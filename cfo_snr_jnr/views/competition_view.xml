@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="view_cfo_competition_form" model="ir.ui.view">
+        <field name="name">cfo.competition.form</field>
+        <field name="model">cfo.competition</field>
+        <field name="arch" type="xml">
+            <form>
+              <sheet string="CFO Competitions">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" required="1"/>
+                    </h1>
+                </div>
+                <group name="studio_group_99554f">
+                  <group name="studio_group_99554f_left">
+                    <field name="cfo_comp"/>
+                  </group>
+                  <group name="studio_group_99554f_right"></group>
+                </group>
+              </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cfo_competition_list" model="ir.ui.view">
+        <field name="name">cfo.competition.list</field>
+        <field name="model">cfo.competition</field>
+        <field name="arch" type="xml">
+            <tree string="CFO Competitions">
+                <field name="name"/>
+                <field name="cfo_comp"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_competition">
+        <field name="name">CFO Competition</field>
+        <field name="res_model">cfo.competition</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_cfo_snr_root" name="CFO SNR" sequence="35"/>
+
+    <menuitem id="menu_cfo_snr_configuration_root" parent="menu_cfo_snr_root" name="CFO Configurations" sequence="40"/>
+
+    <menuitem id="menu_snr_cfo_competition" action="action_cfo_competition" parent="menu_cfo_snr_configuration_root" sequence="1"/>
+
+    <record id="view_cfo_member_type_form" model="ir.ui.view">
+        <field name="name">cfo.configuration.form</field>
+        <field name="model">cfo.configuration</field>
+        <field name="arch" type="xml">
+            <form>
+              <sheet string="CFO Configuration">
+              <group>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="cfo_member_type" required="1"/>
+                    </group>
+                    <group>
+                        <field name="cfo_competitions" required="1"/>
+                        <field name="cfo_comp" required="1"/>
+                    </group>
+              </group>
+              </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cfo_configuration_list" model="ir.ui.view">
+        <field name="name">cfo.configuration.list</field>
+        <field name="model">cfo.configuration</field>
+        <field name="arch" type="xml">
+            <tree string="CFO Configuration">
+                <field name="name"/>
+                <field name="cfo_member_type"/>
+                <field name="cfo_competitions"/>
+                <field name="cfo_comp"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_configuration">
+        <field name="name">CFO Member Types</field>
+        <field name="res_model">cfo.configuration</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_snr_cfo_configuration" action="action_cfo_configuration" parent="menu_cfo_snr_configuration_root" sequence="2"/>
+
+    <menuitem id="menu_cfo_jnr_root" name="CFO JNR" sequence="40"/>
+
+    <menuitem id="menu_cfo_jnr_configuration_root" parent="menu_cfo_jnr_root" name="CFO Configurations" sequence="40"/>
+
+    <menuitem id="menu_jnr_cfo_competition" action="action_cfo_competition" parent="menu_cfo_jnr_configuration_root" sequence="1"/>
+
+    <menuitem id="menu_jnr_cfo_configuration" action="action_cfo_configuration" parent="menu_cfo_jnr_configuration_root" sequence="2"/>
+    
+
+    </data>
+</odoo>

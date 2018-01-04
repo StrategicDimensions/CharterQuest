@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="cfo_snr_jnr.login1" inherit_id="web.login" name="Login">
+            <xpath expr="//t/form/input" position="after">
+                <p style="text-align: center; font-size: large;"><strong>Login to CFO Senior Account</strong></p>
+            </xpath>
+        </template>
+
+        <template id="cfo_snr_jnr.login" inherit_id="auth_signup.login" name="Sign up - Reset Password">
+            <xpath expr="//a[2]" position="replace">
+                <a t-if="reset_password_enabled" t-attf-href="/web/reset_password?{{ keep_query() }}" class="btn btn-link pull-right">Forgot Password</a>
+            </xpath>
+            <xpath expr="//a[@t-if='signup_enabled']" position="replace">
+                <a t-if="signup_enabled" t-attf-href="/web/signup?{{ keep_query() }}" class="btn btn-link pull-right">Register</a>
+            </xpath>
+        </template>
+
+
+    </data>
+</odoo>
