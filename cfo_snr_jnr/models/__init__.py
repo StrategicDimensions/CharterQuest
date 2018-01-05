@@ -21,5 +21,6 @@
 from . import website
 from . import cfo_competition
 from . import cfo_member
+from . import res_users
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

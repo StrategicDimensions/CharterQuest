@@ -1,3 +1,6 @@
 eclipse.preferences.version=1
 encoding//cfo_snr_jnr/__manifest__.py=utf-8
+encoding//cfo_snr_jnr/controller/main.py=utf-8
+encoding//cfo_snr_jnr/models/__init__.py=utf-8
 encoding//cfo_snr_jnr/models/cfo_member.py=utf-8
+encoding//cfo_snr_jnr/models/website.py=utf-8

@@ -30,4 +30,11 @@ class Website(models.Model):
         return False
 
 
+    def get_competition_types(self):
+        return self.env['cfo.competition'].search([])
+
+    def get_member_types(self):
+        return self.env['cfo.configuration'].search([])
+
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -3,20 +3,99 @@
     <data>
 
         <template id="cfo_snr_jnr.login1" inherit_id="web.login" name="Login">
+            <xpath expr="//t/form" position='attributes'>
+                <attribute name='style'>max-width: 385px; !important</attribute>
+            </xpath>
             <xpath expr="//t/form/input" position="after">
-                <p style="text-align: center; font-size: large;"><strong>Login to CFO Senior Account</strong></p>
+                <p style="text-align: center; font-size: large;"><strong>Login to CFO Senior/Junior Account</strong></p>
             </xpath>
         </template>
 
         <template id="cfo_snr_jnr.login" inherit_id="auth_signup.login" name="Sign up - Reset Password">
             <xpath expr="//a[2]" position="replace">
-                <a t-if="reset_password_enabled" t-attf-href="/web/reset_password?{{ keep_query() }}" class="btn btn-link pull-right">Forgot Password</a>
+                <a t-if="request.env['res.config.settings'].sudo().search([],limit=1,order='id desc').auth_signup_reset_password" t-attf-href="/web/reset_password?{{ keep_query() }}" class="btn btn-link pull-right">Forgot Password</a>
             </xpath>
             <xpath expr="//a[@t-if='signup_enabled']" position="replace">
-                <a t-if="signup_enabled" t-attf-href="/web/signup?{{ keep_query() }}" class="btn btn-link pull-right">Register</a>
+                <a t-if="request.env['res.config.settings'].sudo().search([],limit=1,order='id desc').auth_signup_uninvited == 'b2c'" t-attf-href="/web/signup?{{ keep_query() }}" class="btn btn-link pull-right">Register</a>
             </xpath>
         </template>
 
+        <template id="cfo_snr_jnr.reset_password" inherit_id="auth_signup.reset_password" name="Reset password">
+            <xpath expr="//t/form" position='attributes'>
+                <attribute name='style'>max-width: 385px; !important</attribute>
+            </xpath>
+            <xpath expr="//t/form/input" position="after">
+                <p style="text-align: center; font-size: large;"><strong>Reset CFO Senior/Junior Account Password</strong></p>
+            </xpath>
+            <label for="login" position="replace">
+                <label for="login" class="control-label">Email</label>
+            </label>
+            <button type="submit" position="replace">
+                <a t-if="token and not invalid_token" href="/web/login" class="btn btn-link pull-right">Back to Login</a>
+                <button type="submit" class="btn btn-primary pull-left">Reset Password</button>
+            </button>
+        </template>
+
+        <template id="cfo_snr_jnr.fields" inherit_id="auth_signup.fields" name="Auth Signup/ResetPassword form fields">
+            <label for="login" position="replace">
+                <label for="login" class="control-label">Email</label>
+            </label>
+            <label for="name" position="replace">
+                <label for="name" class="control-label">Name</label>
+            </label>
+            <xpath expr="//input[@name='login']" position="attributes">
+                <attribute name="style">background-color: rgb(216, 214, 214); !important</attribute>
+            </xpath>
+            <xpath expr="//input[@name='name']" position="attributes">
+                <attribute name="style">background-color: rgb(216, 214, 214); !important</attribute>
+            </xpath>
+        </template>
+
+<!--         <template id="cfo_snr_jnr.fields1" inherit_id="auth_signup.fields" name="Auth Signup/ResetPassword form fields"> -->
+<!--               <xpath expr="//div[1]" position='before'> -->
+<!--                   <t t-if="not only_passwords"> -->
+<!--                   <t t-set="competition_types" t-value="website.get_competition_types()"/> -->
+<!--                   <t t-set="member_types" t-value="website.get_member_types()"/>" -->
+<!--                       <div class="form-group field-firstname"> -->
+<!--                         <label for="firstname" class="control-label">First Name</label> -->
+<!--                         <input type="text" name="firstname" t-att-value="firstname" id="firstname" class="form-control" -->
+<!--                             autofocus="autofocus" required="required" autocapitalize="off"/> -->
+<!--                       </div> -->
+<!--                       <div class="form-group field-lastname"> -->
+<!--                         <label for="lastname" class="control-label">Last Name</label> -->
+<!--                         <input type="text" name="lastname" t-att-value="lastname" id="lastname" class="form-control" -->
+<!--                             autofocus="autofocus" required="required" autocapitalize="off"/> -->
+<!--                       </div> -->
+<!--                       <div class="form-group field-email"> -->
+<!--                         <label for="email" class="control-label">Email</label> -->
+<!--                         <input type="text" name="email" t-att-value="email" id="email" class="form-control" -->
+<!--                             autofocus="autofocus" required="required" autocapitalize="off"/> -->
+<!--                       </div> -->
+<!--                       <div class="form-group field-competition"> -->
+<!--                         <label for="cfo_competition" class="control-label">Select the Competition</label> -->
+<!--                         <select name="cfo_competition" class="form-control" placeholder="Competition..." required="True"> -->
+<!--                             <option value="select" select="true">Select</option> -->
+<!--                             <t t-foreach="competition_types or []" t-as="competition"> -->
+<!--                                 <option t-att-value="competition.id"> -->
+<!--                                     <t t-esc="competition.name"/> -->
+<!--                                 </option> -->
+<!--                             </t> -->
+<!--                         </select> -->
+<!--                       </div> -->
+<!--                       <div class="form-group field-membertype"> -->
+<!--                         <label for="cfo_membertype" class="control-label">I want to Register as</label> -->
+<!--                         <select name="cfo_membertype" class="form-control" placeholder="Member Type..." required="True"> -->
+<!--                             <option value="select" select="true">Select</option> -->
+<!--                             <t t-foreach="member_types or []" t-as="member_type"> -->
+<!--                                 <option t-att-value="member_type.id"> -->
+<!--                                     <t t-esc="member_type.name"/> -->
+<!--                                 </option> -->
+<!--                             </t> -->
+<!--                         </select> -->
+<!--                       </div> -->
+<!--                   </t> -->
+<!--               </xpath> -->
+<!--         </template> -->
 
     </data>
 </odoo>

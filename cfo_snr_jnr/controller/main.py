@@ -21,35 +21,9 @@ from odoo import http, _
 from odoo.http import request
 import json
 from odoo.addons.web.controllers import main as web
+from odoo.addons.auth_signup.controllers import main as auth_signup
 import odoo
-
-# class cfo_senior(http.Controller):
-# 
-#     @http.route(['/login'], type='http', auth="public", website=True)
-#     def login(self, **post):
-#         return request.render('cfo_snr_jnr.cfo_login')
-# 
-#     @http.route(['/cfo_logout'], type='http', auth="public", website=True)
-#     def cfo_logout(self, **post):
-#         request.session['logged_user'] = None
-#         return request.render("cfo_snr_jnr.cfo_login")
-# 
-#     @http.route(['/login_check'], type='json', auth="public", website=True)
-#     def login_check(self, username, pswd):
-#         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
-#         qry = "SELECT id from res_users where login= '"+username+"' and password='"+pswd+"';"
-#         cr.execute(qry)
-#         row = cr.fetchone()
-#         if row and row[0]:
-#             request.session['logged_user'] = row[0]
-#             return row[0]
-#         return False
-#     
-# 
-#     @http.route(['/user_details'], type='http', auth="public", website=True)
-#     def user_details(self, **post):
-#         value = post
-#         return request.render("cfo_snr_jnr.user_form",value)
+from odoo.exceptions import UserError
 
 
 class cfo_home(web.Home):
@@ -60,16 +34,16 @@ class cfo_home(web.Home):
         request.params['login_success'] = False
         if request.httprequest.method == 'GET' and redirect and request.session.uid:
             return http.redirect_with_hash(redirect)
-
+ 
         if not request.uid:
             request.uid = odoo.SUPERUSER_ID
-
+ 
         values = request.params.copy()
         try:
             values['databases'] = http.db_list()
         except odoo.exceptions.AccessDenied:
             values['databases'] = None
-
+ 
         if request.httprequest.method == 'POST':
             cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
             qry = "SELECT id from res_users where login= '"+request.params['login']+"';"
@@ -78,12 +52,6 @@ class cfo_home(web.Home):
             if not row_username:
                 values['error'] = _("Email Address Does Not Exist, Please Register")
             else:
-#                 qry = "SELECT id from res_users where login= '"+request.params['login']+"' and password='"+request.params['password']+"';"
-#                 cr.execute(qry)
-#                 row = cr.fetchone()
-#                 if not row:
-#                     values['error'] = _("Your Email Address/Password is Incorrect")
-#                 else:
                 old_uid = request.uid
                 uid = request.session.authenticate(request.session.db, request.params['login'], request.params['password'])
                 if uid is not False:
@@ -94,15 +62,31 @@ class cfo_home(web.Home):
         else:
             if 'error' in request.params and request.params.get('error') == 'access':
                 values['error'] = _('Only employee can access this database. Please contact the administrator.')
-
+ 
         if 'login' not in values and request.session.get('auth_login'):
             values['login'] = request.session.get('auth_login')
-
+ 
         if not odoo.tools.config['list_db']:
             values['disable_database_manager'] = True
-
+ 
         response = request.render('web.login', values)
         response.headers['X-Frame-Options'] = 'DENY'
         return response
+
+class cfo_auth_signup(auth_signup.AuthSignupHome):
+    
+    def do_signup(self, qcontext):
+        """ Shared helper that creates a res.partner out of a token """
+        values = { key: qcontext.get(key) for key in ('login', 'name', 'password') }
+        if not values:
+            raise UserError(_("The form was not properly filled in."))
+        if values.get('password') != qcontext.get('confirm_password'):
+            raise UserError(_("Passwords are not the same, please try again"))
+        supported_langs = [lang['code'] for lang in request.env['res.lang'].sudo().search_read([], ['code'])]
+        if request.lang in supported_langs:
+            values['lang'] = request.lang
+        self._signup_with_values(qcontext.get('token'), values)
+        request.env.cr.commit()
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
