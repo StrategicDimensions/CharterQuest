@@ -36,66 +36,124 @@
             </button>
         </template>
 
-        <template id="cfo_snr_jnr.fields" inherit_id="auth_signup.fields" name="Auth Signup/ResetPassword form fields">
-            <label for="login" position="replace">
-                <label for="login" class="control-label">Email</label>
-            </label>
-            <label for="name" position="replace">
-                <label for="name" class="control-label">Name</label>
-            </label>
-            <xpath expr="//input[@name='login']" position="attributes">
-                <attribute name="style">background-color: rgb(216, 214, 214); !important</attribute>
+        <template id="cfo_snr_jnr.signup" inherit_id="auth_signup.signup" name="Sign up login">
+            <xpath expr="//t/form" position='attributes'>
+                <attribute name='style'>max-width: 615px; !important</attribute>
             </xpath>
-            <xpath expr="//input[@name='name']" position="attributes">
-                <attribute name="style">background-color: rgb(216, 214, 214); !important</attribute>
+            <xpath expr="//t/form/div[@class='clearfix oe_login_buttons']" position='replace'>
+                <div class="clearfix oe_login_buttons">
+                    <t t-if="only_passwords">
+                    <a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link pull-right">Already have an account?</a>
+                    </t>
+                    <button type="submit" class="btn btn-primary pull-left o_signup_btn"> Register--> </button>
+                </div>
             </xpath>
         </template>
 
-<!--         <template id="cfo_snr_jnr.fields1" inherit_id="auth_signup.fields" name="Auth Signup/ResetPassword form fields"> -->
-<!--               <xpath expr="//div[1]" position='before'> -->
-<!--                   <t t-if="not only_passwords"> -->
-<!--                   <t t-set="competition_types" t-value="website.get_competition_types()"/> -->
-<!--                   <t t-set="member_types" t-value="website.get_member_types()"/>" -->
-<!--                       <div class="form-group field-firstname"> -->
-<!--                         <label for="firstname" class="control-label">First Name</label> -->
-<!--                         <input type="text" name="firstname" t-att-value="firstname" id="firstname" class="form-control" -->
-<!--                             autofocus="autofocus" required="required" autocapitalize="off"/> -->
-<!--                       </div> -->
-<!--                       <div class="form-group field-lastname"> -->
-<!--                         <label for="lastname" class="control-label">Last Name</label> -->
-<!--                         <input type="text" name="lastname" t-att-value="lastname" id="lastname" class="form-control" -->
-<!--                             autofocus="autofocus" required="required" autocapitalize="off"/> -->
-<!--                       </div> -->
-<!--                       <div class="form-group field-email"> -->
-<!--                         <label for="email" class="control-label">Email</label> -->
-<!--                         <input type="text" name="email" t-att-value="email" id="email" class="form-control" -->
-<!--                             autofocus="autofocus" required="required" autocapitalize="off"/> -->
-<!--                       </div> -->
-<!--                       <div class="form-group field-competition"> -->
-<!--                         <label for="cfo_competition" class="control-label">Select the Competition</label> -->
-<!--                         <select name="cfo_competition" class="form-control" placeholder="Competition..." required="True"> -->
-<!--                             <option value="select" select="true">Select</option> -->
-<!--                             <t t-foreach="competition_types or []" t-as="competition"> -->
-<!--                                 <option t-att-value="competition.id"> -->
-<!--                                     <t t-esc="competition.name"/> -->
-<!--                                 </option> -->
-<!--                             </t> -->
-<!--                         </select> -->
-<!--                       </div> -->
-<!--                       <div class="form-group field-membertype"> -->
-<!--                         <label for="cfo_membertype" class="control-label">I want to Register as</label> -->
-<!--                         <select name="cfo_membertype" class="form-control" placeholder="Member Type..." required="True"> -->
-<!--                             <option value="select" select="true">Select</option> -->
-<!--                             <t t-foreach="member_types or []" t-as="member_type"> -->
-<!--                                 <option t-att-value="member_type.id"> -->
-<!--                                     <t t-esc="member_type.name"/> -->
-<!--                                 </option> -->
-<!--                             </t> -->
-<!--                         </select> -->
-<!--                       </div> -->
-<!--                   </t> -->
-<!--               </xpath> -->
-<!--         </template> -->
+        <template id="auth_signup.fields" name="Auth Signup/ResetPassword form fields">
+            <t t-if="only_passwords">
+            <div class="form-group field-login">
+                <label for="login" class="control-label">Email</label>
+                <input type="text" name="login" t-att-value="login" id="login" class="form-control" autofocus="autofocus"
+                    autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None" style="background-color: rgb(216, 214, 214); !important"/>
+            </div>
+
+            <div class="form-group field-name">
+                <label for="name" class="control-label">Name</label>
+                <input type="text" name="name" t-att-value="name" id="name" class="form-control" placeholder="e.g. John Doe"
+                    required="required" t-att-readonly="'readonly' if only_passwords else None"
+                    t-att-autofocus="'autofocus' if login and not only_passwords else None" style="background-color: rgb(216, 214, 214); !important"/>
+            </div>
+
+            <div class="form-group field-password">
+                <label for="password" class="control-label">Password</label>
+                <input type="password" name="password" id="password" class="form-control"
+                    required="required" t-att-autofocus="'autofocus' if only_passwords else None"/>
+            </div>
+
+            <div class="form-group field-confirm_password">
+                <label for="confirm_password" class="control-label">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control" required="required"/>
+            </div>
+            </t>
+            <t t-if="not only_passwords">
+              <div class="row">
+                  <div class="pull-left" style="width: 307px; !important">
+                  <t t-set="competition_types" t-value="website.get_competition_types()"/>
+                  <t t-set="member_types" t-value="website.get_member_types()"/>
+                  <t t-set="sources" t-value="website.get_cfo_registrants_source()"/>
+                      <div class="form-group field-firstname">
+                        <label for="name" class="control-label">First Name</label>
+                        <input type="text" name="name" t-att-value="name" id="name" class="form-control"
+                            autofocus="autofocus" required="required" autocapitalize="off"/>
+                      </div>
+                      <div class="form-group field-lastname">
+                        <label for="lastname" class="control-label">Last Name</label>
+                        <input type="text" name="lastname" t-att-value="lastname" id="lastname" class="form-control"
+                            autofocus="autofocus" required="required" autocapitalize="off"/>
+                      </div>
+                      <div class="form-group field-login">
+                        <label for="login" class="control-label">Email</label>
+                        <input type="text" name="login" t-att-value="login" id="login" class="form-control" autofocus="autofocus"
+                            autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None"/>
+                      </div>
+                      <div class="form-group field-competition">
+                        <label for="cfo_competition" class="control-label">Select the Competition</label>
+                        <select name="cfo_competition" class="form-control" placeholder="Competition..." required="True">
+                            <option value="select" select="true">Select Category</option>
+                            <t t-foreach="competition_types or []" t-as="competition">
+                                <option t-att-value="competition.id">
+                                    <t t-esc="competition.name"/>
+                                </option>
+                            </t>
+                        </select>
+                      </div>
+                      <div class="form-group field-membertype">
+                        <label for="cfo_membertype" class="control-label">I want to Register as</label>
+                        <select name="cfo_membertype" class="form-control" placeholder="Member Type..." required="True">
+                            <option value="select" select="true">Select</option>
+                            <t t-foreach="member_types or []" t-as="member_type">
+                                <option t-att-value="member_type.name">
+                                    <t t-esc="member_type.name"/>
+                                </option>
+                            </t>
+                        </select>
+                      </div>
+                      </div>
+                      
+                      <div class="pull-right" style="width: 307px; !important">
+                      <div class="form-group field-source">
+                        <label for="cfo_source" class="control-label">How Did you 1st Hear About the CFO</label>
+                        <select name="cfo_source" class="form-control" placeholder="Source..." required="False">
+                            <option value="select" select="true">Select</option>
+                            <t t-foreach="sources or []" t-as="source">
+                                <option t-att-value="source">
+                                    <t t-esc="source"/>
+                                </option>
+                            </t>
+                        </select>
+                      </div>
+                      <div class="form-group field-other">
+                        <label for="other" class="control-label">Other Please Specify</label>
+                        <input type="text" name="other" t-att-value="other" id="other" class="form-control"
+                            autofocus="autofocus" required="False" autocapitalize="off"/>
+                      </div>
+                      <div class="form-group field-password">
+                        <label for="password" class="control-label">Password</label>
+                        <input type="password" name="password" id="password" class="form-control"
+                            required="required" t-att-autofocus="'autofocus' if only_passwords else None"/>
+                    </div>
+        
+                    <div class="form-group field-confirm_password">
+                        <label for="confirm_password" class="control-label">Confirm Password</label>
+                        <input type="password" name="confirm_password" id="confirm_password" class="form-control" required="required"/>
+                    </div>
+                    
+                    <div class="g-recaptcha" style="width: -moz-fit-content;margin-top:50px" data-sitekey="6LfdvzYUAAAAAEKV8DWL7vpRotZIjaS9VQltT2FH"></div>
+                  </div>
+                  </div>
+                  </t>
+        </template>
 
     </data>
 </odoo>

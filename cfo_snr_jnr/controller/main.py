@@ -19,12 +19,16 @@
 ##############################################################################
 from odoo import http, _
 from odoo.http import request
+import logging
 import json
 from odoo.addons.web.controllers import main as web
 from odoo.addons.auth_signup.controllers import main as auth_signup
 import odoo
 from odoo.exceptions import UserError
+from odoo.addons.auth_signup.models.res_users import SignupError
+import datetime
 
+_logger = logging.getLogger(__name__)
 
 class cfo_home(web.Home):
 
@@ -73,20 +77,79 @@ class cfo_home(web.Home):
         response.headers['X-Frame-Options'] = 'DENY'
         return response
 
-class cfo_auth_signup(auth_signup.AuthSignupHome):
+class CfoAuthSignup(auth_signup.AuthSignupHome):
     
     def do_signup(self, qcontext):
         """ Shared helper that creates a res.partner out of a token """
         values = { key: qcontext.get(key) for key in ('login', 'name', 'password') }
+        member_values = { key: qcontext.get(key) for key in ('login', 'name', 'password','lastname','cfo_competition', 'cfo_membertype', 'cfo_source', 'other') }
+
         if not values:
             raise UserError(_("The form was not properly filled in."))
         if values.get('password') != qcontext.get('confirm_password'):
             raise UserError(_("Passwords are not the same, please try again"))
+
         supported_langs = [lang['code'] for lang in request.env['res.lang'].sudo().search_read([], ['code'])]
         if request.lang in supported_langs:
             values['lang'] = request.lang
-        self._signup_with_values(qcontext.get('token'), values)
+        self._signup_with_values(qcontext.get('token'), values, member_values)
         request.env.cr.commit()
+
+    def _signup_with_values(self, token, values, values1=''):
+        db, login, password = request.env['res.users'].sudo().signup(values, token)
+        request.env.cr.commit()     # as authenticate will use its own cursor we need to commit the current transaction
+        uid = request.session.authenticate(db, login, password)
+        user = request.env['res.users'].sudo().browse(uid)
+        member_values = {}
+        if values1.get('lastname'):
+            member_values.update({'name': values1.get('name') + ' ' + values1.pop('lastname')})
+            if values1.get('cfo_competition'):
+                member_values.update({'cfo_comp': int(values1.pop('cfo_competition'))})
+            member_values.update({'cfo_member_type': values1.pop('cfo_membertype')})
+            member_values.update({'cfo_registrants_source': values1.pop('cfo_source', '')})
+            member_values.update({'other': values1.pop('other', '')})
+            member_values.update({'login': values1.get('login')})
+            member_values.update({'aspirants_email': values1.get('login')})
+            member_values.update({'password': values1.get('password')})
+            member_values.update({'cfo_competition_year': str(datetime.date.today().year)})
+        if not uid:
+            raise SignupError(_('Authentication Failed.'))
+        if member_values:
+            user._create_member(member_values)
+
+    @http.route('/web/signup', type='http', auth='public', website=True, sitemap=False)
+    def web_auth_signup(self, *args, **kw):
+        qcontext = self.get_auth_signup_qcontext()
+
+        if not qcontext.get('token') and not qcontext.get('signup_enabled'):
+            raise werkzeug.exceptions.NotFound()
+
+        if 'error' not in qcontext and request.httprequest.method == 'POST':
+            try:
+                self.do_signup(qcontext)
+                # Send an account creation confirmation email
+                if qcontext.get('token'):
+                    user_sudo = request.env['res.users'].sudo().search([('login', '=', qcontext.get('login'))])
+                    template = request.env.ref('auth_signup.mail_template_user_signup_account_created', raise_if_not_found=False)
+                    if user_sudo and template:
+                        template.sudo().with_context(
+                            lang=user_sudo.lang,
+                            auth_login=werkzeug.url_encode({'auth_login': user_sudo.email}),
+                            password=request.params.get('password')
+                        ).send_mail(user_sudo.id, force_send=True)
+                return super(CfoAuthSignup, self).web_login(*args, **kw)
+            except UserError as e:
+                qcontext['error'] = e.name or e.value
+            except (SignupError, AssertionError) as e:
+                if request.env["res.users"].sudo().search([("login", "=", qcontext.get("login"))]):
+                    qcontext["error"] = _("Another user is already registered using this email address.")
+                else:
+                    _logger.error("%s", e)
+                    qcontext['error'] = _("Could not create a new account.")
+
+        response = request.render('auth_signup.signup', qcontext)
+        response.headers['X-Frame-Options'] = 'DENY'
+        return response
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

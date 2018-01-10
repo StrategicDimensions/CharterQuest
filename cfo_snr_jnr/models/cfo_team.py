@@ -18,28 +18,14 @@
 #
 ##############################################################################
 
-{
-    'name': 'CFO Senior Junior',
-    'version': '1.0',
-    'category': 'Website',
-    'summary': 'CFO Senior and Junior Competition',
-    'description': """
-CFO Senior and Junior Competition.
-    """,
-    'depends': ['base','auth_signup','crm','website'],
-    'data': [
-         'security/ir.model.access.csv',
-         'views/login.xml',
-         'views/jsfile.xml',
-         'views/competition_view.xml',
-         'views/cfo_junior_member_view.xml',
-         'views/cfo_senior_member_view.xml',
-         'views/cfo_team_view.xml',
-    ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': False,
-}
+from odoo import models,fields, _
+
+class CFOTeam(models.Model):
+    _name = 'cfo.team'
+ 
+    name = fields.Char('Name')
+    cfo_comp = fields.Selection([('CFO SNR', 'CFO SNR'), ('CFO JNR', 'CFO JNR')], 'Competition')
+    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -20,8 +20,8 @@
 
 from odoo import models,fields, _
 
-class CFOMember(models.Model):
-    _name = 'cfo.member'
+class CFOSeniorMember(models.Model):
+    _name = 'cfo.snr.member'
     _inherit = ['mail.thread']
 #     _rec_name = aspirants_name
 
@@ -79,16 +79,28 @@ class CFOMember(models.Model):
                              ('Mentor', 'Mentor'),
                              ('Secondary/High School','Secondary/High School')],
                              'Type')
-    cfo_comp = fields.Selection([('CFO SNR', 'CFO SNR'), ('CFO JNR', 'CFO JNR')], 'Competition')
     cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
-
-
-class CFOTeam(models.Model):
-    _name = 'cfo.team'
- 
-    name = fields.Char('Name')
-    cfo_comp = fields.Selection([('CFO SNR', 'CFO SNR'), ('CFO JNR', 'CFO JNR')], 'Competition')
-    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+    cfo_registrants_source = fields.Selection([('Social Media', 'Social Media'),
+                                             ('Direct web address', 'Direct web address'),
+                                             ('Google/other search engine', 'Google/other search engine'),
+                                             ('E-banner/Web advertisement', 'E-banner/Web advertisement'),
+                                             ('Email campaign/Signature card with link', 'Email campaign/Signature card with link'),
+                                             ("Person Vue website/exam booking page","Person Vue website/exam booking page"),
+                                             ("Other website listing","Other website listing"),
+                                             ("Radio/TV","Radio/TV"),
+                                             ("Print Media","Print Media"),
+                                             ("Direct mail via the post","Direct mail via the post"),
+                                             ("Word-of-mouth/current/prior CharterQuest Student","Word-of-mouth/current/prior CharterQuest Student"),
+                                             ("My school/mentor/friend","My school/mentor/friend"),
+                                             ("My Employer/Boss/Supervisor","My Employer/Boss/Supervisor"),
+                                             ("Brand Ambassador","Brand Ambassador"),
+                                             ("Professional Body (CIMA, SAICA, ACCA, CFA Institute)","Professional Body (CIMA, SAICA, ACCA, CFA Institute)"),
+                                             ("Billboard/street post/community center/church","Billboard/street post/community center/church"),
+                                             ("Other(please specify)","Other(please specify)")
+                                             ], 'How Did you 1st Hear About the CFO')
+    
+    login = fields.Char('User name')
+    password = fields.Char('Password')
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

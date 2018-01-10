@@ -36,5 +36,13 @@ class Website(models.Model):
     def get_member_types(self):
         return self.env['cfo.configuration'].search([])
 
+    def get_cfo_registrants_source(self):
+        return ["Social Media","Direct web address","Google/other search engine",
+                "E-banner/Web advertisement","Email campaign/Signature card with link",
+                "Person Vue website/exam booking page","Other website listing","Radio/TV",
+                "Print Media","Direct mail via the post","Word-of-mouth/current/prior CharterQuest Student",
+                "My school/mentor/friend","My Employer/Boss/Supervisor","Brand Ambassador",
+                "Professional Body (CIMA, SAICA, ACCA, CFA Institute)","Billboard/street post/community center/church",
+                "Other(please specify)"]
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
