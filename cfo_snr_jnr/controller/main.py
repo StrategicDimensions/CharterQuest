@@ -30,7 +30,7 @@ import datetime
 
 _logger = logging.getLogger(__name__)
 
-class cfo_home(web.Home):
+class CfoHome(web.Home):
 
     @http.route('/web/login', type='http', auth="none", sitemap=False)
     def web_login(self, redirect=None, **kw):
@@ -77,8 +77,9 @@ class cfo_home(web.Home):
         response.headers['X-Frame-Options'] = 'DENY'
         return response
 
+
 class CfoAuthSignup(auth_signup.AuthSignupHome):
-    
+
     def do_signup(self, qcontext):
         """ Shared helper that creates a res.partner out of a token """
         values = { key: qcontext.get(key) for key in ('login', 'name', 'password') }
@@ -111,7 +112,10 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
             member_values.update({'login': values1.get('login')})
             member_values.update({'aspirants_email': values1.get('login')})
             member_values.update({'password': values1.get('password')})
-            member_values.update({'cfo_competition_year': str(datetime.date.today().year)})
+            if datetime.date.today().month in [4,5,6,7,8,9,10,11,12]:
+                member_values.update({'cfo_competition_year': str(datetime.date.today().year + 1)})
+            else:
+                member_values.update({'cfo_competition_year': str(datetime.date.today().year)})
         if not uid:
             raise SignupError(_('Authentication Failed.'))
         if member_values:
@@ -120,6 +124,10 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
     @http.route('/web/signup', type='http', auth='public', website=True, sitemap=False)
     def web_auth_signup(self, *args, **kw):
         qcontext = self.get_auth_signup_qcontext()
+#         if request.env["cfo.snr.member"].sudo().search([("login", "=", qcontext.get("login"))]):
+#             qcontext["error"] = _("Another user is already registered using this email address.")
+#         if request.env["cfo.jnr.member"].sudo().search([("login", "=", qcontext.get("login"))]):
+#             qcontext["error"] = _("Another user is already registered using this email address.")
 
         if not qcontext.get('token') and not qcontext.get('signup_enabled'):
             raise werkzeug.exceptions.NotFound()
