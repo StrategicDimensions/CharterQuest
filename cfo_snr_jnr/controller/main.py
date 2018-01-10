@@ -107,8 +107,10 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
             if values1.get('cfo_competition'):
                 member_values.update({'cfo_comp': int(values1.pop('cfo_competition'))})
             member_values.update({'cfo_member_type': values1.pop('cfo_membertype')})
-            member_values.update({'cfo_registrants_source': values1.pop('cfo_source', '')})
-            member_values.update({'other': values1.pop('other', '')})
+            if values1.get('cfo_source'):
+                member_values.update({'cfo_registrants_source': values1.pop('cfo_source')})
+            if values1.get('other'):
+                member_values.update({'other': values1.pop('other', '')})
             member_values.update({'login': values1.get('login')})
             member_values.update({'aspirants_email': values1.get('login')})
             member_values.update({'password': values1.get('password')})
@@ -124,10 +126,6 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
     @http.route('/web/signup', type='http', auth='public', website=True, sitemap=False)
     def web_auth_signup(self, *args, **kw):
         qcontext = self.get_auth_signup_qcontext()
-#         if request.env["cfo.snr.member"].sudo().search([("login", "=", qcontext.get("login"))]):
-#             qcontext["error"] = _("Another user is already registered using this email address.")
-#         if request.env["cfo.jnr.member"].sudo().search([("login", "=", qcontext.get("login"))]):
-#             qcontext["error"] = _("Another user is already registered using this email address.")
 
         if not qcontext.get('token') and not qcontext.get('signup_enabled'):
             raise werkzeug.exceptions.NotFound()

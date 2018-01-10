@@ -100,7 +100,7 @@
                       <div class="form-group field-competition">
                         <label for="cfo_competition" class="control-label">Select the Competition</label>
                         <select name="cfo_competition" class="form-control" placeholder="Competition..." required="True">
-                            <option value="select" select="true">Select Category</option>
+                            <option value="" select="true">Select Category</option>
                             <t t-foreach="competition_types or []" t-as="competition">
                                 <option t-att-value="competition.id">
                                     <t t-esc="competition.name"/>
@@ -111,7 +111,7 @@
                       <div class="form-group field-membertype">
                         <label for="cfo_membertype" class="control-label">I want to Register as</label>
                         <select name="cfo_membertype" class="form-control" placeholder="Member Type..." required="True">
-                            <option value="select" select="true">Select</option>
+                            <option value="" select="true">Select</option>
                             <t t-foreach="member_types or []" t-as="member_type">
                                 <option t-att-value="member_type.name">
                                     <t t-esc="member_type.name"/>
@@ -124,8 +124,8 @@
                       <div class="pull-right" style="width: 307px; !important">
                       <div class="form-group field-source">
                         <label for="cfo_source" class="control-label">How Did you 1st Hear About the CFO</label>
-                        <select name="cfo_source" class="form-control" placeholder="Source..." required="False">
-                            <option value="select" select="true">Select</option>
+                        <select name="cfo_source" class="form-control" placeholder="Source...">
+                            <option value="" select="true">Select</option>
                             <t t-foreach="sources or []" t-as="source">
                                 <option t-att-value="source">
                                     <t t-esc="source"/>
@@ -136,7 +136,7 @@
                       <div class="form-group field-other">
                         <label for="other" class="control-label">Other Please Specify</label>
                         <input type="text" name="other" t-att-value="other" id="other" class="form-control"
-                            autofocus="autofocus" required="False" autocapitalize="off"/>
+                            autofocus="autofocus" autocapitalize="off"/>
                       </div>
                       <div class="form-group field-password">
                         <label for="password" class="control-label">Password</label>
