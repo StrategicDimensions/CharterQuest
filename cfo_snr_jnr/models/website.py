@@ -33,8 +33,9 @@ class Website(models.Model):
     def get_competition_types(self):
         return self.env['cfo.competition'].search([])
 
-    def get_member_types(self):
-        return self.env['cfo.configuration'].search([])
+#     def get_member_types(self,val):
+#         print('cfo_competition==========',val)
+#         return self.env['cfo.configuration'].search([])
 
     def get_cfo_registrants_source(self):
         return ["Social Media","Direct web address","Google/other search engine",

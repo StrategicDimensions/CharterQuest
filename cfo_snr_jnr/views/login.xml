@@ -80,7 +80,7 @@
               <div class="row">
                   <div class="pull-left" style="width: 307px; !important">
                   <t t-set="competition_types" t-value="website.get_competition_types()"/>
-                  <t t-set="member_types" t-value="website.get_member_types()"/>
+<!--                   <t t-set="member_types" t-value="website.get_member_types()"/> -->
                   <t t-set="sources" t-value="website.get_cfo_registrants_source()"/>
                       <div class="form-group field-firstname">
                         <label for="name" class="control-label">First Name</label>
@@ -99,7 +99,7 @@
                       </div>
                       <div class="form-group field-competition">
                         <label for="cfo_competition" class="control-label">Select the Competition</label>
-                        <select name="cfo_competition" class="form-control" placeholder="Competition..." required="True">
+                        <select id="cfo_competition" name="cfo_competition" class="form-control" placeholder="Competition..." required="True">
                             <option value="" select="true">Select Category</option>
                             <t t-foreach="competition_types or []" t-as="competition">
                                 <option t-att-value="competition.id">
@@ -110,13 +110,13 @@
                       </div>
                       <div class="form-group field-membertype">
                         <label for="cfo_membertype" class="control-label">I want to Register as</label>
-                        <select name="cfo_membertype" class="form-control" placeholder="Member Type..." required="True">
+                        <select id='cfo_membertype' name="cfo_membertype" class="form-control" placeholder="Member Type..." required="True">
                             <option value="" select="true">Select</option>
-                            <t t-foreach="member_types or []" t-as="member_type">
-                                <option t-att-value="member_type.name">
+                            <!-- <t t-foreach="website.get_member_types() or []" t-as="member_type">
+                                <option t-att-value="member_type.id">
                                     <t t-esc="member_type.name"/>
-                                </option>
-                            </t>
+                                </option>s
+                            </t> -->
                         </select>
                       </div>
                       </div>
@@ -124,7 +124,7 @@
                       <div class="pull-right" style="width: 307px; !important">
                       <div class="form-group field-source">
                         <label for="cfo_source" class="control-label">How Did you 1st Hear About the CFO</label>
-                        <select name="cfo_source" class="form-control" placeholder="Source...">
+                        <select id="cfo_source" name="cfo_source" class="form-control" placeholder="Source...">
                             <option value="" select="true">Select</option>
                             <t t-foreach="sources or []" t-as="source">
                                 <option t-att-value="source">
@@ -133,7 +133,7 @@
                             </t>
                         </select>
                       </div>
-                      <div class="form-group field-other">
+                      <div class="form-group field-other" id='other_source' style="display: none;">
                         <label for="other" class="control-label">Other Please Specify</label>
                         <input type="text" name="other" t-att-value="other" id="other" class="form-control"
                             autofocus="autofocus" autocapitalize="off"/>

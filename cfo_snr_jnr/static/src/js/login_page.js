@@ -1,6 +1,6 @@
 odoo.define('cfo_snr_jnr.login_page', function (require) {
 	document.write("<script src='https://www.google.com/recaptcha/api.js'></script>");
-//	var ajax = require('web.ajax');
+	var ajax = require('web.ajax');
 	$(document).ready(function() {
 //
 //	$(".btn_login_js").click(function() {
@@ -39,6 +39,28 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 				e.preventDefault();
 				$('button[type="submit"]').removeAttr('disabled');
 			}
+		});
+		$("#cfo_source").change(function() {
+	    	if (this.value != 'Other(please specify)')
+			{
+	    		$('#other_source').hide();
+			}
+	    	else
+			{
+	    		$('#other_source').show();
+			}
+	    });
+		
+		$('#cfo_competition').change(function(){
+			ajax.jsonRpc("/get_member_types","call",{'val':$(this).val()}).then(function(result){
+				if (result){
+					var html = '';
+					 for(var i=0;i<result.length;i++){
+                         html += "<option>"+result[i]+"</option>";
+                     }
+                     $('#cfo_membertype').html(html);
+                   }
+			});
 		});
 	});
 });

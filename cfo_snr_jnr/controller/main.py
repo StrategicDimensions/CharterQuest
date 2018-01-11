@@ -32,6 +32,12 @@ _logger = logging.getLogger(__name__)
 
 class CfoHome(web.Home):
 
+    @http.route('/get_member_types', type='json', auth='public', webstie=True)
+    def get_member_types(self,val):
+        if val:
+            list = [conf.name for conf in request.env['cfo.configuration'].search([('cfo_competitions', '=', int(val))])]
+            return list
+
     @http.route('/web/login', type='http', auth="none", sitemap=False)
     def web_login(self, redirect=None, **kw):
         web.ensure_db()
@@ -93,6 +99,9 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
         supported_langs = [lang['code'] for lang in request.env['res.lang'].sudo().search_read([], ['code'])]
         if request.lang in supported_langs:
             values['lang'] = request.lang
+        if member_values.get('lastname'):
+            values.update({'name': member_values.get('name') + ' ' + member_values.get('lastname')})
+
         self._signup_with_values(qcontext.get('token'), values, member_values)
         request.env.cr.commit()
 
