@@ -32,6 +32,15 @@ _logger = logging.getLogger(__name__)
 
 class CfoHome(web.Home):
 
+    @http.route(['/login'], type='http', auth="public", website=True)
+    def login(self, **post):
+        return request.render('cfo_snr_jnr.cfo_login')
+
+    @http.route(['/cfo_logout'], type='http', auth="public", website=True)
+    def cfo_logout(self, **post):
+        request.session['logged_user'] = None
+        return request.render("cfo_snr_jnr.cfo_login")
+
     @http.route('/get_member_types', type='json', auth='public', webstie=True)
     def get_member_types(self,val):
         if val:

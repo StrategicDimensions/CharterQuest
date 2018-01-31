@@ -35,6 +35,7 @@ CFO Senior and Junior Competition.
          'views/cfo_junior_member_view.xml',
          'views/cfo_senior_member_view.xml',
          'views/cfo_team_view.xml',
+         'views/menus.xml',
     ],
     'demo': [
     ],

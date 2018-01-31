@@ -20,6 +20,211 @@
 
 from odoo import models,fields, _
 
+class CFOJuniorAspirants(models.Model):
+    _name = 'cfo.jnr.aspirants'
+    _inherit = ['mail.thread']
+
+    _inherits = {
+        'res.partner': 'partner_id',
+    }
+
+    def _work_exp_values(self):
+        res = []
+        for i in range(0,6):
+            res.append((str(i),str(i)))
+        return res
+
+    def _compute_age(self):
+        res = []
+        for i in range(14,26):
+            res.append((str(i),str(i)))
+        return res
+
+    doc_lines = fields.One2many('ir.attachment','aspirant_doc_id','Documents')
+    country_of_birth = fields.Many2one('res.country','Country of Birth')
+    nationality = fields.Many2one('res.country','Current Citizenship/Nationality')
+    entry_as_student = fields.Boolean('I am entering as Student')
+    entry_as_employee = fields.Boolean('I am entering as Employee')
+    emp_start_date = fields.Date('Start Date')
+    emp_status = fields.Selection([('part-time','part-time'),('full-time','full-time')],'Employment Status')
+    emp_experience = fields.Selection(_work_exp_values,'How many years of formal work experience?')
+    partner_id = fields.Many2one('res.partner',
+            string='Related Partner', ondelete='restrict',
+            help='Partner-related data of the user')
+    updated_cfo_bio = fields.Boolean('Updated CFO BIO')
+    aspirant_id = fields.Many2one('cfo.teams','Aspirant ID')
+    aspirant_age = fields.Selection(_compute_age,'Age')
+    member_accept = fields.Boolean('Accept')
+    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+#     is_cfo_junior = fields.Boolean("Is CFO Junior")
+
+
+class AcademicInstitutionJunior(models.Model):
+    _name = 'academic.institution.jnr'
+    _inherit = ['mail.thread']
+
+    _inherits = {
+        'res.partner': 'partner_id',
+    }
+
+    doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
+    partner_id = fields.Many2one('res.partner',
+            string='Related Partner', ondelete='restrict',
+            help='Partner-related data of the user')
+    updated_academic_bio = fields.Boolean('Updated Academic BIO')
+    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+#     is_cfo_junior = fields.Boolean('Is CFO Junior?')
+
+
+class EmployersJunior(models.Model):
+    _name = 'employers.jnr'
+    _inherit = ['mail.thread']
+
+    _inherits = {
+        'res.partner': 'partner_id',
+    }
+
+    doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
+    partner_id = fields.Many2one('res.partner',
+            string='Related Partner', ondelete='restrict',
+            help='Partner-related data of the user')
+    updated_emp_bio = fields.Boolean('Updated Employer BIO')
+    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+
+
+class VolunteersJunior(models.Model):
+    _name = 'volunteers.jnr'
+    _inherit = ['mail.thread']
+
+    _inherits = {
+        'res.partner': 'partner_id',
+    }
+
+    partner_id = fields.Many2one('res.partner',
+            string='Related Partner', ondelete='restrict',
+            help='Partner-related data of the user')
+    volunteers_type = fields.Selection([('External Panel Judge','External Panel Judge'),('External Examiner','External Examiner'),('Case Study Expert','Case Study Expert'),('Student','Student'),('Other Expertise','Other Expertise'),('Mentor','Mentor')],'Volunteers Type')
+    updated_volunteers_bio = fields.Boolean('Updated Volunteers BIO')
+    doc_lines = fields.One2many('ir.attachment','doc_id','Documents')
+    student_planning_phase = fields.Selection([('CFO Brand Ambassadors & Social Media Lead','CFO Brand Ambassadors & Social Media Lead'),('Volunteer Lead','Volunteer Lead'),('Social and Event Lead','Social and Event Lead'),('Marketing Committee Lead','Marketing Committee Lead'),('Youtube Team','Youtube Team'),('Team Ambassadors','Team Ambassadors'),('Pre Competition Contest Teams','Pre Competition Contest Teams'),('Other Committee','Other Committee')],'Student Planning Phase')
+    student_operations_phase = fields.Selection([('Events Logistics Committee','Events Logistics Committee'),('Timekeeper','Timekeeper'),('Prep Room Monitor','Prep Room Monitor'),('Presentation Room Monitor','Presentation Room Monitor'),('Lounge Monitor','Lounge Monitor'),('Other Committee','Other Committee')],'Student Operations Phase')
+    other_planning_phase = fields.Selection([('Legal Affairs Lead','Legal Affairs Lead'),('Event Lead & Social','Event Lead & Social'),('Marketing Committee Lead','Marketing Committee Lead'),('Youtube Team','Youtube Team'),('Pre Competition Contest Teams','Pre Competition Contest Teams'),('Judge Selection Team','Judge Selection Team')],'Other Planning Phase')
+    other_operations_phase = fields.Selection([('Events Logistics Committee','Events Logistics Committee'),('Prep Room Monitor','Prep Room Monitor'),('Lounge Monitor','Lounge Monitor'),('Other Committee','Other Committee')],'Other operations Phase')
+    i_am_a = fields.Selection([('CFO','CFO'),
+        ('CEO','CEO'),
+        ('Senior/C-Suit Executive','Senior/C-Suit Executive'),
+        ('Business academic','Business academic'),
+        ('Successful Entrepreneur','Successful Entrepreneur'),
+        ('Case study alumnus','Case study alumnus'),
+        ('College student','College student'),
+        ('University student','University student'),
+        ('Part time student','Part time student'),
+        ('Job seeker but have special expertise to offer','Job seeker but have special expertise to offer'),
+        ('Employed and have special expertise to offer','Employed and have special expertise to offer')],string = "I am a")
+
+    i_hold_a = fields.Selection([('Masters level qualification','Masters level qualification'),
+        ('Doctorate level qualification','Doctorate level qualification'),
+        ('Professional Qualification','Professional Qualification'),('Bachelors/Honours/Masters Degree','Bachelors/Honours/Masters Degree')],"I Hold a")
+    i_get_involved = fields.Selection([('Marking of reports ONLY','Marking of reports ONLY'),
+        ('Marking of reports and judging during presentations','Marking of reports and judging during presentations'),
+        ('The planning phase (Deadline:31 January 2016)','The planning phase (Deadline:31 January 2016)'),
+        ('Operations phase (Deadline :20 June, 2016 )','Operations phase (Deadline :20 June, 2016 )'),
+        ('The planning phase (Deadline:31 January 2016)','The planning phase (Deadline:31 January 2016)'),
+        ('Operations phase (Deadline :20 June, 2016 )','Operations phase (Deadline :20 June, 2016 )')],"I will like get involved in")
+
+    cfo_brand_ambassadors_n_social_media_lead = fields.Boolean("CFO Brand Ambassadors & Social Media Lead")
+    volunteer_lead = fields.Boolean("Volunteer Lead")
+    social_event_lead = fields.Boolean("Social and Event Lead")
+    marketing_committee_lead = fields.Boolean("Marketing Committee Lead")
+    youtube_team = fields.Boolean("YouTube Team")
+    team_ambassadors = fields.Boolean("Team Ambassadors")
+    pre_competition_contest_teams = fields.Boolean("Pre Competition Contest Teams")
+    other_committee = fields.Boolean("Other committee")
+    legal_affairs_lead = fields.Boolean("Legal Affairs Lead")
+    event_lead_and_social = fields.Boolean("Event Lead and Social")
+    marketing_committee_lead = fields.Boolean("Marketing Committee Lead")
+    judge_selection_team = fields.Boolean("Judge Selection Team")
+
+    event_logistics_committee = fields.Boolean("Event Logistics Committee")
+    timekeeper = fields.Boolean("Timekeeper")
+    prep_room_monitor = fields.Boolean("Prep Room Monitor")
+    presentation_room_monitor = fields.Boolean("Presentation Room Monitor")
+    lounge_monitor = fields.Boolean("Lounge Monitor")
+    operational_other_committee = fields.Boolean("Other Committee")
+    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+
+
+class BrandAmbassadorJunior(models.Model):
+    _name = 'brand.ambassador.jnr'
+    _inherit = ['mail.thread']
+
+    _inherits = {
+        'res.partner': 'partner_id',
+    }
+
+    doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
+    partner_id = fields.Many2one('res.partner',
+            string='Related Partner', ondelete='restrict',
+            help='Partner-related data of the user')
+    updated_brand_amb_bio = fields.Boolean('Updated Brand Ambassador BIO')
+    brand_accept = fields.Boolean('Accept Brand Invite')
+    team_ids = fields.Many2many('cfo.teams','brand_teams_rel','brand_amb_id','team_id','Brand Ambassador for Teams')
+#     is_cfo_junior = fields.Boolean('Is CFO Junior?')
+    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+
+
+class SocialMediaContestantsJunior(models.Model):
+    _name = 'social.media.contestants.jnr'
+    _inherit = ['mail.thread']
+
+    _inherits = {
+        'res.partner': 'partner_id',
+    }
+
+    doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
+    partner_id = fields.Many2one('res.partner',
+            string='Related Partner', ondelete='restrict',
+            help='Partner-related data of the user')
+    updated_social_media_bio = fields.Boolean('Updated Brand Ambassador BIO')
+    social_media_unique_url = fields.Char('Social media unique URL')
+    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+
+
+class MentorsJunior(models.Model):
+    _name = 'mentors.jnr'
+    _inherit = ['mail.thread']
+
+    _inherits = {
+        'res.partner': 'partner_id',
+    }
+
+    doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
+    partner_id = fields.Many2one('res.partner',
+            string='Related Partner', ondelete='restrict',
+            help='Partner-related data of the user')
+    updated_mentors_bio = fields.Boolean('Updated Mentors BIO')
+    mentor_accept = fields.Boolean("Accept Mentors")
+    team_ids = fields.Many2many('cfo.teams','mentor_teams_rel','mentor_id','team_id','Mentors for Teams')
+    i_am_a = fields.Selection([('CFO','CFO'),
+            ('CEO','CEO'),
+            ('Entrepreneur','Entrepreneur'),
+            ('Manager','Manager'),
+            ('Professional Coach/Mentor','Professional Coach/Mentor'),
+            ('Business Educator','Business Educator'),
+            ('Recent Business Graduate','Recent Business Graduate')],string = "I am a")
+
+    i_hold_a = fields.Selection([('Masters level qualification','Masters level qualification'),
+            ('Doctorate level qualification','Doctorate level qualification'),('Bachelors level qualification','Bachelors level qualification'),('Professional Qualification','Professional Qualification')],"I Hold a")
+    i_get_involved = fields.Selection([('Marking of reports ONLY','Marking of reports ONLY'),
+            ('Marking of reports and judging during presentations','Marking of reports and judging during presentations'),
+            ('The planning phase (Deadline:31 January 2016)','The planning phase (Deadline:31 January 2016)'),
+            ('Operations phase (Deadline :20 June, 2016 )','Operations phase (Deadline :20 June, 2016 )'),
+            ('The planning phase (Deadline:31 January 2016)','The planning phase (Deadline:31 January 2016)'),
+            ('Operations phase (Deadline :20 June, 2016 )','Operations phase (Deadline :20 June, 2016 )')],"I will like get involved in")
+    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+#     is_cfo_junior = fields.boolean('Is CFO Junior?')
+
+
 class CFOJuniorMember(models.Model):
     _name = 'cfo.jnr.member'
     _inherit = ['mail.thread']
@@ -68,7 +273,7 @@ class CFOJuniorMember(models.Model):
     college_province = fields.Many2one('res.country.state', 'Province')
     college_zip = fields.Char('Zip')
     college_country = fields.Many2one('res.country', 'Country')
-    cfo_team = fields.Many2one('cfo.team', 'CFO Snr Teams')
+    cfo_team = fields.Many2one('cfo.teams', 'CFO Snr Teams')
 
     cfo_member_type = fields.Selection([('CFO Aspirant', 'CFO Aspirant'),
                              ('Academic Institution', 'Academic Institution'),

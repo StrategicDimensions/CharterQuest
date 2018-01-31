@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="view_cfo_snr_member_form" model="ir.ui.view">
+        <field name="name">cfo.snr.member.form</field>
+        <field name="model">cfo.snr.member</field>
+        <field name="arch" type="xml">
+            <form>
+              <sheet string="CFO Senior Member">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" required="1"/>
+                    </h1>
+                </div>
+<!--                 <group name="studio_group_sWwz5"> -->
+<!--                   <group name="studio_group_sWwz5_left"> -->
+<!--                     <field name="x_name" attrs="{}" readonly="1"/> -->
+<!--                   </group> -->
+<!--                   <group name="studio_group_sWwz5_right"/> -->
+<!--                 </group> -->
+                <notebook name="studio_notebook_fmo1O">
+                  <page name="studio_page_zi92k" string="Bio Details">
+                    <group name="studio_group_zi92k">
+                      <group name="studio_group_zi92k_left">
+                        <field name="aspirants_name"/>
+                        <field name="other_names" string="Other Names"/>
+                        <field name="birth_country" string="Country of Birth"/>
+                        <field name="mobile" string="Mobile" widget="phone"/>
+                        <field name="home_phone" string="Home Phone" widget="phone"/>
+                        <field name="street" string="Address" placeholder="Street.."/>
+                        <field name="street2" string="Street2" placeholder="Street2"/>
+                        <field name="city" string="City" placeholder="City"/>
+                        <field name="province" string="Province"/>
+                        <field name="zip" string="Zip"/>
+                        <field name="country" placeholder="Country"/>
+                        <field name="programme_name" string="Programme Name"/>
+                        <field name="cfo_member_type" invisible="1"/>
+                        <field name="cfo_comp" invisible="1"/>
+                        <field name="cfo_competition_year" invisible="1"/>
+                      </group>
+                      <group name="studio_group_zi92k_right">
+                        <field name="login" readonly="1"/>
+                        <field name="password" readonly="1"/>
+                        <field name="aspirants_email" string="Primary Email" widget="email"/>
+                        <field name="secondary_email" string="Secondary Email" widget="email"/>
+                        <field name="birth_date" string="Date of Birth"/>
+                        <field name="nationality" string="Current Citizenship/Nationality"/>
+                        <field name="office_telephone" string="Office Telephone" widget="phone"/>
+                        <field name="entry_type" string="I am entering as"/>
+                        <field name="age" string="Age"/>
+                        <field name="college_university" string="Legal/Registered Name College/University"/>
+                        <field name="unit" string="Department/Faculty/Unit"/>
+                        <field name="website" string="Website" widget="url"/>
+                        <field name="college_street" string="College Address" placeholder="Street..."/>
+                        <field name="college_street2" string="College Street2" placeholder="College Street2"/>
+                        <field name="college_city" string="College City"/>
+                        <field name="college_province" string="College Province" placeholder="Province"/>
+                        <field name="college_zip" string="College Zip" placeholder="Zip"/>
+                        <field name="college_country" string="College Country" placeholder="Country"/>
+                      </group>
+                    </group>
+                  </page>
+                  <page name="studio_page_ClGCR" string=" Contact Information">
+                    <group name="studio_group_ClGCR">
+                      <group name="studio_group_ClGCR_left"/>
+                      <group name="studio_group_ClGCR_right"/>
+                    </group>
+                  </page>
+                  <page name="studio_page_lNrdd" string="Eligibility">
+                    <group name="studio_group_lNrdd">
+                      <group name="studio_group_lNrdd_left"/>
+                      <group name="studio_group_lNrdd_right"/>
+                    </group>
+                  </page>
+                  <page name="studio_page_RcJIk" string="Current School">
+                    <group name="studio_group_RcJIk">
+                      <group name="studio_group_RcJIk_left"/>
+                      <group name="studio_group_RcJIk_right"/>
+                    </group>
+                  </page>
+                  <page name="studio_page_aCRSo" string="Current Employer">
+                    <group name="studio_group_aCRSo">
+                      <group name="studio_group_aCRSo_left"/>
+                      <group name="studio_group_aCRSo_right"/>
+                    </group>
+                  </page>
+                  <page name="studio_page_I8Wx6" string="Education">
+                    <group name="studio_group_I8Wx6">
+                      <group name="studio_group_I8Wx6_left"/>
+                      <group name="studio_group_I8Wx6_right"/>
+                    </group>
+                  </page>
+                  <page name="studio_page_6CNDY" string="Registrants Source">
+                    <group name="studio_group_6CNDY">
+                      <group name="studio_group_6CNDY_left"/>
+                      <group name="studio_group_6CNDY_right"/>
+                    </group>
+                  </page>
+                  <page name="studio_page_rYQYJ" string=" Competition Rules">
+                    <group name="studio_group_rYQYJ">
+                      <group name="studio_group_rYQYJ_left"/>
+                      <group name="studio_group_rYQYJ_right"/>
+                    </group>
+                  </page>
+                </notebook>
+                <notebook name="studio_notebook_gO9Nc">
+                  <page name="studio_page_gO9Nc" string="TEAMS">
+                    <group name="studio_group_gO9Nc">
+                      <field name="cfo_team"/>
+                    </group>
+                  </page>
+                  <page name="studio_page_d8cQX" string="Credentials">
+                    <group name="studio_group_d8cQX">
+                      <group name="studio_group_d8cQX_left"/>
+                      <group name="studio_group_d8cQX_right"/>
+                    </group>
+                  </page>
+                  <page name="studio_page_rVsTL" string="Other Categories">
+                    <group name="studio_group_rVsTL">
+                      <group name="studio_group_rVsTL_left"/>
+                      <group name="studio_group_rVsTL_right"/>
+                    </group>
+                  </page>
+                  <page name="studio_page_dCr3S" string="Documents">
+                    <group name="studio_group_dCr3S">
+                      <group name="studio_group_dCr3S_left"/>
+                      <group name="studio_group_dCr3S_right"/>
+                    </group>
+                  </page>
+                </notebook>
+<!--   </xpath> -->
+<!--   <xpath expr="//form[1]/sheet[1]/div[1]/h1[1]" position="replace"> -->
+<!--     <div class="oe_chatter"> -->
+<!--       <field name="message_follower_ids" widget="mail_followers"/> -->
+<!--       <field name="message_ids" widget="mail_thread"/> -->
+<!--     </div> -->
+              </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cfo_snr_member_list" model="ir.ui.view">
+        <field name="name">cfo.snr.member.list</field>
+        <field name="model">cfo.snr.member</field>
+        <field name="arch" type="xml">
+            <tree string="CFO Senior Member">
+                <field name="name"/>
+                <field name="aspirants_email"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2016">
+        <field name="name">CFO Snr Aspirants</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'CFO Aspirant'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2016')]</field>
+        <field name="context">{'default_cfo_member_type': 'CFO Aspirant', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2016'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2017">
+        <field name="name">CFO Snr Aspirants</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'CFO Aspirant'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2017')]</field>
+        <field name="context">{'default_cfo_member_type': 'CFO Aspirant', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2017'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2018">
+        <field name="name">CFO Snr Aspirants</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'CFO Aspirant'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2018')]</field>
+        <field name="context">{'default_cfo_member_type': 'CFO Aspirant', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2018'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2019">
+        <field name="name">CFO Snr Aspirants</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'CFO Aspirant'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2019')]</field>
+        <field name="context">{'default_cfo_member_type': 'CFO Aspirant', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2019'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2020">
+        <field name="name">CFO Snr Aspirants</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'CFO Aspirant'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2020')]</field>
+        <field name="context">{'default_cfo_member_type': 'CFO Aspirant', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2020'}</field>
+    </record>
+
+    <menuitem id="menu_cfo_member_snr_2016_root" parent="menu_cfo_snr_root" name="2016" sequence="35"/>
+    <menuitem id="menu_cfo_member_snr_2017_root" parent="menu_cfo_snr_root" name="2017" sequence="36"/>
+    <menuitem id="menu_cfo_member_snr_2018_root" parent="menu_cfo_snr_root" name="2018" sequence="37"/>
+    <menuitem id="menu_cfo_member_snr_2019_root" parent="menu_cfo_snr_root" name="2019" sequence="38"/>
+    <menuitem id="menu_cfo_member_snr_2020_root" parent="menu_cfo_snr_root" name="2020" sequence="39"/>
+
+    <menuitem id="menu_cfo_member_snr_2016" action="action_cfo_snr_aspirants_2016" parent="menu_cfo_member_snr_2016_root" sequence="1"/>
+    <menuitem id="menu_cfo_member_snr_2017" action="action_cfo_snr_aspirants_2017" parent="menu_cfo_member_snr_2017_root" sequence="1"/>
+    <menuitem id="menu_cfo_member_snr_2018" action="action_cfo_snr_aspirants_2018" parent="menu_cfo_member_snr_2018_root" sequence="1"/>
+    <menuitem id="menu_cfo_member_snr_2019" action="action_cfo_snr_aspirants_2019" parent="menu_cfo_member_snr_2019_root" sequence="1"/>
+    <menuitem id="menu_cfo_member_snr_2020" action="action_cfo_snr_aspirants_2020" parent="menu_cfo_member_snr_2020_root" sequence="1"/>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2016">
+        <field name="name">CFO Snr Academic Institutions</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Academic Institution'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2016')]</field>
+        <field name="context">{'default_cfo_member_type': 'Academic Institution', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2016'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2017">
+        <field name="name">CFO Snr Academic Institutions</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Academic Institution'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2017')]</field>
+        <field name="context">{'default_cfo_member_type': 'Academic Institution', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2017'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2018">
+        <field name="name">CFO Snr Academic Institutions</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Academic Institution'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2018')]</field>
+        <field name="context">{'default_cfo_member_type': 'Academic Institution', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2018'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2019">
+        <field name="name">CFO Snr Academic Institutions</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Academic Institution'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2019')]</field>
+        <field name="context">{'default_cfo_member_type': 'Academic Institution', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2019'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2020">
+        <field name="name">CFO Snr Academic Institutions</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Academic Institution'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2020')]</field>
+        <field name="context">{'default_cfo_member_type': 'Academic Institution', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2020'}</field>
+    </record>
+
+    <menuitem id="menu_cfo_academic_inst_snr_2016" action="action_cfo_snr_academic_inst_2016" parent="menu_cfo_member_snr_2016_root" sequence="2"/>
+    <menuitem id="menu_cfo_academic_inst_snr_2017" action="action_cfo_snr_academic_inst_2017" parent="menu_cfo_member_snr_2017_root" sequence="2"/>
+    <menuitem id="menu_cfo_academic_inst_snr_2018" action="action_cfo_snr_academic_inst_2018" parent="menu_cfo_member_snr_2018_root" sequence="2"/>
+    <menuitem id="menu_cfo_academic_inst_snr_2019" action="action_cfo_snr_academic_inst_2019" parent="menu_cfo_member_snr_2019_root" sequence="2"/>
+    <menuitem id="menu_cfo_academic_inst_snr_2020" action="action_cfo_snr_academic_inst_2020" parent="menu_cfo_member_snr_2020_root" sequence="2"/>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_employers_2016">
+        <field name="name">CFO Snr Employers</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Employer'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2016')]</field>
+        <field name="context">{'default_cfo_member_type': 'Employer', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2016'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_employers_2017">
+        <field name="name">CFO Snr Employers</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Employer'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2017')]</field>
+        <field name="context">{'default_cfo_member_type': 'Employer', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2017'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_employers_2018">
+        <field name="name">CFO Snr Employers</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Employer'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2018')]</field>
+        <field name="context">{'default_cfo_member_type': 'Employer', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2018'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_employers_2019">
+        <field name="name">CFO Snr Employers</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Employer'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2019')]</field>
+        <field name="context">{'default_cfo_member_type': 'Employer', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2019'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_employers_2020">
+        <field name="name">CFO Snr Employers</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Employer'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2020')]</field>
+        <field name="context">{'default_cfo_member_type': 'Employer', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2020'}</field>
+    </record>
+
+    <menuitem id="menu_cfo_employer_snr_2016" action="action_cfo_snr_employers_2016" parent="menu_cfo_member_snr_2016_root" sequence="3"/>
+    <menuitem id="menu_cfo_employer_snr_2017" action="action_cfo_snr_employers_2017" parent="menu_cfo_member_snr_2017_root" sequence="3"/>
+    <menuitem id="menu_cfo_employer_snr_2018" action="action_cfo_snr_employers_2018" parent="menu_cfo_member_snr_2018_root" sequence="3"/>
+    <menuitem id="menu_cfo_employer_snr_2019" action="action_cfo_snr_employers_2019" parent="menu_cfo_member_snr_2019_root" sequence="3"/>
+    <menuitem id="menu_cfo_employer_snr_2020" action="action_cfo_snr_employers_2020" parent="menu_cfo_member_snr_2020_root" sequence="3"/>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2016">
+        <field name="name">CFO Snr Mentors</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Mentor'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2016')]</field>
+        <field name="context">{'default_cfo_member_type': 'Mentor', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2016'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2017">
+        <field name="name">CFO Snr Mentors</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Mentor'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2017')]</field>
+        <field name="context">{'default_cfo_member_type': 'Mentor', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2017'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2018">
+        <field name="name">CFO Snr Mentors</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Mentor'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2018')]</field>
+        <field name="context">{'default_cfo_member_type': 'Mentor', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2018'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2019">
+        <field name="name">CFO Snr Mentors</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Mentor'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2019')]</field>
+        <field name="context">{'default_cfo_member_type': 'Mentor', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2019'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2020">
+        <field name="name">CFO Snr Mentors</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Mentor'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2020')]</field>
+        <field name="context">{'default_cfo_member_type': 'Mentor', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2020'}</field>
+    </record>
+
+    <menuitem id="menu_cfo_mentors_snr_2016" action="action_cfo_snr_mentors_2016" parent="menu_cfo_member_snr_2016_root" sequence="4"/>
+    <menuitem id="menu_cfo_mentors_snr_2017" action="action_cfo_snr_mentors_2017" parent="menu_cfo_member_snr_2017_root" sequence="4"/>
+    <menuitem id="menu_cfo_mentors_snr_2018" action="action_cfo_snr_mentors_2018" parent="menu_cfo_member_snr_2018_root" sequence="4"/>
+    <menuitem id="menu_cfo_mentors_snr_2019" action="action_cfo_snr_mentors_2019" parent="menu_cfo_member_snr_2019_root" sequence="4"/>
+    <menuitem id="menu_cfo_mentors_snr_2020" action="action_cfo_snr_mentors_2020" parent="menu_cfo_member_snr_2020_root" sequence="4"/>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2016">
+        <field name="name">CFO Snr Volunteers</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Volunteer'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2016')]</field>
+        <field name="context">{'default_cfo_member_type': 'Volunteer', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2016'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2017">
+        <field name="name">CFO Snr Volunteers</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Volunteer'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2017')]</field>
+        <field name="context">{'default_cfo_member_type': 'Volunteer', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2017'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2018">
+        <field name="name">CFO Snr Volunteers</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Volunteer'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2018')]</field>
+        <field name="context">{'default_cfo_member_type': 'Volunteer', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2018'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2019">
+        <field name="name">CFO Snr Volunteers</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Volunteer'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2019')]</field>
+        <field name="context">{'default_cfo_member_type': 'Volunteer', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2019'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2020">
+        <field name="name">CFO Snr Volunteers</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Volunteer'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2020')]</field>
+        <field name="context">{'default_cfo_member_type': 'Volunteer', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2020'}</field>
+    </record>
+
+    <menuitem id="menu_cfo_volunteers_snr_2016" action="action_cfo_snr_volunteers_2016" parent="menu_cfo_member_snr_2016_root" sequence="5"/>
+    <menuitem id="menu_cfo_volunteers_snr_2017" action="action_cfo_snr_volunteers_2017" parent="menu_cfo_member_snr_2017_root" sequence="5"/>
+    <menuitem id="menu_cfo_volunteers_snr_2018" action="action_cfo_snr_volunteers_2018" parent="menu_cfo_member_snr_2018_root" sequence="5"/>
+    <menuitem id="menu_cfo_volunteers_snr_2019" action="action_cfo_snr_volunteers_2019" parent="menu_cfo_member_snr_2019_root" sequence="5"/>
+    <menuitem id="menu_cfo_volunteers_snr_2020" action="action_cfo_snr_volunteers_2020" parent="menu_cfo_member_snr_2020_root" sequence="5"/>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2016">
+        <field name="name">CFO Snr Brand Ambassadors</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Brand Ambassador'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2016')]</field>
+        <field name="context">{'default_cfo_member_type': 'Brand Ambassador', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2016'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2017">
+        <field name="name">CFO Snr Brand Ambassadors</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Brand Ambassador'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2017')]</field>
+        <field name="context">{'default_cfo_member_type': 'Brand Ambassador', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2017'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2018">
+        <field name="name">CFO Snr Brand Ambassadors</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Brand Ambassador'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2018')]</field>
+        <field name="context">{'default_cfo_member_type': 'Brand Ambassador', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2018'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2019">
+        <field name="name">CFO Snr Brand Ambassadors</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Brand Ambassador'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2019')]</field>
+        <field name="context">{'default_cfo_member_type': 'Brand Ambassador', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2019'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2020">
+        <field name="name">CFO Snr Brand Ambassadors</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Brand Ambassador'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2020')]</field>
+        <field name="context">{'default_cfo_member_type': 'Brand Ambassador', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2020'}</field>
+    </record>
+
+    <menuitem id="menu_cfo_ambassador_snr_2016" action="action_cfo_snr_ambassador_2016" parent="menu_cfo_member_snr_2016_root" sequence="6"/>
+    <menuitem id="menu_cfo_ambassador_snr_2017" action="action_cfo_snr_ambassador_2017" parent="menu_cfo_member_snr_2017_root" sequence="6"/>
+    <menuitem id="menu_cfo_ambassador_snr_2018" action="action_cfo_snr_ambassador_2018" parent="menu_cfo_member_snr_2018_root" sequence="6"/>
+    <menuitem id="menu_cfo_ambassador_snr_2019" action="action_cfo_snr_ambassador_2019" parent="menu_cfo_member_snr_2019_root" sequence="6"/>
+    <menuitem id="menu_cfo_ambassador_snr_2020" action="action_cfo_snr_ambassador_2020" parent="menu_cfo_member_snr_2020_root" sequence="6"/>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2016">
+        <field name="name">CFO Snr Social Media Contestants</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Social Media Contestant'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2016')]</field>
+        <field name="context">{'default_cfo_member_type': 'Social Media Contestant', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2016'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2017">
+        <field name="name">CFO Snr Social Media Contestants</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Social Media Contestant'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2017')]</field>
+        <field name="context">{'default_cfo_member_type': 'Social Media Contestant', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2017'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2018">
+        <field name="name">CFO Snr Social Media Contestants</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Social Media Contestant'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2018')]</field>
+        <field name="context">{'default_cfo_member_type': 'Social Media Contestant', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2018'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2019">
+        <field name="name">CFO Snr Social Media Contestants</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Social Media Contestant'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2019')]</field>
+        <field name="context">{'default_cfo_member_type': 'Social Media Contestant', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2019'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2020">
+        <field name="name">CFO Snr Social Media Contestants</field>
+        <field name="res_model">cfo.snr.member</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cfo_member_type', '=', 'Social Media Contestant'), ('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2020')]</field>
+        <field name="context">{'default_cfo_member_type': 'Social Media Contestant', 'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2020'}</field>
+    </record>
+
+    <menuitem id="menu_cfo_media_contestants_snr_2016" action="action_cfo_snr_media_contestants_2016" parent="menu_cfo_member_snr_2016_root" sequence="6"/>
+    <menuitem id="menu_cfo_media_contestants_snr_2017" action="action_cfo_snr_media_contestants_2017" parent="menu_cfo_member_snr_2017_root" sequence="6"/>
+    <menuitem id="menu_cfo_media_contestants_snr_2018" action="action_cfo_snr_media_contestants_2018" parent="menu_cfo_member_snr_2018_root" sequence="6"/>
+    <menuitem id="menu_cfo_media_contestants_snr_2019" action="action_cfo_snr_media_contestants_2019" parent="menu_cfo_member_snr_2019_root" sequence="6"/>
+    <menuitem id="menu_cfo_media_contestants_snr_2020" action="action_cfo_snr_media_contestants_2020" parent="menu_cfo_member_snr_2020_root" sequence="6"/>
+
+    </data>
+</odoo>

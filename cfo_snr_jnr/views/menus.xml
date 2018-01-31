@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="rest_web_menus" inherit_id="website.layout" name="CFO Login">
+            <xpath expr="//ul[@id='top_menu']/li" position="after">
+<!--                 <t t-set="login_detail" t-value="website.get_logged_user_detail()"/> -->
+<!--                 <t t-if="login_detail"> -->
+<!--                     <li> -->
+<!--                         <a href="/client_details"> -->
+<!--                             Personal Details -->
+<!--                         </a> -->
+<!--                     </li> -->
+<!--                     <li> -->
+<!--                         <a href="/cic_logout"> -->
+<!--                             <t t-esc="'Hello '+ login_detail.sudo().name +' | Logout'"/> -->
+<!--                         </a> -->
+<!--                     </li> -->
+                    
+<!--                 </t> -->
+<!--                 <t t-if="not login_detail"> -->
+                    <li>
+                        <a href="/login">
+                            CFO Login
+                        </a>
+                    </li>
+<!--                 </t> -->
+                <t>
+<!--                     <li> -->
+<!--                         <a href="/consultants"> -->
+<!--                             Consultants -->
+<!--                         </a> -->
+<!--                     </li> -->
+                </t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

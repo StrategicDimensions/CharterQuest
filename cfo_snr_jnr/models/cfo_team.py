@@ -21,7 +21,7 @@
 from odoo import models,fields, _
 
 class CFOTeam(models.Model):
-    _name = 'cfo.team'
+    _name = 'cfo.teams'
  
     name = fields.Char('Name')
     cfo_comp = fields.Selection([('CFO SNR', 'CFO SNR'), ('CFO JNR', 'CFO JNR')], 'Competition')

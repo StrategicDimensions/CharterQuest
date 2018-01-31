@@ -6,5 +6,7 @@ encoding//cfo_snr_jnr/models/cfo_competition.py=utf-8
 encoding//cfo_snr_jnr/models/cfo_junior_member.py=utf-8
 encoding//cfo_snr_jnr/models/cfo_senior_member.py=utf-8
 encoding//cfo_snr_jnr/models/cfo_team.py=utf-8
+encoding//cfo_snr_jnr/models/ir_attachment.py=utf-8
+encoding//cfo_snr_jnr/models/res_partner.py=utf-8
 encoding//cfo_snr_jnr/models/res_users.py=utf-8
 encoding//cfo_snr_jnr/models/website.py=utf-8

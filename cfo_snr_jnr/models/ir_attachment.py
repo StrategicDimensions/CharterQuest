@@ -18,13 +18,19 @@
 #
 ##############################################################################
 
-from . import website
-from . import cfo_competition
-from . import cfo_senior_member
-from . import cfo_junior_member
-from . import cfo_team
-from . import res_users
-from . import res_partner
-from . import ir_attachment
+from odoo import api, fields, models, _
+
+class IrAttachment(models.Model):
+    _inherit = 'ir.attachment'
+
+    team_id = fields.Many2one('cfo.teams','Team ID')
+    doc_id = fields.Many2one('volunteers','Doc ID')
+    mentors_doc_id = fields.Many2one('mentors','DOC ID')
+    fyla_application_id_att = fields.Many2one('fyla.application',"FYLA Application")
+    aspirant_doc_id = fields.Many2one('cfo.aspirants','Aspirants Docs')
+    academic_doc_id = fields.Many2one('academic.institution','Academic Docs')
+    employers_doc_id = fields.Many2one('employers','Employer Docs')
+    social_doc_id = fields.Many2one('social.media.contestants','Social Docs')
+    brand_doc_id = fields.Many2one('brand.ambassador','Social Docs')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
