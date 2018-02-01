@@ -47,6 +47,14 @@ class CfoHome(web.Home):
             list = [conf.name for conf in request.env['cfo.configuration'].search([('cfo_competitions', '=', int(val))])]
             return list
 
+    @http.route(['/cfo_senior'], type='http', auth="public", website=True)
+    def cfo_senior(self, **post):
+        return request.render('cfo_snr_jnr.cfo_senior')
+
+    @http.route(['/cfo_junior'], type='http', auth="public", website=True)
+    def cfo_junior(self, **post):
+        return request.render('cfo_snr_jnr.cfo_junior')
+
     @http.route('/web/login', type='http', auth="none", sitemap=False)
     def web_login(self, redirect=None, **kw):
         web.ensure_db()
@@ -115,31 +123,33 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
         request.env.cr.commit()
 
     def _signup_with_values(self, token, values, values1=''):
+        print("_signup_with_values=========")
         db, login, password = request.env['res.users'].sudo().signup(values, token)
         request.env.cr.commit()     # as authenticate will use its own cursor we need to commit the current transaction
         uid = request.session.authenticate(db, login, password)
         user = request.env['res.users'].sudo().browse(uid)
-        member_values = {}
-        if values1.get('lastname'):
-            member_values.update({'name': values1.get('name') + ' ' + values1.pop('lastname')})
-            if values1.get('cfo_competition'):
-                member_values.update({'cfo_comp': int(values1.pop('cfo_competition'))})
-            member_values.update({'cfo_member_type': values1.pop('cfo_membertype')})
-            if values1.get('cfo_source'):
-                member_values.update({'cfo_registrants_source': values1.pop('cfo_source')})
-            if values1.get('other'):
-                member_values.update({'other': values1.pop('other', '')})
-            member_values.update({'login': values1.get('login')})
-            member_values.update({'aspirants_email': values1.get('login')})
-            member_values.update({'password': values1.get('password')})
-            if datetime.date.today().month in [4,5,6,7,8,9,10,11,12]:
-                member_values.update({'cfo_competition_year': str(datetime.date.today().year + 1)})
-            else:
-                member_values.update({'cfo_competition_year': str(datetime.date.today().year)})
+        user.sudo().write({'share': False})
+#         member_values = {}
+#         if values1.get('lastname'):
+#             member_values.update({'name': values1.get('name') + ' ' + values1.pop('lastname')})
+#             if values1.get('cfo_competition'):
+#                 member_values.update({'cfo_comp': int(values1.pop('cfo_competition'))})
+#             member_values.update({'cfo_member_type': values1.pop('cfo_membertype')})
+#             if values1.get('cfo_source'):
+#                 member_values.update({'cfo_registrants_source': values1.pop('cfo_source')})
+#             if values1.get('other'):
+#                 member_values.update({'other': values1.pop('other', '')})
+#             member_values.update({'login': values1.get('login')})
+#             member_values.update({'aspirants_email': values1.get('login')})
+#             member_values.update({'password': values1.get('password')})
+#             if datetime.date.today().month in [4,5,6,7,8,9,10,11,12]:
+#                 member_values.update({'cfo_competition_year': str(datetime.date.today().year + 1)})
+#             else:
+#                 member_values.update({'cfo_competition_year': str(datetime.date.today().year)})
         if not uid:
             raise SignupError(_('Authentication Failed.'))
-        if member_values:
-            user._create_member(member_values)
+#         if member_values:
+#             user._create_member(member_values)
 
     @http.route('/web/signup', type='http', auth='public', website=True, sitemap=False)
     def web_auth_signup(self, *args, **kw):

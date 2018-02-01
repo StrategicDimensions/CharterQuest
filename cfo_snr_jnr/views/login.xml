@@ -116,8 +116,98 @@
                     <t t-if="only_passwords">
                     <a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link pull-right">Already have an account?</a>
                     </t>
-                    <button type="submit" class="btn btn-primary pull-left o_signup_btn"> Register--> </button>
+                    <button type="submit" class="btn btn-primary pull-left o_signup_btn"> Register <span class="fa fa-long-arrow-right"></span> </button>
                 </div>
+            </xpath>
+        </template>
+
+        <template id="cfo_senior" name="cfo_senior">
+            <t t-set="additional_title">CFO Senior</t>
+            <t t-call="website.layout">
+                <div class="col-md-12">
+                    <form>
+                        <head>
+                            <style>
+                                td{
+                                    padding: 5px !important
+                                    }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
+                                <table align="center" width="40%" style="border-collapse: inherit; border-spacing: 10px;background-color: #F9F9F9;height: 50% !important;border: 1px solid">
+                                    <tr style="height: 70px;">
+                                        <td  style="padding-left: 20px !important;padding-top: 20px !important;font-size: 18px;" >CFO Senior Login</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 75px !important;padding-left: 75px !important;" colspan="2">
+                                            <input type="text" id="username" name="email" class="form-control" Placeholder="Username"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 75px !important;padding-left: 75px !important;" colspan="2">
+                                            <input placeholder="Password" type="password" title="Password must contain at least 1 Capital letter, 1 number, and 1 special Character" id="pswd" class="form-control"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="height: 70px;">
+                                        <td style="padding-left: 20px !important;"><span><input type="checkbox" name="remember" value="Remember Me?"> Remember Me?</input></span></td>
+                                        <td style="padding-right: 20px !important;padding-bottom: 20px !important;" align="right">
+                                        <a class="btn btn-primary btn_login_js" style="">Login</a> 
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </body>
+                    </form>
+                </div>
+            </t>
+        </template>
+        <template id="cfo_junior" name="cfo_junior">
+            <t t-set="additional_title">CFO Junior</t>
+            <t t-call="website.layout">
+                <div class="col-md-12">
+                    <form>
+                        <head>
+                            <style>
+                                td{
+                                    padding: 5px !important
+                                    }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
+                                <table align="center" width="40%" style="border-collapse: inherit; border-spacing: 10px;background-color: #F9F9F9;height: 50% !important;border: 1px solid">
+                                    <tr style="height: 70px;">
+                                        <td  style="padding-left: 20px !important;padding-top: 20px !important;font-size: 18px;" >CFO Junior Login</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 75px !important;padding-left: 75px !important;" colspan="2">
+                                            <input type="text" id="username" name="email" class="form-control" Placeholder="Username"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 75px !important;padding-left: 75px !important;" colspan="2">
+                                            <input placeholder="Password" type="password" title="Password must contain at least 1 Capital letter, 1 number, and 1 special Character" id="pswd" class="form-control"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="height: 70px;">
+                                        <td style="padding-left: 20px !important;"><span><input type="checkbox" name="remember" value="Remember Me?"> Remember Me?</input></span></td>
+                                        <td style="padding-right: 20px !important;padding-bottom: 20px !important;" align="right">
+                                        <a class="btn btn-primary btn_login_js" style="">Login</a> 
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </body>
+                    </form>
+                </div>
+            </t>
+        </template>
+
+        <template id="cfo_snr_jnr.portal_layout" inherit_id="portal.portal_layout" name="CFO Portal access">
+            <xpath expr="//t/div/div/div/div/ol/li/a" position='after'>
+                &amp;nbsp;&amp;nbsp;<a href="/cfo_senior">CFO Senior</a>
+                &amp;nbsp;&amp;nbsp;<a href="/cfo_junior">CFO Junior</a>
             </xpath>
         </template>
 
