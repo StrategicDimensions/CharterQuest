@@ -44,16 +44,76 @@ class CfoHome(web.Home):
     @http.route('/get_member_types', type='json', auth='public', webstie=True)
     def get_member_types(self,val):
         if val:
-            list = [conf.name for conf in request.env['cfo.configuration'].search([('cfo_competitions', '=', int(val))])]
+            list = [conf.cfo_member_type for conf in request.env['cfo.configuration'].search([('cfo_competitions', '=', int(val))])]
             return list
+
+    @http.route(['/CFO/senior/signup'], type='http', auth="public", website=True)
+    def cfo_senior_signup(self, **post):
+        return request.render('cfo_snr_jnr.cfo_senior_signup')
+
+    @http.route(['/CFO/junior/signup'], type='http', auth="public", website=True)
+    def cfo_senior_signup(self, **post):
+        return request.render('cfo_snr_jnr.cfo_junior_signup')
 
     @http.route(['/cfo_senior'], type='http', auth="public", website=True)
     def cfo_senior(self, **post):
-        return request.render('cfo_snr_jnr.cfo_senior')
+        partner = request.env.user.partner_id
+        login = request.env.user.login
+        snr_aspirants = request.env['cfo.snr.aspirants'].sudo().search([('email_1', '=', login)])
+        snr_academic_institution = request.env['academic.institution.snr'].sudo().search([('email_1', '=', login)])
+        snr_employers = request.env['employers.snr'].sudo().search([('email_1', '=', login)])
+        snr_volunteers = request.env['volunteers.snr'].sudo().search([('email_1', '=', login)])
+        snr_brand_ambassador = request.env['brand.ambassador.snr'].sudo().search([('email_1', '=', login)])
+        snr_media_contestants = request.env['social.media.contestants.snr'].sudo().search([('email_1', '=', login)])
+        snr_mentors = request.env['mentors.snr'].sudo().search([('email_1', '=', login)])
+        values = {}
+        if snr_aspirants:
+            values.update({'snr_aspirants': snr_aspirants})
+        if snr_academic_institution:
+            values.update({'snr_academic_institution': snr_academic_institution})
+        if snr_employers:
+            values.update({'snr_employers': snr_employers})
+        if snr_volunteers:
+            values.update({'snr_volunteers': snr_volunteers})
+        if snr_brand_ambassador:
+            values.update({'snr_brand_ambassador': snr_brand_ambassador})
+        if snr_media_contestants:
+            values.update({'snr_media_contestants': snr_media_contestants})
+        if snr_mentors:
+            values.update({'snr_mentors': snr_mentors})
+        if values:
+            values.update({'senior': True})
+        return request.render('cfo_snr_jnr.cfo_senior', values)
 
     @http.route(['/cfo_junior'], type='http', auth="public", website=True)
     def cfo_junior(self, **post):
-        return request.render('cfo_snr_jnr.cfo_junior')
+        partner = request.env.user.partner_id
+        login = request.env.user.login
+        jnr_aspirants = request.env['cfo.jnr.aspirants'].sudo().search([('email_1', '=', login)])
+        jnr_academic_institution = request.env['academic.institution.jnr'].sudo().search([('email_1', '=', login)])
+        jnr_employers = request.env['employers.jnr'].sudo().search([('email_1', '=', login)])
+        jnr_volunteers = request.env['volunteers.jnr'].sudo().search([('email_1', '=', login)])
+        jnr_brand_ambassador = request.env['brand.ambassador.jnr'].sudo().search([('email_1', '=', login)])
+        jnr_media_contestants = request.env['social.media.contestants.jnr'].sudo().search([('email_1', '=', login)])
+        jnr_mentors = request.env['mentors.jnr'].sudo().search([('email_1', '=', login)])
+        values = {}
+        if jnr_aspirants:
+            values.update({'jnr_aspirants': jnr_aspirants})
+        if jnr_academic_institution:
+            values.update({'jnr_academic_institution': jnr_academic_institution})
+        if jnr_employers:
+            values.update({'jnr_employers': jnr_employers})
+        if jnr_volunteers:
+            values.update({'jnr_volunteers': jnr_volunteers})
+        if jnr_brand_ambassador:
+            values.update({'jnr_brand_ambassador': jnr_brand_ambassador})
+        if jnr_media_contestants:
+            values.update({'jnr_media_contestants': jnr_media_contestants})
+        if jnr_mentors:
+            values.update({'jnr_mentors': jnr_mentors})
+        if values:
+            values.update({'junior': True})
+        return request.render('cfo_snr_jnr.cfo_junior', values)
 
     @http.route('/web/login', type='http', auth="none", sitemap=False)
     def web_login(self, redirect=None, **kw):
@@ -83,6 +143,8 @@ class CfoHome(web.Home):
                 uid = request.session.authenticate(request.session.db, request.params['login'], request.params['password'])
                 if uid is not False:
                     request.params['login_success'] = True
+                    if kw.get('cfo_login'):
+                        request.session['cfo_login'] =  True
                     return http.redirect_with_hash(self._login_redirect(uid=uid, redirect=redirect))
                 request.uid = old_uid
                 values['error'] = _("Your Email Address/Password is Incorrect")
@@ -99,6 +161,54 @@ class CfoHome(web.Home):
         response = request.render('web.login', values)
         response.headers['X-Frame-Options'] = 'DENY'
         return response
+
+    @http.route('/CFO/senior/register_cfo_senior', type='http', auth="public", website=True)
+    def register_cfo_senior(self, **post):
+        member_values = {}
+        if post.get('cfo_competition') and post.get('cfo_membertype'):
+            partner = request.env.user.partner_id
+            user = request.env.user
+            member_values.update({'name': user.name})
+            if post.get('cfo_competition'):
+                member_values.update({'cfo_comp': int(post.pop('cfo_competition'))})
+            member_values.update({'cfo_member_type': post.pop('cfo_membertype')})
+            if post.get('cfo_source'):
+                member_values.update({'cfo_registrants_source': post.pop('cfo_source')})
+            if post.get('other'):
+                member_values.update({'other': post.pop('other', '')})
+            member_values.update({'email_1': user.login})
+            member_values.update({'password': user.password})
+            if datetime.date.today().month in [4,5,6,7,8,9,10,11,12]:
+                member_values.update({'cfo_competition_year': str(datetime.date.today().year + 1)})
+            else:
+                member_values.update({'cfo_competition_year': str(datetime.date.today().year)})
+        if member_values:
+            user._create_member(member_values)
+        return request.render('cfo_snr_jnr.cfo_senior')
+
+    @http.route('/CFO/junior/register_cfo_junior', type='http', auth="public", website=True)
+    def register_cfo_junior(self, **post):
+        member_values = {}
+        if post.get('cfo_competition') and post.get('cfo_membertype'):
+            partner = request.env.user.partner_id
+            user = request.env.user
+            member_values.update({'name': user.name})
+            if post.get('cfo_competition'):
+                member_values.update({'cfo_comp': int(post.pop('cfo_competition'))})
+            member_values.update({'cfo_member_type': post.pop('cfo_membertype')})
+            if post.get('cfo_source'):
+                member_values.update({'cfo_registrants_source': post.pop('cfo_source')})
+            if post.get('other'):
+                member_values.update({'other': post.pop('other', '')})
+            member_values.update({'email_1': user.login})
+            member_values.update({'password': user.password})
+            if datetime.date.today().month in [4,5,6,7,8,9,10,11,12]:
+                member_values.update({'cfo_competition_year': str(datetime.date.today().year + 1)})
+            else:
+                member_values.update({'cfo_competition_year': str(datetime.date.today().year)})
+        if member_values:
+            user._create_member(member_values)
+        return request.render('cfo_snr_jnr.cfo_junior')
 
 
 class CfoAuthSignup(auth_signup.AuthSignupHome):
@@ -123,7 +233,6 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
         request.env.cr.commit()
 
     def _signup_with_values(self, token, values, values1=''):
-        print("_signup_with_values=========")
         db, login, password = request.env['res.users'].sudo().signup(values, token)
         request.env.cr.commit()     # as authenticate will use its own cursor we need to commit the current transaction
         uid = request.session.authenticate(db, login, password)

@@ -26,6 +26,10 @@
                     </p>
     
                     <input type="hidden" name="redirect" t-att-value="redirect"/>
+                    <input type="hidden" name="cfo_login" value="true"/>
+<!--                     <t t-call="cfo_snr_jnr.portal_layout"> -->
+<!--                     <t t-set="cfo_login" t-value="1"/> -->
+<!--                     </t> -->
                     <div class="clearfix oe_login_buttons">
                         <button type="submit" class="btn btn-primary">Log in</button>
                     </div>
@@ -121,6 +125,134 @@
             </xpath>
         </template>
 
+        <template id="cfo_senior_signup" name="cfo_senior">
+            <t t-set="additional_title">CFO Senior Registration</t>
+            <t t-call="website.layout">
+                <div class="col-md-12">
+                    <form style='max-width: 300px;position: relative;margin: 50px auto;' action="register_cfo_senior" method="POST" enctype="multipart/form-data">
+                        <head>
+                            <style>
+                                td{
+                                    padding: 5px !important
+                                    }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <div class="row">
+                                  <t t-set="competition_types" t-value="website.get_competition_types('CFO SNR')"/>
+                                  <t t-set="sources" t-value="website.get_cfo_registrants_source()"/>
+                                      <div class="form-group field-competition">
+                                        <label for="cfo_competition" class="control-label">Competition</label>
+                                        <select id="cfo_competition" name="cfo_competition" class="form-control" placeholder="Competition..." required="True">
+                                            <option value="" select="true">Select Category</option>
+                                            <t t-foreach="competition_types or []" t-as="competition">
+                                                <option t-att-value="competition.id">
+                                                    <t t-esc="competition.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                      </div>
+                                      <div class="form-group field-membertype">
+                                        <label for="cfo_membertype" class="control-label">I want to Register as</label>
+                                        <select id='cfo_membertype' name="cfo_membertype" class="form-control" placeholder="Member Type..." required="True">
+                                            <option value="" select="true">Select</option>
+                                        </select>
+                                      </div>
+                                      
+                                      <div class="form-group field-source">
+                                        <label for="cfo_source" class="control-label">How Did you 1st Hear About the CFO</label>
+                                        <select id="cfo_source" name="cfo_source" class="form-control" placeholder="Source...">
+                                            <option value="" select="true">Select</option>
+                                            <t t-foreach="sources or []" t-as="source">
+                                                <option t-att-value="source">
+                                                    <t t-esc="source"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                      </div>
+                                      <div class="form-group field-other" id='other_source' style="display: none;">
+                                        <label for="other" class="control-label">Other Please Specify</label>
+                                        <input type="text" name="other" t-att-value="other" id="other" class="form-control"
+                                            autofocus="autofocus" autocapitalize="off"/>
+                                      </div>
+                                      <div class="clearfix oe_login_buttons">
+                                            <button type="submit" class="btn btn-primary">Register</button>
+                                        </div>
+                              </div>
+                            </div>
+                            
+                        </body>
+                    </form>
+                </div>
+            </t>
+        </template>
+
+        <template id="cfo_junior_signup" name="cfo_junior">
+            <t t-set="additional_title">CFO Junior Registration</t>
+            <t t-call="website.layout">
+                <div class="col-md-12">
+                    <form style='max-width: 300px;position: relative;margin: 50px auto;' action="register_cfo_junior" method="POST" enctype="multipart/form-data">
+                        <head>
+                            <style>
+                                td{
+                                    padding: 5px !important
+                                    }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <div class="row">
+                                  <t t-set="competition_types" t-value="website.get_competition_types('CFO JNR')"/>
+                                  <t t-set="sources" t-value="website.get_cfo_registrants_source()"/>
+                                      <div class="form-group field-competition">
+                                        <label for="cfo_competition" class="control-label">Competition</label>
+                                        <select id="cfo_competition" name="cfo_competition" class="form-control" placeholder="Competition..." required="True">
+                                            <option value="" select="true">Select Category</option>
+                                            <t t-foreach="competition_types or []" t-as="competition">
+                                                <option t-att-value="competition.id">
+                                                    <t t-esc="competition.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                      </div>
+                                      <div class="form-group field-membertype">
+                                        <label for="cfo_membertype" class="control-label">I want to Register as</label>
+                                        <select id='cfo_membertype' name="cfo_membertype" class="form-control" placeholder="Member Type..." required="True">
+                                            <option value="" select="true">Select</option>
+                                        </select>
+                                      </div>
+                                      
+                                      <div class="form-group field-source">
+                                        <label for="cfo_source" class="control-label">How Did you 1st Hear About the CFO</label>
+                                        <select id="cfo_source" name="cfo_source" class="form-control" placeholder="Source...">
+                                            <option value="" select="true">Select</option>
+                                            <t t-foreach="sources or []" t-as="source">
+                                                <option t-att-value="source">
+                                                    <t t-esc="source"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                      </div>
+                                      <div class="form-group field-other" id='other_source' style="display: none;">
+                                        <label for="other" class="control-label">Other Please Specify</label>
+                                        <input type="text" name="other" t-att-value="other" id="other" class="form-control"
+                                            autofocus="autofocus" autocapitalize="off"/>
+                                      </div>
+                                      <div class="clearfix oe_login_buttons">
+                                            <button type="submit" class="btn btn-primary">Register</button>
+                                        </div>
+                              </div>
+                            </div>
+                            
+                        </body>
+                    </form>
+                </div>
+            </t>
+        </template>
+
         <template id="cfo_senior" name="cfo_senior">
             <t t-set="additional_title">CFO Senior</t>
             <t t-call="website.layout">
@@ -133,30 +265,21 @@
                                     }
                             </style>
                         </head>
+                        
                         <body>
+                        <t t-if="not senior">
                             <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
-                                <table align="center" width="40%" style="border-collapse: inherit; border-spacing: 10px;background-color: #F9F9F9;height: 50% !important;border: 1px solid">
-                                    <tr style="height: 70px;">
-                                        <td  style="padding-left: 20px !important;padding-top: 20px !important;font-size: 18px;" >CFO Senior Login</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-right: 75px !important;padding-left: 75px !important;" colspan="2">
-                                            <input type="text" id="username" name="email" class="form-control" Placeholder="Username"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-right: 75px !important;padding-left: 75px !important;" colspan="2">
-                                            <input placeholder="Password" type="password" title="Password must contain at least 1 Capital letter, 1 number, and 1 special Character" id="pswd" class="form-control"/>
-                                        </td>
-                                    </tr>
-                                    <tr style="height: 70px;">
-                                        <td style="padding-left: 20px !important;"><span><input type="checkbox" name="remember" value="Remember Me?"> Remember Me?</input></span></td>
-                                        <td style="padding-right: 20px !important;padding-bottom: 20px !important;" align="right">
-                                        <a class="btn btn-primary btn_login_js" style="">Login</a> 
-                                        </td>
-                                    </tr>
-                                </table>
+                                <h3 style="color:red;">You are not registered for the CFO Senior Competition
+                                <br/> Click the button below to register for the CFO Senior Competition.</h3>
+                                <p>
+                                    <a class="btn btn-link" href="/CFO/senior/signup">Register</a>
+                                </p>
                             </div>
+                        </t>
+                        <t t-if="senior">
+                            <h3>Member already exist</h3>
+                            
+                        </t>
                         </body>
                     </form>
                 </div>
@@ -174,30 +297,21 @@
                                     }
                             </style>
                         </head>
+                        
                         <body>
+                        <t t-if="not junior">
                             <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
-                                <table align="center" width="40%" style="border-collapse: inherit; border-spacing: 10px;background-color: #F9F9F9;height: 50% !important;border: 1px solid">
-                                    <tr style="height: 70px;">
-                                        <td  style="padding-left: 20px !important;padding-top: 20px !important;font-size: 18px;" >CFO Junior Login</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-right: 75px !important;padding-left: 75px !important;" colspan="2">
-                                            <input type="text" id="username" name="email" class="form-control" Placeholder="Username"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-right: 75px !important;padding-left: 75px !important;" colspan="2">
-                                            <input placeholder="Password" type="password" title="Password must contain at least 1 Capital letter, 1 number, and 1 special Character" id="pswd" class="form-control"/>
-                                        </td>
-                                    </tr>
-                                    <tr style="height: 70px;">
-                                        <td style="padding-left: 20px !important;"><span><input type="checkbox" name="remember" value="Remember Me?"> Remember Me?</input></span></td>
-                                        <td style="padding-right: 20px !important;padding-bottom: 20px !important;" align="right">
-                                        <a class="btn btn-primary btn_login_js" style="">Login</a> 
-                                        </td>
-                                    </tr>
-                                </table>
+                                <h3 style="color:red;">You are not registered for the CFO Junior Competition
+                                <br/> Click the button below to register for the CFO Junior Competition.</h3>
+                                <p>
+                                    <a class="btn btn-link" href="/CFO/junior/signup">Register</a>
+                                </p>
                             </div>
+                        </t>
+                        <t t-if="junior">
+                            <h3>Member already exist</h3>
+                            
+                        </t>
                         </body>
                     </form>
                 </div>
@@ -206,8 +320,10 @@
 
         <template id="cfo_snr_jnr.portal_layout" inherit_id="portal.portal_layout" name="CFO Portal access">
             <xpath expr="//t/div/div/div/div/ol/li/a" position='after'>
-                &amp;nbsp;&amp;nbsp;<a href="/cfo_senior">CFO Senior</a>
-                &amp;nbsp;&amp;nbsp;<a href="/cfo_junior">CFO Junior</a>
+                <t t-if="request.session.cfo_login">
+                    &amp;nbsp;&amp;nbsp;<a href="/cfo_senior">CFO Senior</a>
+                    &amp;nbsp;&amp;nbsp;<a href="/cfo_junior">CFO Junior</a>
+                </t>
             </xpath>
         </template>
 

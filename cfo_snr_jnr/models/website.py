@@ -30,8 +30,12 @@ class Website(models.Model):
         return False
 
 
-    def get_competition_types(self):
-        return self.env['cfo.competition'].search([])
+    def get_competition_types(self, member=''):
+        domain = []
+        if member:
+            domain.append(('cfo_comp', '=', member))
+        res = self.env['cfo.competition'].search(domain)
+        return res
 
 #     def get_member_types(self,val):
 #         print('cfo_competition==========',val)

@@ -87,15 +87,46 @@ class ResUsers(models.Model):
     def _create_member(self, values):
         """ create a Charter Quest Member """
         if self.partner_id:
-            values.update({'aspirants_name': self.partner_id.id})
+            values.update({'partner_id': self.partner_id.id})
+        if values.get('cfo_registrants_source'):
+            values.pop('cfo_registrants_source')
         if values.get('cfo_comp'):
-            configuration = self.env['cfo.competition'].browse(values.get('cfo_comp'))
+            configuration = self.env['cfo.competition'].browse(values.pop('cfo_comp'))
+            cfo_member_type = values.pop('cfo_member_type')
             if configuration.cfo_comp == 'CFO SNR':
-                values.update({'cfo_comp': 'CFO SNR'})
-                member = self.env['cfo.snr.member'].create(values)
+                if cfo_member_type == 'CFO Aspirant':
+                    member = self.env['cfo.snr.aspirants'].create(values)
+                elif cfo_member_type == 'Academic Institution':
+                    member = self.env['academic.institution.snr'].create(values)
+                elif cfo_member_type == 'Employer':
+                    member = self.env['employers.snr'].create(values)
+                elif cfo_member_type == 'Volunteer':
+                    member = self.env['volunteers.snr'].create(values)
+                elif cfo_member_type == 'Brand Ambassador':
+                    member = self.env['brand.ambassador.snr'].create(values)
+                elif cfo_member_type == 'Social Media Contestant':
+                    member = self.env['social.media.contestants.snr'].create(values)
+                elif cfo_member_type == 'Mentor':
+                    member = self.env['mentors.snr'].create(values)
+#                 if values.get('cfo_member_type') == 'Secondary/High School':
+#                     member = self.env[''].create(values)
             elif configuration.cfo_comp == 'CFO JNR':
-                values.update({'cfo_comp': 'CFO JNR'})
-                member = self.env['cfo.jnr.member'].create(values)
+                if cfo_member_type == 'CFO Aspirant':
+                    member = self.env['cfo.jnr.aspirants'].create(values)
+                elif cfo_member_type == 'Academic Institution':
+                    member = self.env['academic.institution.jnr'].create(values)
+                elif cfo_member_type == 'Employer':
+                    member = self.env['employers.jnr'].create(values)
+                elif cfo_member_type == 'Volunteer':
+                    member = self.env['volunteers.jnr'].create(values)
+                elif cfo_member_type == 'Brand Ambassador':
+                    member = self.env['brand.ambassador.jnr'].create(values)
+                elif cfo_member_type == 'Social Media Contestant':
+                    member = self.env['social.media.contestants.jnr'].create(values)
+                elif cfo_member_type == 'Mentor':
+                    member = self.env['mentors.jnr'].create(values)
+#                 if values.get('cfo_member_type') == 'Secondary/High School':
+#                     member = self.env[''].create(values)
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

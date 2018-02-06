@@ -8,16 +8,16 @@
         <field name="arch" type="xml">
             <form string="CFO Aspirants Form">
                 <group string='Bio Details' col='4'>
-                    <field name='name' />
-                    <field name='surname' required="True" />
+                    <field name='name' required="True" />
+                    <field name='surname' />
                     <field name='other_names' />
-                    <field name='date_of_birth' required="True" />
-                    <field name='country_of_birth' required="True" />
-                    <field name='nationality' required="True" />
+                    <field name='date_of_birth' required="0" />
+                    <field name='country_of_birth' required="0" />
+                    <field name='nationality' required="0" />
                     <field name="cfo_competition_year" invisible="1"/>
                 </group>
                 <group string='Contact Information' col='4'>
-                    <field name='mobile' required="True" />
+                    <field name='mobile' required="0" />
                     <field name='phone' string='Office Telephone' />
                     <field name='home_phone' />
                     <field name='email_1' required="True" />
@@ -45,8 +45,8 @@
                     <field name='entry_as_employee' />
                 </group>
                 <group string='Current School' col='4'>
-                    <field name='school_name' required="True" />
-                    <field name='department' required="True" />
+                    <field name='school_name' required="0" />
+                    <field name='department' required="0" />
                     <field name='website' />
                     <label for="stu_street" string="Address" />
                     <div>
@@ -65,19 +65,19 @@
                             placeholder="Country" class="oe_no_button"
                             options='{"no_open": True, "no_create": True}' />
                     </div>
-                    <field name='programme_name' required="True" />
-                    <field name='start_date' required="True" />
+                    <field name='programme_name' required="0" />
+                    <field name='start_date' required="0" />
                     <field name='expected_completion_date'
-                        required="True" />
-                    <field name='mode_of_studies' required="True" />
-                    <field name='formal_work_exp' required="True" />
+                        required="0" />
+                    <field name='mode_of_studies' required="0" />
+                    <field name='formal_work_exp' required="0" />
                 </group>
                 <group string='Current Employer' col='4'>
                     <field name='legal_name_employer'
-                        required="True" />
-                    <field name='sector' required="True" />
+                        required="0" />
+                    <field name='sector' required="0" />
                     <field name='if_company' />
-                    <field name='emp_department' required="True" />
+                    <field name='emp_department' required="0" />
                     <label for="emp_street" string="Address" />
                     <div>
                         <field name="emp_street" placeholder="Street..." />
@@ -96,16 +96,16 @@
                             options='{"no_open": True, "no_create": True}' />
                     </div>
                     <field name='emp_website' />
-                    <field name='emp_start_date' required="True" />
-                    <field name='emp_status' required="True" />
-                    <field name='emp_experience' required="True" />
+                    <field name='emp_start_date' required="0" />
+                    <field name='emp_status' required="0" />
+                    <field name='emp_experience' required="0" />
                 </group>
                 <group string='Education' col='4'>
                     <field name='tertiary_qualification'
-                        required="True" />
-                    <field name='field_of_studies' required="True" />
+                        required="0" />
+                    <field name='field_of_studies' required="0" />
                     <field name='pre_tertiary_qualification'
-                        required="True" />
+                        required="0" />
                 </group>
                 <notebook>
                     <page string='Credentials'>
@@ -221,7 +221,7 @@
                             <field name='mobile' />
                             <field name='phone' string='Office Telephone' />
                             <field name='home_phone' />
-                            <field name='email_1' />
+                            <field name='email_1' required="True" />
                             <field name='email_2' />
                             <label for="street" string="Address" />
                             <div>
@@ -425,17 +425,17 @@
         <field name="arch" type="xml">
             <form string="Employers Form">
                 <group string='Bio Details' col='4'>
-                    <field name='name' />
-                    <field name='surname' required="True" />
+                    <field name='name' required="True" />
+                    <field name='surname' required="0" />
                     <field name='other_names' />
                     <field name="cfo_competition_year" invisible="1"/>
                 </group>
                 <group string='Contact Information' col='4'>
                     <field name='mobile' />
                     <field name='phone' string='Office Telephone'
-                        required="True" />
+                        required="0" />
                     <field name='home_phone' />
-                    <field name='email_1' required="True" />
+                    <field name='email_1' required="1" />
                     <field name='email_2' />
                     <label for="street" string="Address" />
                     <div>
@@ -458,10 +458,10 @@
                 </group>
                 <group string='Employer Details' col='4'>
                     <field name='legal_name_employer'
-                        required="True" />
-                    <field name='sector' required="True" />
+                        required="0" />
+                    <field name='sector' required="0" />
                     <field name='if_company' />
-                    <field name='emp_department' required="True" />
+                    <field name='emp_department' required="0" />
                     <label for="emp_street" string="Address" />
                     <div>
                         <field name="emp_street" placeholder="Street..." />
@@ -562,16 +562,16 @@
         <field name="arch" type="xml">
             <form string="Mentors Form">
                 <group string='Bio Details' col='4'>
-                    <field name='name' />
-                    <field name='surname' required="True" />
+                    <field name='name' required="True" />
+                    <field name='surname' required="0" />
                     <field name='other_names' />
                     <field name="cfo_competition_year" invisible="1"/>
                 </group>
                 <group string='Contact Information' col='4'>
-                    <field name='mobile' required="True" />
+                    <field name='mobile' required="0" />
                     <field name='phone' string='Office Telephone' />
                     <field name='home_phone' />
-                    <field name='email_1' required="True" />
+                    <field name='email_1' required="1" />
                     <field name='email_2' />
                     <label for="street" string="Address" />
                     <div>
@@ -672,16 +672,16 @@
         <field name="arch" type="xml">
             <form string="Volunteers Form">
                 <group string='Bio Details' col='4'>
-                    <field name='name' />
-                    <field name='surname' required="True" />
+                    <field name='name' required="True" />
+                    <field name='surname' required="0" />
                     <field name='other_names' />
                     <field name="cfo_competition_year" invisible="1"/>
                 </group>
                 <group string='Contact Information' col='4'>
-                    <field name='mobile' required="True" />
+                    <field name='mobile' required="0" />
                     <field name='phone' string='Office Telephone' />
-                    <field name='home_phone' required="True" />
-                    <field name='email_1' />
+                    <field name='home_phone' required="0" />
+                    <field name='email_1' required="True" />
                     <field name='email_2' />
                     <field name='volunteers_type' />
                     <label for="street" string="Address" />
@@ -733,10 +733,10 @@
                 </group>
                 <group string='Education' col='4'>
                     <field name='tertiary_qualification'
-                        required="True" />
-                    <field name='field_of_studies' required="True" />
+                        required="0" />
+                    <field name='field_of_studies' required="0" />
                     <field name='pre_tertiary_qualification'
-                        required="True" />
+                        required="0" />
                 </group>
                 <notebook>
                     <page string='Credentials'>
@@ -818,14 +818,14 @@
         <field name="arch" type="xml">
             <form string="Brand Ambassadors Form">
                 <group string='Bio Details' col='4'>
-                    <field name='name' />
+                    <field name='name' required="True" />
                     <field name='surname' />
                     <field name='other_names' />
                     <field name="cfo_competition_year" invisible="1"/>
                 </group>
                 <group string='Contact Information' col='4'>
                     <field name='mobile' />
-                    <field name='email_1' />
+                    <field name='email_1' required="True" />
                     <field name='email_2' />
                 </group>
                 <notebook>
@@ -932,14 +932,14 @@
             <field name="arch" type="xml">
                 <form string="Social Media Contentants Form">
                     <group string='Bio Details' col='4'>
-                        <field name='name' />
+                        <field name='name' required="True" />
                         <field name='surname' />
                         <field name='other_names' />
                         <field name="cfo_competition_year" invisible="1"/>
                     </group>
                     <group string='Contact Information' col='4'>
                         <field name='mobile' />
-                        <field name='email_1' />
+                        <field name='email_1' required="True" />
                         <field name='email_2' />
                         <label for="street" string="Address" />
                         <div>
