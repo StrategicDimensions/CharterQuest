@@ -52,7 +52,7 @@ class CfoHome(web.Home):
         return request.render('cfo_snr_jnr.cfo_senior_signup')
 
     @http.route(['/CFO/junior/signup'], type='http', auth="public", website=True)
-    def cfo_senior_signup(self, **post):
+    def cfo_junior_signup(self, **post):
         return request.render('cfo_snr_jnr.cfo_junior_signup')
 
     @http.route(['/cfo_senior'], type='http', auth="public", website=True)
@@ -184,7 +184,7 @@ class CfoHome(web.Home):
                 member_values.update({'cfo_competition_year': str(datetime.date.today().year)})
         if member_values:
             user._create_member(member_values)
-        return request.render('cfo_snr_jnr.cfo_senior')
+        return request.redirect('/cfo_senior')
 
     @http.route('/CFO/junior/register_cfo_junior', type='http', auth="public", website=True)
     def register_cfo_junior(self, **post):
@@ -208,7 +208,7 @@ class CfoHome(web.Home):
                 member_values.update({'cfo_competition_year': str(datetime.date.today().year)})
         if member_values:
             user._create_member(member_values)
-        return request.render('cfo_snr_jnr.cfo_junior')
+        return request.redirect('/cfo_junior')
 
 
 class CfoAuthSignup(auth_signup.AuthSignupHome):

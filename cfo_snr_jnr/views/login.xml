@@ -125,9 +125,9 @@
             </xpath>
         </template>
 
-        <template id="cfo_senior_signup" name="cfo_senior">
+        <template id="cfo_senior_signup" name="cfo_senior_signup">
             <t t-set="additional_title">CFO Senior Registration</t>
-            <t t-call="website.layout">
+            <t t-call="portal.portal_layout">
                 <div class="col-md-12">
                     <form style='max-width: 300px;position: relative;margin: 50px auto;' action="register_cfo_senior" method="POST" enctype="multipart/form-data">
                         <head>
@@ -189,9 +189,9 @@
             </t>
         </template>
 
-        <template id="cfo_junior_signup" name="cfo_junior">
+        <template id="cfo_junior_signup" name="cfo_junior_signup">
             <t t-set="additional_title">CFO Junior Registration</t>
-            <t t-call="website.layout">
+            <t t-call="portal.portal_layout">
                 <div class="col-md-12">
                     <form style='max-width: 300px;position: relative;margin: 50px auto;' action="register_cfo_junior" method="POST" enctype="multipart/form-data">
                         <head>
@@ -255,7 +255,7 @@
 
         <template id="cfo_senior" name="cfo_senior">
             <t t-set="additional_title">CFO Senior</t>
-            <t t-call="website.layout">
+            <t t-call="portal.portal_layout">
                 <div class="col-md-12">
                     <form>
                         <head>
@@ -287,7 +287,7 @@
         </template>
         <template id="cfo_junior" name="cfo_junior">
             <t t-set="additional_title">CFO Junior</t>
-            <t t-call="website.layout">
+            <t t-call="portal.portal_layout">
                 <div class="col-md-12">
                     <form>
                         <head>
@@ -316,15 +316,6 @@
                     </form>
                 </div>
             </t>
-        </template>
-
-        <template id="cfo_snr_jnr.portal_layout" inherit_id="portal.portal_layout" name="CFO Portal access">
-            <xpath expr="//t/div/div/div/div/ol/li/a" position='after'>
-                <t t-if="request.session.cfo_login">
-                    &amp;nbsp;&amp;nbsp;<a href="/cfo_senior">CFO Senior</a>
-                    &amp;nbsp;&amp;nbsp;<a href="/cfo_junior">CFO Junior</a>
-                </t>
-            </xpath>
         </template>
 
 <!--         <template id="auth_signup.fields" name="Auth Signup/ResetPassword form fields"> -->
