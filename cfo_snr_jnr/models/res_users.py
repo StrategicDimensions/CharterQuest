@@ -115,14 +115,14 @@ class ResUsers(models.Model):
                     member = self.env['cfo.jnr.aspirants'].create(values)
                 elif cfo_member_type == 'Academic Institution':
                     member = self.env['academic.institution.jnr'].create(values)
-                elif cfo_member_type == 'Employer':
-                    member = self.env['employers.jnr'].create(values)
-                elif cfo_member_type == 'Volunteer':
-                    member = self.env['volunteers.jnr'].create(values)
+#                 elif cfo_member_type == 'Employer':
+#                     member = self.env['employers.jnr'].create(values)
+#                 elif cfo_member_type == 'Volunteer':
+#                     member = self.env['volunteers.jnr'].create(values)
                 elif cfo_member_type == 'Brand Ambassador':
                     member = self.env['brand.ambassador.jnr'].create(values)
-                elif cfo_member_type == 'Social Media Contestant':
-                    member = self.env['social.media.contestants.jnr'].create(values)
+#                 elif cfo_member_type == 'Social Media Contestant':
+#                     member = self.env['social.media.contestants.jnr'].create(values)
                 elif cfo_member_type == 'Mentor':
                     member = self.env['mentors.jnr'].create(values)
 #                 if values.get('cfo_member_type') == 'Secondary/High School':

@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from odoo import models,fields, _
+from odoo import models,fields, _, api
 
 class CFOSeniorAspirants(models.Model):
     _name = 'cfo.snr.aspirants'
@@ -49,14 +49,22 @@ class CFOSeniorAspirants(models.Model):
     emp_status = fields.Selection([('part-time','part-time'),('full-time','full-time')],'Employment Status')
     emp_experience = fields.Selection(_work_exp_values,'How many years of formal work experience?')
     partner_id = fields.Many2one('res.partner',
-            string='Related Partner', ondelete='restrict',
+            string='Name', ondelete='restrict',
             help='Partner-related data of the user')
     updated_cfo_bio = fields.Boolean('Updated CFO BIO')
     aspirant_id = fields.Many2one('cfo.teams','Aspirant ID')
     aspirant_age = fields.Selection(_compute_age,'Age')
     member_accept = fields.Boolean('Accept')
+    user_id = fields.Many2one('res.users', 'Related User')
     cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
 #     is_cfo_junior = fields.Boolean("Is CFO Junior")
+
+    @api.onchange('partner_id')
+    def onchange_partner(self):
+        if self.partner_id:
+            user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
+            if user:
+                self.user_id = user.id
 
 
 class AcademicInstitutionSenior(models.Model):
@@ -69,11 +77,19 @@ class AcademicInstitutionSenior(models.Model):
 
     doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
     partner_id = fields.Many2one('res.partner',
-            string='Related Partner', ondelete='restrict',
+            string='Name', ondelete='restrict',
             help='Partner-related data of the user')
     updated_academic_bio = fields.Boolean('Updated Academic BIO')
+    user_id = fields.Many2one('res.users', 'Related User')
     cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
 #     is_cfo_junior = fields.Boolean('Is CFO Junior?')
+
+    @api.onchange('partner_id')
+    def onchange_partner(self):
+        if self.partner_id:
+            user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
+            if user:
+                self.user_id = user.id
 
 
 class EmployersSenior(models.Model):
@@ -86,10 +102,18 @@ class EmployersSenior(models.Model):
 
     doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
     partner_id = fields.Many2one('res.partner',
-            string='Related Partner', ondelete='restrict',
+            string='Name', ondelete='restrict',
             help='Partner-related data of the user')
     updated_emp_bio = fields.Boolean('Updated Employer BIO')
+    user_id = fields.Many2one('res.users', 'Related User')
     cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+
+    @api.onchange('partner_id')
+    def onchange_partner(self):
+        if self.partner_id:
+            user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
+            if user:
+                self.user_id = user.id
 
 
 class VolunteersSenior(models.Model):
@@ -101,7 +125,7 @@ class VolunteersSenior(models.Model):
     }
 
     partner_id = fields.Many2one('res.partner',
-            string='Related Partner', ondelete='restrict',
+            string='Name', ondelete='restrict',
             help='Partner-related data of the user')
     volunteers_type = fields.Selection([('External Panel Judge','External Panel Judge'),('External Examiner','External Examiner'),('Case Study Expert','Case Study Expert'),('Student','Student'),('Other Expertise','Other Expertise'),('Mentor','Mentor')],'Volunteers Type')
     updated_volunteers_bio = fields.Boolean('Updated Volunteers BIO')
@@ -152,6 +176,14 @@ class VolunteersSenior(models.Model):
     lounge_monitor = fields.Boolean("Lounge Monitor")
     operational_other_committee = fields.Boolean("Other Committee")
     cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+    user_id = fields.Many2one('res.users', 'Related User')
+
+    @api.onchange('partner_id')
+    def onchange_partner(self):
+        if self.partner_id:
+            user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
+            if user:
+                self.user_id = user.id
 
 
 class BrandAmbassadorSenior(models.Model):
@@ -164,13 +196,21 @@ class BrandAmbassadorSenior(models.Model):
 
     doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
     partner_id = fields.Many2one('res.partner',
-            string='Related Partner', ondelete='restrict',
+            string='Name', ondelete='restrict',
             help='Partner-related data of the user')
     updated_brand_amb_bio = fields.Boolean('Updated Brand Ambassador BIO')
     brand_accept = fields.Boolean('Accept Brand Invite')
     team_ids = fields.Many2many('cfo.teams','brand_teams_rel','brand_amb_id','team_id','Brand Ambassador for Teams')
     cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+    user_id = fields.Many2one('res.users', 'Related User')
 #     is_cfo_junior = fields.Boolean('Is CFO Junior?')
+
+    @api.onchange('partner_id')
+    def onchange_partner(self):
+        if self.partner_id:
+            user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
+            if user:
+                self.user_id = user.id
 
 
 class SocialMediaContestantsSenior(models.Model):
@@ -183,11 +223,19 @@ class SocialMediaContestantsSenior(models.Model):
 
     doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
     partner_id = fields.Many2one('res.partner',
-            string='Related Partner', ondelete='restrict',
+            string='Name', ondelete='restrict',
             help='Partner-related data of the user')
     updated_social_media_bio = fields.Boolean('Updated Brand Ambassador BIO')
     social_media_unique_url = fields.Char('Social media unique URL')
+    user_id = fields.Many2one('res.users', 'Related User')
     cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+
+    @api.onchange('partner_id')
+    def onchange_partner(self):
+        if self.partner_id:
+            user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
+            if user:
+                self.user_id = user.id
 
 
 class MentorsSenior(models.Model):
@@ -200,10 +248,11 @@ class MentorsSenior(models.Model):
 
     doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
     partner_id = fields.Many2one('res.partner',
-            string='Related Partner', ondelete='restrict',
+            string='Name', ondelete='restrict',
             help='Partner-related data of the user')
     updated_mentors_bio = fields.Boolean('Updated Mentors BIO')
     mentor_accept = fields.Boolean("Accept Mentors")
+    user_id = fields.Many2one('res.users', 'Related User')
     team_ids = fields.Many2many('cfo.teams','mentor_teams_rel','mentor_id','team_id','Mentors for Teams')
     i_am_a = fields.Selection([('CFO','CFO'),
             ('CEO','CEO'),
@@ -223,6 +272,13 @@ class MentorsSenior(models.Model):
             ('Operations phase (Deadline :20 June, 2016 )','Operations phase (Deadline :20 June, 2016 )')],"I will like get involved in")
     cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
 #     is_cfo_junior = fields.boolean('Is CFO Junior?')
+
+    @api.onchange('partner_id')
+    def onchange_partner(self):
+        if self.partner_id:
+            user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
+            if user:
+                self.user_id = user.id
 
 
 class CFOSeniorMember(models.Model):

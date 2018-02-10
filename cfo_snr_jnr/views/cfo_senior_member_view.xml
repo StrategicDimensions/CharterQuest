@@ -8,13 +8,14 @@
         <field name="arch" type="xml">
             <form string="CFO Aspirants Form">
                 <group string='Bio Details' col='4'>
-                    <field name='name' required="True"/>
+                    <field name='partner_id' required="True"/>
                     <field name='surname' required="0" />
                     <field name='other_names' />
                     <field name='date_of_birth' required="0" />
                     <field name='country_of_birth' required="0" />
                     <field name='nationality' required="0" />
                     <field name="cfo_competition_year" invisible="1"/>
+                    <field name='user_id'/>
                 </group>
                 <group string='Contact Information' col='4'>
                     <field name='mobile' required="0" />
@@ -107,21 +108,67 @@
                     <field name='pre_tertiary_qualification'
                         required="0" />
                 </group>
+                <group string="Registrants source" col="4">
+                    <field name="registrants_source"/>
+                    <field name="social_media_options" attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
+                    <field name="other_reason" attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>          
+                </group>
                 <notebook>
-                    <page string='Credentials'>
-                        <group col='4'>
-                            <field name='username' />
-                            <field name='password' password='True' />
-                            <field name='cfo_type' />
-                            <field name='cfo_account_activate' />
-                            <field name='cfo_encoded_link' />
-                            <field name='team_leader' />
-                            <field name='team_admin' />
-                            <field name='team_member' />
-                            <field name='updated_cfo_bio' />
+                    <page string="Credentials">
+                        <group col="4">
+                            <field name="username"/>
+                            <field name="password"/>
+                            <field name="cfo_type"/>
+                            <field name="cfo_categ"/>
+                            <field name="cfo_account_activate"/>
+                            <field name="cfo_encoded_link"/>
+                            <field name="team_leader"/>
+                            <field name="team_admin"/>
+                            <field name="team_member"/>
+                            <field name="updated_cfo_bio"/>
+                            <field name="active"/>
                         </group>
                     </page>
+<!--                     <page string='Parent/Guardian Information'> -->
+<!--                         <group col="4"> -->
+<!--                             <field name="parent_name"/> -->
+<!--                             <field name="parent_email"/> -->
+<!--                             <field name="parent_number"/> -->
+<!--                             <field name="parent_occupation"/> -->
+<!--                         </group> -->
+<!--                     </page> -->
+                    <page string="Register for Other categories">
+                        <group col="4">
+                            <field name="external_panel_judge"/>
+                            <field name="external_examiner"/>
+                            <field name="case_study_exper"/>
+                            <field name="ai_and_employer"/>       
+                            <field name="brand_ambassador"/>
+                            <field name="mentor"/>
+                            <field name="social_media_contestant"/>
+                            <field name="volunteer_as_student"/>
+                            <field name="volunteer_other_expertise"/>
+                        </group>
+                    </page>
+                    <page string="Documents">
+                        <field name="doc_lines"/>
+                    </page>
                 </notebook>
+<!--                 <notebook> -->
+<!--                     <page string='Credentials'> -->
+<!--                         <group col='4'> -->
+<!--                             <field name='username' /> -->
+<!--                             <field name='password' password='True' /> -->
+<!--                             <field name='cfo_type' /> -->
+<!--                             <field name='cfo_account_activate' /> -->
+<!--                             <field name='cfo_encoded_link' /> -->
+<!--                             <field name='team_leader' /> -->
+<!--                             <field name='team_admin' /> -->
+<!--                             <field name='team_member' /> -->
+<!--                             <field name='updated_cfo_bio' /> -->
+<!--                         </group> -->
+<!--                     </page> -->
+<!--                 </notebook> -->
             </form>
         </field>
     </record>
@@ -131,7 +178,7 @@
         <field name="model">cfo.snr.aspirants</field>
         <field name="arch" type="xml">
             <tree string='CFO Aspirants'>
-                <field name='name' />
+                <field name='partner_id' />
                 <field name='surname' />
                 <field name="cfo_competition_year" invisible="1"/>
             </tree>
@@ -198,7 +245,7 @@
               <sheet string="CFO Junior Member">
                 <div class="oe_title">
                     <h1>
-                        <field name="name" required="1"/>
+                        <field name="partner_id" required="1"/>
                     </h1>
                 </div>
                 <notebook>
@@ -210,6 +257,7 @@
                         <field name="race" />
                         <field name="gender" />
                         <field name="cfo_competition_year" invisible="1"/>
+                        <field name='user_id'/>
                       </group>
                       <group>
                       </group>
@@ -296,31 +344,30 @@
 <!--                       <group name="studio_group_RcJIk_right"/> -->
 <!--                     </group> -->
 <!--                   </page> -->
-                  <page name="studio_page_aCRSo" string="Current Employer">
-                    <group name="studio_group_aCRSo">
-                      <group name="studio_group_aCRSo_left"/>
-                      <group name="studio_group_aCRSo_right"/>
-                    </group>
-                  </page>
-                  <page name="studio_page_I8Wx6" string="Education">
-                    <group name="studio_group_I8Wx6">
-                      <group name="studio_group_I8Wx6_left"/>
-                      <group name="studio_group_I8Wx6_right"/>
-                    </group>
-                  </page>
-                  <page name="studio_page_rYQYJ" string="Competition Rules">
-                    <group name="studio_group_rYQYJ">
-                      <group name="studio_group_rYQYJ_left"/>
-                      <group name="studio_group_rYQYJ_right"/>
-                    </group>
-                  </page>
+<!--                   <page name="studio_page_aCRSo" string="Current Employer"> -->
+<!--                     <group name="studio_group_aCRSo"> -->
+<!--                       <group name="studio_group_aCRSo_left"/> -->
+<!--                       <group name="studio_group_aCRSo_right"/> -->
+<!--                     </group> -->
+<!--                   </page> -->
+<!--                   <page name="studio_page_I8Wx6" string="Education"> -->
+<!--                     <group name="studio_group_I8Wx6"> -->
+<!--                       <group name="studio_group_I8Wx6_left"/> -->
+<!--                       <group name="studio_group_I8Wx6_right"/> -->
+<!--                     </group> -->
+<!--                   </page> -->
+<!--                   <page name="studio_page_rYQYJ" string="Competition Rules"> -->
+<!--                     <group name="studio_group_rYQYJ"> -->
+<!--                       <group name="studio_group_rYQYJ_left"/> -->
+<!--                       <group name="studio_group_rYQYJ_right"/> -->
+<!--                     </group> -->
+<!--                   </page> -->
                 </notebook>
                 <notebook name="studio_notebook_gO9Nc">
-                  <page name="studio_page_gO9Nc" string="TEAMS">
-                    <group name="studio_group_gO9Nc">
-<!--                       <field name="cfo_team"/> -->
-                    </group>
-                  </page>
+<!--                   <page name="studio_page_gO9Nc" string="TEAMS"> -->
+<!--                     <group name="studio_group_gO9Nc"> -->
+<!--                     </group> -->
+<!--                   </page> -->
                   <page name="studio_page_d8cQX" string="Credentials">
                     <group col='4'>
                         <field name='username' />
@@ -366,7 +413,7 @@
         <field name="model">academic.institution.snr</field>
         <field name="arch" type="xml">
             <tree string='Academic Institutions'>
-                <field name='name' />
+                <field name='partner_id' />
                 <field name='surname' />
                 <field name="cfo_competition_year" invisible="1"/>
             </tree>
@@ -425,10 +472,11 @@
         <field name="arch" type="xml">
             <form string="Employers Form">
                 <group string='Bio Details' col='4'>
-                    <field name='name' required="True" />
+                    <field name='partner_id' required="True" />
                     <field name='surname' required="0" />
                     <field name='other_names' />
                     <field name="cfo_competition_year" invisible="1"/>
+                    <field name='user_id'/>
                 </group>
                 <group string='Contact Information' col='4'>
                     <field name='mobile' />
@@ -482,18 +530,54 @@
                     </div>
                     <field name='emp_website' />
                 </group>
+                <group string="Registrants source" col="4">
+                    <field name="registrants_source"/>
+                    <field name="social_media_options" attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
+                    <field name="other_reason" attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>          
+                </group>
                 <notebook>
-                    <page string='Credentials'>
-                        <group col='4'>
-                            <field name='username' />
-                            <field name='password' password='True' />
-                            <field name='cfo_type' />
-                            <field name='cfo_account_activate' />
-                            <field name='cfo_encoded_link' />
-                            <field name='updated_emp_bio' />
+                    <page string="Credentials">
+                        <group col="4">
+                            <field name="username"/>
+                            <field name="password"/>
+                            <field name="cfo_type"/>
+                            <field name="cfo_account_activate"/>
+                            <field name="cfo_encoded_link"/>
+                            <field name="updated_emp_bio"/>
+                            <field name="team_admin"/>
+                            <field name="team_leader"/>
+                            <field name="team_member"/>
                         </group>
                     </page>
+                    <page string="Register for Other categories">
+                    <group col="4">
+                        <field name="external_panel_judge"/>
+                        <field name="external_examiner"/>
+                        <field name="case_study_exper"/>
+                        <field name="ai_and_employer"/>
+                        <field name="brand_ambassador"/>
+                        <field name="mentor"/>
+                        <field name="social_media_contestant"/>
+                        <field name="volunteer_as_student"/>
+                            <field name="volunteer_other_expertise"/>
+                    </group>
+                </page>
+                <page string="Documents">
+                    <field name="doc_lines"/>
+                </page>
                 </notebook>
+<!--                 <notebook> -->
+<!--                     <page string='Credentials'> -->
+<!--                         <group col='4'> -->
+<!--                             <field name='username' /> -->
+<!--                             <field name='password' password='True' /> -->
+<!--                             <field name='cfo_type' /> -->
+<!--                             <field name='cfo_account_activate' /> -->
+<!--                             <field name='cfo_encoded_link' /> -->
+<!--                             <field name='updated_emp_bio' /> -->
+<!--                         </group> -->
+<!--                     </page> -->
+<!--                 </notebook> -->
             </form>
         </field>
     </record>
@@ -503,7 +587,7 @@
         <field name="model">employers.snr</field>
         <field name="arch" type="xml">
             <tree string='Employers'>
-                <field name='name' />
+                <field name='partner_id' />
                 <field name='surname' />
                 <field name="cfo_competition_year" invisible="1"/>
             </tree>
@@ -562,10 +646,11 @@
         <field name="arch" type="xml">
             <form string="Mentors Form">
                 <group string='Bio Details' col='4'>
-                    <field name='name' required="True" />
+                    <field name='partner_id' required="True" />
                     <field name='surname' required="0" />
                     <field name='other_names' />
                     <field name="cfo_competition_year" invisible="1"/>
+                    <field name='user_id'/>
                 </group>
                 <group string='Contact Information' col='4'>
                     <field name='mobile' required="0" />
@@ -592,18 +677,59 @@
                             options='{"no_open": True, "no_create": True}' />
                     </div>
                 </group>
+                <group string="Mentors Information">
+                    <field name="i_am_a"/>
+                    <field name="i_hold_a"/>
+                </group>
+                <group string="Registrants source" col="4">
+                    <field name="registrants_source"/>
+                    <field name="social_media_options" attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
+                    <field name="other_reason" attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>          
+                </group>
                 <notebook>
-                    <page string='Credentials'>
-                        <group col='4'>
-                            <field name='username' />
-                            <field name='password' password='True' />
-                            <field name='cfo_type' />
-                            <field name='cfo_account_activate' />
-                            <field name='cfo_encoded_link' />
-                            <field name='updated_mentors_bio' />
+                    <page string="Credentials">
+                        <group col="4">
+                            <field name="username"/>
+                            <!--<field name='password' password='True'/>-->
+                            <field name="password"/>
+                            <field name="cfo_type"/>
+                            <field name="cfo_account_activate"/>
+                            <field name="cfo_encoded_link"/>
+                            <field name="updated_mentors_bio"/>
                         </group>
                     </page>
+                    <page string="Register for Other categories">
+                        <group col="4">
+                            <field name="external_panel_judge"/>
+                            <field name="external_examiner"/>
+                            <field name="case_study_exper"/>
+                            <field name="ai_and_employer"/>       
+                            <field name="brand_ambassador"/>
+                            <field name="mentor"/>
+                            <field name="social_media_contestant"/>
+                            <field name="volunteer_as_student"/>
+                            <field name="volunteer_other_expertise"/>
+                        </group>
+                    </page>
+                    <page string="Teams">
+                        <field name="team_ids"/>
+                    </page>
+                    <page string="Documents">
+                        <field name="doc_lines"/>
+                    </page>
                 </notebook>
+<!--                 <notebook> -->
+<!--                     <page string='Credentials'> -->
+<!--                         <group col='4'> -->
+<!--                             <field name='username' /> -->
+<!--                             <field name='password' password='True' /> -->
+<!--                             <field name='cfo_type' /> -->
+<!--                             <field name='cfo_account_activate' /> -->
+<!--                             <field name='cfo_encoded_link' /> -->
+<!--                             <field name='updated_mentors_bio' /> -->
+<!--                         </group> -->
+<!--                     </page> -->
+<!--                 </notebook> -->
             </form>
         </field>
     </record>
@@ -613,7 +739,7 @@
         <field name="model">mentors.snr</field>
         <field name="arch" type="xml">
             <tree string='Mentors'>
-                <field name='name' />
+                <field name='partner_id' />
                 <field name='surname' />
                 <field name="cfo_competition_year" invisible="1"/>
             </tree>
@@ -672,10 +798,11 @@
         <field name="arch" type="xml">
             <form string="Volunteers Form">
                 <group string='Bio Details' col='4'>
-                    <field name='name' required="True" />
+                    <field name='partner_id' required="True" />
                     <field name='surname' required="0" />
                     <field name='other_names' />
                     <field name="cfo_competition_year" invisible="1"/>
+                    <field name='user_id'/>
                 </group>
                 <group string='Contact Information' col='4'>
                     <field name='mobile' required="0" />
@@ -738,18 +865,51 @@
                     <field name='pre_tertiary_qualification'
                         required="0" />
                 </group>
+                <group string="Registrants source" col="4">
+                    <field name="registrants_source"/>
+                    <field name="social_media_options" attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
+                    <field name="other_reason" attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>          
+                </group>
                 <notebook>
-                    <page string='Credentials'>
-                        <group col='4'>
-                            <field name='username' />
-                            <field name='password' password='True' />
-                            <field name='cfo_type' />
-                            <field name='cfo_account_activate' />
-                            <field name='cfo_encoded_link' />
-                            <field name='updated_volunteers_bio' />
+                    <page string="Credentials">
+                        <group col="4">
+                            <field name="username"/>
+                            <field name="password"/>
+                            <field name="cfo_type"/>
+                            <field name="cfo_account_activate"/>
+                            <field name="cfo_encoded_link"/>
+                            <field name="updated_volunteers_bio"/>
                         </group>
                     </page>
+                    <page string="Register for Other categories">
+                        <group col="4">
+                            <field name="external_panel_judge"/>
+                            <field name="external_examiner"/>
+                            <field name="case_study_exper"/>
+                            <field name="ai_and_employer"/>       
+                            <field name="brand_ambassador"/>
+                            <field name="mentor"/>
+                            <field name="social_media_contestant"/>
+                            <field name="volunteer_as_student"/>
+                            <field name="volunteer_other_expertise"/>
+                        </group>
+                    </page>
+                    <page string="Documents" attrs="{'invisible':[('volunteers_type','not in',['External Panel Judge','External Examiner'])]}">
+                    <field name="doc_lines"/>           
+                    </page>
                 </notebook>
+<!--                 <notebook> -->
+<!--                     <page string='Credentials'> -->
+<!--                         <group col='4'> -->
+<!--                             <field name='username' /> -->
+<!--                             <field name='password' password='True' /> -->
+<!--                             <field name='cfo_type' /> -->
+<!--                             <field name='cfo_account_activate' /> -->
+<!--                             <field name='cfo_encoded_link' /> -->
+<!--                             <field name='updated_volunteers_bio' /> -->
+<!--                         </group> -->
+<!--                     </page> -->
+<!--                 </notebook> -->
             </form>
         </field>
     </record>
@@ -759,7 +919,7 @@
         <field name="model">volunteers.snr</field>
         <field name="arch" type="xml">
             <tree string='Volunteers'>
-                <field name='name' />
+                <field name='partner_id' />
                 <field name='surname' />
                 <field name="cfo_competition_year" invisible="1"/>
             </tree>
@@ -818,10 +978,11 @@
         <field name="arch" type="xml">
             <form string="Brand Ambassadors Form">
                 <group string='Bio Details' col='4'>
-                    <field name='name' />
+                    <field name='partner_id' />
                     <field name='surname' />
                     <field name='other_names' />
                     <field name="cfo_competition_year" invisible="1"/>
+                    <field name='user_id'/>
                 </group>
                 <group string='Contact Information' col='4'>
                     <field name='mobile' />
@@ -873,7 +1034,7 @@
         <field name="model">brand.ambassador.snr</field>
         <field name="arch" type="xml">
             <tree string='Brand Ambassadors'>
-                <field name='name' />
+                <field name='partner_id' />
                 <field name='surname' />
                 <field name="cfo_competition_year" invisible="1"/>
             </tree>
@@ -932,10 +1093,11 @@
             <field name="arch" type="xml">
                 <form string="Social Media Contentants Form">
                     <group string='Bio Details' col='4'>
-                        <field name='name' />
+                        <field name='partner_id' />
                         <field name='surname' />
                         <field name='other_names' />
                         <field name="cfo_competition_year" invisible="1"/>
+                        <field name='user_id'/>
                     </group>
                     <group string='Contact Information' col='4'>
                         <field name='mobile' />
@@ -963,7 +1125,6 @@
                         <page string='Credentials'>
                             <group col='4'>
                                 <field name='username' />
-                                <!--<field name='password' password='True'/> -->
                                 <field name="password" />
                                 <field name='cfo_type' />
                                 <field name='cfo_account_activate' />
@@ -1000,7 +1161,7 @@
         <field name="model">social.media.contestants.snr</field>
         <field name="arch" type="xml">
             <tree string='Social Media Contentants'>
-                <field name='name' />
+                <field name='partner_id' />
                 <field name='surname' />
                 <field name="cfo_competition_year" invisible="1"/>
             </tree>

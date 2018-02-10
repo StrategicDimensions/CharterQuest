@@ -37,9 +37,8 @@ class Website(models.Model):
         res = self.env['cfo.competition'].search(domain)
         return res
 
-#     def get_member_types(self,val):
-#         print('cfo_competition==========',val)
-#         return self.env['cfo.configuration'].search([])
+    def get_social_media_options(self):
+        return ['Facebook', 'Twitter', 'U-tube', 'Linked in', 'Instagram', 'other Social Media']
 
     def get_cfo_registrants_source(self):
         return ["Social Media","Direct web address","Google/other search engine",

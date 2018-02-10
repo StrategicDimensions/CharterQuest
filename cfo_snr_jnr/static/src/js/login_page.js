@@ -49,6 +49,15 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 			{
 	    		$('#other_source').show();
 			}
+
+	    	if (this.value != 'Social Media')
+			{
+	    		$('#socialmedia_source').hide();
+			}
+	    	else
+			{
+	    		$('#socialmedia_source').show();
+			}
 	    });
 		
 		$('#cfo_competition').change(function(){

@@ -59,13 +59,19 @@ class CfoHome(web.Home):
     def cfo_senior(self, **post):
         partner = request.env.user.partner_id
         login = request.env.user.login
-        snr_aspirants = request.env['cfo.snr.aspirants'].sudo().search([('email_1', '=', login)])
-        snr_academic_institution = request.env['academic.institution.snr'].sudo().search([('email_1', '=', login)])
-        snr_employers = request.env['employers.snr'].sudo().search([('email_1', '=', login)])
-        snr_volunteers = request.env['volunteers.snr'].sudo().search([('email_1', '=', login)])
-        snr_brand_ambassador = request.env['brand.ambassador.snr'].sudo().search([('email_1', '=', login)])
-        snr_media_contestants = request.env['social.media.contestants.snr'].sudo().search([('email_1', '=', login)])
-        snr_mentors = request.env['mentors.snr'].sudo().search([('email_1', '=', login)])
+        today = datetime.datetime.today()
+        args = [('email_1', '=', login)]
+        if today.month in [4,5,6,7,8,9,10,11,12]:
+            args.append(('cfo_competition_year', '=', str(today.year + 1)))
+        else:
+            args.append(('cfo_competition_year', '=', str(today.year)))
+        snr_aspirants = request.env['cfo.snr.aspirants'].sudo().search(args)
+        snr_academic_institution = request.env['academic.institution.snr'].sudo().search(args)
+        snr_employers = request.env['employers.snr'].sudo().search(args)
+        snr_volunteers = request.env['volunteers.snr'].sudo().search(args)
+        snr_brand_ambassador = request.env['brand.ambassador.snr'].sudo().search(args)
+        snr_media_contestants = request.env['social.media.contestants.snr'].sudo().search(args)
+        snr_mentors = request.env['mentors.snr'].sudo().search(args)
         values = {}
         if snr_aspirants:
             values.update({'snr_aspirants': snr_aspirants})
@@ -89,26 +95,32 @@ class CfoHome(web.Home):
     def cfo_junior(self, **post):
         partner = request.env.user.partner_id
         login = request.env.user.login
-        jnr_aspirants = request.env['cfo.jnr.aspirants'].sudo().search([('email_1', '=', login)])
-        jnr_academic_institution = request.env['academic.institution.jnr'].sudo().search([('email_1', '=', login)])
-        jnr_employers = request.env['employers.jnr'].sudo().search([('email_1', '=', login)])
-        jnr_volunteers = request.env['volunteers.jnr'].sudo().search([('email_1', '=', login)])
-        jnr_brand_ambassador = request.env['brand.ambassador.jnr'].sudo().search([('email_1', '=', login)])
-        jnr_media_contestants = request.env['social.media.contestants.jnr'].sudo().search([('email_1', '=', login)])
-        jnr_mentors = request.env['mentors.jnr'].sudo().search([('email_1', '=', login)])
+        today = datetime.datetime.today()
+        args = [('email_1', '=', login)]
+        if today.month in [4,5,6,7,8,9,10,11,12]:
+            args.append(('cfo_competition_year', '=', str(today.year + 1)))
+        else:
+            args.append(('cfo_competition_year', '=', str(today.year)))
+        jnr_aspirants = request.env['cfo.jnr.aspirants'].sudo().search(args)
+        jnr_academic_institution = request.env['academic.institution.jnr'].sudo().search(args)
+#         jnr_employers = request.env['employers.jnr'].sudo().search(args)
+#         jnr_volunteers = request.env['volunteers.jnr'].sudo().search(args)
+        jnr_brand_ambassador = request.env['brand.ambassador.jnr'].sudo().search(args)
+#         jnr_media_contestants = request.env['social.media.contestants.jnr'].sudo().search(args)
+        jnr_mentors = request.env['mentors.jnr'].sudo().search(args)
         values = {}
         if jnr_aspirants:
             values.update({'jnr_aspirants': jnr_aspirants})
         if jnr_academic_institution:
             values.update({'jnr_academic_institution': jnr_academic_institution})
-        if jnr_employers:
-            values.update({'jnr_employers': jnr_employers})
-        if jnr_volunteers:
-            values.update({'jnr_volunteers': jnr_volunteers})
+#         if jnr_employers:
+#             values.update({'jnr_employers': jnr_employers})
+#         if jnr_volunteers:
+#             values.update({'jnr_volunteers': jnr_volunteers})
         if jnr_brand_ambassador:
             values.update({'jnr_brand_ambassador': jnr_brand_ambassador})
-        if jnr_media_contestants:
-            values.update({'jnr_media_contestants': jnr_media_contestants})
+#         if jnr_media_contestants:
+#             values.update({'jnr_media_contestants': jnr_media_contestants})
         if jnr_mentors:
             values.update({'jnr_mentors': jnr_mentors})
         if values:
@@ -168,7 +180,7 @@ class CfoHome(web.Home):
         if post.get('cfo_competition') and post.get('cfo_membertype'):
             partner = request.env.user.partner_id
             user = request.env.user
-            member_values.update({'name': user.name})
+            member_values.update({'name': user.name, 'partner_id': partner.id, 'user_id': user.id})
             if post.get('cfo_competition'):
                 member_values.update({'cfo_comp': int(post.pop('cfo_competition'))})
             member_values.update({'cfo_member_type': post.pop('cfo_membertype')})
@@ -176,8 +188,9 @@ class CfoHome(web.Home):
                 member_values.update({'cfo_registrants_source': post.pop('cfo_source')})
             if post.get('other'):
                 member_values.update({'other': post.pop('other', '')})
-            member_values.update({'email_1': user.login})
-            member_values.update({'password': user.password})
+            if post.get('social_media_options'):
+                member_values.update({'social_media_options': post.pop('social_media_options', '')})
+            member_values.update({'email_1': user.login,'password': user.password, 'username': user.login})
             if datetime.date.today().month in [4,5,6,7,8,9,10,11,12]:
                 member_values.update({'cfo_competition_year': str(datetime.date.today().year + 1)})
             else:
@@ -192,7 +205,7 @@ class CfoHome(web.Home):
         if post.get('cfo_competition') and post.get('cfo_membertype'):
             partner = request.env.user.partner_id
             user = request.env.user
-            member_values.update({'name': user.name})
+            member_values.update({'name': user.name, 'partner_id': partner.id, 'user_id': user.id})
             if post.get('cfo_competition'):
                 member_values.update({'cfo_comp': int(post.pop('cfo_competition'))})
             member_values.update({'cfo_member_type': post.pop('cfo_membertype')})
@@ -200,8 +213,9 @@ class CfoHome(web.Home):
                 member_values.update({'cfo_registrants_source': post.pop('cfo_source')})
             if post.get('other'):
                 member_values.update({'other': post.pop('other', '')})
-            member_values.update({'email_1': user.login})
-            member_values.update({'password': user.password})
+            if post.get('social_media_options'):
+                member_values.update({'social_media_options': post.pop('social_media_options', '')})
+            member_values.update({'email_1': user.login,'password': user.password, 'username': user.login})
             if datetime.date.today().month in [4,5,6,7,8,9,10,11,12]:
                 member_values.update({'cfo_competition_year': str(datetime.date.today().year + 1)})
             else:

@@ -27,9 +27,6 @@
     
                     <input type="hidden" name="redirect" t-att-value="redirect"/>
                     <input type="hidden" name="cfo_login" value="true"/>
-<!--                     <t t-call="cfo_snr_jnr.portal_layout"> -->
-<!--                     <t t-set="cfo_login" t-value="1"/> -->
-<!--                     </t> -->
                     <div class="clearfix oe_login_buttons">
                         <button type="submit" class="btn btn-primary">Log in</button>
                     </div>
@@ -143,6 +140,7 @@
                                 <div class="row">
                                   <t t-set="competition_types" t-value="website.get_competition_types('CFO SNR')"/>
                                   <t t-set="sources" t-value="website.get_cfo_registrants_source()"/>
+                                  <t t-set="media_sources" t-value="website.get_social_media_options()"/>
                                       <div class="form-group field-competition">
                                         <label for="cfo_competition" class="control-label">Competition</label>
                                         <select id="cfo_competition" name="cfo_competition" class="form-control" placeholder="Competition..." required="True">
@@ -168,6 +166,16 @@
                                             <t t-foreach="sources or []" t-as="source">
                                                 <option t-att-value="source">
                                                     <t t-esc="source"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                      </div>
+                                      <div class="form-group field-socialmedia" id='socialmedia_source' style="display: none;">
+                                        <select id="social_media_options" name="social_media_options" class="form-control" placeholder="Source...">
+                                            <option value="" select="true">Select</option>
+                                            <t t-foreach="media_sources or []" t-as="mediasource">
+                                                <option t-att-value="mediasource">
+                                                    <t t-esc="mediasource"/>
                                                 </option>
                                             </t>
                                         </select>
@@ -207,6 +215,7 @@
                                 <div class="row">
                                   <t t-set="competition_types" t-value="website.get_competition_types('CFO JNR')"/>
                                   <t t-set="sources" t-value="website.get_cfo_registrants_source()"/>
+                                  <t t-set="media_sources" t-value="website.get_social_media_options()"/>
                                       <div class="form-group field-competition">
                                         <label for="cfo_competition" class="control-label">Competition</label>
                                         <select id="cfo_competition" name="cfo_competition" class="form-control" placeholder="Competition..." required="True">
@@ -232,6 +241,17 @@
                                             <t t-foreach="sources or []" t-as="source">
                                                 <option t-att-value="source">
                                                     <t t-esc="source"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                      </div>
+                                      <div class="form-group field-socialmedia" id='socialmedia_source' style="display: none;">
+                                        <label for="socialmedia" class="control-label">Select social media type</label>
+                                        <select id="social_media_options" name="social_media_options" class="form-control" placeholder="Source...">
+                                            <option value="" select="true">Select</option>
+                                            <t t-foreach="media_sources or []" t-as="mediasource">
+                                                <option t-att-value="mediasource">
+                                                    <t t-esc="mediasource"/>
                                                 </option>
                                             </t>
                                         </select>
@@ -277,8 +297,44 @@
                             </div>
                         </t>
                         <t t-if="senior">
-                            <h3>Member already exist</h3>
-                            
+                            <div class="row">
+                                <div class="o_box" style="max-width: 209px;">
+                                    <a class="o_box_item o_dashboard_action" href="#" name="website.action_website" title="Go to Website">
+                                        <div class="o_inner_box o_primary">
+                                            <i class="fa fa-clock-o fa-3x"></i><br>
+                                            CFO report submission Deadline
+                                        </br>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="o_box" style="max-width: 209px;">
+                                    <a class="o_box_item o_dashboard_action" href="#" name="website.action_website" title="Go to Website">
+                                        <div class="o_inner_box o_primary">
+                                            <i class="fa fa-clock-o fa-3x"></i><br>
+                                            CFO report submission Deadline
+                                        </br>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="o_box" style="max-width: 209px;">
+                                    <a class="o_box_item o_dashboard_action" href="#" name="website.action_website" title="Go to Website">
+                                        <div class="o_inner_box o_primary">
+                                            <i class="fa fa-clock-o fa-3x"></i><br>
+                                            CFO report submission Deadline
+                                        </br>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="o_box" style="max-width: 209px;">
+                                    <a class="o_box_item o_dashboard_action" href="#" name="website.action_website" title="Go to Website">
+                                        <div class="o_inner_box o_primary">
+                                            <i class="fa fa-clock-o fa-3x"></i><br>
+                                            CFO report submission Deadline
+                                        </br>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </t>
                         </body>
                     </form>
