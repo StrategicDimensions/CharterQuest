@@ -136,54 +136,53 @@ class CfoHome(web.Home):
             values.update({'junior': True})
         return request.render('cfo_snr_jnr.cfo_junior', values)
 
-    # @http.route('/web/login', type='http', auth="none", sitemap=False)
-    # def web_login(self, redirect=None, **kw):
-    #     web.ensure_db()
-    #     request.params['login_success'] = False
-    #     if request.httprequest.method == 'GET' and redirect and request.session.uid:
-    #         return http.redirect_with_hash(redirect)
-    #
-    #     if not request.uid:
-    #         request.uid = odoo.SUPERUSER_ID
-    #
-    #     values = request.params.copy()
-    #     try:
-    #         values['databases'] = http.db_list()
-    #     except odoo.exceptions.AccessDenied:
-    #         values['databases'] = None
-    #
-    #     if request.httprequest.method == 'POST':
-    #         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
-    #         qry = "SELECT id from res_users where login= '" + request.params['login'] + "';"
-    #         cr.execute(qry)
-    #         row_username = cr.fetchone()
-    #         if not row_username:
-    #             values['error'] = _("Email Address Does Not Exist, Please Register")
-    #         else:
-    #             old_uid = request.uid
-    #             uid = request.session.authenticate(request.session.db, request.params['login'],
-    #                                                request.params['password'])
-    #             if uid is not False:
-    #                 request.params['login_success'] = True
-    #                 if kw.get('cfo_login'):
-    #                     request.session['cfo_login'] = True
-    #                 return http.request.redirect('/my/home')
-    #             request.uid = old_uid
-    #             values['error'] = _("Your Email Address/Password is Incorrect")
-    #     else:
-    #         if 'error' in request.params and request.params.get('error') == 'access':
-    #             values['error'] = _('Only employee can access this database. Please contact the administrator.')
-    #
-    #     if 'login' not in values and request.session.get('auth_login'):
-    #         values['login'] = request.session.get('auth_login')
-    #
-    #     if not odoo.tools.config['list_db']:
-    #         values['disable_database_manager'] = True
-    #
-    #     print("\n\n\n value--------", values)
-    #     response = request.render('web.login', values)
-    #     response.headers['X-Frame-Options'] = 'DENY'
-    #     return response
+    @http.route('/web/login', type='http', auth="none", sitemap=False)
+    def web_login(self, redirect=None, **kw):
+        web.ensure_db()
+        request.params['login_success'] = False
+        if request.httprequest.method == 'GET' and redirect and request.session.uid:
+            return http.redirect_with_hash(redirect)
+
+        if not request.uid:
+            request.uid = odoo.SUPERUSER_ID
+
+        values = request.params.copy()
+        try:
+            values['databases'] = http.db_list()
+        except odoo.exceptions.AccessDenied:
+            values['databases'] = None
+
+        if request.httprequest.method == 'POST':
+            cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
+            qry = "SELECT id from res_users where login= '" + request.params['login'] + "';"
+            cr.execute(qry)
+            row_username = cr.fetchone()
+            if not row_username:
+                values['error'] = _("Email Address Does Not Exist, Please Register")
+            else:
+                old_uid = request.uid
+                uid = request.session.authenticate(request.session.db, request.params['login'],
+                                                   request.params['password'])
+                if uid is not False:
+                    request.params['login_success'] = True
+                    if kw.get('cfo_login'):
+                        request.session['cfo_login'] = True
+                    return http.request.redirect('/my/home')
+                request.uid = old_uid
+                values['error'] = _("Your Email Address/Password is Incorrect")
+        else:
+            if 'error' in request.params and request.params.get('error') == 'access':
+                values['error'] = _('Only employee can access this database. Please contact the administrator.')
+
+        if 'login' not in values and request.session.get('auth_login'):
+            values['login'] = request.session.get('auth_login')
+
+        if not odoo.tools.config['list_db']:
+            values['disable_database_manager'] = True
+
+        response = request.render('web.login', values)
+        response.headers['X-Frame-Options'] = 'DENY'
+        return response
 
     @http.route('/CFO/senior/register_cfo_senior', type='http', auth="public", website=True)
     def register_cfo_senior(self, **post):
