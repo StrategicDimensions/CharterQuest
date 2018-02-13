@@ -1,94 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <template id="cfo_signup_form" name="Sign up login">
+            <t t-call="web.login_layout">
+                <form class="oe_signup_form" action="/web/signup" role="form" method="post" t-if="not message"
+                      style="max-width: 615px; !important">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                    <t t-call="auth_signup.fields">
+                        <t t-set="only_passwords" t-value="bool(token and not invalid_token)"/>
+                    </t>
+
+                    <p class="alert alert-danger" t-if="error">
+                        <t t-esc="error"/>
+                    </p>
+                    <input type="hidden" name="redirect" t-att-value="redirect"/>
+                    <input type="hidden" name="token" t-att-value="token"/>
+                    <input type="hidden" name="cfo_signup" value="True"/>
+                    <div class="clearfix oe_login_buttons">
+                        <a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link pull-right">Already have an
+                            account?
+                        </a>
+                        <button type="submit" class="btn btn-primary pull-left o_signup_btn">Sign up</button>
+                    </div>
+
+                </form>
+            </t>
+        </template>
+
 
         <template id="cfo_login" name="login">
             <t t-set="additional_title">Login</t>
             <t t-call="web.login_layout">
-                <form class="oe_login_form" role="form" t-attf-action="/web/login{{ '?debug' if debug else '' }}" method="post" onsubmit="this.action = this.action + location.hash">
+                <form class="oe_login_form" role="form" t-attf-action="/web/login{{ '?debug' if debug else '' }}"
+                      method="post" onsubmit="this.action = this.action + location.hash">
                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-    
+
                     <div class="form-group field-login">
                         <label for="login" class="control-label">Email</label>
-                        <input type="text" name="login" t-att-value="login" id="login" class="form-control" required="required" autofocus="autofocus" autocapitalize="off"/>
+                        <input type="text" name="login" t-att-value="login" id="login" class="form-control"
+                               required="required" autofocus="autofocus" autocapitalize="off"/>
                     </div>
-    
+
                     <div class="form-group field-password">
                         <label for="password" class="control-label">Password</label>
-                        <input type="password" name="password" id="password" class="form-control" required="required" autocomplete="current-password" t-att-autofocus="'autofocus' if login else None" maxlength="4096"/>
+                        <input type="password" name="password" id="password" class="form-control" required="required"
+                               autocomplete="current-password" t-att-autofocus="'autofocus' if login else None"
+                               maxlength="4096"/>
                     </div>
-    
+
                     <p class="alert alert-danger" t-if="error">
                         <t t-esc="error"/>
                     </p>
                     <p class="alert alert-success" t-if="message">
                         <t t-esc="message"/>
                     </p>
-    
+
                     <input type="hidden" name="redirect" t-att-value="redirect"/>
                     <input type="hidden" name="cfo_login" value="true"/>
                     <div class="clearfix oe_login_buttons">
+                        <a href="/signup" class="btn btn-link pull-right">
+                            Register
+                        </a>
+                        <a href="/web/reset_password"
+                           class="btn btn-link pull-right">Forgot Password
+                        </a>
                         <button type="submit" class="btn btn-primary">Log in</button>
                     </div>
                 </form>
             </t>
-            
-            
-<!--             <t t-call="website.layout"> -->
-<!--                 <div class="col-md-12"> -->
-<!--                     <form> -->
-<!--                         <head> -->
-<!--                             <style> -->
-<!--                                 td{ -->
-<!--                                     padding: 5px !important -->
-<!--                                     } -->
-<!--                             </style> -->
-<!--                         </head> -->
-<!--                         <body> -->
-<!--                             <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%"> -->
-<!--                                 <table align="center" width="40%" style="border-collapse: inherit; border-spacing: 10px;background-color: #F9F9F9;height: 50% !important;border: 1px solid"> -->
-<!--                                     <tr style="height: 70px;"> -->
-<!--                                         <td  style="padding-left: 20px !important;padding-top: 20px !important;font-size: 18px;" >Client Login</td> -->
-<!--                                     </tr> -->
-<!--                                     <tr> -->
-<!--                                         <td style="padding-right: 75px !important;padding-left: 75px !important;" colspan="2"> -->
-<!--                                             <input type="text" id="username" name="email" class="form-control" Placeholder="Username"/> -->
-<!--                                         </td> -->
-<!--                                     </tr> -->
-<!--                                     <tr> -->
-<!--                                         <td style="padding-right: 75px !important;padding-left: 75px !important;" colspan="2"> -->
-<!--                                             <input placeholder="Password" type="password" title="Password must contain at least 1 Capital letter, 1 number, and 1 special Character" id="pswd" class="form-control"/> -->
-<!--                                         </td> -->
-<!--                                     </tr> -->
-<!--                                     <tr style="height: 70px;"> -->
-<!--                                         <td style="padding-left: 20px !important;"><span><input type="checkbox" name="remember" value="Remember Me?"> Remember Me?</input></span></td> -->
-<!--                                         <td style="padding-right: 20px !important;padding-bottom: 20px !important;" align="right"> -->
-<!--                                         <a class="btn btn-primary btn_login_js" style="">Login</a>  -->
-<!--                                         </td> -->
-<!--                                     </tr> -->
-<!--                                 </table> -->
-<!--                             </div> -->
-<!--                         </body> -->
-<!--                     </form> -->
-<!--                 </div> -->
-<!--             </t> -->
+
+
+            <!--             <t t-call="website.layout"> -->
+            <!--                 <div class="col-md-12"> -->
+            <!--                     <form> -->
+            <!--                         <head> -->
+            <!--                             <style> -->
+            <!--                                 td{ -->
+            <!--                                     padding: 5px !important -->
+            <!--                                     } -->
+            <!--                             </style> -->
+            <!--                         </head> -->
+            <!--                         <body> -->
+            <!--                             <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%"> -->
+            <!--                                 <table align="center" width="40%" style="border-collapse: inherit; border-spacing: 10px;background-color: #F9F9F9;height: 50% !important;border: 1px solid"> -->
+            <!--                                     <tr style="height: 70px;"> -->
+            <!--                                         <td  style="padding-left: 20px !important;padding-top: 20px !important;font-size: 18px;" >Client Login</td> -->
+            <!--                                     </tr> -->
+            <!--                                     <tr> -->
+            <!--                                         <td style="padding-right: 75px !important;padding-left: 75px !important;" colspan="2"> -->
+            <!--                                             <input type="text" id="username" name="email" class="form-control" Placeholder="Username"/> -->
+            <!--                                         </td> -->
+            <!--                                     </tr> -->
+            <!--                                     <tr> -->
+            <!--                                         <td style="padding-right: 75px !important;padding-left: 75px !important;" colspan="2"> -->
+            <!--                                             <input placeholder="Password" type="password" title="Password must contain at least 1 Capital letter, 1 number, and 1 special Character" id="pswd" class="form-control"/> -->
+            <!--                                         </td> -->
+            <!--                                     </tr> -->
+            <!--                                     <tr style="height: 70px;"> -->
+            <!--                                         <td style="padding-left: 20px !important;"><span><input type="checkbox" name="remember" value="Remember Me?"> Remember Me?</input></span></td> -->
+            <!--                                         <td style="padding-right: 20px !important;padding-bottom: 20px !important;" align="right"> -->
+            <!--                                         <a class="btn btn-primary btn_login_js" style="">Login</a>  -->
+            <!--                                         </td> -->
+            <!--                                     </tr> -->
+            <!--                                 </table> -->
+            <!--                             </div> -->
+            <!--                         </body> -->
+            <!--                     </form> -->
+            <!--                 </div> -->
+            <!--             </t> -->
         </template>
 
-<!--         <template id="cfo_snr_jnr.login1" inherit_id="web.login" name="Login"> -->
-<!--             <xpath expr="//t/form" position='attributes'> -->
-<!--                 <attribute name='style'>max-width: 385px; !important</attribute> -->
-<!--             </xpath> -->
-<!--             <xpath expr="//t/form/input" position="after"> -->
-<!--                 <p style="text-align: center; font-size: large;"><strong>Login to CFO Senior/Junior Account</strong></p> -->
-<!--             </xpath> -->
-<!--         </template> -->
+        <!--         <template id="cfo_snr_jnr.login1" inherit_id="web.login" name="Login"> -->
+        <!--             <xpath expr="//t/form" position='attributes'> -->
+        <!--                 <attribute name='style'>max-width: 385px; !important</attribute> -->
+        <!--             </xpath> -->
+        <!--             <xpath expr="//t/form/input" position="after"> -->
+        <!--                 <p style="text-align: center; font-size: large;"><strong>Login to CFO Senior/Junior Account</strong></p> -->
+        <!--             </xpath> -->
+        <!--         </template> -->
 
         <template id="cfo_snr_jnr.login" inherit_id="auth_signup.login" name="Sign up - Reset Password">
             <xpath expr="//a[2]" position="replace">
-                <a t-if="request.env['res.config.settings'].sudo().search([],limit=1,order='id desc').auth_signup_reset_password" t-attf-href="/web/reset_password?{{ keep_query() }}" class="btn btn-link pull-right">Forgot Password</a>
+                <a t-if="request.env['res.config.settings'].sudo().search([],limit=1,order='id desc').auth_signup_reset_password"
+                   t-attf-href="/web/reset_password?{{ keep_query() }}" class="btn btn-link pull-right">Forgot Password
+                </a>
             </xpath>
             <xpath expr="//a[@t-if='signup_enabled']" position="replace">
-                <a t-if="request.env['res.config.settings'].sudo().search([],limit=1,order='id desc').auth_signup_uninvited == 'b2c'" t-attf-href="/web/signup?{{ keep_query() }}" class="btn btn-link pull-right">Register</a>
+                <a t-if="request.env['res.config.settings'].sudo().search([],limit=1,order='id desc').auth_signup_uninvited == 'b2c'"
+                   t-attf-href="/web/signup?{{ keep_query() }}" class="btn btn-link pull-right">Register
+                </a>
             </xpath>
         </template>
 
@@ -96,14 +137,15 @@
             <xpath expr="//t/form" position='attributes'>
                 <attribute name='style'>max-width: 385px; !important</attribute>
             </xpath>
-<!--             <xpath expr="//t/form/input" position="after"> -->
-<!--                 <p style="text-align: center; font-size: large;"><strong>Reset CFO Senior/Junior Account Password</strong></p> -->
-<!--             </xpath> -->
+            <!--             <xpath expr="//t/form/input" position="after"> -->
+            <!--                 <p style="text-align: center; font-size: large;"><strong>Reset CFO Senior/Junior Account Password</strong></p> -->
+            <!--             </xpath> -->
             <label for="login" position="replace">
                 <label for="login" class="control-label">Email</label>
             </label>
             <button type="submit" position="replace">
-                <a t-if="token and not invalid_token" href="/web/login" class="btn btn-link pull-right">Back to Login</a>
+                <a t-if="token and not invalid_token" href="/web/login" class="btn btn-link pull-right">Back to Login
+                </a>
                 <button type="submit" class="btn btn-primary pull-left">Reset Password</button>
             </button>
         </template>
@@ -115,9 +157,14 @@
             <xpath expr="//t/form/div[@class='clearfix oe_login_buttons']" position='replace'>
                 <div class="clearfix oe_login_buttons">
                     <t t-if="only_passwords">
-                    <a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link pull-right">Already have an account?</a>
+                        <a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link pull-right">Already have an
+                            account?
+                        </a>
                     </t>
-                    <button type="submit" class="btn btn-primary pull-left o_signup_btn"> Register <span class="fa fa-long-arrow-right"></span> </button>
+                    <button type="submit" class="btn btn-primary pull-left o_signup_btn">Register
+                        <span
+                                class="fa fa-long-arrow-right"></span>
+                    </button>
                 </div>
             </xpath>
         </template>
@@ -126,24 +173,26 @@
             <t t-set="additional_title">CFO Senior Registration</t>
             <t t-call="portal.portal_layout">
                 <div class="col-md-12">
-                    <form style='max-width: 300px;position: relative;margin: 50px auto;' action="register_cfo_senior" method="POST" enctype="multipart/form-data">
+                    <form style='max-width: 300px;position: relative;margin: 50px auto;' action="register_cfo_senior"
+                          method="POST" enctype="multipart/form-data">
                         <head>
                             <style>
                                 td{
-                                    padding: 5px !important
-                                    }
+                                padding: 5px !important
+                                }
                             </style>
                         </head>
                         <body>
                             <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                 <div class="row">
-                                  <t t-set="competition_types" t-value="website.get_competition_types('CFO SNR')"/>
-                                  <t t-set="sources" t-value="website.get_cfo_registrants_source()"/>
-                                  <t t-set="media_sources" t-value="website.get_social_media_options()"/>
-                                      <div class="form-group field-competition">
+                                    <t t-set="competition_types" t-value="website.get_competition_types('CFO SNR')"/>
+                                    <t t-set="sources" t-value="website.get_cfo_registrants_source()"/>
+                                    <t t-set="media_sources" t-value="website.get_social_media_options()"/>
+                                    <div class="form-group field-competition">
                                         <label for="cfo_competition" class="control-label">Competition</label>
-                                        <select id="cfo_competition" name="cfo_competition" class="form-control" placeholder="Competition..." required="True">
+                                        <select id="cfo_competition" name="cfo_competition" class="form-control"
+                                                placeholder="Competition..." required="True">
                                             <option value="" select="true">Select Category</option>
                                             <t t-foreach="competition_types or []" t-as="competition">
                                                 <option t-att-value="competition.id">
@@ -151,17 +200,21 @@
                                                 </option>
                                             </t>
                                         </select>
-                                      </div>
-                                      <div class="form-group field-membertype">
+                                    </div>
+                                    <div class="form-group field-membertype">
                                         <label for="cfo_membertype" class="control-label">I want to Register as</label>
-                                        <select id='cfo_membertype' name="cfo_membertype" class="form-control" placeholder="Member Type..." required="True">
+                                        <select id='cfo_membertype' name="cfo_membertype" class="form-control"
+                                                placeholder="Member Type..." required="True">
                                             <option value="" select="true">Select</option>
                                         </select>
-                                      </div>
-                                      
-                                      <div class="form-group field-source">
-                                        <label for="cfo_source" class="control-label">How Did you 1st Hear About the CFO</label>
-                                        <select id="cfo_source" name="cfo_source" class="form-control" placeholder="Source...">
+                                    </div>
+
+                                    <div class="form-group field-source">
+                                        <label for="cfo_source" class="control-label">How Did you 1st Hear About the
+                                            CFO
+                                        </label>
+                                        <select id="cfo_source" name="cfo_source" class="form-control"
+                                                placeholder="Source...">
                                             <option value="" select="true">Select</option>
                                             <t t-foreach="sources or []" t-as="source">
                                                 <option t-att-value="source">
@@ -169,9 +222,11 @@
                                                 </option>
                                             </t>
                                         </select>
-                                      </div>
-                                      <div class="form-group field-socialmedia" id='socialmedia_source' style="display: none;">
-                                        <select id="social_media_options" name="social_media_options" class="form-control" placeholder="Source...">
+                                    </div>
+                                    <div class="form-group field-socialmedia" id='socialmedia_source'
+                                         style="display: none;">
+                                        <select id="social_media_options" name="social_media_options"
+                                                class="form-control" placeholder="Source...">
                                             <option value="" select="true">Select</option>
                                             <t t-foreach="media_sources or []" t-as="mediasource">
                                                 <option t-att-value="mediasource">
@@ -179,18 +234,19 @@
                                                 </option>
                                             </t>
                                         </select>
-                                      </div>
-                                      <div class="form-group field-other" id='other_source' style="display: none;">
+                                    </div>
+                                    <div class="form-group field-other" id='other_source' style="display: none;">
                                         <label for="other" class="control-label">Other Please Specify</label>
-                                        <input type="text" name="other" t-att-value="other" id="other" class="form-control"
-                                            autofocus="autofocus" autocapitalize="off"/>
-                                      </div>
-                                      <div class="clearfix oe_login_buttons">
-                                            <button type="submit" class="btn btn-primary">Register</button>
-                                        </div>
-                              </div>
+                                        <input type="text" name="other" t-att-value="other" id="other"
+                                               class="form-control"
+                                               autofocus="autofocus" autocapitalize="off"/>
+                                    </div>
+                                    <div class="clearfix oe_login_buttons">
+                                        <button type="submit" class="btn btn-primary">Register</button>
+                                    </div>
+                                </div>
                             </div>
-                            
+
                         </body>
                     </form>
                 </div>
@@ -201,24 +257,26 @@
             <t t-set="additional_title">CFO Junior Registration</t>
             <t t-call="portal.portal_layout">
                 <div class="col-md-12">
-                    <form style='max-width: 300px;position: relative;margin: 50px auto;' action="register_cfo_junior" method="POST" enctype="multipart/form-data">
+                    <form style='max-width: 300px;position: relative;margin: 50px auto;' action="register_cfo_junior"
+                          method="POST" enctype="multipart/form-data">
                         <head>
                             <style>
                                 td{
-                                    padding: 5px !important
-                                    }
+                                padding: 5px !important
+                                }
                             </style>
                         </head>
                         <body>
                             <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                 <div class="row">
-                                  <t t-set="competition_types" t-value="website.get_competition_types('CFO JNR')"/>
-                                  <t t-set="sources" t-value="website.get_cfo_registrants_source()"/>
-                                  <t t-set="media_sources" t-value="website.get_social_media_options()"/>
-                                      <div class="form-group field-competition">
+                                    <t t-set="competition_types" t-value="website.get_competition_types('CFO JNR')"/>
+                                    <t t-set="sources" t-value="website.get_cfo_registrants_source()"/>
+                                    <t t-set="media_sources" t-value="website.get_social_media_options()"/>
+                                    <div class="form-group field-competition">
                                         <label for="cfo_competition" class="control-label">Competition</label>
-                                        <select id="cfo_competition" name="cfo_competition" class="form-control" placeholder="Competition..." required="True">
+                                        <select id="cfo_competition" name="cfo_competition" class="form-control"
+                                                placeholder="Competition..." required="True">
                                             <option value="" select="true">Select Category</option>
                                             <t t-foreach="competition_types or []" t-as="competition">
                                                 <option t-att-value="competition.id">
@@ -226,17 +284,21 @@
                                                 </option>
                                             </t>
                                         </select>
-                                      </div>
-                                      <div class="form-group field-membertype">
+                                    </div>
+                                    <div class="form-group field-membertype">
                                         <label for="cfo_membertype" class="control-label">I want to Register as</label>
-                                        <select id='cfo_membertype' name="cfo_membertype" class="form-control" placeholder="Member Type..." required="True">
-                                            <option value="" select="true">Select</option>
+                                        <select id='cfo_membertype' name="cfo_membertype" class="form-control"
+                                                placeholder="Member Type..." required="True">
+                                            <option value="">Select</option>
                                         </select>
-                                      </div>
-                                      
-                                      <div class="form-group field-source">
-                                        <label for="cfo_source" class="control-label">How Did you 1st Hear About the CFO</label>
-                                        <select id="cfo_source" name="cfo_source" class="form-control" placeholder="Source...">
+                                    </div>
+
+                                    <div class="form-group field-source">
+                                        <label for="cfo_source" class="control-label">How Did you 1st Hear About the
+                                            CFO
+                                        </label>
+                                        <select id="cfo_source" name="cfo_source" class="form-control"
+                                                placeholder="Source...">
                                             <option value="" select="true">Select</option>
                                             <t t-foreach="sources or []" t-as="source">
                                                 <option t-att-value="source">
@@ -244,10 +306,12 @@
                                                 </option>
                                             </t>
                                         </select>
-                                      </div>
-                                      <div class="form-group field-socialmedia" id='socialmedia_source' style="display: none;">
+                                    </div>
+                                    <div class="form-group field-socialmedia" id='socialmedia_source'
+                                         style="display: none;">
                                         <label for="socialmedia" class="control-label">Select social media type</label>
-                                        <select id="social_media_options" name="social_media_options" class="form-control" placeholder="Source...">
+                                        <select id="social_media_options" name="social_media_options"
+                                                class="form-control" placeholder="Source...">
                                             <option value="" select="true">Select</option>
                                             <t t-foreach="media_sources or []" t-as="mediasource">
                                                 <option t-att-value="mediasource">
@@ -255,18 +319,19 @@
                                                 </option>
                                             </t>
                                         </select>
-                                      </div>
-                                      <div class="form-group field-other" id='other_source' style="display: none;">
+                                    </div>
+                                    <div class="form-group field-other" id='other_source' style="display: none;">
                                         <label for="other" class="control-label">Other Please Specify</label>
-                                        <input type="text" name="other" t-att-value="other" id="other" class="form-control"
-                                            autofocus="autofocus" autocapitalize="off"/>
-                                      </div>
-                                      <div class="clearfix oe_login_buttons">
-                                            <button type="submit" class="btn btn-primary">Register</button>
-                                        </div>
-                              </div>
+                                        <input type="text" name="other" t-att-value="other" id="other"
+                                               class="form-control"
+                                               autofocus="autofocus" autocapitalize="off"/>
+                                    </div>
+                                    <div class="clearfix oe_login_buttons">
+                                        <button type="submit" class="btn btn-primary">Register</button>
+                                    </div>
+                                </div>
                             </div>
-                            
+
                         </body>
                     </form>
                 </div>
@@ -281,61 +346,71 @@
                         <head>
                             <style>
                                 td{
-                                    padding: 5px !important
-                                    }
+                                padding: 5px !important
+                                }
                             </style>
                         </head>
-                        
+
                         <body>
-                        <t t-if="not senior">
-                            <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
-                                <h3 style="color:red;">You are not registered for the CFO Senior Competition
-                                <br/> Click the button below to register for the CFO Senior Competition.</h3>
-                                <p>
-                                    <a class="btn btn-link" href="/CFO/senior/signup">Register</a>
-                                </p>
-                            </div>
-                        </t>
-                        <t t-if="senior">
-                            <div class="row">
-                                <div class="o_box" style="max-width: 209px;">
-                                    <a class="o_box_item o_dashboard_action" href="#" name="website.action_website" title="Go to Website">
-                                        <div class="o_inner_box o_primary">
-                                            <i class="fa fa-clock-o fa-3x"></i><br>
-                                            CFO report submission Deadline
-                                        </br>
-                                        </div>
-                                    </a>
+                            <t t-if="not senior">
+                                <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
+                                    <h3 style="color:red;">You are not registered for the CFO Senior Competition
+                                        <br/>
+                                        Click the button below to register for the CFO Senior Competition.
+                                    </h3>
+                                    <p>
+                                        <a class="btn btn-link" href="/CFO/senior/signup">Register</a>
+                                    </p>
                                 </div>
-                                <div class="o_box" style="max-width: 209px;">
-                                    <a class="o_box_item o_dashboard_action" href="#" name="website.action_website" title="Go to Website">
-                                        <div class="o_inner_box o_primary">
-                                            <i class="fa fa-clock-o fa-3x"></i><br>
-                                            CFO report submission Deadline
-                                        </br>
-                                        </div>
-                                    </a>
+                            </t>
+                            <t t-if="senior">
+                                <div class="row">
+                                    <div class="o_box" style="max-width: 209px;">
+                                        <a class="o_box_item o_dashboard_action" href="#" name="website.action_website"
+                                           title="Go to Website">
+                                            <div class="o_inner_box o_primary">
+                                                <i class="fa fa-clock-o fa-3x"></i>
+                                                <br>
+                                                    CFO report submission Deadline
+                                                </br>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="o_box" style="max-width: 209px;">
+                                        <a class="o_box_item o_dashboard_action" href="#" name="website.action_website"
+                                           title="Go to Website">
+                                            <div class="o_inner_box o_primary">
+                                                <i class="fa fa-clock-o fa-3x"></i>
+                                                <br>
+                                                    CFO report submission Deadline
+                                                </br>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="o_box" style="max-width: 209px;">
+                                        <a class="o_box_item o_dashboard_action" href="#" name="website.action_website"
+                                           title="Go to Website">
+                                            <div class="o_inner_box o_primary">
+                                                <i class="fa fa-clock-o fa-3x"></i>
+                                                <br>
+                                                    CFO report submission Deadline
+                                                </br>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="o_box" style="max-width: 209px;">
+                                        <a class="o_box_item o_dashboard_action" href="#" name="website.action_website"
+                                           title="Go to Website">
+                                            <div class="o_inner_box o_primary">
+                                                <i class="fa fa-clock-o fa-3x"></i>
+                                                <br>
+                                                    CFO report submission Deadline
+                                                </br>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="o_box" style="max-width: 209px;">
-                                    <a class="o_box_item o_dashboard_action" href="#" name="website.action_website" title="Go to Website">
-                                        <div class="o_inner_box o_primary">
-                                            <i class="fa fa-clock-o fa-3x"></i><br>
-                                            CFO report submission Deadline
-                                        </br>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="o_box" style="max-width: 209px;">
-                                    <a class="o_box_item o_dashboard_action" href="#" name="website.action_website" title="Go to Website">
-                                        <div class="o_inner_box o_primary">
-                                            <i class="fa fa-clock-o fa-3x"></i><br>
-                                            CFO report submission Deadline
-                                        </br>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </t>
+                            </t>
                         </body>
                     </form>
                 </div>
@@ -349,129 +424,131 @@
                         <head>
                             <style>
                                 td{
-                                    padding: 5px !important
-                                    }
+                                padding: 5px !important
+                                }
                             </style>
                         </head>
-                        
+
                         <body>
-                        <t t-if="not junior">
-                            <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
-                                <h3 style="color:red;">You are not registered for the CFO Junior Competition
-                                <br/> Click the button below to register for the CFO Junior Competition.</h3>
-                                <p>
-                                    <a class="btn btn-link" href="/CFO/junior/signup">Register</a>
-                                </p>
-                            </div>
-                        </t>
-                        <t t-if="junior">
-                            <h3>Member already exist</h3>
-                            
-                        </t>
+                            <t t-if="not junior">
+                                <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
+                                    <h3 style="color:red;">You are not registered for the CFO Junior Competition
+                                        <br/>
+                                        Click the button below to register for the CFO Junior Competition.
+                                    </h3>
+                                    <p>
+                                        <a class="btn btn-link" href="/CFO/junior/signup">Register</a>
+                                    </p>
+                                </div>
+                            </t>
+                            <t t-if="junior">
+                                <h3>Member already exist</h3>
+
+                            </t>
                         </body>
                     </form>
                 </div>
             </t>
         </template>
 
-<!--         <template id="auth_signup.fields" name="Auth Signup/ResetPassword form fields"> -->
-<!--             <t t-if="only_passwords"> -->
-<!--             <div class="form-group field-login"> -->
-<!--                 <label for="login" class="control-label">Email</label> -->
-<!--                 <input type="text" name="login" t-att-value="login" id="login" class="form-control" autofocus="autofocus" -->
-<!--                     autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None" style="background-color: rgb(216, 214, 214); !important"/> -->
-<!--             </div> -->
+        <!--         <template id="auth_signup.fields" name="Auth Signup/ResetPassword form fields"> -->
+        <!--             <t t-if="only_passwords"> -->
+        <!--             <div class="form-group field-login"> -->
+        <!--                 <label for="login" class="control-label">Email</label> -->
+        <!--                 <input type="text" name="login" t-att-value="login" id="login" class="form-control" autofocus="autofocus" -->
+        <!--                     autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None" style="background-color: rgb(216, 214, 214); !important"/> -->
+        <!--             </div> -->
 
-<!--             <div class="form-group field-name"> -->
-<!--                 <label for="name" class="control-label">Name</label> -->
-<!--                 <input type="text" name="name" t-att-value="name" id="name" class="form-control" placeholder="e.g. John Doe" -->
-<!--                     required="required" t-att-readonly="'readonly' if only_passwords else None" -->
-<!--                     t-att-autofocus="'autofocus' if login and not only_passwords else None" style="background-color: rgb(216, 214, 214); !important"/> -->
-<!--             </div> -->
+        <!--             <div class="form-group field-name"> -->
+        <!--                 <label for="name" class="control-label">Name</label> -->
+        <!--                 <input type="text" name="name" t-att-value="name" id="name" class="form-control" placeholder="e.g. John Doe" -->
+        <!--                     required="required" t-att-readonly="'readonly' if only_passwords else None" -->
+        <!--                     t-att-autofocus="'autofocus' if login and not only_passwords else None" style="background-color: rgb(216, 214, 214); !important"/> -->
+        <!--             </div> -->
 
-<!--             <div class="form-group field-password"> -->
-<!--                 <label for="password" class="control-label">Password</label> -->
-<!--                 <input type="password" name="password" id="password" class="form-control" -->
-<!--                     required="required" t-att-autofocus="'autofocus' if only_passwords else None"/> -->
-<!--             </div> -->
+        <!--             <div class="form-group field-password"> -->
+        <!--                 <label for="password" class="control-label">Password</label> -->
+        <!--                 <input type="password" name="password" id="password" class="form-control" -->
+        <!--                     required="required" t-att-autofocus="'autofocus' if only_passwords else None"/> -->
+        <!--             </div> -->
 
-<!--             <div class="form-group field-confirm_password"> -->
-<!--                 <label for="confirm_password" class="control-label">Confirm Password</label> -->
-<!--                 <input type="password" name="confirm_password" id="confirm_password" class="form-control" required="required"/> -->
-<!--             </div> -->
-<!--             </t> -->
-<!--             <t t-if="not only_passwords"> -->
-<!--               <div class="row"> -->
-<!--                   <div class="pull-left" style="width: 307px; !important"> -->
-<!--                   <t t-set="competition_types" t-value="website.get_competition_types()"/> -->
-<!--                   <t t-set="sources" t-value="website.get_cfo_registrants_source()"/> -->
-<!--                       <div class="form-group field-firstname"> -->
-<!--                         <label for="name" class="control-label">First Name</label> -->
-<!--                         <input type="text" name="name" t-att-value="name" id="name" class="form-control" -->
-<!--                             autofocus="autofocus" required="required" autocapitalize="off"/> -->
-<!--                       </div> -->
-<!--                       <div class="form-group field-lastname"> -->
-<!--                         <label for="lastname" class="control-label">Last Name</label> -->
-<!--                         <input type="text" name="lastname" t-att-value="lastname" id="lastname" class="form-control" -->
-<!--                             autofocus="autofocus" required="required" autocapitalize="off"/> -->
-<!--                       </div> -->
-<!--                       <div class="form-group field-login"> -->
-<!--                         <label for="login" class="control-label">Email</label> -->
-<!--                         <input type="text" name="login" t-att-value="login" id="login" class="form-control" autofocus="autofocus" -->
-<!--                             autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None"/> -->
-<!--                       </div> -->
-<!--                       <div class="form-group field-competition"> -->
-<!--                         <label for="cfo_competition" class="control-label">Select the Competition</label> -->
-<!--                         <select id="cfo_competition" name="cfo_competition" class="form-control" placeholder="Competition..." required="True"> -->
-<!--                             <option value="" select="true">Select Category</option> -->
-<!--                             <t t-foreach="competition_types or []" t-as="competition"> -->
-<!--                                 <option t-att-value="competition.id"> -->
-<!--                                     <t t-esc="competition.name"/> -->
-<!--                                 </option> -->
-<!--                             </t> -->
-<!--                         </select> -->
-<!--                       </div> -->
-<!--                       <div class="form-group field-membertype"> -->
-<!--                         <label for="cfo_membertype" class="control-label">I want to Register as</label> -->
-<!--                         <select id='cfo_membertype' name="cfo_membertype" class="form-control" placeholder="Member Type..." required="True"> -->
-<!--                             <option value="" select="true">Select</option> -->
-<!--                         </select> -->
-<!--                       </div> -->
-<!--                       </div> -->
-                      
-<!--                       <div class="pull-right" style="width: 307px; !important"> -->
-<!--                       <div class="form-group field-source"> -->
-<!--                         <label for="cfo_source" class="control-label">How Did you 1st Hear About the CFO</label> -->
-<!--                         <select id="cfo_source" name="cfo_source" class="form-control" placeholder="Source..."> -->
-<!--                             <option value="" select="true">Select</option> -->
-<!--                             <t t-foreach="sources or []" t-as="source"> -->
-<!--                                 <option t-att-value="source"> -->
-<!--                                     <t t-esc="source"/> -->
-<!--                                 </option> -->
-<!--                             </t> -->
-<!--                         </select> -->
-<!--                       </div> -->
-<!--                       <div class="form-group field-other" id='other_source' style="display: none;"> -->
-<!--                         <label for="other" class="control-label">Other Please Specify</label> -->
-<!--                         <input type="text" name="other" t-att-value="other" id="other" class="form-control" -->
-<!--                             autofocus="autofocus" autocapitalize="off"/> -->
-<!--                       </div> -->
-<!--                       <div class="form-group field-password"> -->
-<!--                         <label for="password" class="control-label">Password</label> -->
-<!--                         <input type="password" name="password" id="password" class="form-control" -->
-<!--                             required="required" t-att-autofocus="'autofocus' if only_passwords else None"/> -->
-<!--                     </div> -->
-        
-<!--                     <div class="form-group field-confirm_password"> -->
-<!--                         <label for="confirm_password" class="control-label">Confirm Password</label> -->
-<!--                         <input type="password" name="confirm_password" id="confirm_password" class="form-control" required="required"/> -->
-<!--                     </div> -->
-                    
-<!--                     <div class="g-recaptcha" style="width: -moz-fit-content;margin-top:50px" data-sitekey="6LfdvzYUAAAAAEKV8DWL7vpRotZIjaS9VQltT2FH"></div> -->
-<!--                   </div> -->
-<!--                   </div> -->
-<!--                   </t> -->
-<!--         </template> -->
+        <!--             <div class="form-group field-confirm_password"> -->
+        <!--                 <label for="confirm_password" class="control-label">Confirm Password</label> -->
+        <!--                 <input type="password" name="confirm_password" id="confirm_password" class="form-control" required="required"/> -->
+        <!--             </div> -->
+        <!--             </t> -->
+        <!--             <t t-if="not only_passwords"> -->
+        <!--               <div class="row"> -->
+        <!--                   <div class="pull-left" style="width: 307px; !important"> -->
+        <!--                   <t t-set="competition_types" t-value="website.get_competition_types()"/> -->
+        <!--                   <t t-set="sources" t-value="website.get_cfo_registrants_source()"/> -->
+        <!--                       <div class="form-group field-firstname"> -->
+        <!--                         <label for="name" class="control-label">First Name</label> -->
+        <!--                         <input type="text" name="name" t-att-value="name" id="name" class="form-control" -->
+        <!--                             autofocus="autofocus" required="required" autocapitalize="off"/> -->
+        <!--                       </div> -->
+        <!--                       <div class="form-group field-lastname"> -->
+        <!--                         <label for="lastname" class="control-label">Last Name</label> -->
+        <!--                         <input type="text" name="lastname" t-att-value="lastname" id="lastname" class="form-control" -->
+        <!--                             autofocus="autofocus" required="required" autocapitalize="off"/> -->
+        <!--                       </div> -->
+        <!--                       <div class="form-group field-login"> -->
+        <!--                         <label for="login" class="control-label">Email</label> -->
+        <!--                         <input type="text" name="login" t-att-value="login" id="login" class="form-control" autofocus="autofocus" -->
+        <!--                             autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None"/> -->
+        <!--                       </div> -->
+        <!--                       <div class="form-group field-competition"> -->
+        <!--                         <label for="cfo_competition" class="control-label">Select the Competition</label> -->
+        <!--                         <select id="cfo_competition" name="cfo_competition" class="form-control" placeholder="Competition..." required="True"> -->
+        <!--                             <option value="" select="true">Select Category</option> -->
+        <!--                             <t t-foreach="competition_types or []" t-as="competition"> -->
+        <!--                                 <option t-att-value="competition.id"> -->
+        <!--                                     <t t-esc="competition.name"/> -->
+        <!--                                 </option> -->
+        <!--                             </t> -->
+        <!--                         </select> -->
+        <!--                       </div> -->
+        <!--                       <div class="form-group field-membertype"> -->
+        <!--                         <label for="cfo_membertype" class="control-label">I want to Register as</label> -->
+        <!--                         <select id='cfo_membertype' name="cfo_membertype" class="form-control" placeholder="Member Type..." required="True"> -->
+        <!--                             <option value="" select="true">Select</option> -->
+        <!--                         </select> -->
+        <!--                       </div> -->
+        <!--                       </div> -->
+
+        <!--                       <div class="pull-right" style="width: 307px; !important"> -->
+        <!--                       <div class="form-group field-source"> -->
+        <!--                         <label for="cfo_source" class="control-label">How Did you 1st Hear About the CFO</label> -->
+        <!--                         <select id="cfo_source" name="cfo_source" class="form-control" placeholder="Source..."> -->
+        <!--                             <option value="" select="true">Select</option> -->
+        <!--                             <t t-foreach="sources or []" t-as="source"> -->
+        <!--                                 <option t-att-value="source"> -->
+        <!--                                     <t t-esc="source"/> -->
+        <!--                                 </option> -->
+        <!--                             </t> -->
+        <!--                         </select> -->
+        <!--                       </div> -->
+        <!--                       <div class="form-group field-other" id='other_source' style="display: none;"> -->
+        <!--                         <label for="other" class="control-label">Other Please Specify</label> -->
+        <!--                         <input type="text" name="other" t-att-value="other" id="other" class="form-control" -->
+        <!--                             autofocus="autofocus" autocapitalize="off"/> -->
+        <!--                       </div> -->
+        <!--                       <div class="form-group field-password"> -->
+        <!--                         <label for="password" class="control-label">Password</label> -->
+        <!--                         <input type="password" name="password" id="password" class="form-control" -->
+        <!--                             required="required" t-att-autofocus="'autofocus' if only_passwords else None"/> -->
+        <!--                     </div> -->
+
+        <!--                     <div class="form-group field-confirm_password"> -->
+        <!--                         <label for="confirm_password" class="control-label">Confirm Password</label> -->
+        <!--                         <input type="password" name="confirm_password" id="confirm_password" class="form-control" required="required"/> -->
+        <!--                     </div> -->
+
+        <!--                     <div class="g-recaptcha" style="width: -moz-fit-content;margin-top:50px" data-sitekey="6LfdvzYUAAAAAEKV8DWL7vpRotZIjaS9VQltT2FH"></div> -->
+        <!--                   </div> -->
+        <!--                   </div> -->
+        <!--                   </t> -->
+        <!--         </template> -->
 
     </data>
 </odoo>

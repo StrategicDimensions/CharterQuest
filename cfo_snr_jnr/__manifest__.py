@@ -26,16 +26,17 @@
     'description': """
 CFO Senior and Junior Competition.
     """,
-    'depends': ['base','auth_signup','crm','website'],
+    'depends': ['base', 'auth_signup', 'crm', 'website'],
     'data': [
-         'security/ir.model.access.csv',
-         'views/login.xml',
-         'views/jsfile.xml',
-         'views/competition_view.xml',
-         'views/cfo_junior_member_view.xml',
-         'views/cfo_senior_member_view.xml',
-         'views/cfo_team_view.xml',
-         'views/menus.xml',
+        'security/ir.model.access.csv',
+        'views/login.xml',
+        'views/jsfile.xml',
+        'views/competition_view.xml',
+        'views/cfo_junior_member_view.xml',
+        'views/cfo_senior_member_view.xml',
+        'views/cfo_team_view.xml',
+        'views/menus.xml',
+        'views/res_partner.xml',
     ],
     'demo': [
     ],

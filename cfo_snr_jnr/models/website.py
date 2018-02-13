@@ -20,6 +20,7 @@
 from odoo import models, _
 from odoo.http import request
 
+
 class Website(models.Model):
     _inherit = 'website'
 
@@ -28,7 +29,6 @@ class Website(models.Model):
             user_rec = self.env['res.users'].browse(request.session.get('logged_user'))
             return user_rec
         return False
-
 
     def get_competition_types(self, member=''):
         domain = []
@@ -41,12 +41,12 @@ class Website(models.Model):
         return ['Facebook', 'Twitter', 'U-tube', 'Linked in', 'Instagram', 'other Social Media']
 
     def get_cfo_registrants_source(self):
-        return ["Social Media","Direct web address","Google/other search engine",
-                "E-banner/Web advertisement","Email campaign/Signature card with link",
-                "Person Vue website/exam booking page","Other website listing","Radio/TV",
-                "Print Media","Direct mail via the post","Word-of-mouth/current/prior CharterQuest Student",
-                "My school/mentor/friend","My Employer/Boss/Supervisor","Brand Ambassador",
-                "Professional Body (CIMA, SAICA, ACCA, CFA Institute)","Billboard/street post/community center/church",
-                "Other(please specify)"]
+        return ["Social Media", "Google search engine brought me to website",
+                "E-banner/Web ad that brought me to website",
+                "Website whilst visiting for other matters", "Email Campaign that bought me to the website",
+                "Radio/TV", "A friend", "My School/mentor",
+                "My Employer/Boss", "Brand Ambassador/Social Media Contestant",
+                "Professional Body (CIMA, SAICA, ACCA, CFA Institute)",
+                "Other"]
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

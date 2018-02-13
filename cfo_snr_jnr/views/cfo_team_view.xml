@@ -36,7 +36,7 @@
     </record>
     
     <record model="ir.actions.act_window" id="action_cfo_team_jnr_2016">
-        <field name="name">CFO Jnr Teams</field>
+        <field name="name">Teams</field>
         <field name="res_model">cfo.teams</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2016')]</field>
@@ -44,7 +44,7 @@
     </record>
     
      <record model="ir.actions.act_window" id="action_cfo_team_jnr_2017">
-        <field name="name">CFO Jnr Teams</field>
+        <field name="name">Teams</field>
         <field name="res_model">cfo.teams</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2017')]</field>
@@ -52,7 +52,7 @@
     </record>
     
      <record model="ir.actions.act_window" id="action_cfo_team_jnr_2018">
-        <field name="name">CFO Jnr Teams</field>
+        <field name="name">Teams</field>
         <field name="res_model">cfo.teams</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2018')]</field>
@@ -60,7 +60,7 @@
     </record>
     
      <record model="ir.actions.act_window" id="action_cfo_team_jnr_2019">
-        <field name="name">CFO Jnr Teams</field>
+        <field name="name">Teams</field>
         <field name="res_model">cfo.teams</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2019')]</field>
@@ -68,7 +68,7 @@
     </record>
     
      <record model="ir.actions.act_window" id="action_cfo_team_jnr_2020">
-        <field name="name">CFO Jnr Teams</field>
+        <field name="name">Teams</field>
         <field name="res_model">cfo.teams</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2020')]</field>
@@ -76,7 +76,7 @@
     </record>
     
     <record model="ir.actions.act_window" id="action_cfo_team_snr_2016">
-        <field name="name">CFO Snr Teams</field>
+        <field name="name">Teams</field>
         <field name="res_model">cfo.teams</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2016')]</field>
@@ -84,7 +84,7 @@
     </record>
     
     <record model="ir.actions.act_window" id="action_cfo_team_snr_2017">
-        <field name="name">CFO Snr Teams</field>
+        <field name="name">Teams</field>
         <field name="res_model">cfo.teams</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2017')]</field>
@@ -92,7 +92,7 @@
     </record>
     
     <record model="ir.actions.act_window" id="action_cfo_team_snr_2018">
-        <field name="name">CFO Snr Teams</field>
+        <field name="name">Teams</field>
         <field name="res_model">cfo.teams</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2018')]</field>
@@ -100,7 +100,7 @@
     </record>
     
     <record model="ir.actions.act_window" id="action_cfo_team_snr_2019">
-        <field name="name">CFO Snr Teams</field>
+        <field name="name">Teams</field>
         <field name="res_model">cfo.teams</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2019')]</field>
@@ -108,7 +108,7 @@
     </record>
     
     <record model="ir.actions.act_window" id="action_cfo_team_snr_2020">
-        <field name="name">CFO Snr Teams</field>
+        <field name="name">Teams</field>
         <field name="res_model">cfo.teams</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2020')]</field>

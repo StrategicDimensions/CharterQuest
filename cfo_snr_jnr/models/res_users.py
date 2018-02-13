@@ -88,8 +88,8 @@ class ResUsers(models.Model):
         """ create a Charter Quest Member """
         if self.partner_id:
             values.update({'partner_id': self.partner_id.id})
-        if values.get('cfo_registrants_source'):
-            values.pop('cfo_registrants_source')
+        # if values.get('cfo_registrants_source'):
+        #     values.pop('cfo_registrants_source')
         if values.get('cfo_comp'):
             configuration = self.env['cfo.competition'].browse(values.pop('cfo_comp'))
             cfo_member_type = values.pop('cfo_member_type')

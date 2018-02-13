@@ -18,7 +18,8 @@
 #
 ##############################################################################
 
-from odoo import models,fields, _, api
+from odoo import models, fields, _, api
+
 
 class CFOSeniorAspirants(models.Model):
     _name = 'cfo.snr.aspirants'
@@ -30,34 +31,36 @@ class CFOSeniorAspirants(models.Model):
 
     def _work_exp_values(self):
         res = []
-        for i in range(0,6):
-            res.append((str(i),str(i)))
+        for i in range(0, 6):
+            res.append((str(i), str(i)))
         return res
 
     def _compute_age(self):
         res = []
-        for i in range(14,26):
-            res.append((str(i),str(i)))
+        for i in range(14, 26):
+            res.append((str(i), str(i)))
         return res
 
-    doc_lines = fields.One2many('ir.attachment','aspirant_doc_id','Documents')
-    country_of_birth = fields.Many2one('res.country','Country of Birth')
-    nationality = fields.Many2one('res.country','Current Citizenship/Nationality')
+    doc_lines = fields.One2many('ir.attachment', 'aspirant_doc_id', 'Documents')
+    country_of_birth = fields.Many2one('res.country', 'Country of Birth')
+    nationality = fields.Many2one('res.country', 'Current Citizenship/Nationality')
     entry_as_student = fields.Boolean('I am entering as Student')
     entry_as_employee = fields.Boolean('I am entering as Employee')
     emp_start_date = fields.Date('Start Date')
-    emp_status = fields.Selection([('part-time','part-time'),('full-time','full-time')],'Employment Status')
-    emp_experience = fields.Selection(_work_exp_values,'How many years of formal work experience?')
+    emp_status = fields.Selection([('part-time', 'part-time'), ('full-time', 'full-time')], 'Employment Status')
+    emp_experience = fields.Selection(_work_exp_values, 'How many years of formal work experience?')
     partner_id = fields.Many2one('res.partner',
-            string='Name', ondelete='restrict',
-            help='Partner-related data of the user')
+                                 string='Name', ondelete='restrict',
+                                 help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_cfo_bio = fields.Boolean('Updated CFO BIO')
-    aspirant_id = fields.Many2one('cfo.teams','Aspirant ID')
-    aspirant_age = fields.Selection(_compute_age,'Age')
+    aspirant_id = fields.Many2one('cfo.teams', 'Aspirant ID')
+    aspirant_age = fields.Selection(_compute_age, 'Age')
     member_accept = fields.Boolean('Accept')
     user_id = fields.Many2one('res.users', 'Related User')
-    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
-#     is_cfo_junior = fields.Boolean("Is CFO Junior")
+    cfo_competition_year = fields.Selection(
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+
+    #     is_cfo_junior = fields.Boolean("Is CFO Junior")
 
     @api.onchange('partner_id')
     def onchange_partner(self):
@@ -75,14 +78,16 @@ class AcademicInstitutionSenior(models.Model):
         'res.partner': 'partner_id',
     }
 
-    doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
+    doc_lines = fields.One2many('ir.attachment', 'academic_doc_id', 'Documents')
     partner_id = fields.Many2one('res.partner',
-            string='Name', ondelete='restrict',
-            help='Partner-related data of the user')
+                                 string='Name', ondelete='restrict',
+                                 help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_academic_bio = fields.Boolean('Updated Academic BIO')
     user_id = fields.Many2one('res.users', 'Related User')
-    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
-#     is_cfo_junior = fields.Boolean('Is CFO Junior?')
+    cfo_competition_year = fields.Selection(
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+
+    #     is_cfo_junior = fields.Boolean('Is CFO Junior?')
 
     @api.onchange('partner_id')
     def onchange_partner(self):
@@ -100,13 +105,14 @@ class EmployersSenior(models.Model):
         'res.partner': 'partner_id',
     }
 
-    doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
+    doc_lines = fields.One2many('ir.attachment', 'academic_doc_id', 'Documents')
     partner_id = fields.Many2one('res.partner',
-            string='Name', ondelete='restrict',
-            help='Partner-related data of the user')
+                                 string='Name', ondelete='restrict',
+                                 help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_emp_bio = fields.Boolean('Updated Employer BIO')
     user_id = fields.Many2one('res.users', 'Related User')
-    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+    cfo_competition_year = fields.Selection(
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
 
     @api.onchange('partner_id')
     def onchange_partner(self):
@@ -125,36 +131,61 @@ class VolunteersSenior(models.Model):
     }
 
     partner_id = fields.Many2one('res.partner',
-            string='Name', ondelete='restrict',
-            help='Partner-related data of the user')
-    volunteers_type = fields.Selection([('External Panel Judge','External Panel Judge'),('External Examiner','External Examiner'),('Case Study Expert','Case Study Expert'),('Student','Student'),('Other Expertise','Other Expertise'),('Mentor','Mentor')],'Volunteers Type')
+                                 string='Name', ondelete='restrict',
+                                 help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
+    volunteers_type = fields.Selection(
+        [('External Panel Judge', 'External Panel Judge'), ('External Examiner', 'External Examiner'),
+         ('Case Study Expert', 'Case Study Expert'), ('Student', 'Student'), ('Other Expertise', 'Other Expertise'),
+         ('Mentor', 'Mentor')], 'Volunteers Type')
     updated_volunteers_bio = fields.Boolean('Updated Volunteers BIO')
-    doc_lines = fields.One2many('ir.attachment','doc_id','Documents')
-    student_planning_phase = fields.Selection([('CFO Brand Ambassadors & Social Media Lead','CFO Brand Ambassadors & Social Media Lead'),('Volunteer Lead','Volunteer Lead'),('Social and Event Lead','Social and Event Lead'),('Marketing Committee Lead','Marketing Committee Lead'),('Youtube Team','Youtube Team'),('Team Ambassadors','Team Ambassadors'),('Pre Competition Contest Teams','Pre Competition Contest Teams'),('Other Committee','Other Committee')],'Student Planning Phase')
-    student_operations_phase = fields.Selection([('Events Logistics Committee','Events Logistics Committee'),('Timekeeper','Timekeeper'),('Prep Room Monitor','Prep Room Monitor'),('Presentation Room Monitor','Presentation Room Monitor'),('Lounge Monitor','Lounge Monitor'),('Other Committee','Other Committee')],'Student Operations Phase')
-    other_planning_phase = fields.Selection([('Legal Affairs Lead','Legal Affairs Lead'),('Event Lead & Social','Event Lead & Social'),('Marketing Committee Lead','Marketing Committee Lead'),('Youtube Team','Youtube Team'),('Pre Competition Contest Teams','Pre Competition Contest Teams'),('Judge Selection Team','Judge Selection Team')],'Other Planning Phase')
-    other_operations_phase = fields.Selection([('Events Logistics Committee','Events Logistics Committee'),('Prep Room Monitor','Prep Room Monitor'),('Lounge Monitor','Lounge Monitor'),('Other Committee','Other Committee')],'Other operations Phase')
-    i_am_a = fields.Selection([('CFO','CFO'),
-        ('CEO','CEO'),
-        ('Senior/C-Suit Executive','Senior/C-Suit Executive'),
-        ('Business academic','Business academic'),
-        ('Successful Entrepreneur','Successful Entrepreneur'),
-        ('Case study alumnus','Case study alumnus'),
-        ('College student','College student'),
-        ('University student','University student'),
-        ('Part time student','Part time student'),
-        ('Job seeker but have special expertise to offer','Job seeker but have special expertise to offer'),
-        ('Employed and have special expertise to offer','Employed and have special expertise to offer')],string = "I am a")
+    doc_lines = fields.One2many('ir.attachment', 'doc_id', 'Documents')
+    student_planning_phase = fields.Selection(
+        [('CFO Brand Ambassadors & Social Media Lead', 'CFO Brand Ambassadors & Social Media Lead'),
+         ('Volunteer Lead', 'Volunteer Lead'), ('Social and Event Lead', 'Social and Event Lead'),
+         ('Marketing Committee Lead', 'Marketing Committee Lead'), ('Youtube Team', 'Youtube Team'),
+         ('Team Ambassadors', 'Team Ambassadors'), ('Pre Competition Contest Teams', 'Pre Competition Contest Teams'),
+         ('Other Committee', 'Other Committee')], 'Student Planning Phase')
+    student_operations_phase = fields.Selection(
+        [('Events Logistics Committee', 'Events Logistics Committee'), ('Timekeeper', 'Timekeeper'),
+         ('Prep Room Monitor', 'Prep Room Monitor'), ('Presentation Room Monitor', 'Presentation Room Monitor'),
+         ('Lounge Monitor', 'Lounge Monitor'), ('Other Committee', 'Other Committee')], 'Student Operations Phase')
+    other_planning_phase = fields.Selection(
+        [('Legal Affairs Lead', 'Legal Affairs Lead'), ('Event Lead & Social', 'Event Lead & Social'),
+         ('Marketing Committee Lead', 'Marketing Committee Lead'), ('Youtube Team', 'Youtube Team'),
+         ('Pre Competition Contest Teams', 'Pre Competition Contest Teams'),
+         ('Judge Selection Team', 'Judge Selection Team')], 'Other Planning Phase')
+    other_operations_phase = fields.Selection(
+        [('Events Logistics Committee', 'Events Logistics Committee'), ('Prep Room Monitor', 'Prep Room Monitor'),
+         ('Lounge Monitor', 'Lounge Monitor'), ('Other Committee', 'Other Committee')], 'Other operations Phase')
+    i_am_a = fields.Selection([('CFO', 'CFO'),
+                               ('CEO', 'CEO'),
+                               ('Senior/C-Suit Executive', 'Senior/C-Suit Executive'),
+                               ('Business academic', 'Business academic'),
+                               ('Successful Entrepreneur', 'Successful Entrepreneur'),
+                               ('Case study alumnus', 'Case study alumnus'),
+                               ('College student', 'College student'),
+                               ('University student', 'University student'),
+                               ('Part time student', 'Part time student'),
+                               ('Job seeker but have special expertise to offer',
+                                'Job seeker but have special expertise to offer'),
+                               ('Employed and have special expertise to offer',
+                                'Employed and have special expertise to offer')], string="I am a")
 
-    i_hold_a = fields.Selection([('Masters level qualification','Masters level qualification'),
-        ('Doctorate level qualification','Doctorate level qualification'),
-        ('Professional Qualification','Professional Qualification'),('Bachelors/Honours/Masters Degree','Bachelors/Honours/Masters Degree')],"I Hold a")
-    i_get_involved = fields.Selection([('Marking of reports ONLY','Marking of reports ONLY'),
-        ('Marking of reports and judging during presentations','Marking of reports and judging during presentations'),
-        ('The planning phase (Deadline:31 January 2016)','The planning phase (Deadline:31 January 2016)'),
-        ('Operations phase (Deadline :20 June, 2016 )','Operations phase (Deadline :20 June, 2016 )'),
-        ('The planning phase (Deadline:31 January 2016)','The planning phase (Deadline:31 January 2016)'),
-        ('Operations phase (Deadline :20 June, 2016 )','Operations phase (Deadline :20 June, 2016 )')],"I will like get involved in")
+    i_hold_a = fields.Selection([('Masters level qualification', 'Masters level qualification'),
+                                 ('Doctorate level qualification', 'Doctorate level qualification'),
+                                 ('Professional Qualification', 'Professional Qualification'),
+                                 ('Bachelors/Honours/Masters Degree', 'Bachelors/Honours/Masters Degree')], "I Hold a")
+    i_get_involved = fields.Selection([('Marking of reports ONLY', 'Marking of reports ONLY'),
+                                       ('Marking of reports and judging during presentations',
+                                        'Marking of reports and judging during presentations'),
+                                       ('The planning phase (Deadline:31 January 2016)',
+                                        'The planning phase (Deadline:31 January 2016)'),
+                                       ('Operations phase (Deadline :20 June, 2016 )',
+                                        'Operations phase (Deadline :20 June, 2016 )'),
+                                       ('The planning phase (Deadline:31 January 2016)',
+                                        'The planning phase (Deadline:31 January 2016)'),
+                                       ('Operations phase (Deadline :20 June, 2016 )',
+                                        'Operations phase (Deadline :20 June, 2016 )')], "I will like get involved in")
 
     cfo_brand_ambassadors_n_social_media_lead = fields.Boolean("CFO Brand Ambassadors & Social Media Lead")
     volunteer_lead = fields.Boolean("Volunteer Lead")
@@ -175,7 +206,8 @@ class VolunteersSenior(models.Model):
     presentation_room_monitor = fields.Boolean("Presentation Room Monitor")
     lounge_monitor = fields.Boolean("Lounge Monitor")
     operational_other_committee = fields.Boolean("Other Committee")
-    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+    cfo_competition_year = fields.Selection(
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
     user_id = fields.Many2one('res.users', 'Related User')
 
     @api.onchange('partner_id')
@@ -194,16 +226,18 @@ class BrandAmbassadorSenior(models.Model):
         'res.partner': 'partner_id',
     }
 
-    doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
+    doc_lines = fields.One2many('ir.attachment', 'academic_doc_id', 'Documents')
     partner_id = fields.Many2one('res.partner',
-            string='Name', ondelete='restrict',
-            help='Partner-related data of the user')
+                                 string='Name', ondelete='restrict',
+                                 help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_brand_amb_bio = fields.Boolean('Updated Brand Ambassador BIO')
     brand_accept = fields.Boolean('Accept Brand Invite')
-    team_ids = fields.Many2many('cfo.teams','brand_teams_rel','brand_amb_id','team_id','Brand Ambassador for Teams')
-    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+    team_ids = fields.Many2many('cfo.teams', 'brand_teams_rel', 'brand_amb_id', 'team_id', 'Brand Ambassador for Teams')
+    cfo_competition_year = fields.Selection(
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
     user_id = fields.Many2one('res.users', 'Related User')
-#     is_cfo_junior = fields.Boolean('Is CFO Junior?')
+
+    #     is_cfo_junior = fields.Boolean('Is CFO Junior?')
 
     @api.onchange('partner_id')
     def onchange_partner(self):
@@ -221,14 +255,15 @@ class SocialMediaContestantsSenior(models.Model):
         'res.partner': 'partner_id',
     }
 
-    doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
+    doc_lines = fields.One2many('ir.attachment', 'academic_doc_id', 'Documents')
     partner_id = fields.Many2one('res.partner',
-            string='Name', ondelete='restrict',
-            help='Partner-related data of the user')
-    updated_social_media_bio = fields.Boolean('Updated Brand Ambassador BIO')
+                                 string='Name', ondelete='restrict',
+                                 help='Partner-related data of the user')
+    updated_social_media_bio = fields.Boolean('Updated Brand Ambassador BIO', domain=[('cfo_user', '=', True)])
     social_media_unique_url = fields.Char('Social media unique URL')
     user_id = fields.Many2one('res.users', 'Related User')
-    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+    cfo_competition_year = fields.Selection(
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
 
     @api.onchange('partner_id')
     def onchange_partner(self):
@@ -246,32 +281,41 @@ class MentorsSenior(models.Model):
         'res.partner': 'partner_id',
     }
 
-    doc_lines = fields.One2many('ir.attachment','academic_doc_id','Documents')
+    doc_lines = fields.One2many('ir.attachment', 'academic_doc_id', 'Documents')
     partner_id = fields.Many2one('res.partner',
-            string='Name', ondelete='restrict',
-            help='Partner-related data of the user')
+                                 string='Name', ondelete='restrict',
+                                 help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_mentors_bio = fields.Boolean('Updated Mentors BIO')
     mentor_accept = fields.Boolean("Accept Mentors")
     user_id = fields.Many2one('res.users', 'Related User')
-    team_ids = fields.Many2many('cfo.teams','mentor_teams_rel','mentor_id','team_id','Mentors for Teams')
-    i_am_a = fields.Selection([('CFO','CFO'),
-            ('CEO','CEO'),
-            ('Entrepreneur','Entrepreneur'),
-            ('Manager','Manager'),
-            ('Professional Coach/Mentor','Professional Coach/Mentor'),
-            ('Business Educator','Business Educator'),
-            ('Recent Business Graduate','Recent Business Graduate')],string = "I am a")
+    team_ids = fields.Many2many('cfo.teams', 'mentor_teams_rel', 'mentor_id', 'team_id', 'Mentors for Teams')
+    i_am_a = fields.Selection([('CFO', 'CFO'),
+                               ('CEO', 'CEO'),
+                               ('Entrepreneur', 'Entrepreneur'),
+                               ('Manager', 'Manager'),
+                               ('Professional Coach/Mentor', 'Professional Coach/Mentor'),
+                               ('Business Educator', 'Business Educator'),
+                               ('Recent Business Graduate', 'Recent Business Graduate')], string="I am a")
 
-    i_hold_a = fields.Selection([('Masters level qualification','Masters level qualification'),
-            ('Doctorate level qualification','Doctorate level qualification'),('Bachelors level qualification','Bachelors level qualification'),('Professional Qualification','Professional Qualification')],"I Hold a")
-    i_get_involved = fields.Selection([('Marking of reports ONLY','Marking of reports ONLY'),
-            ('Marking of reports and judging during presentations','Marking of reports and judging during presentations'),
-            ('The planning phase (Deadline:31 January 2016)','The planning phase (Deadline:31 January 2016)'),
-            ('Operations phase (Deadline :20 June, 2016 )','Operations phase (Deadline :20 June, 2016 )'),
-            ('The planning phase (Deadline:31 January 2016)','The planning phase (Deadline:31 January 2016)'),
-            ('Operations phase (Deadline :20 June, 2016 )','Operations phase (Deadline :20 June, 2016 )')],"I will like get involved in")
-    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
-#     is_cfo_junior = fields.boolean('Is CFO Junior?')
+    i_hold_a = fields.Selection([('Masters level qualification', 'Masters level qualification'),
+                                 ('Doctorate level qualification', 'Doctorate level qualification'),
+                                 ('Bachelors level qualification', 'Bachelors level qualification'),
+                                 ('Professional Qualification', 'Professional Qualification')], "I Hold a")
+    i_get_involved = fields.Selection([('Marking of reports ONLY', 'Marking of reports ONLY'),
+                                       ('Marking of reports and judging during presentations',
+                                        'Marking of reports and judging during presentations'),
+                                       ('The planning phase (Deadline:31 January 2016)',
+                                        'The planning phase (Deadline:31 January 2016)'),
+                                       ('Operations phase (Deadline :20 June, 2016 )',
+                                        'Operations phase (Deadline :20 June, 2016 )'),
+                                       ('The planning phase (Deadline:31 January 2016)',
+                                        'The planning phase (Deadline:31 January 2016)'),
+                                       ('Operations phase (Deadline :20 June, 2016 )',
+                                        'Operations phase (Deadline :20 June, 2016 )')], "I will like get involved in")
+    cfo_competition_year = fields.Selection(
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+
+    #     is_cfo_junior = fields.boolean('Is CFO Junior?')
 
     @api.onchange('partner_id')
     def onchange_partner(self):
@@ -284,10 +328,10 @@ class MentorsSenior(models.Model):
 class CFOSeniorMember(models.Model):
     _name = 'cfo.snr.member'
     _inherit = ['mail.thread']
-#     _rec_name = aspirants_name
+    #     _rec_name = aspirants_name
 
     name = fields.Char('Name', required=True)
-    aspirants_name = fields.Many2one('res.partner', 'Name', required=True)
+    aspirants_name = fields.Many2one('res.partner', 'Name', required=True, domain=[('cfo_user', '=', True)])
     other_names = fields.Char('Other Names')
     birth_country = fields.Many2one('res.country', 'Country of Birth')
     cfo_comp = fields.Selection([('CFO SNR', 'CFO SNR'), ('CFO JNR', 'CFO JNR')], 'Competition')
@@ -300,7 +344,7 @@ class CFOSeniorMember(models.Model):
     zip = fields.Char('Zip')
     country = fields.Many2one('res.country', 'Country')
     programme_name = fields.Char('Programme Name')
-    
+
     aspirants_email = fields.Char('Primary Email')
     secondary_email = fields.Char('Secondary Email')
     birth_date = fields.Date('Date of Birth')
@@ -308,21 +352,21 @@ class CFOSeniorMember(models.Model):
     office_telephone = fields.Char('Office Telephone')
     entry_type = fields.Selection([('Student', 'Student'), ('Employee', 'Employee')], 'I am entering as')
     age = fields.Selection([('14', '14'),
-                           ('15', '15'),
-                           ('16', '16'),
-                           ('17', '17'),
-                           ('18', '18'),
-                           ('19', '19'),
-                           ('20', '20'),
-                           ('21', '21'),
-                           ('22', '22'),
-                           ('23', '23'),
-                           ('24', '24'),
-                           ('25', '25'),
-                           ], 'Age')
+                            ('15', '15'),
+                            ('16', '16'),
+                            ('17', '17'),
+                            ('18', '18'),
+                            ('19', '19'),
+                            ('20', '20'),
+                            ('21', '21'),
+                            ('22', '22'),
+                            ('23', '23'),
+                            ('24', '24'),
+                            ('25', '25'),
+                            ], 'Age')
     college_university = fields.Char('Legal/Registered Name College/University')
-    unit  =fields.Char('Department/Faculty/Unit')
-    website  =fields.Char('Website')
+    unit = fields.Char('Department/Faculty/Unit')
+    website = fields.Char('Website')
     college_street = fields.Char('Address')
     college_street2 = fields.Char('Street2')
     college_city = fields.Char('City')
@@ -332,36 +376,41 @@ class CFOSeniorMember(models.Model):
     cfo_team = fields.Many2one('cfo.teams', 'CFO Snr Teams')
 
     cfo_member_type = fields.Selection([('CFO Aspirant', 'CFO Aspirant'),
-                             ('Academic Institution', 'Academic Institution'),
-                             ('Employer', 'Employer'),
-                             ('Volunteer', 'Volunteer'),
-                             ('Brand Ambassador', 'Brand Ambassador'),
-                             ('Social Media Contestant', 'Social Media Contestant'),
-                             ('Mentor', 'Mentor'),
-                             ('Secondary/High School','Secondary/High School')],
-                             'Type')
-    cfo_competition_year = fields.Selection([('2016', '2016'),('2017', '2017'),('2018', '2018'),('2019', '2019'),('2020', '2020')], 'Year')
+                                        ('Academic Institution', 'Academic Institution'),
+                                        ('Employer', 'Employer'),
+                                        ('Volunteer', 'Volunteer'),
+                                        ('Brand Ambassador', 'Brand Ambassador'),
+                                        ('Social Media Contestant', 'Social Media Contestant'),
+                                        ('Mentor', 'Mentor'),
+                                        ('Secondary/High School', 'Secondary/High School')],
+                                       'Type')
+    cfo_competition_year = fields.Selection(
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
     cfo_registrants_source = fields.Selection([('Social Media', 'Social Media'),
-                                             ('Direct web address', 'Direct web address'),
-                                             ('Google/other search engine', 'Google/other search engine'),
-                                             ('E-banner/Web advertisement', 'E-banner/Web advertisement'),
-                                             ('Email campaign/Signature card with link', 'Email campaign/Signature card with link'),
-                                             ("Person Vue website/exam booking page","Person Vue website/exam booking page"),
-                                             ("Other website listing","Other website listing"),
-                                             ("Radio/TV","Radio/TV"),
-                                             ("Print Media","Print Media"),
-                                             ("Direct mail via the post","Direct mail via the post"),
-                                             ("Word-of-mouth/current/prior CharterQuest Student","Word-of-mouth/current/prior CharterQuest Student"),
-                                             ("My school/mentor/friend","My school/mentor/friend"),
-                                             ("My Employer/Boss/Supervisor","My Employer/Boss/Supervisor"),
-                                             ("Brand Ambassador","Brand Ambassador"),
-                                             ("Professional Body (CIMA, SAICA, ACCA, CFA Institute)","Professional Body (CIMA, SAICA, ACCA, CFA Institute)"),
-                                             ("Billboard/street post/community center/church","Billboard/street post/community center/church"),
-                                             ("Other(please specify)","Other(please specify)")
-                                             ], 'How Did you 1st Hear About the CFO')
-    
+                                               ('Direct web address', 'Direct web address'),
+                                               ('Google/other search engine', 'Google/other search engine'),
+                                               ('E-banner/Web advertisement', 'E-banner/Web advertisement'),
+                                               ('Email campaign/Signature card with link',
+                                                'Email campaign/Signature card with link'),
+                                               ("Person Vue website/exam booking page",
+                                                "Person Vue website/exam booking page"),
+                                               ("Other website listing", "Other website listing"),
+                                               ("Radio/TV", "Radio/TV"),
+                                               ("Print Media", "Print Media"),
+                                               ("Direct mail via the post", "Direct mail via the post"),
+                                               ("Word-of-mouth/current/prior CharterQuest Student",
+                                                "Word-of-mouth/current/prior CharterQuest Student"),
+                                               ("My school/mentor/friend", "My school/mentor/friend"),
+                                               ("My Employer/Boss/Supervisor", "My Employer/Boss/Supervisor"),
+                                               ("Brand Ambassador", "Brand Ambassador"),
+                                               ("Professional Body (CIMA, SAICA, ACCA, CFA Institute)",
+                                                "Professional Body (CIMA, SAICA, ACCA, CFA Institute)"),
+                                               ("Billboard/street post/community center/church",
+                                                "Billboard/street post/community center/church"),
+                                               ("Other(please specify)", "Other(please specify)")
+                                               ], 'How Did you 1st Hear About the CFO')
+
     login = fields.Char('User name')
     password = fields.Char('Password')
-
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

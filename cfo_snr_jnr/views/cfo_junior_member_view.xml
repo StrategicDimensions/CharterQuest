@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <form string="CFO Aspirants Form">
                 <group string='Bio Details' col='4'>
-                    <field name='partner_id' required="True" />
+                    <field name='partner_id' required="True" context="{'default_cfo_user':True}"/>
                     <field name='surname' />
                     <field name='other_names' />
                     <field name='date_of_birth' required="0" />
@@ -186,7 +186,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_aspirants_2016">
-        <field name="name">CFO Aspirants</field>
+        <field name="name">CFO Junior Aspirants</field>
         <field name="res_model">cfo.jnr.aspirants</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
@@ -194,7 +194,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_aspirants_2017">
-        <field name="name">CFO Aspirants</field>
+        <field name="name">CFO Junior Aspirants</field>
         <field name="res_model">cfo.jnr.aspirants</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
@@ -202,7 +202,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_aspirants_2018">
-        <field name="name">CFO Aspirants</field>
+        <field name="name">CFO Junior Aspirants</field>
         <field name="res_model">cfo.jnr.aspirants</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
@@ -210,7 +210,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_aspirants_2019">
-        <field name="name">CFO Aspirants</field>
+        <field name="name">CFO Junior Aspirants</field>
         <field name="res_model">cfo.jnr.aspirants</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
@@ -218,7 +218,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_aspirants_2020">
-        <field name="name">CFO Aspirants</field>
+        <field name="name">CFO Junior Aspirants</field>
         <field name="res_model">cfo.jnr.aspirants</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
@@ -245,7 +245,7 @@
               <sheet string="CFO Junior Member">
                 <div class="oe_title">
                     <h1>
-                        <field name="partner_id" required="1"/>
+                        <field name="partner_id" required="1" context="{'default_cfo_user':True}"/>
                     </h1>
                 </div>
                 <notebook>
@@ -421,7 +421,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_academic_inst_2016">
-        <field name="name">CFO Academic Institutions</field>
+        <field name="name">Sec/High Schools</field>
         <field name="res_model">academic.institution.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
@@ -429,7 +429,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_academic_inst_2017">
-        <field name="name">CFO Academic Institutions</field>
+        <field name="name">Sec/High Schools</field>
         <field name="res_model">academic.institution.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
@@ -437,7 +437,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_academic_inst_2018">
-        <field name="name">CFO Academic Institutions</field>
+        <field name="name">Sec/High Schools</field>
         <field name="res_model">academic.institution.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
@@ -445,7 +445,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_academic_inst_2019">
-        <field name="name">CFO Academic Institutions</field>
+        <field name="name">Sec/High Schools</field>
         <field name="res_model">academic.institution.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
@@ -453,7 +453,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_academic_inst_2020">
-        <field name="name">CFO Academic Institutions</field>
+        <field name="name">Sec/High Schools</field>
         <field name="res_model">academic.institution.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
@@ -609,7 +609,7 @@
         <field name="arch" type="xml">
             <form string="Mentors Form">
                 <group string='Bio Details' col='4'>
-                    <field name='partner_id' required="True" />
+                    <field name='partner_id' required="True" context="{'default_cfo_user':True}"/>
                     <field name='surname' required="0" />
                     <field name='other_names' />
                     <field name="cfo_competition_year" invisible="1"/>
@@ -710,7 +710,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_mentors_2016">
-        <field name="name">CFO Mentors</field>
+        <field name="name">Mentors</field>
         <field name="res_model">mentors.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
@@ -718,7 +718,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_mentors_2017">
-        <field name="name">CFO Mentors</field>
+        <field name="name">Mentors</field>
         <field name="res_model">mentors.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
@@ -726,7 +726,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_mentors_2018">
-        <field name="name">CFO Mentors</field>
+        <field name="name">Mentors</field>
         <field name="res_model">mentors.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
@@ -734,7 +734,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_mentors_2019">
-        <field name="name">CFO Mentors</field>
+        <field name="name">Mentors</field>
         <field name="res_model">mentors.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
@@ -742,7 +742,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_mentors_2020">
-        <field name="name">CFO Mentors</field>
+        <field name="name">Mentors</field>
         <field name="res_model">mentors.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
@@ -907,7 +907,7 @@
         <field name="arch" type="xml">
             <form string="Brand Ambassadors Form">
                 <group string='Bio Details' col='4'>
-                    <field name='partner_id' required="True" />
+                    <field name='partner_id' required="True" context="{'default_cfo_user':True}"/>
                     <field name='surname' />
                     <field name='other_names' />
                     <field name="cfo_competition_year" invisible="1"/>
@@ -971,7 +971,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_ambassador_2016">
-        <field name="name">CFO Brand Ambassadors</field>
+        <field name="name">Brand Ambassadors</field>
         <field name="res_model">brand.ambassador.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
@@ -979,7 +979,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_ambassador_2017">
-        <field name="name">CFO Brand Ambassadors</field>
+        <field name="name">Brand Ambassadors</field>
         <field name="res_model">brand.ambassador.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
@@ -987,7 +987,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_ambassador_2018">
-        <field name="name">CFO Brand Ambassadors</field>
+        <field name="name">Brand Ambassadors</field>
         <field name="res_model">brand.ambassador.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
@@ -995,7 +995,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_ambassador_2019">
-        <field name="name">CFO Brand Ambassadors</field>
+        <field name="name">Brand Ambassadors</field>
         <field name="res_model">brand.ambassador.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
@@ -1003,7 +1003,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_cfo_jnr_ambassador_2020">
-        <field name="name">CFO Brand Ambassadors</field>
+        <field name="name">Brand Ambassadors</field>
         <field name="res_model">brand.ambassador.jnr</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('cfo_competition_year', '=', '2020')]</field>

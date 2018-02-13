@@ -41,7 +41,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 			}
 		});
 		$("#cfo_source").change(function() {
-	    	if (this.value != 'Other(please specify)')
+	    	if (this.value != 'Other')
 			{
 	    		$('#other_source').hide();
 			}
@@ -59,7 +59,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 	    		$('#socialmedia_source').show();
 			}
 	    });
-		
+		$('#cfo_competition').val('');
 		$('#cfo_competition').change(function(){
 			ajax.jsonRpc("/get_member_types","call",{'val':$(this).val()}).then(function(result){
 				if (result){
