@@ -1,130 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-    
-    <record id="view_cfo_team_form" model="ir.ui.view">
-        <field name="name">cfo.team.form</field>
-        <field name="model">cfo.teams</field>
-        <field name="arch" type="xml">
-            <form string="CFO Team">
-                <sheet string="CFO Team">
-                <div class="oe_title">
-                    <h1>
-                        <field name="name" required="1"/>
-                    </h1>
-                </div>
-                <group>
-                  <group>
-                    <field name='cfo_comp' invisible="1"/>
-                    <field name='cfo_competition_year' invisible="1"/>
-                  </group>
-                  <group></group>
-                </group>
-              </sheet>
-            </form>
-        </field>
-    </record>
-    
-    <record id="view_cfo_team_list" model="ir.ui.view">
-        <field name="name">cfo.team.list</field>
-        <field name="model">cfo.teams</field>
-        <field name="arch" type="xml">
-            <tree string="CFO Team">
-                <field name="name"/>
-            </tree>
-        </field>
-    </record>
-    
-    <record model="ir.actions.act_window" id="action_cfo_team_jnr_2016">
-        <field name="name">Teams</field>
-        <field name="res_model">cfo.teams</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2016')]</field>
-        <field name="context">{'default_cfo_comp': 'CFO JNR', 'default_cfo_competition_year': '2016'}</field>
-    </record>
-    
-     <record model="ir.actions.act_window" id="action_cfo_team_jnr_2017">
-        <field name="name">Teams</field>
-        <field name="res_model">cfo.teams</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2017')]</field>
-        <field name="context">{'default_cfo_comp': 'CFO JNR', 'default_cfo_competition_year': '2017'}</field>
-    </record>
-    
-     <record model="ir.actions.act_window" id="action_cfo_team_jnr_2018">
-        <field name="name">Teams</field>
-        <field name="res_model">cfo.teams</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2018')]</field>
-        <field name="context">{'default_cfo_comp': 'CFO JNR', 'default_cfo_competition_year': '2018'}</field>
-    </record>
-    
-     <record model="ir.actions.act_window" id="action_cfo_team_jnr_2019">
-        <field name="name">Teams</field>
-        <field name="res_model">cfo.teams</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2019')]</field>
-        <field name="context">{'default_cfo_comp': 'CFO JNR', 'default_cfo_competition_year': '2019'}</field>
-    </record>
-    
-     <record model="ir.actions.act_window" id="action_cfo_team_jnr_2020">
-        <field name="name">Teams</field>
-        <field name="res_model">cfo.teams</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2020')]</field>
-        <field name="context">{'default_cfo_comp': 'CFO JNR', 'default_cfo_competition_year': '2020'}</field>
-    </record>
-    
-    <record model="ir.actions.act_window" id="action_cfo_team_snr_2016">
-        <field name="name">Teams</field>
-        <field name="res_model">cfo.teams</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2016')]</field>
-        <field name="context">{'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2016'}</field>
-    </record>
-    
-    <record model="ir.actions.act_window" id="action_cfo_team_snr_2017">
-        <field name="name">Teams</field>
-        <field name="res_model">cfo.teams</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2017')]</field>
-        <field name="context">{'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2017'}</field>
-    </record>
-    
-    <record model="ir.actions.act_window" id="action_cfo_team_snr_2018">
-        <field name="name">Teams</field>
-        <field name="res_model">cfo.teams</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2018')]</field>
-        <field name="context">{'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2018'}</field>
-    </record>
-    
-    <record model="ir.actions.act_window" id="action_cfo_team_snr_2019">
-        <field name="name">Teams</field>
-        <field name="res_model">cfo.teams</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2019')]</field>
-        <field name="context">{'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2019'}</field>
-    </record>
-    
-    <record model="ir.actions.act_window" id="action_cfo_team_snr_2020">
-        <field name="name">Teams</field>
-        <field name="res_model">cfo.teams</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2020')]</field>
-        <field name="context">{'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2020'}</field>
-    </record>
-    <menuitem id="menu_cfo_team_jnr_2016" action="action_cfo_team_jnr_2016" parent="menu_cfo_member_jnr_2016_root" sequence="7"/>
-    <menuitem id="menu_cfo_team_jnr_2017" action="action_cfo_team_jnr_2017" parent="menu_cfo_member_jnr_2017_root" sequence="7"/>
-    <menuitem id="menu_cfo_team_jnr_2018" action="action_cfo_team_jnr_2018" parent="menu_cfo_member_jnr_2018_root" sequence="7"/>
-    <menuitem id="menu_cfo_team_jnr_2019" action="action_cfo_team_jnr_2019" parent="menu_cfo_member_jnr_2019_root" sequence="7"/>
-    <menuitem id="menu_cfo_team_jnr_2020" action="action_cfo_team_jnr_2020" parent="menu_cfo_member_jnr_2020_root" sequence="7"/>
-    
-    <menuitem id="menu_cfo_team_snr_2016" action="action_cfo_team_snr_2016" parent="menu_cfo_member_snr_2016_root" sequence="7"/>
-    <menuitem id="menu_cfo_team_snr_2017" action="action_cfo_team_snr_2017" parent="menu_cfo_member_snr_2017_root" sequence="7"/>
-    <menuitem id="menu_cfo_team_snr_2018" action="action_cfo_team_snr_2018" parent="menu_cfo_member_snr_2018_root" sequence="7"/>
-    <menuitem id="menu_cfo_team_snr_2019" action="action_cfo_team_snr_2019" parent="menu_cfo_member_snr_2019_root" sequence="7"/>
-    <menuitem id="menu_cfo_team_snr_2020" action="action_cfo_team_snr_2020" parent="menu_cfo_member_snr_2020_root" sequence="7"/>
-    
+
+        <record id='view_cfo_team_snr_form' model='ir.ui.view'>
+            <field name="name">CFO Team SNR</field>
+            <field name="model">cfo.team.snr</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group col='4'>
+                        <field name='name'/>
+                        <field name='ref_name'/>
+                        <field name='mentor_id'/>
+                        <field name='brand_amb_id'/>
+                        <field name='team_leader_id'/>
+                        <field name='create_date' readonly='True'/>
+                        <field name='write_date' readonly='True'/>
+                        <field name='cfo_report_deadline_date'
+                               readonly="False"/>
+                        <field name="date_cfo_report_deadline"
+                               invisible="0"/>
+                        <field name='acknowledge_cfo_report'/>
+                        <field name="cfo_report_submission_date"
+                               readonly="0"/>
+                        <field name='remaining_time_deadline'
+                               readonly="0"/>
+                        <field name='team_type'/>
+                        <field name='academic_admin_id'
+                               attrs="{'invisible':[('team_type','not in',['Academic Institution'])]}"/>
+                        <field name='employer_admin_id'
+                               attrs="{'invisible':[('team_type','not in',['Employer'])]}"/>
+                    </group>
+                    <notebook>
+                        <page string='Team members'>
+                            <field name='aspirants_ids'/>
+                        </page>
+                        <page string='Team Documents'>
+                            <field name='document_ids'/>
+                        </page>
+                        <page string='Credentials'>
+                            <group>
+                                <field name='encrypted_team_type'/>
+                                <field name='encrypted_id'/>
+                            </group>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_cfo_team_snr_list" model="ir.ui.view">
+            <field name="name">cfo.team.snr.list</field>
+            <field name="model">cfo.team.snr</field>
+            <field name="arch" type="xml">
+                <tree string="CFO Team">
+                    <field name="name"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id='view_cfo_team_jnr_form' model='ir.ui.view'>
+            <field name="name">CFO Team JNR</field>
+            <field name="model">cfo.team.jnr</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group col='4'>
+                        <field name='name'/>
+                        <field name='ref_name'/>
+                        <field name='mentor_id'/>
+                        <field name='brand_amb_id'/>
+                        <field name='team_leader_id'/>
+                        <field name='create_date' readonly='True'/>
+                        <field name='write_date' readonly='True'/>
+                        <field name='cfo_report_deadline_date'
+                               readonly="0"/>
+                        <field name="date_cfo_report_deadline"
+                               invisible="0"/>
+                        <field name='acknowledge_cfo_report'/>
+                        <field name="cfo_report_submission_date"
+                               readonly="0"/>
+                        <field name='remaining_time_deadline'
+                               readonly="0"/>
+                        <field name='team_type'/>
+                        <field name='academic_admin_id'
+                               attrs="{'invisible':[('team_type','not in',['Academic Institution'])]}"/>
+                        <field name='employer_admin_id'
+                               attrs="{'invisible':[('team_type','not in',['Employer'])]}"/>
+                    </group>
+                    <notebook>
+                        <page string='Team members'>
+                            <field name='aspirants_ids'/>
+                        </page>
+                        <page string='Team Documents'>
+                            <field name='document_ids'/>
+                        </page>
+                        <page string='Credentials'>
+                            <group>
+                                <field name='encrypted_team_type'/>
+                                <field name='encrypted_id'/>
+                            </group>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <!--<record id="view_cfo_team_snr_form" model="ir.ui.view">-->
+        <!--<field name="name">cfo.team.form</field>-->
+        <!--<field name="model">cfo.team.snr</field>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<form string="CFO Team">-->
+        <!--<sheet string="CFO Team">-->
+        <!--<div class="oe_title">-->
+        <!--<h1>-->
+        <!--<field name="name" required="1"/>-->
+        <!--</h1>-->
+        <!--</div>-->
+        <!--<group>-->
+        <!--<group>-->
+        <!--<field name='cfo_comp' invisible="1"/>-->
+        <!--<field name='cfo_competition_year' invisible="1"/>-->
+        <!--</group>-->
+        <!--<group></group>-->
+        <!--</group>-->
+        <!--</sheet>-->
+        <!--</form>-->
+        <!--</field>-->
+        <!--</record>-->
+
+        <record id="view_cfo_team_jnr_list" model="ir.ui.view">
+            <field name="name">cfo.team.jnr.list</field>
+            <field name="model">cfo.team.jnr</field>
+            <field name="arch" type="xml">
+                <tree string="CFO Team">
+                    <field name="name"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_team_jnr_2016">
+            <field name="name">Teams</field>
+            <field name="res_model">cfo.teams</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2016')]</field>
+            <field name="context">{'default_cfo_comp': 'CFO JNR', 'default_cfo_competition_year': '2016'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_team_jnr_2017">
+            <field name="name">Teams</field>
+            <field name="res_model">cfo.team.jnr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2017')]</field>
+            <field name="context">{'default_cfo_comp': 'CFO JNR', 'default_cfo_competition_year': '2017'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_team_jnr_2018">
+            <field name="name">Teams</field>
+            <field name="res_model">cfo.team.jnr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2018')]</field>
+            <field name="context">{'default_cfo_comp': 'CFO JNR', 'default_cfo_competition_year': '2018'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_team_jnr_2019">
+            <field name="name">Teams</field>
+            <field name="res_model">cfo.team.jnr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2019')]</field>
+            <field name="context">{'default_cfo_comp': 'CFO JNR', 'default_cfo_competition_year': '2019'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_team_jnr_2020">
+            <field name="name">Teams</field>
+            <field name="res_model">cfo.team.jnr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_comp', '=', 'CFO JNR'), ('cfo_competition_year', '=', '2020')]</field>
+            <field name="context">{'default_cfo_comp': 'CFO JNR', 'default_cfo_competition_year': '2020'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_team_snr_2016">
+            <field name="name">Teams</field>
+            <field name="res_model">cfo.team.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2016')]</field>
+            <field name="context">{'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2016'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_team_snr_2017">
+            <field name="name">Teams</field>
+            <field name="res_model">cfo.team.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2017')]</field>
+            <field name="context">{'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2017'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_team_snr_2018">
+            <field name="name">Teams</field>
+            <field name="res_model">cfo.team.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2018')]</field>
+            <field name="context">{'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2018'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_team_snr_2019">
+            <field name="name">Teams</field>
+            <field name="res_model">cfo.team.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2019')]</field>
+            <field name="context">{'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2019'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_team_snr_2020">
+            <field name="name">Teams</field>
+            <field name="res_model">cfo.team.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_comp', '=', 'CFO SNR'), ('cfo_competition_year', '=', '2020')]</field>
+            <field name="context">{'default_cfo_comp': 'CFO SNR', 'default_cfo_competition_year': '2020'}</field>
+        </record>
+        <menuitem id="menu_cfo_team_jnr_2016" action="action_cfo_team_jnr_2016" parent="menu_cfo_member_jnr_2016_root"
+                  sequence="7"/>
+        <menuitem id="menu_cfo_team_jnr_2017" action="action_cfo_team_jnr_2017" parent="menu_cfo_member_jnr_2017_root"
+                  sequence="7"/>
+        <menuitem id="menu_cfo_team_jnr_2018" action="action_cfo_team_jnr_2018" parent="menu_cfo_member_jnr_2018_root"
+                  sequence="7"/>
+        <menuitem id="menu_cfo_team_jnr_2019" action="action_cfo_team_jnr_2019" parent="menu_cfo_member_jnr_2019_root"
+                  sequence="7"/>
+        <menuitem id="menu_cfo_team_jnr_2020" action="action_cfo_team_jnr_2020" parent="menu_cfo_member_jnr_2020_root"
+                  sequence="7"/>
+
+        <menuitem id="menu_cfo_team_snr_2016" action="action_cfo_team_snr_2016" parent="menu_cfo_member_snr_2016_root"
+                  sequence="7"/>
+        <menuitem id="menu_cfo_team_snr_2017" action="action_cfo_team_snr_2017" parent="menu_cfo_member_snr_2017_root"
+                  sequence="7"/>
+        <menuitem id="menu_cfo_team_snr_2018" action="action_cfo_team_snr_2018" parent="menu_cfo_member_snr_2018_root"
+                  sequence="7"/>
+        <menuitem id="menu_cfo_team_snr_2019" action="action_cfo_team_snr_2019" parent="menu_cfo_member_snr_2019_root"
+                  sequence="7"/>
+        <menuitem id="menu_cfo_team_snr_2020" action="action_cfo_team_snr_2020" parent="menu_cfo_member_snr_2020_root"
+                  sequence="7"/>
+
     </data>
 </odoo>

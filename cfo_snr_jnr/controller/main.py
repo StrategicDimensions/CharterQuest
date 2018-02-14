@@ -82,6 +82,8 @@ class CfoHome(web.Home):
         snr_media_contestants = request.env['social.media.contestants.snr'].sudo().search(args)
         snr_mentors = request.env['mentors.snr'].sudo().search(args)
         values = {}
+        if post.get('snr_aspirants'):
+            values['update_bio'] = True
         if snr_aspirants:
             values.update({'snr_aspirants': snr_aspirants})
         if snr_academic_institution:

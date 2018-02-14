@@ -365,49 +365,309 @@
                             </t>
                             <t t-if="senior">
                                 <div class="row">
-                                    <div class="o_box" style="max-width: 209px;">
-                                        <a class="o_box_item o_dashboard_action" href="#" name="website.action_website"
-                                           title="Go to Website">
-                                            <div class="o_inner_box o_primary">
-                                                <i class="fa fa-clock-o fa-3x"></i>
-                                                <br>
-                                                    CFO report submission Deadline
-                                                </br>
-                                            </div>
-                                        </a>
+                                    <h3>
+                                        CFO Senior -
+                                        <t t-if="snr_aspirants">Aspirant</t>
+                                        <t t-if="snr_academic_institution">Academic Institute</t>
+                                        <t t-if="snr_employers">Employee</t>
+                                        <t t-if="snr_volunteers">Volunteer</t>
+                                        <t t-if="snr_brand_ambassador">Brand Ambassador</t>
+                                        <t t-if="snr_media_contestants">Media Contestant</t>
+                                        <t t-if="snr_mentors">Mentor</t>
+                                    </h3>
+                                </div>
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-4">
+                                            <h4>CFO Report Submission Deadline</h4>
+                                            <strong>
+                                                <t t-esc="snr_aspirants.aspirant_id.date_cfo_report_deadline or False"/>
+                                            </strong>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h4>Remaining Time</h4>
+                                            <strong>
+                                                <t t-esc="snr_aspirants.aspirant_id.remaining_time_deadline or False"/>
+                                            </strong>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h4>Submission Status</h4>
+                                            <t t-if="snr_aspirants.aspirant_id.acknowledge_cfo_report">
+                                                Submitted
+                                            </t>
+                                            <t t-if="not snr_aspirants.aspirant_id.acknowledge_cfo_report">
+                                                Pending
+                                            </t>
+                                        </div>
                                     </div>
-                                    <div class="o_box" style="max-width: 209px;">
-                                        <a class="o_box_item o_dashboard_action" href="#" name="website.action_website"
-                                           title="Go to Website">
-                                            <div class="o_inner_box o_primary">
-                                                <i class="fa fa-clock-o fa-3x"></i>
-                                                <br>
-                                                    CFO report submission Deadline
-                                                </br>
-                                            </div>
-                                        </a>
+                                    <div class="col-md-12" style="text-align:center">
+                                        <button id="submit_cfo_report" class="btn btn-primary">SUBMIT CFO REPORT
+                                        </button>
                                     </div>
-                                    <div class="o_box" style="max-width: 209px;">
-                                        <a class="o_box_item o_dashboard_action" href="#" name="website.action_website"
-                                           title="Go to Website">
-                                            <div class="o_inner_box o_primary">
-                                                <i class="fa fa-clock-o fa-3x"></i>
-                                                <br>
-                                                    CFO report submission Deadline
-                                                </br>
-                                            </div>
-                                        </a>
+                                </div>
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-md-3 text-center mt32 mb32">
+                                        <span class="fa fa-check fa-2x bg-gamma"
+                                              style="animation-play-state: paused; transition: none"/>
+                                        <h4>Register</h4>
+                                        <p class="text-muted"/>
                                     </div>
-                                    <div class="o_box" style="max-width: 209px;">
-                                        <a class="o_box_item o_dashboard_action" href="#" name="website.action_website"
-                                           title="Go to Website">
-                                            <div class="o_inner_box o_primary">
-                                                <i class="fa fa-clock-o fa-3x"></i>
-                                                <br>
-                                                    CFO report submission Deadline
-                                                </br>
+                                    <div class="col-md-3 text-center mt32 mb32">
+                                        <t t-if="snr_aspirants and snr_aspirants.updated_cfo_bio">
+                                            <span class="fa fa-check fa-2x bg-gamma"
+                                                  style="animation-play-state: paused; transition: none"/>
+                                        </t>
+                                        <t t-if="snr_aspirants and not snr_aspirants.updated_cfo_bio">
+                                            <span class="fa fa-times fa-2x bg-gray-lighter"
+                                                  style="animation-play-state: paused; transition: none"/>
+                                        </t>
+                                        <h4>Update BIO</h4>
+                                        <p class="text-muted"/>
+                                    </div>
+                                    <div class="col-md-3 text-center mt32 mb32">
+                                        <t t-if="snr_aspirants.aspirant_id">
+                                            <span class="fa fa-check fa-2x bg-gamma"
+                                                  style="animation-play-state: paused; transition: none"/>
+                                        </t>
+                                        <t t-if="not snr_aspirants.aspirant_id">
+                                            <span class="fa fa-times fa-2x bg-gray-lighter"
+                                                  style="animation-play-state: paused; transition: none"/>
+                                        </t>
+                                        <h4>Create Team</h4>
+                                        <p class="text-muted"/>
+                                    </div>
+                                    <div class="col-md-3 text-center mt32 mb32">
+                                        <t t-if="team_obj and team_obj.aspirants_ids">
+                                            <span class="fa fa-check fa-2x bg-gamma"
+                                                  style="animation-play-state: paused; transition: none"/>
+                                        </t>
+                                        <t t-if="not snr_aspirants.aspirant_id">
+                                            <span class="bg-gray-lighter fa fa-times fa-2x "
+                                                  style="animation-play-state: paused; transition: none"/>
+                                        </t>
+                                        <t t-if="snr_aspirants.aspirant_id and not snr_aspirants.aspirant_id.aspirants_ids">
+                                            <span class="bg-gray-lighter fa fa-times fa-2x "
+                                                  style="animation-play-state: paused; transition: none"/>
+                                        </t>
+                                        <h4>Invite Team Members</h4>
+                                        <p class="text-muted"/>
+                                    </div>
+                                </div>
+                                <div class="container" t-if="not update_bio">
+                                    <form action="/cfo/cfo-aspirants-form">
+                                        <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
+                                        <button type="submit" class="btn btn-default btn-primary mb32 a-submit"
+                                                style="margin-left:350px;">UPDATE YOUR BIO
+                                        </button>
+                                        <t t-if="snr_aspirants and snr_aspirants.team_admin and snr_aspirants.updated_cfo_bio and not snr_aspirants.aspirant_id">
+                                            <a href="/cfo/cfo_teams" class="btn btn-default btn-primary mb32 a-submit">
+                                                CREATE/UPDATE
+                                                TEAM
+                                            </a>
+                                        </t>
+                                        <t t-if="aspirant_obj and aspirant_obj.updated_cfo_bio and  team_obj and team_obj.team_type=='CFO Aspirant'">
+                                            <a href="/cfo/cfo_teams" class="btn btn-default btn-primary mb32 a-submit">
+                                                VIEW/UPDATE
+                                                TEAM
+                                            </a>
+                                        </t>
+                                        <button type="button" class="btn btn-default btn-primary mb32 a-submit"
+                                                data-toggle="modal"
+                                                data-target="#myModal" id="modal_button">
+                                            Register for other categories
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="container" t-if="update_bio">
+                                    <div class="container">
+                                        <section class="s_process_steps_2">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-3 text-center mt32 mb32">
+                                                        <h4>Bio Details</h4>
+                                                        <p class="text-muted"/>
+                                                    </div>
+                                                    <div class="col-md-3 text-center mt32 mb32">
+                                                        <h4>Contact Information</h4>
+                                                        <p class="text-muted"/>
+                                                    </div>
+                                                    <div class="col-md-3 text-center mt32 mb32">
+                                                        <h4>Eligibility Status</h4>
+                                                        <p class="text-muted"/>
+                                                    </div>
+                                                    <div class="col-md-3 text-center mt32 mb32">
+                                                        <h4>Competition Rules</h4>
+                                                        <p class="text-muted"/>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </a>
+                                        </section>
+                                        <section class="s_text_image">
+                                            <form action="/cfo/update_cfo_bio" method="post">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-md-6 mt16">
+                                                            <h3>Bio Details</h3>
+                                                            <table class="table  table-responsive">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label class="control-label"
+                                                                                   for="first_name">First Name​
+                                                                            </label>
+                                                                            <input type="text" name="name"
+                                                                                   id="first_name"
+                                                                                   class="form-control" required="1"
+                                                                                   t-att-value="snr_aspirants.name"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label class="control-label" for="surname">
+                                                                                Surname​
+                                                                            </label>
+                                                                            <input type="text" name="surname"
+                                                                                   id="surname"
+                                                                                   class="form-control" required="1"
+                                                                                   t-att-value="snr_aspirants.surname"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>​
+                                                                            <label class="control-label"
+                                                                                   for="other_names">Other Names
+                                                                            </label>
+                                                                            <input type="text" name="other_names"
+                                                                                   id="other_names"
+                                                                                   class="form-control"
+                                                                                   t-att-value="snr_aspirants.other_names"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <p/>
+                                                        </div>
+                                                        <div class="col-md-6 mt16">
+                                                            <h3></h3>
+                                                            <table class="table  table-responsive">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label class="control-label"
+                                                                                   for="date_of_birth">Date of Birth
+                                                                            </label>
+                                                                            <input type="text" name="date_of_birth"
+                                                                                   id="date_of_birth"
+                                                                                   class="form-control" required="1"
+                                                                                   t-att-value="snr_aspirants.date_of_birth"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label class="control-label"
+                                                                                   for="countr_of_birth">Country of
+                                                                                Birth
+                                                                            </label>
+                                                                            <select name="country_of_birth"
+                                                                                    id="country_of_birth"
+                                                                                    class="form-control" required="1">
+                                                                                <t t-if="cfo_obj">
+                                                                                    <option t-att-value=" cfo_obj.country_of_birth.id if cfo_obj.country_of_birth else &quot;&quot;">
+                                                                                        <t t-esc="snr_aspirants.country_of_birth.name if cfo_obj.country_of_birth else &quot;&quot;"/>
+                                                                                    </option>
+                                                                                </t>
+                                                                                <t t-foreach="country_list"
+                                                                                   t-as="country"
+                                                                                   placeholder="Country">
+                                                                                    <option t-att-value="country['id']">
+                                                                                        <t t-esc="country['name']"/>
+                                                                                    </option>
+                                                                                </t>
+                                                                            </select>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label class="control-label"
+                                                                                   for="nationality">Current
+                                                                                Citizenship/Nationality
+                                                                            </label>
+                                                                            <select name="nationality" id="nationality"
+                                                                                    class="form-control"
+                                                                                    required="1">
+                                                                                <t t-if="cfo_obj">
+                                                                                    <option t-att-value=" cfo_obj.nationality.id if cfo_obj.nationality else &quot;&quot;">
+                                                                                        <t t-esc="snr_aspirants.nationality.name if cfo_obj.nationality else &quot;&quot;"/>
+                                                                                    </option>
+                                                                                </t>
+                                                                                <t t-foreach="country_list"
+                                                                                   t-as="country"
+                                                                                   placeholder="Country">
+                                                                                    <option t-att-value="country['id']">
+                                                                                        <t t-esc="country['name']"/>
+                                                                                    </option>
+                                                                                </t>
+                                                                            </select>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <!--cfo junior-->
+                                                                    <t t-if="request.session.get('is_cfo_junior')">
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label class="control-label" for="race">
+                                                                                    Race
+                                                                                </label>
+                                                                                <select name="race" class="form-control"
+                                                                                        placeholder="Race">
+                                                                                    <option>Black</option>
+                                                                                    <option>Coloured</option>
+                                                                                    <option>Indian/Asian</option>
+                                                                                    <option>White</option>
+                                                                                    <option>Other</option>
+                                                                                </select>
+
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label class="control-label"
+                                                                                       for="gender">Gender
+                                                                                </label>
+                                                                                <select name="gender"
+                                                                                        class="form-control"
+                                                                                        placeholder="Gender">
+                                                                                    <option>Male</option>
+                                                                                    <option>Female</option>
+                                                                                </select>
+
+                                                                            </td>
+                                                                        </tr>
+                                                                    </t>
+                                                                    <!--cfo junior ends-->
+
+                                                                </tbody>
+                                                            </table>
+                                                            <p>
+                                                                <t t-if="request.session.get('is_cfo_junior')">
+                                                                    <button class="btn btn-default btn-primary mb32 a-submit"
+                                                                            type="submit"
+                                                                            onclick="window.history.back()">BACK
+                                                                    </button>
+                                                                </t>
+
+                                                                <button class="btn btn-default btn-primary mb32 a-submit"
+                                                                        type="submit">NEXT
+                                                                    to CONTACT INFORMATION &gt;&gt;
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </section>
                                     </div>
                                 </div>
                             </t>

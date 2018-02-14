@@ -53,7 +53,7 @@ class CFOJuniorAspirants(models.Model):
                                  string='Name', ondelete='restrict',
                                  help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_cfo_bio = fields.Boolean('Updated CFO BIO')
-    aspirant_id = fields.Many2one('cfo.teams', 'Aspirant ID')
+    aspirant_id = fields.Many2one('cfo.team.jnr', 'Aspirant ID')
     aspirant_age = fields.Selection(_compute_age, 'Age')
     member_accept = fields.Boolean('Accept')
     user_id = fields.Many2one('res.users', 'Related User')
@@ -180,7 +180,7 @@ class BrandAmbassadorJunior(models.Model):
     updated_brand_amb_bio = fields.Boolean('Updated Brand Ambassador BIO')
     brand_accept = fields.Boolean('Accept Brand Invite')
     user_id = fields.Many2one('res.users', 'Related User')
-    team_ids = fields.Many2many('cfo.teams', 'brand_teams_rel', 'brand_amb_id', 'team_id', 'Brand Ambassador for Teams')
+    team_ids = fields.Many2many('cfo.team.jnr', string='Brand Ambassador for Teams')
     #     is_cfo_junior = fields.Boolean('Is CFO Junior?')
     cfo_competition_year = fields.Selection(
         [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
@@ -219,7 +219,7 @@ class MentorsJunior(models.Model):
     updated_mentors_bio = fields.Boolean('Updated Mentors BIO')
     user_id = fields.Many2one('res.users', 'Related User')
     mentor_accept = fields.Boolean("Accept Mentors")
-    team_ids = fields.Many2many('cfo.teams', 'mentor_teams_rel', 'mentor_id', 'team_id', 'Mentors for Teams')
+    team_ids = fields.Many2many('cfo.team.jnr', string='Mentors for Teams')
     i_am_a = fields.Selection([('CFO', 'CFO'),
                                ('CEO', 'CEO'),
                                ('Entrepreneur', 'Entrepreneur'),
@@ -298,7 +298,7 @@ class CFOJuniorMember(models.Model):
     college_province = fields.Many2one('res.country.state', 'Province')
     college_zip = fields.Char('Zip')
     college_country = fields.Many2one('res.country', 'Country')
-    cfo_team = fields.Many2one('cfo.teams', 'CFO Snr Teams')
+    cfo_team = fields.Many2one('cfo.team.jnr', 'CFO Snr Teams')
 
     cfo_member_type = fields.Selection([('CFO Aspirant', 'CFO Aspirant'),
                                         ('Academic Institution', 'Academic Institution'),
