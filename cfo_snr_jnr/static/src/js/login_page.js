@@ -71,5 +71,16 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                    }
 			});
 		});
+		$('.school_details').css('display','none');
+        $('.employee_details').css('display','none');
+		$('input[name="user_type"]').on('change',function(){
+		    if ($(this).val() == 'student'){
+		        $('.school_details').css('display','block');
+		        $('.employee_details').css('display','none');
+		    }else{
+		        $('.school_details').css('display','none');
+                $('.employee_details').css('display','block');
+		    }
+		});
 	});
 });
