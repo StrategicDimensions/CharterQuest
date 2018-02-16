@@ -351,7 +351,7 @@
                     </head>
 
                     <body>
-                        <t t-if="not senior">
+                        <t t-if="not senior and not academic_institution">
                             <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
                                 <h3 style="color:red;">You are not registered for the CFO Senior Competition
                                     <br/>
@@ -362,20 +362,20 @@
                                 </p>
                             </div>
                         </t>
+                        <div class="row">
+                            <h3>
+                                CFO Senior -
+                                <t t-if="snr_aspirants">Aspirant</t>
+                                <t t-if="snr_academic_institution">Academic Institute</t>
+                                <t t-if="snr_employers">Employee</t>
+                                <t t-if="snr_volunteers">Volunteer</t>
+                                <t t-if="snr_brand_ambassador">Brand Ambassador</t>
+                                <t t-if="snr_media_contestants">Media Contestant</t>
+                                <t t-if="snr_mentors">Mentor</t>
+                            </h3>
+                        </div>
+                        <hr/>
                         <t t-if="senior">
-                            <div class="row">
-                                <h3>
-                                    CFO Senior -
-                                    <t t-if="snr_aspirants">Aspirant</t>
-                                    <t t-if="snr_academic_institution">Academic Institute</t>
-                                    <t t-if="snr_employers">Employee</t>
-                                    <t t-if="snr_volunteers">Volunteer</t>
-                                    <t t-if="snr_brand_ambassador">Brand Ambassador</t>
-                                    <t t-if="snr_media_contestants">Media Contestant</t>
-                                    <t t-if="snr_mentors">Mentor</t>
-                                </h3>
-                            </div>
-                            <hr/>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="col-md-4">
@@ -800,15 +800,17 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
+                                                            <t t-esc="snr_aspirants.entry_as_student"/>
+                                                            <t t-esc="snr_aspirants.entry_as_employee"/>
                                                             I am entering as Student :
                                                             <input type="radio" name="user_type"
                                                                    value="student"
-                                                                   t-att-selected="'selected' if entry_as_student else 0"/>
+                                                                   t-att-checked="'checked' if snr_aspirants.entry_as_student else None"/>
                                                             <br/>
                                                             I am entering as Employee :
                                                             <input type="radio" name="user_type"
                                                                    value="employee"
-                                                                   t-att-selected="'selected' if entry_as_employee else 0"/>
+                                                                   t-att-checked="'checked' if snr_aspirants.entry_as_employee else None"/>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -1198,6 +1200,393 @@
                                             </div>
                                         </form>
                                     </section>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="academic_institution">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-3">Teams</div>
+                                    <div class="col-md-3">Reports Submitted</div>
+                                    <div class="col-md-3">Report Submissions Pending</div>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-primary">View Teams &amp; Submissions</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 text-center mt32 mb32">
+                                        <span class="fa fa-check fa-2x bg-gamma"
+                                              style="animation-play-state: paused; transition: none"/>
+                                        <h4>Register</h4>
+                                        <p class="text-muted"/>
+                                    </div>
+                                    <div class="col-md-3 text-center mt32 mb32">
+                                        <t t-if="snr_academic_institution and snr_academic_institution.updated_academic_bio">
+                                            <span class="fa fa-check fa-2x bg-gamma"
+                                                  style="animation-play-state: paused; transition: none"/>
+                                        </t>
+                                        <t t-if="snr_academic_institution and not snr_academic_institution.updated_academic_bio">
+                                            <span class="fa fa-times fa-2x bg-gray-lighter"
+                                                  style="animation-play-state: paused; transition: none"/>
+                                        </t>
+                                        <h4>Update BIO</h4>
+                                        <p class="text-muted"/>
+                                    </div>
+                                    <div class="col-md-3 text-center mt32 mb32">
+                                        <span class="fa fa-times fa-2x bg-gamma"
+                                              style="animation-play-state: paused; transition: none"/>
+                                        <h4>Create Team</h4>
+                                        <p class="text-muted"/>
+                                    </div>
+                                    <div class="col-md-3 text-center mt32 mb32">
+                                        <span class="fa fa-times fa-2x bg-gamma"
+                                              style="animation-play-state: paused; transition: none"/>
+                                        <h4>Invite Team Members</h4>
+                                        <p class="text-muted"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="container" t-if="not update_bio">
+                                        <form action="/cfo_senior" method="GET">
+                                            <input type="hidden" name="snr_academic_institution"
+                                                   t-att-value="snr_academic_institution.id"/>
+                                            <button type="submit" class="btn btn-default btn-primary mb32 a-submit"
+                                                    style="margin-left:350px;">UPDATE YOUR BIO
+                                            </button>
+                                            <button type="button" class="btn btn-default btn-primary mb32 a-submit"
+                                                    data-toggle="modal"
+                                                    data-target="#myModal" id="modal_button">
+                                                Register for other categories
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="container" t-if="update_bio">
+                                        <section class="s_process_steps_2">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-3 text-center mt32 mb32">
+                                                        <h4 t-att-style="'color:red' if update_bio_info else ''">
+                                                            Bio
+                                                            Details
+                                                        </h4>
+                                                        <p class="text-muted"/>
+                                                    </div>
+                                                    <div class="col-md-3 text-center mt32 mb32">
+                                                        <h4 t-att-style="'color:red' if contact_info else ''">Contact
+                                                            Information
+                                                        </h4>
+                                                        <p class="text-muted"/>
+                                                    </div>
+                                                    <div class="col-md-3 text-center mt32 mb32">
+                                                        <h4 t-att-style="'color:red' if institution_details else ''">
+                                                            Institution Details
+                                                        </h4>
+                                                        <p class="text-muted"/>
+                                                    </div>
+                                                    <div class="col-md-3 text-center mt32 mb32">
+                                                        <h4 t-att-style="'color:red' if competition_rule else ''">
+                                                            Competition Rules
+                                                        </h4>
+                                                        <p class="text-muted"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div class="container" t-if="update_bio">
+                                        <form action="/cfo_senior" method="POST">
+                                            <input type="hidden" name="csrf_token"
+                                                   t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="snr_academic_institution"
+                                                   t-att-value="snr_academic_institution.id"/>
+                                            <div class="col-md-12" t-if="update_bio_info">
+                                                <input type="hidden" name="update_bio_info"
+                                                       t-att-value="True"/>
+                                                <div class="col-md-7">
+                                                    <label class="control-label"
+                                                           for="name">First Name
+                                                    </label>
+                                                    <input type="text" name="name"
+                                                           id="name"
+                                                           class="form-control"
+                                                           t-att-value="snr_academic_institution.name"/>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <label class="control-label"
+                                                           for="surname">Surname
+                                                    </label>
+                                                    <input type="text" name="surname"
+                                                           id="surname"
+                                                           class="form-control"
+                                                           t-att-value="snr_academic_institution.surname"/>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <label class="control-label"
+                                                           for="other_names">Other Names
+                                                    </label>
+                                                    <input type="text" name="other_names"
+                                                           id="other_names"
+                                                           class="form-control"
+                                                           t-att-value="snr_academic_institution.other_names"/>
+                                                </div>
+                                                <p>
+                                                    <button class="btn btn-default btn-primary mb32 a-submit"
+                                                            type="submit">Next to Contact Information
+                                                    </button>
+                                                </p>
+                                            </div>
+                                            <div class="col-md-12" t-if="contact_info">
+                                                <div class="col-md-6 mt16">
+                                                    <h3>Contact Information</h3>
+                                                    <input type="hidden" name="contact_info"
+                                                           value="True"/>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="control-label"
+                                                                       for="mobile">Mobile
+                                                                </label>
+                                                                <input type="text" name="mobile"
+                                                                       id="mobile"
+                                                                       class="form-control"
+                                                                       t-att-value="snr_academic_institution.mobile"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="control-label"
+                                                                       for="phone">Office Telephone​
+                                                                </label>
+                                                                <input type="text" name="phone"
+                                                                       id="phone"
+                                                                       class="form-control"
+                                                                       t-att-value="snr_academic_institution.phone"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="control-label"
+                                                                       for="home_phone">Home Telephone
+                                                                </label>
+                                                                <input type="text" name="home_phone"
+                                                                       id="home_phone"
+                                                                       class="form-control"
+                                                                       t-att-value="snr_academic_institution.home_phone"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="control-label"
+                                                                       for="email_1">Primary Email
+                                                                </label>
+                                                                <input type="text" name="email_1"
+                                                                       id="email_1"
+                                                                       class="form-control"
+                                                                       t-att-value="snr_academic_institution.email_1"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="control-label"
+                                                                       for="email_2">Secondary Email
+                                                                </label>
+                                                                <input type="text" name="email_2"
+                                                                       id="email_2"
+                                                                       class="form-control"
+                                                                       t-att-value="snr_academic_institution.email_2"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="control-label"
+                                                                       for="mobile">Postal Address
+                                                                </label>
+                                                                <input type="text" name="street"
+                                                                       id="street"
+                                                                       placeholder="Street"
+                                                                       class="form-control"
+                                                                       t-att-value="snr_academic_institution.street"/>
+                                                                <input type="text" name="street2"
+                                                                       id="street2"
+                                                                       class="form-control"
+                                                                       placeholder="Street 2"
+                                                                       t-att-value="snr_academic_institution.street2"/>
+                                                                <input type="text" name="city"
+                                                                       id="city"
+                                                                       class="form-control"
+                                                                       placeholder="City"
+                                                                       t-att-value="snr_academic_institution.city"/>
+                                                                <select name="state_id" id="state_id"
+                                                                        class="form-control" placeholder="State"
+                                                                >
+                                                                    <option value="">State</option>
+                                                                    <t t-if="snr_academic_institution">
+                                                                        <option t-att-value=" snr_academic_institution.state_id.id if snr_academic_institution.state_id else &quot;&quot;">
+                                                                            <t t-esc="snr_academic_institution.state_id.name if snr_academic_institution.state_id else &quot;&quot;"/>
+                                                                        </option>
+                                                                    </t>
+                                                                    <t t-foreach="state_list"
+                                                                       t-as="state"
+                                                                       placeholder="State">
+                                                                        <option t-att-value="state.id">
+                                                                            <t t-esc="state.name"/>
+                                                                        </option>
+                                                                    </t>
+                                                                </select>
+                                                                <input type="text" name="zip"
+                                                                       id="zip"
+                                                                       placeholder="Zip"
+                                                                       class="form-control"
+                                                                       t-att-value="snr_academic_institution.zip"/>
+                                                                <select name="country_id" id="country_id"
+                                                                        class="form-control" placeholder="Country"
+                                                                >
+                                                                    <option value="">Country</option>
+                                                                    <t t-if="snr_academic_institution">
+                                                                        <option t-att-value=" snr_academic_institution.country_id.id if snr_academic_institution.country_id else &quot;&quot;">
+                                                                            <t t-esc="snr_academic_institution.country_id.name if snr_academic_institution.country_id else &quot;&quot;"/>
+                                                                        </option>
+                                                                    </t>
+                                                                    <t t-foreach="country_list"
+                                                                       t-as="country">
+                                                                        <option t-att-value="country.id">
+                                                                            <t t-esc="country.name"/>
+                                                                        </option>
+                                                                    </t>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <p>
+                                                        <button class="btn btn-default btn-primary mb32 a-submit"
+                                                                type="submit">NEXT
+                                                            to ELIGIBILITY STATUS &gt;&gt;
+                                                        </button>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" t-if="institution_details">
+                                                <div class="col-md-6 mt16">
+                                                    <h3>Institution Details</h3>
+                                                    <input type="hidden" name="institution_details"
+                                                           value="True"/>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="control-label"
+                                                                       for="school_name">Legal/Registered name of
+                                                                    School/College/University
+                                                                </label>
+                                                                <input type="text" name="school_name"
+                                                                       id="school_name"
+                                                                       class="form-control"
+                                                                       t-att-value="snr_academic_institution.school_name"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="control-label"
+                                                                       for="phone">Website
+                                                                </label>
+                                                                <input type="text" name="website"
+                                                                       id="website"
+                                                                       class="form-control"
+                                                                       t-att-value="snr_academic_institution.website"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="control-label"
+                                                                       for="department">Department
+                                                                </label>
+                                                                <input type="text" name="department"
+                                                                       id="department"
+                                                                       class="form-control"
+                                                                       t-att-value="snr_academic_institution.department"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="control-label"
+                                                                       for="stu_street">Physical Address
+                                                                </label>
+                                                                <input type="text" name="stu_street"
+                                                                       id="stu_street"
+                                                                       placeholder="Street"
+                                                                       class="form-control"
+                                                                       t-att-value="snr_academic_institution.stu_street"/>
+                                                                <input type="text" name="stu_street2"
+                                                                       id="stu_street2"
+                                                                       class="form-control"
+                                                                       placeholder="Street 2"
+                                                                       t-att-value="snr_academic_institution.stu_street2"/>
+                                                                <input type="text" name="stu_city"
+                                                                       id="stu_city"
+                                                                       class="form-control"
+                                                                       placeholder="City"
+                                                                       t-att-value="snr_academic_institution.stu_city"/>
+                                                                <select name="stu_state_id" id="stu_state_id"
+                                                                        class="form-control" placeholder="State"
+                                                                >
+                                                                    <option value="">State</option>
+                                                                    <t t-if="snr_aspirants">
+                                                                        <option t-att-value=" snr_academic_institution.stu_state_id.id if snr_academic_institution.stu_state_id else &quot;&quot;">
+                                                                            <t t-esc="snr_academic_institution.stu_state_id.name if snr_academic_institution.stu_state_id else &quot;&quot;"/>
+                                                                        </option>
+                                                                    </t>
+                                                                    <t t-foreach="state_list"
+                                                                       t-as="state"
+                                                                       placeholder="State">
+                                                                        <option t-att-value="state.id">
+                                                                            <t t-esc="state.name"/>
+                                                                        </option>
+                                                                    </t>
+                                                                </select>
+                                                                <input type="text" name="stu_zip"
+                                                                       id="stu_zip"
+                                                                       placeholder="Zip"
+                                                                       class="form-control"
+                                                                       t-att-value="snr_academic_institution.stu_zip"/>
+                                                                <select name="stu_country_id" id="stu_country_id"
+                                                                        class="form-control" placeholder="Country"
+                                                                >
+                                                                    <option value="">Country</option>
+                                                                    <t t-if="snr_academic_institution">
+                                                                        <option t-att-value=" snr_academic_institution.stu_country_id.id if snr_academic_institution.stu_country_id else &quot;&quot;">
+                                                                            <t t-esc="snr_academic_institution.stu_country_id.name if snr_academic_institution.stu_country_id else &quot;&quot;"/>
+                                                                        </option>
+                                                                    </t>
+                                                                    <t t-foreach="country_list"
+                                                                       t-as="country">
+                                                                        <option t-att-value="country.id">
+                                                                            <t t-esc="country.name"/>
+                                                                        </option>
+                                                                    </t>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <p>
+                                                        <button class="btn btn-default btn-primary mb32 a-submit"
+                                                                type="submit">NEXT
+                                                            to COMPETITION RULES &gt;&gt;
+                                                        </button>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="container" t-if="competition_rule">
+                                                <input type="hidden" name="competition_rule" value="True"/>
+                                                <input type="checkbox" name="update_bio_check" required="1"/>
+                                                Please accept competition rules
+
+                                                <p>
+                                                    <button class="btn btn-default btn-primary mb32 a-submit"
+                                                            type="submit">Submit
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </t>
