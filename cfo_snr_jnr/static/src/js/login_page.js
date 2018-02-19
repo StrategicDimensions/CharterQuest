@@ -87,5 +87,6 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                 $('.employee_details').css('display','block');
 		    }
 		});
+		$('.datepicker').datepicker();
 	});
 });

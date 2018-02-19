@@ -84,27 +84,29 @@ class CfoHome(web.Home):
         values = {}
         values['country_list'] = request.env['res.country'].sudo().search([])
         values['state_list'] = request.env['res.country.state'].sudo().search([])
-        if post.get('snr_aspirants') or post.get('snr_academic_institution'):
+        if post.get('snr_aspirants') or post.get('snr_academic_institution') or post.get('snr_employers') or post.get(
+                'snr_brand_ambassador') or post.get('snr_media_contestants'):
             values['update_bio'] = True
             values['update_bio_info'] = True
         if snr_aspirants:
             values.update({'snr_aspirants': snr_aspirants})
+            values.update({'senior': True})
         if snr_academic_institution:
             values.update({'snr_academic_institution': snr_academic_institution})
+            values.update({'academic_institution': True})
         if snr_employers:
             values.update({'snr_employers': snr_employers})
+            values.update({'employee': True})
         if snr_volunteers:
             values.update({'snr_volunteers': snr_volunteers})
         if snr_brand_ambassador:
             values.update({'snr_brand_ambassador': snr_brand_ambassador})
+            values.update({'brand_ambassador': True})
         if snr_media_contestants:
             values.update({'snr_media_contestants': snr_media_contestants})
+            values.update({'media_contestants': True})
         if snr_mentors:
             values.update({'snr_mentors': snr_mentors})
-        if snr_aspirants:
-            values.update({'senior': True})
-        if snr_academic_institution:
-            values.update({'academic_institution': True})
         if request.httprequest.method == 'POST':
             if post.get('snr_aspirant'):
                 if post.get('update_bio_info'):
@@ -233,6 +235,121 @@ class CfoHome(web.Home):
                     values['institution_details'] = False
                     snr_academic_institution.sudo().write({
                         'updated_academic_bio': True
+                    })
+            if post.get('snr_employers'):
+                if post.get('update_bio_info'):
+                    values['contact_info'] = True
+                    values['update_bio'] = True
+                    values['update_bio_info'] = False
+                    snr_employers.sudo().write({
+                        'name': post.get('name'),
+                        'surname': post.get('surname'),
+                        'other_names': post.get('other_names'),
+                    })
+                if post.get('contact_info'):
+                    values['employer_details'] = True
+                    values['update_bio'] = True
+                    values['contact_info'] = False
+                    values['update_bio_info'] = False
+                    snr_employers.sudo().write({
+                        'mobile': post.get('mobile'),
+                        'phone': post.get('phone'),
+                        'home_phone': post.get('home_phone'),
+                        'email_1': post.get('email_1'),
+                        'email_2': post.get('email_2'),
+                        'street': post.get('street'),
+                        'street2': post.get('street2'),
+                        'city': post.get('city'),
+                        'state_id': post.get('state_id'),
+                        'zip': post.get('zip'),
+                        'country_id': post.get('country_id')
+                    })
+                if post.get('employer_details'):
+                    values['competition_rule'] = True
+                    values['update_bio'] = True
+                    values['employer_details'] = False
+                    values['update_bio_info'] = False
+                    snr_employers.sudo().write({
+                        'legal_name_employer': post.get('legal_name_employer'),
+                        'if_company': post.get('if_company'),
+                        'sector': post.get('sector'),
+                        'emp_department': post.get('emp_department'),
+                        'emp_website': post.get('emp_website'),
+                        'emp_street': post.get('emp_street'),
+                        'emp_street2': post.get('emp_street2'),
+                        'emp_city': post.get('emp_city'),
+                        'emp_state_id': post.get('emp_state_id'),
+                        'emp_zip': post.get('emp_zip'),
+                        'emp_country_id': post.get('emp_country_id')
+                    })
+                if post.get('competition_rule'):
+                    values['update_bio'] = False
+                    values['competition_rule'] = False
+                    values['employer_details'] = False
+                    snr_employers.sudo().write({
+                        'updated_emp_bio': True
+                    })
+            if post.get('snr_brand_ambassador'):
+                if post.get('update_bio_info'):
+                    values['contact_info'] = True
+                    values['update_bio'] = True
+                    values['update_bio_info'] = False
+                    snr_brand_ambassador.sudo().write({
+                        'name': post.get('name'),
+                        'surname': post.get('surname'),
+                        'other_names': post.get('other_names'),
+                    })
+                if post.get('contact_info'):
+                    values['competition_rule'] = True
+                    values['update_bio'] = True
+                    values['contact_info'] = False
+                    values['update_bio_info'] = False
+                    snr_brand_ambassador.sudo().write({
+                        'mobile': post.get('mobile'),
+                        'email_1': post.get('email_1'),
+                        'email_2': post.get('email_2'),
+                    })
+                if post.get('competition_rule'):
+                    values['update_bio'] = False
+                    values['competition_rule'] = False
+                    values['contact_info'] = False
+                    snr_brand_ambassador.sudo().write({
+                        'updated_brand_amb_bio': True
+                    })
+            if post.get('snr_media_contestants'):
+                if post.get('update_bio_info'):
+                    values['contact_info'] = True
+                    values['update_bio'] = True
+                    values['update_bio_info'] = False
+                    snr_media_contestants.sudo().write({
+                        'name': post.get('name'),
+                        'surname': post.get('surname'),
+                        'other_names': post.get('other_names'),
+                    })
+                if post.get('contact_info'):
+                    values['competition_rule'] = True
+                    values['update_bio'] = True
+                    values['contact_info'] = False
+                    values['update_bio_info'] = False
+                    snr_media_contestants.sudo().write({
+                        'mobile': post.get('mobile'),
+                        'phone': post.get('phone'),
+                        'home_phone': post.get('home_phone'),
+                        'email_1': post.get('email_1'),
+                        'email_2': post.get('email_2'),
+                        'street': post.get('street'),
+                        'street2': post.get('street2'),
+                        'city': post.get('city'),
+                        'state_id': post.get('state_id'),
+                        'zip': post.get('zip'),
+                        'country_id': post.get('country_id')
+                    })
+                if post.get('competition_rule'):
+                    values['update_bio'] = False
+                    values['competition_rule'] = False
+                    values['contact_info'] = False
+                    snr_media_contestants.sudo().write({
+                        'updated_social_media_bio': True
                     })
         return request.render('cfo_snr_jnr.cfo_senior', values)
 
