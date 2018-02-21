@@ -59,7 +59,10 @@ class CFOTeamSNR(models.Model):
     ref_name = fields.Char('Reference Name')
     mentor_id = fields.Many2one('mentors', 'Mentor')
     brand_amb_id = fields.Many2one('brand.ambassador.snr', 'Brand Ambassador')
-    team_leader_id = fields.Many2one('cfo.snr.aspirants', 'Team Leader')
+    aspirant_leader_id = fields.Many2one('cfo.snr.aspirants', 'Team Leader')
+    academic_leader_id = fields.Many2one('academic.institution.snr', 'Team Leader')
+    employer_leader_id = fields.Many2one('employers.snr', 'Team Leader')
+    aspirant_admin_id = fields.Many2one('cfo.snr.aspirants', 'Team Created By')
     academic_admin_id = fields.Many2one('academic.institution.snr', 'Team Created By')
     employer_admin_id = fields.Many2one('employers.snr', 'Team Created By')
     aspirants_ids = fields.Many2many('cfo.snr.aspirants', string='Team Members')
@@ -76,6 +79,9 @@ class CFOTeamSNR(models.Model):
     date_cfo_report_deadline = fields.Date('CFO Report Date')
     remaining_time_deadline = fields.Char("Remaining Time for Deadline")
     crossed_deadline = fields.Boolean("Crossed Deadline")
+    aspirant_team_member_ids = fields.One2many('snr.aspirant.team.member', 'team_id', string="Team Member")
+    academic_team_member_ids = fields.One2many('snr.academic.team.member', 'team_id', string="Team Member")
+    employer_team_member_ids = fields.One2many('snr.employer.team.member', 'team_id', string="Team Member")
     cfo_comp = fields.Selection([('CFO SNR', 'CFO SNR'), ('CFO JNR', 'CFO JNR')], 'Competition')
     cfo_competition_year = fields.Selection(
         [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
@@ -86,6 +92,33 @@ class CFOTeamSNR(models.Model):
             team_date = datetime.strptime(cfo_report_deadline_date, "%Y-%m-%d %H:%M:%S").date()
             return {'value': {'date_cfo_report_deadline': team_date}}
         return {}
+
+
+class SNRAspirantTeamMembers(models.Model):
+    _name = 'snr.aspirant.team.member'
+    team_id = fields.Many2one('cfo.team.snr', string="Team")
+    related_user_id = fields.Many2one('cfo.snr.aspirants', string="Related User")
+    email = fields.Char(string="Email", related="related_user_id.email_1")
+    user_type = fields.Selection([('Admin', 'Admin'), ('Leader', 'Leader'), ('Member', 'Member'), ('Mentor', 'Mentor'),
+                                  ('Brand Ambassador', 'Brand Ambassador')])
+
+
+class SNRAcademicTeamMembers(models.Model):
+    _name = 'snr.academic.team.member'
+    team_id = fields.Many2one('cfo.team.snr', string="Team")
+    related_user_id = fields.Many2one('academic.institution.snr', string="Related User")
+    email = fields.Char(string="Email", related="related_user_id.email_1")
+    user_type = fields.Selection([('Admin', 'Admin'), ('Leader', 'Leader'), ('Member', 'Member'), ('Mentor', 'Mentor'),
+                                  ('Brand Ambassador', 'Brand Ambassador')])
+
+
+class SNREmployerTeamMembers(models.Model):
+    _name = 'snr.employer.team.member'
+    team_id = fields.Many2one('cfo.team.snr', string="Team")
+    related_user_id = fields.Many2one('employers.snr', string="Related User")
+    email = fields.Char(string="Email", related="related_user_id.email_1")
+    user_type = fields.Selection([('Admin', 'Admin'), ('Leader', 'Leader'), ('Member', 'Member'), ('Mentor', 'Mentor'),
+                                  ('Brand Ambassador', 'Brand Ambassador')])
 
 
 class CFOTeamJNR(models.Model):

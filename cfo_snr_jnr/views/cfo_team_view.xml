@@ -12,7 +12,6 @@
                         <field name='ref_name'/>
                         <field name='mentor_id'/>
                         <field name='brand_amb_id'/>
-                        <field name='team_leader_id'/>
                         <field name='create_date' readonly='True'/>
                         <field name='write_date' readonly='True'/>
                         <field name='cfo_report_deadline_date'
@@ -25,14 +24,35 @@
                         <field name='remaining_time_deadline'
                                readonly="0"/>
                         <field name='team_type'/>
-                        <field name='academic_admin_id'
-                               attrs="{'invisible':[('team_type','not in',['Academic Institution'])]}"/>
-                        <field name='employer_admin_id'
-                               attrs="{'invisible':[('team_type','not in',['Employer'])]}"/>
                     </group>
                     <notebook>
-                        <page string='Team members'>
-                            <field name='aspirants_ids'/>
+                        <page string="Team Members" attrs="{'invisible':[('team_type','!=','CFO Aspirant')]}">
+                            <field name="aspirant_team_member_ids">
+                                <tree editable="bottom">
+                                    <field name="related_user_id"/>
+                                    <field name="email" readonly="1"/>
+                                    <field name="user_type"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Team Members"
+                              attrs="{'invisible':[('team_type','not in',[False,'Academic Institution'])]}">
+                            <field name="academic_team_member_ids">
+                                <tree editable="bottom">
+                                    <field name="related_user_id"/>
+                                    <field name="email" readonly="1"/>
+                                    <field name="user_type"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Team Members" attrs="{'invisible':[('team_type','!=','Employer')]}">
+                            <field name="employer_team_member_ids">
+                                <tree editable="bottom">
+                                    <field name="related_user_id"/>
+                                    <field name="email" readonly="1"/>
+                                    <field name="user_type"/>
+                                </tree>
+                            </field>
                         </page>
                         <page string='Team Documents'>
                             <field name='document_ids'/>
