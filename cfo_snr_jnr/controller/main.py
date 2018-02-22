@@ -107,8 +107,14 @@ class CfoHome(web.Home):
             values.update({'media_contestants': True})
         if snr_mentors:
             values.update({'snr_mentors': snr_mentors})
+        if post.get('cfo_team'):
+            values['cfo_team'] = True
+            values['update_bio'] = False
+            values['update_bio_info'] = False
+            if snr_aspirants.aspirant_id:
+                values['aspirant_team'] = snr_aspirants.aspirant_id
         if request.httprequest.method == 'POST':
-            if post.get('snr_aspirant'):
+            if post.get('snr_aspirant') and not post.get('cfo_team'):
                 if post.get('update_bio_info'):
                     values['contact_info'] = True
                     values['update_bio'] = True
@@ -185,6 +191,14 @@ class CfoHome(web.Home):
                     snr_aspirants.sudo().write({
                         'updated_cfo_bio': True
                     })
+            if post.get('cfo_team_edit') and post.get('snr_aspirants'):
+                print ("\n\n\n post------------", post)
+                values['cfo_team_edit'] = True
+                values['cfo_team'] = True
+                values['update_bio'] = False
+                values['update_bio_info'] = False
+                if snr_aspirants.aspirant_id:
+                    values['aspirant_team'] = snr_aspirants.aspirant_id
             if post.get('snr_academic_institution'):
                 if post.get('update_bio_info'):
                     values['contact_info'] = True
@@ -486,6 +500,68 @@ class CfoHome(web.Home):
         if member_values:
             user._create_member(member_values)
         return request.redirect('/cfo_junior')
+
+    @http.route('/check_user_team', type='json', auth="public", website=True)
+    def check_user_team(self, **post):
+        if post.get('email'):
+            res = request.env['snr.aspirant.team.member'].sudo().search(
+                [('related_user_id.email_1', 'ilike', post.get('email'))])
+            if res:
+                return True
+            else:
+                return False
+
+    @http.route('/create_team', type='json', auth="public", website=True)
+    def create_team(self, **post):
+        if post.get('aspirant_id') and not post.get('aspirant_team'):
+            aspirant_id = request.env['cfo.snr.aspirants'].sudo().search([('id', '=', int(post.get('aspirant_id')))],
+                                                                         limit=1)
+            team_id = request.env['cfo.team.snr'].sudo().create({
+                'name': post.get('name'),
+                'ref_name': post.get('sys_name'),
+                'team_type': 'CFO Aspirant',
+                'aspirant_admin_id': aspirant_id.id,
+                'cfo_competition_year': aspirant_id.cfo_competition_year,
+                'cfo_comp': 'CFO SNR'
+            })
+            for each in post.get('list_of_member'):
+                user = request.env['cfo.snr.aspirants'].sudo().search([('email_1', 'ilike', str(each['email']))],
+                                                                      limit=1)
+                if not user:
+                    return False
+                else:
+                    request.env['snr.aspirant.team.member'].sudo().create({
+                        'team_id': team_id.id,
+                        'related_user_id': user.id,
+                        'user_type': each['user_type']
+                    })
+            aspirant_id.write({
+                'aspirant_id': team_id.id
+            })
+        if post.get('aspirant_team'):
+            aspirant_id = request.env['cfo.snr.aspirants'].sudo().search([('id', '=', int(post.get('aspirant_id')))])
+            team_id = request.env['cfo.team.snr'].sudo().search([('id', '=', int(post.get('aspirant_team')))], limit=1)
+            team_id.sudo().write({
+                'name': post.get('name'),
+                'ref_name': post.get('sys_name'),
+                'team_type': 'CFO Aspirant',
+                'aspirant_admin_id': aspirant_id.id,
+                'cfo_competition_year': aspirant_id.cfo_competition_year,
+                'cfo_comp': 'CFO SNR'
+            })
+            for each in post.get('list_of_member'):
+                user = request.env['cfo.snr.aspirants'].sudo().search(
+                    [('email_1', 'ilike', str(each['email']))], limit=1)
+                if not user:
+                    return False
+                else:
+                    if not request.env['snr.aspirant.team.member'].sudo().search([('related_user_id', '=', user.id)]):
+                        request.env['snr.aspirant.team.member'].sudo().create({
+                            'team_id': team_id.id,
+                            'related_user_id': user.id,
+                            'user_type': each['user_type']
+                        })
+            return True
 
 
 class CfoAuthSignup(auth_signup.AuthSignupHome):

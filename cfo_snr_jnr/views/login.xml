@@ -471,17 +471,18 @@
                     <p class="text-muted"/>
                 </div>
             </div>
-            <div class="container" t-if="not update_bio">
+            <div class="container" t-if="not update_bio and not cfo_team">
                 <form action="/cfo_senior" method="GET">
                     <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
                     <button type="submit" class="btn btn-default btn-primary mb32 a-submit"
                             style="margin-left:350px;">UPDATE YOUR BIO
                     </button>
-                    <t t-if="snr_aspirants and snr_aspirants.team_admin and snr_aspirants.updated_cfo_bio and not snr_aspirants.aspirant_id">
-                        <a href="/cfo/cfo_teams" class="btn btn-default btn-primary mb32 a-submit">
+                    <t t-if="snr_aspirants and snr_aspirants.updated_cfo_bio">
+                        <input type="hidden" name="cfo_team" value="True"/>
+                        <button type="submit" class="btn btn-default btn-primary mb32 a-submit">
                             CREATE/UPDATE
                             TEAM
-                        </a>
+                        </button>
                     </t>
                     <t t-if="aspirant_obj and aspirant_obj.updated_cfo_bio and  team_obj and team_obj.team_type=='CFO Aspirant'">
                         <a href="/cfo/cfo_teams" class="btn btn-default btn-primary mb32 a-submit">
@@ -1218,6 +1219,189 @@
                         </form>
                     </section>
                 </div>
+            </div>
+            <div class="container" t-if="cfo_team">
+                <t t-if="not cfo_team_edit">
+                    <form action="/cfo_senior" method="post">
+                        <input type="hidden" name="csrf_token"
+                               t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
+                        <input type="hidden" name="cfo_team_edit" value="True"/>
+                        <div class="col-md-12">
+                            <button class="btn btn-primary" type="submit">Create Team</button>
+                        </div>
+                        <div class="col-md-12" t-if="aspirant_team">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th></th>
+                                    <th>Team Name</th>
+                                    <th>Team Members</th>
+                                    <th>Other Members</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="hidden" t-att-value="aspirant_team.id" name="aspirant_team"/>
+                                        <button class="btn" type="submit">Edit Team</button>
+                                    </td>
+                                    <td>
+                                        <t t-esc="aspirant_team.name"/>
+                                    </td>
+                                    <t t-set="member" t-value="Admin"/>
+                                    <t t-set="other_member" t-value="Admin"/>
+                                    <!--<t t-if="aspirant_team.aspirant_team_member_ids">-->
+                                    <!--<t t-foreach="aspirant_team.aspirant_team_member_ids" t-as="member_id">-->
+                                    <!--<t t-if="member_id.user_type in ['Admin','Leader','Member']">-->
+                                    <!--<t t-set="member" t-value="member + member_id.user_type +','"/>-->
+                                    <!--</t>-->
+                                    <!--<t t-if="member_id.user_type in ['Mentor','Brand Ambassador']">-->
+                                    <!--<t t-set="other_member"-->
+                                    <!--t-value="other_member + member_id.user_type +','"/>-->
+                                    <!--</t>-->
+                                    <!--</t>-->
+                                    <!--</t>-->
+                                    <td>
+                                        <t t-esc="member"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="other_member"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </form>
+                </t>
+                <t t-if="cfo_team_edit">
+                    <div class="form">
+                        <input type="hidden" name="csrf_token"
+                               t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
+                        <input type="hidden" t-att-value="aspirant_team.id" name="aspirant_team" t-if="aspirant_team"/>
+                        <h3>Team</h3>
+                        <div class="col-md-8">
+                            <label class="control-label"
+                                   for="name">Name
+                            </label>
+                            <input type="hidden" name="country" t-att-value="snr_aspirants.country_id.name"/>
+                            <input type="hidden" name="state" t-att-value="snr_aspirants.state_id.name"/>
+                            <t t-if="aspirant_team">
+                                <input type="text" name="name"
+                                       id="name"
+                                       class="form-control" required="1"
+                                       t-att-value="aspirant_team.name"/>
+                            </t>
+                            <t t-if="not aspirant_team">
+                                <input type="text" name="name"
+                                       id="name" required="1"
+                                       class="form-control"/>
+                            </t>
+                        </div>
+                        <div class="col-md-8">
+                            <p>
+                                Enter the name you will like your team to be called. E.g. if you choose Caledonia,
+                                your team will be referred to as Team CALEDONIA from University of Buea,
+                                Cameroon or Team CALEDONIA from AnglogoldAshanti, South Africa.
+                            </p>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="control-label"
+                                   for="sys_name">System-generated name of your Team
+                            </label>
+                            <t t-if="aspirant_team">
+                                <input type="text" name="sys_name"
+                                       id="sys_name"
+                                       class="form-control sys_name_new"
+                                       readonly="1"
+                                       t-att-value="aspirant_team.ref_name"/>
+                            </t>
+                            <t t-if="not aspirant_team">
+                                <input type="text" name="sys_name" readonly="1"
+                                       class="form-control sys_name_new"/>
+                            </t>
+                        </div>
+                        <div class="col-md-8">
+                            <h3>
+                                Maximum team size is 3. You can invite them here.
+                            </h3>
+                            <h4>
+                                Members added and their details will display underneath.
+                            </h4>
+                        </div>
+                        <div class="col-md-12">
+                            <table id="table_quick_view">
+                                <tbody class="add_row_table" style="border:unset;">
+                                    <t t-if="not aspirant_team">
+                                        <tr class="ac-row-data-list">
+                                            <td>Email</td>
+                                            <td>
+                                                <input type="text" readonly="True" name="email" class="form-control"
+                                                       t-att-value="snr_aspirants.email_1"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" readonly="True" class="form-control user_type"
+                                                       value="Admin"/>
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-check-circle" style="color:green;"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="aspirant_team and aspirant_team.aspirant_team_member_ids">
+                                        <t t-foreach="aspirant_team.aspirant_team_member_ids" t-as="member_id">
+                                            <tr class="ac-row-data-list">
+                                                <td>Email</td>
+                                                <td>
+                                                    <input type="text" name="email" class="form-control"
+                                                           t-att-value="member_id.email"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="email_type" class="form-control user_type"
+                                                           t-att-value="member_id.user_type"/>
+                                                </td>
+                                                <td>
+                                                    <i class="fa fa-check-circle" style="color:green;"/>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-danger table-remove">Remove</button>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                    <tr class="custom_tr ac-row-data-list hide">
+                                        <td>Email</td>
+                                        <td>
+                                            <input type="text" name="email" class="form-control team_email"/>
+                                        </td>
+                                        <td>
+                                            <select name="user_type" class="form-control user_type">
+                                                <option value="Leader">Leader</option>
+                                                <option value="Member">Member</option>
+                                                <option value="Mentor">Mentor</option>
+                                                <option value="Brand Ambassador">Brand Ambassador</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-clock-o"/>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger table-remove">Remove</button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger request-join" style="display:none;">Request to
+                                                join your Team
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-md-12">
+                                <button class="btn table-add">Add Member</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="text-align:center">
+                            <button type="submit" class="btn btn-primary create_team">Create Team</button>
+                        </div>
+                    </div>
+                </t>
             </div>
         </template>
         <template id="cfo_senior_academic_institution">
