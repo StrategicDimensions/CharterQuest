@@ -192,7 +192,6 @@ class CfoHome(web.Home):
                         'updated_cfo_bio': True
                     })
             if post.get('cfo_team_edit') and post.get('snr_aspirants'):
-                print ("\n\n\n post------------", post)
                 values['cfo_team_edit'] = True
                 values['cfo_team'] = True
                 values['update_bio'] = False
@@ -507,7 +506,21 @@ class CfoHome(web.Home):
             res = request.env['snr.aspirant.team.member'].sudo().search(
                 [('related_user_id.email_1', 'ilike', post.get('email'))])
             if res:
-                return True
+                return {'user_id': res.related_user_id.id}
+            else:
+                return False
+
+    @http.route('/request_to_join', type='json', auth="public", website=True)
+    def request_to_join(self, **post):
+        if post.get('user_id'):
+            res = request.env['cfo.snr.aspirants'].sudo().search(
+                [('id', '=', int(post.get('user_id')))])
+            res.sudo().write({
+                'is_request': True,
+                'new_team_id': int(post.get('team_id'))
+            })
+            if res:
+                return {'user_id': res.id}
             else:
                 return False
 
@@ -516,31 +529,71 @@ class CfoHome(web.Home):
         if post.get('aspirant_id') and not post.get('aspirant_team'):
             aspirant_id = request.env['cfo.snr.aspirants'].sudo().search([('id', '=', int(post.get('aspirant_id')))],
                                                                          limit=1)
-            team_id = request.env['cfo.team.snr'].sudo().create({
-                'name': post.get('name'),
-                'ref_name': post.get('sys_name'),
-                'team_type': 'CFO Aspirant',
-                'aspirant_admin_id': aspirant_id.id,
-                'cfo_competition_year': aspirant_id.cfo_competition_year,
-                'cfo_comp': 'CFO SNR'
-            })
-            for each in post.get('list_of_member'):
-                user = request.env['cfo.snr.aspirants'].sudo().search([('email_1', 'ilike', str(each['email']))],
-                                                                      limit=1)
-                if not user:
-                    return False
-                else:
-                    request.env['snr.aspirant.team.member'].sudo().create({
-                        'team_id': team_id.id,
-                        'related_user_id': user.id,
-                        'user_type': each['user_type']
-                    })
-            aspirant_id.write({
-                'aspirant_id': team_id.id
-            })
+            if not aspirant_id.aspirant_id:
+                team_id = request.env['cfo.team.snr'].sudo().create({
+                    'name': post.get('name'),
+                    'ref_name': post.get('sys_name'),
+                    'team_type': 'CFO Aspirant',
+                    'cfo_competition_year': aspirant_id.cfo_competition_year,
+                    'aspirant_admin_id': aspirant_id.id,
+                    'cfo_comp': 'CFO SNR'
+                })
+                for each in post.get('list_of_member'):
+                    member_ids = request.env['snr.aspirant.team.member'].sudo().search(
+                        [('team_id', '=', team_id.id), ('user_type', '=', 'Member')])
+                    user = request.env['cfo.snr.aspirants'].sudo().search(
+                        [('email_1', 'ilike', str(each['email']))], limit=1)
+                    mentor = request.env['mentors.snr'].sudo().search(
+                        [('email_1', 'ilike', str(each['email']))], limit=1)
+                    brand_ambassador = request.env['brand.ambassador.snr'].sudo().search(
+                        [('email_1', 'ilike', str(each['email']))], limit=1)
+                    if not user and not mentor and not brand_ambassador:
+                        return {'error': "error"}
+                    else:
+                        if len(member_ids) <= 3:
+                            if each['user_type'] == 'Member':
+                                if not request.env['snr.aspirant.team.member'].sudo().search(
+                                        [('related_user_id', '=', user.id)]):
+                                    request.env['snr.aspirant.team.member'].sudo().create({
+                                        'team_id': team_id.id,
+                                        'related_user_id': user.id,
+                                        'user_type': each['user_type']
+                                    })
+                        else:
+                            return {'member_limit_error': True}
+                        if each['user_type'] == 'Admin':
+                            team_id.aspirant_admin_id = user.id
+                            if not request.env['snr.aspirant.team.member'].sudo().search(
+                                    [('related_user_id', '=', user.id)]):
+                                request.env['snr.aspirant.team.member'].sudo().create({
+                                    'team_id': team_id.id,
+                                    'related_user_id': user.id,
+                                    'user_type': each['user_type']
+                                })
+                        if each['user_type'] == 'Leader':
+                            team_id.aspirant_leader_id = user.id
+                            if not request.env['snr.aspirant.team.member'].sudo().search(
+                                    [('related_user_id', '=', user.id)]):
+                                request.env['snr.aspirant.team.member'].sudo().create({
+                                    'team_id': team_id.id,
+                                    'related_user_id': user.id,
+                                    'user_type': each['user_type']
+                                })
+                        if each['user_type'] == 'Mentor':
+                            team_id.mentor_id = mentor.id
+                        if each['user_type'] == 'Brand Ambassador':
+                            team_id.brand_amb_id = brand_ambassador.id
+                aspirant_id.write({
+                    'aspirant_id': team_id.id
+                })
+            else:
+                return {'team_error': True}
         if post.get('aspirant_team'):
             aspirant_id = request.env['cfo.snr.aspirants'].sudo().search([('id', '=', int(post.get('aspirant_id')))])
             team_id = request.env['cfo.team.snr'].sudo().search([('id', '=', int(post.get('aspirant_team')))], limit=1)
+            member = request.env['snr.aspirant.team.member'].sudo().search([('team_id', '=', team_id.id)])
+            for each in member:
+                each.unlink()
             team_id.sudo().write({
                 'name': post.get('name'),
                 'ref_name': post.get('sys_name'),
@@ -550,18 +603,51 @@ class CfoHome(web.Home):
                 'cfo_comp': 'CFO SNR'
             })
             for each in post.get('list_of_member'):
+                member_ids = request.env['snr.aspirant.team.member'].sudo().search(
+                    [('team_id', '=', team_id.id), ('user_type', '=', 'Member')])
                 user = request.env['cfo.snr.aspirants'].sudo().search(
                     [('email_1', 'ilike', str(each['email']))], limit=1)
-                if not user:
-                    return False
+                mentor = request.env['mentors.snr'].sudo().search(
+                    [('email_1', 'ilike', str(each['email']))], limit=1)
+                brand_ambassador = request.env['brand.ambassador.snr'].sudo().search(
+                    [('email_1', 'ilike', str(each['email']))], limit=1)
+                if not user and not mentor and not brand_ambassador:
+                    return {'error': "error"}
                 else:
-                    if not request.env['snr.aspirant.team.member'].sudo().search([('related_user_id', '=', user.id)]):
-                        request.env['snr.aspirant.team.member'].sudo().create({
-                            'team_id': team_id.id,
-                            'related_user_id': user.id,
-                            'user_type': each['user_type']
-                        })
-            return True
+                    if len(member_ids) <= 3:
+                        if each['user_type'] == 'Member':
+                            if not request.env['snr.aspirant.team.member'].sudo().search(
+                                    [('related_user_id', '=', user.id)]):
+                                request.env['snr.aspirant.team.member'].sudo().create({
+                                    'team_id': team_id.id,
+                                    'related_user_id': user.id,
+                                    'user_type': each['user_type']
+                                })
+                    else:
+                        return {'member_limit_error': True}
+                    if each['user_type'] == 'Admin':
+                        team_id.aspirant_admin_id = user.id
+                        if not request.env['snr.aspirant.team.member'].sudo().search(
+                                [('related_user_id', '=', user.id)]):
+                            request.env['snr.aspirant.team.member'].sudo().create({
+                                'team_id': team_id.id,
+                                'related_user_id': user.id,
+                                'user_type': each['user_type']
+                            })
+                    if each['user_type'] == 'Leader':
+                        team_id.aspirant_leader_id = user.id
+                        if not request.env['snr.aspirant.team.member'].sudo().search(
+                                [('related_user_id', '=', user.id)]):
+                            request.env['snr.aspirant.team.member'].sudo().create({
+                                'team_id': team_id.id,
+                                'related_user_id': user.id,
+                                'user_type': each['user_type']
+                            })
+                    if each['user_type'] == 'Mentor':
+                        team_id.mentor_id = mentor.id
+                    if each['user_type'] == 'Brand Ambassador':
+                        team_id.brand_amb_id = brand_ambassador.id
+        return {'success': 'success '}
 
 
 class CfoAuthSignup(auth_signup.AuthSignupHome):

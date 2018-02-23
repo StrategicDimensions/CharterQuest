@@ -2,1153 +2,1064 @@
 <odoo>
     <data>
 
-    <record id='cfo_snr_aspirants_form' model='ir.ui.view'>
-        <field name="name">CFO Aspirants</field>
-        <field name="model">cfo.snr.aspirants</field>
-        <field name="arch" type="xml">
-            <form string="CFO Aspirants Form">
-                <group string='Bio Details' col='4'>
-                    <field name='partner_id' required="True" context="{'default_cfo_user':True}"/>
-                    <field name='surname' required="0" />
-                    <field name='other_names' />
-                    <field name='date_of_birth' required="0" />
-                    <field name='country_of_birth' required="0" />
-                    <field name='nationality' required="0" />
-                    <field name="cfo_competition_year" invisible="1"/>
-                    <field name='user_id'/>
-                </group>
-                <group string='Contact Information' col='4'>
-                    <field name='mobile' required="0" />
-                    <field name='phone' string='Office Telephone' />
-                    <field name='home_phone' />
-                    <field name='email_1' required="True" />
-                    <field name='email_2' />
-                    <label for="street" string="Address" />
-                    <div>
-                        <field name="street" placeholder="Street..." />
-                        <field name="street2" />
-                        <div class="address_format">
-                            <field name="city" placeholder="City"
-                                style="width: 40%%" />
-                            <field name="state_id" class="oe_no_button"
-                                placeholder="State" style="width: 37%%"
-                                options='{"no_open": True}' />
-                            <field name="zip" placeholder="ZIP"
-                                style="width: 20%%" />
-                        </div>
-                        <field name="country_id" placeholder="Country"
-                            class="oe_no_button"
-                            options='{"no_open": True, "no_create": True}' />
-                    </div>
-                </group>
-                <group string='Eligibility' col='4'>
-                    <field name='entry_as_student' />
-                    <field name='entry_as_employee' />
-                </group>
-                <group string='Current School' col='4'>
-                    <field name='school_name' required="0" />
-                    <field name='department' required="0" />
-                    <field name='website' />
-                    <label for="stu_street" string="Address" />
-                    <div>
-                        <field name="stu_street" placeholder="Street..." />
-                        <field name="stu_street2" />
-                        <div class="address_format">
-                            <field name="stu_city"
-                                placeholder="City" style="width: 40%%" />
-                            <field name="stu_state_id" class="oe_no_button"
-                                placeholder="State" style="width: 37%%"
-                                options='{"no_open": True}' />
-                            <field name="stu_zip" placeholder="ZIP"
-                                style="width: 20%%" />
-                        </div>
-                        <field name="stu_country_id"
-                            placeholder="Country" class="oe_no_button"
-                            options='{"no_open": True, "no_create": True}' />
-                    </div>
-                    <field name='programme_name' required="0" />
-                    <field name='start_date' required="0" />
-                    <field name='expected_completion_date'
-                        required="0" />
-                    <field name='mode_of_studies' required="0" />
-                    <field name='formal_work_exp' required="0" />
-                </group>
-                <group string='Current Employer' col='4'>
-                    <field name='legal_name_employer'
-                        required="0" />
-                    <field name='sector' required="0" />
-                    <field name='if_company' />
-                    <field name='emp_department' required="0" />
-                    <label for="emp_street" string="Address" />
-                    <div>
-                        <field name="emp_street" placeholder="Street..." />
-                        <field name="emp_street2" />
-                        <div class="address_format">
-                            <field name="emp_city"
-                                placeholder="City" style="width: 40%%" />
-                            <field name="emp_state_id" class="oe_no_button"
-                                placeholder="State" style="width: 37%%"
-                                options='{"no_open": True}' />
-                            <field name="emp_zip" placeholder="ZIP"
-                                style="width: 20%%" />
-                        </div>
-                        <field name="emp_country_id"
-                            placeholder="Country" class="oe_no_button"
-                            options='{"no_open": True, "no_create": True}' />
-                    </div>
-                    <field name='emp_website' />
-                    <field name='emp_start_date' required="0" />
-                    <field name='emp_status' required="0" />
-                    <field name='emp_experience' required="0" />
-                </group>
-                <group string='Education' col='4'>
-                    <field name='tertiary_qualification'
-                        required="0" />
-                    <field name='field_of_studies' required="0" />
-                    <field name='pre_tertiary_qualification'
-                        required="0" />
-                </group>
-                <group string="Registrants source" col="4">
-                    <field name="registrants_source"/>
-                    <field name="social_media_options" attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
-                    <field name="other_reason" attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>          
-                </group>
-                <notebook>
-                    <page string="Credentials">
-                        <group col="4">
-                            <field name="username"/>
-                            <field name="password"/>
-                            <field name="cfo_type"/>
-                            <field name="cfo_categ"/>
-                            <field name="cfo_account_activate"/>
-                            <field name="cfo_encoded_link"/>
-                            <field name="team_leader"/>
-                            <field name="team_admin"/>
-                            <field name="team_member"/>
-                            <field name="updated_cfo_bio"/>
-                            <field name="active"/>
+        <record id='cfo_snr_aspirants_form' model='ir.ui.view'>
+            <field name="name">CFO Aspirants</field>
+            <field name="model">cfo.snr.aspirants</field>
+            <field name="arch" type="xml">
+                <form string="CFO Aspirants Form">
+                    <header>
+                        <button type="object" string="Accept Invitation" name="accept_request"
+                                attrs="{'invisible':[('is_request','=',False)]}"/>
+                    </header>
+                    <sheet>
+                        <group string='Bio Details' col='4'>
+                            <field name='partner_id' required="True" context="{'default_cfo_user':True}"/>
+                            <field name='surname' required="0"/>
+                            <field name='other_names'/>
+                            <field name='date_of_birth' required="0"/>
+                            <field name='country_of_birth' required="0"/>
+                            <field name='nationality' required="0"/>
+                            <field name="cfo_competition_year" invisible="1"/>
+                            <field name='user_id'/>
                         </group>
-                    </page>
-<!--                     <page string='Parent/Guardian Information'> -->
-<!--                         <group col="4"> -->
-<!--                             <field name="parent_name"/> -->
-<!--                             <field name="parent_email"/> -->
-<!--                             <field name="parent_number"/> -->
-<!--                             <field name="parent_occupation"/> -->
-<!--                         </group> -->
-<!--                     </page> -->
-                    <page string="Register for Other categories">
-                        <group col="4">
-                            <field name="external_panel_judge"/>
-                            <field name="external_examiner"/>
-                            <field name="case_study_exper"/>
-                            <field name="ai_and_employer"/>       
-                            <field name="brand_ambassador"/>
-                            <field name="mentor"/>
-                            <field name="social_media_contestant"/>
-                            <field name="volunteer_as_student"/>
-                            <field name="volunteer_other_expertise"/>
-                        </group>
-                    </page>
-                    <page string="Documents">
-                        <field name="doc_lines"/>
-                    </page>
-                </notebook>
-<!--                 <notebook> -->
-<!--                     <page string='Credentials'> -->
-<!--                         <group col='4'> -->
-<!--                             <field name='username' /> -->
-<!--                             <field name='password' password='True' /> -->
-<!--                             <field name='cfo_type' /> -->
-<!--                             <field name='cfo_account_activate' /> -->
-<!--                             <field name='cfo_encoded_link' /> -->
-<!--                             <field name='team_leader' /> -->
-<!--                             <field name='team_admin' /> -->
-<!--                             <field name='team_member' /> -->
-<!--                             <field name='updated_cfo_bio' /> -->
-<!--                         </group> -->
-<!--                     </page> -->
-<!--                 </notebook> -->
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="cfo_snr_aspirants_tree">
-        <field name="name">CFO Aspirants</field>
-        <field name="model">cfo.snr.aspirants</field>
-        <field name="arch" type="xml">
-            <tree string='CFO Aspirants'>
-                <field name='partner_id' context="{'default_cfo_user':True}"/>
-                <field name='surname' />
-                <field name="cfo_competition_year" invisible="1"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2016">
-        <field name="name">CFO Aspirants</field>
-        <field name="res_model">cfo.snr.aspirants</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
-        <field name="context">{'default_cfo_competition_year': '2016'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2017">
-        <field name="name">CFO Aspirants</field>
-        <field name="res_model">cfo.snr.aspirants</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
-        <field name="context">{'default_cfo_competition_year': '2017'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2018">
-        <field name="name">CFO Aspirants</field>
-        <field name="res_model">cfo.snr.aspirants</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
-        <field name="context">{'default_cfo_competition_year': '2018'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2019">
-        <field name="name">CFO Aspirants</field>
-        <field name="res_model">cfo.snr.aspirants</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
-        <field name="context">{'default_cfo_competition_year': '2019'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2020">
-        <field name="name">CFO Aspirants</field>
-        <field name="res_model">cfo.snr.aspirants</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
-        <field name="context">{'default_cfo_competition_year': '2020'}</field>
-    </record>
-
-    <menuitem id="menu_cfo_member_snr_2016_root" parent="menu_cfo_snr_root" name="2016" sequence="35"/>
-    <menuitem id="menu_cfo_member_snr_2017_root" parent="menu_cfo_snr_root" name="2017" sequence="36"/>
-    <menuitem id="menu_cfo_member_snr_2018_root" parent="menu_cfo_snr_root" name="2018" sequence="37"/>
-    <menuitem id="menu_cfo_member_snr_2019_root" parent="menu_cfo_snr_root" name="2019" sequence="38"/>
-    <menuitem id="menu_cfo_member_snr_2020_root" parent="menu_cfo_snr_root" name="2020" sequence="39"/>
-
-    <menuitem id="menu_cfo_member_snr_2016" action="action_cfo_snr_aspirants_2016" parent="menu_cfo_member_snr_2016_root" sequence="1"/>
-    <menuitem id="menu_cfo_member_snr_2017" action="action_cfo_snr_aspirants_2017" parent="menu_cfo_member_snr_2017_root" sequence="1"/>
-    <menuitem id="menu_cfo_member_snr_2018" action="action_cfo_snr_aspirants_2018" parent="menu_cfo_member_snr_2018_root" sequence="1"/>
-    <menuitem id="menu_cfo_member_snr_2019" action="action_cfo_snr_aspirants_2019" parent="menu_cfo_member_snr_2019_root" sequence="1"/>
-    <menuitem id="menu_cfo_member_snr_2020" action="action_cfo_snr_aspirants_2020" parent="menu_cfo_member_snr_2020_root" sequence="1"/>
-
-    <record id='academic_institutions_snr_form_cfo' model='ir.ui.view'>
-        <field name="name">Academic Institutions</field>
-        <field name="model">academic.institution.snr</field>
-        <field name="arch" type="xml">
-            <form string="Academic Institutions Form">
-              <sheet string="CFO Junior Member">
-                <div class="oe_title">
-                    <h1>
-                        <field name="partner_id" required="1" context="{'default_cfo_user':True}"/>
-                    </h1>
-                </div>
-                <notebook>
-                  <page string="Bio Details">
-                    <group>
-                      <group>
-                        <field name='surname' />
-                        <field name='other_names' />
-                        <field name="race" />
-                        <field name="gender" />
-                        <field name="cfo_competition_year" invisible="1"/>
-                        <field name='user_id'/>
-                      </group>
-                      <group>
-                      </group>
-                    </group>
-                  </page>
-                  <page string="Contact Information">
-                    <group>
-                      <group>
-                            <field name='mobile' />
-                            <field name='phone' string='Office Telephone' />
-                            <field name='home_phone' />
-                            <field name='email_1' />
-                            <field name='email_2' />
-                            <label for="street" string="Address" />
+                        <group string='Contact Information' col='4'>
+                            <field name='mobile' required="0"/>
+                            <field name='phone' string='Office Telephone'/>
+                            <field name='home_phone'/>
+                            <field name='email_1' required="True"/>
+                            <field name='email_2'/>
+                            <label for="street" string="Address"/>
                             <div>
-                                <field name="street" placeholder="Street..." />
-                                <field name="street2" />
+                                <field name="street" placeholder="Street..."/>
+                                <field name="street2"/>
                                 <div class="address_format">
-                                    <field name="city" placeholder="City" style="width: 40%%" />
+                                    <field name="city" placeholder="City"
+                                           style="width: 40%%"/>
                                     <field name="state_id" class="oe_no_button"
-                                        placeholder="State" style="width: 37%%"
-                                        options='{"no_open": True}'
-                                        on_change="onchange_state(state_id)" />
-                                    <field name="zip" placeholder="ZIP" style="width: 20%%" />
+                                           placeholder="State" style="width: 37%%"
+                                           options='{"no_open": True}'/>
+                                    <field name="zip" placeholder="ZIP"
+                                           style="width: 20%%"/>
                                 </div>
                                 <field name="country_id" placeholder="Country"
-                                    class="oe_no_button"
-                                    options='{"no_open": True, "no_create": True}' />
+                                       class="oe_no_button"
+                                       options='{"no_open": True, "no_create": True}'/>
                             </div>
-                      </group>
-                      <group name="studio_group_ClGCR_right"/>
-                    </group>
-                  </page>
-                  <page string="Institution Details">
-                    <group>
-                      <group>
-                            <field name='school_name' />
-                            <field name='department' />
-                            <field name='website' />
-                            <label for="stu_street" string="Address" />
+                        </group>
+                        <group string='Eligibility' col='4'>
+                            <field name='entry_as_student'/>
+                            <field name='entry_as_employee'/>
+                        </group>
+                        <group string='Current School' col='4'>
+                            <field name='school_name' required="0"/>
+                            <field name='department' required="0"/>
+                            <field name='website'/>
+                            <label for="stu_street" string="Address"/>
                             <div>
-                                <field name="stu_street" placeholder="Street..." />
-                                <field name="stu_street2" />
+                                <field name="stu_street" placeholder="Street..."/>
+                                <field name="stu_street2"/>
                                 <div class="address_format">
                                     <field name="stu_city"
-                                        placeholder="City" style="width: 40%%" />
+                                           placeholder="City" style="width: 40%%"/>
                                     <field name="stu_state_id" class="oe_no_button"
-                                        placeholder="State" style="width: 37%%"
-                                        options='{"no_open": True}'
-                                        on_change="onchange_state(state_id)" />
+                                           placeholder="State" style="width: 37%%"
+                                           options='{"no_open": True}'/>
                                     <field name="stu_zip" placeholder="ZIP"
-                                        style="width: 20%%" />
+                                           style="width: 20%%"/>
                                 </div>
                                 <field name="stu_country_id"
-                                    placeholder="Country" class="oe_no_button"
-                                    options='{"no_open": True, "no_create": True}' />
+                                       placeholder="Country" class="oe_no_button"
+                                       options='{"no_open": True, "no_create": True}'/>
                             </div>
-                      </group>
-                      <group/>
-                    </group>
-                  </page>
-                  <page string="Registrants source">
-                    <group>
-                      <group>
-                        <field name="registrants_source" />
-                        <field name="social_media_options"
-                            attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}" />
-                        <field name="other_reason"
-                            attrs="{'invisible':[('registrants_source','not in',['Other'])]}" />
-                      </group>
-                      <group>
-                      </group>
-                    </group>
-                  </page>
-                  <page name="studio_page_lNrdd" string="Eligibility">
-                    <group name="studio_group_lNrdd">
-                      <group name="studio_group_lNrdd_left"/>
-                      <group name="studio_group_lNrdd_right"/>
-                    </group>
-                  </page>
-<!--                   <page name="studio_page_RcJIk" string="Current School"> -->
-<!--                     <group name="studio_group_RcJIk"> -->
-<!--                       <group name="studio_group_RcJIk_left"/> -->
-<!--                       <group name="studio_group_RcJIk_right"/> -->
-<!--                     </group> -->
-<!--                   </page> -->
-<!--                   <page name="studio_page_aCRSo" string="Current Employer"> -->
-<!--                     <group name="studio_group_aCRSo"> -->
-<!--                       <group name="studio_group_aCRSo_left"/> -->
-<!--                       <group name="studio_group_aCRSo_right"/> -->
-<!--                     </group> -->
-<!--                   </page> -->
-<!--                   <page name="studio_page_I8Wx6" string="Education"> -->
-<!--                     <group name="studio_group_I8Wx6"> -->
-<!--                       <group name="studio_group_I8Wx6_left"/> -->
-<!--                       <group name="studio_group_I8Wx6_right"/> -->
-<!--                     </group> -->
-<!--                   </page> -->
-<!--                   <page name="studio_page_rYQYJ" string="Competition Rules"> -->
-<!--                     <group name="studio_group_rYQYJ"> -->
-<!--                       <group name="studio_group_rYQYJ_left"/> -->
-<!--                       <group name="studio_group_rYQYJ_right"/> -->
-<!--                     </group> -->
-<!--                   </page> -->
-                </notebook>
-                <notebook name="studio_notebook_gO9Nc">
-<!--                   <page name="studio_page_gO9Nc" string="TEAMS"> -->
-<!--                     <group name="studio_group_gO9Nc"> -->
-<!--                     </group> -->
-<!--                   </page> -->
-                  <page name="studio_page_d8cQX" string="Credentials">
-                    <group col='4'>
-                        <field name='username' />
-                        <field name="password" />
-                        <field name='cfo_type' />
-                        <field name='cfo_account_activate' />
-                        <field name='cfo_encoded_link' />
-                        <field name='updated_academic_bio' />
-                        <field name='team_admin' />
-                        <field name='team_leader' />
-                        <field name='team_member' />
-                    </group>
-                  </page>
-                  <page name="studio_page_rVsTL" string="Other Categories">
-                    <group col='4'>
-                        <field name='external_panel_judge' />
-                        <field name='external_examiner' />
-                        <field name='case_study_exper' />
-                        <field name='ai_and_employer' />
-                        <field name='brand_ambassador' />
-                        <field name='mentor' />
-                        <field name='social_media_contestant' />
-                        <field name='volunteer_as_student' />
-                        <field name='volunteer_other_expertise' />
-                    </group>
-                  </page>
-                  <page string="Documents">
-                    <field name="doc_lines" />
-                  </page>
-                </notebook>
-              </sheet>
-              <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers"/>
-                    <field name="activity_ids" widget="mail_activity"/>
-                    <field name="message_ids" widget="mail_thread"/>
-              </div>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="academic_institution_snr_tree">
-        <field name="name">Academic Institution</field>
-        <field name="model">academic.institution.snr</field>
-        <field name="arch" type="xml">
-            <tree string='Academic Institutions'>
-                <field name='partner_id' context="{'default_cfo_user':True}"/>
-                <field name='surname' />
-                <field name="cfo_competition_year" invisible="1"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2016">
-        <field name="name">Academic Institutions</field>
-        <field name="res_model">academic.institution.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
-        <field name="context">{'default_cfo_competition_year': '2016'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2017">
-        <field name="name">Academic Institutions</field>
-        <field name="res_model">academic.institution.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
-        <field name="context">{'default_cfo_competition_year': '2017'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2018">
-        <field name="name">Academic Institutions</field>
-        <field name="res_model">academic.institution.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
-        <field name="context">{'default_cfo_competition_year': '2018'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2019">
-        <field name="name">Academic Institutions</field>
-        <field name="res_model">academic.institution.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
-        <field name="context">{'default_cfo_competition_year': '2019'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2020">
-        <field name="name">Academic Institutions</field>
-        <field name="res_model">academic.institution.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
-        <field name="context">{'default_cfo_competition_year': '2020'}</field>
-    </record>
-
-    <menuitem id="menu_cfo_academic_inst_snr_2016" action="action_cfo_snr_academic_inst_2016" parent="menu_cfo_member_snr_2016_root" sequence="2"/>
-    <menuitem id="menu_cfo_academic_inst_snr_2017" action="action_cfo_snr_academic_inst_2017" parent="menu_cfo_member_snr_2017_root" sequence="2"/>
-    <menuitem id="menu_cfo_academic_inst_snr_2018" action="action_cfo_snr_academic_inst_2018" parent="menu_cfo_member_snr_2018_root" sequence="2"/>
-    <menuitem id="menu_cfo_academic_inst_snr_2019" action="action_cfo_snr_academic_inst_2019" parent="menu_cfo_member_snr_2019_root" sequence="2"/>
-    <menuitem id="menu_cfo_academic_inst_snr_2020" action="action_cfo_snr_academic_inst_2020" parent="menu_cfo_member_snr_2020_root" sequence="2"/>
-
-    <record id='employers_snr_form' model='ir.ui.view'>
-        <field name="name">Employers</field>
-        <field name="model">employers.snr</field>
-        <field name="arch" type="xml">
-            <form string="Employers Form">
-                <group string='Bio Details' col='4'>
-                    <field name='partner_id' required="True" context="{'default_cfo_user':True}"/>
-                    <field name='surname' required="0" />
-                    <field name='other_names' />
-                    <field name="cfo_competition_year" invisible="1"/>
-                    <field name='user_id'/>
-                </group>
-                <group string='Contact Information' col='4'>
-                    <field name='mobile' />
-                    <field name='phone' string='Office Telephone'
-                        required="0" />
-                    <field name='home_phone' />
-                    <field name='email_1' required="True" />
-                    <field name='email_2' />
-                    <label for="street" string="Address" />
-                    <div>
-                        <field name="street" placeholder="Street..." />
-                        <field name="street2" />
-                        <div class="address_format">
-                            <field name="city" placeholder="City"
-                                style="width: 40%%" />
-                            <field name="state_id" class="oe_no_button"
-                                placeholder="State" style="width: 37%%"
-                                options='{"no_open": True}'
-                                on_change="onchange_state(state_id)" />
-                            <field name="zip" placeholder="ZIP"
-                                style="width: 20%%" />
-                        </div>
-                        <field name="country_id" placeholder="Country"
-                            class="oe_no_button"
-                            options='{"no_open": True, "no_create": True}' />
-                    </div>
-                </group>
-                <group string='Employer Details' col='4'>
-                    <field name='legal_name_employer'
-                        required="0" />
-                    <field name='sector' required="0" />
-                    <field name='if_company' />
-                    <field name='emp_department' required="0" />
-                    <label for="emp_street" string="Address" />
-                    <div>
-                        <field name="emp_street" placeholder="Street..." />
-                        <field name="emp_street2" />
-                        <div class="address_format">
-                            <field name="emp_city"
-                                placeholder="City" style="width: 40%%" />
-                            <field name="emp_state_id" class="oe_no_button"
-                                placeholder="State" style="width: 37%%"
-                                options='{"no_open": True}'
-                                on_change="onchange_state(state_id)" />
-                            <field name="emp_zip" placeholder="ZIP"
-                                style="width: 20%%" />
-                        </div>
-                        <field name="emp_country_id"
-                            placeholder="Country" class="oe_no_button"
-                            options='{"no_open": True, "no_create": True}' />
-                    </div>
-                    <field name='emp_website' />
-                </group>
-                <group string="Registrants source" col="4">
-                    <field name="registrants_source"/>
-                    <field name="social_media_options" attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
-                    <field name="other_reason" attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>          
-                </group>
-                <notebook>
-                    <page string="Credentials">
-                        <group col="4">
-                            <field name="username"/>
-                            <field name="password"/>
-                            <field name="cfo_type"/>
-                            <field name="cfo_account_activate"/>
-                            <field name="cfo_encoded_link"/>
-                            <field name="updated_emp_bio"/>
-                            <field name="team_admin"/>
-                            <field name="team_leader"/>
-                            <field name="team_member"/>
+                            <field name='programme_name' required="0"/>
+                            <field name='start_date' required="0"/>
+                            <field name='expected_completion_date'
+                                   required="0"/>
+                            <field name='mode_of_studies' required="0"/>
+                            <field name='formal_work_exp' required="0"/>
                         </group>
-                    </page>
-                    <page string="Register for Other categories">
-                    <group col="4">
-                        <field name="external_panel_judge"/>
-                        <field name="external_examiner"/>
-                        <field name="case_study_exper"/>
-                        <field name="ai_and_employer"/>
-                        <field name="brand_ambassador"/>
-                        <field name="mentor"/>
-                        <field name="social_media_contestant"/>
-                        <field name="volunteer_as_student"/>
-                            <field name="volunteer_other_expertise"/>
-                    </group>
-                </page>
-                <page string="Documents">
-                    <field name="doc_lines"/>
-                </page>
-                </notebook>
-<!--                 <notebook> -->
-<!--                     <page string='Credentials'> -->
-<!--                         <group col='4'> -->
-<!--                             <field name='username' /> -->
-<!--                             <field name='password' password='True' /> -->
-<!--                             <field name='cfo_type' /> -->
-<!--                             <field name='cfo_account_activate' /> -->
-<!--                             <field name='cfo_encoded_link' /> -->
-<!--                             <field name='updated_emp_bio' /> -->
-<!--                         </group> -->
-<!--                     </page> -->
-<!--                 </notebook> -->
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="employers_snr_tree">
-        <field name="name">Employers</field>
-        <field name="model">employers.snr</field>
-        <field name="arch" type="xml">
-            <tree string='Employers'>
-                <field name='partner_id' context="{'default_cfo_user':True}"/>
-                <field name='surname' />
-                <field name="cfo_competition_year" invisible="1"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_employers_2016">
-        <field name="name">Employers</field>
-        <field name="res_model">employers.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
-        <field name="context">{'default_cfo_competition_year': '2016'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_employers_2017">
-        <field name="name">Employers</field>
-        <field name="res_model">employers.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
-        <field name="context">{'default_cfo_competition_year': '2017'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_employers_2018">
-        <field name="name">Employers</field>
-        <field name="res_model">employers.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
-        <field name="context">{'default_cfo_competition_year': '2018'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_employers_2019">
-        <field name="name">Employers</field>
-        <field name="res_model">employers.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
-        <field name="context">{'default_cfo_competition_year': '2019'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_employers_2020">
-        <field name="name">Employers</field>
-        <field name="res_model">employers.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
-        <field name="context">{'default_cfo_competition_year': '2020'}</field>
-    </record>
-
-    <menuitem id="menu_cfo_employer_snr_2016" action="action_cfo_snr_employers_2016" parent="menu_cfo_member_snr_2016_root" sequence="3"/>
-    <menuitem id="menu_cfo_employer_snr_2017" action="action_cfo_snr_employers_2017" parent="menu_cfo_member_snr_2017_root" sequence="3"/>
-    <menuitem id="menu_cfo_employer_snr_2018" action="action_cfo_snr_employers_2018" parent="menu_cfo_member_snr_2018_root" sequence="3"/>
-    <menuitem id="menu_cfo_employer_snr_2019" action="action_cfo_snr_employers_2019" parent="menu_cfo_member_snr_2019_root" sequence="3"/>
-    <menuitem id="menu_cfo_employer_snr_2020" action="action_cfo_snr_employers_2020" parent="menu_cfo_member_snr_2020_root" sequence="3"/>
-
-    <record id='mentors_snr_form' model='ir.ui.view'>
-        <field name="name">Mentors</field>
-        <field name="model">mentors.snr</field>
-        <field name="arch" type="xml">
-            <form string="Mentors Form">
-                <group string='Bio Details' col='4'>
-                    <field name='partner_id' required="True" context="{'default_cfo_user':True}"/>
-                    <field name='surname' required="0" />
-                    <field name='other_names' />
-                    <field name="cfo_competition_year" invisible="1"/>
-                    <field name='user_id'/>
-                </group>
-                <group string='Contact Information' col='4'>
-                    <field name='mobile' required="0" />
-                    <field name='phone' string='Office Telephone' />
-                    <field name='home_phone' />
-                    <field name='email_1' required="True" />
-                    <field name='email_2' />
-                    <label for="street" string="Address" />
-                    <div>
-                        <field name="street" placeholder="Street..." />
-                        <field name="street2" />
-                        <div class="address_format">
-                            <field name="city" placeholder="City"
-                                style="width: 40%%" />
-                            <field name="state_id" class="oe_no_button"
-                                placeholder="State" style="width: 37%%"
-                                options='{"no_open": True}'
-                                on_change="onchange_state(state_id)" />
-                            <field name="zip" placeholder="ZIP"
-                                style="width: 20%%" />
-                        </div>
-                        <field name="country_id" placeholder="Country"
-                            class="oe_no_button"
-                            options='{"no_open": True, "no_create": True}' />
-                    </div>
-                </group>
-                <group string="Mentors Information">
-                    <field name="i_am_a"/>
-                    <field name="i_hold_a"/>
-                </group>
-                <group string="Registrants source" col="4">
-                    <field name="registrants_source"/>
-                    <field name="social_media_options" attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
-                    <field name="other_reason" attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>          
-                </group>
-                <notebook>
-                    <page string="Credentials">
-                        <group col="4">
-                            <field name="username"/>
-                            <!--<field name='password' password='True'/>-->
-                            <field name="password"/>
-                            <field name="cfo_type"/>
-                            <field name="cfo_account_activate"/>
-                            <field name="cfo_encoded_link"/>
-                            <field name="updated_mentors_bio"/>
+                        <group string='Current Employer' col='4'>
+                            <field name='legal_name_employer'
+                                   required="0"/>
+                            <field name='sector' required="0"/>
+                            <field name='if_company'/>
+                            <field name='emp_department' required="0"/>
+                            <label for="emp_street" string="Address"/>
+                            <div>
+                                <field name="emp_street" placeholder="Street..."/>
+                                <field name="emp_street2"/>
+                                <div class="address_format">
+                                    <field name="emp_city"
+                                           placeholder="City" style="width: 40%%"/>
+                                    <field name="emp_state_id" class="oe_no_button"
+                                           placeholder="State" style="width: 37%%"
+                                           options='{"no_open": True}'/>
+                                    <field name="emp_zip" placeholder="ZIP"
+                                           style="width: 20%%"/>
+                                </div>
+                                <field name="emp_country_id"
+                                       placeholder="Country" class="oe_no_button"
+                                       options='{"no_open": True, "no_create": True}'/>
+                            </div>
+                            <field name='emp_website'/>
+                            <field name='emp_start_date' required="0"/>
+                            <field name='emp_status' required="0"/>
+                            <field name='emp_experience' required="0"/>
                         </group>
-                    </page>
-                    <page string="Register for Other categories">
-                        <group col="4">
-                            <field name="external_panel_judge"/>
-                            <field name="external_examiner"/>
-                            <field name="case_study_exper"/>
-                            <field name="ai_and_employer"/>       
-                            <field name="brand_ambassador"/>
-                            <field name="mentor"/>
-                            <field name="social_media_contestant"/>
-                            <field name="volunteer_as_student"/>
-                            <field name="volunteer_other_expertise"/>
+                        <group string='Education' col='4'>
+                            <field name='tertiary_qualification'
+                                   required="0"/>
+                            <field name='field_of_studies' required="0"/>
+                            <field name='pre_tertiary_qualification'
+                                   required="0"/>
+                            <field name="is_request" invisible="1"/>
                         </group>
-                    </page>
-                    <page string="Teams">
-                        <field name="team_ids"/>
-                    </page>
-                    <page string="Documents">
-                        <field name="doc_lines"/>
-                    </page>
-                </notebook>
-<!--                 <notebook> -->
-<!--                     <page string='Credentials'> -->
-<!--                         <group col='4'> -->
-<!--                             <field name='username' /> -->
-<!--                             <field name='password' password='True' /> -->
-<!--                             <field name='cfo_type' /> -->
-<!--                             <field name='cfo_account_activate' /> -->
-<!--                             <field name='cfo_encoded_link' /> -->
-<!--                             <field name='updated_mentors_bio' /> -->
-<!--                         </group> -->
-<!--                     </page> -->
-<!--                 </notebook> -->
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="mentors_snr_tree">
-        <field name="name">mentors</field>
-        <field name="model">mentors.snr</field>
-        <field name="arch" type="xml">
-            <tree string='Mentors'>
-                <field name='partner_id' context="{'default_cfo_user':True}"/>
-                <field name='surname' />
-                <field name="cfo_competition_year" invisible="1"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2016">
-        <field name="name">Mentors</field>
-        <field name="res_model">mentors.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
-        <field name="context">{'default_cfo_competition_year': '2016'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2017">
-        <field name="name">Mentors</field>
-        <field name="res_model">mentors.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
-        <field name="context">{'default_cfo_competition_year': '2017'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2018">
-        <field name="name">Mentors</field>
-        <field name="res_model">mentors.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
-        <field name="context">{'default_cfo_competition_year': '2018'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2019">
-        <field name="name">Mentors</field>
-        <field name="res_model">mentors.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
-        <field name="context">{'default_cfo_competition_year': '2019'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2020">
-        <field name="name">Mentors</field>
-        <field name="res_model">mentors.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
-        <field name="context">{'default_cfo_competition_year': '2020'}</field>
-    </record>
-
-    <menuitem id="menu_cfo_mentors_snr_2016" action="action_cfo_snr_mentors_2016" parent="menu_cfo_member_snr_2016_root" sequence="4"/>
-    <menuitem id="menu_cfo_mentors_snr_2017" action="action_cfo_snr_mentors_2017" parent="menu_cfo_member_snr_2017_root" sequence="4"/>
-    <menuitem id="menu_cfo_mentors_snr_2018" action="action_cfo_snr_mentors_2018" parent="menu_cfo_member_snr_2018_root" sequence="4"/>
-    <menuitem id="menu_cfo_mentors_snr_2019" action="action_cfo_snr_mentors_2019" parent="menu_cfo_member_snr_2019_root" sequence="4"/>
-    <menuitem id="menu_cfo_mentors_snr_2020" action="action_cfo_snr_mentors_2020" parent="menu_cfo_member_snr_2020_root" sequence="4"/>
-
-    <record id='volunteers_snr_form' model='ir.ui.view'>
-        <field name="name">Volunteers</field>
-        <field name="model">volunteers.snr</field>
-        <field name="arch" type="xml">
-            <form string="Volunteers Form">
-                <group string='Bio Details' col='4'>
-                    <field name='partner_id' required="True" context="{'default_cfo_user':True}"/>
-                    <field name='surname' required="0" />
-                    <field name='other_names' />
-                    <field name="cfo_competition_year" invisible="1"/>
-                    <field name='user_id'/>
-                </group>
-                <group string='Contact Information' col='4'>
-                    <field name='mobile' required="0" />
-                    <field name='phone' string='Office Telephone' />
-                    <field name='home_phone' required="0" />
-                    <field name='email_1' required="True" />
-                    <field name='email_2' />
-                    <field name='volunteers_type' />
-                    <label for="street" string="Address" />
-                    <div>
-                        <field name="street" placeholder="Street..." />
-                        <field name="street2" />
-                        <div class="address_format">
-                            <field name="city" placeholder="City"
-                                style="width: 40%%" />
-                            <field name="state_id" class="oe_no_button"
-                                placeholder="State" style="width: 37%%"
-                                options='{"no_open": True}'
-                                on_change="onchange_state(state_id)" />
-                            <field name="zip" placeholder="ZIP"
-                                style="width: 20%%" />
-                        </div>
-                        <field name="country_id" placeholder="Country"
-                            class="oe_no_button"
-                            options='{"no_open": True, "no_create": True}' />
-                    </div>
-                </group>
-                <group string='Current School' col='4'>
-                    <field name='school_name' />
-                    <field name='department' />
-                    <field name='website' />
-                    <label for="stu_street" string="Address" />
-                    <div>
-                        <field name="stu_street" placeholder="Street..." />
-                        <field name="stu_street2" />
-                        <div class="address_format">
-                            <field name="stu_city"
-                                placeholder="City" style="width: 40%%" />
-                            <field name="stu_state_id" class="oe_no_button"
-                                placeholder="State" style="width: 37%%"
-                                options='{"no_open": True}'
-                                on_change="onchange_state(state_id)" />
-                            <field name="stu_zip" placeholder="ZIP"
-                                style="width: 20%%" />
-                        </div>
-                        <field name="stu_country_id"
-                            placeholder="Country" class="oe_no_button"
-                            options='{"no_open": True, "no_create": True}' />
-                    </div>
-                    <field name='programme_name' />
-                    <field name='start_date' />
-                    <field name='expected_completion_date' />
-                    <field name='mode_of_studies' />
-                    <field name='formal_work_exp' />
-                </group>
-                <group string='Education' col='4'>
-                    <field name='tertiary_qualification'
-                        required="0" />
-                    <field name='field_of_studies' required="0" />
-                    <field name='pre_tertiary_qualification'
-                        required="0" />
-                </group>
-                <group string="Registrants source" col="4">
-                    <field name="registrants_source"/>
-                    <field name="social_media_options" attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
-                    <field name="other_reason" attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>          
-                </group>
-                <notebook>
-                    <page string="Credentials">
-                        <group col="4">
-                            <field name="username"/>
-                            <field name="password"/>
-                            <field name="cfo_type"/>
-                            <field name="cfo_account_activate"/>
-                            <field name="cfo_encoded_link"/>
-                            <field name="updated_volunteers_bio"/>
+                        <group string="Registrants source" col="4">
+                            <field name="registrants_source"/>
+                            <field name="social_media_options"
+                                   attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
+                            <field name="other_reason"
+                                   attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>
                         </group>
-                    </page>
-                    <page string="Register for Other categories">
-                        <group col="4">
-                            <field name="external_panel_judge"/>
-                            <field name="external_examiner"/>
-                            <field name="case_study_exper"/>
-                            <field name="ai_and_employer"/>       
-                            <field name="brand_ambassador"/>
-                            <field name="mentor"/>
-                            <field name="social_media_contestant"/>
-                            <field name="volunteer_as_student"/>
-                            <field name="volunteer_other_expertise"/>
-                        </group>
-                    </page>
-                    <page string="Documents" attrs="{'invisible':[('volunteers_type','not in',['External Panel Judge','External Examiner'])]}">
-                    <field name="doc_lines"/>           
-                    </page>
-                </notebook>
-<!--                 <notebook> -->
-<!--                     <page string='Credentials'> -->
-<!--                         <group col='4'> -->
-<!--                             <field name='username' /> -->
-<!--                             <field name='password' password='True' /> -->
-<!--                             <field name='cfo_type' /> -->
-<!--                             <field name='cfo_account_activate' /> -->
-<!--                             <field name='cfo_encoded_link' /> -->
-<!--                             <field name='updated_volunteers_bio' /> -->
-<!--                         </group> -->
-<!--                     </page> -->
-<!--                 </notebook> -->
-            </form>
-        </field>
-    </record>
+                    </sheet>
+                    <notebook>
+                        <page string="Credentials">
+                            <group col="4">
+                                <field name="username"/>
+                                <field name="password"/>
+                                <field name="cfo_type"/>
+                                <field name="cfo_categ"/>
+                                <field name="cfo_account_activate"/>
+                                <field name="cfo_encoded_link"/>
+                                <field name="team_leader"/>
+                                <field name="team_admin"/>
+                                <field name="team_member"/>
+                                <field name="updated_cfo_bio"/>
+                                <field name="active"/>
+                            </group>
+                        </page>
+                        <!--                     <page string='Parent/Guardian Information'> -->
+                        <!--                         <group col="4"> -->
+                        <!--                             <field name="parent_name"/> -->
+                        <!--                             <field name="parent_email"/> -->
+                        <!--                             <field name="parent_number"/> -->
+                        <!--                             <field name="parent_occupation"/> -->
+                        <!--                         </group> -->
+                        <!--                     </page> -->
+                        <page string="Register for Other categories">
+                            <group col="4">
+                                <field name="external_panel_judge"/>
+                                <field name="external_examiner"/>
+                                <field name="case_study_exper"/>
+                                <field name="ai_and_employer"/>
+                                <field name="brand_ambassador"/>
+                                <field name="mentor"/>
+                                <field name="social_media_contestant"/>
+                                <field name="volunteer_as_student"/>
+                                <field name="volunteer_other_expertise"/>
+                            </group>
+                        </page>
+                        <page string="Documents">
+                            <field name="doc_lines"/>
+                        </page>
+                    </notebook>
+                    <!--                 <notebook> -->
+                    <!--                     <page string='Credentials'> -->
+                    <!--                         <group col='4'> -->
+                    <!--                             <field name='username' /> -->
+                    <!--                             <field name='password' password='True' /> -->
+                    <!--                             <field name='cfo_type' /> -->
+                    <!--                             <field name='cfo_account_activate' /> -->
+                    <!--                             <field name='cfo_encoded_link' /> -->
+                    <!--                             <field name='team_leader' /> -->
+                    <!--                             <field name='team_admin' /> -->
+                    <!--                             <field name='team_member' /> -->
+                    <!--                             <field name='updated_cfo_bio' /> -->
+                    <!--                         </group> -->
+                    <!--                     </page> -->
+                    <!--                 </notebook> -->
+                </form>
+            </field>
+        </record>
 
-    <record model="ir.ui.view" id="volunteers_snr_tree">
-        <field name="name">Volunteers</field>
-        <field name="model">volunteers.snr</field>
-        <field name="arch" type="xml">
-            <tree string='Volunteers'>
-                <field name='partner_id' context="{'default_cfo_user':True}"/>
-                <field name='surname' />
-                <field name="cfo_competition_year" invisible="1"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2016">
-        <field name="name">Volunteers</field>
-        <field name="res_model">volunteers.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
-        <field name="context">{'default_cfo_competition_year': '2016'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2017">
-        <field name="name">Volunteers</field>
-        <field name="res_model">volunteers.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
-        <field name="context">{'default_cfo_competition_year': '2017'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2018">
-        <field name="name">Volunteers</field>
-        <field name="res_model">volunteers.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
-        <field name="context">{'default_cfo_competition_year': '2018'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2019">
-        <field name="name">Volunteers</field>
-        <field name="res_model">volunteers.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
-        <field name="context">{'default_cfo_competition_year': '2019'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2020">
-        <field name="name">Volunteers</field>
-        <field name="res_model">volunteers.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
-        <field name="context">{'default_cfo_competition_year': '2020'}</field>
-    </record>
-
-    <menuitem id="menu_cfo_volunteers_snr_2016" action="action_cfo_snr_volunteers_2016" parent="menu_cfo_member_snr_2016_root" sequence="5"/>
-    <menuitem id="menu_cfo_volunteers_snr_2017" action="action_cfo_snr_volunteers_2017" parent="menu_cfo_member_snr_2017_root" sequence="5"/>
-    <menuitem id="menu_cfo_volunteers_snr_2018" action="action_cfo_snr_volunteers_2018" parent="menu_cfo_member_snr_2018_root" sequence="5"/>
-    <menuitem id="menu_cfo_volunteers_snr_2019" action="action_cfo_snr_volunteers_2019" parent="menu_cfo_member_snr_2019_root" sequence="5"/>
-    <menuitem id="menu_cfo_volunteers_snr_2020" action="action_cfo_snr_volunteers_2020" parent="menu_cfo_member_snr_2020_root" sequence="5"/>
-
-    <record id='brand_ambassador_snr_form' model='ir.ui.view'>
-        <field name="name">Brand Ambassador</field>
-        <field name="model">brand.ambassador.snr</field>
-        <field name="arch" type="xml">
-            <form string="Brand Ambassadors Form">
-                <group string='Bio Details' col='4'>
-                    <field name='partner_id' context="{'default_cfo_user':True}"/>
-                    <field name='surname' />
-                    <field name='other_names' />
-                    <field name="cfo_competition_year" invisible="1"/>
-                    <field name='user_id'/>
-                </group>
-                <group string='Contact Information' col='4'>
-                    <field name='mobile' />
-                    <field name='email_1' />
-                    <field name='email_2' />
-                </group>
-                <notebook>
-                    <page string='Credentials'>
-                        <group col='4'>
-                            <field name='username' />
-                            <!--<field name='password' password='True'/> -->
-                            <field name="password" />
-                            <field name='cfo_type' />
-                            <field name='cfo_account_activate' />
-                            <field name='cfo_encoded_link' />
-                            <field name='updated_brand_amb_bio' />
-                            <!-- cfo junior -->
-<!--                             <field name="is_cfo_junior" /> -->
-                            <!-- cfo junior ends -->
-                        </group>
-                    </page>
-                    <page string='Register for Other categories'>
-                        <group col='4'>
-                            <field name='external_panel_judge' />
-                            <field name='external_examiner' />
-                            <field name='case_study_exper' />
-                            <field name='ai_and_employer' />
-                            <field name='brand_ambassador' />
-                            <field name='mentor' />
-                            <field name='social_media_contestant' />
-                            <field name='volunteer_as_student' />
-                            <field name='volunteer_other_expertise' />
-                        </group>
-                    </page>
-                    <page string="Teams">
-                        <field name="team_ids" />
-                    </page>
-                    <page string="Documents">
-                        <field name="doc_lines" />
-                    </page>
-
-                </notebook>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="brand_ambassador_snr_tree">
-        <field name="name">Brand Ambassador</field>
-        <field name="model">brand.ambassador.snr</field>
-        <field name="arch" type="xml">
-            <tree string='Brand Ambassadors'>
-                <field name='partner_id' context="{'default_cfo_user':True}"/>
-                <field name='surname' />
-                <field name="cfo_competition_year" invisible="1"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2016">
-        <field name="name">Brand Ambassadors</field>
-        <field name="res_model">brand.ambassador.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
-        <field name="context">{'default_cfo_competition_year': '2016'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2017">
-        <field name="name">Brand Ambassadors</field>
-        <field name="res_model">brand.ambassador.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
-        <field name="context">{'default_cfo_competition_year': '2017'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2018">
-        <field name="name">Brand Ambassadors</field>
-        <field name="res_model">brand.ambassador.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
-        <field name="context">{'default_cfo_competition_year': '2018'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2019">
-        <field name="name">Brand Ambassadors</field>
-        <field name="res_model">brand.ambassador.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
-        <field name="context">{'default_cfo_competition_year': '2019'}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2020">
-        <field name="name">Brand Ambassadors</field>
-        <field name="res_model">brand.ambassador.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
-        <field name="context">{'default_cfo_competition_year': '2020'}</field>
-    </record>
-
-    <menuitem id="menu_cfo_ambassador_snr_2016" action="action_cfo_snr_ambassador_2016" parent="menu_cfo_member_snr_2016_root" sequence="6"/>
-    <menuitem id="menu_cfo_ambassador_snr_2017" action="action_cfo_snr_ambassador_2017" parent="menu_cfo_member_snr_2017_root" sequence="6"/>
-    <menuitem id="menu_cfo_ambassador_snr_2018" action="action_cfo_snr_ambassador_2018" parent="menu_cfo_member_snr_2018_root" sequence="6"/>
-    <menuitem id="menu_cfo_ambassador_snr_2019" action="action_cfo_snr_ambassador_2019" parent="menu_cfo_member_snr_2019_root" sequence="6"/>
-    <menuitem id="menu_cfo_ambassador_snr_2020" action="action_cfo_snr_ambassador_2020" parent="menu_cfo_member_snr_2020_root" sequence="6"/>
-
-    <record id='social_media_contestants_snr_form' model='ir.ui.view'>
-            <field name="name">Social Media Contestants</field>
-            <field name="model">social.media.contestants.snr</field>
+        <record model="ir.ui.view" id="cfo_snr_aspirants_tree">
+            <field name="name">CFO Aspirants</field>
+            <field name="model">cfo.snr.aspirants</field>
             <field name="arch" type="xml">
-                <form string="Social Media Contentants Form">
+                <tree string='CFO Aspirants'>
+                    <field name='partner_id' context="{'default_cfo_user':True}"/>
+                    <field name='surname'/>
+                    <field name="cfo_competition_year" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2016">
+            <field name="name">CFO Aspirants</field>
+            <field name="res_model">cfo.snr.aspirants</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
+            <field name="context">{'default_cfo_competition_year': '2016'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2017">
+            <field name="name">CFO Aspirants</field>
+            <field name="res_model">cfo.snr.aspirants</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
+            <field name="context">{'default_cfo_competition_year': '2017'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2018">
+            <field name="name">CFO Aspirants</field>
+            <field name="res_model">cfo.snr.aspirants</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
+            <field name="context">{'default_cfo_competition_year': '2018'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2019">
+            <field name="name">CFO Aspirants</field>
+            <field name="res_model">cfo.snr.aspirants</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
+            <field name="context">{'default_cfo_competition_year': '2019'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_aspirants_2020">
+            <field name="name">CFO Aspirants</field>
+            <field name="res_model">cfo.snr.aspirants</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
+            <field name="context">{'default_cfo_competition_year': '2020'}</field>
+        </record>
+
+        <menuitem id="menu_cfo_member_snr_2016_root" parent="menu_cfo_snr_root" name="2016" sequence="35"/>
+        <menuitem id="menu_cfo_member_snr_2017_root" parent="menu_cfo_snr_root" name="2017" sequence="36"/>
+        <menuitem id="menu_cfo_member_snr_2018_root" parent="menu_cfo_snr_root" name="2018" sequence="37"/>
+        <menuitem id="menu_cfo_member_snr_2019_root" parent="menu_cfo_snr_root" name="2019" sequence="38"/>
+        <menuitem id="menu_cfo_member_snr_2020_root" parent="menu_cfo_snr_root" name="2020" sequence="39"/>
+
+        <menuitem id="menu_cfo_member_snr_2016" action="action_cfo_snr_aspirants_2016"
+                  parent="menu_cfo_member_snr_2016_root" sequence="1"/>
+        <menuitem id="menu_cfo_member_snr_2017" action="action_cfo_snr_aspirants_2017"
+                  parent="menu_cfo_member_snr_2017_root" sequence="1"/>
+        <menuitem id="menu_cfo_member_snr_2018" action="action_cfo_snr_aspirants_2018"
+                  parent="menu_cfo_member_snr_2018_root" sequence="1"/>
+        <menuitem id="menu_cfo_member_snr_2019" action="action_cfo_snr_aspirants_2019"
+                  parent="menu_cfo_member_snr_2019_root" sequence="1"/>
+        <menuitem id="menu_cfo_member_snr_2020" action="action_cfo_snr_aspirants_2020"
+                  parent="menu_cfo_member_snr_2020_root" sequence="1"/>
+
+        <record id='academic_institutions_snr_form_cfo' model='ir.ui.view'>
+            <field name="name">Academic Institutions</field>
+            <field name="model">academic.institution.snr</field>
+            <field name="arch" type="xml">
+                <form string="Academic Institutions Form">
+                    <sheet string="CFO Junior Member">
+                        <div class="oe_title">
+                            <h1>
+                                <field name="partner_id" required="1" context="{'default_cfo_user':True}"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <page string="Bio Details">
+                                <group>
+                                    <group>
+                                        <field name='surname'/>
+                                        <field name='other_names'/>
+                                        <field name="race"/>
+                                        <field name="gender"/>
+                                        <field name="cfo_competition_year" invisible="1"/>
+                                        <field name='user_id'/>
+                                    </group>
+                                    <group>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Contact Information">
+                                <group>
+                                    <group>
+                                        <field name='mobile'/>
+                                        <field name='phone' string='Office Telephone'/>
+                                        <field name='home_phone'/>
+                                        <field name='email_1'/>
+                                        <field name='email_2'/>
+                                        <label for="street" string="Address"/>
+                                        <div>
+                                            <field name="street" placeholder="Street..."/>
+                                            <field name="street2"/>
+                                            <div class="address_format">
+                                                <field name="city" placeholder="City" style="width: 40%%"/>
+                                                <field name="state_id" class="oe_no_button"
+                                                       placeholder="State" style="width: 37%%"
+                                                       options='{"no_open": True}'
+                                                       on_change="onchange_state(state_id)"/>
+                                                <field name="zip" placeholder="ZIP" style="width: 20%%"/>
+                                            </div>
+                                            <field name="country_id" placeholder="Country"
+                                                   class="oe_no_button"
+                                                   options='{"no_open": True, "no_create": True}'/>
+                                        </div>
+                                    </group>
+                                    <group name="studio_group_ClGCR_right"/>
+                                </group>
+                            </page>
+                            <page string="Institution Details">
+                                <group>
+                                    <group>
+                                        <field name='school_name'/>
+                                        <field name='department'/>
+                                        <field name='website'/>
+                                        <label for="stu_street" string="Address"/>
+                                        <div>
+                                            <field name="stu_street" placeholder="Street..."/>
+                                            <field name="stu_street2"/>
+                                            <div class="address_format">
+                                                <field name="stu_city"
+                                                       placeholder="City" style="width: 40%%"/>
+                                                <field name="stu_state_id" class="oe_no_button"
+                                                       placeholder="State" style="width: 37%%"
+                                                       options='{"no_open": True}'
+                                                       on_change="onchange_state(state_id)"/>
+                                                <field name="stu_zip" placeholder="ZIP"
+                                                       style="width: 20%%"/>
+                                            </div>
+                                            <field name="stu_country_id"
+                                                   placeholder="Country" class="oe_no_button"
+                                                   options='{"no_open": True, "no_create": True}'/>
+                                        </div>
+                                    </group>
+                                    <group/>
+                                </group>
+                            </page>
+                            <page string="Registrants source">
+                                <group>
+                                    <group>
+                                        <field name="registrants_source"/>
+                                        <field name="social_media_options"
+                                               attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
+                                        <field name="other_reason"
+                                               attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>
+                                    </group>
+                                    <group>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="studio_page_lNrdd" string="Eligibility">
+                                <group name="studio_group_lNrdd">
+                                    <group name="studio_group_lNrdd_left"/>
+                                    <group name="studio_group_lNrdd_right"/>
+                                </group>
+                            </page>
+                            <!--                   <page name="studio_page_RcJIk" string="Current School"> -->
+                            <!--                     <group name="studio_group_RcJIk"> -->
+                            <!--                       <group name="studio_group_RcJIk_left"/> -->
+                            <!--                       <group name="studio_group_RcJIk_right"/> -->
+                            <!--                     </group> -->
+                            <!--                   </page> -->
+                            <!--                   <page name="studio_page_aCRSo" string="Current Employer"> -->
+                            <!--                     <group name="studio_group_aCRSo"> -->
+                            <!--                       <group name="studio_group_aCRSo_left"/> -->
+                            <!--                       <group name="studio_group_aCRSo_right"/> -->
+                            <!--                     </group> -->
+                            <!--                   </page> -->
+                            <!--                   <page name="studio_page_I8Wx6" string="Education"> -->
+                            <!--                     <group name="studio_group_I8Wx6"> -->
+                            <!--                       <group name="studio_group_I8Wx6_left"/> -->
+                            <!--                       <group name="studio_group_I8Wx6_right"/> -->
+                            <!--                     </group> -->
+                            <!--                   </page> -->
+                            <!--                   <page name="studio_page_rYQYJ" string="Competition Rules"> -->
+                            <!--                     <group name="studio_group_rYQYJ"> -->
+                            <!--                       <group name="studio_group_rYQYJ_left"/> -->
+                            <!--                       <group name="studio_group_rYQYJ_right"/> -->
+                            <!--                     </group> -->
+                            <!--                   </page> -->
+                        </notebook>
+                        <notebook name="studio_notebook_gO9Nc">
+                            <!--                   <page name="studio_page_gO9Nc" string="TEAMS"> -->
+                            <!--                     <group name="studio_group_gO9Nc"> -->
+                            <!--                     </group> -->
+                            <!--                   </page> -->
+                            <page name="studio_page_d8cQX" string="Credentials">
+                                <group col='4'>
+                                    <field name='username'/>
+                                    <field name="password"/>
+                                    <field name='cfo_type'/>
+                                    <field name='cfo_account_activate'/>
+                                    <field name='cfo_encoded_link'/>
+                                    <field name='updated_academic_bio'/>
+                                    <field name='team_admin'/>
+                                    <field name='team_leader'/>
+                                    <field name='team_member'/>
+                                </group>
+                            </page>
+                            <page name="studio_page_rVsTL" string="Other Categories">
+                                <group col='4'>
+                                    <field name='external_panel_judge'/>
+                                    <field name='external_examiner'/>
+                                    <field name='case_study_exper'/>
+                                    <field name='ai_and_employer'/>
+                                    <field name='brand_ambassador'/>
+                                    <field name='mentor'/>
+                                    <field name='social_media_contestant'/>
+                                    <field name='volunteer_as_student'/>
+                                    <field name='volunteer_other_expertise'/>
+                                </group>
+                            </page>
+                            <page string="Documents">
+                                <field name="doc_lines"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="academic_institution_snr_tree">
+            <field name="name">Academic Institution</field>
+            <field name="model">academic.institution.snr</field>
+            <field name="arch" type="xml">
+                <tree string='Academic Institutions'>
+                    <field name='partner_id' context="{'default_cfo_user':True}"/>
+                    <field name='surname'/>
+                    <field name="cfo_competition_year" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2016">
+            <field name="name">Academic Institutions</field>
+            <field name="res_model">academic.institution.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
+            <field name="context">{'default_cfo_competition_year': '2016'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2017">
+            <field name="name">Academic Institutions</field>
+            <field name="res_model">academic.institution.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
+            <field name="context">{'default_cfo_competition_year': '2017'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2018">
+            <field name="name">Academic Institutions</field>
+            <field name="res_model">academic.institution.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
+            <field name="context">{'default_cfo_competition_year': '2018'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2019">
+            <field name="name">Academic Institutions</field>
+            <field name="res_model">academic.institution.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
+            <field name="context">{'default_cfo_competition_year': '2019'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_academic_inst_2020">
+            <field name="name">Academic Institutions</field>
+            <field name="res_model">academic.institution.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
+            <field name="context">{'default_cfo_competition_year': '2020'}</field>
+        </record>
+
+        <menuitem id="menu_cfo_academic_inst_snr_2016" action="action_cfo_snr_academic_inst_2016"
+                  parent="menu_cfo_member_snr_2016_root" sequence="2"/>
+        <menuitem id="menu_cfo_academic_inst_snr_2017" action="action_cfo_snr_academic_inst_2017"
+                  parent="menu_cfo_member_snr_2017_root" sequence="2"/>
+        <menuitem id="menu_cfo_academic_inst_snr_2018" action="action_cfo_snr_academic_inst_2018"
+                  parent="menu_cfo_member_snr_2018_root" sequence="2"/>
+        <menuitem id="menu_cfo_academic_inst_snr_2019" action="action_cfo_snr_academic_inst_2019"
+                  parent="menu_cfo_member_snr_2019_root" sequence="2"/>
+        <menuitem id="menu_cfo_academic_inst_snr_2020" action="action_cfo_snr_academic_inst_2020"
+                  parent="menu_cfo_member_snr_2020_root" sequence="2"/>
+
+        <record id='employers_snr_form' model='ir.ui.view'>
+            <field name="name">Employers</field>
+            <field name="model">employers.snr</field>
+            <field name="arch" type="xml">
+                <form string="Employers Form">
                     <group string='Bio Details' col='4'>
-                        <field name='partner_id' context="{'default_cfo_user':True}" />
-                        <field name='surname' />
-                        <field name='other_names' />
+                        <field name='partner_id' required="True" context="{'default_cfo_user':True}"/>
+                        <field name='surname' required="0"/>
+                        <field name='other_names'/>
                         <field name="cfo_competition_year" invisible="1"/>
                         <field name='user_id'/>
                     </group>
                     <group string='Contact Information' col='4'>
-                        <field name='mobile' />
-                        <field name='email_1' />
-                        <field name='email_2' />
-                        <label for="street" string="Address" />
+                        <field name='mobile'/>
+                        <field name='phone' string='Office Telephone'
+                               required="0"/>
+                        <field name='home_phone'/>
+                        <field name='email_1' required="True"/>
+                        <field name='email_2'/>
+                        <label for="street" string="Address"/>
                         <div>
-                            <field name="street" placeholder="Street..." />
-                            <field name="street2" />
+                            <field name="street" placeholder="Street..."/>
+                            <field name="street2"/>
                             <div class="address_format">
                                 <field name="city" placeholder="City"
-                                    style="width: 40%%" />
+                                       style="width: 40%%"/>
                                 <field name="state_id" class="oe_no_button"
-                                    placeholder="State" style="width: 37%%"
-                                    options='{"no_open": True}' />
+                                       placeholder="State" style="width: 37%%"
+                                       options='{"no_open": True}'
+                                       on_change="onchange_state(state_id)"/>
                                 <field name="zip" placeholder="ZIP"
-                                    style="width: 20%%" />
+                                       style="width: 20%%"/>
                             </div>
                             <field name="country_id" placeholder="Country"
-                                class="oe_no_button"
-                                options='{"no_open": True, "no_create": True}' />
+                                   class="oe_no_button"
+                                   options='{"no_open": True, "no_create": True}'/>
                         </div>
+                    </group>
+                    <group string='Employer Details' col='4'>
+                        <field name='legal_name_employer'
+                               required="0"/>
+                        <field name='sector' required="0"/>
+                        <field name='if_company'/>
+                        <field name='emp_department' required="0"/>
+                        <label for="emp_street" string="Address"/>
+                        <div>
+                            <field name="emp_street" placeholder="Street..."/>
+                            <field name="emp_street2"/>
+                            <div class="address_format">
+                                <field name="emp_city"
+                                       placeholder="City" style="width: 40%%"/>
+                                <field name="emp_state_id" class="oe_no_button"
+                                       placeholder="State" style="width: 37%%"
+                                       options='{"no_open": True}'
+                                       on_change="onchange_state(state_id)"/>
+                                <field name="emp_zip" placeholder="ZIP"
+                                       style="width: 20%%"/>
+                            </div>
+                            <field name="emp_country_id"
+                                   placeholder="Country" class="oe_no_button"
+                                   options='{"no_open": True, "no_create": True}'/>
+                        </div>
+                        <field name='emp_website'/>
+                    </group>
+                    <group string="Registrants source" col="4">
+                        <field name="registrants_source"/>
+                        <field name="social_media_options"
+                               attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
+                        <field name="other_reason" attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>
+                    </group>
+                    <notebook>
+                        <page string="Credentials">
+                            <group col="4">
+                                <field name="username"/>
+                                <field name="password"/>
+                                <field name="cfo_type"/>
+                                <field name="cfo_account_activate"/>
+                                <field name="cfo_encoded_link"/>
+                                <field name="updated_emp_bio"/>
+                                <field name="team_admin"/>
+                                <field name="team_leader"/>
+                                <field name="team_member"/>
+                            </group>
+                        </page>
+                        <page string="Register for Other categories">
+                            <group col="4">
+                                <field name="external_panel_judge"/>
+                                <field name="external_examiner"/>
+                                <field name="case_study_exper"/>
+                                <field name="ai_and_employer"/>
+                                <field name="brand_ambassador"/>
+                                <field name="mentor"/>
+                                <field name="social_media_contestant"/>
+                                <field name="volunteer_as_student"/>
+                                <field name="volunteer_other_expertise"/>
+                            </group>
+                        </page>
+                        <page string="Documents">
+                            <field name="doc_lines"/>
+                        </page>
+                    </notebook>
+                    <!--                 <notebook> -->
+                    <!--                     <page string='Credentials'> -->
+                    <!--                         <group col='4'> -->
+                    <!--                             <field name='username' /> -->
+                    <!--                             <field name='password' password='True' /> -->
+                    <!--                             <field name='cfo_type' /> -->
+                    <!--                             <field name='cfo_account_activate' /> -->
+                    <!--                             <field name='cfo_encoded_link' /> -->
+                    <!--                             <field name='updated_emp_bio' /> -->
+                    <!--                         </group> -->
+                    <!--                     </page> -->
+                    <!--                 </notebook> -->
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="employers_snr_tree">
+            <field name="name">Employers</field>
+            <field name="model">employers.snr</field>
+            <field name="arch" type="xml">
+                <tree string='Employers'>
+                    <field name='partner_id' context="{'default_cfo_user':True}"/>
+                    <field name='surname'/>
+                    <field name="cfo_competition_year" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_employers_2016">
+            <field name="name">Employers</field>
+            <field name="res_model">employers.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
+            <field name="context">{'default_cfo_competition_year': '2016'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_employers_2017">
+            <field name="name">Employers</field>
+            <field name="res_model">employers.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
+            <field name="context">{'default_cfo_competition_year': '2017'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_employers_2018">
+            <field name="name">Employers</field>
+            <field name="res_model">employers.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
+            <field name="context">{'default_cfo_competition_year': '2018'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_employers_2019">
+            <field name="name">Employers</field>
+            <field name="res_model">employers.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
+            <field name="context">{'default_cfo_competition_year': '2019'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_employers_2020">
+            <field name="name">Employers</field>
+            <field name="res_model">employers.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
+            <field name="context">{'default_cfo_competition_year': '2020'}</field>
+        </record>
+
+        <menuitem id="menu_cfo_employer_snr_2016" action="action_cfo_snr_employers_2016"
+                  parent="menu_cfo_member_snr_2016_root" sequence="3"/>
+        <menuitem id="menu_cfo_employer_snr_2017" action="action_cfo_snr_employers_2017"
+                  parent="menu_cfo_member_snr_2017_root" sequence="3"/>
+        <menuitem id="menu_cfo_employer_snr_2018" action="action_cfo_snr_employers_2018"
+                  parent="menu_cfo_member_snr_2018_root" sequence="3"/>
+        <menuitem id="menu_cfo_employer_snr_2019" action="action_cfo_snr_employers_2019"
+                  parent="menu_cfo_member_snr_2019_root" sequence="3"/>
+        <menuitem id="menu_cfo_employer_snr_2020" action="action_cfo_snr_employers_2020"
+                  parent="menu_cfo_member_snr_2020_root" sequence="3"/>
+
+        <record id='mentors_snr_form' model='ir.ui.view'>
+            <field name="name">Mentors</field>
+            <field name="model">mentors.snr</field>
+            <field name="arch" type="xml">
+                <form string="Mentors Form">
+                    <group string='Bio Details' col='4'>
+                        <field name='partner_id' required="True" context="{'default_cfo_user':True}"/>
+                        <field name='surname' required="0"/>
+                        <field name='other_names'/>
+                        <field name="cfo_competition_year" invisible="1"/>
+                        <field name='user_id'/>
+                    </group>
+                    <group string='Contact Information' col='4'>
+                        <field name='mobile' required="0"/>
+                        <field name='phone' string='Office Telephone'/>
+                        <field name='home_phone'/>
+                        <field name='email_1' required="True"/>
+                        <field name='email_2'/>
+                        <label for="street" string="Address"/>
+                        <div>
+                            <field name="street" placeholder="Street..."/>
+                            <field name="street2"/>
+                            <div class="address_format">
+                                <field name="city" placeholder="City"
+                                       style="width: 40%%"/>
+                                <field name="state_id" class="oe_no_button"
+                                       placeholder="State" style="width: 37%%"
+                                       options='{"no_open": True}'
+                                       on_change="onchange_state(state_id)"/>
+                                <field name="zip" placeholder="ZIP"
+                                       style="width: 20%%"/>
+                            </div>
+                            <field name="country_id" placeholder="Country"
+                                   class="oe_no_button"
+                                   options='{"no_open": True, "no_create": True}'/>
+                        </div>
+                    </group>
+                    <group string="Mentors Information">
+                        <field name="i_am_a"/>
+                        <field name="i_hold_a"/>
+                    </group>
+                    <group string="Registrants source" col="4">
+                        <field name="registrants_source"/>
+                        <field name="social_media_options"
+                               attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
+                        <field name="other_reason" attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>
+                    </group>
+                    <notebook>
+                        <page string="Credentials">
+                            <group col="4">
+                                <field name="username"/>
+                                <!--<field name='password' password='True'/>-->
+                                <field name="password"/>
+                                <field name="cfo_type"/>
+                                <field name="cfo_account_activate"/>
+                                <field name="cfo_encoded_link"/>
+                                <field name="updated_mentors_bio"/>
+                            </group>
+                        </page>
+                        <page string="Register for Other categories">
+                            <group col="4">
+                                <field name="external_panel_judge"/>
+                                <field name="external_examiner"/>
+                                <field name="case_study_exper"/>
+                                <field name="ai_and_employer"/>
+                                <field name="brand_ambassador"/>
+                                <field name="mentor"/>
+                                <field name="social_media_contestant"/>
+                                <field name="volunteer_as_student"/>
+                                <field name="volunteer_other_expertise"/>
+                            </group>
+                        </page>
+                        <page string="Teams">
+                            <field name="team_ids"/>
+                        </page>
+                        <page string="Documents">
+                            <field name="doc_lines"/>
+                        </page>
+                    </notebook>
+                    <!--                 <notebook> -->
+                    <!--                     <page string='Credentials'> -->
+                    <!--                         <group col='4'> -->
+                    <!--                             <field name='username' /> -->
+                    <!--                             <field name='password' password='True' /> -->
+                    <!--                             <field name='cfo_type' /> -->
+                    <!--                             <field name='cfo_account_activate' /> -->
+                    <!--                             <field name='cfo_encoded_link' /> -->
+                    <!--                             <field name='updated_mentors_bio' /> -->
+                    <!--                         </group> -->
+                    <!--                     </page> -->
+                    <!--                 </notebook> -->
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="mentors_snr_tree">
+            <field name="name">mentors</field>
+            <field name="model">mentors.snr</field>
+            <field name="arch" type="xml">
+                <tree string='Mentors'>
+                    <field name='partner_id' context="{'default_cfo_user':True}"/>
+                    <field name='surname'/>
+                    <field name="cfo_competition_year" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2016">
+            <field name="name">Mentors</field>
+            <field name="res_model">mentors.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
+            <field name="context">{'default_cfo_competition_year': '2016'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2017">
+            <field name="name">Mentors</field>
+            <field name="res_model">mentors.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
+            <field name="context">{'default_cfo_competition_year': '2017'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2018">
+            <field name="name">Mentors</field>
+            <field name="res_model">mentors.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
+            <field name="context">{'default_cfo_competition_year': '2018'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2019">
+            <field name="name">Mentors</field>
+            <field name="res_model">mentors.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
+            <field name="context">{'default_cfo_competition_year': '2019'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_mentors_2020">
+            <field name="name">Mentors</field>
+            <field name="res_model">mentors.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
+            <field name="context">{'default_cfo_competition_year': '2020'}</field>
+        </record>
+
+        <menuitem id="menu_cfo_mentors_snr_2016" action="action_cfo_snr_mentors_2016"
+                  parent="menu_cfo_member_snr_2016_root" sequence="4"/>
+        <menuitem id="menu_cfo_mentors_snr_2017" action="action_cfo_snr_mentors_2017"
+                  parent="menu_cfo_member_snr_2017_root" sequence="4"/>
+        <menuitem id="menu_cfo_mentors_snr_2018" action="action_cfo_snr_mentors_2018"
+                  parent="menu_cfo_member_snr_2018_root" sequence="4"/>
+        <menuitem id="menu_cfo_mentors_snr_2019" action="action_cfo_snr_mentors_2019"
+                  parent="menu_cfo_member_snr_2019_root" sequence="4"/>
+        <menuitem id="menu_cfo_mentors_snr_2020" action="action_cfo_snr_mentors_2020"
+                  parent="menu_cfo_member_snr_2020_root" sequence="4"/>
+
+        <record id='volunteers_snr_form' model='ir.ui.view'>
+            <field name="name">Volunteers</field>
+            <field name="model">volunteers.snr</field>
+            <field name="arch" type="xml">
+                <form string="Volunteers Form">
+                    <group string='Bio Details' col='4'>
+                        <field name='partner_id' required="True" context="{'default_cfo_user':True}"/>
+                        <field name='surname' required="0"/>
+                        <field name='other_names'/>
+                        <field name="cfo_competition_year" invisible="1"/>
+                        <field name='user_id'/>
+                    </group>
+                    <group string='Contact Information' col='4'>
+                        <field name='mobile' required="0"/>
+                        <field name='phone' string='Office Telephone'/>
+                        <field name='home_phone' required="0"/>
+                        <field name='email_1' required="True"/>
+                        <field name='email_2'/>
+                        <field name='volunteers_type'/>
+                        <label for="street" string="Address"/>
+                        <div>
+                            <field name="street" placeholder="Street..."/>
+                            <field name="street2"/>
+                            <div class="address_format">
+                                <field name="city" placeholder="City"
+                                       style="width: 40%%"/>
+                                <field name="state_id" class="oe_no_button"
+                                       placeholder="State" style="width: 37%%"
+                                       options='{"no_open": True}'
+                                       on_change="onchange_state(state_id)"/>
+                                <field name="zip" placeholder="ZIP"
+                                       style="width: 20%%"/>
+                            </div>
+                            <field name="country_id" placeholder="Country"
+                                   class="oe_no_button"
+                                   options='{"no_open": True, "no_create": True}'/>
+                        </div>
+                    </group>
+                    <group string='Current School' col='4'>
+                        <field name='school_name'/>
+                        <field name='department'/>
+                        <field name='website'/>
+                        <label for="stu_street" string="Address"/>
+                        <div>
+                            <field name="stu_street" placeholder="Street..."/>
+                            <field name="stu_street2"/>
+                            <div class="address_format">
+                                <field name="stu_city"
+                                       placeholder="City" style="width: 40%%"/>
+                                <field name="stu_state_id" class="oe_no_button"
+                                       placeholder="State" style="width: 37%%"
+                                       options='{"no_open": True}'
+                                       on_change="onchange_state(state_id)"/>
+                                <field name="stu_zip" placeholder="ZIP"
+                                       style="width: 20%%"/>
+                            </div>
+                            <field name="stu_country_id"
+                                   placeholder="Country" class="oe_no_button"
+                                   options='{"no_open": True, "no_create": True}'/>
+                        </div>
+                        <field name='programme_name'/>
+                        <field name='start_date'/>
+                        <field name='expected_completion_date'/>
+                        <field name='mode_of_studies'/>
+                        <field name='formal_work_exp'/>
+                    </group>
+                    <group string='Education' col='4'>
+                        <field name='tertiary_qualification'
+                               required="0"/>
+                        <field name='field_of_studies' required="0"/>
+                        <field name='pre_tertiary_qualification'
+                               required="0"/>
+                    </group>
+                    <group string="Registrants source" col="4">
+                        <field name="registrants_source"/>
+                        <field name="social_media_options"
+                               attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
+                        <field name="other_reason" attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>
+                    </group>
+                    <notebook>
+                        <page string="Credentials">
+                            <group col="4">
+                                <field name="username"/>
+                                <field name="password"/>
+                                <field name="cfo_type"/>
+                                <field name="cfo_account_activate"/>
+                                <field name="cfo_encoded_link"/>
+                                <field name="updated_volunteers_bio"/>
+                            </group>
+                        </page>
+                        <page string="Register for Other categories">
+                            <group col="4">
+                                <field name="external_panel_judge"/>
+                                <field name="external_examiner"/>
+                                <field name="case_study_exper"/>
+                                <field name="ai_and_employer"/>
+                                <field name="brand_ambassador"/>
+                                <field name="mentor"/>
+                                <field name="social_media_contestant"/>
+                                <field name="volunteer_as_student"/>
+                                <field name="volunteer_other_expertise"/>
+                            </group>
+                        </page>
+                        <page string="Documents"
+                              attrs="{'invisible':[('volunteers_type','not in',['External Panel Judge','External Examiner'])]}">
+                            <field name="doc_lines"/>
+                        </page>
+                    </notebook>
+                    <!--                 <notebook> -->
+                    <!--                     <page string='Credentials'> -->
+                    <!--                         <group col='4'> -->
+                    <!--                             <field name='username' /> -->
+                    <!--                             <field name='password' password='True' /> -->
+                    <!--                             <field name='cfo_type' /> -->
+                    <!--                             <field name='cfo_account_activate' /> -->
+                    <!--                             <field name='cfo_encoded_link' /> -->
+                    <!--                             <field name='updated_volunteers_bio' /> -->
+                    <!--                         </group> -->
+                    <!--                     </page> -->
+                    <!--                 </notebook> -->
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="volunteers_snr_tree">
+            <field name="name">Volunteers</field>
+            <field name="model">volunteers.snr</field>
+            <field name="arch" type="xml">
+                <tree string='Volunteers'>
+                    <field name='partner_id' context="{'default_cfo_user':True}"/>
+                    <field name='surname'/>
+                    <field name="cfo_competition_year" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2016">
+            <field name="name">Volunteers</field>
+            <field name="res_model">volunteers.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
+            <field name="context">{'default_cfo_competition_year': '2016'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2017">
+            <field name="name">Volunteers</field>
+            <field name="res_model">volunteers.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
+            <field name="context">{'default_cfo_competition_year': '2017'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2018">
+            <field name="name">Volunteers</field>
+            <field name="res_model">volunteers.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
+            <field name="context">{'default_cfo_competition_year': '2018'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2019">
+            <field name="name">Volunteers</field>
+            <field name="res_model">volunteers.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
+            <field name="context">{'default_cfo_competition_year': '2019'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_volunteers_2020">
+            <field name="name">Volunteers</field>
+            <field name="res_model">volunteers.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
+            <field name="context">{'default_cfo_competition_year': '2020'}</field>
+        </record>
+
+        <menuitem id="menu_cfo_volunteers_snr_2016" action="action_cfo_snr_volunteers_2016"
+                  parent="menu_cfo_member_snr_2016_root" sequence="5"/>
+        <menuitem id="menu_cfo_volunteers_snr_2017" action="action_cfo_snr_volunteers_2017"
+                  parent="menu_cfo_member_snr_2017_root" sequence="5"/>
+        <menuitem id="menu_cfo_volunteers_snr_2018" action="action_cfo_snr_volunteers_2018"
+                  parent="menu_cfo_member_snr_2018_root" sequence="5"/>
+        <menuitem id="menu_cfo_volunteers_snr_2019" action="action_cfo_snr_volunteers_2019"
+                  parent="menu_cfo_member_snr_2019_root" sequence="5"/>
+        <menuitem id="menu_cfo_volunteers_snr_2020" action="action_cfo_snr_volunteers_2020"
+                  parent="menu_cfo_member_snr_2020_root" sequence="5"/>
+
+        <record id='brand_ambassador_snr_form' model='ir.ui.view'>
+            <field name="name">Brand Ambassador</field>
+            <field name="model">brand.ambassador.snr</field>
+            <field name="arch" type="xml">
+                <form string="Brand Ambassadors Form">
+                    <group string='Bio Details' col='4'>
+                        <field name='partner_id' context="{'default_cfo_user':True}"/>
+                        <field name='surname'/>
+                        <field name='other_names'/>
+                        <field name="cfo_competition_year" invisible="1"/>
+                        <field name='user_id'/>
+                    </group>
+                    <group string='Contact Information' col='4'>
+                        <field name='mobile'/>
+                        <field name='email_1'/>
+                        <field name='email_2'/>
                     </group>
                     <notebook>
                         <page string='Credentials'>
                             <group col='4'>
-                                <field name='username' />
-                                <field name="password" />
-                                <field name='cfo_type' />
-                                <field name='cfo_account_activate' />
-                                <field name='cfo_encoded_link' />
-                                <field name='updated_social_media_bio' />
-                                <field name='social_media_unique_url'
-                                    widget='url' />
+                                <field name='username'/>
+                                <!--<field name='password' password='True'/> -->
+                                <field name="password"/>
+                                <field name='cfo_type'/>
+                                <field name='cfo_account_activate'/>
+                                <field name='cfo_encoded_link'/>
+                                <field name='updated_brand_amb_bio'/>
+                                <!-- cfo junior -->
+                                <!--                             <field name="is_cfo_junior" /> -->
+                                <!-- cfo junior ends -->
                             </group>
                         </page>
                         <page string='Register for Other categories'>
                             <group col='4'>
-                                <field name='external_panel_judge' />
-                                <field name='external_examiner' />
-                                <field name='case_study_exper' />
-                                <field name='ai_and_employer' />
-                                <field name='brand_ambassador' />
-                                <field name='mentor' />
-                                <field name='social_media_contestant' />
-                                <field name='volunteer_as_student' />
-                                <field name='volunteer_other_expertise' />
+                                <field name='external_panel_judge'/>
+                                <field name='external_examiner'/>
+                                <field name='case_study_exper'/>
+                                <field name='ai_and_employer'/>
+                                <field name='brand_ambassador'/>
+                                <field name='mentor'/>
+                                <field name='social_media_contestant'/>
+                                <field name='volunteer_as_student'/>
+                                <field name='volunteer_other_expertise'/>
                             </group>
                         </page>
+                        <page string="Teams">
+                            <field name="team_ids"/>
+                        </page>
                         <page string="Documents">
-                            <field name="doc_lines" />
+                            <field name="doc_lines"/>
                         </page>
 
                     </notebook>
@@ -1156,63 +1067,200 @@
             </field>
         </record>
 
-    <record model="ir.ui.view" id="social_media_contestants_snr_tree">
-        <field name="name">Social Media Contestants</field>
-        <field name="model">social.media.contestants.snr</field>
-        <field name="arch" type="xml">
-            <tree string='Social Media Contentants'>
-                <field name='partner_id' context="{'default_cfo_user':True}"/>
-                <field name='surname' />
-                <field name="cfo_competition_year" invisible="1"/>
-            </tree>
-        </field>
-    </record>
+        <record model="ir.ui.view" id="brand_ambassador_snr_tree">
+            <field name="name">Brand Ambassador</field>
+            <field name="model">brand.ambassador.snr</field>
+            <field name="arch" type="xml">
+                <tree string='Brand Ambassadors'>
+                    <field name='partner_id' context="{'default_cfo_user':True}"/>
+                    <field name='surname'/>
+                    <field name="cfo_competition_year" invisible="1"/>
+                </tree>
+            </field>
+        </record>
 
-    <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2016">
-        <field name="name">Social Media Contestants</field>
-        <field name="res_model">social.media.contestants.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
-        <field name="context">{'default_cfo_competition_year': '2016'}</field>
-    </record>
+        <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2016">
+            <field name="name">Brand Ambassadors</field>
+            <field name="res_model">brand.ambassador.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
+            <field name="context">{'default_cfo_competition_year': '2016'}</field>
+        </record>
 
-    <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2017">
-        <field name="name">Social Media Contestants</field>
-        <field name="res_model">social.media.contestants.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
-        <field name="context">{'default_cfo_competition_year': '2017'}</field>
-    </record>
+        <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2017">
+            <field name="name">Brand Ambassadors</field>
+            <field name="res_model">brand.ambassador.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
+            <field name="context">{'default_cfo_competition_year': '2017'}</field>
+        </record>
 
-    <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2018">
-        <field name="name">Social Media Contestants</field>
-        <field name="res_model">social.media.contestants.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
-        <field name="context">{'default_cfo_competition_year': '2018'}</field>
-    </record>
+        <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2018">
+            <field name="name">Brand Ambassadors</field>
+            <field name="res_model">brand.ambassador.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
+            <field name="context">{'default_cfo_competition_year': '2018'}</field>
+        </record>
 
-    <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2019">
-        <field name="name">Social Media Contestants</field>
-        <field name="res_model">social.media.contestants.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
-        <field name="context">{'default_cfo_competition_year': '2019'}</field>
-    </record>
+        <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2019">
+            <field name="name">Brand Ambassadors</field>
+            <field name="res_model">brand.ambassador.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
+            <field name="context">{'default_cfo_competition_year': '2019'}</field>
+        </record>
 
-    <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2020">
-        <field name="name">Social Media Contestants</field>
-        <field name="res_model">social.media.contestants.snr</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
-        <field name="context">{'default_cfo_competition_year': '2020'}</field>
-    </record>
+        <record model="ir.actions.act_window" id="action_cfo_snr_ambassador_2020">
+            <field name="name">Brand Ambassadors</field>
+            <field name="res_model">brand.ambassador.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
+            <field name="context">{'default_cfo_competition_year': '2020'}</field>
+        </record>
 
-    <menuitem id="menu_cfo_media_contestants_snr_2016" action="action_cfo_snr_media_contestants_2016" parent="menu_cfo_member_snr_2016_root" sequence="6"/>
-    <menuitem id="menu_cfo_media_contestants_snr_2017" action="action_cfo_snr_media_contestants_2017" parent="menu_cfo_member_snr_2017_root" sequence="6"/>
-    <menuitem id="menu_cfo_media_contestants_snr_2018" action="action_cfo_snr_media_contestants_2018" parent="menu_cfo_member_snr_2018_root" sequence="6"/>
-    <menuitem id="menu_cfo_media_contestants_snr_2019" action="action_cfo_snr_media_contestants_2019" parent="menu_cfo_member_snr_2019_root" sequence="6"/>
-    <menuitem id="menu_cfo_media_contestants_snr_2020" action="action_cfo_snr_media_contestants_2020" parent="menu_cfo_member_snr_2020_root" sequence="6"/>
+        <menuitem id="menu_cfo_ambassador_snr_2016" action="action_cfo_snr_ambassador_2016"
+                  parent="menu_cfo_member_snr_2016_root" sequence="6"/>
+        <menuitem id="menu_cfo_ambassador_snr_2017" action="action_cfo_snr_ambassador_2017"
+                  parent="menu_cfo_member_snr_2017_root" sequence="6"/>
+        <menuitem id="menu_cfo_ambassador_snr_2018" action="action_cfo_snr_ambassador_2018"
+                  parent="menu_cfo_member_snr_2018_root" sequence="6"/>
+        <menuitem id="menu_cfo_ambassador_snr_2019" action="action_cfo_snr_ambassador_2019"
+                  parent="menu_cfo_member_snr_2019_root" sequence="6"/>
+        <menuitem id="menu_cfo_ambassador_snr_2020" action="action_cfo_snr_ambassador_2020"
+                  parent="menu_cfo_member_snr_2020_root" sequence="6"/>
+
+        <record id='social_media_contestants_snr_form' model='ir.ui.view'>
+            <field name="name">Social Media Contestants</field>
+            <field name="model">social.media.contestants.snr</field>
+            <field name="arch" type="xml">
+                <form string="Social Media Contentants Form">
+                    <group string='Bio Details' col='4'>
+                        <field name='partner_id' context="{'default_cfo_user':True}"/>
+                        <field name='surname'/>
+                        <field name='other_names'/>
+                        <field name="cfo_competition_year" invisible="1"/>
+                        <field name='user_id'/>
+                    </group>
+                    <group string='Contact Information' col='4'>
+                        <field name='mobile'/>
+                        <field name='email_1'/>
+                        <field name='email_2'/>
+                        <label for="street" string="Address"/>
+                        <div>
+                            <field name="street" placeholder="Street..."/>
+                            <field name="street2"/>
+                            <div class="address_format">
+                                <field name="city" placeholder="City"
+                                       style="width: 40%%"/>
+                                <field name="state_id" class="oe_no_button"
+                                       placeholder="State" style="width: 37%%"
+                                       options='{"no_open": True}'/>
+                                <field name="zip" placeholder="ZIP"
+                                       style="width: 20%%"/>
+                            </div>
+                            <field name="country_id" placeholder="Country"
+                                   class="oe_no_button"
+                                   options='{"no_open": True, "no_create": True}'/>
+                        </div>
+                    </group>
+                    <notebook>
+                        <page string='Credentials'>
+                            <group col='4'>
+                                <field name='username'/>
+                                <field name="password"/>
+                                <field name='cfo_type'/>
+                                <field name='cfo_account_activate'/>
+                                <field name='cfo_encoded_link'/>
+                                <field name='updated_social_media_bio'/>
+                                <field name='social_media_unique_url'
+                                       widget='url'/>
+                            </group>
+                        </page>
+                        <page string='Register for Other categories'>
+                            <group col='4'>
+                                <field name='external_panel_judge'/>
+                                <field name='external_examiner'/>
+                                <field name='case_study_exper'/>
+                                <field name='ai_and_employer'/>
+                                <field name='brand_ambassador'/>
+                                <field name='mentor'/>
+                                <field name='social_media_contestant'/>
+                                <field name='volunteer_as_student'/>
+                                <field name='volunteer_other_expertise'/>
+                            </group>
+                        </page>
+                        <page string="Documents">
+                            <field name="doc_lines"/>
+                        </page>
+
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="social_media_contestants_snr_tree">
+            <field name="name">Social Media Contestants</field>
+            <field name="model">social.media.contestants.snr</field>
+            <field name="arch" type="xml">
+                <tree string='Social Media Contentants'>
+                    <field name='partner_id' context="{'default_cfo_user':True}"/>
+                    <field name='surname'/>
+                    <field name="cfo_competition_year" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2016">
+            <field name="name">Social Media Contestants</field>
+            <field name="res_model">social.media.contestants.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2016')]</field>
+            <field name="context">{'default_cfo_competition_year': '2016'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2017">
+            <field name="name">Social Media Contestants</field>
+            <field name="res_model">social.media.contestants.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2017')]</field>
+            <field name="context">{'default_cfo_competition_year': '2017'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2018">
+            <field name="name">Social Media Contestants</field>
+            <field name="res_model">social.media.contestants.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2018')]</field>
+            <field name="context">{'default_cfo_competition_year': '2018'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2019">
+            <field name="name">Social Media Contestants</field>
+            <field name="res_model">social.media.contestants.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2019')]</field>
+            <field name="context">{'default_cfo_competition_year': '2019'}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cfo_snr_media_contestants_2020">
+            <field name="name">Social Media Contestants</field>
+            <field name="res_model">social.media.contestants.snr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('cfo_competition_year', '=', '2020')]</field>
+            <field name="context">{'default_cfo_competition_year': '2020'}</field>
+        </record>
+
+        <menuitem id="menu_cfo_media_contestants_snr_2016" action="action_cfo_snr_media_contestants_2016"
+                  parent="menu_cfo_member_snr_2016_root" sequence="6"/>
+        <menuitem id="menu_cfo_media_contestants_snr_2017" action="action_cfo_snr_media_contestants_2017"
+                  parent="menu_cfo_member_snr_2017_root" sequence="6"/>
+        <menuitem id="menu_cfo_media_contestants_snr_2018" action="action_cfo_snr_media_contestants_2018"
+                  parent="menu_cfo_member_snr_2018_root" sequence="6"/>
+        <menuitem id="menu_cfo_media_contestants_snr_2019" action="action_cfo_snr_media_contestants_2019"
+                  parent="menu_cfo_member_snr_2019_root" sequence="6"/>
+        <menuitem id="menu_cfo_media_contestants_snr_2020" action="action_cfo_snr_media_contestants_2020"
+                  parent="menu_cfo_member_snr_2020_root" sequence="6"/>
 
     </data>
 </odoo>

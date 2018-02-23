@@ -59,6 +59,8 @@ class CFOSeniorAspirants(models.Model):
     user_id = fields.Many2one('res.users', 'Related User')
     cfo_competition_year = fields.Selection(
         [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+    is_request = fields.Boolean('Request to join')
+    new_team_id = fields.Many2one('cfo.team.snr')
 
     #     is_cfo_junior = fields.Boolean("Is CFO Junior")
 
@@ -68,6 +70,11 @@ class CFOSeniorAspirants(models.Model):
             user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
             if user:
                 self.user_id = user.id
+
+    @api.multi
+    def accept_request(self):
+        self.aspirant_id = self.new_team_id.id
+        self.is_request = False
 
 
 class AcademicInstitutionSenior(models.Model):

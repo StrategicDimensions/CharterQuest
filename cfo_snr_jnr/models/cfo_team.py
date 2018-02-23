@@ -57,7 +57,7 @@ class CFOTeamSNR(models.Model):
 
     name = fields.Char(string='Name')
     ref_name = fields.Char('Reference Name')
-    mentor_id = fields.Many2one('mentors', 'Mentor')
+    mentor_id = fields.Many2one('mentors.snr', 'Mentor')
     brand_amb_id = fields.Many2one('brand.ambassador.snr', 'Brand Ambassador')
     aspirant_leader_id = fields.Many2one('cfo.snr.aspirants', 'Team Leader')
     academic_leader_id = fields.Many2one('academic.institution.snr', 'Team Leader')
