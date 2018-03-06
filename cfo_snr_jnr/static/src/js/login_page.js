@@ -13,7 +13,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 //                alert('Incorrect username/password.!')
 //            }
 //            if(data){
-//                location.replace('/user_details');
+//                location.replace('/user_details');hot to know webscription version in odoo
 //            }
 //        });
 //    });
@@ -92,6 +92,12 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             e.preventDefault();
         });
         $('.table-remove').click(function () {
+            var member_id = $(this).parents('tr').attr('member_id');
+            if (member_id) {
+                ajax.jsonRpc("/remove_member", "call", {'member_id': member_id})
+                    .then(function (result) {
+                    });
+            }
             $(this).parents('tr').remove();
         });
         $('input[name="name"]').on('change', function () {
@@ -103,12 +109,29 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         $('.team_email').on('change', function () {
             var email = $(this).val();
             var self = $(this);
+            var user_type = $(this).parents('tr').find('.user_type').val();
             ajax.jsonRpc("/check_user_team", "call", {'email': email})
                 .then(function (result) {
-                    if (result) {
+                    if (result.user_id) {
                         self.parents('tr').find('.request-join').show().attr('user_id', result['user_id']);
                     } else {
                         self.parents('tr').find('.request-join').hide();
+                        self.parents('tr').find('.create-user').hide()
+                    }
+                });
+        });
+        $('.user_type').on('change', function () {
+            var user_type = $(this).val();
+            var email = $(this).parents('tr').find('.team_email').val();
+            var self = $(this);
+            ajax.jsonRpc("/check_user_team", "call", {'email': email, 'user_type': user_type})
+                .then(function (result) {
+                    if (result) {
+                        self.parents('tr').find('.create_member').show();
+                        self.parents('tr').find('.team_member_name').show();
+                    } else {
+                        self.parents('tr').find('.create_member').hide();
+                        self.parents('tr').find('.team_member_name').hide()
                     }
                 });
         });
@@ -124,7 +147,23 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                         self.parents('tr').find('.request-join').show().attr('user_id', result['user_id']);
                     }
                 });
-        })
+        });
+        $('.create_member').on('click', function () {
+            var email = $(this).parents('tr').find('.team_email').val();
+            var name = $(this).parents('tr').find('.team_member_name').val();
+            var user_type = $(this).parents('tr').find('.user_type').val();
+            var year = $(this).parents('tr').find('.competition_year').val();
+            var self = $(this);
+            ajax.jsonRpc("/create_new_member", "call", {'email': email, 'name': name,'user_type':user_type,'year':year})
+                .then(function (result) {
+                    if (result) {
+                        alert("Email already exist...")
+                    } else {
+                        self.parents('tr').find('.create_member').hide();
+                        self.parents('tr').find('.team_member_name').hide()
+                    }
+                });
+        });
         $('.create_team').on('click', function () {
             var self = $(this).parents('.form');
             var name = self.find('input[name="name"]').val();
@@ -161,6 +200,42 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                         alert('Email not found');
                     }
                 });
+        });
+        $('.create_acadamic_team').on('click', function () {
+            var self = $(this).parents('.form');
+            var name = self.find('input[name="name"]').val();
+            var sys_name = self.find('input[name="sys_name"]').val();
+            var acadamic_id = self.find('input[name="snr_academic_institution"]').val();
+            var acadamic_team = self.find('input[name="acadamic_ids"]').val();
+            var list_of_member = [];
+            $(".ac-row-data-list").each(function () {
+                var email = $(this).find("input[name='email']").val();
+                var user_type = $(this).find(".user_type").val();
+                if (email && user_type) {
+                    list_of_member.push({'email': email, 'user_type': user_type});
+                }
+            });
+            ajax.jsonRpc("/create_acadamic_team", 'call', {
+                'snr_academic_institution': acadamic_id,
+                'name': name,
+                'sys_name': sys_name,
+                'list_of_member': list_of_member,
+                'acadamic_team': acadamic_team
+            }).then(function (data) {
+                if (data['success']) {
+                    window.location.replace("/cfo_senior");
+                } else if (data['member_limit_error']) {
+                    alert('You can not add more than 3 members');
+                } else if (data['leader_limit_error']) {
+                    alert('You can not add more than 1 Leader');
+                } else if (data['brand_limit_error']) {
+                    alert('You can not add more than 1 Brand Ambassador');
+                } else if (data['team_error']) {
+                    alert('You can not create more than 1 team');
+                } else {
+                    alert('Email not found');
+                }
+            });
         });
     });
 

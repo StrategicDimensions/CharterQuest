@@ -351,7 +351,7 @@
                     </head>
 
                     <body>
-                        <t t-if="not senior and not academic_institution and not employee and not brand_ambassador and not media_contestants">
+                        <t t-if="not senior and not academic_institution and not employee and not brand_ambassador and not media_contestants and not mentor">
                             <div class="col-md-12" align="center" style="margin-bottom:3%;margin-top:3%">
                                 <h3 style="color:red;">You are not registered for the CFO Senior Competition
                                     <br/>
@@ -1227,9 +1227,10 @@
                                t-att-value="request.csrf_token()"/>
                         <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
                         <input type="hidden" name="cfo_team_edit" value="True"/>
-                        <div class="col-md-12">
+                        <div class="col-md-12" t-if="not snr_aspirants.aspirant_id">
                             <button class="btn btn-primary" type="submit">Create Team</button>
                         </div>
+
                         <div class="col-md-12" t-if="aspirant_team">
                             <table class="table table-bordered">
                                 <tr>
@@ -1369,7 +1370,17 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <i class="fa fa-clock-o" t-if="member_id.user_type != 'Admin'"/>
+                                                    <t t-if="member_id.member_status =='Pending'">
+                                                        <i class="fa fa-clock-o" t-if="member_id.user_type != 'Admin'"/>
+                                                    </t>
+                                                    <t t-if="member_id.member_status =='Accept'">
+                                                        <i class="fa fa-check-circle" style="color:green;"
+                                                           t-if="member_id.user_type != 'Admin'"/>
+                                                    </t>
+                                                    <t t-if="member_id.member_status =='Rejected'">
+                                                        <i class="fa fa-times" style="color:red;"
+                                                           t-if="member_id.user_type != 'Admin'"/>
+                                                    </t>
                                                     <i class="fa fa-check-circle" style="color:green;"
                                                        t-if="member_id.user_type == 'Admin'"/>
                                                 </td>
@@ -1395,7 +1406,15 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <i class="fa fa-clock-o"/>
+                                                <t t-if="aspirant_team.mentor_id.team_status =='Pending'">
+                                                    <i class="fa fa-clock-o"/>
+                                                </t>
+                                                <t t-if="aspirant_team.mentor_id.team_status =='Accept'">
+                                                    <i class="fa fa-check-circle" style="color:green;"/>
+                                                </t>
+                                                <t t-if="aspirant_team.mentor_id.team_status =='Rejected'">
+                                                    <i class="fa fa-times" style="color:red;"/>
+                                                </t>
                                             </td>
                                             <td>
                                                 <button class="btn btn-danger table-remove">Remove</button>
@@ -1419,7 +1438,15 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <i class="fa fa-clock-o"/>
+                                                <t t-if="aspirant_team.brand_amb_id.team_status =='Pending'">
+                                                    <i class="fa fa-clock-o"/>
+                                                </t>
+                                                <t t-if="aspirant_team.brand_amb_id.team_status =='Accept'">
+                                                    <i class="fa fa-check-circle" style="color:green;"/>
+                                                </t>
+                                                <t t-if="aspirant_team.brand_amb_id.team_status =='Rejected'">
+                                                    <i class="fa fa-times" style="color:red;"/>
+                                                </t>
                                             </td>
                                             <td>
                                                 <button class="btn btn-danger table-remove">Remove</button>
@@ -1441,6 +1468,16 @@
                                             </select>
                                         </td>
                                         <td>
+                                            <input type="hidden" name="competition_year" class="competition_year" t-att-value="snr_aspirants.cfo_competition_year"/>
+                                            <input type="text" name="member_name"
+                                                   class="form-control team_member_name" style="display:none;"/>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success create_member" style="display:none;">
+                                                Create New User
+                                            </button>
+                                        </td>
+                                        <td>
                                             <i class="fa fa-clock-o"/>
                                         </td>
                                         <td>
@@ -1453,11 +1490,18 @@
                                                     Request to
                                                     join your Team
                                                 </button>
+                                                <button class="btn btn-danger create-user" style="display:none;"
+                                                        t-att-team-id="aspirant_team.id">
+                                                    Create
+                                                </button>
                                             </t>
                                             <t t-if="not aspirant_team">
                                                 <button class="btn btn-danger request-join" style="display:none;">
                                                     Request to
                                                     join your Team
+                                                </button>
+                                                <button class="btn btn-danger create-user" style="display:none;">
+                                                    Create
                                                 </button>
                                             </t>
                                         </td>
@@ -1525,6 +1569,12 @@
                             <button type="submit" class="btn btn-default btn-primary mb32 a-submit"
                                     style="margin-left:350px;">UPDATE YOUR BIO
                             </button>
+                            <t t-if="snr_academic_institution and snr_academic_institution.updated_academic_bio">
+                                <input type="hidden" name="cfo_team" value="True"/>
+                                <button type="submit" class="btn btn-default btn-primary mb32 a-submit">
+                                    CREATE/UPDATE TEAM
+                                </button>
+                            </t>
                             <button type="button" class="btn btn-default btn-primary mb32 a-submit"
                                     data-toggle="modal"
                                     data-target="#myModal" id="modal_button">
@@ -1689,8 +1739,7 @@
                                                        placeholder="City"
                                                        t-att-value="snr_academic_institution.city"/>
                                                 <select name="state_id" id="state_id"
-                                                        class="form-control" placeholder="State"
-                                                >
+                                                        class="form-control" placeholder="State">
                                                     <option value="">State</option>
                                                     <t t-if="snr_academic_institution">
                                                         <option t-att-value=" snr_academic_institution.state_id.id if snr_academic_institution.state_id else &quot;&quot;">
@@ -1711,8 +1760,7 @@
                                                        class="form-control"
                                                        t-att-value="snr_academic_institution.zip"/>
                                                 <select name="country_id" id="country_id"
-                                                        class="form-control" placeholder="Country"
-                                                >
+                                                        class="form-control" placeholder="Country">
                                                     <option value="">Country</option>
                                                     <t t-if="snr_academic_institution">
                                                         <option t-att-value=" snr_academic_institution.country_id.id if snr_academic_institution.country_id else &quot;&quot;">
@@ -1798,8 +1846,7 @@
                                                        placeholder="City"
                                                        t-att-value="snr_academic_institution.stu_city"/>
                                                 <select name="stu_state_id" id="stu_state_id"
-                                                        class="form-control" placeholder="State"
-                                                >
+                                                        class="form-control" placeholder="State">
                                                     <option value="">State</option>
                                                     <t t-if="snr_aspirants">
                                                         <option t-att-value=" snr_academic_institution.stu_state_id.id if snr_academic_institution.stu_state_id else &quot;&quot;">
@@ -1820,8 +1867,7 @@
                                                        class="form-control"
                                                        t-att-value="snr_academic_institution.stu_zip"/>
                                                 <select name="stu_country_id" id="stu_country_id"
-                                                        class="form-control" placeholder="Country"
-                                                >
+                                                        class="form-control" placeholder="Country">
                                                     <option value="">Country</option>
                                                     <t t-if="snr_academic_institution">
                                                         <option t-att-value=" snr_academic_institution.stu_country_id.id if snr_academic_institution.stu_country_id else &quot;&quot;">
@@ -1859,6 +1905,300 @@
                             </div>
                         </form>
                     </div>
+                </div>
+                <div class="container" t-if="cfo_team">
+                    <t t-if="not cfo_team_edit">
+                        <form action="/cfo_senior" method="post">
+                            <input type="hidden" name="csrf_token"
+                                   t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="snr_academic_institution"
+                                   t-att-value="snr_academic_institution.id"/>
+                            <input type="hidden" name="cfo_team_edit" value="True"/>
+                            <input type="hidden" name="new_form" value="True"/>
+                            <div class="col-md-12">
+                                <button class="btn btn-primary" type="submit">Create Team</button>
+                            </div>
+                            <div class="col-md-12" t-if="acadamic_team">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th></th>
+                                        <th>Team Name</th>
+                                        <th>Team Members</th>
+                                        <th>Other Members</th>
+                                    </tr>
+                                    <t t-foreach="acadamic_team" t-as="acadamic_team">
+                                        <form action="/cfo_senior" method="post">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" t-att-value="acadamic_team.id"
+                                                           name="acadamic_team"/>
+                                                    <button class="btn" type="submit">Edit Team</button>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="acadamic_team.name"/>
+                                                </td>
+                                                <td>
+                                                    <t t-if="acadamic_team.academic_team_member_ids">
+                                                        <t t-foreach="acadamic_team.academic_team_member_ids"
+                                                           t-as="member_id">
+                                                            <t t-if="member_id.user_type in ['Admin','Leader','Member']">
+                                                                <t t-esc="member_id.user_type"/>,
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                </td>
+                                                <td>
+                                                    <t t-if="acadamic_team.brand_amb_id">
+                                                        Brand Ambassador
+                                                    </t>
+                                                    <t t-if="acadamic_team.mentor_id">
+                                                        Mentor
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </form>
+                                    </t>
+                                </table>
+                            </div>
+                        </form>
+                    </t>
+                    <t t-if="cfo_team_edit">
+                        <div class="form">
+                            <input type="hidden" name="csrf_token"
+                                   t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="snr_academic_institution"
+                                   t-att-value="snr_academic_institution.id"/>
+                            <input type="hidden" t-att-value="acadamic_team.id" name="acadamic_team"
+                                   t-if="acadamic_team"/>
+                            <h3>Team</h3>
+                            <div class="col-md-8">
+                                <label class="control-label"
+                                       for="name">Name
+                                </label>
+                                <input type="hidden" name="country"
+                                       t-att-value="snr_academic_institution.country_id.name"/>
+                                <input type="hidden" name="state" t-att-value="snr_academic_institution.state_id.name"/>
+                                <t t-if="acadamic_team">
+                                    <input type="text" name="name"
+                                           id="name"
+                                           class="form-control" required="1"
+                                           t-att-value="acadamic_team.name"/>
+                                </t>
+                                <t t-if="not acadamic_team">
+                                    <input type="text" name="name"
+                                           id="name" required="1"
+                                           class="form-control"/>
+                                </t>
+                            </div>
+                            <div class="col-md-8">
+                                <p>
+                                    Enter the name you will like your team to be called. E.g. if you choose Caledonia,
+                                    your team will be referred to as Team CALEDONIA from University of Buea,
+                                    Cameroon or Team CALEDONIA from AnglogoldAshanti, South Africa.
+                                </p>
+                            </div>
+                            <div class="col-md-8">
+                                <label class="control-label"
+                                       for="sys_name">System-generated name of your Team
+                                </label>
+                                <t t-if="acadamic_team">
+                                    <input type="text" name="sys_name"
+                                           id="sys_name"
+                                           class="form-control sys_name_new"
+                                           readonly="1"
+                                           t-att-value="acadamic_team.ref_name"/>
+                                </t>
+                                <t t-if="not acadamic_team">
+                                    <input type="text" name="sys_name" readonly="1"
+                                           class="form-control sys_name_new"/>
+                                </t>
+                            </div>
+                            <div class="col-md-8">
+                                <h3>
+                                    Maximum team size is 3. You can invite them here.
+                                </h3>
+                                <h4>
+                                    Members added and their details will display underneath.
+                                </h4>
+                            </div>
+                            <div class="col-md-12">
+                                <table id="table_quick_view">
+                                    <tbody class="add_row_table" style="border:unset;">
+                                        <t t-if="not acadamic_team">
+                                            <tr class="ac-row-data-list">
+                                                <td>Email</td>
+                                                <td>
+                                                    <input type="text" readonly="True" name="email" class="form-control"
+                                                           t-att-value="snr_academic_institution.email_1"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" readonly="True" class="form-control user_type"
+                                                           value="Admin"/>
+                                                </td>
+                                                <td>
+                                                    <i class="fa fa-check-circle" style="color:green;"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="acadamic_team and acadamic_team.academic_team_member_ids">
+                                            <t t-foreach="acadamic_team.academic_team_member_ids" t-as="member_id">
+                                                <tr class="ac-row-data-list">
+                                                    <td>Email</td>
+                                                    <td>
+                                                        <input type="text" name="email" class="form-control"
+                                                               t-att-value="member_id.email"
+                                                               t-att-readonly="'1' if member_id.user_type == 'Admin' else False"/>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="user_type"
+                                                               t-att-value="member_id.user_type"
+                                                               class="form-control user_type"
+                                                               t-if="member_id.user_type == 'Admin'" readonly="1"/>
+                                                        <select name="user_type" class="form-control user_type"
+                                                                t-if="member_id.user_type != 'Admin'">
+                                                            <option t-att-value="member_id.user_type"
+                                                                    selected="selected">
+                                                                <t t-esc="member_id.user_type"/>
+                                                            </option>
+                                                            <option value="Leader">Leader</option>
+                                                            <option value="Member">Member</option>
+                                                            <option value="Mentor">Mentor</option>
+                                                            <option value="Brand Ambassador">Brand Ambassador</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="member_id.member_status =='Pending'">
+                                                            <i class="fa fa-clock-o"
+                                                               t-if="member_id.user_type != 'Admin'"/>
+                                                        </t>
+                                                        <t t-if="member_id.member_status =='Accept'">
+                                                            <i class="fa fa-check-circle" style="color:green;"
+                                                               t-if="member_id.user_type != 'Admin'"/>
+                                                        </t>
+                                                        <t t-if="member_id.member_status =='Rejected'">
+                                                            <i class="fa fa-times" style="color:red;"
+                                                               t-if="member_id.user_type != 'Admin'"/>
+                                                        </t>
+                                                        <i class="fa fa-check-circle" style="color:green;"
+                                                           t-if="member_id.user_type == 'Admin'"/>
+                                                    </td>
+                                                    <td t-if="member_id.user_type != 'Admin'">
+                                                        <button class="btn btn-danger table-remove">Remove</button>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <t t-if="acadamic_team and acadamic_team.mentor_id">
+                                            <tr class="ac-row-data-list">
+                                                <td>Email</td>
+                                                <td>
+                                                    <input type="text" name="email" class="form-control"
+                                                           t-att-value="acadamic_team.mentor_id.email_1"/>
+                                                </td>
+                                                <td>
+                                                    <select name="user_type" class="form-control user_type">
+                                                        <option value="Leader">Leader</option>
+                                                        <option value="Member">Member</option>
+                                                        <option value="Mentor" selected="1">Mentor</option>
+                                                        <option value="Brand Ambassador">Brand Ambassador</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <t t-if="acadamic_team.mentor_id.team_status =='Pending'">
+                                                        <i class="fa fa-clock-o"/>
+                                                    </t>
+                                                    <t t-if="acadamic_team.mentor_id.team_status =='Accept'">
+                                                        <i class="fa fa-check-circle" style="color:green;"/>
+                                                    </t>
+                                                    <t t-if="acadamic_team.mentor_id.team_status =='Rejected'">
+                                                        <i class="fa fa-times" style="color:red;"/>
+                                                    </t>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-danger table-remove">Remove</button>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="acadamic_team and acadamic_team.brand_amb_id">
+                                            <tr class="ac-row-data-list">
+                                                <td>Email</td>
+                                                <td>
+                                                    <input type="text" name="email" class="form-control"
+                                                           t-att-value="acadamic_team.brand_amb_id.email_1"/>
+                                                </td>
+                                                <td>
+                                                    <select name="user_type" class="form-control user_type">
+                                                        <option value="Leader">Leader</option>
+                                                        <option value="Member">Member</option>
+                                                        <option value="Mentor">Mentor</option>
+                                                        <option value="Brand Ambassador" selected="1">Brand Ambassador
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <t t-if="acadamic_team.brand_amb_id.team_status =='Pending'">
+                                                        <i class="fa fa-clock-o"/>
+                                                    </t>
+                                                    <t t-if="acadamic_team.brand_amb_id.team_status =='Accept'">
+                                                        <i class="fa fa-check-circle" style="color:green;"/>
+                                                    </t>
+                                                    <t t-if="acadamic_team.brand_amb_id.team_status =='Rejected'">
+                                                        <i class="fa fa-times" style="color:red;"/>
+                                                    </t>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-danger table-remove">Remove</button>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <tr class="custom_tr ac-row-data-list hide">
+                                            <td>Email</td>
+                                            <td>
+                                                <input type="text" name="email" class="form-control team_email"/>
+                                            </td>
+                                            <td>
+                                                <select name="user_type" class="form-control user_type">
+                                                    <option value=""></option>
+                                                    <option value="Leader">Leader</option>
+                                                    <option value="Member">Member</option>
+                                                    <option value="Mentor">Mentor</option>
+                                                    <option value="Brand Ambassador">Brand Ambassador</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-clock-o"/>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger table-remove">Remove</button>
+                                            </td>
+                                            <td>
+                                                <t t-if="acadamic_team">
+                                                    <button class="btn btn-danger request-join" style="display:none;"
+                                                            t-att-team-id="acadamic_team.id">
+                                                        Request to
+                                                        join your Team
+                                                    </button>
+                                                </t>
+                                                <t t-if="not acadamic_team">
+                                                    <button class="btn btn-danger request-join" style="display:none;">
+                                                        Request to
+                                                        join your Team
+                                                    </button>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="col-md-12">
+                                    <button class="btn table-add">Add Member</button>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="text-align:center">
+                                <button type="submit" class="btn btn-primary create_acadamic_team">Create Team</button>
+                            </div>
+                        </div>
+                    </t>
                 </div>
             </div>
         </template>
@@ -2221,8 +2561,7 @@
                                                        placeholder="City"
                                                        t-att-value="snr_employers.emp_city"/>
                                                 <select name="emp_state_id" id="emp_state_id"
-                                                        class="form-control" placeholder="State"
-                                                >
+                                                        class="form-control" placeholder="State">
                                                     <option value="">State</option>
                                                     <t t-if="snr_aspirants">
                                                         <option t-att-value=" snr_employers.emp_state_id.id if snr_employers.emp_state_id else &quot;&quot;">
@@ -2756,105 +3095,6 @@
                 </div>
             </t>
         </template>
-
-        <!--         <template id="auth_signup.fields" name="Auth Signup/ResetPassword form fields"> -->
-        <!--             <t t-if="only_passwords"> -->
-        <!--             <div class="form-group field-login"> -->
-        <!--                 <label for="login" class="control-label">Email</label> -->
-        <!--                 <input type="text" name="login" t-att-value="login" id="login" class="form-control" autofocus="autofocus" -->
-        <!--                     autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None" style="background-color: rgb(216, 214, 214); !important"/> -->
-        <!--             </div> -->
-
-        <!--             <div class="form-group field-name"> -->
-        <!--                 <label for="name" class="control-label">Name</label> -->
-        <!--                 <input type="text" name="name" t-att-value="name" id="name" class="form-control" placeholder="e.g. John Doe" -->
-        <!--                     required="required" t-att-readonly="'readonly' if only_passwords else None" -->
-        <!--                     t-att-autofocus="'autofocus' if login and not only_passwords else None" style="background-color: rgb(216, 214, 214); !important"/> -->
-        <!--             </div> -->
-
-        <!--             <div class="form-group field-password"> -->
-        <!--                 <label for="password" class="control-label">Password</label> -->
-        <!--                 <input type="password" name="password" id="password" class="form-control" -->
-        <!--                     required="required" t-att-autofocus="'autofocus' if only_passwords else None"/> -->
-        <!--             </div> -->
-
-        <!--             <div class="form-group field-confirm_password"> -->
-        <!--                 <label for="confirm_password" class="control-label">Confirm Password</label> -->
-        <!--                 <input type="password" name="confirm_password" id="confirm_password" class="form-control" required="required"/> -->
-        <!--             </div> -->
-        <!--             </t> -->
-        <!--             <t t-if="not only_passwords"> -->
-        <!--               <div class="row"> -->
-        <!--                   <div class="pull-left" style="width: 307px; !important"> -->
-        <!--                   <t t-set="competition_types" t-value="website.get_competition_types()"/> -->
-        <!--                   <t t-set="sources" t-value="website.get_cfo_registrants_source()"/> -->
-        <!--                       <div class="form-group field-firstname"> -->
-        <!--                         <label for="name" class="control-label">First Name</label> -->
-        <!--                         <input type="text" name="name" t-att-value="name" id="name" class="form-control" -->
-        <!--                             autofocus="autofocus" required="required" autocapitalize="off"/> -->
-        <!--                       </div> -->
-        <!--                       <div class="form-group field-lastname"> -->
-        <!--                         <label for="lastname" class="control-label">Last Name</label> -->
-        <!--                         <input type="text" name="lastname" t-att-value="lastname" id="lastname" class="form-control" -->
-        <!--                             autofocus="autofocus" required="required" autocapitalize="off"/> -->
-        <!--                       </div> -->
-        <!--                       <div class="form-group field-login"> -->
-        <!--                         <label for="login" class="control-label">Email</label> -->
-        <!--                         <input type="text" name="login" t-att-value="login" id="login" class="form-control" autofocus="autofocus" -->
-        <!--                             autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None"/> -->
-        <!--                       </div> -->
-        <!--                       <div class="form-group field-competition"> -->
-        <!--                         <label for="cfo_competition" class="control-label">Select the Competition</label> -->
-        <!--                         <select id="cfo_competition" name="cfo_competition" class="form-control" placeholder="Competition..." required="True"> -->
-        <!--                             <option value="" select="true">Select Category</option> -->
-        <!--                             <t t-foreach="competition_types or []" t-as="competition"> -->
-        <!--                                 <option t-att-value="competition.id"> -->
-        <!--                                     <t t-esc="competition.name"/> -->
-        <!--                                 </option> -->
-        <!--                             </t> -->
-        <!--                         </select> -->
-        <!--                       </div> -->
-        <!--                       <div class="form-group field-membertype"> -->
-        <!--                         <label for="cfo_membertype" class="control-label">I want to Register as</label> -->
-        <!--                         <select id='cfo_membertype' name="cfo_membertype" class="form-control" placeholder="Member Type..." required="True"> -->
-        <!--                             <option value="" select="true">Select</option> -->
-        <!--                         </select> -->
-        <!--                       </div> -->
-        <!--                       </div> -->
-
-        <!--                       <div class="pull-right" style="width: 307px; !important"> -->
-        <!--                       <div class="form-group field-source"> -->
-        <!--                         <label for="cfo_source" class="control-label">How Did you 1st Hear About the CFO</label> -->
-        <!--                         <select id="cfo_source" name="cfo_source" class="form-control" placeholder="Source..."> -->
-        <!--                             <option value="" select="true">Select</option> -->
-        <!--                             <t t-foreach="sources or []" t-as="source"> -->
-        <!--                                 <option t-att-value="source"> -->
-        <!--                                     <t t-esc="source"/> -->
-        <!--                                 </option> -->
-        <!--                             </t> -->
-        <!--                         </select> -->
-        <!--                       </div> -->
-        <!--                       <div class="form-group field-other" id='other_source' style="display: none;"> -->
-        <!--                         <label for="other" class="control-label">Other Please Specify</label> -->
-        <!--                         <input type="text" name="other" t-att-value="other" id="other" class="form-control" -->
-        <!--                             autofocus="autofocus" autocapitalize="off"/> -->
-        <!--                       </div> -->
-        <!--                       <div class="form-group field-password"> -->
-        <!--                         <label for="password" class="control-label">Password</label> -->
-        <!--                         <input type="password" name="password" id="password" class="form-control" -->
-        <!--                             required="required" t-att-autofocus="'autofocus' if only_passwords else None"/> -->
-        <!--                     </div> -->
-
-        <!--                     <div class="form-group field-confirm_password"> -->
-        <!--                         <label for="confirm_password" class="control-label">Confirm Password</label> -->
-        <!--                         <input type="password" name="confirm_password" id="confirm_password" class="form-control" required="required"/> -->
-        <!--                     </div> -->
-
-        <!--                     <div class="g-recaptcha" style="width: -moz-fit-content;margin-top:50px" data-sitekey="6LfdvzYUAAAAAEKV8DWL7vpRotZIjaS9VQltT2FH"></div> -->
-        <!--                   </div> -->
-        <!--                   </div> -->
-        <!--                   </t> -->
-        <!--         </template> -->
 
     </data>
 </odoo>

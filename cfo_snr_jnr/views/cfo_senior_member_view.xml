@@ -10,6 +10,12 @@
                     <header>
                         <button type="object" string="Accept Invitation" name="accept_request"
                                 attrs="{'invisible':[('is_request','=',False)]}"/>
+                        <button type="object" string="Reject Invitation" name="reject_request"
+                                attrs="{'invisible':[('is_request','=',False)]}"/>
+                        <button type="object" string="Accept" name="accept_team"
+                                attrs="{'invisible':[('team_status','!=','Pending')]}"/>
+                        <button type="object" string="Reject" name="reject_team"
+                                attrs="{'invisible':[('team_status','!=','Pending')]}"/>
                     </header>
                     <sheet>
                         <group string='Bio Details' col='4'>
@@ -20,6 +26,7 @@
                             <field name='country_of_birth' required="0"/>
                             <field name='nationality' required="0"/>
                             <field name="cfo_competition_year" invisible="1"/>
+                            <field name="team_status" invisible="1"/>
                             <field name='user_id'/>
                         </group>
                         <group string='Contact Information' col='4'>
@@ -34,12 +41,12 @@
                                 <field name="street2"/>
                                 <div class="address_format">
                                     <field name="city" placeholder="City"
-                                           style="width: 40%%"/>
+                                           style="width: 40%"/>
                                     <field name="state_id" class="oe_no_button"
-                                           placeholder="State" style="width: 37%%"
+                                           placeholder="State" style="width: 37%"
                                            options='{"no_open": True}'/>
                                     <field name="zip" placeholder="ZIP"
-                                           style="width: 20%%"/>
+                                           style="width: 20%"/>
                                 </div>
                                 <field name="country_id" placeholder="Country"
                                        class="oe_no_button"
@@ -60,12 +67,12 @@
                                 <field name="stu_street2"/>
                                 <div class="address_format">
                                     <field name="stu_city"
-                                           placeholder="City" style="width: 40%%"/>
+                                           placeholder="City" style="width: 40%"/>
                                     <field name="stu_state_id" class="oe_no_button"
-                                           placeholder="State" style="width: 37%%"
+                                           placeholder="State" style="width: 37%"
                                            options='{"no_open": True}'/>
                                     <field name="stu_zip" placeholder="ZIP"
-                                           style="width: 20%%"/>
+                                           style="width: 20 %"/>
                                 </div>
                                 <field name="stu_country_id"
                                        placeholder="Country" class="oe_no_button"
@@ -90,12 +97,12 @@
                                 <field name="emp_street2"/>
                                 <div class="address_format">
                                     <field name="emp_city"
-                                           placeholder="City" style="width: 40%%"/>
+                                           placeholder="City" style="width: 40%"/>
                                     <field name="emp_state_id" class="oe_no_button"
-                                           placeholder="State" style="width: 37%%"
+                                           placeholder="State" style="width: 37%"
                                            options='{"no_open": True}'/>
                                     <field name="emp_zip" placeholder="ZIP"
-                                           style="width: 20%%"/>
+                                           style="width: 20%"/>
                                 </div>
                                 <field name="emp_country_id"
                                        placeholder="Country" class="oe_no_button"
@@ -290,12 +297,12 @@
                                             <field name="street" placeholder="Street..."/>
                                             <field name="street2"/>
                                             <div class="address_format">
-                                                <field name="city" placeholder="City" style="width: 40%%"/>
+                                                <field name="city" placeholder="City" style="width: 40%"/>
                                                 <field name="state_id" class="oe_no_button"
-                                                       placeholder="State" style="width: 37%%"
+                                                       placeholder="State" style="width: 37%"
                                                        options='{"no_open": True}'
                                                        on_change="onchange_state(state_id)"/>
-                                                <field name="zip" placeholder="ZIP" style="width: 20%%"/>
+                                                <field name="zip" placeholder="ZIP" style="width: 20%"/>
                                             </div>
                                             <field name="country_id" placeholder="Country"
                                                    class="oe_no_button"
@@ -317,13 +324,13 @@
                                             <field name="stu_street2"/>
                                             <div class="address_format">
                                                 <field name="stu_city"
-                                                       placeholder="City" style="width: 40%%"/>
+                                                       placeholder="City" style="width: 40%"/>
                                                 <field name="stu_state_id" class="oe_no_button"
-                                                       placeholder="State" style="width: 37%%"
+                                                       placeholder="State" style="width: 37%"
                                                        options='{"no_open": True}'
                                                        on_change="onchange_state(state_id)"/>
                                                 <field name="stu_zip" placeholder="ZIP"
-                                                       style="width: 20%%"/>
+                                                       style="width: 20%"/>
                                             </div>
                                             <field name="stu_country_id"
                                                    placeholder="Country" class="oe_no_button"
@@ -510,13 +517,13 @@
                             <field name="street2"/>
                             <div class="address_format">
                                 <field name="city" placeholder="City"
-                                       style="width: 40%%"/>
+                                       style="width: 40%"/>
                                 <field name="state_id" class="oe_no_button"
-                                       placeholder="State" style="width: 37%%"
+                                       placeholder="State" style="width: 37%"
                                        options='{"no_open": True}'
                                        on_change="onchange_state(state_id)"/>
                                 <field name="zip" placeholder="ZIP"
-                                       style="width: 20%%"/>
+                                       style="width: 20%"/>
                             </div>
                             <field name="country_id" placeholder="Country"
                                    class="oe_no_button"
@@ -535,13 +542,13 @@
                             <field name="emp_street2"/>
                             <div class="address_format">
                                 <field name="emp_city"
-                                       placeholder="City" style="width: 40%%"/>
+                                       placeholder="City" style="width: 40%"/>
                                 <field name="emp_state_id" class="oe_no_button"
-                                       placeholder="State" style="width: 37%%"
+                                       placeholder="State" style="width: 37%"
                                        options='{"no_open": True}'
                                        on_change="onchange_state(state_id)"/>
                                 <field name="emp_zip" placeholder="ZIP"
-                                       style="width: 20%%"/>
+                                       style="width: 20%"/>
                             </div>
                             <field name="emp_country_id"
                                    placeholder="Country" class="oe_no_button"
@@ -670,92 +677,102 @@
             <field name="model">mentors.snr</field>
             <field name="arch" type="xml">
                 <form string="Mentors Form">
-                    <group string='Bio Details' col='4'>
-                        <field name='partner_id' required="True" context="{'default_cfo_user':True}"/>
-                        <field name='surname' required="0"/>
-                        <field name='other_names'/>
-                        <field name="cfo_competition_year" invisible="1"/>
-                        <field name='user_id'/>
-                    </group>
-                    <group string='Contact Information' col='4'>
-                        <field name='mobile' required="0"/>
-                        <field name='phone' string='Office Telephone'/>
-                        <field name='home_phone'/>
-                        <field name='email_1' required="True"/>
-                        <field name='email_2'/>
-                        <label for="street" string="Address"/>
-                        <div>
-                            <field name="street" placeholder="Street..."/>
-                            <field name="street2"/>
-                            <div class="address_format">
-                                <field name="city" placeholder="City"
-                                       style="width: 40%%"/>
-                                <field name="state_id" class="oe_no_button"
-                                       placeholder="State" style="width: 37%%"
-                                       options='{"no_open": True}'
-                                       on_change="onchange_state(state_id)"/>
-                                <field name="zip" placeholder="ZIP"
-                                       style="width: 20%%"/>
+                    <header>
+                        <button type="object" string="Accept" name="accept_team"
+                                attrs="{'invisible':[('team_status','!=','Pending')]}"/>
+                        <button type="object" string="Reject" name="reject_team"
+                                attrs="{'invisible':[('team_status','!=','Pending')]}"/>
+                    </header>
+                    <sheet>
+                        <group string='Bio Details' col='4'>
+                            <field name='partner_id' required="True" context="{'default_cfo_user':True}"/>
+                            <field name='surname' required="0"/>
+                            <field name='other_names'/>
+                            <field name="cfo_competition_year" invisible="1"/>
+                            <field name='user_id'/>
+                        </group>
+                        <group string='Contact Information' col='4'>
+                            <field name='mobile' required="0"/>
+                            <field name='phone' string='Office Telephone'/>
+                            <field name='home_phone'/>
+                            <field name='email_1' required="True"/>
+                            <field name='email_2'/>
+                            <label for="street" string="Address"/>
+                            <div>
+                                <field name="street" placeholder="Street..."/>
+                                <field name="street2"/>
+                                <div class="address_format">
+                                    <field name="city" placeholder="City"
+                                           style="width: 40%"/>
+                                    <field name="state_id" class="oe_no_button"
+                                           placeholder="State" style="width: 37%"
+                                           options='{"no_open": True}'
+                                           on_change="onchange_state(state_id)"/>
+                                    <field name="zip" placeholder="ZIP"
+                                           style="width: 20%"/>
+                                </div>
+                                <field name="country_id" placeholder="Country"
+                                       class="oe_no_button"
+                                       options='{"no_open": True, "no_create": True}'/>
                             </div>
-                            <field name="country_id" placeholder="Country"
-                                   class="oe_no_button"
-                                   options='{"no_open": True, "no_create": True}'/>
-                        </div>
-                    </group>
-                    <group string="Mentors Information">
-                        <field name="i_am_a"/>
-                        <field name="i_hold_a"/>
-                    </group>
-                    <group string="Registrants source" col="4">
-                        <field name="registrants_source"/>
-                        <field name="social_media_options"
-                               attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
-                        <field name="other_reason" attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>
-                    </group>
-                    <notebook>
-                        <page string="Credentials">
-                            <group col="4">
-                                <field name="username"/>
-                                <!--<field name='password' password='True'/>-->
-                                <field name="password"/>
-                                <field name="cfo_type"/>
-                                <field name="cfo_account_activate"/>
-                                <field name="cfo_encoded_link"/>
-                                <field name="updated_mentors_bio"/>
-                            </group>
-                        </page>
-                        <page string="Register for Other categories">
-                            <group col="4">
-                                <field name="external_panel_judge"/>
-                                <field name="external_examiner"/>
-                                <field name="case_study_exper"/>
-                                <field name="ai_and_employer"/>
-                                <field name="brand_ambassador"/>
-                                <field name="mentor"/>
-                                <field name="social_media_contestant"/>
-                                <field name="volunteer_as_student"/>
-                                <field name="volunteer_other_expertise"/>
-                            </group>
-                        </page>
-                        <page string="Teams">
-                            <field name="team_ids"/>
-                        </page>
-                        <page string="Documents">
-                            <field name="doc_lines"/>
-                        </page>
-                    </notebook>
-                    <!--                 <notebook> -->
-                    <!--                     <page string='Credentials'> -->
-                    <!--                         <group col='4'> -->
-                    <!--                             <field name='username' /> -->
-                    <!--                             <field name='password' password='True' /> -->
-                    <!--                             <field name='cfo_type' /> -->
-                    <!--                             <field name='cfo_account_activate' /> -->
-                    <!--                             <field name='cfo_encoded_link' /> -->
-                    <!--                             <field name='updated_mentors_bio' /> -->
-                    <!--                         </group> -->
-                    <!--                     </page> -->
-                    <!--                 </notebook> -->
+                        </group>
+                        <group string="Mentors Information">
+                            <field name="i_am_a"/>
+                            <field name="i_hold_a"/>
+                        </group>
+                        <group string="Registrants source" col="4">
+                            <field name="registrants_source"/>
+                            <field name="social_media_options"
+                                   attrs="{'invisible':[('registrants_source','not in',['Social Media'])]}"/>
+                            <field name="other_reason"
+                                   attrs="{'invisible':[('registrants_source','not in',['Other'])]}"/>
+                        </group>
+                        <notebook>
+                            <page string="Credentials">
+                                <group col="4">
+                                    <field name="username"/>
+                                    <!--<field name='password' password='True'/>-->
+                                    <field name="password"/>
+                                    <field name="cfo_type"/>
+                                    <field name="cfo_account_activate"/>
+                                    <field name="cfo_encoded_link"/>
+                                    <field name="updated_mentors_bio"/>
+                                    <field name="team_status" invisible="1"/>
+                                </group>
+                            </page>
+                            <page string="Register for Other categories">
+                                <group col="4">
+                                    <field name="external_panel_judge"/>
+                                    <field name="external_examiner"/>
+                                    <field name="case_study_exper"/>
+                                    <field name="ai_and_employer"/>
+                                    <field name="brand_ambassador"/>
+                                    <field name="mentor"/>
+                                    <field name="social_media_contestant"/>
+                                    <field name="volunteer_as_student"/>
+                                    <field name="volunteer_other_expertise"/>
+                                </group>
+                            </page>
+                            <page string="Teams">
+                                <field name="team_ids"/>
+                            </page>
+                            <page string="Documents">
+                                <field name="doc_lines"/>
+                            </page>
+                        </notebook>
+                        <!--                 <notebook> -->
+                        <!--                     <page string='Credentials'> -->
+                        <!--                         <group col='4'> -->
+                        <!--                             <field name='username' /> -->
+                        <!--                             <field name='password' password='True' /> -->
+                        <!--                             <field name='cfo_type' /> -->
+                        <!--                             <field name='cfo_account_activate' /> -->
+                        <!--                             <field name='cfo_encoded_link' /> -->
+                        <!--                             <field name='updated_mentors_bio' /> -->
+                        <!--                         </group> -->
+                        <!--                     </page> -->
+                        <!--                 </notebook> -->
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -848,13 +865,13 @@
                             <field name="street2"/>
                             <div class="address_format">
                                 <field name="city" placeholder="City"
-                                       style="width: 40%%"/>
+                                       style="width: 40%"/>
                                 <field name="state_id" class="oe_no_button"
-                                       placeholder="State" style="width: 37%%"
+                                       placeholder="State" style="width: 37%"
                                        options='{"no_open": True}'
                                        on_change="onchange_state(state_id)"/>
                                 <field name="zip" placeholder="ZIP"
-                                       style="width: 20%%"/>
+                                       style="width: 20%"/>
                             </div>
                             <field name="country_id" placeholder="Country"
                                    class="oe_no_button"
@@ -871,13 +888,13 @@
                             <field name="stu_street2"/>
                             <div class="address_format">
                                 <field name="stu_city"
-                                       placeholder="City" style="width: 40%%"/>
+                                       placeholder="City" style="width: 40%"/>
                                 <field name="stu_state_id" class="oe_no_button"
-                                       placeholder="State" style="width: 37%%"
+                                       placeholder="State" style="width: 37%"
                                        options='{"no_open": True}'
                                        on_change="onchange_state(state_id)"/>
                                 <field name="stu_zip" placeholder="ZIP"
-                                       style="width: 20%%"/>
+                                       style="width: 20%"/>
                             </div>
                             <field name="stu_country_id"
                                    placeholder="Country" class="oe_no_button"
@@ -1015,54 +1032,63 @@
             <field name="model">brand.ambassador.snr</field>
             <field name="arch" type="xml">
                 <form string="Brand Ambassadors Form">
-                    <group string='Bio Details' col='4'>
-                        <field name='partner_id' context="{'default_cfo_user':True}"/>
-                        <field name='surname'/>
-                        <field name='other_names'/>
-                        <field name="cfo_competition_year" invisible="1"/>
-                        <field name='user_id'/>
-                    </group>
-                    <group string='Contact Information' col='4'>
-                        <field name='mobile'/>
-                        <field name='email_1'/>
-                        <field name='email_2'/>
-                    </group>
-                    <notebook>
-                        <page string='Credentials'>
-                            <group col='4'>
-                                <field name='username'/>
-                                <!--<field name='password' password='True'/> -->
-                                <field name="password"/>
-                                <field name='cfo_type'/>
-                                <field name='cfo_account_activate'/>
-                                <field name='cfo_encoded_link'/>
-                                <field name='updated_brand_amb_bio'/>
-                                <!-- cfo junior -->
-                                <!--                             <field name="is_cfo_junior" /> -->
-                                <!-- cfo junior ends -->
-                            </group>
-                        </page>
-                        <page string='Register for Other categories'>
-                            <group col='4'>
-                                <field name='external_panel_judge'/>
-                                <field name='external_examiner'/>
-                                <field name='case_study_exper'/>
-                                <field name='ai_and_employer'/>
-                                <field name='brand_ambassador'/>
-                                <field name='mentor'/>
-                                <field name='social_media_contestant'/>
-                                <field name='volunteer_as_student'/>
-                                <field name='volunteer_other_expertise'/>
-                            </group>
-                        </page>
-                        <page string="Teams">
-                            <field name="team_ids"/>
-                        </page>
-                        <page string="Documents">
-                            <field name="doc_lines"/>
-                        </page>
+                    <header>
+                        <button type="object" string="Accept" name="accept_team"
+                                attrs="{'invisible':[('team_status','!=','Pending')]}"/>
+                        <button type="object" string="Reject" name="reject_team"
+                                attrs="{'invisible':[('team_status','!=','Pending')]}"/>
+                    </header>
+                    <sheet>
+                        <group string='Bio Details' col='4'>
+                            <field name='partner_id' context="{'default_cfo_user':True}"/>
+                            <field name='surname'/>
+                            <field name='other_names'/>
+                            <field name="cfo_competition_year" invisible="1"/>
+                            <field name="team_status" invisible="1"/>
+                            <field name='user_id'/>
+                        </group>
+                        <group string='Contact Information' col='4'>
+                            <field name='mobile'/>
+                            <field name='email_1'/>
+                            <field name='email_2'/>
+                        </group>
+                        <notebook>
+                            <page string='Credentials'>
+                                <group col='4'>
+                                    <field name='username'/>
+                                    <!--<field name='password' password='True'/> -->
+                                    <field name="password"/>
+                                    <field name='cfo_type'/>
+                                    <field name='cfo_account_activate'/>
+                                    <field name='cfo_encoded_link'/>
+                                    <field name='updated_brand_amb_bio'/>
+                                    <!-- cfo junior -->
+                                    <!--                             <field name="is_cfo_junior" /> -->
+                                    <!-- cfo junior ends -->
+                                </group>
+                            </page>
+                            <page string='Register for Other categories'>
+                                <group col='4'>
+                                    <field name='external_panel_judge'/>
+                                    <field name='external_examiner'/>
+                                    <field name='case_study_exper'/>
+                                    <field name='ai_and_employer'/>
+                                    <field name='brand_ambassador'/>
+                                    <field name='mentor'/>
+                                    <field name='social_media_contestant'/>
+                                    <field name='volunteer_as_student'/>
+                                    <field name='volunteer_other_expertise'/>
+                                </group>
+                            </page>
+                            <page string="Teams">
+                                <field name="team_ids"/>
+                            </page>
+                            <page string="Documents">
+                                <field name="doc_lines"/>
+                            </page>
 
-                    </notebook>
+                        </notebook>
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -1152,12 +1178,12 @@
                             <field name="street2"/>
                             <div class="address_format">
                                 <field name="city" placeholder="City"
-                                       style="width: 40%%"/>
+                                       style="width: 40%"/>
                                 <field name="state_id" class="oe_no_button"
-                                       placeholder="State" style="width: 37%%"
+                                       placeholder="State" style="width: 37%"
                                        options='{"no_open": True}'/>
                                 <field name="zip" placeholder="ZIP"
-                                       style="width: 20%%"/>
+                                       style="width: 20%"/>
                             </div>
                             <field name="country_id" placeholder="Country"
                                    class="oe_no_button"

@@ -66,6 +66,7 @@ class CFOTeamSNR(models.Model):
     academic_admin_id = fields.Many2one('academic.institution.snr', 'Team Created By')
     employer_admin_id = fields.Many2one('employers.snr', 'Team Created By')
     aspirants_ids = fields.Many2many('cfo.snr.aspirants', string='Team Members')
+#     cfo_academic_ids = fields.Many2many('academic.institution.snr',string="Team Member")
     document_ids = fields.One2many('ir.attachment', 'snr_team_id', 'Team Documents')
     team_type = fields.Selection(
         [('CFO Aspirant', 'CFO Aspirant'), ('Academic Institution', 'Academic Institution'),
@@ -79,6 +80,7 @@ class CFOTeamSNR(models.Model):
     date_cfo_report_deadline = fields.Date('CFO Report Date')
     remaining_time_deadline = fields.Char("Remaining Time for Deadline")
     crossed_deadline = fields.Boolean("Crossed Deadline")
+    
     aspirant_team_member_ids = fields.One2many('snr.aspirant.team.member', 'team_id', string="Team Member")
     academic_team_member_ids = fields.One2many('snr.academic.team.member', 'team_id', string="Team Member")
     employer_team_member_ids = fields.One2many('snr.employer.team.member', 'team_id', string="Team Member")
@@ -101,6 +103,8 @@ class SNRAspirantTeamMembers(models.Model):
     email = fields.Char(string="Email", related="related_user_id.email_1")
     user_type = fields.Selection([('Admin', 'Admin'), ('Leader', 'Leader'), ('Member', 'Member'), ('Mentor', 'Mentor'),
                                   ('Brand Ambassador', 'Brand Ambassador')])
+    member_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept')],
+                                     string="Status")
 
 
 class SNRAcademicTeamMembers(models.Model):
@@ -108,8 +112,10 @@ class SNRAcademicTeamMembers(models.Model):
     team_id = fields.Many2one('cfo.team.snr', string="Team")
     related_user_id = fields.Many2one('academic.institution.snr', string="Related User")
     email = fields.Char(string="Email", related="related_user_id.email_1")
-    user_type = fields.Selection([('Admin', 'Admin'), ('Leader', 'Leader'), ('Member', 'Member'), ('Mentor', 'Mentor'),
+    user_type = fields.Selection([('Admin', 'Admin'), ('Leader', 'Leader'),('Member', 'Member'), ('Mentor', 'Mentor'),
                                   ('Brand Ambassador', 'Brand Ambassador')])
+    member_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept')],
+                                     string="Status")
 
 
 class SNREmployerTeamMembers(models.Model):
@@ -119,6 +125,8 @@ class SNREmployerTeamMembers(models.Model):
     email = fields.Char(string="Email", related="related_user_id.email_1")
     user_type = fields.Selection([('Admin', 'Admin'), ('Leader', 'Leader'), ('Member', 'Member'), ('Mentor', 'Mentor'),
                                   ('Brand Ambassador', 'Brand Ambassador')])
+    member_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept')],
+                                     string="Status")
 
 
 class CFOTeamJNR(models.Model):

@@ -61,6 +61,8 @@ class CFOSeniorAspirants(models.Model):
         [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
     is_request = fields.Boolean('Request to join')
     new_team_id = fields.Many2one('cfo.team.snr')
+    team_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept')],
+                                   string="Status")
 
     #     is_cfo_junior = fields.Boolean("Is CFO Junior")
 
@@ -75,6 +77,28 @@ class CFOSeniorAspirants(models.Model):
     def accept_request(self):
         self.aspirant_id = self.new_team_id.id
         self.is_request = False
+
+    @api.multi
+    def accept_team(self):
+        self.aspirant_id = self.new_team_id
+        self.team_status = 'Accept'
+        member = self.env['snr.aspirant.team.member'].sudo().search([('team_id', '=', self.aspirant_id.id),
+                                                                     ('related_user_id', '=', self.id)])
+        if member:
+            member.sudo().write({
+                'member_status': 'Accept'
+            })
+
+    @api.multi
+    def reject_team(self):
+        self.aspirant_id = False
+        self.team_status = 'Rejected'
+        member = self.env['snr.aspirant.team.member'].sudo().search([('team_id', '=', self.aspirant_id.id),
+                                                                     ('related_user_id', '=', self.id)])
+        if member:
+            member.sudo().write({
+                'member_status': 'Accept'
+            })
 
 
 class AcademicInstitutionSenior(models.Model):
@@ -91,6 +115,8 @@ class AcademicInstitutionSenior(models.Model):
                                  help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_academic_bio = fields.Boolean('Updated Academic BIO')
     user_id = fields.Many2one('res.users', 'Related User')
+    ref_name = fields.Char(string = 'Reference')
+    cfo_team_ids = fields.Many2many('cfo.team.snr','cfo_team_rel', string='Acadamic ID')
     cfo_competition_year = fields.Selection(
         [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
 
@@ -159,7 +185,7 @@ class VolunteersSenior(models.Model):
     other_planning_phase = fields.Selection(
         [('Legal Affairs Lead', 'Legal Affairs Lead'), ('Event Lead & Social', 'Event Lead & Social'),
          ('Marketing Committee Lead', 'Marketing Committee Lead'), ('Youtube Team', 'Youtube Team'),
-         ('Pre Competition Contest Teams', 'Pre Competition Contest Teams'),
+         ('Pre Competition Contest Teams', 'Pre Compcfo_team_idsetition Contest Teams'),
          ('Judge Selection Team', 'Judge Selection Team')], 'Other Planning Phase')
     other_operations_phase = fields.Selection(
         [('Events Logistics Committee', 'Events Logistics Committee'), ('Prep Room Monitor', 'Prep Room Monitor'),
@@ -199,7 +225,7 @@ class VolunteersSenior(models.Model):
     social_event_lead = fields.Boolean("Social and Event Lead")
     marketing_committee_lead = fields.Boolean("Marketing Committee Lead")
     youtube_team = fields.Boolean("YouTube Team")
-    team_ambassadors = fields.Boolean("Team Ambassadors")
+    team_ambassadors = fields.Boolean("Team Ambassacfo_team_idsdors")
     pre_competition_contest_teams = fields.Boolean("Pre Competition Contest Teams")
     other_committee = fields.Boolean("Other committee")
     legal_affairs_lead = fields.Boolean("Legal Affairs Lead")
@@ -243,6 +269,9 @@ class BrandAmbassadorSenior(models.Model):
     cfo_competition_year = fields.Selection(
         [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
     user_id = fields.Many2one('res.users', 'Related User')
+    new_team_id = fields.Many2one('cfo.team.snr')
+    team_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept')],
+                                   string="Status")
 
     #     is_cfo_junior = fields.Boolean('Is CFO Junior?')
 
@@ -252,6 +281,15 @@ class BrandAmbassadorSenior(models.Model):
             user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
             if user:
                 self.user_id = user.id
+
+    @api.multi
+    def accept_team(self):
+        self.team_status = 'Accept'
+
+    @api.multi
+    def reject_team(self):
+        self.new_team_id = False
+        self.team_status = 'Rejected'
 
 
 class SocialMediaContestantsSenior(models.Model):
@@ -321,6 +359,9 @@ class MentorsSenior(models.Model):
                                         'Operations phase (Deadline :20 June, 2016 )')], "I will like get involved in")
     cfo_competition_year = fields.Selection(
         [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+    new_team_id = fields.Many2one('cfo.team.snr')
+    team_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept')],
+                                   string="Status")
 
     #     is_cfo_junior = fields.boolean('Is CFO Junior?')
 
@@ -330,6 +371,15 @@ class MentorsSenior(models.Model):
             user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
             if user:
                 self.user_id = user.id
+
+    @api.multi
+    def accept_team(self):
+        self.team_status = 'Accept'
+
+    @api.multi
+    def reject_team(self):
+        self.new_team_id = False
+        self.team_status = 'Rejected'
 
 
 class CFOSeniorMember(models.Model):
