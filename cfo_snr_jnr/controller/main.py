@@ -66,6 +66,7 @@ class CfoHome(web.Home):
 
     @http.route(['/cfo_senior'], type='http', auth="public", website=True)
     def cfo_senior(self, **post):
+        
         partner = request.env.user.partner_id
         login = request.env.user.login
         today = datetime.datetime.today()
@@ -81,13 +82,18 @@ class CfoHome(web.Home):
         snr_brand_ambassador = request.env['brand.ambassador.snr'].sudo().search(args)
         snr_media_contestants = request.env['social.media.contestants.snr'].sudo().search(args)
         snr_mentors = request.env['mentors.snr'].sudo().search(args)
+        is_from_new_member=request.session.get('is_from_new_member')
+        print ("\n\n\n-------->>>>>>>>",is_from_new_member)
         values = {}
         values['country_list'] = request.env['res.country'].sudo().search([])
         values['state_list'] = request.env['res.country.state'].sudo().search([])
+     
         if post.get('snr_aspirants') or post.get('snr_academic_institution') or post.get('snr_employers') or post.get(
                 'snr_brand_ambassador') or post.get('snr_media_contestants'):
             values['update_bio'] = True
             values['update_bio_info'] = True
+        if is_from_new_member:
+            values['is_from_new_member'] = True
         if snr_aspirants:
             values.update({'snr_aspirants': snr_aspirants})
             values.update({'senior': True})
@@ -553,13 +559,17 @@ class CfoHome(web.Home):
 
     @http.route('/create_new_member', type='json', auth="public", website=True)
     def create_new_member(self, **post):
-        print ("\n \n post",post)
         res_user = request.env['res.users'].sudo().search([('login', '=', post.get('email'))])
         if not res_user:
             user = request.env['res.users'].sudo().create({
                 'name': post.get('name'),
-                'login': post.get('email')
+                'login': post.get('email'),
+                'state' : 'new',
+                'in_group_9':True,
             })
+            request.session['cfo_login'] = True
+            request.session['is_from_new_member'] = True
+            user.partner_id.write({'email':post.get('email'),'is_from_new_member':True})
             if post.get('user_type') in ['Leader', 'Member']:
                 request.env['cfo.snr.aspirants'].sudo().create({
                     'name': post.get('name'),
@@ -581,18 +591,45 @@ class CfoHome(web.Home):
                     'user_id': user.id,
                     'cfo_competition_year': str(post.get('year'))
                 })
-
+            user.with_context(create_user=True).action_reset_password()
         else:
             return {'email_exist': True}
 
     @http.route('/request_to_join', type='json', auth="public", website=True)
     def request_to_join(self, **post):
+        
         if post.get('user_id'):
             res = request.env['cfo.snr.aspirants'].sudo().search(
                 [('id', '=', int(post.get('user_id')))])
+            team_id =  request.env['cfo.team.snr'].sudo().search([('id', '=', post.get('team_id'))])
+            
+            '''
+               Send email for Join Our Team.
+            '''
+            mail_content = _('<h3>Hi %s,</h3><br/> This is Request for join our team<br/><br/>'
+                    'Please Check Team Detail as  below:<br/><br/>'
+                    '<table><tr><td>Team Name<td/><td>%s<td/><tr/>'
+                    '<tr><td>Member Type<td/><td>%s<td/><tr/><tr><td><a href="http://localhost:8080/my/home"'
+                    'style="padding:5px 10px;font-size:12px;line-height:18px;color:#ffffff;border-color:#875a7b;text-decoration:none;display:inline-block;margin-bottom:0px;font-weight:400;text-align:center;vertical-align:middle;white-space:nowrap;background-color:#875a7b;border:1px solid #875a7b;border-radius:3px;"/>'
+                    'Accept'
+                    '</a></td>'
+                    '<td><a href="http://localhost:8080/my/home"'
+                    'style="padding:5px 10px;font-size:12px;line-height:18px;color:#ffffff;border-color:#875a7b;text-decoration:none;display:inline-block;margin-bottom:0px;font-weight:400;text-align:center;vertical-align:middle;white-space:nowrap;background-color:#875a7b;border:1px solid #875a7b;border-radius:3px;"'
+                    '/>Reject'
+                    '</a></td></tr><table/>') % \
+                               (res.partner_id.name,team_id.name,post.get('user_type'))
+            main_content = {
+                    'subject': _('Request For Join Our Team: %s') % team_id.name,
+                    'author_id': res.user_id.partner_id.id,
+                    'body_html': mail_content,
+                    'email_to': res.partner_id.email,
+                }
+           
+            mail_data=request.env['mail.mail'].sudo().create(main_content).send()
+            
             res.sudo().write({
                 'is_request': True,
-                'new_team_id': int(post.get('team_id'))
+                'new_team_id': post.get('team_id')
             })
             if res:
                 return {'user_id': res.id}

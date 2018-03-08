@@ -138,8 +138,10 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         $('.request-join').on('click', function () {
             var user_id = $(this).attr('user_id');
             var team_id = $(this).attr('team-id');
+            var email = $(this).parents('tr').find('.team_email').val();
             var self = $(this);
-            ajax.jsonRpc("/request_to_join", "call", {'user_id': user_id, 'team_id': team_id})
+            var user_type = $(this).parents('tr').find('.user_type').val();
+            ajax.jsonRpc("/request_to_join", "call", {'user_id': user_id, 'team_id': team_id, 'user_type':user_type,})
                 .then(function (result) {
                     if (result) {
                         self.parents('tr').find('.request-join').hide().attr('user_id', '');
@@ -171,6 +173,11 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             var aspirant_id = self.find('input[name="snr_aspirants"]').val();
             var aspirant_team = self.find('input[name="aspirant_team"]').val();
             var list_of_member = [];
+            if(self.find('input[name="name"]').val().length < 1){
+                alert("Team name must be required !!!!.");
+                $(this).focus();
+                return false;
+            }
             $(".ac-row-data-list").each(function () {
                 var email = $(this).find("input[name='email']").val();
                 var user_type = $(this).find(".user_type").val();

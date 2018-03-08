@@ -477,17 +477,22 @@
                     <button type="submit" class="btn btn-default btn-primary mb32 a-submit"
                             style="margin-left:350px;">UPDATE YOUR BIO
                     </button>
-                    <t t-if="snr_aspirants and snr_aspirants.updated_cfo_bio">
+                    <t t-if="snr_aspirants and snr_aspirants.updated_cfo_bio and not is_from_new_member">
                         <input type="hidden" name="cfo_team" value="True"/>
                         <button type="submit" class="btn btn-default btn-primary mb32 a-submit">
                             CREATE/UPDATE
                             TEAM
                         </button>
                     </t>
-                    <t t-if="aspirant_obj and aspirant_obj.updated_cfo_bio and  team_obj and team_obj.team_type=='CFO Aspirant'">
+                    <t t-if="aspirant_obj and aspirant_obj.updated_cfo_bio and  team_obj and team_obj.team_type=='CFO Aspirant' and  not is_from_new_member">
                         <a href="/cfo/cfo_teams" class="btn btn-default btn-primary mb32 a-submit">
                             VIEW/UPDATE
                             TEAM
+                        </a>
+                    </t>
+                    <t t-if="is_from_new_member ">
+                        <a href="/cfo/cfo_teams" class="btn btn-default btn-primary mb32 a-submit">
+                            VIEW TEAM
                         </a>
                     </t>
                     <button type="button" class="btn btn-default btn-primary mb32 a-submit"
@@ -1258,10 +1263,11 @@
                                     </td>
                                     <td>
                                         <t t-if="aspirant_team.brand_amb_id">
-                                            Brand Ambassador
+                                           <t t-esc="aspirant_team.brand_amb_id.name"/>
+                                           
                                         </t>,
                                         <t t-if="aspirant_team.mentor_id">
-                                            Mentor
+                                            <t t-esc="aspirant_team.mentor_id.name"/>
                                         </t>
                                     </td>
                                 </tr>
@@ -1469,7 +1475,7 @@
                                         </td>
                                         <td>
                                             <input type="hidden" name="competition_year" class="competition_year" t-att-value="snr_aspirants.cfo_competition_year"/>
-                                            <input type="text" name="member_name"
+                                            <input type="text" name="member_name" placeholder="Name"
                                                    class="form-control team_member_name" style="display:none;"/>
                                         </td>
                                         <td>
@@ -1950,10 +1956,10 @@
                                                 </td>
                                                 <td>
                                                     <t t-if="acadamic_team.brand_amb_id">
-                                                        Brand Ambassador
+                                                       <t t-esc="acadamic_team"/>
                                                     </t>
                                                     <t t-if="acadamic_team.mentor_id">
-                                                        Mentor
+                                                        <t t-esc="acadamic_team.mentor_id"/>
                                                     </t>
                                                 </td>
                                             </tr>

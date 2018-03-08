@@ -117,6 +117,7 @@ class ResPartner(models.Model):
     post_city = fields.Char('City')
     post_state_id = fields.Many2one("res.country.state", 'State', ondelete='restrict')
     post_country_id = fields.Many2one('res.country', 'Country', ondelete='restrict')
+    is_from_new_member = fields.Boolean(string = 'IS From New Member')
     # cfo junior
     # 'is_cfo_junior = fields.boolean("Is CFO Junior"),
     race = fields.Selection(
