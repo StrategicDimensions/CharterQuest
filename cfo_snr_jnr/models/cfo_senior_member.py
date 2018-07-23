@@ -63,8 +63,9 @@ class CFOSeniorAspirants(models.Model):
     new_team_id = fields.Many2one('cfo.team.snr')
     team_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept')],
                                    string="Status")
-
+    is_from_create_member = fields.Boolean(string = "Is From Create Member")
     #     is_cfo_junior = fields.Boolean("Is CFO Junior")
+    
 
     @api.onchange('partner_id')
     def onchange_partner(self):
@@ -120,8 +121,6 @@ class AcademicInstitutionSenior(models.Model):
     cfo_competition_year = fields.Selection(
         [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
 
-    #     is_cfo_junior = fields.Boolean('Is CFO Junior?')
-
     @api.onchange('partner_id')
     def onchange_partner(self):
         if self.partner_id:
@@ -146,6 +145,7 @@ class EmployersSenior(models.Model):
     user_id = fields.Many2one('res.users', 'Related User')
     cfo_competition_year = fields.Selection(
         [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+    cfo_team_ids = fields.Many2many('cfo.team.snr','cfo_team_emp_rel', string='Acadamic ID')
 
     @api.onchange('partner_id')
     def onchange_partner(self):
@@ -265,15 +265,13 @@ class BrandAmbassadorSenior(models.Model):
                                  help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_brand_amb_bio = fields.Boolean('Updated Brand Ambassador BIO')
     brand_accept = fields.Boolean('Accept Brand Invite')
-    team_ids = fields.Many2many('cfo.team.snr', string='Brand Ambassador for Teams')
+    team_ids = fields.One2many('cfo.team.snr', 'brand_amb_id', string='Brand Ambassador for Teams')
     cfo_competition_year = fields.Selection(
         [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
     user_id = fields.Many2one('res.users', 'Related User')
     new_team_id = fields.Many2one('cfo.team.snr')
-    team_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept')],
+    team_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept'),('removed','Removed')],
                                    string="Status")
-
-    #     is_cfo_junior = fields.Boolean('Is CFO Junior?')
 
     @api.onchange('partner_id')
     def onchange_partner(self):
@@ -333,7 +331,7 @@ class MentorsSenior(models.Model):
     updated_mentors_bio = fields.Boolean('Updated Mentors BIO')
     mentor_accept = fields.Boolean("Accept Mentors")
     user_id = fields.Many2one('res.users', 'Related User')
-    team_ids = fields.Many2many('cfo.team.snr', string='Mentors for Teams')
+    team_ids = fields.One2many('cfo.team.snr', 'mentor_id', string='Mentors for Teams')
     i_am_a = fields.Selection([('CFO', 'CFO'),
                                ('CEO', 'CEO'),
                                ('Entrepreneur', 'Entrepreneur'),
@@ -360,7 +358,7 @@ class MentorsSenior(models.Model):
     cfo_competition_year = fields.Selection(
         [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
     new_team_id = fields.Many2one('cfo.team.snr')
-    team_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept')],
+    team_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept'),('removed','Removed')],
                                    string="Status")
 
     #     is_cfo_junior = fields.boolean('Is CFO Junior?')

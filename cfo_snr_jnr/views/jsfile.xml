@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-   <data>
+    <data>
+        <template id="assets_frontend_cfo" name="website_warranty"
+                  inherit_id="website.assets_frontend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/mediaquery.css"/>
+                <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/snippets_menu.css"/>
+                <link rel="stylesheet"
+                      href="/cfo_snr_jnr/static/src/css/bootstrap-datepicker.css"/>
+                <link rel="stylesheet"
+                      href="/cfo_snr_jnr/static/src/css/simple-iconpicker.css"/>
 
-       <template id="assets_frontend" name="website_warranty" inherit_id="website.assets_frontend">
-           <xpath expr="." position="inside">
-                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/login_page.js"></script>
-               <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/bootstrap-datepicker.js"></script>
-           </xpath>
-       </template>
+                <link rel="stylesheet"
+                      href="/cfo_snr_jnr/static/src/css/backend.css"/>
+                <script type="text/javascript"
+                        src="/cfo_snr_jnr/static/src/js/bootstrap-datepicker.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/login_page.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/simple-iconpicker.js"/>
+                <!--<script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu.js"/>-->
+                <!--<script type="text/javascript" src="/cfo_snr_jnr/static/src/js/contentMenu.js"/>-->
+            </xpath>
+        </template>
+        <template id="assets_editor_cfo" name="website_warranty"
+                  inherit_id="website.assets_editor">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/snippets_menu.css"/>
+                <link rel="stylesheet"
+                      href="/cfo_snr_jnr/static/src/css/simple-iconpicker.css"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/simple-iconpicker.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/contentMenu.js"/>
+            </xpath>
+        </template>
 
-   </data>
+    </data>
 </openerp>

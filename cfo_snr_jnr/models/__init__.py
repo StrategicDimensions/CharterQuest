@@ -20,9 +20,9 @@
 
 from . import website
 from . import cfo_competition
+from . import cfo_team
 from . import cfo_senior_member
 from . import cfo_junior_member
-from . import cfo_team
 from . import res_users
 from . import res_partner
 from . import ir_attachment

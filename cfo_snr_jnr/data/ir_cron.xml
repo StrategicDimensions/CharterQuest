@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+    <record id="compute_remaining_day" model="ir.cron">
+        <field name="name">Remaining Day Calculation Cron</field>
+        <field name="model_id" ref="model_cfo_team_snr"/>
+        <field name="state">code</field>
+        <field name="code">model._compute_remaining_time_deadline()</field>
+        <field name="interval_number">15</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+    
+    <record id="send_reminder_for_bio_112" model="ir.cron">
+        <field name="name">Send Reminder about bio updation</field>
+        <field name="model_id" ref="model_cfo_team_snr"/>
+        <field name="state">code</field>
+        <field name="code">model._send_reminder_for_bio()</field>
+        <field name="interval_number">7</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+     <record id="send_reminder_for_bio_jnr" model="ir.cron">
+        <field name="name">Send Reminder about bio updation jnr</field>
+        <field name="model_id" ref="model_cfo_team_jnr"/>
+        <field name="state">code</field>
+        <field name="code">model._send_reminder_for_bio_jnr()</field>
+        <field name="interval_number">7</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+</odoo>

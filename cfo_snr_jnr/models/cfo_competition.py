@@ -27,20 +27,6 @@ class CFOCompetition(models.Model):
     name = fields.Char('Name')
     cfo_comp = fields.Selection([('CFO SNR', 'CFO SNR'), ('CFO JNR', 'CFO JNR')], 'Competition')
 
-# class CFOMemberType(models.Model):
-#     _name = 'cfo.member.type'
-# 
-#     name = fields.Char('Name')
-#     type = fields.Selection([('CFO Aspirant', 'CFO Aspirant'),
-#                              ('Academic Institution', 'Academic Institution'),
-#                              ('Employer', 'Employer')
-#                              ('Volunteer', 'Volunteer'),
-#                              ('Brand Ambassador', 'Brand Ambassador'),
-#                              ('Social Media Contestant', 'Social Media Contestant'),
-#                              ('Mentor', 'Mentor'),
-#                              ('Secondary/High School','Secondary/High School')],
-#                              'Type')
-
 
 class CFOConfiguration(models.Model):
     _name = 'cfo.configuration'

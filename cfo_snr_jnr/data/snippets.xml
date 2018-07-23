@@ -1,0 +1,46 @@
+<odoo>
+    <template id="cfo_snr_jnr_menu_snippet" name="Menu">
+        <section class="cfo_snr_jnr_menu" contentEditable="true">
+            <div class="container">
+                <div class="row">
+                    <a class="onlymobilebtn">
+                        <img src="/cfo_snr_jnr/static/src/img/blocks/drop_menu3.png" alt="menu-bar" width="45"
+                             height="45"/>
+                    </a>
+                    <div class="label_link_list row">
+                    </div>
+                    <div class="row site-identifier ci-red-bg">
+                        <h3># Add Title</h3>
+                    </div>
+                    <div class="row menu-with-icon">
+                    </div>
+                    <div class="row menu-content" style="width: 80%;float: left;margin:0px;">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="cfo_snr_jnr_menu_snippet_add_menu_option" inherit_id="website.snippet_options"
+              name="Add Menu Options">
+        <xpath expr="//div" position="after">
+            <div data-js="cfo_snr_jnr_menu_snippet_add_menu_option" data-selector=".cfo_snr_jnr_menu"
+                 data-snippet-option-id="cfo_snr_jnr_menu_snippet_add_menu_option">
+                <li data-cfo-snr-jnr-menu="">
+                    <a class="cfo_snr_jnr_menu">Add Menu</a>
+                </li>
+                <li data-cfo-snr-jnr-menu="">
+                    <a class="cfo_snr_jnr_remove_menu">Remove Active Menu</a>
+                </li>
+            </div>
+        </xpath>
+    </template>
+    <template id="cfo_snr_jnr_extra_snippet" inherit_id="website.snippets" name="CFO SNR JNR Extra Snippet">
+        <xpath expr="//div[@id='snippet_structure']" position="inside">
+            <div class="o_panel_body">
+                <t t-snippet="cfo_snr_jnr.cfo_snr_jnr_menu_snippet"
+                   t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/side_menu.jpeg"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

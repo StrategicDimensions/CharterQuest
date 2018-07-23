@@ -1,0 +1,817 @@
+/* form report start */
+.responsive_form_td_set1{
+	width:40%;
+}
+.responsive_form_td_set2{
+	width:40%;
+}
+.responsive_form_td_set3{
+	width:20%;
+}
+.h3set_width{
+	    width: 84%;
+	     margin:10px;
+}
+
+
+
+
+
+
+
+
+
+
+.cfo_snr_reportformset{
+	    width: 100%;
+    float: left;
+    margin: 5px;
+}
+.widthset_formreport{
+	width: 100%;
+    float: left;
+    margin: 5px 0;
+}
+.widthset_form_report{
+	    width: 70%;
+    float: left;
+    display: inline-table;
+}
+.email_width{
+	padding: 5px;
+    width: 9%;
+}
+.formreport_input1{
+	    width: 66%;
+    padding: 5px;
+}
+.formreport_input2{
+	    width: 30%;
+    padding: 5px;
+}
+.oe_website_login_container{
+	overflow: hidden;
+    float: left;
+    width: 100%;
+}  
+.form_report_margin{
+	margin: 10px;
+}  
+.fontset_forreport h3{
+	
+    width: 100%;
+    max-width: 66%;
+}
+.widthset_for_report_table{
+	float:left;
+    width: 100%;
+    max-width: 66%;
+}
+.tableset_part3{
+	width: 100%;
+    float: left;
+    margin: 0 14px;
+    max-width: 66%;
+    text-align: justify;
+}
+.tableset_part4{
+	width: 100%;
+    float: left;
+    margin: 14px;
+    max-width: 72%;
+	
+}
+.table_report_trset{
+	    width: 100%;
+    display: inline-table;
+}
+.table_report_trset td{
+	    padding:5px;
+}
+.fontset_forreport1 span{
+	
+      float: left;
+    width: 100%;
+    max-width: 67%;
+    text-align: left;
+    text-align: justify;
+    padding: 2px 9px;
+    
+
+}
+.fontset_forreport1 h3{
+	float: left;
+    width: 100%;
+    max-width: 67%;
+    /* text-align: center; */
+    padding: 2px 9px;
+    
+
+}
+.cforeport_tableset{
+	    border-right: solid;
+}
+.text_set_desktopview{
+	width: 100%;
+    margin: 22px;
+    max-width: 68%;
+}
+
+
+
+
+/* form report end */
+
+.teammember_31{
+	margin: 5px;
+	width:50%;
+}
+.teammember_32{
+	margin: 5px;
+	width:50%;
+}
+.teammember_61{
+	margin: 5px;
+	width:50%;
+}
+.teammember_62{
+	margin: 5px;
+	width:50%;
+}
+.teammember_71{
+	margin: 5px;
+	width:50%;
+}
+.teammember_72{
+	margin: 5px;
+	width:50%;
+}
+.teammember_51{
+	margin: 5px;
+	width:50%;
+	    padding: 5px;
+}
+.teammember_52{
+	margin: 5px;
+	width:50%;
+	    padding: 5px;
+}
+.teammember_41{
+	margin: 5px;
+	width:50%;
+}
+.teammember_42{
+	margin: 5px;
+	width:50%;
+}
+.report_remainder_set1{
+    width : 100%;
+}
+.team_member_set_41{
+	    display: inline-flex;
+    width: 100%;
+}
+.team_member_set_42{
+	    display: inline-flex;
+    width: 100%;
+}
+.team_member_set_51{
+	    display: inline-flex;
+    width: 100%;
+}
+.team_member_set_52{
+	    display: inline-flex;
+    width: 100%;
+}
+.team_member_set_61{
+	    display: inline-flex;
+    width: 100%;
+}
+.team_member_set_63{
+	    display: inline-flex;
+    width: 100%;
+}
+.team_member_set_71{
+	    display: inline-flex;
+    width: 100%;
+}
+.team_member_set_73{
+	    display: inline-flex;
+    width: 100%;
+}
+ .teammember_1{
+	margin: 5px;
+	width:50%;
+}
+.teammember_3{
+	margin: 5px;
+	width:50%;
+}
+.teammember_4{
+	margin: 5px;
+	width:50%;
+}
+.teammember_5{
+	margin: 5px;
+	width:50%;
+}
+.teammember_7{
+	margin: 5px;
+	width:50%;
+}
+.teammember_8{
+	margin: 5px;
+	width:50%;
+}
+.teammember_6{
+	margin: 5px;
+	width:50%;
+}
+.teammember_21{
+	margin: 5px;
+	width:50%;
+}
+.teammember_22{
+	margin: 5px;
+	width:50%;
+}
+.team_member_set_3{
+	width:100%;
+	display:inline-flex;
+}
+.team_member_set_23{
+	width:100%;
+	display:inline-flex;
+}.team_member_set_31{
+	width:100%;
+	display:inline-flex;
+}
+.team_member_set_21{
+	width:100%;
+	display:inline-flex;
+}
+.team_member_set_4{
+	width:100%;
+	display:inline-flex;
+}
+.team_member_set_1{
+	width:100%;
+	display:inline-flex;
+}
+.team_member_set_31{
+	width:100%;
+	display:inline-flex;
+}
+.team_member_set_32{
+	width:100%;
+	display:inline-flex;
+}
+.teammember_2{
+	margin: 5px;
+	width:50%;
+}
+.table_setheight_part2{
+	height: 49px;
+    width: 100%;
+    display: block !importanr;
+   /*  text-align:center; */
+	
+}
+.table_responsive_set2 td{
+	padding:5px;
+}
+.team_memmer_part{
+	display: inline-flex;
+}.teammember_31{
+	margin: 5px;
+	width:50%;
+}
+.teammember_32{
+	margin: 5px;
+	width:50%;
+}
+
+.table_setheight{
+	width:17%;
+}
+.table_setheight_teamname{
+	width:10%;
+}
+.team_heightset_teammember{
+	width:40%;
+}
+.report_submission_set{
+	width:23%;
+	
+    text-align: center;
+}
+.team_action_height{
+	width:23%;
+}
+.report_download_set{
+	font-size:11px;
+	white-space: inherit;
+	width: 100%;
+	background-color: firebrick;
+	height:30px;
+	}
+	.btnset_responsive{
+	width: 100%;
+    display: inline-table;
+    text-align: center;
+	}
+	footer #footer {
+    padding-top: 0;
+}
+	
+	
+
+/* chgfvjhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg */
+
+ @media (max-width: 460px) {
+ .teammember_3{
+	      margin: 6px 0px !important;
+    display: block;
+    font-size: 11px;
+    width: 40%;
+}
+.teammember_4{
+	margin: 6px 9px !important;
+    display: block;
+    font-size: 11px;
+    width: 45%;
+}
+ .teammember_41{
+	      margin: 6px 0px !important;
+    display: block;
+    font-size: 11px;
+    width: 40%;
+}
+.teammember_42{
+	margin: 6px 5px !important;
+    display: block;
+    font-size: 11px;
+    width: 49%;
+}
+.teammember_21{
+	margin: 6px 0px !important;
+    display: block;
+    font-size: 11px;
+    width: 40%;
+}
+.teammember_31{
+	margin: 6px 9px !important;
+    display: block;
+    font-size: 11px;
+    width: 45%;
+}
+.teammember_32{
+	margin: 6px 0px !important;
+    display: block;
+    font-size: 11px;
+    width: 40%;
+}
+.teammember_51{
+	    margin: 6px 4px !important;
+    display: block;
+    font-size: 11px;
+    width: 45%;
+    padding: 4px;
+}
+.teammember_52{
+	    margin: 6px 0px !important;
+    display: block;
+    font-size: 11px;
+    width: 48%;
+    padding: 4px;
+}
+.teammember_61{
+	    margin: 6px 4px !important;
+    display: block;
+    font-size: 11px;
+    width: 45%;
+    padding: 4px;
+}
+.teammember_62{
+	    margin: 6px 0px !important;
+    display: block;
+    font-size: 11px;
+    width: 48%;
+    padding: 4px;
+}
+.teammember_71{
+	    margin: 6px 4px !important;
+    display: block;
+    font-size: 11px;
+    width: 45%;
+    padding: 4px;
+}
+.teammember_72{
+	    margin: 6px 0px !important;
+    display: block;
+    font-size: 11px;
+    width: 48%;
+    padding: 4px;
+}
+
+.teammember_22{
+	margin: 6px 9px !important;
+    display: block;
+    font-size: 11px;
+    width: 45%;
+}
+.teammember_5{
+	    margin: 6px 0px !important;
+    display: block;
+    font-size: 11px;
+    width: 40%;
+}
+.teammember_6{
+	margin: 6px 9px !important;
+    display: block;
+    font-size: 11px;
+    width: 45%;
+}
+.teammember_7{
+	    margin: 6px 1px !important;
+    display: block;
+    font-size: 11px;
+    width: 40%;
+}
+.teammember_8{
+	    margin: 6px 0px !important;
+    display: block;
+    font-size: 11px;
+    width: 39%;
+}
+   .table_responsive_set1{
+	 float: left;
+ display: inline-grid;
+ width: 40%;
+	
+}
+.report_download_set{
+	top:3px;
+	position:relative;
+	height:30px;
+}
+.team_member_set_3{
+	width:100%;
+	display:block;
+}
+.table_responsive_set2{
+	float: right;
+    display: inline-grid;
+    width: 60%;
+    overflow: hidden;
+   
+}
+.table_responsive_set_padding{
+	  padding: 0px 0px 0px 4px;
+	  float:right;
+}
+.table_setheight{
+	height: 49px;
+	width: 100%;
+}
+.table_setheight_teamname{
+	height:32px;
+	width: 100%;
+}
+.team_heightset_teammember{
+	  min-height: 463px;
+    	height: auto; margin:10px;
+    	width: 100%;
+}
+.table_setheight_part2{
+	height: 49px;
+    width: 100%;
+    display: block !importanr;
+	
+}
+.team_heightset{
+	    height: 186px;
+	}
+	.height_set{
+		  height: 28px;
+	}
+.heightset_buttons{
+	    min-height: 291px;
+    	height: auto;
+}
+.team_action_height{
+	height:160px !important;
+	width: 100%;
+}
+.report_submission_set{
+	    height: 78px;
+   	width:100%;
+    position: relative;
+}
+.teammember_1{
+	   margin: 6px 0px !important;
+    display: block;
+    font-size: 11px;
+    width: 40%;
+}
+.teammember_2{
+	    margin: 6px 9px !important;
+    display: block;
+    font-size: 11px;
+    width: 45%;
+}
+.report_remainder_set1{
+	position: relative;
+    top: 10px;
+    margin: 13px 15px;
+    padding: 5px;
+    width : 81%;
+}
+.report_remainder_set2{
+	    position: relative;
+    top: 0px;
+    margin: 0px 0px;
+}
+.team_member_set_1 {
+    width: 100%; margin:10px;
+    /*  display: block; */
+}
+.btnset_marginset{
+	margin:7px;
+}
+table {
+	margin:0 5px;
+}
+.table_respons_set_360{
+	width: 60% !important;
+    float: right !important;
+}
+.submit_report_button{
+	width:100% !important;
+}
+.mb32 {
+    margin-bottom: 5px !important;
+}
+.mt32 {
+    margin-top: 26px !important;
+}
+.btnset_responsive{
+	width:100%;
+}
+.btn1_responsive{
+	    width: 100%;
+    display: block;
+    float: left;
+}
+.btnset_aspirants{
+	    width: 100%;
+    display: block;
+    float: left;
+    
+}
+footer #footer {
+    padding-top: 0;
+}
+.formcontrol_inputset{
+	width:75px;
+}
+.leader_setinput{
+	width: 70px;
+    font-size: 12px;
+    padding: 0 3px;
+    text-align: center;
+}
+.leader_setinput23{
+	width: 70px;
+    font-size: 12px;
+    padding: 0 3px;
+    text-align: center;
+}
+.ac-row-data-list td {
+    padding: 3px 1px !important;
+}
+.member_setinput23{
+	width: 141px;
+}
+.member_set_res_456{
+	    width: 70px;
+    font-size: 12px;
+    padding: 0 3px;
+    text-align: center;
+}
+.email_123{
+	 width: 100px;
+    font-size: 12px;
+}
+.team_member_set_23{
+	width:100%;
+	display:flow-root;
+}
+.team_member_set_21{
+	width:100%;
+	display:flow-root;
+}
+.team_member_set_31{
+	width:100%;
+	display:block;
+}
+
+.team_member_set_32{
+	width:100%;
+	display:block;
+}
+.team_member_set_41{
+	width:100%;
+	display:block;
+}
+
+.team_member_set_42{
+	width:100%;
+	    display: flow-root;
+}
+.team_member_set_61{
+	width:100%;
+	display:block;
+}
+
+.team_member_set_63{
+	width:100%;
+	    display: flow-root;
+}
+.team_member_set_71{
+	width:100%;
+	display:block;
+}
+
+.team_member_set_73{
+	width:100%;
+	    display: flow-root;
+}
+.team_member_set_51{
+	width:100%;
+	display:block;
+	
+}
+
+.team_member_set_52{
+	width:100%;
+	    display: flow-root;
+}
+.widthset_btn{
+	width:81% !important;
+	white-space: inherit;
+}
+.widthset_btn1{
+	margin:0 !important;
+	top:0 !important;
+}
+table {
+    margin: 0!important;
+}
+ .table_responsive_set11_set th {
+    padding: 0 0 0 4px !important;
+} 
+.margin_btn{
+	margin:4px;
+}
+/* form report start */
+.cfo_snr_reportformset{
+	
+}
+.email_width{
+	padding: 5px;
+    width: 9%;
+}
+.formreport_input1{
+	    width: 56%;
+    padding: 5px;
+}
+.formreport_input1 input{
+	    
+    font-size:12px;
+}
+.form_report_margin input , select{
+	 font-size:12px !important;
+	 padding:5px !important;
+}
+.formreport_input2{
+	    width: 30%;
+    padding: 5px;
+}
+.add_row_table .formreport_input2{
+	    
+    padding: 0px !important;
+}
+.add_row_table .formreport_input1{
+	    
+    padding: 3px !important;
+}
+.widthset_formreport{
+	width: 100%;
+    float: left;
+    margin: 5px 0;
+}
+.widthset_form_report{
+	    width: 100%;
+    float: left;
+    display: inline-table;
+}
+.form_report_margin{
+	margin: 10px !important;
+}  
+.fontset_forreport h3{
+	    background-color: red;
+    width: 100%;
+    max-width: 100%;
+}
+.widthset_for_report_table{
+	float:left;
+    width: 100%;
+    max-width: 66%;
+}
+.responsive_tr_formreport{
+	    display: inline-table;
+    float: left;
+    width: 68%;
+    margin: 0px;
+}
+.cforeport_tableset{
+	      float: left;
+    width: 33%;
+    overflow: hidden;
+    border-right: solid;
+    /* font-size: 12px; */
+    height: 42px;
+        
+}
+.cforeport_tableset1{
+	    border-right: none;
+	     float: left;
+    width: 33%;
+    overflow: hidden;
+    
+    height: 42px;
+        padding: 4px 6px;
+}
+.fontset_forreport1 span{
+	
+        float: left;
+    width: 100%;
+    max-width: 94%;
+    text-align: left;
+    text-align: justify;
+    /* white-space: inherit; */
+    padding: 2px 9px;
+    
+
+}
+.fontset_forreport1 h3{
+	
+       float: left;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    
+
+}
+.tableset_part4 {
+    width: 100%;
+    float: left;
+    margin: 14px;
+    max-width: 100%;
+}
+.tableset_part4 .table_report_trset{
+	    width: 100%;
+    display: inline-table;
+}
+.responsive_form_td_set1 input{
+	
+}
+.responsive_form_td_set1{
+	    width: 38%;
+    font-size: 11px;
+}
+.responsive_form_td_set2{
+	    width: 35%;
+    font-size: 11px;
+}
+.responsive_form_td_set3{
+	 
+    font-size: 11px;
+}
+.table_report_trset input{
+	 font-size: 11px;
+}
+.text_set_desktopview{
+	width: 100%;
+    margin: 22px;
+    max-width: 68%;
+}
+.h3set_width{
+	    width: 100%;
+	    margin:10px;
+}
+
+/* form report end */
+}
+

@@ -1,0 +1,44 @@
+<template>
+    <t t-name="cfo_snr_jnr.cfo_snr_jnr_menu_block">
+        <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal" id="cfo_add_menu_modal" contenteditable="False" role="dialog"
+             style="z-index:2001" tabindex="1">
+            <div class="modal-dialog">
+                <div class="modal-content" id="s_media_block_modal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Menu Customization</h4>
+                    </div>
+                    <div class="modal-body" contenteditable="false">
+                        <form class="form-horizontal container-fluid" role="form">
+                            <div class="col-sm-12 form-group">
+                                <label class="col-sm-3 control-label" for="menu-title">Title</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="menu-title" required="required"
+                                           type="text"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <label class="col-sm-3 control-label" for="menu-icon">Icon</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="menu-icon"
+                                           type="text"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <label class="col-sm-3 control-label" for="menu-url">URL</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="menu-url" required="required"
+                                           type="text"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-dismiss="modal" id="cancel">Cancel</button>
+                        <button class="btn btn-danger" data-dismiss="modal" id="menu_sub_data" type="submit">Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>

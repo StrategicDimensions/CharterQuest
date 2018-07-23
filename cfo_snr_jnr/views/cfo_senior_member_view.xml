@@ -28,6 +28,7 @@
                             <field name="cfo_competition_year" invisible="1"/>
                             <field name="team_status" invisible="1"/>
                             <field name='user_id'/>
+                            <field name="is_from_create_member" invisible="1"/>
                         </group>
                         <group string='Contact Information' col='4'>
                             <field name='mobile' required="0"/>
@@ -170,21 +171,6 @@
                             <field name="doc_lines"/>
                         </page>
                     </notebook>
-                    <!--                 <notebook> -->
-                    <!--                     <page string='Credentials'> -->
-                    <!--                         <group col='4'> -->
-                    <!--                             <field name='username' /> -->
-                    <!--                             <field name='password' password='True' /> -->
-                    <!--                             <field name='cfo_type' /> -->
-                    <!--                             <field name='cfo_account_activate' /> -->
-                    <!--                             <field name='cfo_encoded_link' /> -->
-                    <!--                             <field name='team_leader' /> -->
-                    <!--                             <field name='team_admin' /> -->
-                    <!--                             <field name='team_member' /> -->
-                    <!--                             <field name='updated_cfo_bio' /> -->
-                    <!--                         </group> -->
-                    <!--                     </page> -->
-                    <!--                 </notebook> -->
                 </form>
             </field>
         </record>
@@ -359,36 +345,8 @@
                                     <group name="studio_group_lNrdd_right"/>
                                 </group>
                             </page>
-                            <!--                   <page name="studio_page_RcJIk" string="Current School"> -->
-                            <!--                     <group name="studio_group_RcJIk"> -->
-                            <!--                       <group name="studio_group_RcJIk_left"/> -->
-                            <!--                       <group name="studio_group_RcJIk_right"/> -->
-                            <!--                     </group> -->
-                            <!--                   </page> -->
-                            <!--                   <page name="studio_page_aCRSo" string="Current Employer"> -->
-                            <!--                     <group name="studio_group_aCRSo"> -->
-                            <!--                       <group name="studio_group_aCRSo_left"/> -->
-                            <!--                       <group name="studio_group_aCRSo_right"/> -->
-                            <!--                     </group> -->
-                            <!--                   </page> -->
-                            <!--                   <page name="studio_page_I8Wx6" string="Education"> -->
-                            <!--                     <group name="studio_group_I8Wx6"> -->
-                            <!--                       <group name="studio_group_I8Wx6_left"/> -->
-                            <!--                       <group name="studio_group_I8Wx6_right"/> -->
-                            <!--                     </group> -->
-                            <!--                   </page> -->
-                            <!--                   <page name="studio_page_rYQYJ" string="Competition Rules"> -->
-                            <!--                     <group name="studio_group_rYQYJ"> -->
-                            <!--                       <group name="studio_group_rYQYJ_left"/> -->
-                            <!--                       <group name="studio_group_rYQYJ_right"/> -->
-                            <!--                     </group> -->
-                            <!--                   </page> -->
                         </notebook>
                         <notebook name="studio_notebook_gO9Nc">
-                            <!--                   <page name="studio_page_gO9Nc" string="TEAMS"> -->
-                            <!--                     <group name="studio_group_gO9Nc"> -->
-                            <!--                     </group> -->
-                            <!--                   </page> -->
                             <page name="studio_page_d8cQX" string="Credentials">
                                 <group col='4'>
                                     <field name='username'/>
@@ -756,22 +714,11 @@
                             <page string="Teams">
                                 <field name="team_ids"/>
                             </page>
+                            
                             <page string="Documents">
                                 <field name="doc_lines"/>
                             </page>
                         </notebook>
-                        <!--                 <notebook> -->
-                        <!--                     <page string='Credentials'> -->
-                        <!--                         <group col='4'> -->
-                        <!--                             <field name='username' /> -->
-                        <!--                             <field name='password' password='True' /> -->
-                        <!--                             <field name='cfo_type' /> -->
-                        <!--                             <field name='cfo_account_activate' /> -->
-                        <!--                             <field name='cfo_encoded_link' /> -->
-                        <!--                             <field name='updated_mentors_bio' /> -->
-                        <!--                         </group> -->
-                        <!--                     </page> -->
-                        <!--                 </notebook> -->
                     </sheet>
                 </form>
             </field>
@@ -948,18 +895,6 @@
                             <field name="doc_lines"/>
                         </page>
                     </notebook>
-                    <!--                 <notebook> -->
-                    <!--                     <page string='Credentials'> -->
-                    <!--                         <group col='4'> -->
-                    <!--                             <field name='username' /> -->
-                    <!--                             <field name='password' password='True' /> -->
-                    <!--                             <field name='cfo_type' /> -->
-                    <!--                             <field name='cfo_account_activate' /> -->
-                    <!--                             <field name='cfo_encoded_link' /> -->
-                    <!--                             <field name='updated_volunteers_bio' /> -->
-                    <!--                         </group> -->
-                    <!--                     </page> -->
-                    <!--                 </notebook> -->
                 </form>
             </field>
         </record>
@@ -1081,7 +1016,11 @@
                                 </group>
                             </page>
                             <page string="Teams">
-                                <field name="team_ids"/>
+                                <field name="team_ids">
+                                  <tree>
+                                     <field name="name"/>     
+                                  </tree>
+                                </field>
                             </page>
                             <page string="Documents">
                                 <field name="doc_lines"/>

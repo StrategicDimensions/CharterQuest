@@ -44,7 +44,7 @@ class ResPartner(models.Model):
     mode_of_studies = fields.Selection([('Part Time', 'Part Time'), ('Full Time', 'Full Time')], 'Mode of Studies')
     formal_work_exp = fields.Selection(_work_exp_values, 'How many years of formal work experience?')
     tertiary_qualification = fields.Selection(
-        [('non', 'non'), ('current studies', 'current studies'), ('Bachelor degree', 'Bachelor degree'),
+        [('none', 'None'), ('current studies', 'current studies'), ('Bachelor degree', 'Bachelor degree'),
          ('Professional Qualification', 'Professional Qualification')], 'Prior tertiary Qualification')
     field_of_studies = fields.Char('Field of studies')
     pre_tertiary_qualification = fields.Char('Pre tertiary qualification')
@@ -135,7 +135,7 @@ class ResPartner(models.Model):
          ('Cambridge AS Level', 'Cambridge AS Level'), ('Cambridge A Level', 'Cambridge A Level'), ('Other', 'Other')],
         "Programme Name")
     cfo_user = fields.Boolean(string="Cfo User")
-
+    charterquest_tags = fields.Many2many('res.partner.category','charter_quest_rel',string='Charterquest Tags')
     # cfo junior ends
     ##Mearging by Raaj
     cfo_categ = fields.Selection([('CFO', 'CFO'), ('CFO Junior', 'CFO Junior')], 'CFO Category')
@@ -146,5 +146,15 @@ class ResPartner(models.Model):
     def onchange_state(self):
         if self.state_id:
             self.country_id = self.state_id.country_id.id
-
+            
+            
+    @api.multi
+    def _compute_signup_url(self):
+        """ proxy for function field towards actual implementation """
+        result = self._get_signup_url_for_action()
+        for partner in self:
+            partner.signup_url = result.get(partner.id, False)
+            if self._context.get('cfo_login'):
+                partner.signup_url +='&cfo_login=True' 
+                
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,25 +1,276 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+	<data>
+		<template id="less" inherit_id="theme_treehouse.less">
+			<xpath expr="//link[last()]" position="after">
+				<link href="/cfo_snr_jnr/static/src/css/color.less" rel="stylesheet"
+					type="text/less" />
+			</xpath>
+		</template>
+		<template id="assets_editor" inherit_id="theme_treehouse.assets_editor">
+			<xpath expr="//link[last()]" position="after">
+				<link href="/cfo_snr_jnr/static/src/css/color.less" rel="stylesheet"
+					type="text/less" />
+			</xpath>
+		</template>
+		<template id="main_header_layout_id" inherit_id="website.layout"
+			name="Theme Header">
+			<xpath expr="//div[@class='navbar-header']" position="replace">
+				<table>
+					<tr>
+						<td>
+							<a href="/" class="navbar-brand logo visible-xs-inline-block">
+								<img src="http://charterquest.co.za/web/static/src/img/header1.png"
+									alt="Logo of The CharterQuest Professional Education Institute"
+									title="The CharterQuest Professional Education Institute" />
+							</a>
+						</td>
+						<td>
+							<button type="button" class="navbar-toggle collapsed"
+								data-toggle="collapse" data-target=".navbar-top-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</td>
+					</tr>
+				</table>
+			</xpath>
+			<xpath expr="//div[@id='wrapwrap']/header/div" position="replace">
+				<meta name="google-site-verification" content="oAc1xhM__sqkHLweAa64_Tt7YGIJmcF8fhV0-_6U-gA" />
+				<div id="preheader_new" class="bg-alpha">
+					<div class="container banner_theme">
+						<div class="row">
+							<div class="col-md-12">
+								<ul id="contact" class="list-inline">
+									<table style="width:100%;">
+										<tr>
+											<td >
+												<li class="hidden-xs">
+													<a class="cq-logo" href="http://www.charterquest.co.za">
+														<img data-pin-nopin="true"
+															src="http://charterquest.co.za/web/static/src/img/header1.png"
+															style="" />
+													</a>
+												</li>
+											  </td>
+											  <td style="padding-left: 27px;">
+												<li class="home visible-xs-inline" style="margin-right:0px">
+													<a class="cqcolor" href="/page/website.contactus">
+														<i class="fa fa-envelope fa-1x"></i>
+														Contact
+													</a>
+												</li>
+												<li class="home visible-xs-inline">
+													<a href="http://enrolments.charterquest.co.za" target="_blank">
+														<img class="img-size"
+															src="http://www.charterquest.co.za/web/static/src/img/bookings.png" />
+													</a>
+												</li>
+												<div class="Address" style="display:inline-block;position:relative;top: 3px !important;line-height:5px;width: 245px;">
+													<li class="hidden-xs">
+														<a class="cqcolor" href="/page/website.contactus">
+															<i class="fa fa-map-marker fa-1x" />
+															Contact us
+														</a>
+													</li>
+													<br />
+													<li class="hidden-xs">
+														<i class="fa fa-phone fa-1x" />
+														<span t-field="res_company.phone" />
+													</li>
+													<br />
+													<li class="hidden-xs">
+														<i class="fa fa-envelope fa-1x" />
+														<a class="cqcolor" t-attf-href="mailto:{{ res_company.email }}"
+															t-field="res_company.email" />
+													</li>
+												</div>
+												</td>
+												<td>
+												<li class="hidden-xs">
+													<a class="btn-group" href="http://enrolments.charterquest.co.za"
+														target='_blank'>
+														<img class='img-size'
+															src="http://www.charterquest.co.za/web/static/src/img/bookings.png"
+															style="height: 80px;position: relative;max-height: 80px;bottom: 5px;padding-left: 228px;" />
+													</a>
+												</li>
+												</td>
+										</tr>
+									</table>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</xpath>
+		</template>
+		<template id="footer_default_inherit" inherit_id="website.footer_custom"
+			customize_show="True" name="Automatic Footer">
+			<xpath expr="//div[@id='footer']" position="replace">
+				<div class="container hidden-print" style="margin-left: 25px;">
+					<div class="row">
+						<div class="col-md-3">
+							<h4>Quick Links</h4>
+							<ul class="list-unstyled" id="products">
+								<li>
+									<a href="/page/prices-and-timetables">Fees and Timetables</a>
+								</li>
+								<li>
+									<div>
+										<a href="/page/study-options">Choose a Study Option</a>
+										<br />
+										<a href="/page/pc-exams">PC Exams Centre</a>
+										<br />
+										<a href="/page/study-cima">New to CIMA?</a>
+										<br />
+										<a href="/page/join-the-charterquest-alumni-network">Join the CQ Alumni Network</a>
+										<br />
+										<a href="/page/international-students">
+											<span style="background-color: rgb(213, 222, 235);">International Students</span>
+										</a>
+										<br />
+										<a href="http://onlinetests.charterquest.co.za/tao/Main/login"
+											target="_blank">CQ Online Tests</a>
+										<br />
+										<a href="/page/frequently-asked-questions">FAQs</a>
+										<div>
+											<div>
+												<div>
+													<div>
+														<div />
+													</div>
+												</div>
+											</div>
+										</div>
+										<div />
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="col-md-3" id="info">
+							<h4>Connect with us </h4>
+							<ul class="list-unstyled">
+								<li>
+									<a href="/page/website.contactus">Contact us</a>
+									<br />
+									<a href="http://charterquest.co.za/event">Upcoming Events</a>
+									<div>
+										<a href="/blog">Blogs</a>
+									</div>
+								</li>
+								<li>
+									<a t-attf-href="/blog/1">News</a>
+								</li>
+							</ul>
+							<ul class="list-unstyled">
+								<li t-ignore="true">
+									<i class="fa fa-phone" />
+									<span t-field="res_company.phone" />
+								</li>
+								<li t-ignore="true">
+									<i class="fa fa-envelope" />
+									<span t-field="res_company.email" />
+								</li>
+							</ul>
+							<h2>
+								<a t-att-href="website.social_facebook" t-if="website.social_facebook">
+									<i class="fa fa-facebook-square" />
+								</a>
+								<a t-att-href="website.social_twitter" t-if="website.social_twitter">
+									<i class="fa fa-twitter" />
+								</a>
+								<a t-att-href="website.social_linkedin" t-if="website.social_linkedin">
+									<i class="fa fa-linkedin" />
+								</a>
+								<a t-att-href="website.social_youtube" t-if="website.social_youtube">
+									<i class="fa fa-youtube-play" />
+								</a>
+								<a t-att-href="website.social_googleplus" t-if="website.social_googleplus">
+									<i class="fa fa-google-plus-square" />
+								</a>
+								<a t-att-href="website.social_github" t-if="website.social_github">
+									<i class="fa fa-github" />
+								</a>
+							</h2>
+						</div>
+						<div class="col-md-3">
+							<h4>Key Brands</h4>
+							<div>
+								<ul class="list-unstyled" id="products">
+									<li>
+										<a href="http://www.charterquest.co.za/">CharterQuest</a>
+										<br />
+										<a href="/page/charterconnect">CharterConnect</a>
+									</li>
+									<li>
+										<a href="/page/charteradvisory">CharterAdvisory</a>
+									</li>
+									<li>
+										<a href="/page/charterbooks">CharterBooks</a>
+										<br />
+										<a href="/page/case-study-center">Case Study Center</a>
+									</li>
+									<li>
+										<a href="/page/the-cfo">The CFO (and CFO Junior)</a>
+									</li>
+									<li>
+										<a href="/page/fyla">FYLA</a>
+									</li>
+									<li>
+										<a href="/page/the-future-cfo">The Future CFO Magazine</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<h4>
+								<span t-field="res_company.name" class="oe_editable" />
+							</h4>
+							<p>
+								<a href="/page/terms-and-conditions">Terms &amp; Conditions</a>
+								<br />
+								<a href="/page/frequently-asked-questions">FAQs</a>
+								<br />
+								<a href="/page/privacy-policy">Privacy Policy</a>
+								<br />
+								<a href="/page/disclaimer">Disclaimer</a>
+								<br />
+								<a href="/page/downloads">Downloads</a>
+								<br />
+								<a href="/page/thank-you">Thank You</a>
+								<br />
+							</p>
+						</div>
+					</div>
+				</div>
+			</xpath>
+		</template>
+		<template id="portal_show_cfo_login" inherit_id="portal.portal_show_sign_in"
+			name="Show CFO Log In">
+			<xpath expr="//ul[@id='top_menu']/li[@class='divider']"
+				position="after">
+				<li groups="base.group_public">
+					<a t-attf-href="/login">
+						<b>CFO Login</b>
+					</a>
+				</li>
+			</xpath>
+		</template>
 
-        <template id="portal_show_cfo_login" inherit_id="portal.portal_show_sign_in" name="Show CFO Log In">
-            <xpath expr="//ul[@id='top_menu']/li[@class='divider']" position="after">
-                <li groups="base.group_public">
-                    <a t-attf-href="/login">
-                        <b>CFO Login</b>
-                    </a>
-                </li>
-            </xpath>
-        </template>
+		<template id="cfo_snr_jnr.portal_layout" inherit_id="portal.portal_layout"
+			name="CFO Portal access">
+			<xpath expr="//t/div/div/div/div/ol/li/a" position='after'>
 
-        <template id="cfo_snr_jnr.portal_layout" inherit_id="portal.portal_layout" name="CFO Portal access">
-            <xpath expr="//t/div/div/div/div/ol/li/a" position='after'>
-                <t t-if="request.session.cfo_login">
-                    &amp;nbsp;&amp;nbsp;<a href="/cfo_senior">CFO Senior</a>
-                    &amp;nbsp;&amp;nbsp;<a href="/cfo_junior">CFO Junior</a>
-                </t>
-            </xpath>
-        </template>
-
-    </data>
+				<t t-if="request.session.cfo_login">
+					&amp;nbsp;&amp;nbsp;
+					<a href="/cfo_senior">CFO Senior</a>
+					&amp;nbsp;&amp;nbsp;
+					<a href="/cfo_junior">CFO Junior</a>
+				</t>
+			</xpath>
+		</template>
+	</data>
 </odoo>
