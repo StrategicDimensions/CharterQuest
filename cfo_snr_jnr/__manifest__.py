@@ -24,7 +24,7 @@
     'category': 'Website',
     'summary': 'CFO Senior and Junior Competition',
     'description': """CFO Senior and Junior Competition.""",
-    'depends': ['base', 'auth_signup', 'crm', 'website', 'web_editor'],
+    'depends': ['base', 'auth_signup', 'crm', 'website', 'web_editor', 'product'],
     'data': [
         'security/ir.model.access.csv',
         'data/snippets.xml',
@@ -37,7 +37,6 @@
         'views/cfo_team_view.xml',
         'views/menus.xml',
         'views/res_partner.xml',
-        'views/website_sale.xml',
         'data/email_template.xml',
         'data/ir_cron.xml',
     ],
