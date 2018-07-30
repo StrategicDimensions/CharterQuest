@@ -14,7 +14,7 @@
 #    GNU General Public License for more details.
 #
 #    A copy of the GNU General Public License is available at:
-#    <http://www.gnu.org/licenses/gpl.html>.
+#    <http://www.gnu.org/licenses/gpl.html>..
 #
 ##############################################################################
 
