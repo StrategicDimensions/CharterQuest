@@ -265,6 +265,6 @@
     text-transform: uppercase;
 }
 
-body .oe_main_menu_navbar #wrapwrap {
+body #wrapwrap {
     padding-top: 0px !important;
 }
