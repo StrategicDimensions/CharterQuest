@@ -20,7 +20,7 @@
 
 {
     'name': 'CFO Senior Junior',
-    'version': '11.2.6',
+    'version': '11.2.8',
     'category': 'Website',
     'summary': 'CFO Senior and Junior Competition',
     'description': """CFO Senior and Junior Competition.""",
@@ -41,7 +41,7 @@
         'data/email_template.xml',
         'data/ir_cron.xml',
         'views/enrolment_template.xml',
-        # 'views/email_template.xml'
+        'views/email_template.xml'
     ],
     'demo': [
     ],
