@@ -15,35 +15,37 @@
                         <div class="collapse navbar-collapse navbar-top-collapse" style="border: 0;    float: none !important;display: inline-block !important;vertical-align: middle;width: 100% !important;">
                             <div class="topnav-right" style="float:right;">
                                 <ul class="nav navbar-nav navbar-right" id="top_menu" style="float: left !important;">
-                                    <li style="margin: 5px 0px;position: relative;display: block;    float: left;">
-                                        <a href="/">
-                                            <span data-oe-model="website.menu" data-oe-id="2" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">myCQ</span>
-                                        </a>
-                                    </li>
+                                    <t t-foreach="request.env['dynamic.menu'].sudo().search([('parent_id','=', False)])" t-as="menu_id">
 
-                                    <li style="margin: 5px 0px;position: relative;display: block;    float: left;">
-                                        <a href="/login">
-                                            <span data-oe-model="website.menu" data-oe-id="2" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">CFO Login</span>
-                                        </a>
-                                    </li>
+                                        <t t-set="child_ids" t-value="request.env['dynamic.menu'].sudo().search([('parent_id','=', menu_id.id)])"/>
 
-                                    <li style="margin: 5px 0px;position: relative;display: block;    float: left;">
-                                        <a href="/">
-                                            <span data-oe-model="website.menu" data-oe-id="5" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">Fees &amp; Timetables</span>
-                                        </a>
-                                    </li>
+                                        <li style="margin: 5px 0px;position: relative;display: block;float: left;">
+                                            <t t-if="not child_ids">
+                                                <a href="/">
+                                                    <span data-oe-model="dynamic.menu" data-oe-id="menu_id.id" data-oe-expression="menu_id.name" t-esc="menu_id.name"/>
+                                                    <span class="caret" t-if="child_ids"> </span>
+                                                </a>
+                                            </t>
+                                            <t t-if="child_ids">
+                                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                                    <span data-oe-model="dynamic.menu" data-oe-id="menu_id.id" data-oe-expression="menu_id.name" t-esc="menu_id.name"/>
+                                                    <span class="caret" t-if="child_ids"> </span>
+                                                </a>
+                                            </t>
+                                            <t t-if="child_ids">
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <t t-foreach="child_ids" t-as="child_id">
 
-                                    <li style="margin: 5px 0px;position: relative;display: block;    float: left;">
-                                        <a href="/">
-                                            <span data-oe-model="website.menu" data-oe-id="7" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">Bookstore</span>
-                                        </a>
-                                    </li>
-
-                                    <li style="margin: 5px 0px;position: relative;display: block;    float: left;">
-                                        <a href="/">
-                                            <span data-oe-model="website.menu" data-oe-id="11" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">Book Pc Exam</span>
-                                        </a>
-                                    </li>
+                                                        <li>
+                                                            <a href="/demo_blocks_structure">
+                                                                <span t-esc="child_id.name"/>
+                                                            </a>
+                                                        </li>
+                                                    </t>
+                                                </ul>
+                                            </t>
+                                        </li>
+                                    </t>
                                 </ul>
                                 <input type="text" id="mySearch" placeholder="Search.." style="margin-left: 20px !important;margin-top: 8px !important;"/>
                             </div>

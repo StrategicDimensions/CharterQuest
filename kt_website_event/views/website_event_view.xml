@@ -34,6 +34,43 @@
             </field>
         </record>
 
+        <record id="dynamic_form_form_view" model="ir.ui.view">
+            <field name="name">dynamic.form</field>
+            <field name="model">dynamic.menu</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="2">
+                            <field name="name"/>
+                            <field name="parent_id"/>
+                            <field name="menu_url"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+         </record>
+
+        <record id="dynamic_form_tree_view" model="ir.ui.view">
+            <field name="name">dynamic.tree</field>
+            <field name="model">dynamic.menu</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_dynamic_menu" model="ir.actions.act_window">
+            <field name="name">Dynamic Menus</field>
+            <field name="res_model">dynamic.menu</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="daynamic_menu_root" name="Menu"
+        parent="website.menu_website_global_configuration"/>
+
+        <menuitem id="daynamic_menu" parent="daynamic_menu_root" action="action_dynamic_menu"/>
         <!--<record id="view_event_form_inherit" model="ir.ui.view">-->
             <!--<field name="name">view_event_form</field>-->
             <!--<field name="model">event.event</field>-->
