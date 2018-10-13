@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_event_semester_form" model="ir.ui.view">
+            <field name="name">event.semester.form</field>
+            <field name="model">event.semester</field>
+            <field name="arch" type="xml">
+                <form string="Semesters">
+                 <group col="4">
+                   <field name="name" required="1"/>
+                   <field name="date_begin" required="1"/>
+                   <field name="date_end" required="1"/>
+                   <field name="semester"/>
+                </group>
+                </form>
+            </field>
+         </record>
+
+
+        <record id="view_event_semester_tree" model="ir.ui.view">
+            <field name="name">event.semester.tree</field>
+            <field name="model">event.semester</field>
+            <field name="arch" type="xml">
+                <tree string="Semesters">
+                   <field name="name"/>
+                  <field name="date_begin"/>
+                   <field name="date_end"/>
+                </tree>
+            </field>
+         </record>
+
+
+        <record id="action_event_semester" model="ir.actions.act_window">
+            <field name="name">Semesters</field>
+            <field name="res_model">event.semester</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add Semester
+              </p><p>
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_event_semester" action="action_event_semester"  parent="event.menu_event_configuration" sequence="18"/>
+
+        <record model="ir.ui.view" id="terms_conditions_form_view">
+            <field name="name">Terms and Conditions</field>
+            <field name="model">terms.conditions</field>
+            <field name="arch" type="xml">
+                <form string="Terms and Conditions">
+                <sheet string="Terms and Conditions">
+                    <group col="4" class="oe_header">
+                        <field name="name" />
+                        <field name="type" />
+
+                    </group>
+                    <field name="terms_condition" />
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="terms_conditions_tree_view">
+            <field name="name">Terms and Conditions</field>
+            <field name="model">terms.conditions</field>
+            <field name="arch" type="xml">
+                <tree string="Terms and Conditions Tree" >
+                    <field name="name"/>
+                    <field name="type" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="terms_conditions_action">
+            <field name="name">Terms and Conditions</field>
+            <field name="res_model">terms.conditions</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="terms_conditions_tree_view"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a new Terms and Conditions.
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_terms_condition" action="terms_conditions_action"  parent="event.menu_event_configuration" sequence="19"/>
+
+        <record model="ir.ui.view" id="debitorder_interest_form_view">
+            <field name="name">DebitOrder Interests</field>
+            <field name="model">debitorder.interest</field>
+            <field name="arch" type="xml">
+                <form string="DebitOrder Interests">
+                <sheet string="DebitOrder Interests">
+                    <group col="4" class="oe_header">
+                        <field name="no_months" />
+                        <field name="interest_per" />
+
+                    </group>
+
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="debitorder_interest_tree_view">
+            <field name="name">DebitOrder Interest</field>
+            <field name="model">debitorder.interest</field>
+            <field name="arch" type="xml">
+                <tree string="Debitorder Intrests Tree" >
+                    <field name="no_months"/>
+                    <field name="interest_per" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="debitorder_interest_action">
+            <field name="name">DebitOrder Interests</field>
+            <field name="res_model">debitorder.interest</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="debitorder_interest_tree_view"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a new Debit Order Interests.
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_debitorder_interest" action="debitorder_interest_action"  parent="event.menu_event_configuration" groups='account.group_account_manager' sequence="20"/>
+
+
+        <!-- deploy to live 14/06-->
+
+        <record model="ir.ui.view" id="pcexams_voucher_form_view">
+            <field name="name">PCExams Voucher</field>
+            <field name="model">pcexams.voucher</field>
+            <field name="arch" type="xml">
+                <form string="PCExams Voucher">
+                <sheet string="PCExams Voucher">
+                    <group col="4" class="oe_header">
+                        <field name="voucher_no" readonly="1"/>
+                        <field name="create_date" readonly="1"/>
+                        <field name="student_id" readonly="1"/>
+                        <field name="invoice_id" readonly="1"/>
+                        <field name="expiry_date" />
+                        <field name="voucher_value" readonly="0"/>
+                        <field name="prof_body" readonly="1"/>
+                        <field name="qualification_id" readonly="1"/>
+                        <field name="campus_id" readonly="1"/>
+                        <field name="status" />
+                       <!-- <field name="redeemed_invoice" readonly="1"/>-->
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!--<record model="res.groups" id="group_pc_exam_voucher">-->
+            <!--<field name="category_id" ref="base.module_category_accounting_and_finance"/>-->
+            <!--<field name="implied_ids" eval="[(4, ref('base.group_hr_manager')), (4,ref('account.group_account_manager')), (4,ref('base.group_sale_manager')), (4,ref('marketing.group_marketing_manager'))]"/>-->
+            <!--<field name="name">PC Exam Voucher</field>-->
+        <!--</record>-->
+
+
+        <!--<record model="ir.ui.view" id="pcexams_voucher_form_view_inherit">-->
+            <!--<field name="name">PCExams Voucher</field>-->
+            <!--<field name="model">pcexams.voucher</field>-->
+            <!--<field name="inherit_id" ref="pcexams_voucher_form_view"/>-->
+            <!--<field name = "groups_id" eval = "[(6,0,[ref('group_pc_exam_voucher')])]"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<field name="voucher_value" position = "attributes">-->
+                    <!--<attribute name="readonly">0</attribute>-->
+            <!--</field>-->
+                <!--<field name="qualification_id" position = "attributes">-->
+                    <!--<attribute name="readonly">0</attribute>-->
+            <!--</field>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+        <record model="ir.ui.view" id="pcexams_voucher_tree_view">
+            <field name="name">PCExams Voucher</field>
+            <field name="model">pcexams.voucher</field>
+            <field name="arch" type="xml">
+                <tree string="PCExams Voucher Tree" >
+                    <field name="voucher_no" />
+                        <field name="create_date" />
+                        <field name="student_id" />
+                        <field name="invoice_id" />
+                        <field name="expiry_date" />
+                        <field name="voucher_value" />
+                        <field name="prof_body" />
+                        <field name="qualification_id" />
+                        <field name="campus_id" />
+                        <field name="status" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="pcexams_voucher_action">
+            <field name="name">PCExams Voucher</field>
+            <field name="res_model">pcexams.voucher</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="pcexams_voucher_tree_view"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a new PCExams Voucher.
+              </p>
+            </field>
+        </record>
+
+        <record id="view_pcexams_voucher_filter" model="ir.ui.view">
+            <field name="name">pcexams.voucher.select</field>
+            <field name="model">pcexams.voucher</field>
+            <field name="arch" type="xml">
+                <search string="PCExams voucher">
+                    <field name="student_id"/>
+                    <field name="voucher_no" />
+                    <field name="status"/>
+                    <field name="campus_id" />
+                    <field name="qualification_id"/>
+                    <field name="prof_body"/>
+
+                    <separator/>
+                    <filter string="Issued" domain="[('status','=','Issued')]" />
+                    <filter string="Redeemed" domain="[('status','=','Redeemed')]" />
+                    <filter string="Cancelled" domain="[('status','=','Cancelled')]" />
+                    <filter string="Expired" domain="[('status','=','Expired')]" />
+                    <separator/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Student" domain="[]" context="{'group_by':'student_id'}"/>
+                        <filter string="Status" domain="[]" context="{'group_by':'status'}"/>
+                        <filter string="Campus" domain="[]" context="{'group_by':'campus_id'}"/>
+                        <filter string="Qualification Level" domain="[]" context="{'group_by':'qualification_id'}"/>
+                        <filter string="Professional Body" domain="[]" context="{'group_by':'prof_body'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_pcexams_voucher" action="pcexams_voucher_action"  parent="event.menu_event_configuration" sequence="21"/>
+        <!-- deploy to live 14/06-->
+
+        <record model="ir.cron" id="pcexam_expiry_cron">
+            <field name="name">PC Exam Expiry Notification</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+             <field name="model_id" ref="model_pcexams_voucher"/>
+            <field name="state">code</field>
+            <field name="code">model.pcexams_expiry_notification()</field>
+        </record>
+
+    </data>
+</odoo>

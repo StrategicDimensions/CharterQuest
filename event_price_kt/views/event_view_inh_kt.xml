@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_event_class_attendance_tree_view" model="ir.ui.view">
+            <field name="name">Event Class Attendance</field>
+            <field name="model">event.class.attendance</field>
+            <field name="arch" type="xml">
+                <tree string="Attended Students for the class">
+                      <field name="class_name"/>
+                      <field name="date"/>
+                      <field name="event_id"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_event_class_attendance_form_view" model="ir.ui.view">
+            <field name="name">Event Class Attendance</field>
+            <field name="model">event.class.attendance</field>
+            <field name="arch" type="xml">
+                <form string="Attended Students for the class">
+                    <sheet>
+                        <group>
+                            <field name="class_name" required="1"/>
+                            <field name="date"/>
+                            <field name="event_id"/>
+                            <field name="status"/>
+                            <field name="student_ids" context="{'event':event_id}"/>
+                            <field name="comment"/>
+                       </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_event_class_attendance1">
+            <field name="name">Event Class Attendance</field>
+            <field name="res_model">event.class.attendance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+       <menuitem name="Class Attendance" id="menu_class_attendance" action="action_event_class_attendance1" parent="event.menu_event_configuration" groups="base.group_no_one" sequence="15"/>
+
+        <record id="view_attendance_sheet_report_wizard11" model="ir.ui.view">
+            <field name="name">Export Report</field>
+            <field name="model">attendance.sheet.report</field>
+            <field name="arch" type="xml">
+                <form string="Export Report">
+                    <group>
+                        <field name="name"/>
+                        <field name="file_stream" readonly="1"  filename="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- To add discount field in event type-->
+        <record id="view_event_type_form_kt" model="ir.ui.view">
+            <field name="name">event.type.kt.inherit</field>
+            <field name="model">event.type</field>
+            <field name="inherit_id" ref="event.view_event_type_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <group>
+                        <field name="professional_body_code"/>
+                        <field name="discount"/>
+                        <field name="order" />
+                    </group>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="view_cancel_reason" model="ir.ui.view">
+            <field name="name">cancel.reason</field>
+            <field name="model">cancel.reason</field>
+            <field name="arch" type="xml">
+                <form string="Reason for Cancellation of registration">
+                    <field name="reason"/>
+                    <button name="registration_cancel" string="Proceed" type="object" icon="gtk-apply"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_registration_cancel_wizard" model="ir.actions.act_window">
+            <field name="name">Reason for Cancellation of registration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cancel.reason</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_cancel_reason"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_event_form_inh_kt">
+            <field name="name">Events</field>
+            <field name="model">event.event</field>
+            <field name="inherit_id" ref="event.view_event_form"/>
+            <field name="arch" type="xml">
+                <button name="toggle_active" position="after">
+                    <button name="get_attendance_report" icon="fa-users" class="oe_stat_button" type="object" string="Attendance" help="Attendance Register for this event"/>
+                </button>
+                <field name="organizer_id" position="after">
+                        <field name="pc_exam"/>
+                        <field name="type_pc_exam" attrs="{'invisible':[('pc_exam','!=',True)],'required':[('pc_exam','=',True)]}" groups="base.group_no_one"/>
+                        <field name="subject" attrs="{'invisible':[('pc_exam','!=',True)],'required':[('pc_exam','=',True)]}"/>
+                        <field name="month" invisible="1"/>
+                        <field name="day" invisible="1"/>
+                        <field name="event_course_code"/>
+                </field>
+
+                <field name="seats_min" position="after">
+                        <field name="seats_available"/>
+                </field>
+
+                <notebook>
+                    <page string="Materials" attrs="{'invisible':[('pc_exam','=',True)]}">
+                        <group>
+                        <field name="product_ids" widget="many2many_tags" string="Materials"/>
+                        </group>
+                    </page>
+                    <page string="Attendance">
+                        <field name="class_attendance_ids">
+                        <tree editable="top">
+                            <field name="class_name" required="1"/>
+                            <field name="date"/>
+                            <field name="status"/>
+                            <field name="student_ids" widget="many2many_tags"/>
+                            <field name="comment"/>
+                        </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <!--<record model="ir.ui.view" id="event_event_inh_kt">-->
+            <!--<field name="name">event.event.inh</field>-->
+            <!--<field name="model">event.event</field>-->
+            <!--<field name="inherit_id" ref="event_price.event_event_inh" />-->
+            <!--<field name="arch" type="xml">-->
+                <!--<field name='qualification' position="replace">-->
+                    <!--<field name="qualification" required="1"/>-->
+                <!--</field>-->
+                <!--<field name='study' position="replace">-->
+                    <!--<field name="study" attrs="{'invisible':[('pc_exam','=',True)],'required':[('pc_exam','!=',True)]}" />-->
+                <!--</field>-->
+                <!--<field name='semester' position="replace">-->
+                    <!--<field name="semester" attrs="{'required':[('pc_exam','!=',True)]}" />-->
+                <!--</field>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+        <record id="event_registration_inh_form_kt" model="ir.ui.view">
+            <field name="name">event.registration.inhform.kt</field>
+            <field name="model">event.registration</field>
+            <field name="inherit_id" ref="event.view_event_registration_form"/>
+            <field name="arch" type="xml">
+                <button name="button_reg_cancel" position="replace">
+                    <button name="%(action_registration_cancel_wizard)d" string="Cancel Registration" states="draft,open" type="action" icon="gtk-cancel"/>
+                </button>
+                <field name="event_id" position="after">
+                    <field name="pc_exam"/>
+                    <field name="nb_register"/>
+                    <field name="reg_prof_body" attrs="{'invisible':[('pc_exam','!=',True)]}"/>
+                </field>
+                <field name="date_closed" position="after">
+                    <field name="pc_exam_marks" attrs="{'invisible':[('state','!=','done')]}"/>
+                    <field name="pc_exam_result" attrs="{'invisible':[('state','!=','done')]}"/>
+                </field>
+            </field>
+        </record>
+
+        <!--<record model="ir.ui.view" id="view_event_registration_search_inh_kt">-->
+            <!--<field name="name">Registrations</field>-->
+            <!--<field name="model">event.registration</field>-->
+            <!--<field name="inherit_id" ref="event.view_registration_search"/>-->
+            <!--<field name="arch" type="xml">-->
+                    <!--<filter icon="terp-personal" string="Registered with Professional Body" help="Registered with Professional Body" domain="[('reg_prof_body','=',True)]"/>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <record id="saler_order_event_inh_form_kt" model="ir.ui.view">
+            <field name="name">sale.order.inhform.kt</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="event_price.saler_order_event_inh_form"/>
+            <field name="arch" type="xml">
+                <button name="action_quotation_send" position="replace"/>
+                    <button name="action_cancel" position="before">
+                    <button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="oe_highlight" groups="event_price_kt.group_quote_sale_invoice" />
+                </button>
+                <!--<button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="oe_highlight" groups="base.group_user" position="replace">-->
+                <!--<button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="oe_highlight" groups="event_price_kt.group_quote_sale_invoice" />-->
+                <!--</button>-->
+                <field name="quote_type" position="before">
+                    <field name="pc_exam"/>
+                    <field name="pc_exam_type" attrs="{'invisible':[('pc_exam','!=',True)]}"/>
+                    <field name="provisional_booking"/>
+                </field>
+                <field name="fiscal_position_id" position="after">
+                    <field name="link_portal"  widget='url'/>
+                    <field name="no_of_days"/>
+                    <field name="current_quote"/>
+                    <field name="no_of_reminder_emails_sent" readonly="1"/>
+                    <field name="freequote_opt_out" />
+                </field>
+            </field>
+        </record>
+
+        <record id="res_partner_inherit_form_kt" model="ir.ui.view">
+            <field name="name">res.partner.inhform.kt</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="title" position="after">
+                    <field name="examwritten"/>
+                    <field name="dob"/>
+                    <field name="prof_body_id"/>
+                    <field name="prof_password"/>
+                    <field name="student_company"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Pc Exam Type -->
+
+        <record model="ir.ui.view" id="view_pcexam_type_form">
+            <field name="name">PC Exam Type</field>
+            <field name="model">pc.exam.type</field>
+            <field name="arch" type="xml">
+                <form string="PC Exam Type">
+                    <group>
+                         <field name="name"/>
+                         <field name="discount_amount"/>
+                         <field name="type_event_id" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_pcexam_type_tree">
+        <field name="name">Pc Exam Type</field>
+        <field name="model">pc.exam.type</field>
+        <field name="arch" type="xml">
+            <tree string="PC Exam Type">
+                 <field name="name"/>
+                 <field name="discount_amount"/>
+                 <field name="type_event_id" />
+            </tree>
+        </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pc_exam_type">
+            <field name="name">PC Exam Types</field>
+            <field name="res_model">pc.exam.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="PC Exam Type" id="menu_pcexam_type" action="action_pc_exam_type" parent="event.menu_event_configuration" groups="base.group_no_one" sequence="16"/>
+
+        <record id="view_event_subject_form" model="ir.ui.view">
+            <field name="name">event.subject.form</field>
+            <field name="model">event.subject</field>
+            <field name="arch" type="xml">
+                <form string="Subjects">
+                 <group col="2">
+                   <field name="name" required="1"/>
+                </group>
+                </form>
+            </field>
+         </record>
+
+
+        <record id="view_event_subject_tree" model="ir.ui.view">
+            <field name="name">event.subject</field>
+            <field name="model">event.subject</field>
+            <field name="arch" type="xml">
+                <tree string="Subjects">
+                   <field name="name"/>
+                </tree>
+            </field>
+         </record>
+
+        <record id="action_event_subject" model="ir.actions.act_window">
+            <field name="name">Subjects</field>
+            <field name="res_model">event.subject</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Click to add Subjects
+                </p><p></p>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_event_subject" action="action_event_subject"  parent="event.menu_event_configuration" sequence="17"/>
+    </data>
+</odoo>

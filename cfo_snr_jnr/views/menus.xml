@@ -15,7 +15,7 @@
 		</template>
 		<template id="main_header_layout_id" inherit_id="website.layout"
 			name="Theme Header">
-			<xpath expr="//div[@class='navbar-header']" position="replace">
+			<xpath expr="//div[hasclass('navbar-header')]" position="replace">
 				<table>
 					<tr>
 						<td>
@@ -248,17 +248,18 @@
 				</div>
 			</xpath>
 		</template>
-		<template id="portal_show_cfo_login" inherit_id="portal.portal_show_sign_in"
-			name="Show CFO Log In">
-			<xpath expr="//ul[@id='top_menu']/li[@class='divider']"
-				position="after">
-				<li groups="base.group_public">
-					<a t-attf-href="/login">
-						<b>CFO Login</b>
-					</a>
-				</li>
-			</xpath>
-		</template>
+
+		<!--<template id="portal_show_cfo_login" inherit_id="portal.portal_show_sign_in"-->
+			<!--name="Show CFO Log In">-->
+			<!--<xpath expr="//ul[@id='top_menu']/li[hasclass('divider')]"-->
+				<!--position="after">-->
+				<!--<li groups="base.group_public">-->
+					<!--<a t-attf-href="/login">-->
+						<!--<b>CFO Login</b>-->
+					<!--</a>-->
+				<!--</li>-->
+			<!--</xpath>-->
+		<!--</template>-->
 
 		<template id="cfo_snr_jnr.portal_layout" inherit_id="portal.portal_layout"
 			name="CFO Portal access">

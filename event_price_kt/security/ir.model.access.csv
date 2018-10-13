@@ -1,0 +1,28 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+
+access_event_discounts,event.discount,model_event_discount,account.group_account_manager,1,1,1,1
+access_event_discounts,event.discount,model_event_discount,sales_team.group_sale_manager,1,1,1,1
+account.access_account_invoice_uinvoice,account.invoice,model_account_invoice,account.group_account_invoice,1,1,1,0
+account.access_account_invoice_group_invoice,account.invoice group invoice,model_account_invoice,account.group_account_invoice,1,1,1,0
+sale.access_account_invoice_salesman,account_invoice salesman,account.model_account_invoice,sales_team.group_sale_salesman,1,1,0,0
+sale.access_account_invoice_manager,account_invoice manager,account.model_account_invoice,sales_team.group_sale_manager,1,1,0,0
+access_account_manager_group_invoice,account.invoice manager,model_account_invoice,account.group_account_manager,1,1,1,0
+sale.access_sale_order,sale.order,model_sale_order,sales_team.group_sale_salesman,1,1,0,0
+sale.access_sale_order_manager,sale.order.manager,model_sale_order,sales_team.group_sale_manager,1,1,0,0
+access_account_manager,sale.order.account manager,model_sale_order,account.group_account_manager,1,1,0,0
+stock.access_account_invoice_user,account.invoice stock user,account.model_account_invoice,stock.group_stock_user,1,1,0,0
+sale.access_sale_order_manager,sale.order.manager,model_sale_order,event_price_kt.group_quote_sale_invoice,1,1,1,1
+access_account_manager_group_invoice,account.invoice manager,model_account_invoice,event_price_kt.group_quote_sale_invoice,1,1,1,1
+pcexams_wizard_id,pcexams_wizard_name,model_pcexams_wizard,base.group_user,1,1,1,1
+pcexams_success_id,pcexams_success_name,model_pcexams_success,base.group_user,1,1,1,1
+event_subject_id,event_subject_name,model_event_subject,base.group_user,1,1,1,1
+event_semester_id,event_semester,model_event_semester,base.group_user,1,1,1,1
+pcexams_voucher_id,pcexams_voucher,model_pcexams_voucher,base.group_user,1,1,1,1
+access_event_max_discount,access_event_max_discount,model_event_max_discount,,1,1,1,1
+access_terms_conditions,access_terms_conditions,model_terms_conditions,,1,1,1,1
+access_debitorder_interest,access_debitorder_interest,model_debitorder_interest,,1,1,1,1
+access_attendance_sheet_report,access_attendance_sheet_report,model_attendance_sheet_report,,1,1,1,1
+access_pc_exam_type,access_pc_exam_type,model_pc_exam_type,,1,1,1,1
+access_cancel_reason,access_cancel_reason,model_cancel_reason,,1,1,1,1
+access_event_class_attendance,access_event_class_attendance,model_event_class_attendance,,1,1,1,1

@@ -20,6 +20,7 @@
 
 from odoo import models,fields, _
 
+
 class CFOCompetition(models.Model):
     _name = 'cfo.competition'
     _inherit = ['mail.thread']

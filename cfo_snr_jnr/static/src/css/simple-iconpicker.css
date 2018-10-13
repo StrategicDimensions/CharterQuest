@@ -108,3 +108,12 @@
     border-color: #f55e4f !important;
     color: #fff;
 }
+
+
+.free_quote_form select{
+    width: 50%;
+}
+
+.my_class .add_menu_side , .my_class .step-link{
+    pointer-events : none;
+}

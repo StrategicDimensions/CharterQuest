@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data no_update='1'>
+	<!--Email template for Sending Tax Invoice to Student -->
+        <record id="email_template_edi_first_contact_template" model="mail.template">
+            <field name="name">Discount about to Expire</field>
+            <field name="email_from">{''}</field>
+             <field name="email_to">${object.partner_id.email}</field>
+            <field name="subject">First Contact Template</field>
+            <field name="email_recipients">${object.partner_id.id}</field>
+            <field name="model_id" ref="emts_group_kt.model_subscription_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+<br>
+Dear
+<br>
+Thank you for your interest in our course/s.<br>
+<font color='red'><b>Hurry up before you miss out in 2 days!!!! </b> </font> <br>
+Make a 10% minimum deposit on the attached free quote to secure your discount and save money!  <br>
+ <font color='red'>Not decided yet? Awaiting exemption confirmations? </font> <br>
+You can still change subjects, study package or the course you wish to study with us or defer your studies altogether by up to 12 months just by securing your discount. There could not be a better hedge against our future price increases or loss of admission due to fully booked classes/packages.<br>
+Click on the link below to accept this quote and/or complete your enrolment/registration.<br>
+
+LINK: __________________________________________________________________________
+Thanking you
+Valentine D. Nti
+Founding CEO, 
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE
+
+
+SANDTON CAMPUS:
+
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE
+@ CHARTERQUEST HOUSE,
+Metropolitan Park
+374 Rivonia Boulevard
+Rivonia, SANDTON
+South Africa
+
+CONTACT INFORMATION:
+Tel: +27 (0)11 234 9223 [SA & Intl]
+Tel: +27 (0)11 234 9238 [SA & Intl]
+Tel: 0861 131 137 [SA ONLY]
+Fax: 086 218 8713 [SA ONLY]
+Email: enquiries@charterquest.co.za
+
+
+BRAAMFONTEIN CAMPUS:
+ 
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE
+@ ORION HOUSE,
+[13th floor] 49 Jorissen Street
+Cnr Biccard and Jorissen Street
+BRAAMFONTEIN
+South Africa
+ 
+CONTACT INFORMATION:
+Tel: +27 [0]11 403 0656 [SA & Intl]
+Tel: +27 [0]11 403 0642 [SA & Intl]
+Fax: 086 218 8713 [SA ONLY]
+Fax: +27 [0]11 791 7703 [SA & Intl]
+Email: enquiries@charterquest.co.za
+
+PRETORIA CAMPUS:
+
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE
+367 Hilda Street
+Hatfield Rendez Vous Building
+Hatfield, PRETORIA
+South Africa
+
+CONTACT INFORMATION:
+Tel: +27 [0]12 751 7608 [SA & Intl]
+Email: enquiries@charterquest.co.za
+  
+
+		]]></field>
+        </record>
+	</data>
+</odoo>
+

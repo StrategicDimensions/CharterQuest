@@ -773,12 +773,25 @@ class CfoHome(web.Home):
                     return {
                         'new_user': True
                     }
+
     @http.route('/check_team_name', type='json', auth="public", website=True)
     def check_team_name(self, **post):
         if post.get('team_name'):
             team_name = request.env['cfo.team.snr'].sudo().search([('name', '=', post.get('team_name'))])
             if team_name:
-              return team_name;
+                return team_name;
+
+    @http.route('/get_cfo_snr_member', type='json', auth="public", website=True)
+    def get_cfo_snr_member(self, **post):
+        team_member = request.env['cfo.snr.member.add'].sudo().search([],limit=1, order="id")
+        if team_member:
+            return {'team_member':team_member.total_member}
+
+    @http.route('/get_cfo_jnr_member', type='json', auth="public", website=True)
+    def get_cfo_jnr_member(self, **post):
+        team_member = request.env['cfo.jnr.member.add'].sudo().search([], limit=1, order="id")
+        if team_member:
+            return {'team_member': team_member.total_member}
             
     @http.route('/create_new_member', type='json', auth="public", website=True)
     def create_new_member(self, **post):
@@ -1026,7 +1039,9 @@ class CfoHome(web.Home):
     
     @http.route('/download_report', type='json', auth="public", website=True)
     def download_report(self, **post):
-        attachment_ids = request.env['ir.attachment'].sudo().search([('snr_team_id','=', int(post.get('team_id'))),('mimetype', '=', 'application/pdf')],order = "id desc", limit = 1)
+        attachment_ids = request.env['ir.attachment'].sudo().search([('snr_team_id', '=', int(post.get('team_id'))),
+                                                                     ('mimetype', '=', 'application/pdf')],
+                                                                    order="id desc", limit=1)
 
     @http.route("/remove_attachment_from_team", type="json", auth="public",website=True)
     def remove_attachment_from_team(self, **post):

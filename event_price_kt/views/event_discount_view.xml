@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="view_sale_order_discount_type_form" model="ir.ui.view">
+            <field name="name">sale.order.discount.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>  
+            <field name="arch" type="xml">
+                <field name="payment_term_id" position="after">
+                     <field name="discount_type_ids" widget="many2many_tags" domain="[('event_type_id','=',prof_body)]" on_change="onchange_discount_type(discount_type_ids)"/>
+                     <field name="discount" invisible="1"/>
+                </field>
+            </field>
+         </record>
+
+  
+         <record id="view_event_discount_form" model="ir.ui.view">
+            <field name="name">event.discount.form</field>
+            <field name="model">event.discount</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="event_type_id" required="1"/>
+                        <field name="discount"/>
+                        <field name="description"/>
+                        <field name="condition"/>
+                        <field name="discount_type"/>
+                    </group>
+                </form>
+            </field>
+         </record>
+
+           
+        <record id="view_event_discount_tree" model="ir.ui.view">
+            <field name="name">event.discount.tree</field>
+            <field name="model">event.discount</field>
+            <field name="arch" type="xml">
+                <tree string="Discounts">
+                    <field name="name"/>
+                    <field name="event_type_id"/>
+                    <field name="discount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_event_discount" model="ir.actions.act_window">
+            <field name="name">Discounts</field>
+            <field name="res_model">event.discount</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add discount
+              </p><p>
+              </p>
+            </field>
+        </record>
+   
+        <menuitem id="menu_action_event_discount" action="action_event_discount"  parent="event.menu_event_configuration" sequence="12"/>
+                
+       <!--Maximum discount Master -->
+
+         <record id="view_event_max_discount_form" model="ir.ui.view">
+            <field name="name">event.max.discount.form</field>
+            <field name="model">event.max.discount</field>
+            <field name="arch" type="xml">
+                <form>
+                 <group>
+                   <field name="date" readonly="1"/>
+                   <field name="max_discount"/>
+                     <field name="prof_body"/>
+                </group>
+                </form>
+            </field>
+         </record>
+
+
+        <record id="view_event_max_discount_tree" model="ir.ui.view">
+            <field name="name">event.max.discount.tree</field>
+            <field name="model">event.max.discount</field>
+            <field name="arch" type="xml">
+                <tree string="Max Discounts">
+                   <field name="date"/>
+                   <field name="max_discount"/>
+                    <field name="prof_body"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_event_max_discount" model="ir.actions.act_window">
+            <field name="name">Max Discounts</field>
+            <field name="res_model">event.max.discount</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add Max discount
+              </p><p>
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_event_max_discount" action="action_event_max_discount"  parent="event.menu_event_configuration" sequence="13"/>
+       
+        <record model="ir.cron" id="sale_order_early_bird_cron">
+            <field name="name">Early Bird Discount Process</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model.get_early_bird_discount()</field>
+        </record>
+
+        <record model="ir.cron" id="sale_order_early_settlement_cron">
+            <field name="name">Early Settlement Discount Process</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model.get_early_settlement_discount()</field>
+        </record>
+
+        <record model="ir.cron" id="early_bird_expiry_email_cron">
+            <field name="name">Early Bird Discount Expiry Notice</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model.send_early_bird_discount_email()</field>
+        </record>
+
+        <record model="ir.cron" id="early_settlement_expiry_email_cron">
+            <field name="name">Early Settlement Discount Expiry Notice</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model.send_early_settlement_discount_email()</field>
+        </record>
+
+        <record id="product_normal_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='default_code']" position='after'>
+                    <field name='does_not_apply'/>
+                    <field name="pcexam_voucher" />
+                    <field name="no_vouchers" attrs="{'required': [('pcexam_voucher','=',True )]}"/>
+                    <field name="voucher_value" attrs="{'required': [('pcexam_voucher','=',True )]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

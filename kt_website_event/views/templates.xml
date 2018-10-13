@@ -1,0 +1,1023 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--<template id='event_description_full_inherit' inherit_id='website_event.event_description_full'>-->
+            <!--<xpath expr="//button[@type='submit']" position='replace'>-->
+                <!--<button type="submit" class="btn btn-primary btn-lg pull-right" t-if="event.seats_available">Register-->
+                    <!--Now-->
+                <!--</button>-->
+            <!--</xpath>-->
+        <!--</template>-->
+
+        <template id='in_out_stock_wrapper' inherit_id='website_sale.products_item' name="Products item">
+            <xpath expr="//div[hasclass('ribbon-wrapper')]" position='after'>
+                <t t-if="product.qty_available">
+                    <div class="ribbon-wrapper" style="right: 0px !important;width: 145px !important;height: 160px !important;top: 0px !important;display:block;">
+                        <div class="ribbon btn btn-success" style="width: 160px;top: 36px;background:#4cae4c !important;color: #fff !important;border: 1px solid#fff !important;">In Stock</div>
+                    </div>
+                </t>
+                <t t-if="not product.qty_available">
+                    <div class="ribbon-wrapper" style="right: 0px !important;width: 145px !important;height: 160px !important;top: 0px !important;display:block;">
+                        <div class="ribbon btn btn-success" style="padding: 6px 26px;width: 160px;top: 36px;background:red !important;color: #fff !important;border: 1px solid#fff !important;"><center>Out Of Stock</center></div>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="UnsubscribePage" name="Unsubscribe Successfull Page">
+            <t t-call='website.layout'>
+                <div class="oe_structure"/>
+                <h3>
+                    <center>
+                        <font color="green">You have been successfully unsubscribed</font>
+                    </center>
+                </h3>
+            </t>
+        </template>
+
+        <template id="unsubscribePagemagazine" name="MAGAZINE-Unsubscribe-success-page">
+            <t t-call='website.layout'>
+                <div class="oe_structure"/>
+                <div>
+                    <h2>You have been removed from the mailing list</h2>
+                    <h4>Please click on below to go to Home Page.</h4>
+                </div>
+                <p>
+                    <div class='container'>
+                        <div class='row'>
+                            <a href='http://charterquest.co.za'
+                               class="btn btn-default btn-primary mb32 pull-right a-submit">HOME
+                            </a>
+                        </div>
+                    </div>
+                </p>
+                <div class='oe_structure'></div>
+            </t>
+        </template>
+
+
+        <template id="activationsuccessPagemagazine" name="MAGAZINE-activation-success-page">
+            <t t-call='website.layout'>
+                <div class="oe_structure"/>
+                <div>
+                    <h2>Your Account has been activated...</h2>
+                    <h4>Please click on below to login your account.</h4>
+                </div>
+                <p>
+                    <div class='container'>
+                        <div class='row'>
+                            <a href='/magazine/signin' class="btn btn-default btn-primary mb32 pull-right a-submit">
+                                Login
+                            </a>
+                        </div>
+                    </div>
+                </p>
+                <div class='oe_structure'></div>
+            </t>
+        </template>
+
+        <template id="magazine-activation-already-activated" name="Magazine-activation-already-activated">
+            <t t-call="website.layout">
+                <div>
+                    <h2 class="mb0">Account Already Activated</h2>
+                    <h4 class="text-primary mt0">So, what next?</h4>
+                    <hr class="s_separator hr-full hr-1px hr-solid"/>
+                    <p>Please click below to login to your account.</p>
+                    <p>
+                        <a class="btn btn-primary " href="http://charterquest.co.za/magazine/signin">Login</a>
+                    </p>
+                    <div class="col-lg-4">
+                        <center/>
+                        <br/>
+                    </div>
+                </div>
+                <div class="oe_structure">
+                    <section class="s_text_block mb0 mt0">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 mb0 mt0">
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <template id="magazine-activation-failed" name="Magazine-activation-failed">
+            <t t-call="website.layout">
+                <div>
+                    <h2>Account Activation Failed</h2>
+                    <div>
+                        <span style="line-height: 1.5; background-color: transparent;">P
+                            <strong>lease contact <em>The CQ</em> support team for more details:
+                            </strong>
+                        </span>
+                    </div>
+                    <div>
+                        <span style="line-height: 1.5; background-color: transparent;"/>
+                    </div>
+                    <p>
+                        <strong>
+                            <a href="mailto:info@charterquest.co.za">
+                                <span style="line-height: 1.5; background-color: transparent;">info@charterquest.co.za
+                                </span>
+                            </a>
+                        </strong>
+                    </p>
+                </div>
+                <div class="oe_structure">
+                    <section class="s_text_block">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 mt16 mb0">
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <template id="magazine_signin" name="Magazine Signin Page">
+            <script src='https://www.google.com/recaptcha/api.js'></script>
+            <t t-call="website.layout">
+                <div class="oe_structure"/>
+                <div id="wrap" class="oe_structure oe_empty">
+                    <div class="container">
+                        <div class="row"/>
+                        <div class="row">
+                            <form action="/magazine/subscription" method="post">
+                                <h4>&amp;nbsp;</h4>
+                                <div class="col-md-4">
+                                    <img src="http://charterquestdev.openerponline.co.za/web/static/src/img/tablet_darw.jpg"
+                                         style="width:90%;height:42%;"/>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <p>
+                                        <font color="darkblue" style="font-size: 140%; margin-left: -4px;" size="5px">
+                                            <b>Subscribe to Download Magazine/s</b>
+                                        </font>
+                                    </p>
+
+                                </div>
+                                <div class="col-md-4">
+
+                                    <p>
+                                        <font color="darkblue" style="font-size: 140%; margin-left: -4px;" size="5px">
+                                            <b>Login to Download Magazine/s</b>
+                                        </font>
+                                    </p>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <!--<p><font color="darkblue" style="font-size: 140%;" size="5px"><b>Subscribe to Download Magazine/s</b></font></p>-->
+                                    <label class="control-label field-label" for="name">Name</label>
+                                    <input type="text" id="fname"
+                                           class=" field-input form-control ng-scope ng-pristine ng-invalid ng-invalid-required"
+                                           name="name" required="1"/>
+
+                                    <label class="control-label field-label" for="email">Your Email Address</label>
+                                    <input type="text" name="email" id="email"
+                                           class="field-input form-control ng-scope ng-pristine ng-invalid ng-invalid-required"
+                                           required="1" onchange="email_validation()"/>
+                                    <span style="display:none" class="font-red" id="email_info"/>
+
+
+                                    <br/>
+                                    <div class="g-recaptcha"
+                                         data-sitekey="6LcGJRITAAAAAOYbNNzoMcoC78mYCaKRcj2gZNas"></div>
+                                    <span id='message' class='font-red'>
+                                        <b>
+                                            <t t-esc='message'/>
+                                        </b>
+                                    </span>
+                                    <br/>
+
+                                    <button type="submit" class="btn btn-default btn-primary mb32 a-submit next-submit">
+                                        Subscribe
+                                        <span class="fa fa-long-arrow-right"/>
+                                    </button>
+
+                                </div>
+                            </form>
+                            <!-- Login -->>
+                            <form action="/magazine/signin" method="post">
+
+                                <div class="col-lg-4">
+
+                                    <!--<p><font color="darkblue" style="font-size: 140%;" size="5px"><b>Login to Download Magazine/s</b></font></p>-->
+                                    <label class="control-label" for="email">Email</label>
+                                    <input type="text" name="email2" id="email2"
+                                           class="field-input form-control ng-scope ng-pristine ng-invalid ng-invalid-required"
+                                           onchange="email_validation2()" required="1"/>
+                                    <span style="display:none" class="font-red" id="email_info2"/>
+
+                                    <br/>
+                                    <button type="submit"
+                                            class="btn btn-default btn-primary mb32 a-submit next-submit2">Login
+                                        <span class="fa fa-long-arrow-right"/>
+                                    </button>
+
+                                </div>
+                                <div class="col-lg-4">
+                                </div>
+                                <!-- Login end-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+            <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"/>
+
+            <script>
+                $(document).ready(function(){
+                $(".next-submit2").on("click",function(){
+                error=0;
+
+                if($("#email2").val()=="")
+                if (error == 0)
+                {
+                alert("Signin Email is mandatory");
+                error++;
+                }
+
+
+                if(error!=0)
+                return false;
+                })
+
+                });
+
+                $(document).ready(function(){
+                $(".next-submit").on("click",function(){
+                error=0;
+                if($("#fname").val()=="")
+                if (error == 0)
+                {
+                alert("First Name is mandatory");
+                error++;
+                }
+
+                if($("#email").val()=="")
+                if (error == 0)
+                {
+                alert("Email is mandatory");
+                error++;
+                }
+
+
+                if(error!=0)
+                return false;
+                })
+
+                });
+
+                function email_validation(){
+                jQuery.ajax({
+                url:"/subscriber/email_validation",
+                method:"POST",
+                data:{email:$('#email').val()},
+                success:function(response){
+                response = jQuery.parseJSON(response)
+                if (response &amp;&amp; response.error){
+                $('#email').val('')
+                $('#email_info').text(response.error)
+                $('#email_info').css('display','block')
+                }
+                else{
+                $('#email_info').css('display','none')
+                }
+                }
+
+                });
+                }
+
+                function email_validation2(){
+                jQuery.ajax({
+                url:"/subscriber/email_validation2",
+                method:"POST",
+                data:{email2:$('#email2').val()},
+                success:function(response){
+                response = jQuery.parseJSON(response)
+                if (response &amp;&amp; response.error){
+                $('#email2').val('')
+                $('#email_info2').text(response.error)
+                $('#email_info2').css('display','block')
+                }
+                else{
+                $('#email_info2').css('display','none')
+                }
+                }
+
+                });
+                }
+
+
+            </script>
+        </template>
+
+
+        <template id="magazine_signout" name="Magazine Signout Page">
+            <t t-call="website.layout">
+                <div class="oe_structure"/>
+                <div id="wrap" class="oe_structure oe_empty">
+                    <h4>Magazine Signout Page</h4>
+                    <h5>You have successfully signed out from Magazine</h5>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3 col-md-offset-5">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="reset_password" name="Magazine Reset Password">
+            <t t-call='website.layout'>
+                <div class='oe_structure'></div>
+                <div>
+                    <h3>Reset Password ...</h3>
+                    <div class='col-lg-4'></div>
+                    <div class='col-lg-4'>
+                        <form action='/magazine/reset-password' method='post'>
+                            <label class="control-label" for="email">Email</label>
+                            <input type="text" name="email" id='email' class="form-control" required='1'/>
+                            <br/>
+                            <button type='submit' class="btn btn-default btn-primary mb32 a-submit">Reset Password
+                                <span class="fa fa-long-arrow-right"/>
+                            </button> &amp;nbsp;&amp;nbsp;
+                            <a href="/magazine/reset-password">Reset Pasword</a>
+                            <br/>
+                            <t t-if='error'>
+                                <span class='login-fail'>
+                                    <t t-esc='error'/>
+                                </span>
+                                <br/>
+                            </t>
+                            <t t-if='success'>
+                                <span class='success'>
+                                    <t t-esc='success'/>
+                                </span>
+                                <br/>
+                            </t>
+                        </form>
+                    </div>
+                    <div class='col-lg-4'></div>
+                </div>
+                <div class='oe_structure'></div>
+            </t>
+        </template>
+
+        <template id="reset_password_status" name="Magazine-reset-password_status">
+            <t t-call='website.layout'>
+                <div class='oe_structure'></div>
+                <div>
+                    <span class='success'>
+                        <t t-esc='message'/>
+                    </span>
+                    <a class='a-padding' href="/magazine/signin">Back to Login</a>
+                    <br/>
+                </div>
+                <div class='oe_structure'></div>
+            </t>
+        </template>
+
+        <template id="reset_magazine_password" name="Reset_Magazine-password">
+            <t t-call='website.layout'>
+                <div class='oe_structure'></div>
+                <div>
+                    <h3>Reset Password ...</h3>
+                    <div class='col-lg-4'></div>
+                    <div class='col-lg-4'>
+                        <form action='/magazine/reset_magazine_account' method='post'>
+                            <label class="control-label" for="email">Your Email</label>
+                            <input type="text" name="email" id='email' class="form-control" t-att-value='record.email'
+                                   readonly='1'/>
+                            <br/>
+                            <label class="control-label" for="email">Your Name</label>
+                            <input type="text" name="name" id='name' class="form-control" t-att-value='record.name'
+                                   readonly='1'/>
+                            <br/>
+                            <label class=" control-label" for="password">Password</label>
+                            <input type="password" name="password" id='password' class="form-control" required='1'/>
+                            <label class="control-label" for="confirm_password">Confirm Password</label>
+                            <input type="password" name="confirm_password" class="form-control"
+                                   onchange='onchange_password(this)' required='1'/>
+                            <br/>
+                            <span id='password_info' style='display:none' class='font-red'>Passwords do not match</span>
+                            <br/>
+                            <input type="hidden" name="obj" class="form-control" t-att-value='obj'/>
+                            <input type="hidden" name="link" class="form-control" t-att-value='link'/>
+                            <button type='submit' class="btn btn-default btn-primary mb32 a-submit">Reset Password
+                                <span class="fa fa-long-arrow-right"/>
+                            </button>
+                            <a class='a-padding' href="/magazine/signin">Back to Login</a>
+                        </form>
+                    </div>
+                    <div class='col-lg-4'></div>
+                </div>
+                <div class='oe_structure'></div>
+            </t>
+            <script>
+                function onchange_password(event){
+                console.log('in onchnge_password');
+                new_password = event.value;
+                console.log(new_password);
+                console.log($('#password').val());
+                password = $('#password').val();
+                if (password != new_password){
+                event.value = ''
+                $('#password_info').css('display','block');
+                }
+                }
+            </script>
+        </template>
+
+        <!-- Deploy to live -->
+        <template id="magazine_subscription_page" name="Magazine Subscription Page">
+            <script src='https://www.google.com/recaptcha/api.js'></script>
+            <t t-call="website.layout">
+                <div class="oe_structure"/>
+                <div id="wrap" class="oe_structure oe_empty">
+                    <div class="container">
+                        <div class="row"/>
+                        <div class="row">
+                            <form action="/magazine/subscription" method="post">
+                                <h4>&amp;nbsp;</h4>
+                                <div class="col-md-4">
+                                    <img src="http://charterquestdev.openerponline.co.za/web/static/src/img/tablet_darw.jpg"
+                                         style="width:90%;height:42%;"/>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <p>
+                                        <font color="darkblue" style="font-size: 140%; margin-left: -4px;" size="5px">
+                                            <b>Subscribe to Download Magazine/s</b>
+                                        </font>
+                                    </p>
+
+                                </div>
+                                <div class="col-md-4">
+
+                                    <p>
+                                        <font color="darkblue" style="font-size: 140%; margin-left: -4px;" size="5px">
+                                            <b>Login to Download Magazine/s</b>
+                                        </font>
+                                    </p>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <!--<p><font color="darkblue" style="font-size: 140%;" size="5px"><b>Subscribe to Download Magazine/s</b></font></p>-->
+                                    <label class="control-label field-label" for="name">Name</label>
+                                    <input type="text" id="fname"
+                                           class=" field-input form-control ng-scope ng-pristine ng-invalid ng-invalid-required"
+                                           name="name" required="1"/>
+
+                                    <label class="control-label field-label" for="email">Your Email Address</label>
+                                    <input type="text" name="email" id="email"
+                                           class="field-input form-control ng-scope ng-pristine ng-invalid ng-invalid-required"
+                                           required="1" onchange="email_validation()"/>
+                                    <span style="display:none" class="font-red" id="email_info"/>
+
+
+                                    <br/>
+                                    <div class="g-recaptcha"
+                                         data-sitekey="6LcGJRITAAAAAOYbNNzoMcoC78mYCaKRcj2gZNas"></div>
+                                    <span id='message' class='font-red'>
+                                        <b>
+                                            <t t-esc='message'/>
+                                        </b>
+                                    </span>
+                                    <br/>
+
+                                    <button type="submit" class="btn btn-default btn-primary mb32 a-submit next-submit">
+                                        Subscribe
+                                        <span class="fa fa-long-arrow-right"/>
+                                    </button>
+
+                                </div>
+
+                            </form>
+                            <!-- Login-->
+                            <form action="/magazine/signin" method="post">
+
+                                <div class="col-lg-4">
+
+                                    <!--<p><font color="darkblue" style="font-size: 140%;" size="5px"><b>Login to Download Magazine/s</b></font></p>-->
+                                    <label class="control-label" for="email">Email</label>
+                                    <input type="text" name="email2" id="email2"
+                                           class="field-input form-control ng-scope ng-pristine ng-invalid ng-invalid-required"
+                                           required="1" onchange="email_validation2()"/>
+                                    <span style="display:none" class="font-red" id="email_info2"/>
+
+                                    <br/>
+                                    <button type="submit"
+                                            class="btn btn-default btn-primary mb32 a-submit next-submit2">Login
+                                        <span class="fa fa-long-arrow-right"/>
+                                    </button>
+
+                                </div>
+                                <div class="col-lg-4">
+                                </div>
+                                <!-- Login end-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+            <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"/>
+
+            <script>
+
+                $(document).ready(function(){
+                $(".next-submit2").on("click",function(){
+                error=0;
+
+                if($("#email2").val()=="")
+                if (error == 0)
+                {
+                alert("Signin Email is mandatory");
+                error++;
+                }
+
+
+                if(error!=0)
+                return false;
+                })
+
+                });
+
+                $(document).ready(function(){
+                $(".next-submit").on("click",function(){
+                error=0;
+                if($("#fname").val()=="")
+                if (error == 0)
+                {
+                alert("First Name is mandatory");
+                error++;
+                }
+
+                if($("#email").val()=="")
+                if (error == 0)
+                {
+                alert("Email is mandatory");
+                error++;
+                }
+
+
+                if(error!=0)
+                return false;
+                })
+
+                });
+
+                function email_validation(){
+                jQuery.ajax({
+                url:"/subscriber/email_validation",
+                method:"POST",
+                data:{email:$('#email').val()},
+                success:function(response){
+                response = jQuery.parseJSON(response)
+                if (response &amp;&amp; response.error){
+                $('#email').val('')
+                $('#email_info').text(response.error)
+                $('#email_info').css('display','block')
+                }
+                else{
+                $('#email_info').css('display','none')
+                }
+                }
+
+                });
+                }
+
+                function email_validation2(){
+                jQuery.ajax({
+                url:"/subscriber/email_validation2",
+                method:"POST",
+                data:{email2:$('#email2').val()},
+                success:function(response){
+                response = jQuery.parseJSON(response)
+                if (response &amp;&amp; response.error){
+                $('#email2').val('')
+                $('#email_info2').text(response.error)
+                $('#email_info2').css('display','block')
+                }
+                else{
+                $('#email_info2').css('display','none')
+                }
+                }
+
+                });
+                }
+
+
+            </script>
+        </template>
+
+
+        <template id="magazine_subscription_success_page" name="Magazine Subscription Success Page">
+            <t t-call="website.layout">
+                <div class="oe_structure"/>
+                <div class="s_banner_2 carousel slide" id="myCarousel3" style="height: 88px; overflow: hidden;">
+                    <ol class="carousel-indicators">
+                        <li class="active" data-slide-to="0" data-target="#myCarousel3"/>
+                        <li data-slide-to="1" data-target="#myCarousel3"/>
+                        <li data-slide-to="2" data-target="#myCarousel3"/>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="item bg-img-02 active">
+                            <div class="container">
+                                <div class="row content">
+                                    <div class="carousel-box-content bg-white col-md-5 mt128">
+                                        <h2>Success</h2>
+                                        <h5 class="text-primary">Click to customize this text.</h5>
+                                        <p>Use this snippet to presents your content in a slideshow-like format, with a
+                                            set number of items at a time and arrows for navigation.
+                                        </p>
+                                        <p>
+                                            <a class="btn btn-primary btn-sm" href="/page/website.aboutus">About us</a>
+                                            <a class="btn btn-success btn-sm" href="/page/website.contactus">Contact
+                                                us
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item bg-img-07">
+                            <div class="container">
+                                <div class="row content">
+                                    <div class="col-md-4 col-md-offset-8 carousel-box-content bg-none mt64">
+                                        <h2>Slide title</h2>
+                                        <h5 class="text-primary">Click to customize this text.</h5>
+                                        <p>This is a great component if you want visitors to browse through any featured
+                                            content in a scrolling carousel.
+                                        </p>
+                                        <p>
+                                            <a class="btn btn-default btn-lg" href="/">Start now</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item bg-img-08">
+                            <div class="container">
+                                <div class="row content">
+                                    <div class="col-md-4 col-md-offset-4 carousel-box-content bg-white text-center mt64">
+                                        <h2>Slide title</h2>
+                                        <h5 class="text-primary">Click to customize this text.</h5>
+                                        <p>Add and arrange blocks to create a custom layout of text, images and links.
+                                        </p>
+                                        <p>
+                                            <a class="btn btn-success btn-lg" href="/">Read more</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-control left" data-slide="prev" data-target="#myCarousel3" href="#myCarousel3">
+                        <i class="fa fa-chevron-left fa-1x"/>
+                    </div>
+                    <div class="carousel-control right" data-slide="next" data-target="#myCarousel3"
+                         href="#myCarousel3">
+                        <i class="fa fa-chevron-right fa-1x" style=""/>
+                    </div>
+                </div>
+                <div id="wrap" class="oe_structure oe_empty">
+                    <h4>Magazine Subscription Success Page</h4>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3 col-md-offset-5">
+                                <div class="row">
+                                    <a href="/magazine/signin" class="btn btn-default btn-primary mb32 a-submit">LOGIN
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="magazine_preview" name="Magazine Preview Page">
+            <t t-call="website.layout">
+                <div class="oe_structure"/>
+                <div id="wrap" class="oe_structure oe_empty">
+                    <h4>Magazine Preview Page</h4>
+                    <section class="jumbotron s_button bg-gray-darker" style="height: 152px; overflow: hidden;">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3 col-md-offset-5">
+                                    <a class="btn btn-success btn-lg" href="http://charterquest.co.za/magazines">Go To
+                                        Magazine
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <template id="magazine_page" name="Magazine Page">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <div class="container">
+                        <div class="oe_structure"/>
+
+                        <div class="row">
+                            <div>
+                                <a href="/magazine/october_16" class="btn btn-success btn-lg">VIEW CURRENT MAGAZINE</a>
+                                <a href="/magazine/previous_issues" class="btn btn-success btn-lg">VIEW PREVIOUS
+                                    ISSUES
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="magazine_previous_issues" name="Magazine Previous Issues">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <div class="container">
+                        <div class="oe_structure"/>
+
+                        <div class="row">
+                            <div>
+                                <a href="/magazine/january_16" class="btn btn-success btn-lg">VIEW JANUARY MAGAZINE</a>
+                                <a href="/magazine/april_16" class="btn btn-success btn-lg">VIEW APRIL MAGAZINE</a>
+                                <!--<a href="/page/flip-test" class="btn btn-success btn-lg">VIEW AUGUST ISSUE</a>-->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="magazine_october_16" name="Magazine October 2016">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section class="s_text_block">
+                        <div class="container">
+                            <div class="oe_structure"/>
+                            <div class="row" style="text-align:right;">
+                                <a href="/magazine/signout" class="btn btn-default btn-primary mb32 a-submit">Sign Out
+                                </a>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                </div>
+                                <div class="col-md-12 mb16 mt16">
+                                    <h4>THE CFO MAGAZINE</h4>
+                                    <center>
+                                        <iframe width="700" height="500" frameborder='0'
+                                                src="http://online.flipbuilder.com/lynu/ojgu/mobile/index.html">
+                                        </iframe>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="magazine_january_17" name="Magazine January 2017">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section class="s_text_block">
+                        <div class="container">
+                            <div class="oe_structure"/>
+                            <div class="row" style="text-align:right;">
+                                <a href="/magazine/signout" class="btn btn-default btn-primary mb32 a-submit">Sign Out
+                                </a>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                </div>
+                                <div class="col-md-12 mb16 mt16">
+                                    <h4>THE CFO MAGAZINE JANUARY 2017</h4>
+                                    <center>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="magazine_april_17" name="Magazine April 2017">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section class="s_text_block">
+                        <div class="container">
+                            <div class="oe_structure"/>
+                            <div class="row" style="text-align:right;">
+                                <a href="/magazine/signout" class="btn btn-default btn-primary mb32 a-submit">Sign Out
+                                </a>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                </div>
+                                <div class="col-md-12 mb16 mt16">
+                                    <h4>THE CFO MAGAZINE APRIL 2017</h4>
+                                    <center>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <template id="magazine_july_17" name="Magazine July 2017">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section class="s_text_block">
+                        <div class="container">
+                            <div class="oe_structure"/>
+                            <div class="row" style="text-align:right;">
+                                <a href="/magazine/signout" class="btn btn-default btn-primary mb32 a-submit">Sign Out
+                                </a>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                </div>
+                                <div class="col-md-12 mb16 mt16">
+                                    <h4>THE CFO MAGAZINE JULY 2017</h4>
+                                    <center>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <template id="magazine_october_17" name="Magazine October 2017">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section class="s_text_block">
+                        <div class="container">
+                            <div class="oe_structure"/>
+                            <div class="row" style="text-align:right;">
+                                <a href="/magazine/signout" class="btn btn-default btn-primary mb32 a-submit">Sign Out
+                                </a>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                </div>
+                                <div class="col-md-12 mb16 mt16">
+                                    <h4>THE CFO MAGAZINE OCTOBER 2017</h4>
+                                    <center>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <template id='open_day_register'>
+            <t t-call='website.layout'>
+                <div class="oe_structure">
+                    <div class="carousel slide s_banner" id="myCarousel3" style="height: 320px;">
+                        <ol class="carousel-indicators hidden">
+                            <li class="active" data-slide-to="0" data-target="#myCarousel3"/>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item bg-img-16 active" style="">
+                                <div class="container">
+                                    <div class="row content">
+                                        <div class="carousel-content col-md-6 col-sm-12">
+                                            <h2>Registration Form</h2>
+                                            <h3>Fill the form to make registration</h3>
+                                            <p>
+                                                <a class="btn btn-success btn-large" href="/page/website.contactus">
+                                                    Contact us
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-control left hidden" data-slide="prev" data-target="#myCarousel3"
+                             href="#myCarousel3" style="width: 10%">
+                            <i class="fa fa-chevron-left"/>
+                        </div>
+                        <div class="carousel-control right hidden" data-slide="next" data-target="#myCarousel3"
+                             href="#myCarousel3" style="width: 10%">
+                            <i class="fa fa-chevron-right"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <form t-attf-action="/open_day_register/#{slug(event)}/#{slug(ticket)}/#{quantity}"
+                              method='POST'>
+                            <div>
+                                <label class="control-label" for="name">Name</label>
+                                <span style='color:red'>
+                                    <t t-esc='error_name'/>
+                                </span>
+                                <input type="char" name="name" class="form-control"
+                                       t-att-value="post and post.get('name')"/>
+                            </div>
+                            <div>
+                                <label class="control-label" for="email">Email</label>
+                                <span style='color:red'>
+                                    <t t-esc='error_email'/>
+                                </span>
+                                <input type="email" name="email" class="form-control"
+                                       t-att-value="post and post.get('email')"/>
+                            </div>
+                            <div>
+                                <label class="control-label" for="mobile">Mobile</label>
+                                <span style='color:red'>
+                                    <t t-esc='error_mobile'/>
+                                </span>
+                                <input type="char" name="mobile" class="form-control"
+                                       t-att-value="post and post.get('mobile')"/>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg pull-right btn-margin">Proceed</button>
+                            <div class="clearfix"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-3 oe_structure" id="right_column">
+                </div>
+                <div class="oe_structure">
+                </div>
+            </t>
+            <style>
+                .btn-margin {margin:5px;}
+            </style>
+        </template>
+
+
+        <template id="open_day_register_confirm">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="oe_structure"/>
+                    <div class="container">
+                        <h1>Thanks!</h1>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="alert alert-success">
+                                    You have successfully registered. A confirmation mail has been sent to you.
+                                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                                </div>
+                                <p>
+                                    We will get back to you shortly.
+                                </p>
+                                <p class="mt64">
+                                    If you have an emergency, do not hesitate to contact us by phone:
+                                </p>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <i class="fa fa-phone"></i>
+                                        :
+                                        <span t-field="res_company.phone"/>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-envelope"></i>
+                                        :
+                                        <span t-field="res_company.email"/>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <t t-call="website.company_description"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </template>
+
+
+    </data>
+</openerp>

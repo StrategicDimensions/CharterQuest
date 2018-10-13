@@ -49,7 +49,7 @@ class CFOSeniorAspirants(models.Model):
     emp_start_date = fields.Date('Start Date')
     emp_status = fields.Selection([('part-time', 'part-time'), ('full-time', 'full-time')], 'Employment Status')
     emp_experience = fields.Selection(_work_exp_values, 'How many years of formal work experience?')
-    partner_id = fields.Many2one('res.partner',
+    partner_id = fields.Many2one('res.partner', required=True,
                                  string='Name', ondelete='restrict',
                                  help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_cfo_bio = fields.Boolean('Updated CFO BIO')
@@ -111,7 +111,7 @@ class AcademicInstitutionSenior(models.Model):
     }
 
     doc_lines = fields.One2many('ir.attachment', 'academic_doc_id', 'Documents')
-    partner_id = fields.Many2one('res.partner',
+    partner_id = fields.Many2one('res.partner', required=True,
                                  string='Name', ondelete='restrict',
                                  help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_academic_bio = fields.Boolean('Updated Academic BIO')
@@ -138,7 +138,7 @@ class EmployersSenior(models.Model):
     }
 
     doc_lines = fields.One2many('ir.attachment', 'academic_doc_id', 'Documents')
-    partner_id = fields.Many2one('res.partner',
+    partner_id = fields.Many2one('res.partner', required=True,
                                  string='Name', ondelete='restrict',
                                  help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_emp_bio = fields.Boolean('Updated Employer BIO')
@@ -163,7 +163,7 @@ class VolunteersSenior(models.Model):
         'res.partner': 'partner_id',
     }
 
-    partner_id = fields.Many2one('res.partner',
+    partner_id = fields.Many2one('res.partner', required=True,
                                  string='Name', ondelete='restrict',
                                  help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     volunteers_type = fields.Selection(
@@ -260,7 +260,7 @@ class BrandAmbassadorSenior(models.Model):
     }
 
     doc_lines = fields.One2many('ir.attachment', 'academic_doc_id', 'Documents')
-    partner_id = fields.Many2one('res.partner',
+    partner_id = fields.Many2one('res.partner', required=True,
                                  string='Name', ondelete='restrict',
                                  help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_brand_amb_bio = fields.Boolean('Updated Brand Ambassador BIO')
@@ -299,7 +299,7 @@ class SocialMediaContestantsSenior(models.Model):
     }
 
     doc_lines = fields.One2many('ir.attachment', 'academic_doc_id', 'Documents')
-    partner_id = fields.Many2one('res.partner',
+    partner_id = fields.Many2one('res.partner',required=True,
                                  string='Name', ondelete='restrict',
                                  help='Partner-related data of the user')
     updated_social_media_bio = fields.Boolean('Updated Brand Ambassador BIO', domain=[('cfo_user', '=', True)])
@@ -325,7 +325,7 @@ class MentorsSenior(models.Model):
     }
 
     doc_lines = fields.One2many('ir.attachment', 'academic_doc_id', 'Documents')
-    partner_id = fields.Many2one('res.partner',
+    partner_id = fields.Many2one('res.partner', required=True,
                                  string='Name', ondelete='restrict',
                                  help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_mentors_bio = fields.Boolean('Updated Mentors BIO')
@@ -467,5 +467,11 @@ class CFOSeniorMember(models.Model):
 
     login = fields.Char('User name')
     password = fields.Char('Password')
+
+
+class SnrMemberAdd(models.Model):
+    _name = 'cfo.snr.member.add'
+
+    total_member = fields.Char(string="No. Of Member")
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

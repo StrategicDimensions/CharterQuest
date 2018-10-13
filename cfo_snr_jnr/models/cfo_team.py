@@ -27,10 +27,10 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 class IRAttachment(models.Model):
     _inherit = 'ir.attachment'
 
-    snr_team_id = fields.Many2one('cfo.team.snr', 'SNR Team ID')
-    jnr_team_id = fields.Many2one('cfo.team.jnr', 'JNR Team ID')
-    snr_doc_id = fields.Many2one('volunteers.snr', 'SNR Doc ID')
-    jnr_doc_id = fields.Many2one('volunteers.jnr', 'JNR Doc ID')
+    snr_team_id = fields.Many2one('cfo.team.snr', string='SNR Team ID')
+    jnr_team_id = fields.Many2one('cfo.team.jnr', string='JNR Team ID')
+    snr_doc_id = fields.Many2one('volunteers.snr', string='SNR Doc ID')
+    jnr_doc_id = fields.Many2one('volunteers.jnr', string='JNR Doc ID')
     snr_mentors_doc_id = fields.Many2one('mentors.snr', 'SNR DOC ID')
     jnr_mentors_doc_id = fields.Many2one('mentors.jnr', 'JNR DOC ID')
     snr_aspirant_doc_id = fields.Many2one('cfo.snr.aspirants', 'Aspirants Docs')

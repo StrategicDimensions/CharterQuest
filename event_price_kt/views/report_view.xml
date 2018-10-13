@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+                id="report_pcexam_voucher1"
+                string="PCExams Voucher"
+                model="pcexams.voucher"
+                report_type="qweb-pdf"
+                file="event_price_kt.pcexam_voucher_report"
+                name="event_price_kt.pcexam_voucher_report"/>
+
+        <report
+                id="report_sale_enrollment"
+                string="Enrollment Proforma"
+                model="sale.order"
+                report_type="qweb-pdf"
+                file="event_price_kt.report_enrollment"
+                name="event_price_kt.report_enrollment"
+        />
+
+        <report
+                id="report_sale_book"
+                string="CharterBooks Proforma"
+                model="sale.order"
+                report_type="qweb-pdf"
+                file="event_price_kt.report_book"
+                name="event_price_kt.report_book"
+        />
+
+        <report
+                id="report_pc_exam"
+                string="PC Exam Proforma"
+                model="sale.order"
+                report_type="qweb-pdf"
+                file="event_price_kt.report_pcexam"
+                name="event_price_kt.report_pcexam"
+        />
+
+        <report
+                id="report_enrollment_invoice"
+                string="Enrollment Invoice"
+                model="account.invoice"
+                report_type="qweb-pdf"
+                file="event_price_kt.report_invoice_enrollment_proforma"
+                name="event_price_kt.report_invoice_enrollment_proforma"
+        />
+
+        <report
+                id="report_invoice_pcexam"
+                string="PC Exam Invoice"
+                model="account.invoice"
+                report_type="qweb-pdf"
+                file="event_price_kt.report_invoice_pc_exam"
+                name="event_price_kt.report_invoice_pc_exam"
+        />
+
+        <report
+                id="report_invoice_book"
+                string="CharterBooks Invoice"
+                model="account.invoice"
+                report_type="qweb-pdf"
+                file="event_price_kt.report_invoice_charterbook"
+                name="event_price_kt.report_invoice_charterbook"
+        />
+
+        <report
+                id="report_statement_enrollment"
+                string="Account Enrollment Statement"
+                model="account.invoice"
+                report_type="qweb-pdf"
+                file="event_price_kt.report_account_statement"
+                name="event_price_kt.report_account_statement"
+        />
+
+        <report
+                id="account_statement_enrollment"
+                model="debit.order.details"
+                name="account_statement_enrollment"
+                file="event_price_kt/report/account_enrollment_statement.rml"
+                string="Enrollment Statement"
+                usage="default"
+        />
+
+    </data>
+</odoo>

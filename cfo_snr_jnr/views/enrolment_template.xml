@@ -1,0 +1,1454 @@
+<odoo>
+    <record id="website_menu_enrolment_booking" model="website.menu">
+        <field name="name">Booking</field>
+        <field name="url">/enrolment_book</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">50</field>
+    </record>
+
+
+    <template id="top_header_cfo" inherit_id="website.layout" name="Top Header">
+        <xpath expr="//div[@id='wrapwrap']/header" position="before">
+            <header>
+                <div class="navbar navbar-default navbar-static-top" style="padding-top: 0px;padding-bottom: 0px;background-color: #eeeeee;margin-bottom: 10px;position: relative;min-height: 25px">
+                    <div class="container">
+                        <div class="collapse navbar-collapse navbar-top-collapse" style="border: 0;    float: none !important;display: inline-block !important;vertical-align: middle;width: 100% !important;">
+                            <div class="topnav-right" style="float:right;">
+                                <ul class="nav navbar-nav navbar-right" id="top_menu" style="float: left !important;">
+                                    <li style="margin: 5px 0px;position: relative;display: block;    float: left;">
+                                        <a href="/">
+                                            <span data-oe-model="website.menu" data-oe-id="2" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">myCQ</span>
+                                        </a>
+                                    </li>
+
+                                    <li style="margin: 5px 0px;position: relative;display: block;    float: left;">
+                                        <a href="/login">
+                                            <span data-oe-model="website.menu" data-oe-id="2" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">CFO Login</span>
+                                        </a>
+                                    </li>
+
+                                    <li style="margin: 5px 0px;position: relative;display: block;    float: left;">
+                                        <a href="/">
+                                            <span data-oe-model="website.menu" data-oe-id="5" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">Fees &amp; Timetables</span>
+                                        </a>
+                                    </li>
+
+                                    <li style="margin: 5px 0px;position: relative;display: block;    float: left;">
+                                        <a href="/">
+                                            <span data-oe-model="website.menu" data-oe-id="7" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">Bookstore</span>
+                                        </a>
+                                    </li>
+
+                                    <li style="margin: 5px 0px;position: relative;display: block;    float: left;">
+                                        <a href="/">
+                                            <span data-oe-model="website.menu" data-oe-id="11" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">Book Pc Exam</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <input type="text" id="mySearch" placeholder="Search.." style="margin-left: 20px !important;margin-top: 8px !important;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </xpath>
+    </template>
+
+    <template id="header_template" name="Header">
+        <section class="cfo_snr_jnr_menu my_class" data-menu-title="new" data-menu-url="new" data-menu-icon="fa-angle-right">
+            <div class="container">
+                <div class="row">
+                    <a class="onlymobilebtn">
+                        <img src="/cfo_snr_jnr/static/src/img/blocks/drop_menu3.png" alt="menu-bar" width="45" height="45"/>
+                    </a>
+                    <div class="label_link_list row">
+                        <!--<div class="col-md-3">-->
+                            <!--<a href="#" t-attf-class="honsNav0 add_menu_side book #{'active' if page_name == 'book' else ''}" data-current-menu="book" id="custom">Book</a>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-3">-->
+                            <!--<a href="#" t-attf-class="honsNav0 add_menu_side campus #{'active' if page_name == 'campus' else ''}" data-current-menu="campus" id="custom">Campus</a>-->
+                        <!--</div>-->
+                        <div class="col-md-3">
+                            <a href="#" t-attf-class="honsNav0 add_menu_side course #{'active' if page_name == 'course' else ''}" data-current-menu="course" id="custom">Course</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#" t-attf-class="honsNav0 add_menu_side fee #{'active' if page_name == 'fees' else ''}" data-current-menu="fee" id="custom">Fees</a>
+                        </div>
+                        <t t-if="self_or_cmp != 'cmp_sponosored'">
+                            <div class="col-md-3">
+                                <a href="#" t-attf-class="honsNav0 add_menu_side discount #{'active' if page_name == 'discounts' else ''}" data-current-menu="fee" id="custom">Discount</a>
+                            </div>
+                        </t>
+
+                        <div class="col-md-3">
+                            <a href="#" t-attf-class="honsNav0 add_menu_side price #{'active' if page_name == 'price' else ''}" data-current-menu="price" id="custom">Price</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#" t-attf-class="honsNav0 add_menu_side registration #{'active' if page_name == 'registration' else ''}" data-current-menu="registration" id="custom">Registration</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#" t-attf-class="honsNav0 add_menu_side payment #{'active' if page_name == 'payment' else ''}" data-current-menu="payment" id="custom">Payment Structure</a>
+                        </div>
+                    </div>
+
+                    <div class="row site-identifier ci-red-bg">
+                        <h3 class="o_default_snippet_text">FREE QUOTES AND BOOKINGS PORTAL</h3>
+                    </div>
+
+                    <div class="row menu-with-icon">
+                        <!--<a href="#" class="step-link">-->
+                            <!--<div t-attf-class="col-md-1 menu-icon book book_id #{'active' if page_name == 'book' else ''}" data-current-menu="book">-->
+                                <!--<ul class="breadcrumb-list-new">-->
+                                    <!--<li class="step-done">-->
+                                        <!--<div class="stop-rounding add-connector_after">-->
+                                            <!--<span class="step-number">-->
+                                                <!--<i class="fa fa-address-book" aria-hidden="true"> </i>-->
+                                            <!--</span>-->
+                                        <!--</div>-->
+                                        <!--<p>Book</p>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                        <!--</a>-->
+
+                        <!--<a href="#" class="step-link">-->
+                            <!--<div id="campus_id_add" t-attf-class="col-md-1 menu-icon campus campus_id #{'active' if page_name == 'campus' else ''}" data-current-menu="campus">-->
+                                <!--<ul class="breadcrumb-list-new">-->
+                                    <!--<li class="step-done">-->
+                                        <!--<div class="stop-rounding add-connector add-connector_after">-->
+                                            <!--<span class="step-number">-->
+                                                <!--<i class="fa fa-address-book-o" aria-hidden="true"> </i>-->
+                                            <!--</span>-->
+                                        <!--</div>-->
+                                        <!--<p>Campus</p>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                        <!--</a>-->
+
+                        <a href="#" class="step-link">
+                            <div t-attf-class="col-md-1 menu-icon course #{'active' if page_name == 'course' else ''}" data-current-menu="course">
+                                <ul class="breadcrumb-list-new">
+                                    <li class="step-done">
+                                        <div class="stop-rounding add-connector_after">
+                                            <span class="step-number">
+                                                <i class="fa fa-angle-right course_id" aria-hidden="true"> </i>
+                                            </span>
+                                        </div>
+                                        <p>Course</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+
+                        <a href="#" class="step-link">
+                            <div t-attf-class="col-md-1 menu-icon fee #{'active' if page_name == 'fees' else ''}" data-current-menu="fee">
+                                <ul class="breadcrumb-list-new">
+                                    <li class="step-done">
+                                        <div class="stop-rounding add-connector add-connector_after" data-original-title="" title="">
+                                            <span class="step-number">
+                                                <i class="fa fa-check" aria-hidden="true"> </i>
+                                            </span>
+                                        </div>
+                                        <p>Fees</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+
+                        <t t-if="self_or_cmp != 'cmp_sponosored'">
+                            <a href="#" class="step-link">
+                                <div t-attf-class="col-md-1 menu-icon discount #{'active' if page_name == 'discounts' else ''}" data-current-menu="discount">
+                                    <ul class="breadcrumb-list-new">
+                                        <li class="step-done">
+                                            <div class="stop-rounding add-connector add-connector_after" data-original-title="" title="">
+                                                <span class="step-number">
+                                                    <i class="fa fa-check" aria-hidden="true"> </i>
+                                                </span>
+                                            </div>
+                                            <p>Discount</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </t>
+
+                        <a href="#" class="step-link">
+                            <div t-attf-class="col-md-1 menu-icon price #{'active' if page_name == 'price' else ''}" data-current-menu="price">
+                                <ul class="breadcrumb-list-new">
+                                    <li class="step-done">
+                                        <div class="stop-rounding add-connector add-connector_after" data-original-title="" title="">
+                                            <span class="step-number">
+                                                <i class="fa fa-check" aria-hidden="true"> </i>
+                                            </span>
+                                        </div>
+                                        <p>Price</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+
+                        <a href="#" class="step-link">
+                            <div t-attf-class="col-md-1 menu-icon registration #{'active' if page_name == 'registration' else ''}" data-current-menu="registration">
+                                <ul class="breadcrumb-list-new">
+                                    <li class="step-done">
+                                        <div class="stop-rounding add-connector add-connector_after" data-original-title="" title="">
+                                            <span class="step-number">
+                                                <i class="fa fa-check" aria-hidden="true"> </i>
+                                            </span>
+                                        </div>
+                                        <p>Registration</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+
+                        <a href="#" class="step-link">
+                            <div t-attf-class="col-md-1 menu-icon payment #{'active' if page_name == 'payment' else ''}" data-current-menu="payment">
+                                <ul class="breadcrumb-list-new">
+                                    <li class="step-done">
+                                        <div class="stop-rounding add-connector" data-original-title="" title="">
+                                            <span class="step-number">
+                                                <i class="fa fa-check" aria-hidden="true"> </i>
+                                            </span>
+                                        </div>
+                                        <p>Payment Structure</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="row menu-content" style="width: 80%;float: left;margin:0px;">
+                        <t t-raw="0"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="get_free_quote_email" name="Book">
+        <t t-call="website.layout">
+            <div class="oe_structure"/>
+            <!--<t t-call="cfo_snr_jnr.header_template">-->
+            <div class="container">
+                <div class="row button-form" id="step-1">
+                    <center>
+                        <form action="/prof_body_form_render" method="post"
+                            class="s_website_form form-horizontal container-fluid mt32"
+                            enctype="multipart/form-data" data-success_page="">
+                            <h3 style="color:black;">FREE QUOTES<br/>AND<br/>BOOKINGS PORTAL</h3>
+                            <p style="color:black;font-size: 18px;line-height: 3;font-weight: 500;">Please select what you would like to do.</p>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="custome_btn">
+                                            <button id="free_quote_email" style="height:50px;width:300px;" class="my-btn btn-large btn-danger" type="submit"> ​<b style="color:white;font-weight: 900;"> GET FREE QUOTE EMAILED </b></button>
+                                        </td>
+                                        <td>
+                                        <h3 style="margin-left: 10px; color:black; font-weight: 700;">OR</h3>
+                                        </td>
+                                        <td>
+                                            <button id="free_quote_email" style="height:50px;width:300px;" class="my-btn btn-large btn-danger" type="button">​ ​<b style="color:white;font-weight: 900;">REGISTER AND ENROLLment </b></button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <button id="free_quote_email" style="height:50px;width:300px;" class="my-btn btn-large btn-danger" type="button">​ ​<b style="color:white;font-weight: 900;">BOOK PC EXAM </b></button>
+                                        </td>
+                                        <td>
+                                            <h3></h3>
+                                        </td>
+                                        <td>
+                                            <button id="pay_prof_body" class="my-btn btn-large btn-danger" style="margin-top: 45px;height:50px;width:300px;" type="button"> ​<b style="color:white;font-weight: 900;">PAY PROFESSIONAL BODY FESS ONLY </b></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </center>
+                </div>
+                <!--<div class="oe_structure"/>-->
+            </div>
+            <!--</t>-->
+        </t>
+    </template>
+
+    <template id="enrolment_process_form" name="Enrolment Process">
+        <t t-call="website.layout">
+            <!--<t t-call="cfo_snr_jnr.header_template">-->
+                <div class="row" id="step-2">
+
+                    <form action="/enrolment_book_prof" method="post"
+                          class="s_website_form form-horizontal container-fluid mt32"
+                          enctype="multipart/form-data" data-success_page="">
+                        <div class="form-group form-field o_website_form_custom">
+                            <div class="col-md-3 col-sm-4 text-right-not-xs">
+                                <label class="control-label" for="Prior/Returning Student? ">Prior/Returning
+                                    Student?
+                                </label>
+                            </div>
+                            <div class="col-md-7 col-sm-8">
+                                <select class="form-control o_website_form_input"
+                                        name="return_student" required="false">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-field o_website_form_custom">
+                            <div class="col-md-3 col-sm-4 text-right-not-xs">
+                                <label class="control-label" for="Are You Registered with a Professional Body?">
+                                    Are You Registered with a Professional Body?
+                                </label>
+                            </div>
+                            <div class="col-md-7 col-sm-8">
+                                <select class="form-control o_website_form_input"
+                                        name="registered_professional_body?" required="false">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-field o_website_form_custom">
+                            <div class="col-md-3 col-sm-4 text-right-not-xs">
+                                <label class="control-label" for="Are You Registered with a Professional Body?">
+                                    Are You Self Or Company Sponosored?
+                                </label>
+                            </div>
+                            <div class="col-md-7 col-sm-8">
+                                <select class="form-control o_website_form_input"
+                                        name="self_or_company" required="false">
+                                    <option value="self">self</option>
+                                    <option value="cmp_sponosored">Company Sponosored</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-field o_website_form_custom">
+                            <div class="col-md-3 col-sm-4 text-right-not-xs">
+                                <label class="control-label" for="Select Prof Body">Select Prof Body</label>
+                            </div>
+                            <div class="col-md-7 col-sm-8">
+                                <t t-set="event_type"
+                                   t-value="request.env['event.type'].sudo().search([('publish_on_portal','=',True)] , order='order')"/>
+                                <select id="professional_body" class="form-control o_website_form_input" name="Select Prof Body"
+                                        required="false">
+                                    <option> </option>
+                                    <t t-foreach="event_type" t-as="type">
+                                        <option t-att-value="type.id">
+                                            <t t-esc="type.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-field o_website_form_custom">
+                            <div class="col-md-3 col-sm-4 text-right-not-xs">
+                                <label for="campus" class="control-label">Select Campus
+                                </label>
+                            </div>
+                            <div class="col-md-7 col-sm-8">
+                                <t t-set="event_ids" t-value="request.env['event.event'].sudo().search([])"/>
+                                <select id="select_campus" class="form-control o_website_form_input" name="campus"
+                                        required="false">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-field o_website_form_custom">
+                            <div class="col-md-3 col-sm-4 text-right-not-xs">
+                                <label class="control-label" for="Enrol for?">Enrol for?</label>
+                            </div>
+                            <div class="col-md-7 col-sm-8">
+                                <select class="form-control o_website_form_input" name="Enrol for?"
+                                        required="false">
+                                    <option value="Part Time">Part Time</option>
+                                    <option value="Full Time">Full Time</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-field o_website_form_custom">
+                            <div class="col-md-3 col-sm-4 text-right-not-xs">
+                                <label class="control-label" for="Semester">Semester</label>
+                            </div>
+                            <div class="col-md-7 col-sm-8">
+                                <select id="select_semester" class="form-control o_website_form_input" name="Semester"
+                                        required="false">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                                <button class="btn btn-primary pull-right" type="submit">Next</button>
+                                <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                            </div>
+                        </div>
+                        <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                        <input class="form-field" name="page_name" value="course" type="hidden"/>
+                    </form>
+                </div>
+            <!--</t>-->
+        </t>
+    </template>
+
+    <template id="enrolment_process_form2" name="Enrolment Process">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <div class="col-md-12 mb128 mt0 row" id="step-3">
+                    <form action="/fees_level" method="post"
+                        class="s_website_form form-horizontal container-fluid mt32"
+                        enctype="multipart/form-data" data-success_page="">
+                        <h1 class="mt0">
+                            <font class="bg-gamma" style="">Select Level and Courses</font>
+                        </h1>
+                        <t t-if="not enrolment_data">
+                            <div class="container" style="color:black;">
+                                <form id="target" class="form-horizontal" action="/prof_body_form_render" method="post">
+                                    <fieldset>
+                                        <div class="alert alert-custom">
+                                            <h3>Courses currently being loaded. Please return in 6 hours to generate your quote/and or enroll. If urgent, <a href="">kindly download manual form here</a> and submit so we can generate your quote and email back. Please allow 24 hours to receive quote.  Thank you for your patience.</h3>
+                                        </div>
+                                        <!--<button class="btn btn-primary pull-right" type="button">Back</button>-->
+                                        <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                                        <!--<input type="button" class="btn btn-large btn-inverse" value="Back"/>-->
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </t>
+                        <t t-if="enrolment_data">
+                            <t t-foreach="enrolment_data" t-as="each_sequence">
+                                <t t-foreach="each_sequence_value" t-as="each_level">
+                                    <h2><span t-esc="each_level" style="color:black;"/></h2>
+                                    <table class="table" style="color:black">
+                                        <thead>
+                                            <tr>
+                                                <th>Course Code</th>
+                                                <th>Event Name</th>
+                                                <!--<t t-set="leng" t-value="len(each_level_value['ticket_product'])"/>-->
+                                                <!--<t t-set="ticket_product_list" t-value="each_level_value['ticket_product']"/>-->
+                                                    <t t-set="ticket_product_list" t-value="each_level_value['ticket_product']"/>
+                                                    <t t-set="leng" t-value="len(each_level_value['ticket_product'])"/>
+                                                    <t t-foreach="each_level_value['ticket_product']" t-as="each_ticket_product">
+                                                        <t t-foreach="each_ticket_product" t-as="l">
+                                                            <th><span t-esc="l.name"/></th>
+                                                        </t>
+                                                    </t>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="each_level_value['event']" t-as="each_event">
+                                                <tr>
+                                                    <td><span t-esc="each_event.event_course_code"/></td>
+                                                    <td><span t-esc="each_event.name"/></td>
+                                                    <t t-foreach="ticket_product_list" t-as="each_product_list">
+                                                        <t t-set="event_record" t-value="request.env['event.event.ticket'].sudo().search([('product_id', '=', each_product_list.id), ('event_id', '=', each_event.id)], limit = 1, order='id desc')">
+                                                        </t>
+                                                        <td>
+                                                            <t t-if="event_record.price">
+                                                                <input id="only_one" type="checkbox" class="event_course" t-att-name="'event-%s' % (event_record.id)" t-att-value="event_record.id" t-att-data-id="'group%s[]'%(each_event.id)"/>
+                                                            </t>
+                                                            <t t-if="not event_record.price">
+                                                                <input type="checkbox" class="event_course" t-att-name="'event-%s' % (event_record.id)" t-att-value="event_record.id" disabled="disabled"/>
+                                                            </t>
+                                                            <span t-esc="event_record.price if event_record.price else 'N/A'"/>
+                                                        </td>
+                                                    </t>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </t>
+                            </t>
+                            <div class="form-group">
+                                <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                                    <button id="check_event" class="btn btn-primary pull-right" type="submit">Next</button>
+                                    <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                                </div>
+                            </div>
+                        </t>
+                    </form>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="enrolment_process_form3" name="Fees Process">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <div>
+                    <form action="/discount" method="post"
+                        class="s_website_form form-horizontal container-fluid mt32"
+                        enctype="multipart/form-data" data-success_page="">
+                        <t t-foreach="fees_detail" t-as="each_fees_sequence">
+                            <t t-foreach="each_fees_sequence_value" t-as="each_fees_level">
+                                <div class="s_panel panel panel-delta" style="color:black;">
+                                    <div class="panel-heading ">
+                                        <h4 class="mt0 mb0 o_default_snippet_text"><i class="fa fa-star fa-1x text-muted"> </i><span t-esc="each_fees_level.name"/></h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <t t-set="counter" t-value="1"/>
+                                            <t t-foreach="each_fees_level_value" t-as="each_fee_type">
+                                                <li t-att-class="'nav-item active' if counter == 1 else 'nav-item'">
+                                                    <a class="nav-link" data-toggle="tab" t-esc="each_fee_type.name" t-attf-href="##{(each_fee_type.id)}#{(each_fees_level.id)}"> </a>
+                                                </li>
+                                                <t t-set="counter" t-value="counter + 1"/>
+                                            </t>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <t t-set="counter" t-value="1"/>
+                                            <t t-foreach="each_fees_level_value" t-as="each_level_product">
+                                                <div t-attf-id="#{(each_level_product.id)}#{(each_fees_level.id)}" style="color:black;" t-att-class="'tab-pane fade in active' if counter == 1 else 'tab-pane fade in'">
+                                                    <t t-foreach="each_level_product_value" t-as="each_product">
+                                                        <div class="col-md-7 col-sm-8 tab-content-data">
+                                                            <t t-if="return_student == 'Yes'">
+                                                                <t t-if="each_product.does_not_apply == 'return_student'">
+                                                                    <input t-att-name="'product-%s' % (each_product.id)" t-att-value="each_product.id" class="o_website_form_input" type="checkbox" disabled="disabled"/>
+                                                                    <strike><label id="line-through" class="control-label" for="MyCheckBox" t-esc="each_product.name"> </label></strike>
+                                                                </t>
+                                                                <t t-if="not each_product.does_not_apply == 'return_student'">
+                                                                    <input t-att-name="'product-%s' % (each_product.id)" t-att-value="each_product.id" class="o_website_form_input" type="checkbox"/>
+                                                                    <label class="control-label" for="MyCheckBox" t-esc="each_product.name"> </label>
+                                                                </t>
+                                                            </t>
+                                                            <t t-if="not return_student == 'Yes'">
+                                                                <t t-if="each_product.does_not_apply == 'new_student'">
+                                                                    <input t-att-name="'product-%s' % (each_product.id)" t-att-value="each_product.id" class="o_website_form_input" type="checkbox" disabled="disabled"/>
+                                                                    <strike><label id="line-through" class="control-label" for="MyCheckBox" t-esc="each_product.name"> </label></strike>
+                                                                </t>
+                                                                <t t-if="not each_product.does_not_apply == 'new_student'">
+                                                                    <input t-att-name="'product-%s' % (each_product.id)" t-att-value="each_product.id" class="o_website_form_input" type="checkbox"/>
+                                                                    <label class="control-label" for="MyCheckBox" t-esc="each_product.name"> </label>
+                                                                </t>
+                                                            </t>
+                                                        </div>
+                                                    </t>
+                                                </div>
+                                                <t t-set="counter" t-value="counter + 1"/>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                                <button class="btn btn-primary pull-right" type="submit">Next</button>
+                                <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="enrolment_process_discount_form" name="Discount Process">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <div>
+                    <form action="/price" method="post"
+                        class="s_website_form form-horizontal container-fluid mt32"
+                        enctype="multipart/form-data" data-model_name="mail.mail" data-success_page="">
+                        <t t-if="not discount_detail">
+                            <table class="table table-bordered" style="color:black;background-color:azure;">
+                                <tbody>
+                                    <th colspan="3"><span style="color:black;">No Discount Available</span></th>
+                                </tbody>
+                            </table>
+
+                        </t>
+                        <t t-if="discount_detail">
+                            <table class="table table-bordered" style="color:black;background-color:azure;">
+                                <thead>
+                                    <tr style="background-color:red;">
+                                        <th>Discount Type</th>
+                                        <th>Requirements (All discounts must be verifiably claimed and included in the free quote or final invoice prior to making the first payment or will be forfeited).</th>
+                                        <th>Tick for Yes</th>
+                                        <th>Discount %</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="discount_detail" t-as="each_discount">
+                                        <t t-if="event_len == 2">
+                                            <t t-if="each_discount.discount_type == 'combo_2'">
+                                                <tr>
+                                                    <td><span t-esc="each_discount.name"/></td>
+                                                    <td><span t-esc="each_discount.description"/></td>
+                                                    <td><input id="discount_type_id" name="discount_value" t-att-value="each_discount.discount" t-attf-data-id="discount_#{each_discount.id}" t-att-discount-data-id="each_discount.id" t-attf-class="o_website_form_input discount_value_set chk check_set" type="checkbox" checked="" disabled="disabled" /></td>
+                                                    <td><span t-esc="each_discount.discount"/></td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <t t-if="event_len == 3">
+                                            <t t-if="each_discount.discount_type == 'combo_3'">
+                                                <tr>
+                                                    <td><span t-esc="each_discount.name"/></td>
+                                                    <td><span t-esc="each_discount.description"/></td>
+                                                    <td><input id="discount_type_id" name="discount_value" t-att-value="each_discount.discount" t-attf-data-id="discount_#{each_discount.id}" t-att-discount-data-id="each_discount.id" t-attf-class="o_website_form_input discount_value_set chk check_set" type="checkbox" checked="" disabled="disabled" /></td>
+                                                    <td><span t-esc="each_discount.discount"/></td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <t t-if="event_len == 4">
+                                            <t t-if="each_discount.discount_type == 'combo_4'">
+                                                <tr>
+                                                    <td><span t-esc="each_discount.name"/></td>
+                                                    <td><span t-esc="each_discount.description"/></td>
+                                                    <td><input id="discount_type_id" name="discount_value" t-att-value="each_discount.discount" readonly="" t-attf-data-id="discount_#{each_discount.id}" t-att-discount-data-id="each_discount.id" t-attf-class="o_website_form_input discount_value_set chk check_set" type="checkbox" checked="" disabled="disabled"/></td>
+                                                    <td><span t-esc="each_discount.discount"/></td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <tr t-if="each_discount.discount_type != '1' and each_discount.discount_type != 'combo_2' and each_discount.discount_type != 'combo_3' and each_discount.discount_type != 'combo_4'">
+                                            <td><span t-esc="each_discount.name"/></td>
+                                            <td><span t-esc="each_discount.description"/></td>
+                                            <td><input id="discount_type_id" name="discount_value" t-att-value="each_discount.discount" t-attf-data-id="discount_#{each_discount.id}" t-att-discount-data-id="each_discount.id" t-attf-class="o_website_form_input discount_value_set chk check_set" type="checkbox"/></td>
+                                            <td><span t-esc="each_discount.discount"/></td>
+                                        </tr>
+                                        <t t-if="each_discount.discount_type == '1'">
+                                            <tr>
+                                                <td><span t-esc="each_discount.name"/></td>
+                                                <td><span t-esc="each_discount.description"/></td>
+                                                <td><input id="discount_type_id" name="discount_value" t-att-value="each_discount.discount" t-attf-data-id="discount_#{each_discount.id}" t-att-discount-data-id="each_discount.id" t-attf-class="o_website_form_input discount_value_set chk check_set" type="checkbox"/></td>
+                                                <td><span t-esc="each_discount.discount"/></td>
+                                            </tr>
+                                            <tr id="emailadd" style="background-color: azure; display:none;" t-attf-class="studentnumberprocess emailAddr" t-attf-data-id="discount_#{each_discount.id}">
+                                                <td>Enter Email Address *</td>
+                                                <td><input type="text" name="EmailAddress" id="EmailAddress" placeholder="Enter Email Address"/><input t-attf-data-id="discount_#{each_discount.id}" id="btn_email" type="button" name="button" class="btn" value="Search"/></td>
+                                                <td id="email_msg"><font color="red"> </font></td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr id="stdnumbr" style="background-color: azure; display:none;" class="studentnumberprocess studentNum" t-attf-data-id="discount_#{each_discount.id}">
+                                                <td>Enter Student Number *</td>
+                                                <td><input type="text" name="Studentnumber" id="Studentnumber" placeholder="Enter Student Number"/><input t-attf-data-id="discount_#{each_discount.id}" id="btn-stdnumbr" type="button" name="button" class="btn" value="Search"/></td>
+                                                <td id="number_msg" name="total_discount_val"><font color="red"> </font></td>
+                                                <td> </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                    <tr>
+                                        <td> </td>
+                                        <td><b>Total Discount %</b></td>
+                                        <td> </td>
+                                        <td><b><span id="total_discount_count" value="0">0</span></b></td>
+                                        <input id="discount_val" class="form-field" name="discount_add" value="" type="hidden"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                                <button class="btn btn-primary pull-right" type="submit">Next</button>
+                                <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="enrolment_process_price" name="Price Process">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <div>
+                    <h2 style="color:black;">Course Pricing</h2>
+                    <table class="table table-bordered" style="color:black;background-color:azure;">
+                        <t t-set="total_course_price" t-value="0"/>
+                        <thead>
+                            <tr style="background-color:red;">
+                                <th>#</th>
+                                <th>Course/Paper</th>
+                                <th colspan="3">Pricing</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th> </th>
+                                <th> </th>
+                                <th>Price</th>
+                                <th>Course Total</th>
+                                <th> </th>
+                            </tr>
+                            <t t-foreach="event_id" t-as="each_event">
+                                <t t-set="event_ticket_id" t-value="request.env['event.event.ticket'].sudo().search([('id', '=',int(each_event_value))])"/>
+                                <tr>
+                                    <td>#</td>
+                                    <td><span t-esc="'%s - %s' % (event_ticket_id.product_id.name, event_ticket_id.event_id.name)" /></td>
+                                    <td><span t-esc="event_ticket_id.price" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                    <span/></td>
+                                    <td><span t-esc="event_ticket_id.price" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    <td> </td>
+                                    <t t-set="total_course_price" t-value="total_course_price + event_ticket_id.price"/>
+                                </tr>
+                            </t>
+
+                            <tr>
+                                <th>TOTAL</th>
+                                <th> </th>
+                                <th><span class="" t-esc="total_course_price" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></th>
+                                <th><span t-esc="total_course_price" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></th>
+                                <th> </th>
+                            </tr>
+                            <tr>
+                                <th>Discount</th>
+                                <td><span t-esc="discount if discount else 0"/> % All Inclusive Discount (Subject to terms and conditions)</td>
+                                <td> </td>
+                                <td> </td>
+                                <t t-if="discount">
+                                    <t t-set="discount_set_value" t-value="(total_course_price * discount)/100"/>
+                                    <td><b><span t-esc="discount_set_value" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" style="background-color: red; padding: 2px 4px; border-radius: 3px;"/></b></td>
+                                </t>
+                                <t t-if="not discount">
+                                    <td><b><span t-esc="0.0" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" style="background-color: red; padding: 2px 4px; border-radius: 3px;"/></b></td>
+                                </t>
+                            </tr>
+                            <tr>
+                                <th>Grand Total</th>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <t t-if="discount">
+                                    <t t-set="grand_total" t-value="total_course_price - discount_set_value"/>
+                                </t>
+                                <td><b><span id="grand_tot_val" t-esc="grand_total if discount else total_course_price" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></b></td>
+                                <input type="hidden" value="grand_total if discount else total_course_price" name="grand_total_value"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <center>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <button id="btn_get_free_email" style="margin-top: 30px;" class="btn btn-primary" name="button" type="button" value="Get Free Quote Emailed">Get Free Quote Emailed</button>
+                                    </td>
+                                    <td>
+                                        <!--<h2 style="color:black;">OR</h2>-->
+                                    </td>
+                                    <td>
+                                        <button id="btn_reg_enroll" style="margin-top: 30px;" class="btn btn-primary" name="button" type="button" value="Register And Enroll">Register And Enroll</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </center>
+
+                    <h2 style="color:black;">Professional body Remittance Pricing</h2>
+                    <table class="table table-bordered" style="color:black;background-color:azure;">
+                        <t t-set="total" t-value="0"/>
+                        <thead>
+                            <tr style="background-color:red;">
+                                <th>#</th>
+                                <th>Fees</th>
+                                <th>Pricing</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th> </th>
+                                <th> </th>
+                                <th>Price</th>
+                            </tr>
+                            <t t-foreach="product_id" t-as="each_product">
+                                <t t-set="each_product_record" t-value="request.env['product.product'].sudo().search([('id', '=', int(each_product_value))])"/>
+                                <tr>
+                                    <td>#</td>
+                                    <td><span t-esc="each_product_record.name"/></td>
+                                    <td><span t-esc="each_product_record.lst_price" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    <t t-set="total" t-value="total + each_product_record.lst_price"/>
+                                </tr>
+                            </t>
+                            <tr>
+                                <th>TOTAL</th>
+                                <th> </th>
+                                <th><span id="product_total" t-esc="total" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="enrolment_process_registration" name="Registration Process">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <center>
+                <div class="container">
+                    <form action="/payment" method="post"
+                        class="s_website_form form-horizontal container-fluid mt32"
+                        enctype="multipart/form-data" data-model_name="mail.mail" data-success_page="">
+                        <!--<h2>Registration</h2>-->
+                        <div class="form-group">
+                            <label for="firstName" class="col-sm-3 control-label">* First Name</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="firstName" placeholder="First Name" name="firstName" required="" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" class="col-sm-3 control-label">* Last Name</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="lastName" placeholder="Last Name" name="lastName" required="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-sm-3 control-label">* Create your own Password</label>
+                            <div class="col-sm-4">
+                                <input type="password" id="password" placeholder="Password" required="" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-3 control-label">* Email Address</label>
+                            <div class="col-sm-4">
+                                <input type="email" id="email" placeholder="Email" class="form-control" required="" name= "email"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phoneNumber" class="col-sm-3 control-label">* Contact Number </label>
+                            <div class="col-sm-4">
+                                <input type="phoneNumber" id="phoneNumber" name="phoneNumber" required="" placeholder="Phone number" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="company" class="col-sm-3 control-label">Students Company</label>
+                            <div class="col-sm-4">
+                                <input type="company" id="company" placeholder="Company" class="form-control" name= "company"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="vatNumber" class="col-sm-3 control-label">Vat Number</label>
+                            <div class="col-sm-4">
+                                <input type="company" id="vatNumber" placeholder="Vat" class="form-control" name= "vatNumber"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="comments" class="col-sm-3 control-label">Comments/Requests? </label>
+                            <div class="col-sm-4">
+                                <textarea id="comments" name="comments" cols="40" rows="5" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 button-div">
+                            <center>
+                                <button type="submit" class="btn btn-primary pull-right">Next</button>
+                                <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                            </center>
+                        </div>
+                    </form>
+                </div>
+                </center>
+            </t>
+        </t>
+    </template>
+
+    <template id="enrolment_process_payment" name="Payment Process">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <form action="/page/thank-you" method="post"
+                        class="s_website_form form-horizontal container-fluid mt32"
+                        enctype="multipart/form-data" data-model_name="mail.mail" data-success_page="">
+                    <table class="table table-bordered" style="color:black;background-color:lightyellow;">
+                        <tbody>
+                            <tr style="background-color:#DA4F49;">
+                                <th>Charge description</th>
+                                <th>% and/or Amount in Rands</th>
+                                <th>Guidance / How to:</th>
+                            </tr>
+                            <tr>
+                                <td>Course Fees</td>
+                                <td><span id="grand_total_amount" t-esc="grand_tot"> </span></td>
+                                <td> </td>
+                            </tr>
+                            <tr>
+                                <td>Remittance Fees</td>
+                                <td><input type="text" name="inputRemittancefee" id="inputRemittancefee" readonly="" t-att-value="'%s' %(product_tot)"/></td>
+                                <td><input type="checkbox" name="inputNoRemittance" class="remove_fee" id="inputNoRemittance"/>Remove Remittance Fees</td>
+                            </tr>
+                            <tr>
+                                <t t-set="total_payment" t-value="0"/>
+                                <t t-set="total_payment" t-value="float(grand_tot) + float(product_tot)"/>
+                                <td style="background-color: -moz-MenuBarText;">Total</td>
+                                <td style="background-color: -moz-MenuBarText;"><input type="text" name="toalamount" id="totalamount" readonly="" t-att-value="'%s' %(total_payment)"/></td>
+                                <td> </td>
+                            </tr>
+                            <tr style="background-color:#DA4F49;">
+                                <th>Deposit Payment Info</th>
+                                <th>% and/or Amount in Rands</th>
+                                <th>Guidance / How to:</th>
+                            </tr>
+                            <tr>
+                                <td>Course Deposit</td>
+                                <td>
+                                    <select name="inputPaypercentage" class="requiredValue" id="inputPaypercentage">
+                                        <option value="20"> 20 %</option>
+                                        <option value="30"> 30 %</option>
+                                        <option value="40"> 40 %</option>
+                                        <option value="50"> 50 %</option>
+                                        <option value="60"> 60 %</option>
+                                        <option value="70"> 70 %</option>
+                                        <option value="80"> 80 %</option>
+                                        <option value="90"> 90 %</option>
+                                        <option value="100"> 100 %</option>
+                                    </select>
+                                </td>
+                                <td>Please use the dropdown arrow to select the deposit % you would like to pay. Minimum Deposit to enroll is 20% of your total fees (i.e. 20% of your net proforma invoice fees as quoted after applying all the discounts you may be eligible for as a self-sponsored student).</td>
+                            </tr>
+                            <tr>
+                                <t t-set="due" t-value="(float(total_payment)*20)/100"/>
+                                <td style="background-color: -moz-MenuBarText;">Total (Due Now)</td>
+                                <td style="background-color: -moz-MenuBarText;"><input type="text" name="inputTotalDue" id="inputTotalDue" t-att-value="due" readonly=""/></td>
+                                <td> </td>
+                            </tr>
+                            <tr style="background-color:#DA4F49;">
+                                <th>Proposed Payment Structure</th>
+                                <th>% and/or Amount in Rands</th>
+                                <th>Guidance / How to:</th>
+                            </tr>
+                            <tr>
+                                <t t-set="out_standing" t-value="(float(total_payment)) - (float(due))"/>
+                                <td>Outstanding Balance</td>
+                                <td><input type="text" name="inputOutstanding" id="inputOutstanding" t-att-value="out_standing" readonly=""/></td>
+                                <td> </td>
+                            </tr>
+                            <tr>
+                                <td>No. of payment months desired?</td>
+                                <td>
+                                    <select name="inputPaymonths" class="requiredValue parsley-validated" id="inputPaymonths" data-required="true">
+                                        <t t-set="interest_detail" t-value="request.env['debitorder.interest'].sudo().search([])"/>
+                                            <t t-foreach="interest_detail" t-as="each_interest">
+                                            <option t-att-data-interest="each_interest.interest_per" t-att-value="each_interest.no_months"><span t-esc="each_interest.no_months"/><span>Months</span></option>
+                                        </t>
+                                    </select>
+                                </td>
+                                <td>Please use the dropdown arrow to select no. of months to be displayed on your Free Quote or invoice/statement to be emailed to you.</td>
+                            </tr>
+                            <tr>
+                                <td>Interest</td>
+
+                                <td><input type="text" name="inputInterest" value="0.0" id="inputInterest" readonly=""/></td>
+                                <td><b>Time-Interest display on outstanding balance:</b><br/>
+                                    <table class="table table-bordered" style="color:black;background-color:lightyellow;">
+                                        <tbody>
+                                            <tr>
+                                                <t t-foreach="interest_detail" t-as="each_interest">
+                                                    <td><span t-esc="each_interest.no_months"/><span>Months</span></td>
+                                                </t>
+                                            </tr>
+                                            <tr>
+                                                <t t-foreach="interest_detail" t-as="each_interest">
+                                                    <td><span t-esc="each_interest.interest_per"/></td>
+                                                </t>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <t t-set="due" t-value="(float(total_payment)*20)/100"/>
+                                <td style="background-color: -moz-MenuBarText;">Total (inclusive of VAT AND Interest)</td>
+                                <td style="background-color: -moz-MenuBarText;"><input type="text" name="inputtotalandInterest" id="inputtotalandInterest" t-att-value="out_standing" readonly=""/></td>
+                                <td> </td>
+                            </tr>
+                            <tr>
+                                <td>Display of monthly amounts.</td>
+                                <td><input type="text" name="inputpaymentpermonth" id="inputpaymentpermonth" t-att-value="out_standing" readonly=""/></td>
+                                <td>Based on the % deposit and no. of months you selected above, the value on the left will display on your Free Quote or invoice/statement to be emailed.</td>
+                            </tr>
+                            <tr>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <t t-if="page_confirm">
+                        <table id="debit_order_section" class="table table-bordered" style="color:black;background-color:lightyellow;margin-bottom:20px;">
+	                        <tbody>
+                                <tr>
+                                    <td>Debit Order Date</td>
+                                    <td>
+                                        <select name="inputPaydate" class="requiredValue" id="inputPaydate">
+                                            <option value="1"> 1</option>
+                                            <option value="2"> 2</option>
+                                            <option value="3"> 3</option>
+                                            <option value="4"> 4</option>
+                                            <option value="5"> 5</option>
+                                            <option value="6"> 6</option>
+                                            <option value="7"> 7</option>
+                                            <option value="8"> 8</option>
+                                            <option value="9"> 9</option>
+                                            <option value="10"> 10</option>
+                                            <option value="11"> 11</option>
+                                            <option value="12"> 12</option>
+                                            <option value="13"> 13</option>
+                                            <option value="14"> 14</option>
+                                            <option value="15"> 15</option>
+                                            <option value="16"> 16</option>
+                                            <option value="17"> 17</option>
+                                            <option value="18"> 18</option>
+                                            <option value="19"> 19</option>
+                                            <option value="20"> 20</option>
+                                            <option value="21"> 21</option>
+                                            <option value="22"> 22</option>
+                                            <option value="23"> 23</option>
+                                            <option value="24"> 24</option>
+                                            <option value="25"> 25</option>
+                                            <option value="26"> 26</option>
+                                            <option value="27"> 27</option>
+                                            <option value="28"> 28</option>
+                                            <option value="29"> 29</option>
+                                            <option value="30"> 30</option>
+                                        </select>
+                                    </td>
+                                    <td>Using the dropdown, please select the preferred date for the debit orders.</td>
+                                </tr>
+                                <tr>
+                                    <td>Next Debit Order Date</td>
+                                    <td>
+                                        <t t-set="today_date" t-value="datetime.date.today() + relativedelta(months=1)"/>
+                                        <input type="text" t-att-value="today_date.strftime('%d/%m/%Y')" name="inputnextdodate" id="inputnextdodate" placeholder="dd/mm/yyyy" readonly=""/>
+                                    </td>
+                                    <td> </td>
+                               </tr>
+                                <tr style="background-color: #DA4F49;">
+                                    <th colspan="3">Your Account Details for Debit Orders</th>
+                                </tr>
+                                <tr>
+                                    <td style="width:24%;">Please enter your bank account details where the Debit Orders will be run.</td>
+                                    <td> </td>
+                                    <td>Please note that the system will validate and authenticate your banking details provided.</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:24%;">Account Holder Name</td>
+                                    <td><input type="text" name="inputAccholderName" id="inputAccholderName"/></td><td> </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:24%;">Bank Name</td>
+                                    <td>
+                                        <select name="inputBankName" class="requiredValue" id="inputBankName">
+                                            <t t-set="res_bank" t-value="request.env['res.bank'].sudo().search([])"/>
+                                            <t t-foreach="res_bank" t-as="each_bank">
+                                                <option t-att-bank-id="each_bank.id" t-att-value="each_bank.id"><span t-esc="each_bank.name"/></option>
+                                            </t>
+                                        </select>
+                                    </td>
+                                    <td> </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:24%;">Account No.</td>
+                                    <td><input type="text" name="inputAccount" id="inputAccount"/></td><td> </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:24%;">Bank Code</td>
+                                    <td>
+                                        <select name="inputBCode" class="requiredValue" id="inputBCode" disabled="true">
+                                            <t t-foreach="res_bank" t-as="each_bank">
+                                                <option id="bank_code" t-att-value="each_bank.id"><span t-esc="each_bank.bic"/></option>
+                                            </t>
+                                        </select>
+                                    </td>
+                                    <td> </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:24%;">Account Type</td>
+                                    <td>
+                                        <select name="inputAtype" class="requiredValue" id="inputAtype">
+                                            <t t-set="account_type" t-value="request.env['account.account.type'].sudo().search([])"/>
+                                            <t t-foreach="account_type" t-as="each_account_type">
+                                                <option t-att-value="each_account_type.id"><span t-esc="each_account_type.name"/></option>
+                                            </t>
+                                        </select>
+                                    </td>
+                                    <td> </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+		                                <div class="control-group">
+                                            <div class="controls">
+                                                <label class="checkbox">
+		                                            <input type="checkbox" id="debitrequiredcheckbox" name="debitrequiredcheckbox" data-required="true" class="parsley-validated"/> I accept Debit Order <a target="blank_" href=" http://www.charterquest.co.za/page/debit-order-terms">Terms and Conditions</a>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                    <t t-if="not page_confirm">
+                        <div class="control-group">
+                            <input class="form-field" name="sale_order" t-att-value="sale_order" type="hidden"/>
+                            <button id="back_button" class="btn btn-primary pull-left" type="button">Back</button>
+                            <button type="submit" id="getfreequote-button" style="margin-left: 150px;" class="col-sm-4 btn btn-primary pull-left">Get Free Quote Emailed</button>
+                        </div>
+                    </t>
+                    <t t-if="page_confirm">
+                        <div class="control-group">
+                            <label class="checkbox" style="color:black;padding-left: 35px;padding-bottom: 10px;">
+		                        <input type="checkbox" id="requiredcheckbox" name="requiredcheckbox" data-required="true" class="parsley-validated" required=""/> I accept the <a target="blank_" href="http://www.charterquest.co.za/page/terms-and-conditions">Terms and Conditions</a>
+		                    </label>
+                            <input id="sale_order_id" class="form-field" name="sale_order" t-att-value="sale_order" type="hidden"/>
+                            <button id="back_button" class="btn btn-primary" type="button">Back</button>
+                            <button type="submit" style="margin-left:10px;" id="credit-button" class="btn btn-primary">Pay Via Credit Card</button>
+                            <button type="submit" style="margin-left:10px;" formaction="/validate_payment" id="eft-button" class="btn btn-primary">Pay Via EFT</button>
+                            <button type="submit" style="margin-left:10px;" formaction="/validate_payment" id="bankdeposit-button" value="true" name="Pay Via Bank Deposit" class="btn btn-primary">Pay Via Bank Deposit</button>
+                        </div>
+                    </t>
+                </form>
+            </t>
+        </t>
+    </template>
+
+    <template id="enrolment_process_page_thankyou" name="Thank You">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <div class="col-sm-12" style="color:black;">
+                    <h3>Thank You!</h3>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="enrolment_process_reg_and_enrol_thankyou" name="Thank You">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <div class="col-sm-12" style="color:black;">
+                    <h3>Thank You!</h3>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="enrolment_process_registration_and_enroll" name="Registration Process">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <form action="/registration_and_enrol" class="form-horizontal-enroll" name="registrationform" method="post">
+                    <fieldset>
+                        <table class="table" style="color:black;">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputTitle">* Title</label>
+                                            <div class="controls">
+                                                <select name="inputTitle" class="requiredValue form-control1" id="inputTitle" required="">
+                                                    <t t-set="title" t-value="request.env['res.partner.title'].sudo().search([])"/>
+                                                    <t t-foreach="title" t-as="each_title">
+                                                        <option t-att-value="each_title.id"><span t-esc="each_title.name"/></option>
+                                                    </t>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" id="stud_company" for="inputCompany">Students Company</label>
+                                            <div class="controls">
+                                                <input type="text" class="form-control1" name="inputCompany" id="inputCompany" placeholder="Company"/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputFirstName">* First Name</label>
+                                            <div class="controls">
+                                                <input type="text" name="inputFirstName" id="inputFirstName" placeholder="First Name" class="requiredValue form-control1" required=""/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" id="vat_number" for="inputVat">VAT Number</label>
+                                            <div class="controls">
+                                                <input type="text" class="form-control1" name="inputVat" id="inputVat" placeholder="vat"/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputLastName">* Last Name</label>
+                                            <div class="controls">
+                                                <input type="text" name="inputLastName" id="inputLastName" placeholder="Last Name" class="requiredValue form-control1" required=""/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputStreet">* Address Street</label>
+                                            <div class="controls">
+                                                <input type="text" name="inputStreet" id="inputStreet" placeholder="Street" class="requiredValue form-control1" required=""/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputDOB">* Date of Birth</label>
+                                            <div class="controls">
+                                                <!--<input id="datepicker" type="text" name="inputDOB" class="requiredValue hasDatepicker form-control1" placeholder="MM-DD-YY"/>-->
+                                                <input type="text" id="datepicker" name="inputDOB" class="form-control1" placeholder="MM-DD-YY" required="" readonly=""/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputStreet2">* Address Street</label>
+                                            <div class="controls">
+                                                <input type="text" name="inputStreet2" id="inputStreet2" placeholder="" class="form-control1" required=""/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputID_PassportNo.">* ID/Passport No.</label>
+                                            <div class="controls">
+                                                <input type="text" name="inputID_PassportNo." id="inputID_PassportNo." placeholder="ID/Passport No." class="requiredValue form-control1" required=""/>
+                                            </div>
+                                        </div>
+                                    </td><td>
+                                    <div class="control-group">
+                                        <label class="control-label" for="inputCity">* Address City</label>
+                                        <div class="controls">
+                                            <input type="text" name="inputCity" id="inputCity" placeholder="City" class="requiredValue form-control1" required=""/>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputContactNumber">* Cell/Mobile</label>
+                                            <div class="controls">
+                                                <input type="text" name="inputContactNumber" id="inputContactNumber" placeholder="Contact Number" class="requiredValue form-control1" required=""/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputState">* Province</label>
+                                            <div class="controls">
+                                                <t t-set="state" t-value="request.env['res.country.state'].sudo().search([])"/>
+                                                <select name="inputState" id="inputState" class="requiredValue form-control1" required="">
+                                                    <t t-foreach="state" t-as="each_state">
+                                                        <option t-att-value="each_state.id"><span t-esc="each_state.name"/></option>
+                                                    </t>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputEmail">* Students Email</label>
+                                            <div class="controls">
+                                                <input type="text" name="inputEmail" id="inputEmail" placeholder="Email" class="requiredValue form-control1" required=""/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputZip">* Zipcode</label>
+                                            <div class="controls">
+                                                <input type="text" id="inputZip" name="inputZip" placeholder="Zipcode" class="requiredValue form-control1" required=""/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputFax">Fax</label>
+                                            <div class="controls">
+                                                <input type="text" name="inputFax" id="inputFax" placeholder="Fax" class="form-control1"/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="info">* Where did you find out about CharterQuest?</label>
+                                            <div class="controls">
+                                                <select name="inputFindout" id="inputFindout" class="requiredValue form-control1" required="">
+                                                    <option value="1"> Friend or Colleague </option>
+                                                    <option value="2"> Institute </option>
+                                                    <option value="3"> Internet Search Engine </option>
+                                                    <option value="4"> Advertisement </option>
+                                                    <option value="5"> Other </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputId">* Professional Body Student ID No.</label>
+                                            <div class="controls">
+                                                <input type="text" name="inputId" class="requiredValue form-control1" id="inputId" placeholder="" required=""/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="control-group">
+                                            <label class="control-label" for="comment"> Comments/Requests?</label>
+                                            <div class="controls">
+                                                <textarea name="inputComment" rows="3" placeholder="Comments/Requests?" class="form-control1"> </textarea>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="control-group"><label class="control-label" for="inputPassword">* Create your own Password</label>
+                                            <div class="controls">
+                                                <input type="password" name="inputPassword" id="inputPassword" placeholder="Password" class="requiredValue form-control1" required=""/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" id="requiredcheckbox" required=""/> I accept the <a target="blank_" href="http://www.charterquest.co.za/page/terms-and-conditions">Terms and Conditions</a>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="new_text" style="background-color: rgba(239, 25, 9, 1); color: white;">
+                                            Before ACCEPTING this Enrolment Form, students are reminded to ensure that they have clearly understood all the terms of their enrolment
+                                            With CHARTERQUEST, in particular clauses concerning refunds, deferments, waivers, course transfers and visa
+                                            applications (when applicable).
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="control-group">
+                            <div id="alert-area">
+                            </div>
+                            <div id="exceptLabel" style="display:None;color:red;">
+                                <strong>Warning!</strong> Please make sure all Fields are filled in
+                            </div>
+                            <div class="col-sm-12 button-div">
+                                <center>
+                                    <button id="reg_and_enrol" type="submit" class="btn btn-primary pull-right">Next</button>
+                                    <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                                </center>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </t>
+        </t>
+    </template>
+
+    <template id="enrolment_process_validate_payment" name="Validate Payment Process">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <form action="/page/thank-you" class="form-horizontal-validate-payment" method="post" style="color:black;">
+
+
+                    <t t-if="button_hide">
+                        <h2>Pay Later</h2>
+                        <h3>
+                            See below banking details. Ensure you use your unique reference number below.  Bank deposits may attract bank charges, ensure you cover any charges related to your transaction.
+                        </h3>
+                        <center>
+                            <button id="btn_pay_later" formaction="/thank-you" type="submit" style="margin-top: 30px;" class="btn btn-primary">Get Quote and Banking details Emailed</button>
+                        </center><br/>
+                    </t>
+                    <t t-if="not button_hide">
+                        <h2>Pay Now</h2>
+                        <h3>Log onto your online banking and make payment using the details below and then click the I’ve Paid button below.</h3>
+                        <center>
+                        <button id="btn_paid" type="submit" style="margin-top: 30px;" class="btn btn-primary">I’ve Paid</button>
+                        <button id="btn_pay_later" formaction="/thank-you" type="submit" style="margin-top: 30px;" class="btn btn-primary">Pay Later</button>
+                            <!--<a href="/eft_payment?status=paid" class="btn btn-large btn-danger">I’ve Paid</a>-->
+                            <!--<a href="/eft_payment?status=cancel" class="btn btn-large btn-danger">Pay Later</a>-->
+                        </center><br/>
+                    </t>
+
+                    <table class="table table-bordered" style="background-color: rgb(163, 192, 235);margin-bottom: 30px;">
+                        <t t-if="post_data">
+                            <tbody>
+                                <tr>
+                                    <td>Bank:</td>
+                                    <!--<t t-set="bank_detail" t-value="request.env['res.bank'].sudo().search([('id', '=', int(post_data['inputBankName']) if post_data['inputBankName'] else '')])"/>-->
+                                    <!--<t t-if="bank_detail">-->
+                                        <!--<td><span t-esc="bank_detail.name"/> </td>-->
+                                    <!--</t>-->
+                                    <!--<t t-if="not bank_detail">-->
+                                    <td>FNB</td>
+                                    <!--</t>-->
+                                </tr>
+                                <tr>
+                                    <td>Beneficiary name:</td>
+                                    <td>The CharterQuest Professional Education Institute (Pty) Ltd</td>
+                                </tr>
+                                <tr>
+                                    <td>Account type:</td>
+                                    <!--<t t-set="account_detail" t-value="request.env['account.account.type'].sudo().search([('id', '=', int(post_data['inputAtype']) if post_data['inputAtype'] else '')])"/>-->
+                                    <!--<t t-if="account_detail">-->
+                                        <!--<td><span t-esc="account_detail.name"/></td>-->
+                                    <!--</t>-->
+                                    <!--<t t-if="not account_detail">-->
+                                        <td>Business Cheque</td>
+                                    <!--</t>-->
+                                </tr>
+                                <tr>
+                                    <td>Account no:</td>
+                                    <!--<td><span t-esc="post_data['inputAccount'] if post_data['inputAccount'] else ''"/></td>-->
+                                    <td>626 8076 7054</td>
+                                </tr>
+                                <tr>
+                                    <td>Branch code:</td>
+                                    <!--<t t-if="bank_detail">-->
+                                        <!--<td><span t-esc="bank_detail.bic"/> </td>-->
+                                    <!--</t>-->
+                                    <!--<t t-if="not bank_detail">-->
+                                        <td>250655</td>
+                                    <!--</t>-->
+                                </tr>
+                                <tr>
+                                    <td>Reference/Beneficiary statement:</td>
+                                    <t t-set="order_detail" t-value="request.env['sale.order'].sudo().search([('id', '=', int(post_data['sale_order']) if post_data['sale_order'] else '')])"/>
+                                    <t t-if="order_detail">
+                                        <td><span t-esc="order_detail.name"/><t/> <t/>  Please do not modify, use the reference/beneficiary text exactly as shown.</td>
+                                        <input class="form-field" name="sale_order" t-att-value="post_data['sale_order'] if post_data['sale_order'] else ''" value="tttt" type="hidden"/>
+                                    </t>
+                                    <t t-if="not order_detail">
+                                        <td> </td>
+                                    </t>
+                                </tr>
+                                <tr>
+                                    <td>Amount:</td>
+                                    <td><span t-esc="post_data['inputTotalDue']" t-options=""/>  <t/><t/>Please enter the amount to be paid exactly as shown. Do not round off.</td>
+                                </tr>
+
+                            </tbody>
+                        </t>
+                    </table>
+                    <button id="back_button" class="btn btn-primary pull-left" type="button">Back</button>
+                </form>
+            </t>
+        </t>
+    </template>
+</odoo>

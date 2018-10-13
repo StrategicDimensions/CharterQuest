@@ -640,6 +640,24 @@
         </field>
     </record>
 
+    <record model="ir.ui.view" id="cfo_jnr_member_add_tree">
+        <field name="name">No. Of CFO Member</field>
+        <field name="model">cfo.jnr.member.add</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name='total_member' />
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="action_cfo_jnr_member_add">
+        <field name="name">CFO Member</field>
+        <field name="res_model">cfo.jnr.member.add</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
+
     <record model="ir.actions.act_window" id="action_cfo_jnr_ambassador_2016">
         <field name="name">Brand Ambassadors</field>
         <field name="res_model">brand.ambassador.jnr</field>
@@ -680,6 +698,7 @@
         <field name="context">{'default_cfo_competition_year': '2020'}</field>
     </record>
 
+    <menuitem id="menu_cfo_jnr_member_add" action="action_cfo_jnr_member_add" parent="menu_cfo_jnr_configuration_root" sequence="3"/>
     <menuitem id="menu_cfo_ambassador_jnr_2016" action="action_cfo_jnr_ambassador_2016" parent="menu_cfo_member_jnr_2016_root" sequence="6"/>
     <menuitem id="menu_cfo_ambassador_jnr_2017" action="action_cfo_jnr_ambassador_2017" parent="menu_cfo_member_jnr_2017_root" sequence="6"/>
     <menuitem id="menu_cfo_ambassador_jnr_2018" action="action_cfo_jnr_ambassador_2018" parent="menu_cfo_member_jnr_2018_root" sequence="6"/>

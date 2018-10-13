@@ -92,7 +92,7 @@ odoo.define('cfo_snr_jnr.snippet_menu', function (require) {
                     } else {
                         menu_icon = _t("fa-check");
                     }
-                    html = '<a href="#' + menu_url + '" class="step-link"><div class="col-md-1 menu-icon ' + menu_url + '" data-current-menu="' + menu_url + '"><ul class="breadcrumb-list-new"><li class="step-done">';
+                    var html = '<a href="#' + menu_url + '" class="step-link"><div class="col-md-1 menu-icon ' + menu_url + '" data-current-menu="' + menu_url + '"><ul class="breadcrumb-list-new"><li class="step-done">';
                     if (typeof self.$target.find('.menu-with-icon ul li').html() != 'undefined') {
                         $(".menu-with-icon ul li:last-child div").addClass('add-connector_after');
                         html += '<div class="stop-rounding add-connector">';

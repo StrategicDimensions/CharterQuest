@@ -1,0 +1,236 @@
+<odoo>
+    <data>
+
+        <record id="fnb_integration_csv_cron" model="ir.cron">
+            <field name="name">FNB Integration CSV</field>
+            <field name="model_id" ref="model_exported_debit_order_file"/>
+            <field name="state">code</field>
+            <field name="code">model.generate_fnb_integration_csv()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
+
+        <record model="ir.cron" id="debit_order_status_cron">
+            <field name="name">Debit Order Status Sucessfull</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="model_debit_order_details"/>
+            <field name="state">code</field>
+            <field name="code">model.get_debit_order_status_successful()</field>
+        </record>
+
+
+        <!-- sequence for Debit order -->
+
+        <record id="seq_debit_order_details" model="ir.sequence">
+            <field name="name">Debit Order</field>
+            <field name="code">debit.order.details</field>
+            <field name="prefix">DO</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record model="ir.ui.view" id="view_debit_order_form">
+            <field name="name">Debit Orders</field>
+            <field name="model">debit.order.details</field>
+            <field name="arch" type="xml">
+                <form string="Debit Order">
+                    <sheet string="Debit Order">
+                        <group col="4" class="oe_header">
+                            <field name="name"/>
+                            <field name="partner_id" on_change="onchange_partner_id(partner_id)"/>
+                            <field name="student_number" />
+                            <field name="dbo_amount" widget='monetary'/>
+                            <field name="course_fee"/>
+                            <field name="interest"/>
+                            <field name="dbo_date"/>
+                            <field name="acc_holder"/>
+                            <field name="bank_name"/>
+                            <field name="bank_acc_no"/>
+                            <field name="bank_code"/>
+                            <!--<field name="bank_acc_type"/>-->
+                            <field name="invoice_id"/>
+                            <field name="state"/>
+                            <field name="debit_order_batchname"/>
+                            <field name="debit_order_batch" readonly="1" filename="debit_order_batchname"/>
+                            <button name="export_debit_orders" type="object" string="Export Debit Orders for FNB" invisible="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                    </div>
+                </form>
+        </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_debit_order_tree">
+            <field name="name">Debit Orders</field>
+            <field name="model">debit.order.details</field>
+            <field name="arch" type="xml">
+                <tree string="Debit Orders">
+                     <field name="name" readonly="1"/>
+                     <field name="partner_id"/>
+                     <field name="student_number" />
+                     <field name="dbo_amount"/>
+                     <field name="course_fee"/>
+                     <field name="interest"/>
+                     <field name="dbo_date"/>
+                     <field name="acc_holder"/>
+                     <field name="bank_name"/>
+                     <field name="bank_acc_no"/>
+                     <field name="bank_code"/>
+                     <!--<field name="bank_acc_type"/>-->
+                     <field name="invoice_id"/>
+                     <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_debit_order_detail_filter" model="ir.ui.view">
+            <field name="name">Debit - Orders  Search</field>
+            <field name="model">debit.order.details</field>
+            <field name="arch" type="xml">
+                <search string="Search Debit Orders">
+                    <field name="name" />
+                    <field name="dbo_date"/>
+                    <field name="student_number" />
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_debit_order_details">
+            <field name="name">Debit Orders</field>
+            <field name="res_model">debit.order.details</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Debit Orders" id="menu_debit_orders" action="action_debit_order_details" parent="account.menu_finance_receivables" sequence="10"/>
+
+        <!-- Debit order Mandate -->
+
+        <record model="ir.ui.view" id="view_debit_order_mandate_form">
+            <field name="name">Debit Order Mandate</field>
+            <field name="model">debit.order.mandate</field>
+            <field name="arch" type="xml">
+                <form string="Debit Order Mandate">
+                     <field name="partner_id"/>
+                     <field name="dbo_amount"/>
+                     <field name="course_fee"/>
+                     <field name="months"/>
+                     <field name="interest"/>
+                     <field name="dbo_date"/>
+                     <field name="acc_holder"/>
+                     <field name="bank_name"/>
+                     <field name="bank_acc_no"/>
+                     <field name="bank_code"/>
+                     <field name="bank_acc_type"/>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record model="ir.ui.view" id="view_debit_order_mandate_tree">
+            <field name="name">Debit Order Mandate</field>
+            <field name="model">debit.order.mandate</field>
+            <field name="arch" type="xml">
+                <tree string="Debit Order Mandate">
+                     <field name="partner_id"/>
+                     <field name="dbo_amount"/>
+                     <field name="course_fee"/>
+                     <field name="months"/>
+                     <field name="interest"/>
+                     <field name="dbo_date"/>
+                     <field name="acc_holder"/>
+                     <field name="bank_name"/>
+                     <field name="bank_acc_no"/>
+                     <field name="bank_code"/>
+                     <field name="bank_acc_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_debit_order_mandate">
+            <field name="name">Debit Order Mandate</field>
+            <field name="res_model">debit.order.mandate</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Debit Order Mandate" id="menu_debit_orders_mandate" action="action_debit_order_mandate" parent="account.menu_finance_receivables" sequence="11"/>
+
+
+        <record model="ir.ui.view" id="view_debit_order_file_form">
+        <field name="name">Debit Order Files</field>
+        <field name="model">exported.debit.order.file</field>
+        <field name="arch" type="xml">
+            <form string="Debit Order File">
+                 <group col="4" >
+                  <field name="type" />
+                  <field name="name"/>
+                  <field name="file" readonly="1" filename="name"/>
+                  <field name="hash_file_name"/>
+                  <field name="hash_file" readonly="1" filename="hash_file_name"/>
+                  <field name="date"/>
+                  <field name="action_date"/>
+                  <field name="no_of_transactions"/>
+                  <field name="transactions_amount_total"/>
+                  <field name="installation_generation_number"/>
+                  <field name="user_generation_number"/>
+                  <field name="hash_total"/>
+                  <field name="loaded_to_fnb" />
+                 </group>
+                  <button  name="get_debit_orders"
+                  string="Debit Order Entries"
+                  type="object"
+                  help="Debit Order Entries"/>
+            </form>
+        </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_debit_order_file_tree">
+        <field name="name">Debit Order Files</field>
+        <field name="model">exported.debit.order.file</field>
+        <field name="arch" type="xml">
+            <tree string="Debit Order File">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="action_date"/>
+                <field name='no_of_transactions'/>
+                <field name='transactions_amount_total'/>
+                <field name='loaded_to_fnb'/>
+            </tree>
+        </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_exported_debit_order_file">
+            <field name="name">Debit Order Files</field>
+            <field name="res_model">exported.debit.order.file</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Debit Order Files" id="menu_debit_orders_mandate" action="action_exported_debit_order_file" parent="account.menu_finance_receivables" sequence="12"/>
+
+        <record forcecreate="True" id="failure_debit_order_notify_cron" model="ir.cron">
+            <field name="name">Failure Debit Order Notificaton Scheduler</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">5</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field name="model_id" ref="model_debit_order_details"/>
+            <field name="state">code</field>
+            <field name="code">model.failed_debit_order_notification()</field>
+        </record>
+      <!--End-->
+    </data>
+</odoo>

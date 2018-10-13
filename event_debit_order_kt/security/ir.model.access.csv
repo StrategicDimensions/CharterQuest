@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_debit_order_details,debit.order.details,model_debit_order_details,group_debit_order,1,1,1,1
+access_debit_order_mandate,debit.order.mandate,model_debit_order_mandate,group_debit_order,1,1,1,1
+access_sale_user,payment.confirmation.user,model_payment_confirmation,base.group_user,1,1,1,1
+access_user,payment.confirmation.base.user,model_payment_confirmation,base.group_user,1,1,1,1
+access_exported_debit_order_file,access_exported_debit_order_file,model_exported_debit_order_file,base.group_user,1,0,0,0

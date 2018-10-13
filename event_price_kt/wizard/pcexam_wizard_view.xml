@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="pcexams_success_form" model="ir.ui.view">
+             <field name="name">PCExams Success Wizard</field>
+             <field name="model">pcexams.success</field>
+             <field name="arch" type="xml">
+                 <form string="PC Exams Success Wizard">
+                     <group col="4" >
+                     <field name="name"/>
+                    </group>
+                    <newline/>
+                 </form>
+             </field>
+        </record>
+
+        <record id="action_pcexams_success" model="ir.actions.act_window">
+            <field name="name">PCExams Success Form</field>
+            <field name="res_model">pcexams.success</field>
+            <field name="view_id" ref="pcexams_success_form"/>
+            <field name="view_mode">form</field>
+        </record>
+
+
+        <record id="pcexams_wizard_form" model="ir.ui.view">
+             <field name="name">PCExams Wizard</field>
+             <field name="model">pcexams.wizard</field>
+             <field name="arch" type="xml">
+                 <form string="PC Exams Wizard">
+                     <group col="4" >
+                     <field name="name" required="1"/>
+                     <field name="address_id" required="1" domain="[('is_campus','=',1)]"/>
+                     <field name="type_pc_exam" required="1"/>
+                     <field name="subject" required="1"/>
+                     <field name="type" required="1"/>
+                     <field name="date_begin" required="1"/>
+                     <field name="date_end" required="1"/>
+                     <field name="price" required="1"/>
+                     <field name="semester" required="1"/>
+                     <field name="qualification" required="1"/>
+                     <field name="seats_max" required="1"/>
+                     <field name="user_id" required="1" />
+                     <field name="email_registration_id" required="1"/>
+                     <field name="email_confirmation_id" required="1"/>
+                    </group>
+                    <newline/>
+           <!--<field name="event_id" domain="[('type','=',prof_body),('semester','=',semester),('address_id','=',address_id)]"/>-->
+                    <button name="create_events" class="oe_highlight" type="object" string="Create Events"/>
+                 </form>
+             </field>
+        </record>
+
+        <record id="action_pcexams_wizard" model="ir.actions.act_window">
+            <field name="name">Create PCExam Events</field>
+            <field name="res_model">pcexams.wizard</field>
+            <field name="view_id" ref="pcexams_wizard_form"/>
+            <field name="view_mode">form</field>
+        </record>
+
+        <menuitem id="menu_action_pcexams_wizard" action="action_pcexams_wizard"  parent="event.menu_event_configuration" sequence="24"/>
+    </data>
+</odoo>
+

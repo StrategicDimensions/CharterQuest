@@ -25,15 +25,15 @@ from collections import defaultdict
 class IrAttachment(models.Model):
     _inherit = 'ir.attachment'
 
-    team_id = fields.Many2one('cfo.teams','Team ID')
-    doc_id = fields.Many2one('volunteers','Doc ID')
-    mentors_doc_id = fields.Many2one('mentors','DOC ID')
-    fyla_application_id_att = fields.Many2one('fyla.application',"FYLA Application")
-    aspirant_doc_id = fields.Many2one('cfo.aspirants','Aspirants Docs')
-    academic_doc_id = fields.Many2one('academic.institution','Academic Docs')
-    employers_doc_id = fields.Many2one('employers','Employer Docs')
-    social_doc_id = fields.Many2one('social.media.contestants','Social Docs')
-    brand_doc_id = fields.Many2one('brand.ambassador','Social Docs')
+    team_id = fields.Many2one('cfo.teams', 'Team ID')
+    doc_id = fields.Many2one('volunteers', 'Doc ID')
+    mentors_doc_id = fields.Many2one('mentors', 'DOC ID')
+    fyla_application_id_att = fields.Many2one('fyla.application', "FYLA Application")
+    aspirant_doc_id = fields.Many2one('cfo.aspirants', 'Aspirants Docs')
+    academic_doc_id = fields.Many2one('academic.institution', 'Academic Docs')
+    employers_doc_id = fields.Many2one('employers', 'Employer Docs')
+    social_doc_id = fields.Many2one('social.media.contestants', 'Social Docs')
+    brand_doc_id = fields.Many2one('brand.ambassador', 'Social Docs')
     
     @api.model
     def check(self, mode, values=None):

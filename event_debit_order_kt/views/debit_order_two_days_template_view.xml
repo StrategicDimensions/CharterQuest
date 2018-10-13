@@ -1,0 +1,99 @@
+<?xml version="1.0" ?>
+<odoo>
+	<data noupdate="0">
+        <!--Email template -->
+        <record id="email_template_edi_invoice" model="mail.template">
+            <field name="name">Debit Order Going of in two days</field>
+<!--            <field name="email_from">${object.partner_id.user_id.email}</field> -->
+	        <field name='email_from'>enquiries@charterquest.co.za</field>
+            <field name="subject">Debit Order going of in two days</field>
+	        <field name='email_to'>${object.partner_id.email}</field>
+            <field name="model_id" ref="model_debit_order_details"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+Dear <br/>
+Greetings from us at CharterQuest!<br/><br/>
+This is a friendly reminder that your debit order will go off your account in 2 days.  <br/><br/>
+Please kindly provide for sufficient funds to support our ongoing service commitments and maintain your otherwise good standing with us, your professional body and external credit institutions.<br/><br/>
+Do not hesitate to contact us should you have any queries.<br/><br/>
+Thanking you<br/>
+
+Desmond B. Fosang <br/>
+
+Student Accounting Services <br/>
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE <br/>
+Email: accounts@charterquest.co.za | desmond.f@charterquest.co.za <br/>
+Tel.: +27 (0)11 791 3014 <br/><br/>
+
+
+SANDTON CAMPUS: <br/>
+<br/>
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE <br/>
+@ CHARTERQUEST HOUSE,<br/>
+Metropolitan Park<br/>
+374 Rivonia Boulevard<br/>
+Rivonia, SANDTON <br/>
+South Africa <br/>
+
+CONTACT INFORMATION: <br/>
+Tel: +27 (0)11 234 9223 [SA & Intl] <br/>
+Tel: +27 (0)11 234 9238 [SA & Intl]<br/>
+Tel: 0861 131 137 [SA ONLY]<br/>
+Fax: 086 218 8713 [SA ONLY]<br/>
+Email: enquiries@charterquest.co.za<br/>
+
+
+BRAAMFONTEIN CAMPUS:<br/>
+ 
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE <br/>
+@ ORION HOUSE,<br/>
+[13th floor] 49 Jorissen Street <br/>
+Cnr Biccard and Jorissen Street <br/>
+BRAAMFONTEIN<br/>
+South Africa<br/>
+ 
+CONTACT INFORMATION: <br/>
+Tel: +27 [0]11 403 0656 [SA & Intl]<br/>
+Tel: +27 [0]11 403 0642 [SA & Intl] <br/>
+Fax: 086 218 8713 [SA ONLY] <br/>
+Fax: +27 [0]11 791 7703 [SA & Intl] <br/>
+Email: enquiries@charterquest.co.za <br/>
+
+PRETORIA CAMPUS: <br/>
+<br/>
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE <br/>
+367 Hilda Street <br/>
+Hatfield Rendez Vous Building <br/>
+Hatfield, PRETORIA <br/>
+South Africa <br/>
+
+CONTACT INFORMATION:<br/>
+Tel: +27 [0]12 751 7608 [SA & Intl] <br/>
+Email: enquiries@charterquest.co.za <br/>
+
+
+</div>
+		    ]]></field>
+        </record>
+
+
+	<!--Cron for scheduling Debit orders going of in two days -->
+        <record forcecreate="True" id="debit_order_going_two_days_template" model="ir.cron">
+            <field name="name">Debit order going of in two days</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field name="model_id" ref="model_debit_order_details"/>
+            <field name="state">code</field>
+            <field name="code">model.send_debit_order_emails()</field>
+            <!--<field eval="'()'" name="args"/>-->
+        </record>
+
+</data>
+</odoo>
+

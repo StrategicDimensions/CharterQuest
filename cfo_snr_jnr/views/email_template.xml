@@ -1,0 +1,98 @@
+<?xml version="1.0" ?>
+<odoo>
+
+   <data noupdate="0">
+        <record id="email_template_paid_success" model="mail.template">
+            <field name="name">Paid Fees Email</field>
+            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_to">${object.user_id.email or ''}</field>
+            <field name="subject">Charterquest FreeQuote/Enrolment ${object.name}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="report_template" ref="event_price_kt.report_sale_enrollment"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.user_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+<br>
+Dear ${object.partner_id.name or ''}
+<br><br>
+Thank you for your course fee/price inquiry.
+<br><br>
+<font size="3">To enrol, please access banking details or pay online by clicking this link:
+ </font>
+<br><br>
+
+<br><br>
+
+Confirm discounts requirements below and double check your attached quote to ensure you have claimed all discounts applicable to you before you proceed:
+<br><br>
+
+	We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!
+	<br><br><br>
+
+    Thanking You
+    <br><br>
+    Patience Mukondwa<br>
+    Head Of Operations<br>
+    The CharterQuest Institute<br>
+    CENTRAL CONTACT INFORMATION:<br>
+    Tel: +27 (0)11 234 9223 [SA & Intl]<br>
+    Tel: +27 (0)11 234 9238 [SA & Intl]<br>
+    Tel: 0861 131 137 [SA ONLY]<br>
+    Fax: 086 218 8713 [SA ONLY]<br>
+    Email:enquiries@charterquest.co.za<br>
+	<br/>
+	<div>
+		    ]]></field>
+        </record>
+
+        <record id="email_template_paid_later_success" model="mail.template">
+            <field name="name">Fees Pay Later Email</field>
+            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_to">${object.partner_id.email or ''}</field>
+            <field name="subject">Charterquest FreeQuote/Enrolment ${object.name}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="report_template" ref="event_price_kt.report_sale_enrollment"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="lang">${object.user_id.lang}</field>
+            <field name="body_html"><![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                <br>
+                Dear ${object.partner_id.name}
+                <br><br>
+                Thank you for your enrolment and Please send your proof of payment to confirm your payment!
+                <br><br>
+                For your records, please find attached Invoice/Full Statement, copy of the Student Agreement as well as the Debit Order Mandate you just accepted Online during enrolment.
+                <br><br>
+                The Student Agreement inter alia covers:
+                <br><br>
+                1. Exam fee remmittances.
+                <br>
+                2. How to access your learning materials.
+                <br>
+                3. Cancellations, change of bookings and postponements.
+                <br>
+                4. Refunds and students complaints.
+                <br>
+                5. 1st Time Pass Guarantee scheme and other incidental matters.
+                <br><br>
+                We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!
+                <br><br><br>
+
+                Thanking You
+                <br><br>
+                Patience Mukondwa<br>
+                Head Of Operations<br>
+                The CharterQuest Professional Education Institute<br>
+                <br><br>
+
+                CENTRAL CONTACT INFORMATION:<br>
+                Tel: +27 (0)11 234 9223 [SA & Intl]<br>
+                Cell: +27 (0)73 174 5454 [SA & Intl]<br>
+                <br/>
+                <div>
+		            ]]>
+            </field>
+        </record>
+   </data>
+</odoo>

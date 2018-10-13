@@ -1,0 +1,195 @@
+<odoo>
+    <data>
+        <record id="account_invoice_form_view_kt" model='ir.ui.view'>
+        <field name="name">Invoice</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <!--<button name="action_invoice_sent" type="object" string="Send by Email" attrs="{'invisible':['|',('sent','=',True), ('state', '!=', 'open')]}" class="oe_highlight" groups="base.group_user" position="replace">-->
+            <!--<button name="action_invoice_sent" type="object" string="Send by Email" attrs="{'invisible':['|',('sent','=',True), ('state', '!=', 'open')]}" class="oe_highlight" groups="event_price_kt.group_quote_sale_invoice"/>-->
+            <!--</button>-->
+            <!--<button name="action_invoice_sent" type="object" string="Send by Email" attrs="{'invisible':['|',('sent','=',False), ('state', '!=', 'open')]}" groups="base.group_user" position="replace">-->
+            <!--<button name="action_invoice_sent" type="object" string="Send by Email" attrs="{'invisible':['|',('sent','=',False), ('state', '!=', 'open')]}" groups="event_price_kt.group_quote_sale_invoice"/>-->
+            <!--</button>-->
+            <field name="date_due" position="after">
+                <field name="debit_order_mandate"/>
+                <field name="student_number"/>
+                <field name="to_review" invisible="1"/>
+            <!--<field name = "sent_pdf_links"/>-->
+            </field>
+            <notebook>
+                <page string="Debit Order Entries">
+                    <field name="debit_order_entry"/>
+                </page>
+                <page string="PC Exams Vocuhers">
+                    <separator string="PC Exams Vouchers"/>
+                    <field name="pcexam_voucher_ids" />
+                    <separator string="Redeemed Vouchers"/>
+                    <field name="redeemed_voucher_ids" />
+                </page>
+            </notebook>
+        </field>
+        </record>
+
+        <record id="account_invoice_form_view_kt_inh" model="ir.ui.view">
+           <field name="name">account_invoice_form_view_kt_inh</field>
+           <field name="model">account.invoice</field>
+           <field name="inherit_id" ref="event_debit_order_kt.account_invoice_form_view_kt"/>
+           <field name="groups_id" eval="[(6, 0, [ref('account.group_account_invoice'),ref('account.group_account_manager')])]"/>
+           <field name="arch" type="xml">
+                 <form position="attributes">
+                    <attribute name="create">0</attribute>
+                    <attribute name="edit">1</attribute>
+                 </form>
+           </field>
+        </record>
+
+        <!--<record id="account_invoice_form_view_kt_inh1" model="ir.ui.view">-->
+           <!--<field name="name">account_invoice_form_view_kt_inh1</field>-->
+           <!--<field name="model">account.invoice</field>-->
+           <!--<field name="inherit_id" ref="event_debit_order_kt.account_invoice_form_view_kt_inh"/>-->
+           <!--<field name="groups_id" eval="[(6, 0, [ref('event_price_kt.group_quote_sale_invoice')])]"/>-->
+           <!--<field name="arch" type="xml">-->
+                 <!--<form position="attributes">-->
+                    <!--<attribute name="create">1</attribute>-->
+                    <!--<attribute name="edit">1</attribute>-->
+                 <!--</form>-->
+           <!--</field>-->
+        <!--</record>-->
+
+
+        <record id="account.invoice_tree" model="ir.ui.view">
+            <field name="name">account.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <tree colors="red:to_review==True;blue:state in ('paid');black:state in ('proforma','proforma2','open','draft');gray:state == 'cancel';" string="Invoice">
+                    <field name="partner_id" groups="base.group_user"/>
+                    <field name="student_number"/>
+                    <field name="date_invoice"/>
+                    <field name="number"/>
+                    <field name="reference" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="journal_id" invisible="1"/>
+                    <!--<field name="period_id" invisible="1" groups="account.group_account_user"/>-->
+                    <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                    <field name="user_id"/>
+                    <field name="date_due"/>
+                    <field name="origin"/>
+                    <field name="currency_id" groups="base.group_multi_currency"/>
+                    <field name="residual" sum="Residual Amount"/>
+                    <field name="amount_untaxed" sum="Untaxed Amount"/>
+                    <field name="amount_total" sum="Total Amount"/>
+                    <field name="state"/>
+                    <field name="to_review" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--<record id="invoice_tree_inh" model="ir.ui.view">-->
+           <!--<field name="name">invoice_tree_inh</field>-->
+           <!--<field name="model">account.invoice</field>-->
+           <!--<field name="inherit_id" ref="account.invoice_tree"/>-->
+           <!--<field name="groups_id" eval="[(6, 0, [ref('account.group_account_invoice'),ref('account.group_account_manager')])]"/>-->
+           <!--<field name="arch" type="xml">-->
+                 <!--<tree position="attributes">-->
+                    <!--<attribute name="create">0</attribute>-->
+                    <!--<attribute name="edit">1</attribute>-->
+                 <!--</tree>-->
+           <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="invoice_tree_inh1" model="ir.ui.view">-->
+           <!--<field name="name">invoice_tree_inh1</field>-->
+           <!--<field name="model">account.invoice</field>-->
+           <!--<field name="inherit_id" ref="event_debit_order_kt.invoice_tree_inh"/>-->
+           <!--<field name="groups_id" eval="[(6, 0, [ref('event_price_kt.group_quote_sale_invoice')])]"/>-->
+           <!--<field name="arch" type="xml">-->
+                 <!--<tree position="attributes">-->
+                    <!--<attribute name="create">1</attribute>-->
+                    <!--<attribute name="edit">1</attribute>-->
+                 <!--</tree>-->
+           <!--</field>-->
+        <!--</record>-->
+
+
+        <!--<record id="view_vendor_receipt_form_kt" model='ir.ui.view'>-->
+        <!--<field name="name">account.voucher.receipt.form.kt</field>-->
+        <!--<field name="model">account.voucher</field>-->
+        <!--<field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>-->
+        <!--<field name="arch" type="xml">-->
+              <!--<field name="partner_id" position="after">-->
+                <!--<field name="student_number"/>-->
+                 <!--<field name="invoice_id"/>-->
+              <!--</field>-->
+        <!--</field>-->
+        <!--</record>-->
+
+        <record model="ir.ui.view" id="view_voucher_tree_kt">
+            <field name="name">account.voucher.tree.kt</field>
+            <field name="model">account.voucher</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';gray:state == 'cancel';red:audit" string="Voucher Entries">
+                    <field name="date"/>
+                    <field name="number"/>
+                    <field name="reference"/>
+                    <field name="partner_id"/>
+                    <field name="student_number"/>
+                    <field name="journal_id" groups="account.group_account_user"/>
+                    <!--<field name="period_id" invisible="context.get('visible', True)"/>-->
+                    <!--<field name="type" invisible="context.get('visible', True)"/>-->
+                    <field name="amount" sum="Total Amount"/>
+                    <!--<field name="audit" invisible="1"/>-->
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_voucher.view_voucher_filter_customer_pay" model="ir.ui.view">
+            <field name="name">account.voucher.customer.pay.select</field>
+            <field name="model">account.voucher</field>
+            <field name="arch" type="xml">
+                <search string="Search Vouchers">
+                    <field name="number" string="Voucher"/>
+                     <field name="student_number"/>
+                    <field name="date"/>
+                    <filter icon="terp-document-new" string="Draft" domain="[('state','=','draft')]" help="Draft Vouchers"/>
+                    <filter icon="terp-camera_test" string="Posted" domain="[('state','=','posted')]" help="Posted Vouchers"/>
+                    <field name="partner_id" string="Customer" filter_domain="[('partner_id','child_of',self)]"/>
+                    <field name="journal_id" widget="selection" context="{'journal_id': self, 'set_visible':False}" domain="[('type','in',('bank','cash'))]"/> <!-- Keep widget=selection on this field to pass numeric `self` value, which is not the case for regular m2o widgets! -->
+                    <!--<field name="period_id"/>-->
+                    <group expand="0" string="Group By...">
+                        <filter string="Customer" icon="terp-personal" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Journal" icon="terp-folder-orange" domain="[]" context="{'group_by':'journal_id'}"/>
+                        <filter string="Period" icon="terp-go-month" domain="[]" context="{'group_by':'period_id','visible':True}"/>
+                        <filter string="Status" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="account_voucher.action_vendor_receipt" model="ir.actions.act_window">
+            <field name="name">Customer Payments</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('journal_id.type', 'in', ['bank', 'cash']), ('type','=','receipt')]</field>
+            <field name="context">{'type':'receipt'}</field>
+            <field name="search_view_id" ref="account_voucher.view_voucher_filter_customer_pay"/>
+            <field name="view_id" ref="view_voucher_tree_kt"/>
+            <field name="target">current</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to register a new payment.
+              </p><p>
+                Enter the customer and the payment method and then, either
+                create manually a payment record or OpenERP will propose to you
+                automatically the reconciliation of this payment with the open
+                invoices or sales receipts.
+              </p>
+            </field>
+        </record>
+         <record id="account_voucher.action_vendor_receipt_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_voucher_tree_kt"/>
+        </record>
+    </data>
+</odoo>

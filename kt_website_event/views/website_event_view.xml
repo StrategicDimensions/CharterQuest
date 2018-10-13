@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_event_type_form">
+            <field name="name">Event type</field>
+            <field name="model">event.type</field>
+            <field name='inherit_id' ref='event.view_event_type_form'/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='event_type_location']" position="after">
+                    <div class="row mt16 o_settings_container" name="event_type_location">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="publish_on_website"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="publish_on_website"/>
+                                <div class="row">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="publish_on_portal"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="publish_on_portal"/>
+                                <div class="row">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <!--<record id="view_event_form_inherit" model="ir.ui.view">-->
+            <!--<field name="name">view_event_form</field>-->
+            <!--<field name="model">event.event</field>-->
+            <!--<field name="inherit_id" ref="event_sale.view_event_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//field[@name='event_ticket_ids']//field[@name='price']" position='after'>-->
+                    <!--<field name='is_free' string='Is Free?' required='True'/>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+    </data>
+</odoo>

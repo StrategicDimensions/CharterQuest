@@ -1,0 +1,420 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+    <!-- Event  Qual-->
+        <record model="ir.ui.view" id="view_event_qual_form">
+            <field name="name">Qualification Level</field>
+            <field name="model">event.qual</field>
+            <field name="arch" type="xml">
+                <form string="Event Qualification Level">
+                    <field name="name"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_event_qual_tree">
+            <field name="name">Qualification Level</field>
+            <field name="model">event.qual</field>
+            <field name="arch" type="xml">
+                <tree string="Event Qualification Level">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_event_fee_form">
+            <field name="name">Event Fee</field>
+            <field name="model">event.feetype</field>
+            <field name="arch" type="xml">
+                <form string="Event Fee Type">
+                    <field name="name"/>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record model="ir.ui.view" id="view_event_fee_tree">
+            <field name="name">Event Fee</field>
+            <field name="model">event.feetype</field>
+            <field name="arch" type="xml">
+                <tree string="Event Fee Type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_event_feetype">
+            <field name="name">Fee Types</field>
+            <field name="res_model">event.feetype</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!--<menuitem name="Confi" id="my_config" action="action_event_feetype" parent="event.event_main_menu" groups="base.group_no_one" sequence="7"/>-->
+        <menuitem name="Fee Type" id="menu_event_feetype" action="action_event_feetype" parent="event.menu_event_configuration" groups="base.group_no_one" sequence="7"/>
+
+
+
+
+        <!--   Fee type -->
+
+
+        <!-- Portal Registration Tracking -->
+        <record model="ir.ui.view" id="view_event_portal_reg_form">
+            <field name="name">Portal Reg</field>
+            <field name="model">event.portal.reg</field>
+            <field name="arch" type="xml">
+                <form string="Event Portal Reg">
+                    <field name="campus"/>
+                    <field name="course"/>
+                    <field name="invoice"/>
+                    <field name="prof_body"/>
+                    <field name="quotation"/>
+                    <field name="reg"/>
+                    <field name="spons"/>
+                    <field name="student"/>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record model="ir.ui.view" id="view_event_portal_reg_tree">
+            <field name="name"> Portal Reg</field>
+            <field name="model">event.portal.reg</field>
+            <field name="arch" type="xml">
+                <tree string="Event Fee Type">
+                    <field name="campus"/>
+                    <field name="invoice"/>
+                    <field name="prof_body"/>
+                    <field name="quotation"/>
+                    <field name="reg"/>
+                    <field name="spons"/>
+                    <field name="student"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_event_portal_reg">
+            <field name="name">Portal Reg</field>
+            <field name="res_model">event.portal.reg</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Portal Reg" id="menu_event_portal_reg" action="action_event_portal_reg" parent="event.menu_event_configuration" groups="base.group_no_one" sequence="8"/>
+
+        <!--   Fee type -->
+
+
+        <!-- Event  View Modifications-->
+        <record model="ir.ui.view" id="event_event_inh">
+            <field name="name">event.event.inh</field>
+            <field name="model">event.event</field>
+            <field name="inherit_id" ref="event.view_event_form" />
+            <field name="arch" type="xml">
+                <field name='date_end' position="after">
+                    <field name="price"/>
+                    <field name="semester_id"/>
+                    <field name="qualification"/>
+                    <field name="address_ids" widget="many2many_tags"/>
+                    <!--<field name="study"/>-->
+
+                </field>
+                <notebook>
+                    <page string="Online Registrations">
+                        <field name="online_register_current"/>
+                        <field name="online_registration_ids">
+                            <tree string="Registration">
+                                <field name="event_id"/>
+                                <field name="partner_id"/>
+                                <field name="email"/>
+                                <field name="namee"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="event_event_inh_tree">
+            <field name="name">event.event.inhtree</field>
+            <field name="model">event.event</field>
+            <field name="inherit_id" ref="event.view_event_tree"/>
+            <field name="arch" type="xml">
+                <field name='event_type_id' position="after">
+                    <field name="qualification" />
+                    <field name="address_id" />
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="event_reg_inh_tree">
+            <field name="name">event.reg.inhtree</field>
+            <field name="model">event.registration</field>
+            <field name="inherit_id" ref="event.view_event_registration_tree" />
+            <field name="arch" type="xml">
+                <field name='email' position="after">
+                    <field name="event_campus" />
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="event_reg_inh_form">
+            <field name="name">event.reg.inhform</field>
+            <field name="model">event.registration</field>
+            <field name="inherit_id" ref="event.view_event_registration_form" />
+            <field name="arch" type="xml">
+                <field name='event_id' position="after">
+                    <field name="event_campus"/>
+                    <field name="event_body"/>
+                    <field name="semester_id"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="event_reg_inh_search">
+            <field name="name">event.reg.search</field>
+            <field name="model">event.registration</field>
+            <field name="inherit_id" ref="event.view_registration_search" />
+            <field name="arch" type="xml">
+                <field name="event_id" position="after">
+                    <field name="event_campus"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Event  View Modifications-->
+
+        <!-- Event Qualifications  -->
+
+        <record model="ir.ui.view" id="view_event_qual_form">
+            <field name="name">Event Qualifications </field>
+            <field name="model">event.qual</field>
+            <field name="arch" type="xml">
+                <form string="Event Qualification">
+                    <group col="4">
+                        <field name="name"/>
+                        <field name="order" />
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_event_qual_tree">
+            <field name="name">Event Qualifications</field>
+            <field name="model">event.qual</field>
+            <field name="arch" type="xml">
+                <tree string="Event Qualification">
+                    <field name="name"/>
+                    <field name="order" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_event_qual">
+            <field name="name">Qualifications</field>
+            <field name="res_model">event.qual</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Qualification Level" id="menu_event_qual" action="action_event_qual" parent="event.menu_event_configuration" groups="base.group_no_one" sequence="10"/>
+
+        <!-- Event Qualifications  -->
+
+        <!-- Event Options  -->
+
+        <record model="ir.ui.view" id="view_event_opt_form">
+            <field name="name">Study Options </field>
+            <field name="model">event.options</field>
+            <field name="arch" type="xml">
+                <form string="Study Options">
+                    <group col="4">
+                        <field name="name"/>
+                        <field name="order" />
+                        <field name="description" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_event_opt_tree">
+            <field name="name">Study Options</field>
+            <field name="model">event.options</field>
+            <field name="arch" type="xml">
+                <tree string="Study Options">
+                    <field name="name"/>
+                    <field name="order" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_event_opt">
+            <field name="name">Study Options</field>
+            <field name="res_model">event.options</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Study Options" id="menu_event_opt" action="action_event_opt" parent="event.menu_event_configuration" groups="base.group_no_one" sequence="11"/>
+
+        <!-- Event Options  -->
+
+
+        <!-- Sale Order View Modifications-->
+        <!--Adding Quote Type to the Sale Order View Tree View -->
+        <record id="sale_order_event_inh_tree" model="ir.ui.view">
+            <field name="name">sale.order.inhtree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree" />
+            <field name="arch" type="xml" >
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="student_number" />
+                    <field name="quote_type" />
+                    <field name="campus" />
+                    <field name="affiliation" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_order_event_inheritance_tree1" model="ir.ui.view">
+            <field name="name">sale.order.inhtree1</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree" />
+            <field name="arch" type="xml" >
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="student_number" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sales_order_filter_event_price" model="ir.ui.view">
+            <field name="name">sale.order.list.select</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <search string="Search Sales Order">
+                    <field name="name" string="Sales Order" filter_domain="['|',('name','ilike',self),('client_order_ref','ilike',self)]"/>
+                    <filter icon="terp-mail-message-new" string="Unread Messages" name="message_unread" domain="[('message_unread','=',True)]"/>
+                    <separator/>
+                    <filter icon="terp-document-new" string="Quotations" name="draft" domain="[('state','in',('draft','sent'))]" help="Sales Order that haven't yet been confirmed"/>
+                    <filter icon="terp-check" string="Sales" name="sales" domain="[('state','in',('manual','progress'))]"/>
+                    <filter icon="terp-dolar_ok!" string="To Invoice" domain="[('state','=','manual')]" help="Sales Order ready to be invoiced"/>
+                    <filter icon="terp-dolar_ok!" string="Done" domain="[('state','=','done')]" help="Sales Order done"/>
+                    <separator/>
+                    <filter string="My Sales Orders" domain="[('user_id','=',uid)]" help="My Sales Orders" icon="terp-personal" name="my_sale_orders_filter"/>
+                    <field name="partner_id" filter_domain="[('partner_id', 'child_of', self)]"/>
+                    <field name="student_number" />
+                    <field name="user_id"/>
+                    <!--<field name="project_id"/>-->
+                    <group expand="0" string="Group By...">
+                        <filter string="Customer" icon="terp-personal" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Salesperson" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Status" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Order Date" icon="terp-go-month" domain="[]" context="{'group_by':'date_order'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="saler_order_event_inh_form" model="ir.ui.view">
+            <field name="name">sale.order.inhform</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="confirmation_date" position="after">
+                    <field name="quote_type"/>
+                    <field name="campus" />
+                    <field name="affiliation" />
+                    <field name="prof_body" />
+                    <!--<field name="semester" invisible="1"/>-->
+                    <field name="student_number" />
+                    <field name="semester_id" />
+                </field>
+                <!--<field name="event_id" position="replace">-->
+                    <!--<field name="event_id"  on_change="event_change(event_id)" attrs="{'invisible': [('event_ok', '=', False)],'required': [('event_ok', '!=', False)]}"   />-->
+                <!--</field>-->
+            </field>
+        </record>
+
+        <!-- Sale Order View Modifications-->
+
+        <!-- Customer view Modifications-->
+
+        <record id="res_partner_inh_form" model="ir.ui.view">
+            <field name="name">res.partner.inhform</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="website" position="after">
+                    <field name="event_type_id"/>
+                    <field name="idpassport"/>
+                    <field name="vat_no_comp"/>
+                    <field name="cq_password"/>
+                    <field name="findout"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="res_partner_inh_tree" model="ir.ui.view">
+            <field name="name">res.partner.inhtree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="email" position="after">
+                    <field name="event_type_id"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Customer View Modifications-->
+        <!-- Product modifications added event View Modifications-->
+
+        <record model="ir.ui.view" id="prod_event_inh_form2">
+            <field name="name">product.product.inhform</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <div name="options" position="inside">
+                    <field name="fee_ok" />
+
+                    <label for="fee_ok"/>
+                </div>
+                <field name='type' position="before">
+                    <field name="event_type_rem" attrs="{'readonly': [('fee_ok','=',False)]}"/>
+                    <field name="event_qual_rem" attrs="{'readonly': [('fee_ok','=',False)]}"/>
+                    <field name="event_feetype_rem" attrs="{'readonly': [('fee_ok','=',False)]}"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Event  View Modifications-->
+        <record model="ir.ui.view" id="account_invoice_inh">
+            <field name="name">account.invoice.inh</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form" />
+            <field name="arch" type="xml">
+                <button name='invoice_print' position="after">
+
+                    <button name="action_paid_body" type="object" string="Pay Prof Body" attrs="{'invisible':[('paid_body','=', True)]}" />
+                </button>
+
+                <field name='partner_id' position="after">
+
+                <field name="paid_body" readonly="1" />
+                <field name="fee_on_invoice" readonly="1" />
+                <field name="quote_type" readonly="1" />
+                <!--<field name="semester" readonly="1" invisible="1"/>-->
+                <field name="affiliation" readonly="1" />
+                <field name="campus" readonly="1" />
+                <field name="prof_body" readonly="1" />
+                <field name="sale_order_id" readonly="1" />
+                <field name="semester_id" invisible="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

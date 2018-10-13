@@ -6,19 +6,24 @@
             <xpath expr="." position="inside">
                 <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/mediaquery.css"/>
                 <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/snippets_menu.css"/>
+                <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/my_css.css"/>
                 <link rel="stylesheet"
                       href="/cfo_snr_jnr/static/src/css/bootstrap-datepicker.css"/>
                 <link rel="stylesheet"
                       href="/cfo_snr_jnr/static/src/css/simple-iconpicker.css"/>
-
+                <link rel="stylesheet"
+                      href="/cfo_snr_jnr/static/src/css/jquery-ui.css"/>
                 <link rel="stylesheet"
                       href="/cfo_snr_jnr/static/src/css/backend.css"/>
+                <script type="text/javascript"
+                        src="/cfo_snr_jnr/static/src/js/enrolment.js"/>
                 <script type="text/javascript"
                         src="/cfo_snr_jnr/static/src/js/bootstrap-datepicker.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/login_page.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/simple-iconpicker.js"/>
-                <!--<script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu.js"/>-->
-                <!--<script type="text/javascript" src="/cfo_snr_jnr/static/src/js/contentMenu.js"/>-->
+                <!--<script type="text/javascript" src="/cfo_snr_jnr/static/src/js/jquery-ui.js"/>-->
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/contentMenu.js"/>
             </xpath>
         </template>
         <template id="assets_editor_cfo" name="website_warranty"

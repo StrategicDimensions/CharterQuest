@@ -1,0 +1,88 @@
+<odoo>
+    <data>
+        <record model="ir.cron" id="debit_order_mandate_reminder_cron">
+            <field name="name">Debit Order Mandate Reminder</field>
+            <field name="interval_number">3</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model.get_debit_order_mandate_reminder()</field>
+        </record>
+
+        <record model="ir.cron" id="debit_order_mandate_reminder_sms_cron">
+            <field name="name">Debit Order Mandate Reminder SMS</field>
+            <field name="interval_number">5</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model.debit_order_mandate_sms()</field>
+        </record>
+
+        <record id="view_order_form_inherit_kt" model="ir.ui.view">
+            <field name="name">sale.order.form.sale.stock</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+              <!--<button name="%(sale.action_view_sale_advance_payment_inv)d" position="replace">-->
+                <!--<button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"-->
+                            <!--type="action" class="oe_highlight" groups="base.group_user" attrs="{'invisible':['|',('state','not in',['manual']),('affiliation','=','1'),'|',('state','not in',['manual']),('pc_exam','=',False)]}"/>-->
+              <!--</button>-->
+
+                <notebook>
+                  <page string="Debit Order Mandat">
+                    <group>
+                    <field name="diposit_selected" string="Deposit"/>
+                    <field name="due_amount" string="Total Due (To Secure Discounts &amp; Access)"/>
+                    <field name="months" string="No. of payment months"/>
+                    <field name="out_standing_balance_incl_vat" string="Outstanding Balance(inclusive of VAT &amp; Interest)"/>
+                    <field name="monthly_amount" string="Display of monthly amounts"/>
+                    </group>
+                    <field name="debit_order_mandat"/>
+                  </page>
+                </notebook>
+                <field name="date_order" position="after" >
+                  <field name="payment_amount" />
+                  <field name="payment_ref" />
+                  <field name="payment_method" widget="selection" Domain="[('type','in',['bank','cash'])]"/>
+                  <field name="debit_order_mandate" />
+                  <field name="debit_order_mandate_link"  widget='url'/>
+                </field>
+             </field>
+        </record>
+
+        <record id="view_payment_confirmation_form" model="ir.ui.view">
+            <field name="name">payment.confirmation.form</field>
+            <field name="model">payment.confirmation</field>
+            <field name="priority">30</field>
+            <field name="arch" type="xml">
+                <form string="Payment">
+                    <group>
+                        <group>
+                            <field name="payment_amount" required="1"/>
+                            <field name="payment_ref" required="1"/>
+                            <field name="payment_method" widget="selection" Domain="[('type','in',['bank','cash'])]" required="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="button_create_saleorder" string="Create Sale Order" class="oe_highlight" type="object"/> or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_debit_order_confirm">
+            <field name="name">Debit Orders confirm</field>
+            <field name="res_model">payment.confirmation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--<menuitem name="Debit Order confirm" id="menu_debit_confirm_payment" action="action_debit_order_confirm" parent="account.menu_finance_receivables" sequence="15"/>-->
+    </data>
+</odoo>

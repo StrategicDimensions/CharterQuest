@@ -1,0 +1,61 @@
+<openerp>
+    <data noupdate="1">
+
+        <record id="cron_vue_exam_report_wednessday" model="ir.cron">
+            <field name="name">Cron to send VUE exam report Wednessday</field>
+            <field name="model_id" ref="model_event_event"/>
+            <field name="state">code</field>
+            <field name="code">model.send_vue_exam_report()</field>
+            <field name="interval_number">7</field>
+            <field name="interval_type">days</field>
+            <field name="active">0</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+         <record id="cron_vue_exam_report_friday" model="ir.cron">
+            <field name="name">Cron to send VUE exam report Friday</field>
+            <field name="model_id" ref="model_event_event"/>
+            <field name="state">code</field>
+            <field name="code">model.send_vue_exam_report()</field>
+            <field name="interval_number">7</field>
+            <field name="interval_type">days</field>
+            <field name="active">0</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+
+    </data>
+
+    <data noupdate="1">
+
+        <record id="cron_remittence_report" model="ir.cron">
+            <field name="name">Cron to send Remittence Report</field>
+            <field name="model_id" ref="model_account_invoice"/>
+            <field name="state">code</field>
+            <field name="code">model.send_remittence_report()</field>
+            <field name="interval_number">7</field>
+            <field name="interval_type">days</field>
+            <field name="active">0</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+
+    </data>
+
+    <data noupdate="1">
+
+         <record id="cron_stock_report" model="ir.cron">
+            <field name="name">Cron to send monthly stock Report</field>
+            <field name="model_id" ref="model_stock_quant"/>
+            <field name="state">code</field>
+            <field name="code">model.send_monthly_stock_report()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="active">0</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+
+    </data>
+
+</openerp>

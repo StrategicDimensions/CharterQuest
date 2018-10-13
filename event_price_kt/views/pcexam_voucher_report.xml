@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_pcexam_voucher">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="row">
+                        <div class="watermark" style="position:absolute;width:600px;height:600px;border: 1px solid white;opacity:1.0;filter:alpha(opacity=60);">
+                            <div class="col-xs-6" style="width:600px;height:600px;border:1px solid white;opacity:1.0;filter:alpha(opacity=60);">
+                                <h1 style="font-size: 35px; color:red;">
+                                    <span><strong>PC Exam Voucher:</strong></span>
+                                </h1><br></br>
+                                <h2 style="font-size: 35px;"><strong><span>Student:</span><span t-field="doc.student_id.name"/></strong></h2><br></br>
+                                <h4> <span>Voucher Number:</span><strong><span t-field="doc.voucher_no" /></strong></h4>
+                                <h4> <span>Expiry Date: </span><strong style="color:red"><span t-field="doc.expiry_date"/></strong></h4>
+                                <h4> <span>Voucher Value: R </span><strong><span t-field="doc.voucher_value" /></strong></h4>
+                                <h4> <span>Invoice Number: </span><strong><span t-field="doc.invoice_id.number" /></strong></h4>
+                                <h4> <span>Professional Body: </span><strong><span t-field="doc.prof_body.name" /></strong></h4>
+                                <h4> <span>Qualification Status: </span><strong><span t-field="doc.qualification_id.name" /></strong></h4>
+                                <h4> <span>Campus: </span><strong><span t-field="doc.campus_id.name" /></strong></h4>
+                                <h4> <span>Status: </span><strong><span t-field="doc.status" /></strong></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <template id="pcexam_voucher_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="event_price_kt.report_pcexam_voucher"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

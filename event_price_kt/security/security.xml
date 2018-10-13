@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="res.groups" id="group_quote_sale_invoice">
+            <field name="name">Create Quotes/SO/Invoices</field>
+            <field name="comment">the User will be able to create Quotations, Sale Orders and Invoices.</field>
+        </record>
+    </data>
+</odoo>

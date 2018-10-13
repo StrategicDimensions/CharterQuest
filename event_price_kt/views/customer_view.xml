@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_partner_form_inherit_kt" model="ir.ui.view">
+            <field name="name">res.partner.inhform.kt</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="website" position="after">
+                  <field name="student_number"/>
+                </field>
+                <!--
+                <field name="examwritten" position="replace"/>-->
+                <notebook>
+                <page string="Configuration" >
+                    <group>
+                        <field name="student_number_allocated" />
+                        <field name="previous_student"/>
+                        <field name="current_student"/>
+                        <field name="examwritten" />
+                        <field name="is_campus" />
+                        <field name="campus_code" attrs="{'required':[('is_campus','=',True)]}"/>
+                    </group>
+                </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="view_res_partner_filter_inherit1" model="ir.ui.view">
+            <field name="name">Customers Search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+               <field name="parent_id" position="after" >
+                 <field name="email" />
+                 <field name="student_number" />
+               </field>
+            </field>
+        </record>
+
+
+        <record id="partner_bank_view_inherit_kt" model='ir.ui.view'>
+            <field name="name">Partner Bank Accounts</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="base.view_partner_bank_form"/>
+            <field name="arch" type="xml">
+                 <field name="acc_number" position="after">
+                     <field name="acc_holder_name"/>
+                    <field name="acc_valid_state"/>
+                 </field>
+                 <!--<field name='bank_bic' position='after'>-->
+                     <!--<field name="acc_valid_state"/>-->
+                 <!--</field>-->
+            </field>
+        </record>
+
+        <record model="ir.cron" id="res_partner_student_number_cron">
+            <field name="name">Student Number</field>
+            <field name="interval_number">30</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">model.get_student_number()</field>
+        </record>
+
+        <record id="seq_student_number" model="ir.sequence">
+            <field name="name">Student Number</field>
+            <field name="code">res.partner</field>
+            <field name="prefix"></field>
+            <field name="padding">0</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>
+

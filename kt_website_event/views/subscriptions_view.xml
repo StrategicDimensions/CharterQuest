@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+       <!--  <record model="ir.ui.view" id="subscribers_res_partner_view_form">
+            <field name="name">Subscribers</field>
+            <field name="model">res.partner</field>
+            <field name='inherit_id' ref='base.view_partner_form'/>
+            <field name="arch" type="xml">
+                <field name="email" position="after">
+                    <field name="is_subscriber"/>
+                    <field name="magazine_opt_out"/>
+                </field>
+                <notebook>
+                    <page name="subscribers_info" string="Subscribers Information"
+                          attrs="{'invisible':[('is_subscriber','!=',True)]}">
+                        <group>
+                            <field name="password" type="password"/>
+                            <field name='subscriber_country_id'/>
+                            <field name='subscriber_occupation'/>
+                            <field name='subscriber_future_career_interest'/>
+                            <field name='subscriber_profession_work'/>
+                            <field name='subscriber_field_study'/>
+                            <field name='subscriber_level_study'/>
+                            <field name='magazine_source'/>
+                            <field name='subscription_date'/>
+                            <field name='subscriber_town'/>
+                            <field name='imported_subscribers'/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record> -->
+
+
+        <record model="ir.ui.view" id="magazine_issue_view_view_form">
+            <field name="name">Magazine Issue Pages</field>
+            <field name="model">ir.ui.view</field>
+            <field name='inherit_id' ref='base.view_view_form'/>
+            <field name="arch" type="xml">
+                <field name="active" position="after">
+                    <field name="is_magazine" attrs="{'invisible':[('type','!=','qweb')]}"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_subscribers">
+            <field name="name">Subscribers</field>
+            <field name="res_model">res.partner</field>
+            <field name="context">{'default_is_subscriber':'1'}</field>
+            <field name="domain">[('is_subscriber','=','True')]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_ir_ui_view_magazine">
+            <field name="name">Magazine Issue Pages</field>
+            <field name="res_model">ir.ui.view</field>
+            <field name="context">{'default_is_subscriber':'1'}</field>
+            <field name="domain">[('is_magazine','=','True')]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="subscribe_for_magazine_form">
+            <field name="name">Subscribe For Magazine</field>
+            <field name="model">subscribe.for.magazine</field>
+            <field name="arch" type="xml">
+                <form>
+                    <footer>
+                        <button name="subscribe_customers_magazine" type="object" class="oe_highlight"
+                                string="Subscribe Now"/>
+                        <button name="cancel" string="Cancel" special="cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="cron_subscribe_all_erp_partners" model="ir.cron">
+            <field name="name">Cron to subscribe all ERP Partners</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">model.subscribe_all_erp_partners_cron()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="active">0</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+
+        <record id="send_2nd_issue_cron" model="ir.cron">
+            <field name="name">Cron to send 2nd news latter</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">model.send_2nd_issue()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="active">0</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record id="send_new2_issue_cron" model="ir.cron">
+            <field name="name">Cron to send new 2 issue</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">model.send_new2_issue()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="active">0</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+
+        <menuitem id="the_future_cfo_magazine_menu" name="The Future CFO Magazine" sequence="10"/>
+        <menuitem id="the_future_cfo_magazine_sub_menu" parent="the_future_cfo_magazine_menu"
+                  name="The Future CFO Magazine" sequence="1"/>
+        <menuitem id="subscribers_menu" parent="the_future_cfo_magazine_sub_menu" action="action_subscribers"
+                  name="Subscribers" sequence="1"/>
+        <menuitem id="magazine_issue_pages_menu" parent="the_future_cfo_magazine_sub_menu"
+                  action="action_ir_ui_view_magazine" name="Magazine Issue Pages" sequence="2"/>
+
+    </data>
+</odoo>

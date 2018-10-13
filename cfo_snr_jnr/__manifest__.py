@@ -20,14 +20,15 @@
 
 {
     'name': 'CFO Senior Junior',
-    'version': '1.0',
+    'version': '11.2.6',
     'category': 'Website',
     'summary': 'CFO Senior and Junior Competition',
     'description': """CFO Senior and Junior Competition.""",
-    'depends': ['base', 'auth_signup', 'crm', 'website', 'web_editor', 'product'],
+    'depends': ['base', 'auth_signup', 'crm', 'website', 'web_editor', 'product', 'theme_zap'],
     'data': [
         'security/ir.model.access.csv',
         'data/snippets.xml',
+        'data/attachment_data.xml',
         'views/login.xml',
         'views/login_cfo_jnr.xml',
         'views/jsfile.xml',
@@ -39,6 +40,8 @@
         'views/res_partner.xml',
         'data/email_template.xml',
         'data/ir_cron.xml',
+        'views/enrolment_template.xml',
+        # 'views/email_template.xml'
     ],
     'demo': [
     ],

@@ -1,0 +1,323 @@
+<?xml version="1.0" ?>
+<odoo>
+
+   <data noupdate="1">
+
+        <!--Email template -->
+        <record id="email_template_email_to_student" model="mail.template">
+            <field name="name">Student Number</field>
+            <field name="email_from">sappa.thirupathi@goktree.com</field>
+             <field name="email_to">sappa.thirupathi@goktree.com,kiran.marati@goktree.com</field>
+            <field name="subject">Student Number is Assigned</field>
+            <field name="model_id" ref="event_price_kt.model_res_partner"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang"></field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+    <p>Dear ${object.name},</p>
+    
+    <br><br>
+    Thank you for registering with CharterQuest.
+    <br><br>
+    Below is your unique CQ Student No. for all your interactions with us: allocating your payments, gaining access to class and/or receiving your study materials.
+    <br/>
+    Where applicable, your e-materials will only be downloaded using this unique number so keep it safe, secure and confidential.
+    <br><br>
+    Student Name: ${object.name}<br>
+    Student Number:${object.student_number} 
+    <br><br>
+    NB: If your CQ student no. is lost or not working, contact CQ admin office during Office hours at: enquiries@charterquest.co.za, Tel:011 234 9223
+    <br>
+    CharterQuest Office Hours
+    <br>
+    Monday to Friday 	08h00 – 16h00
+    <br>
+    Kind Regards,
+                 
+<br/><br/>
+Regards,
+<br/>
+Charter Quest
+    </p>
+</div>
+            ]]></field>
+        </record>
+    </data>
+
+
+
+<data noupdate="1">
+
+        <!--Email template for Free Quote reminder email -->
+        <record id="email_template_edi_sale_order_reminder" model="mail.template">
+            <field name="name">Freequote Reminder Email</field>
+            <field name="email_from">ravi.acespritech@gmail.com</field>
+             <field name="email_to">${object.user_id.email or ''}</field>
+            <field name="subject">Charterquest FreeQuote/Enrolment ${object.name}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.user_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+<br>
+Dear ${object.partner_id.name}
+<br><br>
+It’s been ${object.no_of_days} since you requested and obtained the re-attached 
+Free Quote/Proforma from us!
+<br><br>
+Your assigned Early Bird Discount will expire end of this month and very few open seats are left.
+<br><br>
+<font size="3">TAKE ACTION NOW! ACCPET ENROLMENT/QUOTE @ LINK BELOW! </font>
+<br><br>
+<a href=http://enrolments.charterquest.co.za/debitorder/${object.decoded_quote_name}>http://enrolments.charterquest.co.za/debitorder/${object.decoded_quote_name}</a>
+<br><br>
+
+<font size="3">NEED US TO CONTACT YOU? </font> Email: <a href="mailto:enquiries@charterquest.co.za" target="_top">enquiries@charterquest.co.za</a>. 
+<br><br>
+
+<font size="3">WANT TO OPT OUT?</font> click Email: 
+<br><br>
+	<a href="mailto:enquiries@charterquest.co.za?Subject=Unsubscribe Quotes" target="_top">enquiries@charterquest.co.za</a>
+	<br><br>
+
+	We remain convinced your most affordable entry and best chance at passing 1st Time lies with CharterQuest
+	<br><br><br>
+
+	Thanking you,
+	<br><br>
+	Valentine D. Nti<br>
+	Founding CEO,<br>
+	CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
+	@ CHARTERQUEST HOUSE, Metropolitan Park<br>
+	374 Rivonia Boulevard<br>
+	Rivonia, SANDTON, South Africa<br>
+	CONTACT INFORMATION:<br>
+	Tel: +27 (0)11 234 9223 / 9238<br>
+	Email:enquiries@charterquest.co.za<br>
+	<br/>
+	<div>
+		    ]]></field>
+        </record>
+
+
+       <!-- Cron Job For Free Quote Reminder Email -->
+
+        <record id="ir_cron_free_quote_reminder_action" model="ir.cron">
+            <field name="name">Free Quote Remainder Email</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field ref="model_sale_order" name="model_id"/>
+            <field name="state">code</field>
+            <field name="code">model.send_freequote_remainder_email()</field>
+        </record>
+  
+        <!--Email template for Sending Enrolement Statement to Student-->
+        <!--<record id="email_template_edi_enrolement_statement_student" model="mail.template">-->
+            <!--<field name="name">Sending Enrolment Statement to Student</field>-->
+            <!--<field name="email_from">enquiries@charterquest.co.za</field>-->
+             <!--<field name="email_to">${object.partner_id.email or ''}</field>-->
+            <!--<field name="subject">CharterQuest Payment Confirmation and Enrolment Statement </field>-->
+            <!--<field name="email_recipients">${object.partner_id.id}</field>-->
+            <!--<field name="model_id" ref="event_debit_order_kt.model_debit_order_details"/>-->
+            <!--<field name="auto_delete" eval="True"/>-->
+            <!--<field name="lang">${object.invoice_id.partner_id.user_id.lang}</field>-->
+            <!--<field name="body_html"><![CDATA[-->
+<!--<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">-->
+<!--<br>-->
+<!--Dear ${object.partner_id.name}-->
+<!--<br><br>-->
+<!--Thank you for the payment which was processed and received<br>-->
+<!--via Debit Order on ${object.dbo_date} with the reference ${object.name}.-->
+
+<!--<br><br>-->
+<!--Please find attached Statement which reflects your paymentsreceived.-->
+<!--<br><br>-->
+<!--To the extent applicable to you, the Student Agreement covers our T/Cs on the following:-->
+<!--<br><br>-->
+<!--1. Discounts allowed<br>-->
+<!--2. Exam fee remittances<br>-->
+<!--3. Payment procedures<br>-->
+<!--4. Post payment procedures and access to learning materials<br>-->
+<!--5. Cancellations, change of bookings and postponements;<br>-->
+<!--6. Refunds and students complaints;<br>-->
+<!--7. 1st Time Pass Guarantee scheme and other incidental matters.<br>-->
+<!--<br><br>-->
+<!--We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!-->
+<!--<br><br>-->
+<!--<br><br>-->
+
+	<!--Thanking you,-->
+	<!--<br><br>-->
+	<!--Valentine D. Nti<br>-->
+	<!--Founding CEO,<br>-->
+	<!--CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>-->
+	<!--@ CHARTERQUEST HOUSE, Metropolitan Park<br>-->
+	<!--374 Rivonia Boulevard<br>-->
+	<!--Rivonia, SANDTON, South Africa<br>-->
+	<!--CONTACT INFORMATION:<br>-->
+	<!--Tel: +27 (0)11 234 9223 / 9238<br>-->
+	<!--Email:enquiries@charterquest.co.za<br>-->
+
+	<!--<br><br>-->
+	<!--CONTACT INFORMATION:-->
+	<!--<br><br>-->
+    <!--Tel: +27 (0)11 234 9223 [SA & Intl]<br>-->
+    <!--Tel: +27 (0)11 234 9238 [SA & Intl]<br>-->
+    <!--Tel: 0861 131 137 [SA ONLY]<br>-->
+    <!--Fax: 086 218 8713 [SA ONLY]<br>-->
+    <!--Email:enquiries@charterquest.co.za<br>-->
+    <!--<br><br>-->
+    <!--BRAAMFONTEIN CAMPUS:<br>-->
+    <!--CHARTERQUEST FINANCIAL TRAINING INSTITUTE @ ORION HOUSE,<br>-->
+    <!--[13th floor] 49 Jorissen Street<br>-->
+    <!--Cnr Biccard and Jorissen Street<br>-->
+    <!--BRAAMFONTEIN<br>-->
+    <!--South Africa<br>-->
+    <!--<br><br>-->
+    <!--CONTACT INFORMATION:<br>-->
+    <!--Tel: +27 [0]11 403 0656 [SA & Intl]<br>-->
+    <!--Tel: +27 [0]11 403 0642 [SA & Intl]<br>-->
+    <!--Fax: 086 218 8713 [SA ONLY]<br>-->
+    <!--Fax: +27 [0]11 791 7703 [SA & Intl]<br>-->
+    <!--Email:enquiries@charterquest.co.za<br>-->
+    <!--<br><br>-->
+    <!--PRETORIA CAMPUS:<br>-->
+    <!--CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>-->
+    <!--367 Hilda Street<br>-->
+    <!--Hatfield Rendez Vous Building<br>-->
+    <!--Hatfield, PRETORIA<br>-->
+    <!--South Africa<br>-->
+    <!--<br><br>-->
+    <!--CONTACT INFORMATION:-->
+    <!--Tel: +27 [0]12 751 7608 [SA & Intl]<br>-->
+    <!--Email: enquiries@charterquest.co.za<br>-->
+	<!--<br/>-->
+	<!--</div>-->
+		    <!--]]></field>-->
+        <!--</record>-->
+
+      <!-- Email Template For  Discount Expiry Notice Email Template -->
+        
+        <record id="email_template_early_bird_discount_expiry_notice" model="mail.template">
+            <field name="name">Early Bird DISCOUNT EXPIRY NOTICE</field>
+            <field name="email_from">ravi.acespritech@gmail.com</field>
+             <field name="email_to">ravi.acespritech@gmail.com</field>
+            <field name="subject">Early Bird Discount due to Expiry </field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+<br>
+Dear ${object.partner_id.name} - Student Number ${object.partner_id.student_number or ''}
+<br><br>
+
+Thank you for your interest in our course/s.<br>
+<strong> <font color='red'>Hurry up before you miss out in 2 days!!!!</font></strong><br>
+Make a 10% minimum deposit on the attached free quote to secure your discount and save money!<br>  
+<font color='red'>Not decided yet? Awaiting exemption confirmations? </font> <br>
+You can still change subjects, study package or the course you wish to study with us or defer your studies altogether by up to 12 months just by securing your discount. There could not be a better hedge against our future price increases or loss of admission due to fully booked classes/packages.<br>
+
+<br><br>
+
+Click on the link below to accept this quote and/or complete your enrolment/registration.<br>
+LINK: __________________________________________________________________________<br>
+Thanking you<br>
+Valentine D. Nti<br>
+Founding CEO, <br>
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
+<br>
+<br>
+SANDTON CAMPUS:<br>
+<br>
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
+@ CHARTERQUEST HOUSE,<br>
+Metropolitan Park<br>
+374 Rivonia Boulevard<br>
+Rivonia, SANDTON<br>
+South Africa<br>
+<br>
+CONTACT INFORMATION:<br>
+Tel: +27 (0)11 234 9223 [SA & Intl]<br>
+Tel: +27 (0)11 234 9238 [SA & Intl]<br>
+Tel: 0861 131 137 [SA ONLY]<br>
+Fax: 086 218 8713 [SA ONLY]<br>
+Email: enquiries@charterquest.co.za<br>
+<br>
+	<br/>
+	</div>
+		    ]]></field>
+        </record>
+        
+        <record id="email_template_early_settelement_discount_expiry_notice" model="mail.template">
+            <field name="name">Early Settelement DISCOUNT EXPIRY NOTICE</field>
+            <field name="email_from">enquiries@charterquest.co.za</field>
+             <field name="email_to">benjamin@strategicdimensions.co.za</field>
+            <field name="subject">Early Settelement Discount due to Expiry </field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+<br>
+Dear ${object.partner_id.name} - Student Number ${object.partner_id.student_number or ''}
+<br><br>
+This is to notify you that the Early Settelement Discount issued on the ${object.name} you requested on ${object.create_date} will be expiring in the next two days.
+The discount will be removed and the balance will be readjusted if the discount expires.
+
+<br><br>
+
+	Thanking you,
+	<br><br>
+	Valentine D. Nti<br>
+	Founding CEO,<br>
+	CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
+	@ CHARTERQUEST HOUSE, Metropolitan Park<br>
+	374 Rivonia Boulevard<br>
+	Rivonia, SANDTON, South Africa<br>
+	CONTACT INFORMATION:<br>
+	Tel: +27 (0)11 234 9223 / 9238<br>
+	Email:enquiries@charterquest.co.za<br>
+	
+	<br><br>
+	CONTACT INFORMATION:
+	<br><br>
+    Tel: +27 (0)11 234 9223 [SA & Intl]<br>
+    Tel: +27 (0)11 234 9238 [SA & Intl]<br>
+    Tel: 0861 131 137 [SA ONLY]<br>
+    Fax: 086 218 8713 [SA ONLY]<br>
+    Email:enquiries@charterquest.co.za<br>
+    <br><br>
+    BRAAMFONTEIN CAMPUS:<br>
+    CHARTERQUEST FINANCIAL TRAINING INSTITUTE @ ORION HOUSE,<br>
+    [13th floor] 49 Jorissen Street<br>
+    Cnr Biccard and Jorissen Street<br>
+    BRAAMFONTEIN<br>
+    South Africa<br>
+    <br><br>
+    CONTACT INFORMATION:<br>
+    Tel: +27 [0]11 403 0656 [SA & Intl]<br>
+    Tel: +27 [0]11 403 0642 [SA & Intl]<br>
+    Fax: 086 218 8713 [SA ONLY]<br>
+    Fax: +27 [0]11 791 7703 [SA & Intl]<br>
+    Email:enquiries@charterquest.co.za<br>
+    <br><br>
+    PRETORIA CAMPUS:<br>
+    CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
+    367 Hilda Street<br>
+    Hatfield Rendez Vous Building<br>
+    Hatfield, PRETORIA<br>
+    South Africa<br>
+    <br><br>
+    CONTACT INFORMATION:
+    Tel: +27 [0]12 751 7608 [SA & Intl]<br>
+    Email: enquiries@charterquest.co.za<br>
+	<br/>
+	</div>
+		    ]]></field>
+        </record>
+    </data>
+</odoo>
