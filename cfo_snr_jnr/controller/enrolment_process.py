@@ -468,22 +468,22 @@ class EnrolmentProcess(http.Controller):
                     if event_count == 2:
                         if each.discount_type == 'combo_2':
                             body_html += "<tr> <td style='width:10%;'>" + each.name + "</td>"
-                            body_html += "<td style='width:50%;'>" + each.condition + "</td>"
-                            body_html += "<td style='width:10%;'>" + str(each.discount) + "</td> </tr>"
+                            body_html += "<td style='width:50%;'>" + each.condition if each.condition else '' + "</td>"
+                            body_html += "<td style='width:10%;'>" + str(each.discount) if each.discount else '0.0' + "</td> </tr>"
                     if event_count == 3:
                         if each.discount_type == 'combo_3':
                             body_html += "<tr> <td style='width:10%;'>" + each.name + "</td>"
-                            body_html += "<td style='width:50%;'>" + each.condition + "</td>"
-                            body_html += "<td style='width:10%;'>" + str(each.discount) + "</td> </tr>"
+                            body_html += "<td style='width:50%;'>" + each.condition if each.condition else '' + "</td>"
+                            body_html += "<td style='width:10%;'>" + str(each.discount) if each.discount else '0.0' + "</td> </tr>"
                     if event_count == 4:
                         if each.discount_type == 'combo_4':
                             body_html += "<tr> <td style='width:10%;'>" + each.name + "</td>"
-                            body_html += "<td style='width:50%;'>" + each.condition + "</td>"
-                            body_html += "<td style='width:10%;'>" + str(each.discount) + "</td> </tr>"
+                            body_html += "<td style='width:50%;'>" + each.condition if each.condition else '' + "</td>"
+                            body_html += "<td style='width:10%;'>" + str(each.discount) if each.discount else '0.0' + "</td> </tr>"
                     if each.discount_type != 'combo_2' and each.discount_type != 'combo_3' and each.discount_type != 'combo_4':
                         body_html += "<tr> <td style='width:10%;'>"+each.name+"</td>"
-                        body_html += "<td style='width:50%;'>" + each.condition + "</td>"
-                        body_html += "<td style='width:10%;'>" + str(each.discount) + "</td> </tr>"
+                        body_html += "<td style='width:50%;'>" + each.condition if each.condition else '' + "</td>"
+                        body_html += "<td style='width:10%;'>" + str(each.discount) if each.discount else '0.0' + "</td> </tr>"
                 body_html += "<tr><td></td><td><b>Maximum Discount Available</b></td><td>"+str(max_discount_detail.max_discount)+"</td></tr>"
                 body_html += "</table><br><br>"
                 body_html += "We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
