@@ -390,4 +390,24 @@ class JnrMemberAdd(models.Model):
 
     total_member = fields.Char(string="No. Of Member")
 
+
+class JnrMemberSettings(models.TransientModel):
+    _inherit = 'res.config.settings'
+    _name = 'jnr.member.config.settings'
+
+    total_member = fields.Char(string="No. Of Member")
+
+    @api.model
+    def get_values(self):
+        res = super(JnrMemberSettings, self).get_values()
+        res.update(
+            total_member=self.env['ir.config_parameter'].sudo().get_param('cfo_snr_jnr.total_member', default='2')
+        )
+        return res
+
+    @api.multi
+    def set_values(self):
+        super(JnrMemberSettings, self).set_values()
+        self.env['ir.config_parameter'].sudo().set_param('cfo_snr_jnr.total_member', self.total_member)
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

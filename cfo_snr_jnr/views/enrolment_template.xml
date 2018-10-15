@@ -21,7 +21,11 @@
 
                                         <li style="margin: 5px 0px;position: relative;display: block;float: left;">
                                             <t t-if="not child_ids">
-                                                <a href="/">
+                                                <a t-att-href="'%s' % menu_id.menu_url" t-if="menu_id.menu_url">
+                                                    <span data-oe-model="dynamic.menu" data-oe-id="menu_id.id" data-oe-expression="menu_id.name" t-esc="menu_id.name"/>
+                                                    <span class="caret" t-if="child_ids"> </span>
+                                                </a>
+                                                <a href="/" t-if="not menu_id.menu_url">
                                                     <span data-oe-model="dynamic.menu" data-oe-id="menu_id.id" data-oe-expression="menu_id.name" t-esc="menu_id.name"/>
                                                     <span class="caret" t-if="child_ids"> </span>
                                                 </a>
@@ -37,7 +41,10 @@
                                                     <t t-foreach="child_ids" t-as="child_id">
 
                                                         <li>
-                                                            <a href="/demo_blocks_structure">
+                                                            <a t-att-href="'%s' % child_id.menu_url" t-if="child_id.menu_url">
+                                                                <span t-esc="child_id.name"/>
+                                                            </a>
+                                                            <a href="/" t-if="not child_id.menu_url">
                                                                 <span t-esc="child_id.name"/>
                                                             </a>
                                                         </li>
@@ -88,9 +95,11 @@
                         <div class="col-md-3">
                             <a href="#" t-attf-class="honsNav0 add_menu_side registration #{'active' if page_name == 'registration' else ''}" data-current-menu="registration" id="custom">Registration</a>
                         </div>
-                        <div class="col-md-3">
-                            <a href="#" t-attf-class="honsNav0 add_menu_side payment #{'active' if page_name == 'payment' else ''}" data-current-menu="payment" id="custom">Payment Structure</a>
-                        </div>
+                        <t t-if="self_or_cmp != 'cmp_sponosored'">
+                            <div class="col-md-3">
+                                <a href="#" t-attf-class="honsNav0 add_menu_side payment #{'active' if page_name == 'payment' else ''}" data-current-menu="payment" id="custom">Payment Structure</a>
+                            </div>
+                        </t>
                     </div>
 
                     <div class="row site-identifier ci-red-bg">
@@ -168,7 +177,7 @@
                                                     <i class="fa fa-check" aria-hidden="true"> </i>
                                                 </span>
                                             </div>
-                                            <p>Discount</p>
+                                                <p>Discount</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -194,31 +203,42 @@
                             <div t-attf-class="col-md-1 menu-icon registration #{'active' if page_name == 'registration' else ''}" data-current-menu="registration">
                                 <ul class="breadcrumb-list-new">
                                     <li class="step-done">
-                                        <div class="stop-rounding add-connector add-connector_after" data-original-title="" title="">
+                                        <t t-if="self_or_cmp == 'cmp_sponosored'">
+                                            <div class="stop-rounding add-connector" data-original-title="" title="">
                                             <span class="step-number">
                                                 <i class="fa fa-check" aria-hidden="true"> </i>
                                             </span>
                                         </div>
+                                        </t>
+                                        <t t-if="self_or_cmp != 'cmp_sponosored'">
+                                            <div class="stop-rounding add-connector add-connector_after" data-original-title="" title="">
+                                                <span class="step-number">
+                                                    <i class="fa fa-check" aria-hidden="true"> </i>
+                                                </span>
+                                            </div>
+                                        </t>
                                         <p>Registration</p>
                                     </li>
                                 </ul>
                             </div>
                         </a>
 
-                        <a href="#" class="step-link">
-                            <div t-attf-class="col-md-1 menu-icon payment #{'active' if page_name == 'payment' else ''}" data-current-menu="payment">
-                                <ul class="breadcrumb-list-new">
-                                    <li class="step-done">
-                                        <div class="stop-rounding add-connector" data-original-title="" title="">
-                                            <span class="step-number">
-                                                <i class="fa fa-check" aria-hidden="true"> </i>
-                                            </span>
-                                        </div>
-                                        <p>Payment Structure</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </a>
+                        <t t-if="self_or_cmp != 'cmp_sponosored'">
+                            <a href="#" class="step-link">
+                                <div t-attf-class="col-md-1 menu-icon payment #{'active' if page_name == 'payment' else ''}" data-current-menu="payment">
+                                    <ul class="breadcrumb-list-new">
+                                        <li class="step-done">
+                                            <div class="stop-rounding add-connector" data-original-title="" title="">
+                                                <span class="step-number">
+                                                    <i class="fa fa-check" aria-hidden="true"> </i>
+                                                </span>
+                                            </div>
+                                            <p>Payment Structure</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </t>
                     </div>
 
                     <div class="row menu-content" style="width: 80%;float: left;margin:0px;">

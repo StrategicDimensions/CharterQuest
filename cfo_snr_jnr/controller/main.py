@@ -783,15 +783,21 @@ class CfoHome(web.Home):
 
     @http.route('/get_cfo_snr_member', type='json', auth="public", website=True)
     def get_cfo_snr_member(self, **post):
-        team_member = request.env['cfo.snr.member.add'].sudo().search([],limit=1, order="id")
+        # team_member = request.env['cfo.snr.member.add'].sudo().search([],limit=1, order="id")
+        team_member = request.env['ir.config_parameter'].sudo().get_param('cfo_snr_jnr.snr_total_member')
         if team_member:
-            return {'team_member':team_member.total_member}
+            return {'team_member': team_member}
+        else:
+            return {'team_member': 2}
 
     @http.route('/get_cfo_jnr_member', type='json', auth="public", website=True)
     def get_cfo_jnr_member(self, **post):
-        team_member = request.env['cfo.jnr.member.add'].sudo().search([], limit=1, order="id")
+        # team_member = request.env['jnr.member.config.settings'].sudo().search([], limit=1, order="id")
+        team_member = request.env['ir.config_parameter'].sudo().get_param('cfo_snr_jnr.total_member')
         if team_member:
-            return {'team_member': team_member.total_member}
+            return {'team_member': team_member}
+        else:
+            return {'team_member': 2}
             
     @http.route('/create_new_member', type='json', auth="public", website=True)
     def create_new_member(self, **post):

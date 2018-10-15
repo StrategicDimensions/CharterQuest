@@ -18,6 +18,6 @@ class event_ticket(models.Model):
 class Dynamic_menu(models.Model):
     _name = 'dynamic.menu'
 
-    name = fields.Char(string="Main Menu")
-    parent_id = fields.Many2one('dynamic.menu', 'name')
+    name = fields.Char(string="Name")
+    parent_id = fields.Many2one('dynamic.menu', 'Parent')
     menu_url = fields.Char(string="Url")
