@@ -418,7 +418,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             var count = $(document).find('.member-add').attr('data-count');
 
             if(window.location.pathname == '/cfo_senior'){
-                ajax.jsonRpc("/get_cfo_member", 'call',{'url':window.location.pathname}).then(
+                ajax.jsonRpc("/get_cfo_snr_member", 'call',{'url':window.location.pathname}).then(
                 function (result) {
                     if(result['team_member']){
                         if (count < parseInt(result['team_member'])) {

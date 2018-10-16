@@ -474,4 +474,24 @@ class SnrMemberAdd(models.Model):
 
     total_member = fields.Char(string="No. Of Member")
 
+
+class SnrMemberSettings(models.TransientModel):
+    _inherit = 'res.config.settings'
+    _name = 'snr.member.config.settings'
+
+    snr_total_member = fields.Char(string="No. Of Member")
+
+    @api.model
+    def get_values(self):
+        res = super(SnrMemberSettings, self).get_values()
+        res.update(
+            snr_total_member=self.env['ir.config_parameter'].sudo().get_param('cfo_snr_jnr.snr_total_member', default='2')
+        )
+        return res
+
+    @api.multi
+    def set_values(self):
+        super(SnrMemberSettings, self).set_values()
+        self.env['ir.config_parameter'].sudo().set_param('cfo_snr_jnr.snr_total_member', self.snr_total_member)
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
