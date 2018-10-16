@@ -10,28 +10,28 @@
     <template id="top_header_cfo" inherit_id="website.layout" name="Top Header">
         <xpath expr="//div[@id='wrapwrap']/header" position="before">
             <header>
-                <div class="navbar navbar-default navbar-static-top" style="padding-top: 0px;padding-bottom: 0px;background-color: #eeeeee;margin-bottom: 10px;position: relative;min-height: 25px">
+                <div class="navbar navbar-default navbar-static-top" style="padding-top: 0px;padding-bottom: 0px;background-color: firebrick;margin-bottom: 10px;position: relative;min-height: 25px">
                     <div class="container">
                         <div class="collapse navbar-collapse navbar-top-collapse" style="border: 0;    float: none !important;display: inline-block !important;vertical-align: middle;width: 100% !important;">
                             <div class="topnav-right" style="float:right;">
                                 <ul class="nav navbar-nav navbar-right" id="top_menu" style="float: left !important;">
-                                    <t t-foreach="request.env['dynamic.menu'].sudo().search([('parent_id','=', False)])" t-as="menu_id">
+                                    <t t-foreach="request.env['dynamic.menu'].sudo().search([('parent_id','=', False)], order='menu_sequence')" t-as="menu_id">
 
-                                        <t t-set="child_ids" t-value="request.env['dynamic.menu'].sudo().search([('parent_id','=', menu_id.id)])"/>
+                                        <t t-set="child_ids" t-value="request.env['dynamic.menu'].sudo().search([('parent_id','=', menu_id.id)], order='menu_sequence')"/>
 
-                                        <li style="margin: 5px 0px;position: relative;display: block;float: left;">
+                                        <li class="top_header_li" style="margin: 5px 0px;position: relative;display: block;float: left;">
                                             <t t-if="not child_ids">
-                                                <a t-att-href="'%s' % menu_id.menu_url" t-if="menu_id.menu_url">
+                                                <a t-att-href="'%s' % menu_id.menu_url" t-if="menu_id.menu_url" style="color:floralwhite;">
                                                     <span data-oe-model="dynamic.menu" data-oe-id="menu_id.id" data-oe-expression="menu_id.name" t-esc="menu_id.name"/>
                                                     <span class="caret" t-if="child_ids"> </span>
                                                 </a>
-                                                <a href="/" t-if="not menu_id.menu_url">
+                                                <a href="/" t-if="not menu_id.menu_url" style="color:floralwhite;">
                                                     <span data-oe-model="dynamic.menu" data-oe-id="menu_id.id" data-oe-expression="menu_id.name" t-esc="menu_id.name"/>
                                                     <span class="caret" t-if="child_ids"> </span>
                                                 </a>
                                             </t>
                                             <t t-if="child_ids">
-                                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:floralwhite;">
                                                     <span data-oe-model="dynamic.menu" data-oe-id="menu_id.id" data-oe-expression="menu_id.name" t-esc="menu_id.name"/>
                                                     <span class="caret" t-if="child_ids"> </span>
                                                 </a>
@@ -40,11 +40,11 @@
                                                 <ul class="dropdown-menu" role="menu">
                                                     <t t-foreach="child_ids" t-as="child_id">
 
-                                                        <li>
-                                                            <a t-att-href="'%s' % child_id.menu_url" t-if="child_id.menu_url">
+                                                        <li class="top_header_li" style="background:firebrick;">
+                                                            <a t-att-href="'%s' % child_id.menu_url" t-if="child_id.menu_url" style="color:floralwhite;">
                                                                 <span t-esc="child_id.name"/>
                                                             </a>
-                                                            <a href="/" t-if="not child_id.menu_url">
+                                                            <a href="/" t-if="not child_id.menu_url" style="color:floralwhite;">
                                                                 <span t-esc="child_id.name"/>
                                                             </a>
                                                         </li>

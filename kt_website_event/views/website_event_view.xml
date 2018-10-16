@@ -44,6 +44,7 @@
                             <field name="name"/>
                             <field name="parent_id"/>
                             <field name="menu_url"/>
+                            <field name="menu_sequence"/>
                         </group>
                     </sheet>
                 </form>
