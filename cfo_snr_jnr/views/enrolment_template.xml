@@ -10,28 +10,28 @@
     <template id="top_header_cfo" inherit_id="website.layout" name="Top Header">
         <xpath expr="//div[@id='wrapwrap']/header" position="before">
             <header>
-                <div class="navbar navbar-default navbar-static-top" style="padding-top: 0px;padding-bottom: 0px;background-color: firebrick;margin-bottom: 10px;position: relative;min-height: 25px">
+                <div class="navbar navbar-default navbar-static-top" style="padding-top: 0px;padding-bottom: 0px;background-color: #ff0000;margin-bottom: 10px;position: relative;min-height: 25px">
                     <div class="container">
-                        <div class="collapse navbar-collapse navbar-top-collapse" style="border: 0;    float: none !important;display: inline-block !important;vertical-align: middle;width: 100% !important;">
+                        <div class="collapse navbar-collapse navbar-top-collapse" style="border: 0;float: none !important;display: inline-block !important;vertical-align: middle;width: 100% !important; height: 30px !important;">
                             <div class="topnav-right" style="float:right;">
                                 <ul class="nav navbar-nav navbar-right" id="top_menu" style="float: left !important;">
                                     <t t-foreach="request.env['dynamic.menu'].sudo().search([('parent_id','=', False)], order='menu_sequence')" t-as="menu_id">
 
                                         <t t-set="child_ids" t-value="request.env['dynamic.menu'].sudo().search([('parent_id','=', menu_id.id)], order='menu_sequence')"/>
 
-                                        <li class="top_header_li" style="margin: 5px 0px;position: relative;display: block;float: left;">
+                                        <li class="top_header_li" style="margin: 5px 0px;position: relative;display: block;float: left; margin: 0px !important;padding: 0px !important;">
                                             <t t-if="not child_ids">
-                                                <a t-att-href="'%s' % menu_id.menu_url" t-if="menu_id.menu_url" style="color:floralwhite;">
+                                                <a t-att-href="'%s' % menu_id.menu_url" t-if="menu_id.menu_url" style="color:white;padding: 2px 14px !important;line-height: 22px !important;">
                                                     <span data-oe-model="dynamic.menu" data-oe-id="menu_id.id" data-oe-expression="menu_id.name" t-esc="menu_id.name"/>
                                                     <span class="caret" t-if="child_ids"> </span>
                                                 </a>
-                                                <a href="/" t-if="not menu_id.menu_url" style="color:floralwhite;">
+                                                <a href="/" t-if="not menu_id.menu_url" style="color:white; padding: 2px 14px !important;line-height: 22px !important">
                                                     <span data-oe-model="dynamic.menu" data-oe-id="menu_id.id" data-oe-expression="menu_id.name" t-esc="menu_id.name"/>
                                                     <span class="caret" t-if="child_ids"> </span>
                                                 </a>
                                             </t>
                                             <t t-if="child_ids">
-                                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:floralwhite;">
+                                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:white; padding: 2px 14px !important;line-height: 22px !important">
                                                     <span data-oe-model="dynamic.menu" data-oe-id="menu_id.id" data-oe-expression="menu_id.name" t-esc="menu_id.name"/>
                                                     <span class="caret" t-if="child_ids"> </span>
                                                 </a>
@@ -40,11 +40,11 @@
                                                 <ul class="dropdown-menu" role="menu">
                                                     <t t-foreach="child_ids" t-as="child_id">
 
-                                                        <li class="top_header_li" style="background:firebrick;">
-                                                            <a t-att-href="'%s' % child_id.menu_url" t-if="child_id.menu_url" style="color:floralwhite;">
+                                                        <li class="top_header_li" style="background: #ff0000;">
+                                                            <a t-att-href="'%s' % child_id.menu_url" t-if="child_id.menu_url" style="color:white; padding: 2px 14px !important;line-height: 22px !important">
                                                                 <span t-esc="child_id.name"/>
                                                             </a>
-                                                            <a href="/" t-if="not child_id.menu_url" style="color:floralwhite;">
+                                                            <a href="/" t-if="not child_id.menu_url" style="color:white; padding: 2px 14px !important;line-height: 22px !important">
                                                                 <span t-esc="child_id.name"/>
                                                             </a>
                                                         </li>
@@ -54,7 +54,7 @@
                                         </li>
                                     </t>
                                 </ul>
-                                <input type="text" id="mySearch" placeholder="Search.." style="margin-left: 20px !important;margin-top: 8px !important;"/>
+                                <input type="text" id="mySearch" placeholder="Search.." style="margin-left: 20px !important;margin-top: 0px !important; height: 30px !important;"/>
                             </div>
                         </div>
                     </div>
@@ -291,125 +291,128 @@
                         </form>
                     </center>
                 </div>
-                <!--<div class="oe_structure"/>-->
+
             </div>
+            <div class="oe_structure"/>
             <!--</t>-->
         </t>
     </template>
 
     <template id="enrolment_process_form" name="Enrolment Process">
         <t t-call="website.layout">
+            <div class="oe_structure"/>
             <!--<t t-call="cfo_snr_jnr.header_template">-->
-                <div class="row" id="step-2">
+            <div class="row" id="step-2">
 
-                    <form action="/enrolment_book_prof" method="post"
-                          class="s_website_form form-horizontal container-fluid mt32"
-                          enctype="multipart/form-data" data-success_page="">
-                        <div class="form-group form-field o_website_form_custom">
-                            <div class="col-md-3 col-sm-4 text-right-not-xs">
-                                <label class="control-label" for="Prior/Returning Student? ">Prior/Returning
-                                    Student?
-                                </label>
-                            </div>
-                            <div class="col-md-7 col-sm-8">
-                                <select class="form-control o_website_form_input"
-                                        name="return_student" required="false">
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </div>
+                <form action="/enrolment_book_prof" method="post"
+                      class="s_website_form form-horizontal container-fluid mt32"
+                      enctype="multipart/form-data" data-success_page="">
+                    <div class="form-group form-field o_website_form_custom">
+                        <div class="col-md-3 col-sm-4 text-right-not-xs">
+                            <label class="control-label" for="Prior/Returning Student? ">Prior/Returning
+                                Student?
+                            </label>
                         </div>
-                        <div class="form-group form-field o_website_form_custom">
-                            <div class="col-md-3 col-sm-4 text-right-not-xs">
-                                <label class="control-label" for="Are You Registered with a Professional Body?">
-                                    Are You Registered with a Professional Body?
-                                </label>
-                            </div>
-                            <div class="col-md-7 col-sm-8">
-                                <select class="form-control o_website_form_input"
-                                        name="registered_professional_body?" required="false">
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </div>
+                        <div class="col-md-7 col-sm-8">
+                            <select class="form-control o_website_form_input"
+                                    name="return_student" required="false">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
                         </div>
-                        <div class="form-group form-field o_website_form_custom">
-                            <div class="col-md-3 col-sm-4 text-right-not-xs">
-                                <label class="control-label" for="Are You Registered with a Professional Body?">
-                                    Are You Self Or Company Sponosored?
-                                </label>
-                            </div>
-                            <div class="col-md-7 col-sm-8">
-                                <select class="form-control o_website_form_input"
-                                        name="self_or_company" required="false">
-                                    <option value="self">self</option>
-                                    <option value="cmp_sponosored">Company Sponosored</option>
-                                </select>
-                            </div>
+                    </div>
+                    <div class="form-group form-field o_website_form_custom">
+                        <div class="col-md-3 col-sm-4 text-right-not-xs">
+                            <label class="control-label" for="Are You Registered with a Professional Body?">
+                                Are You Registered with a Professional Body?
+                            </label>
                         </div>
-                        <div class="form-group form-field o_website_form_custom">
-                            <div class="col-md-3 col-sm-4 text-right-not-xs">
-                                <label class="control-label" for="Select Prof Body">Select Prof Body</label>
-                            </div>
-                            <div class="col-md-7 col-sm-8">
-                                <t t-set="event_type"
-                                   t-value="request.env['event.type'].sudo().search([('publish_on_portal','=',True)] , order='order')"/>
-                                <select id="professional_body" class="form-control o_website_form_input" name="Select Prof Body"
-                                        required="false">
-                                    <option> </option>
-                                    <t t-foreach="event_type" t-as="type">
-                                        <option t-att-value="type.id">
-                                            <t t-esc="type.name"/>
-                                        </option>
-                                    </t>
-                                </select>
-                            </div>
+                        <div class="col-md-7 col-sm-8">
+                            <select class="form-control o_website_form_input"
+                                    name="registered_professional_body?" required="false">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
                         </div>
-                        <div class="form-group form-field o_website_form_custom">
-                            <div class="col-md-3 col-sm-4 text-right-not-xs">
-                                <label for="campus" class="control-label">Select Campus
-                                </label>
-                            </div>
-                            <div class="col-md-7 col-sm-8">
-                                <t t-set="event_ids" t-value="request.env['event.event'].sudo().search([])"/>
-                                <select id="select_campus" class="form-control o_website_form_input" name="campus"
-                                        required="false">
-                                </select>
-                            </div>
+                    </div>
+                    <div class="form-group form-field o_website_form_custom">
+                        <div class="col-md-3 col-sm-4 text-right-not-xs">
+                            <label class="control-label" for="Are You Registered with a Professional Body?">
+                                Are You Self Or Company Sponosored?
+                            </label>
                         </div>
+                        <div class="col-md-7 col-sm-8">
+                            <select class="form-control o_website_form_input"
+                                    name="self_or_company" required="false">
+                                <option value="self">self</option>
+                                <option value="cmp_sponosored">Company Sponosored</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-field o_website_form_custom">
+                        <div class="col-md-3 col-sm-4 text-right-not-xs">
+                            <label class="control-label" for="Select Prof Body">Select Prof Body</label>
+                        </div>
+                        <div class="col-md-7 col-sm-8">
+                            <t t-set="event_type"
+                               t-value="request.env['event.type'].sudo().search([('publish_on_portal','=',True)] , order='order')"/>
+                            <select id="professional_body" class="form-control o_website_form_input" name="Select Prof Body"
+                                    required="false">
+                                <option> </option>
+                                <t t-foreach="event_type" t-as="type">
+                                    <option t-att-value="type.id">
+                                        <t t-esc="type.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-field o_website_form_custom">
+                        <div class="col-md-3 col-sm-4 text-right-not-xs">
+                            <label for="campus" class="control-label">Select Campus
+                            </label>
+                        </div>
+                        <div class="col-md-7 col-sm-8">
+                            <t t-set="event_ids" t-value="request.env['event.event'].sudo().search([])"/>
+                            <select id="select_campus" class="form-control o_website_form_input" name="campus"
+                                    required="false">
+                            </select>
+                        </div>
+                    </div>
 
-                        <div class="form-group form-field o_website_form_custom">
-                            <div class="col-md-3 col-sm-4 text-right-not-xs">
-                                <label class="control-label" for="Enrol for?">Enrol for?</label>
-                            </div>
-                            <div class="col-md-7 col-sm-8">
-                                <select class="form-control o_website_form_input" name="Enrol for?"
-                                        required="false">
-                                    <option value="Part Time">Part Time</option>
-                                    <option value="Full Time">Full Time</option>
-                                </select>
-                            </div>
+                    <div class="form-group form-field o_website_form_custom">
+                        <div class="col-md-3 col-sm-4 text-right-not-xs">
+                            <label class="control-label" for="Enrol for?">Enrol for?</label>
                         </div>
-                        <div class="form-group form-field o_website_form_custom">
-                            <div class="col-md-3 col-sm-4 text-right-not-xs">
-                                <label class="control-label" for="Semester">Semester</label>
-                            </div>
-                            <div class="col-md-7 col-sm-8">
-                                <select id="select_semester" class="form-control o_website_form_input" name="Semester"
-                                        required="false">
-                                </select>
-                            </div>
+                        <div class="col-md-7 col-sm-8">
+                            <select class="form-control o_website_form_input" name="Enrol for?"
+                                    required="false">
+                                <option value="Part Time">Part Time</option>
+                                <option value="Full Time">Full Time</option>
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
-                                <button class="btn btn-primary pull-right" type="submit">Next</button>
-                                <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
-                            </div>
+                    </div>
+                    <div class="form-group form-field o_website_form_custom">
+                        <div class="col-md-3 col-sm-4 text-right-not-xs">
+                            <label class="control-label" for="Semester">Semester</label>
                         </div>
-                        <input class="form-field" name="email_to" value="tttt" type="hidden"/>
-                        <input class="form-field" name="page_name" value="course" type="hidden"/>
-                    </form>
-                </div>
+                        <div class="col-md-7 col-sm-8">
+                            <select id="select_semester" class="form-control o_website_form_input" name="Semester"
+                                    required="false">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                            <button class="btn btn-primary pull-right" type="submit">Next</button>
+                            <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                        </div>
+                    </div>
+                    <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                    <input class="form-field" name="page_name" value="course" type="hidden"/>
+                </form>
+            </div>
+            <div class="oe_structure"/>
             <!--</t>-->
         </t>
     </template>
@@ -417,7 +420,8 @@
     <template id="enrolment_process_form2" name="Enrolment Process">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
-                <div class="col-md-12 mb128 mt0 row" id="step-3">
+                <div class="oe_structure"/>
+                <div class="col-md-12 mb128 mt0 row" id="step-3" >
                     <form action="/fees_level" method="post"
                         class="s_website_form form-horizontal container-fluid mt32"
                         enctype="multipart/form-data" data-success_page="">
@@ -490,7 +494,9 @@
                             </div>
                         </t>
                     </form>
+                    <div class="oe_structure"/>
                 </div>
+
             </t>
         </t>
     </template>
@@ -498,6 +504,7 @@
     <template id="enrolment_process_form3" name="Fees Process">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
+                <div class="oe_structure"/>
                 <div>
                     <form action="/discount" method="post"
                         class="s_website_form form-horizontal container-fluid mt32"
@@ -562,6 +569,7 @@
                         </div>
                     </form>
                 </div>
+                <div class="oe_structure"/>
             </t>
         </t>
     </template>
@@ -569,6 +577,7 @@
     <template id="enrolment_process_discount_form" name="Discount Process">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
+                <div class="oe_structure"/>
                 <div>
                     <form action="/price" method="post"
                         class="s_website_form form-horizontal container-fluid mt32"
@@ -668,6 +677,7 @@
                         </div>
                     </form>
                 </div>
+                <div class="oe_structure"/>
             </t>
         </t>
     </template>
@@ -675,7 +685,8 @@
     <template id="enrolment_process_price" name="Price Process">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
-                <div>
+                <div class="oe_structure"/>
+                <div style="margin-bottom: 100px;">
                     <h2 style="color:black;">Course Pricing</h2>
                     <table class="table table-bordered" style="color:black;background-color:azure;">
                         <t t-set="total_course_price" t-value="0"/>
@@ -790,15 +801,21 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                    <div>
+                        <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                    </div>
+
                 </div>
+                <div class="oe_structure"/>
             </t>
+
         </t>
     </template>
 
     <template id="enrolment_process_registration" name="Registration Process">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
+                <div class="oe_structure"/>
                 <center>
                 <div class="container">
                     <form action="/payment" method="post"
@@ -863,6 +880,7 @@
                     </form>
                 </div>
                 </center>
+                <div class="oe_structure"/>
             </t>
         </t>
     </template>
@@ -870,6 +888,7 @@
     <template id="enrolment_process_payment" name="Payment Process">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
+                <div class="oe_structure"/>
                 <form action="/page/thank-you" method="post"
                         class="s_website_form form-horizontal container-fluid mt32"
                         enctype="multipart/form-data" data-model_name="mail.mail" data-success_page="">
@@ -1121,6 +1140,7 @@
                         </div>
                     </t>
                 </form>
+                <div class="oe_structure"/>
             </t>
         </t>
     </template>
@@ -1128,6 +1148,8 @@
     <template id="enrolment_process_page_thankyou" name="Thank You">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
+                <div class="oe_structure"/>
+
                 <div class="col-sm-12" style="color:black;">
                     <h3>Thank You!</h3>
                 </div>
@@ -1138,6 +1160,7 @@
     <template id="enrolment_process_reg_and_enrol_thankyou" name="Thank You">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
+                <div class="oe_structure"/>
                 <div class="col-sm-12" style="color:black;">
                     <h3>Thank You!</h3>
                 </div>
@@ -1148,6 +1171,7 @@
     <template id="enrolment_process_registration_and_enroll" name="Registration Process">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
+                <div class="oe_structure"/>
                 <form action="/registration_and_enrol" class="form-horizontal-enroll" name="registrationform" method="post">
                     <fieldset>
                         <table class="table" style="color:black;">
@@ -1378,6 +1402,7 @@
                         </div>
                     </fieldset>
                 </form>
+                <div class="oe_structure"/>
             </t>
         </t>
     </template>
@@ -1385,6 +1410,7 @@
     <template id="enrolment_process_validate_payment" name="Validate Payment Process">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
+                <div class="oe_structure"/>
                 <form action="/page/thank-you" class="form-horizontal-validate-payment" method="post" style="color:black;">
 
 
@@ -1470,6 +1496,7 @@
                     </table>
                     <button id="back_button" class="btn btn-primary pull-left" type="button">Back</button>
                 </form>
+                <div class="oe_structure"/>
             </t>
         </t>
     </template>
