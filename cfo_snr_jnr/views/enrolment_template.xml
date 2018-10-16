@@ -338,14 +338,14 @@
                     <div class="form-group form-field o_website_form_custom">
                         <div class="col-md-3 col-sm-4 text-right-not-xs">
                             <label class="control-label" for="Are You Registered with a Professional Body?">
-                                Are You Self Or Company Sponosored?
+                                Are You Self Or Company Sponsored?
                             </label>
                         </div>
                         <div class="col-md-7 col-sm-8">
                             <select class="form-control o_website_form_input"
                                     name="self_or_company" required="false">
                                 <option value="self">self</option>
-                                <option value="cmp_sponosored">Company Sponosored</option>
+                                <option value="cmp_sponosored">Company Sponsored</option>
                             </select>
                         </div>
                     </div>
