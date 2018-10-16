@@ -344,7 +344,7 @@
                         <div class="col-md-7 col-sm-8">
                             <select class="form-control o_website_form_input"
                                     name="self_or_company" required="false">
-                                <option value="self">self</option>
+                                <option value="self">Self</option>
                                 <option value="cmp_sponosored">Company Sponsored</option>
                             </select>
                         </div>
