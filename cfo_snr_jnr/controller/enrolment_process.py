@@ -76,6 +76,16 @@ class EnrolmentProcess(http.Controller):
         request.session['reg_and_enrol'] = ''
         return True
 
+    @http.route(['/reg_enroll'], type='json', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
+    def reg_enroll(self, **post):
+        request.session['reg_enrol_btn'] = True
+        return True
+
+    @http.route(['/free_quote'], type='json', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
+    def free_quote(self, **post):
+        request.session['reg_enrol_btn'] = False
+        return True
+
     @http.route(['/registration'], type='json', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def registration(self, **post):
         request.session['grand_tot'] = float(post['grand_tot'].replace(',', '')) if post.get('grand_tot') else 0
@@ -118,6 +128,7 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/enrolment_book_prof'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def enrolment_book_prof(self, **post):
+
         today_date = datetime.today()
         str_today_date = datetime.strftime(today_date, '%Y-%m-%d 00:00:00')
         # str_today_end_date = datetime.strftime(today_date, '%Y-%m-%d 23:59:59')
@@ -155,7 +166,8 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/prof_body_form_render'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def prof_body_form_render(self):
-            return request.render('cfo_snr_jnr.enrolment_process_form', {'page_name': 'campus'})
+        print('\n\n\n===================>', request.session['reg_enrol_btn'])
+        return request.render('cfo_snr_jnr.enrolment_process_form', {'page_name': 'campus'})
 
     @http.route(['/fees_level'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def course_level(self, **post):
@@ -238,6 +250,7 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/price'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def price(self, **post):
+        display_btn = request.session['reg_enrol_btn'] if request.session.get('reg_enrol_btn') else False
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
         if post:
             request.session['discount_id'] = request.session['discount_id'] if request.session.get('discount_id') else ''
@@ -246,6 +259,7 @@ class EnrolmentProcess(http.Controller):
                                                                           'event_id': request.session['event_id'],
                                                                           'page_name': 'price',
                                                                           'discount': float(post.get('discount_add')) if post.get('discount_add') else 0.0,
+                                                                          'btn_display': display_btn,
                                                                           'self_or_cmp': user_select[
                                                                               'self_or_company'] if user_select.get(
                                                                               'self_or_company') else ''})
@@ -255,6 +269,7 @@ class EnrolmentProcess(http.Controller):
                                                                           'event_id': request.session['event_id'],
                                                                           'page_name': 'price',
                                                                           'discount': 0.0,
+                                                                          'btn_display': display_btn,
                                                                           'self_or_cmp': user_select[
                                                                               'self_or_company'] if user_select.get(
                                                                               'self_or_company') else ''})

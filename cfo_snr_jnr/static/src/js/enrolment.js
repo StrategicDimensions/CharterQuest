@@ -172,6 +172,24 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
             }
         });
 
+        $('button[id="reg_and_enrll"]').on('click',function(ev){
+            ajax.jsonRpc("/reg_enroll", 'call').then(
+                function (result) {
+                if (result){
+                    window.location.href = '/prof_body_form_render'
+                }
+            });
+        });
+
+        $('button[id="free_quote_email"]').on('click',function(ev){
+            ajax.jsonRpc("/free_quote", 'call').then(
+                function (result) {
+                if (result){
+                    window.location.href = '/prof_body_form_render'
+                }
+            });
+        });
+
         $('button[id="btn_get_free_email"]').on('click', function (ev) {
             var grand_tot = $('#grand_tot_val').find('.oe_currency_value').text()
             var product_tot = $('#product_total').find('.oe_currency_value').text()

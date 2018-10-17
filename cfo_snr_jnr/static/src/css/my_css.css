@@ -9,6 +9,16 @@
     font-weight: initial;
 }
 
+#reg_and_enrll{
+    background-color:red;
+    color:white;
+    border:1px solid red;
+    margin-top: 25px;
+    height: 35px;
+    font-weight: initial;
+}
+
+
 #pay_prof_body{
     background-color:red;
     color:white;
