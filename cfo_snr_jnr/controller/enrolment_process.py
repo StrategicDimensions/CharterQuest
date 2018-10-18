@@ -308,6 +308,7 @@ class EnrolmentProcess(http.Controller):
                                       'discount': float(discount_add) if discount_add else 0}])
         if request.session.get('reg_and_enrol'):
             if request.session.get('reg_and_enrol_email'):
+
                 partner_detail = request.env['res.partner'].sudo().search([('email', '=', request.session['reg_and_enrol_email'])], limit=1)
                 if partner_detail:
                     sale_order_id = sale_obj.create({'partner_id': partner_detail.id,
@@ -316,7 +317,7 @@ class EnrolmentProcess(http.Controller):
                                                          'campus') else '',
                                                      'prof_body': user_select['Select Prof Body'] if user_select.get(
                                                          'Select Prof Body') else '',
-                                                     'quote_type': 'enrolment' if display_btn else 'freequote',
+                                                     'quote_type': 'enrolment',
                                                      'semester_id': user_select['Semester'] if user_select.get(
                                                          'Semester') else '',
                                                      'discount_type_ids': [(6, 0, [each for each in discount_id])],

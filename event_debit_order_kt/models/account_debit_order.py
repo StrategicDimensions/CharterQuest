@@ -306,7 +306,7 @@ class debit_order_details(models.Model):
     bank_name = fields.Many2one('res.bank',string='Bank Name')
     bank_acc_no = fields.Char(string='Bank Account No', size=54)
     bank_code = fields.Char(string='Bank Code',size=54)
-    bank_type_id = fields.Many2one('res.bank_type', string="Bank Type")
+    bank_type_id = fields.Many2one('res.bank.type', string="Bank Type")
     # bank_acc_type = fields.Selection([('')], string='Bank Account Type')
     sale_id = fields.Many2one('sale.order', string="Sale order")
     invoice_id = fields.Many2one('account.invoice', string='Invoice No')
