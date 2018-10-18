@@ -1493,7 +1493,7 @@
                                 </tr>
                                 <tr>
                                     <td>Amount:</td>
-                                    <td><span t-esc="post_data['inputTotalDue']" t-options=""/>  <t/><t/>Please enter the amount to be paid exactly as shown. Do not round off.</td>
+                                    <td><span t-esc="post_data.get('inputTotalDue')" t-options=""/>  <t/><t/>Please enter the amount to be paid exactly as shown. Do not round off.</td>
                                 </tr>
 
                             </tbody>
