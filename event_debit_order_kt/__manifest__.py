@@ -1,8 +1,8 @@
 {
     "name": "Debit Order Customization",
-    "version": "11.0.1",
+    "version": "11.5",
     "sequence":3,
-    "depends": ["base", "account", "account_voucher","event_price_kt"],
+    "depends": ["base", "account", "account_voucher", "event_price_kt"],
     "author": "Ktree <Kiran.Marati@ktree.com>",
     "category": "Custom",
     "description": "Adds a custom Pricing debit orders to OpenERP events",

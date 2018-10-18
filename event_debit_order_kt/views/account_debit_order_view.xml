@@ -53,7 +53,7 @@
                             <field name="bank_name"/>
                             <field name="bank_acc_no"/>
                             <field name="bank_code"/>
-                            <!--<field name="bank_acc_type"/>-->
+                            <field name="bank_type_id"/>
                             <field name="invoice_id"/>
                             <field name="state"/>
                             <field name="debit_order_batchname"/>
@@ -85,7 +85,7 @@
                      <field name="bank_name"/>
                      <field name="bank_acc_no"/>
                      <field name="bank_code"/>
-                     <!--<field name="bank_acc_type"/>-->
+                     <field name="bank_type_id"/>
                      <field name="invoice_id"/>
                      <field name="state"/>
                 </tree>
@@ -130,7 +130,7 @@
                      <field name="bank_name"/>
                      <field name="bank_acc_no"/>
                      <field name="bank_code"/>
-                     <field name="bank_acc_type"/>
+                     <field name="bank_type_id"/>
                 </form>
             </field>
         </record>
@@ -152,7 +152,7 @@
                      <field name="bank_name"/>
                      <field name="bank_acc_no"/>
                      <field name="bank_code"/>
-                     <field name="bank_acc_type"/>
+                     <field name="bank_type_id"/>
                 </tree>
             </field>
         </record>
@@ -231,6 +231,43 @@
             <field name="state">code</field>
             <field name="code">model.failed_debit_order_notification()</field>
         </record>
+
+        <record id="res_bank_type_form_view" model="ir.ui.view">
+            <field name="name">Res Bank Type</field>
+            <field name="model">res.bank.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="2">
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="res_bank_type_tree_view" model="ir.ui.view">
+            <field name="name">Res Bank Type</field>
+            <field name="model">res.bank.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_res_bank_type" model="ir.actions.act_window">
+            <field name="name">Bank Account Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.bank.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_res_bank_type_form"
+        action="action_res_bank_type"
+        parent="contacts.menu_config_bank_accounts"
+        sequence="3"/>
       <!--End-->
     </data>
 </odoo>

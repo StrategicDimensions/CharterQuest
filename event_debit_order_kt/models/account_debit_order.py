@@ -306,6 +306,7 @@ class debit_order_details(models.Model):
     bank_name = fields.Many2one('res.bank',string='Bank Name')
     bank_acc_no = fields.Char(string='Bank Account No', size=54)
     bank_code = fields.Char(string='Bank Code',size=54)
+    bank_type_id = fields.Many2one('res.bank_type', string="Bank Type")
     # bank_acc_type = fields.Selection([('')], string='Bank Account Type')
     sale_id = fields.Many2one('sale.order', string="Sale order")
     invoice_id = fields.Many2one('account.invoice', string='Invoice No')
@@ -392,15 +393,12 @@ class debit_order_details(models.Model):
 
     @api.model
     def create(self, vals):
-        print('vals=========>',vals)
         if vals.get('name', 'New') == 'New':
             vals['name'] = self.env['ir.sequence'].next_by_code('debit.order.details') or _('New')
         inv_ref = False
         if 'invoice_id' in vals.keys():
-            print('if invoice========\n\n')
             invoice_id = vals['invoice_id']
             inv_ref = self.env['account.invoice'].browse(invoice_id)
-            print('invoice ref=====',inv_ref)
         if inv_ref:
             if inv_ref.number:
                 vals['name'] = inv_ref.number + "-" + vals['name']
@@ -447,7 +445,7 @@ class debit_order_details(models.Model):
                 homing_branch =  obj.bank_code
                 homing_acc_no =  (obj.bank_acc_no).rjust(11,"0")
                 hash_total += int(homing_acc_no)
-                type_of_account = obj.bank_acc_type
+                type_of_account = obj.bank_type_id
                 acctype = acc_type[type_of_account]
                 amount = obj.dbo_amount
                 total_debit += amount
@@ -712,6 +710,12 @@ class debit_order_mandate(models.Model):
     bank_name = fields.Many2one('res.bank', 'Bank Name')
     bank_acc_no = fields.Char('Bank Account No', size=54)
     bank_code = fields.Char('Bank Code', size=54)
-    bank_acc_type = fields.Char('Bank Account Type', size=54)
+    bank_type_id = fields.Many2one('res.bank.type', size=54)
     sale_id = fields.Many2one('sale.order', "Sale Order")
     months = fields.Integer('Months')
+
+
+class ResBankType(models.Model):
+    _name = "res.bank.type"
+
+    name = fields.Char(string="Account Type")

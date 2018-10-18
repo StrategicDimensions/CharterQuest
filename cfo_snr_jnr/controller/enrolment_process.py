@@ -166,7 +166,6 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/prof_body_form_render'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def prof_body_form_render(self):
-        print('\n\n\n===================>', request.session['reg_enrol_btn'])
         return request.render('cfo_snr_jnr.enrolment_process_form', {'page_name': 'campus'})
 
     @http.route(['/fees_level'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
@@ -277,6 +276,7 @@ class EnrolmentProcess(http.Controller):
     @http.route(['/payment'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def payment(self, **post):
         sale_order_id = False
+        display_btn = request.session['reg_enrol_btn'] if request.session.get('reg_enrol_btn') else False
         product_ids = request.session['product_id'] if request.session.get('product_id') else ''
         reg_and_enrol = request.session['reg_and_enrol'] if request.session.get('reg_and_enrol') else ''
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
@@ -311,11 +311,12 @@ class EnrolmentProcess(http.Controller):
                 partner_detail = request.env['res.partner'].sudo().search([('email', '=', request.session['reg_and_enrol_email'])], limit=1)
                 if partner_detail:
                     sale_order_id = sale_obj.create({'partner_id': partner_detail.id,
+                                                     'affiliation': '1' if user_select.get('self_or_company') and user_select.get('self_or_company') == 'self' else '2',
                                                      'campus': user_select['campus'] if user_select.get(
                                                          'campus') else '',
                                                      'prof_body': user_select['Select Prof Body'] if user_select.get(
                                                          'Select Prof Body') else '',
-                                                     'quote_type': 'enrolment',
+                                                     'quote_type': 'enrolment' if display_btn else 'freequote',
                                                      'semester_id': user_select['Semester'] if user_select.get(
                                                          'Semester') else '',
                                                      'discount_type_ids': [(6, 0, [each for each in discount_id])],
@@ -343,9 +344,11 @@ class EnrolmentProcess(http.Controller):
                 partner_detail = request.env['res.partner'].sudo().search([('email', '=', post.get('email'))], limit=1)
                 if partner_detail:
                     sale_order_id = sale_obj.create({'partner_id': partner_detail.id,
+                                                     'affiliation': '1' if user_select.get('self_or_company') and user_select.get(
+                                                         'self_or_company') == 'self' else '2',
                                                      'campus': user_select['campus'] if user_select.get('campus') else '',
                                                      'prof_body': user_select['Select Prof Body'] if user_select.get('Select Prof Body') else '',
-                                                     'quote_type': 'enrolment',
+                                                     'quote_type': 'enrolment' if display_btn else 'freequote',
                                                      'semester_id': user_select['Semester'] if user_select.get('Semester') else '',
                                                      'discount_type_ids':  [(6, 0, [each for each in discount_id])],
                                                      'order_line': order_line})
@@ -668,7 +671,7 @@ class EnrolmentProcess(http.Controller):
                                               'bank_name': res_bank_detail.id if res_bank_detail else '',
                                               'bank_acc_no': post.get('inputAccount') if post.get('inputAccount') else '',
                                               'bank_code': res_bank_detail.bic if res_bank_detail else '',
-                                              'bank_acc_type': account_type.name if account_type else ''}])
+                                              'bank_type_id': int(post['inputAtype']) if post.get('inputAtype') else ''}])
 
             sale_order_id.write({'diposit_selected': post.get('inputPaypercentage') if post.get('inputPaypercentage') else 0,
                                  'due_amount': post.get('inputTotalDue') if post.get('inputTotalDue') else 0,

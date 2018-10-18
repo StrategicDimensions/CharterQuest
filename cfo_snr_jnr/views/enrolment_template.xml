@@ -427,6 +427,7 @@
                         <h1 class="mt0">
                             <font class="bg-gamma" style="">Select Level and Courses</font>
                         </h1>
+
                         <t t-if="not enrolment_data">
                             <div class="container" style="color:black;">
                                 <form id="target" class="form-horizontal" action="/prof_body_form_render" method="post">
@@ -1102,9 +1103,9 @@
                                     <td style="width:24%;">Account Type</td>
                                     <td>
                                         <select name="inputAtype" class="requiredValue" id="inputAtype">
-                                            <t t-set="account_type" t-value="request.env['account.account.type'].sudo().search([])"/>
-                                            <t t-foreach="account_type" t-as="each_account_type">
-                                                <option t-att-value="each_account_type.id"><span t-esc="each_account_type.name"/></option>
+                                            <t t-set="bank_type" t-value="request.env['res.bank.type'].sudo().search([])"/>
+                                            <t t-foreach="bank_type" t-as="each_bank_type">
+                                                <option t-att-value="each_bank_type.id"><span t-esc="each_bank_type.name"/></option>
                                             </t>
                                         </select>
                                     </td>
