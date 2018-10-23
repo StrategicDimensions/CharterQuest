@@ -275,7 +275,9 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
                     }
             });
 
-            var input_per = $("#inputPaypercentage").val();
+            if($('#mandate_link').val() == ""){
+            console.log('hello============= ')
+                var input_per = $("#inputPaypercentage").val();
             var total_amount = $(document).find('#totalamount').val();
             var due_amount = (parseFloat(total_amount) * parseFloat(input_per)) /100;
             $("#inputTotalDue").val(parseFloat(due_amount.toFixed(2)));
@@ -298,6 +300,8 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
                 var per_mnth_payment = parseFloat(out_standing_amount) / parseFloat(payment_month)
                 $("#inputpaymentpermonth").val(parseFloat(per_mnth_payment.toFixed(2)));
             }
+            }
+
         });
 
         $('select[id="inputPaydate"]').on('change', function(){
