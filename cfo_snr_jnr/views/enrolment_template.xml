@@ -1274,7 +1274,7 @@
                             </t>
 
                             <button id="back_button" class="btn btn-primary" type="button">Back</button>
-                            <button type="submit" style="margin-left:10px;" id="credit-button" class="btn btn-primary">Pay Via Credit Card</button>
+                            <button type="submit" style="margin-left:10px;" formaction="/pay/thankyou" id="credit-button" class="btn btn-primary">Pay Via Credit Card</button>
                             <button type="submit" style="margin-left:10px;" formaction="/validate_payment" id="eft-button" class="btn btn-primary">Pay Via EFT</button>
                             <button type="submit" style="margin-left:10px;" formaction="/validate_payment" id="bankdeposit-button" value="true" name="Pay Via Bank Deposit" class="btn btn-primary">Pay Via Bank Deposit</button>
                         </div>
@@ -1286,6 +1286,30 @@
     </template>
 
     <template id="enrolment_process_page_thankyou" name="Thank You">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <div class="oe_structure"/>
+
+                <div class="col-sm-12" style="color:black;">
+                    <h3>Thank You!</h3>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="enrolment_process_page_thankyou_creditcard" name="Thank You">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <div class="oe_structure"/>
+
+                <div class="col-sm-12" style="color:black;">
+                    <h3>Thank You!</h3>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="enrolment_process_page_thankyou_bank" name="Thank You">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
                 <div class="oe_structure"/>
@@ -1316,6 +1340,21 @@
                     <fieldset>
                         <table class="table" style="color:black;">
                             <tbody>
+                                <tr>
+                                    <td>
+                                        <t t-if="self_or_cmp == 'cmp_sponosored'">
+                                            <div class="control-group">
+                                                <label class="control-label" for="invoicegenerated">* Do you require an invoice to be generated ?</label>
+                                                <div class="controls">
+                                                    <select class="requiredValue form-control1" name="do_invoice" required="false">
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>
                                         <div class="control-group">
@@ -1560,15 +1599,15 @@
                             See below banking details. Ensure you use your unique reference number below.  Bank deposits may attract bank charges, ensure you cover any charges related to your transaction.
                         </h3>
                         <center>
-                            <button id="btn_pay_later" formaction="/thank-you" type="submit" style="margin-top: 30px;" class="btn btn-primary">Get Quote and Banking details Emailed</button>
+                            <button id="btn_pay_later" formaction="/pay/bank/thankyou" type="submit" style="margin-top: 30px;" class="btn btn-primary">Get Quote and Banking details Emailed</button>
                         </center><br/>
                     </t>
                     <t t-if="not button_hide">
                         <h2>Pay Now</h2>
                         <h3>Log onto your online banking and make payment using the details below and then click the I’ve Paid button below.</h3>
                         <center>
-                        <button id="btn_paid" type="submit" style="margin-top: 30px;" class="btn btn-primary">I’ve Paid</button>
-                        <button id="btn_pay_later" formaction="/thank-you" type="submit" style="margin-top: 30px;" class="btn btn-primary">Pay Later</button>
+                        <button id="btn_paid" formaction="/thank-you" type="submit" style="margin-top: 30px;" class="btn btn-primary">I’ve Paid</button>
+                        <button id="btn_pay_later" type="submit" style="margin-top: 30px;" class="btn btn-primary">Pay Later</button>
                             <!--<a href="/eft_payment?status=paid" class="btn btn-large btn-danger">I’ve Paid</a>-->
                             <!--<a href="/eft_payment?status=cancel" class="btn btn-large btn-danger">Pay Later</a>-->
                         </center><br/>
