@@ -7,7 +7,6 @@
                 model="pcexams.voucher"
                 report_type="qweb-pdf"
                 file="event_price_kt.pcexam_voucher_report"
-                paperformat="event_price_kt.paperformat_euro"
                 name="event_price_kt.pcexam_voucher_report"/>
 
         <report
@@ -16,7 +15,6 @@
                 model="sale.order"
                 report_type="qweb-pdf"
                 file="event_price_kt.report_enrollment"
-                paperformat="event_price_kt.paperformat_euro"
                 name="event_price_kt.report_enrollment"
         />
 
@@ -26,7 +24,6 @@
                 model="sale.order"
                 report_type="qweb-pdf"
                 file="event_price_kt.report_book"
-                paperformat="event_price_kt.paperformat_euro"
                 name="event_price_kt.report_book"
         />
 
@@ -36,7 +33,6 @@
                 model="sale.order"
                 report_type="qweb-pdf"
                 file="event_price_kt.report_pcexam"
-                paperformat="event_price_kt.paperformat_euro"
                 name="event_price_kt.report_pcexam"
         />
 
@@ -46,7 +42,6 @@
                 model="account.invoice"
                 report_type="qweb-pdf"
                 file="event_price_kt.report_invoice_enrollment_proforma"
-                paperformat="event_price_kt.paperformat_euro"
                 name="event_price_kt.report_invoice_enrollment_proforma"
         />
 
@@ -56,7 +51,6 @@
                 model="account.invoice"
                 report_type="qweb-pdf"
                 file="event_price_kt.report_invoice_pc_exam"
-                paperformat="event_price_kt.paperformat_euro"
                 name="event_price_kt.report_invoice_pc_exam"
         />
 
@@ -66,7 +60,6 @@
                 model="account.invoice"
                 report_type="qweb-pdf"
                 file="event_price_kt.report_invoice_charterbook"
-                paperformat="event_price_kt.paperformat_euro"
                 name="event_price_kt.report_invoice_charterbook"
         />
 
@@ -76,7 +69,6 @@
                 model="account.invoice"
                 report_type="qweb-pdf"
                 file="event_price_kt.report_account_statement"
-                paperformat="event_price_kt.paperformat_euro"
                 name="event_price_kt.report_account_statement"
         />
 
