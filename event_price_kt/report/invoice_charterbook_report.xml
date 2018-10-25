@@ -62,7 +62,7 @@
                                         <p><b>Doc No.</b></p>
                                     </td>
                                     <td>
-                                        <p><b><span t-field="doc.origin"/></b></p>
+                                        <p><b><span t-field="doc.number"/></b></p>
                                     </td>
                                 </tr>
                             </thead>

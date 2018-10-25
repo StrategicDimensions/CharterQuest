@@ -46,7 +46,6 @@ class event_event(models.Model):
     @api.model
     def create(self, vals):
         """ To write the Number of seats available """
-        print('vals================>',vals)
         if 'date_begin' in vals.keys() and not vals.get('month', False):
             date_begin = datetime.strptime(vals['date_begin'], "%Y-%m-%d %H:%M:%S")
             vals['month'] = date_begin.month
@@ -349,12 +348,15 @@ class sale_order(models.Model):
    #Fot payment page capture
    diposit_selected = fields.Integer("Selected Deposit %")
    due_amount = fields.Float('Total Due')
+   outstanding_amount = fields.Float(string="Outstanding Amount")
+   interest_amount = fields.Float(string="Interest Amount")
    months = fields.Integer("Months required to pay")
    out_standing_balance_incl_vat = fields.Float("Outstanding Balance (inclusive of VAT & Interest)")
    monthly_amount = fields.Float("Monthly Amount")
    no_of_days = fields.Char(type='char', string='Days From requested date')
    no_of_reminder_emails_sent = fields.Integer("No.of Reminder Emails Sent", default=0)
    freequote_opt_out = fields.Boolean("FreeQuote Opt-out")
+   debit_link = fields.Char(string="url")
 
    @api.model
    def send_freequote_remainder_email(self):

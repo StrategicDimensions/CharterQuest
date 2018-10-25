@@ -1,8 +1,8 @@
 <odoo>
-    <data noupdate="1">
+    <data noupdate="0">
         <record id="term_and_condition_pdf_enrolment" model="ir.attachment">
-            <field name="name">Term and Condition</field>
-            <field name="datas_fname">Term and Condition</field>
+            <field name="name">STUDENT-AGREEMENT</field>
+            <field name="datas_fname">STUDENT-AGREEMENT</field>
             <field name="type">binary</field>
             <field name="datas" type="base64" file="cfo_snr_jnr/data/agreement.pdf"/>
         </record>

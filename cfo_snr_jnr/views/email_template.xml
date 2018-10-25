@@ -2,6 +2,136 @@
 <odoo>
 
    <data noupdate="0">
+
+       <record id="email_template_freequote" model="mail.template">
+            <field name="name">Charterquest FreeQuote/Enrolment</field>
+            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_to">${object.user_id.email or ''}</field>
+            <field name="subject">Charterquest FreeQuote/Enrolment ${object.name}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.user_id.lang}</field>
+            <field name="body_html"><![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                <br>
+                Dear ${object.partner_id.name or ''}
+                <br><br>
+                Thank you for your Enrolment Application.
+                <br><br>
+                Please find	attached Invoice as	well as	copy of	the	Student	Agreement you just accepted	during enrolment.
+                <br><br>
+
+                Your sponsor/company can pay using the Invoice no. as reference	and	return proof of	payment	to:	accounts@charterquest.co.za
+                to process your	enrolment. You can email accounts should you wish to make special payment arrangements.
+                <br><br>
+
+                Should your company require	an invoice, please forward this	proforma to	the	above
+                email requesting its conversion	into an	invoice. We	will need your company's details to	generate an	invoice	for	you!
+                <br><br>
+
+                Once we	issue an invoice, this becomes binding as you will	be	expected to	settle the
+                amount in full should your company not honour the agreement. So	please kindly ensure
+                your company has pre-approved your bursary or training expenditure before you request
+                conversion to an Invoice.
+                <br><br>
+
+                We look	forward	to seeing you during our course	and	helping	you, in	achieving a	1st	Time Pass!
+                <br><br><br>
+
+                Thanking You
+                <br><br>
+                Patience Mukondwa<br>
+                Head Of Operations<br>
+                The CharterQuest Institute<br>
+                CENTRAL CONTACT INFORMATION:<br>
+                Tel: +27 (0)11 234 9223 [SA & Intl]<br>
+                Tel: +27 (0)11 234 9238 [SA & Intl]<br>
+                Tel: 0861 131 137 [SA ONLY]<br>
+                Fax: 086 218 8713 [SA ONLY]<br>
+                Email:enquiries@charterquest.co.za<br>
+                <br/>
+                <div>
+            ]]></field>
+       </record>
+
+
+       <record id="email_template_payvia_bank_deposit" model="mail.template">
+            <field name="name">Charterquest Pay Via Bank Deposit</field>
+            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_to">${object.user_id.email or ''}</field>
+            <field name="subject">Charterquest FreeQuote/Enrolment ${object.name}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.user_id.lang}</field>
+            <field name="body_html"><![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                <br>
+                Dear ${object.partner_id.name or ''}
+                <br><br>
+                Thank you for your Enrolment Application.
+                <br><br>
+                Please find attached proforma invoice as well as copy of the Student Agreement and Debit Order Mandate you just accepted during enrolment.
+                <br><br>
+
+                As you opted to "pay by cash", please follow the steps below to complete your enrolment:
+                <br><br>
+
+                1. Click the link below to access our banking details;
+                http://www.charterquest.co.za/page/downloads
+                <br><br>
+
+                2. Make a cash deposit of at least 20% (taking into account your payment plan on the debit order mandate) of the course fee into our bank account
+                with an additional R90 to cover cash deposit bank charges (use your proforma invoice no. as your pay reference to avoid delays in crediting your account, securing your place and releasing your study materials): and
+                <br><br>
+
+                3. Once the cash deposit is made email your proof of payment to accounts@charterquest.co.za. An email will be sent to you once your payment is allocated and the post-payment procedures defined in your Student Agreement attached will be activated.
+                <br><br>
+
+                <table border=1>
+                    <tr>
+                        <td>Bank</td>
+                        <td>FNB</td>
+                    </tr>
+                    <tr>
+                        <td>Beneficiary Name</td>
+                        <td>The CharterQuest Professional Education Institute</td>
+                    </tr>
+                    <tr>
+                        <td>Account Type</td>
+                        <td>Current Account</td>
+                    </tr>
+                    <tr>
+                        <td>Account No</td>
+                        <td>62680767054</td>
+                    </tr>
+                    <tr>
+                        <td>Branch Code</td>
+                        <td>256755</td>
+                    </tr>
+                </table>
+
+                <br><br>
+
+                We look	forward	to seeing you during our course	and	helping	you, in	achieving a	1st	Time Pass!
+                <br><br><br>
+
+                Thanking You
+                <br><br>
+                Patience Mukondwa<br>
+                Head Of Operations<br>
+                The CharterQuest Institute<br>
+                CENTRAL CONTACT INFORMATION:<br>
+                Tel: +27 (0)11 234 9223 [SA & Intl]<br>
+                Tel: +27 (0)11 234 9238 [SA & Intl]<br>
+                Tel: 0861 131 137 [SA ONLY]<br>
+                Fax: 086 218 8713 [SA ONLY]<br>
+                Email:enquiries@charterquest.co.za<br>
+                <br/>
+                <div>
+            ]]></field>
+       </record>
+
+
         <record id="email_template_paid_success" model="mail.template">
             <field name="name">Paid Fees Email</field>
             <field name="email_from">enquiries@charterquest.co.za</field>

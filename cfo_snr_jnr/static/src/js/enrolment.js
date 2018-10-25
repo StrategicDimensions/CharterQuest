@@ -172,10 +172,30 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
             }
         });
 
+        $('button[id="reg_and_enrll"]').on('click',function(ev){
+            ajax.jsonRpc("/reg_enroll", 'call').then(
+                function (result) {
+                if (result){
+                    window.location.href = '/prof_body_form_render'
+                }
+            });
+        });
+
+        $('button[id="free_quote_email"]').on('click',function(ev){
+            ajax.jsonRpc("/free_quote", 'call').then(
+                function (result) {
+                if (result){
+                    window.location.href = '/prof_body_form_render'
+                }
+            });
+        });
+
         $('button[id="btn_get_free_email"]').on('click', function (ev) {
             var grand_tot = $('#grand_tot_val').find('.oe_currency_value').text()
             var product_tot = $('#product_total').find('.oe_currency_value').text()
             $(document).find('#product_total')
+            console.log('product-----------', product_tot)
+            console.log('grand-----------', grand_tot)
             ajax.jsonRpc("/get_free_email", 'call', {'grand_tot': grand_tot, 'product_tot':product_tot}).then(
                 function (result) {
                 if (result){
@@ -257,7 +277,9 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
                     }
             });
 
-            var input_per = $("#inputPaypercentage").val();
+            if($('#mandate_link').val() == ""){
+            console.log('hello============= ')
+                var input_per = $("#inputPaypercentage").val();
             var total_amount = $(document).find('#totalamount').val();
             var due_amount = (parseFloat(total_amount) * parseFloat(input_per)) /100;
             $("#inputTotalDue").val(parseFloat(due_amount.toFixed(2)));
@@ -280,6 +302,8 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
                 var per_mnth_payment = parseFloat(out_standing_amount) / parseFloat(payment_month)
                 $("#inputpaymentpermonth").val(parseFloat(per_mnth_payment.toFixed(2)));
             }
+            }
+
         });
 
         $('select[id="inputPaydate"]').on('change', function(){

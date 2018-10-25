@@ -155,6 +155,12 @@ class ResPartner(models.Model):
         for partner in self:
             partner.signup_url = result.get(partner.id, False)
             if self._context.get('cfo_login'):
-                partner.signup_url +='&cfo_login=True' 
-                
+                partner.signup_url +='&cfo_login=True'
+
+
+# class ResBankType(models.Model):
+#     _name = "res.bank.type"
+#
+#     name = fields.Char(string="Account Type")
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

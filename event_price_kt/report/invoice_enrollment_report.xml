@@ -63,7 +63,7 @@
                                         <p><b>Doc No.</b></p>
                                     </td>
                                     <td>
-                                        <p><b><span t-field="o.name"/></b></p>
+                                        <p><b><span t-field="o.number"/></b></p>
                                     </td>
                                 </tr>
                             </thead>
