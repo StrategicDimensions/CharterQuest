@@ -21,7 +21,7 @@
 
 {
     'name': 'Events Sales Custome',
-    'version': '11.0.1',
+    'version': '12.5',
     'category': 'Tools',
     'sequence':2,
     'website' : 'https://www.odoo.com/page/events',

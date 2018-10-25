@@ -306,29 +306,30 @@ class EnrolmentProcess(http.Controller):
             product_tot = 0.0
             grand_tot = 0.0
             if sale_order_id:
-                # for each in sale_order_id.order_line:
-                #     if each.product_id.fee_ok:
-                #         pass
+                for each in sale_order_id.order_line:
+                    if each.product_id.fee_ok:
+                        product_tot += each.price_subtotal
+                    if each.product_id.event_ok:
+                        grand_tot += each.price_subtotal
+                print('product tot====', product_tot, grand_tot)
 
                 if sale_order_id.quote_type == 'enrolment':
                     return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
-                                                                                    'product_tot': request.session['product_tot'] if request.session.get('product_tot') else 0,
-                                                                                    'grand_tot': request.session['grand_tot'] if request.session.get('grand_tot') else 0,
+                                                                                    'product_tot': product_tot,
+                                                                                    'grand_tot': grand_tot,
                                                                                     'sale_order_id': sale_order_id if sale_order_id else '',
                                                                                     'mandate_link': 'mandate_link_find',
                                                                                     'bank_detail': 'true'})
                 if sale_order_id.quote_type == 'freequote':
                     return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
-                                                                                    'product_tot': request.session[
-                                                                                        'product_tot'] if request.session.get('product_tot') else 0,
-                                                                                    'grand_tot': request.session[
-                                                                                        'grand_tot'] if request.session.get('grand_tot') else 0,
+                                                                                    'product_tot': product_tot,
+                                                                                    'grand_tot': grand_tot,
                                                                                     'sale_order_id': sale_order_id if sale_order_id else '',
                                                                                     'mandate_link': 'mandate_link_find',
                                                                                     'bank_detail': ''})
         return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
-                                                                        'product_tot': request.session['product_tot'] if request.session.get('product_tot') else 0,
-                                                                        'grand_tot': request.session['grand_tot'] if request.session.get('grand_tot') else 0})
+                                                                        'product_tot': product_tot,
+                                                                        'grand_tot': grand_tot})
 
     @http.route(['/payment'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def payment(self, **post):
@@ -539,6 +540,7 @@ class EnrolmentProcess(http.Controller):
                                                      'invoice_line_ids': invoice_line,
                                                      'residual': sale_order_id.out_standing_balance_incl_vat,
                                                      })
+                    invoice_id.action_invoice_open()
             event_tickets = request.session['event_id'] if request.session.get('event_id') else ''
             event_count = request.session['event_count'] if request.session.get('event_count') else 0
             discount_detail_list = []
@@ -823,6 +825,7 @@ class EnrolmentProcess(http.Controller):
                                          'invoice_line_ids': invoice_line,
                                          'residual': sale_order_id.out_standing_balance_incl_vat,
                                          })
+        invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:
                 debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
@@ -1047,6 +1050,7 @@ class EnrolmentProcess(http.Controller):
                                          'invoice_line_ids': invoice_line,
                                          'residual': sale_order_id.out_standing_balance_incl_vat,
                                          })
+        invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:
                 debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,

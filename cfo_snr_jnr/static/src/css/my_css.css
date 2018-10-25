@@ -283,3 +283,7 @@ body #wrapwrap {
     background-color: white !important;
     color: red !important;
 }
+
+#event_course tr:nth-child(even){
+    background-color: #e9e9e9;
+    }
