@@ -3,7 +3,7 @@
     "version": "12.5",
     "sequence":3,
     "depends": ["base", "account", "account_voucher", "event_price_kt"],
-    "author": "Ktree <Kiran.Marati@ktree.com>",
+    "author": "Acespritech Solutions Pvt. Ltd.",
     "category": "Custom",
     "description": "Adds a custom Pricing debit orders to OpenERP events",
     "data": [

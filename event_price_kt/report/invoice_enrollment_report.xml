@@ -222,7 +222,7 @@
                                         <span t-esc="o.prof_body and o.prof_body.name or 'Not Provided'"/>
                                     </td>
                                     <td style="border-top:2px solid black">
-                                        <span>Semister</span>
+                                        <span>Semester</span>
                                     </td>
                                     <td style="border-top:2px solid black">
                                         <span t-esc="o.semester_id and  o.semester_id.name or 'Not Provided'"/>
@@ -242,22 +242,22 @@
                         <table class="table">
                             <thead>
                                 <tr style="background-color:darkgray;">
-                                    <td style="padding: 5px;line-height: 1;">
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
                                         <span><b>Description(See section for details of package benefits)</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
                                         <span><b>Taxes</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
                                         <span><b>Quantity</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
                                         <span><b>Unit Price</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
                                         <span><b>Disc.(%)</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
                                         <span><b>Price</b></span>
                                     </td>
                                 </tr>
@@ -356,7 +356,7 @@
                         </table>
                         <br/>
                         <br/>
-                        <table class="table">
+                        <table class="table" t-if="o.affiliation != '2'">
                             <thead>
                                 <tr>
                                     <td><span><b>Display of Payment Structure:</b></span></td>
@@ -427,12 +427,14 @@
                                     <td>
                                         <span>Tuition &amp; Exam Prep Package - Evenings</span>
                                     </td>
-                                    <td>
-                                        <span>1. 18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span><br/>
-                                        <span>2. 6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span><br/>
-                                        <span>3. Kaplan Study Text and e-Course Notes</span><br/>
-                                        <span>4. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span><br/>
-                                        <span>5. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span></li>
+                                            <li><span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span></li>
+                                            <li><span>Kaplan Study Text and e-Course Notes</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -442,12 +444,14 @@
                                     <td>
                                         <span>Tuition &amp; Exam Prep Package -Weekends</span>
                                     </td>
-                                    <td>
-                                        <span>1. 18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span><br/>
-                                        <span>2. 6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span><br/>
-                                        <span>3. Kaplan Study Text and e-Course Notes</span><br/>
-                                        <span>4. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span><br/>
-                                        <span>5. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span></li>
+                                            <li><span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span></li>
+                                            <li><span>Kaplan Study Text and e-Course Notes</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -457,12 +461,14 @@
                                     <td>
                                         <span>Tuition &amp; Exam Prep Package -Daytime Block Release Package</span>
                                     </td>
-                                    <td>
-                                        <span>1. 18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span><br/>
-                                        <span>2. 6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span><br/>
-                                        <span>3. Kaplan Study Text and e-Course Notes</span><br/>
-                                        <span>4. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span><br/>
-                                        <span>5. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span></li>
+                                            <li><span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span></li>
+                                            <li><span>Kaplan Study Text and e-Course Notes</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -472,12 +478,14 @@
                                     <td>
                                         <span>Tuition &amp; Exam Prep Package -Fulltime</span>
                                     </td>
-                                    <td>
-                                        <span>1. 18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span><br/>
-                                        <span>2. 6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span><br/>
-                                        <span>3. Kaplan Study Text and e-Course Notes</span><br/>
-                                        <span>4. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span><br/>
-                                        <span>5. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span></li>
+                                            <li><span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span></li>
+                                            <li><span>Kaplan Study Text and e-Course Notes</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                      </td>
                                 </tr>
                                 <tr>
@@ -487,11 +495,13 @@
                                     <td>
                                         <span>Tuition &amp; Exam Prep Package -Weekends(Integrated Case Study Exams)</span>
                                     </td>
-                                    <td>
-                                        <span>1. 18 - 24 hours of Tuition contact time</span><br/>
-                                        <span>2. 6-18 hours of Exam Preps/Revision time</span><br/>
-                                        <span>3. Kaplan Case Study specific Workbook/e Course Notes</span><br/>
-                                        <span>4. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>18 - 24 hours of Tuition contact time</span></li>
+                                            <li><span>6-18 hours of Exam Preps/Revision time</span></li>
+                                            <li><span>Kaplan Case Study specific Workbook/e Course Notes</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -501,10 +511,12 @@
                                     <td>
                                         <span>Exam Prep ONLY Package (Integrated Case Study Exams)</span>
                                     </td>
-                                    <td>
-                                        <span>1. 6-18 hours of Exam Preps/Revision time</span><br/>
-                                        <span>2. Kaplan Case Study specific Workbook/e Course Notes</span><br/>
-                                        <span>3. 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>6-18 hours of Exam Preps/Revision time</span></li>
+                                            <li><span>Kaplan Case Study specific Workbook/e Course Notes</span></li>
+                                            <li><span>1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -514,10 +526,12 @@
                                     <td>
                                         <span>Exam Preparatory Only Package (E/W/D/FT) for OT Exams</span>
                                     </td>
-                                    <td>
-                                        <span>1. 6-18 hours of Exam Preps/Revision time (structured over 4, 3 hour sessions)</span><br/>
-                                        <span>2. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span><br/>
-                                        <span>3. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -527,12 +541,14 @@
                                     <td>
                                         <span>Home Study Package</span>
                                     </td>
-                                    <td>
-                                        <span>1. Home Study Kit/Scheme of Work</span><br/>
-                                        <span>2. Interactive online support</span><br/>
-                                        <span>3. Kaplan Study Text and Course Notes</span><br/>
-                                        <span>4. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span><br/>
-                                        <span>5. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>Home Study Kit/Scheme of Work</span></li>
+                                            <li><span>Interactive online support</span></li>
+                                            <li><span>Kaplan Study Text and Course Notes</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -542,10 +558,12 @@
                                     <td>
                                         <span>Transition and Exam Booster Package</span>
                                     </td>
-                                    <td>
-                                        <span>1. 6-12 hours of Exam Preps/Revision time</span><br/>
-                                        <span>2. Kaplan e-Course Notes</span><br/>
-                                        <span>3. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>6-12 hours of Exam Preps/Revision time</span></li>
+                                            <li><span>Kaplan e-Course Notes</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                             </tbody>

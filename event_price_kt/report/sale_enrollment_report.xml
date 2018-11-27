@@ -210,7 +210,7 @@
                                         <span t-esc="o.prof_body and o.prof_body.name or 'Not Provided'"/>
                                     </td>
                                     <td style="border-top:2px solid black;padding: 8px;line-height: 1;">
-                                        <span>Semister</span>
+                                        <span>Semester</span>
                                     </td>
                                     <td style="border-top:2px solid black;padding: 8px;line-height: 1;">
                                         <span t-esc="o.semester_id and  o.semester_id.name or 'Not Provided'"/>
@@ -229,22 +229,22 @@
                         <table class="table">
                             <thead>
                                 <tr style="background-color:darkgray;">
-                                    <td style="padding: 5px;line-height: 1;">
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
                                         <span><b>Description</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
                                         <span><b>Taxes</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
                                         <span><b>Quantity</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
                                         <span><b>Unit Price</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
                                         <span><b>Disc.(%)</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
                                         <span><b>Price</b></span>
                                     </td>
                                 </tr>
@@ -252,25 +252,25 @@
                             <tbody>
                                 <t t-foreach="o.order_line" t-as="l">
                                 <tr>
-                                    <td style="padding: 2px;line-height: 1;width:45%;">
+                                    <td style="padding: 2px;line-height: 1;width:45%;text-align:center;">
                                         <span t-esc="l.name"/>
                                     </td>
-                                    <td style="padding: 2px;line-height: 1;width:10%;">
+                                    <td style="padding: 2px;line-height: 1;width:10%;text-align:center;">
                                         <t t-foreach="l.tax_id" t-as="lt">
                                         <span style="float:right;" t-esc="lt.name"/>
                                         </t>
                                     </td>
-                                    <td style="padding: 2px;line-height: 1;width:10%;">
+                                    <td style="padding: 2px;line-height: 1;width:10%;text-align:center;">
                                         <span style="float:right;" t-esc="l.product_uom_qty"/>
                                     </td>
-                                    <td style="padding: 2px;line-height: 1;width:10%;">
-                                        <span style="float:right;" t-esc="l.price_unit"/>
+                                    <td style="padding: 2px;line-height: 1;width:10%;text-align:center;">
+                                        <span style="float:right;" t-esc="'%.2f'%(l.price_unit)"/>
                                     </td>
-                                    <td style="padding: 2px;line-height: 1;width:10%;">
-                                        <span style="float:right;" t-esc="l.discount"/>
+                                    <td style="padding: 2px;line-height: 1;width:10%;text-align:center;">
+                                        <span style="float:right;" t-esc="'%.2f'%(l.discount)"/>
                                     </td>
-                                    <td style="padding: 2px;line-height: 1;width:15%;">
-                                        <span style="float:right;" t-esc="l.price_subtotal"/>
+                                    <td style="padding: 2px;line-height: 1;width:15%;text-align:center;">
+                                        <span style="float:right;" t-esc="'%.2f'%(l.price_subtotal)"/>
                                         <span style="float:right;" t-esc="o.currency_id.symbol"/>
                                     </td>
                                 </tr>
@@ -285,7 +285,7 @@
                                       </p>
                                     </td>
                                     <td>
-                                      <span style="float:right;" t-esc="o.amount_untaxed"/>
+                                      <span style="float:right;" t-esc="'%.2f'%(o.amount_untaxed)"/>
                                         <span style="float:right;" t-esc="o.currency_id.symbol"/>
                                     </td>
                                 </tr>
@@ -298,7 +298,7 @@
                                       </p>
                                     </td>
                                     <td>
-                                        <span style="float:right;" t-esc="o.amount_tax"/>
+                                        <span style="float:right;" t-esc="'%.2f'%(o.amount_tax)"/>
                                         <span style="float:right;" t-esc="o.currency_id.symbol"/>
                                     </td>
                                 </tr>
@@ -310,14 +310,14 @@
                                         <span></span>
                                     </td>
                                     <td>
-                                        <span style="float:right; color:white;" t-esc="o.amount_total"/>
+                                        <span style="float:right; color:white;" t-esc="'%.2f'%(o.amount_total)"/>
                                         <span style="float:right; color:white;" t-esc="o.currency_id.symbol"/>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         <br/>
-                        <table class="table">
+                        <table class="table" t-if="o.affiliation != '2'">
                             <thead>
                                 <tr>
                                     <td><b><span>Display of Payment Structure:</span></b></td>
@@ -327,12 +327,21 @@
                                                 <tr>
                                                     <td><span>Invoice Total</span></td>
                                                     <td style="width: 15%;">
-                                                        <span t-esc="o.amount_total" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                                        <span class="pull-left" t-esc="'%.2f'%(o.amount_total)"/>
+                                                        <span class="pull-left" t-esc="o.currency_id.symbol"/>
+                                                              <!--t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>-->
                                                     </td>
                                                     <td><span>Outstanding Balance (inclusive of Interest)</span></td>
                                                     <td style="width: 15%;">
-                                                        <span class="pull-left" t-esc="o.out_standing_balance_incl_vat and o.out_standing_balance_incl_vat or '0.0'"/>
-                                                        <span class="pull-left" t-esc="o.currency_id.symbol"/>
+                                                        <t t-if="o.out_standing_balance_incl_vat">
+                                                            <span class="pull-left" t-esc="'%.2f'%(o.out_standing_balance_incl_vat)"/>
+                                                            <span class="pull-left" t-esc="o.currency_id.symbol"/>
+                                                        </t>
+                                                        <t t-if="not o.out_standing_balance_incl_vat">
+                                                            <span class="pull-left" t-esc="0.00"/>
+                                                            <span class="pull-left" t-esc="o.currency_id.symbol"/>
+                                                        </t>
+
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -344,13 +353,19 @@
                                                 <tr>
                                                     <td><span>Total Due (To Secure Discounts &amp; Access)</span></td>
                                                     <td style="width: 15%;">
-                                                        <span class="pull-left" t-esc="o.due_amount" />
+                                                        <span class="pull-left" t-esc="'%.2f'%(o.due_amount)" />
                                                         <span class="pull-left" t-esc="o.currency_id.symbol"/>
                                                     </td>
                                                     <td><span>Display of monthly amounts</span></td>
                                                     <td style="width: 15%;">
-                                                        <span class="pull-left" t-esc="o.monthly_amount and o.monthly_amount or '0'"/>
-                                                        <span class="pull-left" t-esc="o.currency_id.symbol"/>
+                                                        <t t-if="o.monthly_amount">
+                                                            <span class="pull-left" t-esc="'%.2f'%(o.monthly_amount)"/>
+                                                            <span class="pull-left" t-esc="o.currency_id.symbol"/>
+                                                        </t>
+                                                        <t t-if="not o.monthly_amount">
+                                                            <span class="pull-left" t-esc="0.00"/>
+                                                            <span class="pull-left" t-esc="o.currency_id.symbol"/>
+                                                        </t>
                                                     </td>
                                                 </tr>
                                             </thead>
@@ -414,16 +429,16 @@
 
                             <table>
                                 <tr style="background-color:darkgray;">
-                                    <td>
-                                        <b><span> Discount category</span></b>
+                                    <td style="text-align:center;">
+                                        <b><span> Discount Category</span></b>
                                     </td>
-                                    <td>
+                                    <td style="text-align:center;">
                                         <b><span> Requirement (All discounts must be claimed and included in the free quote or final invoice prior to making the first payment or will be forfeited).</span></b>
                                     </td>
-                                    <td>
+                                    <td style="text-align:center;">
                                         <b><span>Discount %  Available</span></b>
                                     </td>
-                                    <td>
+                                    <td style="text-align:center;">
                                         <b><span>Discount % Applied</span></b>
                                     </td>
                                 </tr>
@@ -510,12 +525,14 @@
                                     <td>
                                         <span>Tuition &amp; Exam Prep Package - Evenings</span>
                                     </td>
-                                    <td>
-                                        <span>1. 18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span><br/>
-                                        <span>2. 6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span><br/>
-                                        <span>3. Kaplan Study Text and e-Course Notes</span><br/>
-                                        <span>4. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span><br/>
-                                        <span>5. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span></li>
+                                            <li><span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span></li>
+                                            <li><span>Kaplan Study Text and e-Course Notes</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -525,12 +542,14 @@
                                     <td>
                                         <span>Tuition &amp; Exam Prep Package -Weekends</span>
                                     </td>
-                                    <td>
-                                        <span>1. 18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span><br/>
-                                        <span>2. 6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span><br/>
-                                        <span>3. Kaplan Study Text and e-Course Notes</span><br/>
-                                        <span>4. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span><br/>
-                                        <span>5. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span></li>
+                                            <li><span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span></li>
+                                            <li><span>Kaplan Study Text and e-Course Notes</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -540,12 +559,14 @@
                                     <td>
                                         <span>Tuition &amp; Exam Prep Package -Daytime Block Release Package</span>
                                     </td>
-                                    <td>
-                                        <span>1. 18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span><br/>
-                                        <span>2. 6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span><br/>
-                                        <span>3. Kaplan Study Text and e-Course Notes</span><br/>
-                                        <span>4. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span><br/>
-                                        <span>5. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span></li>
+                                            <li><span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span></li>
+                                            <li><span>Kaplan Study Text and e-Course Notes</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -555,12 +576,14 @@
                                     <td>
                                         <span>Tuition &amp; Exam Prep Package -Fulltime</span>
                                     </td>
-                                    <td>
-                                        <span>1. 18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span><br/>
-                                        <span>2. 6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span><br/>
-                                        <span>3. Kaplan Study Text and e-Course Notes</span><br/>
-                                        <span>4. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span><br/>
-                                        <span>5. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour sessions)</span></li>
+                                            <li><span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span></li>
+                                            <li><span>Kaplan Study Text and e-Course Notes</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                      </td>
                                 </tr>
                                 <tr>
@@ -570,11 +593,13 @@
                                     <td>
                                         <span>Tuition &amp; Exam Prep Package -Weekends(Integrated Case Study Exams)</span>
                                     </td>
-                                    <td>
-                                        <span>1. 18 - 24 hours of Tuition contact time</span><br/>
-                                        <span>2. 6-18 hours of Exam Preps/Revision time</span><br/>
-                                        <span>3. Kaplan Case Study specific Workbook/e Course Notes</span><br/>
-                                        <span>4. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>18 - 24 hours of Tuition contact time</span></li>
+                                            <li><span>6-18 hours of Exam Preps/Revision time</span></li>
+                                            <li><span>Kaplan Case Study specific Workbook/e Course Notes</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -584,10 +609,12 @@
                                     <td>
                                         <span>Exam Prep ONLY Package (Integrated Case Study Exams)</span>
                                     </td>
-                                    <td>
-                                        <span>1. 6-18 hours of Exam Preps/Revision time</span><br/>
-                                        <span>2. Kaplan Case Study specific Workbook/e Course Notes</span><br/>
-                                        <span>3. 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>6-18 hours of Exam Preps/Revision time</span></li>
+                                            <li><span>Kaplan Case Study specific Workbook/e Course Notes</span></li>
+                                            <li><span>1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -597,10 +624,12 @@
                                     <td>
                                         <span>Exam Preparatory Only Package (E/W/D/FT) for OT Exams</span>
                                     </td>
-                                    <td>
-                                        <span>1. 6-18 hours of Exam Preps/Revision time (structured over 4, 3 hour sessions)</span><br/>
-                                        <span>2. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span><br/>
-                                        <span>3. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour sessions)</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -610,12 +639,14 @@
                                     <td>
                                         <span>Home Study Package</span>
                                     </td>
-                                    <td>
-                                        <span>1. Home Study Kit/Scheme of Work</span><br/>
-                                        <span>2. Interactive online support</span><br/>
-                                        <span>3. Kaplan Study Text and Course Notes</span><br/>
-                                        <span>4. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span><br/>
-                                        <span>5. 2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>Home Study Kit/Scheme of Work</span></li>
+                                            <li><span>Interactive online support</span></li>
+                                            <li><span>Kaplan Study Text and Course Notes</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                            <li><span>2 Progress Mocks/Tests + 1 Final Mock all marked with review feedback.</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                                 <tr>
@@ -625,10 +656,12 @@
                                     <td>
                                         <span>Transition and Exam Booster Package</span>
                                     </td>
-                                    <td>
-                                        <span>1. 6-12 hours of Exam Preps/Revision time</span><br/>
-                                        <span>2. Kaplan e-Course Notes</span><br/>
-                                        <span>3. Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
+                                    <td style="padding-left: 25px;">
+                                        <ol>
+                                            <li><span>6-12 hours of Exam Preps/Revision time</span></li>
+                                            <li><span>Kaplan e-Course Notes</span></li>
+                                            <li><span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span></li>
+                                        </ol>
                                     </td>
                                 </tr>
                             </tbody>

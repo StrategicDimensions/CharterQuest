@@ -50,7 +50,7 @@ class sale_order(models.Model):
                 for event_obj in sale_id.discount_type_ids:
                     max_disc = self.env['event.discount'].search([('name', '=', 'Early Bird Discount')])
                     max_discount_id = max_disc and max_disc[0] or False
-                    if event_obj.id == max_discount_id:
+                    if event_obj.id == max_discount_id.id:
                         template_id = self.env['mail.template'].search([('name', '=', "Early Bird DISCOUNT EXPIRY NOTICE")])
                         if template_id:
                             mail_message = template_id.send_mail(sale_id)
@@ -187,7 +187,6 @@ class sale_order(models.Model):
 
 
 class sale_order_line(models.Model):
-
     _inherit = "sale.order.line"
 
     @api.model

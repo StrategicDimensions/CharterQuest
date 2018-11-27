@@ -201,23 +201,23 @@
                         <table class="table">
                             <thead>
                                 <tr style="background-color:darkgray;">
-                                    <td style="padding: 5px;line-height: 1;">
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
                                         <span><b>Description</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
-                                        <span style="float:right;"><b>Taxes</b></span>
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
+                                        <span><b>Taxes</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
-                                        <span style="float:right;"><b>Quantity</b></span>
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
+                                        <span><b>Quantity</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
-                                        <span style="float:right;"><b>Unit Price</b></span>
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
+                                        <span><b>Unit Price</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
-                                        <span style="float:right;"><b>Disc.(%)</b></span>
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
+                                        <span><b>Disc.(%)</b></span>
                                     </td>
-                                    <td style="padding: 5px;line-height: 1;">
-                                        <span style="float:right;"><b>Price</b></span>
+                                    <td style="padding: 5px;line-height: 1;text-align:center;">
+                                        <span><b>Price</b></span>
                                     </td>
                                 </tr>
                             </thead>
@@ -237,13 +237,13 @@
                                         <span style="float:right;" t-esc="l.quantity"/>
                                     </td>
                                     <td style="padding: 2px;line-height: 1;width:10%;">
-                                        <span style="float:right;" t-esc="l.price_unit"/>
+                                        <span style="float:right;" t-esc="'%.2f'%(l.price_unit)"/>
                                     </td>
                                     <td style="padding: 2px;line-height: 1;width:10%;">
-                                        <span style="float:right;" t-esc="l.discount"/>
+                                        <span style="float:right;" t-esc="'%.2f'%(l.discount)"/>
                                     </td>
                                     <td style="padding: 2px;line-height: 1;width:15%;">
-                                        <span style="float:right;" t-esc="l.price_subtotal"/>
+                                        <span style="float:right;" t-esc="'%.2f'%(l.price_subtotal)"/>
                                         <span style="float:right;" t-esc="doc.currency_id.symbol"/>
                                     </td>
                                 </tr>
@@ -258,7 +258,7 @@
                                       </p>
                                     </td>
                                     <td>
-                                      <span style="float:right;" t-esc="doc.amount_untaxed"/>
+                                      <span style="float:right;" t-esc="'%.2f'%(doc.amount_untaxed)"/>
                                         <span style="float:right;" t-esc="doc.currency_id.symbol"/>
                                     </td>
                                 </tr>
@@ -271,7 +271,7 @@
                                       </p>
                                     </td>
                                     <td>
-                                        <span style="float:right;" t-esc="doc.amount_tax"/>
+                                        <span style="float:right;" t-esc="'%.2f'%(doc.amount_tax)"/>
                                         <span style="float:right;" t-esc="doc.currency_id.symbol"/>
                                     </td>
                                 </tr>
@@ -283,7 +283,7 @@
                                         <span></span>
                                     </td>
                                     <td>
-                                        <span style="float:right; color:white;" t-esc="doc.amount_total"/>
+                                        <span style="float:right; color:white;" t-esc="'%.2f'%(doc.amount_total)"/>
                                         <span style="float:right; color:white;" t-esc="doc.currency_id.symbol"/>
                                     </td>
                                 </tr>
@@ -296,7 +296,7 @@
                                         <span></span>
                                     </td>
                                     <td>
-                                        <span style="float:right;" t-esc="doc.amount_total - doc.residual"/>
+                                        <span style="float:right;" t-esc="'%.2f'%(doc.amount_total - doc.residual)"/>
                                         <span style="float:right;" t-esc="doc.currency_id.symbol"/>
                                     </td>
                                 </tr>
@@ -308,7 +308,7 @@
                                         <span></span>
                                     </td>
                                     <td>
-                                        <span style="float:right; color:white;" t-esc="doc.residual"/>
+                                        <span style="float:right; color:white;" t-esc="'%.2f'%(doc.residual)"/>
                                         <span style="float:right; color:white;" t-esc="doc.currency_id.symbol"/>
                                     </td>
                                 </tr>

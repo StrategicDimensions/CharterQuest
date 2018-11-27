@@ -296,16 +296,16 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="product_template_form_view_inherit">
-        <field name="name">product.template.product.website.form</field>
-        <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_form_view"/>
-            <field name="arch" type="xml">
-                <field name="website_style_ids" position="attributes">
-                    <attribute name="groups"/>
-                </field>
-            </field>
-        </record>
+        <!--<record model="ir.ui.view" id="product_template_form_view_inherit">-->
+        <!--<field name="name">product.template.product.website.form</field>-->
+        <!--<field name="model">product.template</field>-->
+        <!--<field name="inherit_id" ref="product.product_template_form_view"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<field name="website_style_ids" position="attributes">-->
+                    <!--<attribute name="groups"/>-->
+                <!--</field>-->
+            <!--</field>-->
+        <!--</record>-->
 
         <menuitem id="menu_action_event_subject" action="action_event_subject"  parent="event.menu_event_configuration" sequence="17"/>
     </data>

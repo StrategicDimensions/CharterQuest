@@ -11,7 +11,7 @@ access_account_manager_group_invoice,account.invoice manager,model_account_invoi
 sale.access_sale_order,sale.order,model_sale_order,sales_team.group_sale_salesman,1,1,0,0
 sale.access_sale_order_manager,sale.order.manager,model_sale_order,sales_team.group_sale_manager,1,1,0,0
 access_account_manager,sale.order.account manager,model_sale_order,account.group_account_manager,1,1,0,0
-stock.access_account_invoice_user,account.invoice stock user,account.model_account_invoice,stock.group_stock_user,1,1,0,0
+stock.access_account_invoice_user,account.invoice stock user,account.model_account_invoice,stock.group_stock_user,1,1,1,0
 sale.access_sale_order_manager,sale.order.manager,model_sale_order,event_price_kt.group_quote_sale_invoice,1,1,1,1
 access_account_manager_group_invoice,account.invoice manager,model_account_invoice,event_price_kt.group_quote_sale_invoice,1,1,1,1
 pcexams_wizard_id,pcexams_wizard_name,model_pcexams_wizard,base.group_user,1,1,1,1

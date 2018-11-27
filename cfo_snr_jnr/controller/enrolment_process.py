@@ -1,12 +1,19 @@
 import base64
 import hashlib
+import time
+from urllib.parse import urljoin
 
+import werkzeug
 from pkg_resources import require
 from odoo import http
 from odoo.http import request
 from datetime import date, datetime
+from odoo import http, SUPERUSER_ID
 import PyPDF2
 import json, base64
+from odoo.addons.payment_payu_com.controllers.main import PayuController
+from odoo.addons.cfo_snr_jnr.models.payment_transaction import PaymentTransactionCus
+# from CharterQuest.payment_payu_com.controllers.main import PayuController
 
 
 class EnrolmentProcess(http.Controller):
@@ -41,10 +48,7 @@ class EnrolmentProcess(http.Controller):
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
         today_date = datetime.today()
         str_today_date = datetime.strftime(today_date, '%Y-%m-%d')
-        max_discount_detail = request.env['event.max.discount'].sudo().search([('date', '=', str_today_date),
-                                                                               ('prof_body', '=',
-                                                                                int(user_select[
-                                                                                        'Select Prof Body']) if user_select else '')],
+        max_discount_detail = request.env['event.max.discount'].sudo().search([('prof_body', '=', int(user_select['Select Prof Body']) if user_select else '')],
                                                                               limit=1, order="id desc")
         return {'discount': max_discount_detail.max_discount}
 
@@ -56,8 +60,7 @@ class EnrolmentProcess(http.Controller):
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
         today_date = datetime.today()
         str_today_date = datetime.strftime(today_date, '%Y-%m-%d')
-        max_discount_detail = request.env['event.max.discount'].sudo().search([('date', '=', str_today_date),
-                                                                               ('prof_body', '=',
+        max_discount_detail = request.env['event.max.discount'].sudo().search([('prof_body', '=',
                                                                                 int(user_select['Select Prof Body']) if user_select else '')],
                                                                               limit=1, order="id desc")
         return {'discount': max_discount_detail.max_discount}
@@ -72,8 +75,10 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/get_free_email'], type='json', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def get_free_email(self, **post):
-        request.session['grand_tot'] = float(post['grand_tot'].replace(',', '')) if post.get('grand_tot') else 0
-        request.session['product_tot'] = float(post['product_tot'].replace(',', '')) if post.get('product_tot') else 0
+        value_grand_tot = float(post['grand_tot'].replace(',', '')) if post.get('grand_tot') else 0
+        value_product_tot = float(post['product_tot'].replace(',', '')) if post.get('product_tot') else 0
+        request.session['grand_tot'] = format(value_grand_tot, '.2f')
+        request.session['product_tot'] = format(value_product_tot, '.2f')
         request.session['reg_and_enrol'] = ''
         return True
 
@@ -180,10 +185,18 @@ class EnrolmentProcess(http.Controller):
                                     event_details_dict[each.qualification.order][each.qualification.name]['ticket_product'].append(each_ticket.product_id)
                                 if each not in event_details_dict[each.qualification.order][each.qualification.name]['event']:
                                     event_details_dict[each.qualification.order][each.qualification.name]['event'].append(each)
-            for each_duplicate in duplicate_event_detail_dict:
-                if duplicate_event_detail_dict:
+            if duplicate_event_detail_dict:
+                for each_duplicate in duplicate_event_detail_dict:
                     event_keys = sorted(list(event_details_dict.keys()))
                     event_details_dict[event_keys[-1]+1] = {each_duplicate: duplicate_event_detail_dict[each_duplicate]}
+
+            for each in event_details_dict:
+                for each_level in event_details_dict[each]:
+                    event_order_list = []
+                    for each_event in event_details_dict[each][each_level]['event']:
+                        event_order_list.append(each_event.id)
+                    event_details = request.env['event.event'].sudo().search([('id', 'in', event_order_list)], order="name ASC")
+                    event_details_dict[each][each_level]['event'] = event_details
             return request.render('cfo_snr_jnr.enrolment_process_form2', {'enrolment_data': dict(sorted(event_details_dict.items())),
                                                                           'page_name': post.get('page_name'),
                                                                           'self_or_cmp': post['self_or_company'] if post.get('self_or_company') else ''})
@@ -303,33 +316,31 @@ class EnrolmentProcess(http.Controller):
     def debitorder(self, uuid=False, **post):
         if uuid:
             sale_order_id = request.env['sale.order'].sudo().search([('debit_link', '=', uuid)])
-            product_tot = 0.0
-            grand_tot = 0.0
+            product_tot = 0.00
+            grand_tot = 0.00
             if sale_order_id:
                 for each in sale_order_id.order_line:
                     if each.product_id.fee_ok:
                         product_tot += each.price_subtotal
                     if each.product_id.event_ok:
                         grand_tot += each.price_subtotal
-                print('product tot====', product_tot, grand_tot)
-
                 if sale_order_id.quote_type == 'enrolment':
                     return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
-                                                                                    'product_tot': product_tot,
-                                                                                    'grand_tot': grand_tot,
+                                                                                    'product_tot': round(product_tot, 2),
+                                                                                    'grand_tot': round(grand_tot, 2),
                                                                                     'sale_order_id': sale_order_id if sale_order_id else '',
                                                                                     'mandate_link': 'mandate_link_find',
                                                                                     'bank_detail': 'true'})
                 if sale_order_id.quote_type == 'freequote':
                     return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
-                                                                                    'product_tot': product_tot,
-                                                                                    'grand_tot': grand_tot,
+                                                                                    'product_tot': round(product_tot, 2),
+                                                                                    'grand_tot': round(grand_tot, 2),
                                                                                     'sale_order_id': sale_order_id if sale_order_id else '',
                                                                                     'mandate_link': 'mandate_link_find',
-                                                                                    'bank_detail': ''})
+                                                                                    'bank_detail': 'true'})
         return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
-                                                                        'product_tot': product_tot,
-                                                                        'grand_tot': grand_tot})
+                                                                        'product_tot': round(product_tot),
+                                                                        'grand_tot': round(grand_tot)})
 
     @http.route(['/payment'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def payment(self, **post):
@@ -345,6 +356,25 @@ class EnrolmentProcess(http.Controller):
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
 
         order_line = []
+        for each_event_ticket in event_tickets:
+            event_ticket = request.env['event.event.ticket'].sudo().search(
+                [('id', '=', int(event_tickets[each_event_ticket]))])
+            event_full_name = False
+            if event_ticket and event_ticket.event_id:
+                if event_ticket.event_id.event_course_code:
+                    event_full_name = event_ticket.event_id.event_course_code + " - " + event_ticket.event_id.name + " - " + event_ticket.product_id.name
+                else:
+                    event_full_name = event_ticket.event_id.name + " - " + event_ticket.product_id.name
+            order_line.append([0, 0, {'product_id': event_ticket.product_id.id,
+                                      'event_id': event_ticket.event_id.id if event_ticket.product_id.event_ok else '',
+                                      'event_type_id': event_ticket.product_id.event_type_id.id if event_ticket.product_id.event_type_id else '',
+                                      'event_ticket_id': event_ticket.id if event_ticket.event_id else '',
+                                      'name': event_full_name,
+                                      'product_uom_qty': 1.0,
+                                      'product_uom': 1.0,
+                                      'price_unit': event_ticket.price,
+                                      'discount': float(discount_add) if discount_add else 0}])
+
         for each_product in product_ids:
             product_id = request.env['product.product'].sudo().search([('id', '=', int(product_ids[each_product]))])
             order_line.append([0, 0, {'product_id': product_id.id,
@@ -352,18 +382,6 @@ class EnrolmentProcess(http.Controller):
                                       'product_uom': 1,
                                       'price_unit': product_id.lst_price}])
 
-        for each_event_ticket in event_tickets:
-            event_ticket = request.env['event.event.ticket'].sudo().search(
-                [('id', '=', int(event_tickets[each_event_ticket]))])
-            order_line.append([0, 0, {'product_id': event_ticket.product_id.id,
-                                      'event_id': event_ticket.event_id.id if event_ticket.product_id.event_ok else '',
-                                      'event_type_id': event_ticket.product_id.event_type_id.id if event_ticket.product_id.event_type_id else '',
-                                      'event_ticket_id': event_ticket.id if event_ticket.event_id else '',
-                                      'name': event_ticket.event_id.name,
-                                      'product_uom_qty': 1.0,
-                                      'product_uom': 1.0,
-                                      'price_unit': event_ticket.price,
-                                      'discount': float(discount_add) if discount_add else 0}])
         if request.session.get('reg_and_enrol'):
             if request.session.get('reg_and_enrol_email'):
                 partner_detail = request.env['res.partner'].sudo().search([('email', '=', request.session['reg_and_enrol_email'])], limit=1)
@@ -514,6 +532,7 @@ class EnrolmentProcess(http.Controller):
             sale_order = post.get('sale_order_id')
 
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
+
         if sale_order_id:
             if post.get('sale_order') or post.get('sale_order_id') or request.session.get('sale_order'):
                 sale_order_id.write({'diposit_selected': post.get('inputPaypercentage') if post.get('inputPaypercentage') else 0,
@@ -593,7 +612,7 @@ class EnrolmentProcess(http.Controller):
                     body_html += "<br><br>"
                     body_html += "Confirm discounts requirements below and double check your attached quote to ensure you have claimed all discounts applicable to you before you proceed:"
                     body_html += "<br><br>"
-                    body_html += "<table border='1' style='width: 630px;max-width: 100%'> <tr style='background-color:lightgray;'> <td style='width:10%;'>Discount Category</td> <td style='width:60%;'>Requirements (All discounts must be claimed and included in the free quote or final invoice prior to making the first payment or will be forfeited).</td> <td>Discount % Available</td></tr>"
+                    body_html += "<table border='1' style='width: 630px;max-width: 100%'> <tr style='background-color:lightgray;'> <td style='width:10%;text-align:center;'>Discount Category</td> <td style='width:60%;'>Requirements (All discounts must be claimed and included in the free quote or final invoice prior to making the first payment or will be forfeited).</td> <td>Discount % Available</td></tr>"
 
                     for each in discount_detail_list:
                         if event_count == 2:
@@ -705,14 +724,10 @@ class EnrolmentProcess(http.Controller):
                         body_html += "<br><br>"
                         body_html += "Thank you for your Enrolment Application."
                         body_html += "<br><br>"
-                        body_html += "Please find attached Invoice as	well as	copy of	the	Student	Agreement you just accepted	during enrolment."
+                        body_html += "Please find attached Invoice as well as copy of the Student Agreement you just accepted during enrolment."
                         body_html += "<br><br>"
                         body_html += "Your sponsor/company can pay using the Invoice no. as reference and return proof of payment to: accounts@charterquest.co.za"
                         body_html += " to process your enrolment. You can email accounts should you wish to make special payment arrangements."
-                        body_html += "<br><br>"
-                        body_html += "Should your company require	an invoice, please forward this	proforma to	the	above email requesting its conversion into an invoice. We will need your company's details to generate an invoice for you!"
-                        body_html += "<br><br>"
-                        body_html += "Once we issue an invoice, this becomes binding as you will be	expected to	settle the amount in full should your company not honour the agreement. So please kindly ensure your company has pre-approved your bursary or training expenditure before you request conversion to an Invoice."
                         body_html += "<br><br>"
                         body_html += "We look forward to seeing	you	during our course and helping you, in achieving	a 1st Time Pass!"
                         body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
@@ -761,7 +776,7 @@ class EnrolmentProcess(http.Controller):
                         body_html += "<br><br>"
                         body_html += "Thank you for your Enrolment Application."
                         body_html += "<br><br>"
-                        body_html += "Please find attached proforma Invoice as	well as	copy of	the	Student	Agreement you just accepted	during enrolment."
+                        body_html += "Please find attached Proforma Invoice as	well as	copy of	the	Student	Agreement you just accepted	during enrolment."
                         body_html += "<br><br>"
                         body_html += "Your sponsor/company can pay using the Invoice no. as reference and return proof of payment to: accounts@charterquest.co.za"
                         body_html += " to process your enrolment. You can email accounts should you wish to make special payment arrangements."
@@ -810,22 +825,23 @@ class EnrolmentProcess(http.Controller):
             sale_order = request.session['sale_order']
 
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
-        for each_order_line in sale_order_id.order_line:
-            invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
-                                        'name': each_order_line.name,
-                                        'quantity': 1.0,
-                                        'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
-                                        'price_unit': each_order_line.price_unit,
-                                        'discount': each_order_line.discount}])
-        invoice_id = invoice_obj.create({'partner_id': sale_order_id.partner_id.id,
-                                         'campus': sale_order_id.campus.id,
-                                         'prof_body': sale_order_id.prof_body.id,
-                                         'sale_order_id': sale_order_id.id,
-                                         'semester_id': sale_order_id.semester_id.id,
-                                         'invoice_line_ids': invoice_line,
-                                         'residual': sale_order_id.out_standing_balance_incl_vat,
-                                         })
-        invoice_id.action_invoice_open()
+        if sale_order_id:
+            for each_order_line in sale_order_id.order_line:
+                invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
+                                            'name': each_order_line.name,
+                                            'quantity': 1.0,
+                                            'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
+                                            'price_unit': each_order_line.price_unit,
+                                            'discount': each_order_line.discount}])
+            invoice_id = invoice_obj.create({'partner_id': sale_order_id.partner_id.id,
+                                             'campus': sale_order_id.campus.id,
+                                             'prof_body': sale_order_id.prof_body.id,
+                                             'sale_order_id': sale_order_id.id,
+                                             'semester_id': sale_order_id.semester_id.id,
+                                             'invoice_line_ids': invoice_line,
+                                             'residual': sale_order_id.out_standing_balance_incl_vat,
+                                             })
+            invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:
                 debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
@@ -869,14 +885,14 @@ class EnrolmentProcess(http.Controller):
                 body_html += "<br><br>"
                 body_html += "Thank you for your Enrolment Application."
                 body_html += "<br><br>"
-                body_html += "Please find attached proforma invoice as well as copy of the Student Agreement and Debit Order Mandate you just accepted during enrolment."
+                body_html += "Please find attached Proforma Invoice as well as copy of the Student Agreement and Debit Order Mandate you just accepted during enrolment."
                 body_html += "<br><br>"
                 body_html += "As you opted to 'pay by cash', please follow the steps below to complete your enrolment:"
                 body_html += "<br><br>"
                 body_html += "1. Click the link below to access our banking details;"
                 body_html += "<br>http://www.charterquest.co.za/page/downloads"
                 body_html += "<br><br>"
-                body_html += "2. Make a cash deposit of at least 20% (taking into account your payment plan on the debit order mandate) of the course fee into our bank account with an additional R90 to cover cash deposit bank charges (use your proforma invoice no. as your pay reference to avoid delays in crediting your account, securing your place and releasing your study materials): and"
+                body_html += "2. Make a cash deposit of at least 20% (taking into account your payment plan on the debit order mandate) of the course fee into our bank account with an additional R90 to cover cash deposit bank charges (use your Proforma Invoice No. as your pay reference to avoid delays in crediting your account, securing your place and releasing your study materials): and"
                 body_html += "<br><br>"
                 body_html += "3. Once the cash deposit is made email your proof of payment to accounts@charterquest.co.za. An email will be sent to you once your payment is allocated and the post-payment procedures defined in your Student Agreement attached will be activated."
                 body_html += "<br><br>"
@@ -901,7 +917,232 @@ class EnrolmentProcess(http.Controller):
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou_bank',
                                           {'self_or_cmp': user_select['self_or_company'] if user_select.get(
                                               'self_or_company') else ''})
+
         return request.render('cfo_snr_jnr.enrolment_process_page_thankyou_bank')
+
+    @http.route(['/event/redirect_payu'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
+    def event_redirect(self, **post):
+        sale_order_id = False
+        base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        return_url = urljoin(base_url, '/event/payment/payu_com/dpn/')
+        cancel_url = urljoin(base_url, '/event/payment/payu_com/cancel/')
+        currency = request.env.ref('base.main_company').currency_id
+        if post.get('sale_order'):
+            sale_order_id = request.env['sale.order'].sudo().search([('id', '=', int(post.get('sale_order')))])
+        payu_tx_values = dict(post)
+        payment_acquire = request.env['payment.acquirer'].sudo().search([('provider', '=', 'payu')])
+        amount = post['inputTotalDue']
+        # convert amount to cent
+        if len(amount.split('.')[1]) == 1:
+            amount = amount + '0'
+            amount = amount.replace('.', '')
+        elif len(amount.split('.')[1]) == 2:
+            amount = amount.replace('.', '')
+        if sale_order_id:
+            debit_order_mandet = []
+            res_bank_detail = False
+            account_type = False
+
+            if post.get('inputBankName'):
+                res_bank_detail = request.env['res.bank'].sudo().search([('id', '=', int(post['inputBankName']))])
+            if post.get('inputAtype'):
+                account_type = request.env['account.account.type'].sudo().search([('id', '=', int(post['inputAtype']))])
+
+            debit_order_mandet.append([0, 0, {'partner_id': sale_order_id.partner_id.id,
+                                              'dbo_amount': post.get('inputtotalandInterest') if post.get('inputtotalandInterest') else 0,
+                                              'course_fee': post.get('inputOutstanding') if post.get(
+                                                  'inputOutstanding') else 0,
+                                              'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
+                                              'interest': post.get('inputInterest') if post.get('inputInterest') else 0,
+                                              'acc_holder': sale_order_id.partner_id.name,
+                                              'bank_name': res_bank_detail.id if res_bank_detail else '',
+                                              'bank_acc_no': post.get('inputAccount') if post.get(
+                                                  'inputAccount') else '',
+                                              'bank_code': res_bank_detail.bic if res_bank_detail else '',
+                                              'bank_type_id': int(post['inputAtype']) if post.get(
+                                                  'inputAtype') else ''}])
+            sale_order_id.write(
+                {'diposit_selected': post.get('inputPaypercentage') if post.get('inputPaypercentage') else 0,
+                 'due_amount': post.get('inputTotalDue') if post.get('inputTotalDue') else 0,
+                 'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
+                 'out_standing_balance_incl_vat': post.get('inputtotalandInterest') if post.get(
+                     'inputtotalandInterest') else 0,
+                 'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
+                 'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
+                 'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0,
+                 'debit_order_mandat': debit_order_mandet})
+
+            name_split = sale_order_id.partner_id.name.split(' ')
+            transactionDetails = {}
+            transactionDetails['store'] = {}
+            transactionDetails['store']['soapUsername'] = payment_acquire.payu_api_username
+            transactionDetails['store']['soapPassword'] = payment_acquire.payu_api_password
+            transactionDetails['store']['safekey'] = payment_acquire.payu_seller_account
+            transactionDetails['store']['environment'] = payment_acquire.environment
+            transactionDetails['store']['TransactionType'] = 'PAYMENT'
+            transactionDetails['basket'] = {}
+            transactionDetails['basket']['description'] = 'CFO'
+            transactionDetails['basket']['amountInCents'] = amount
+            transactionDetails['basket']['currencyCode'] = currency.name
+            transactionDetails['additionalInformation'] = {}
+            transactionDetails['additionalInformation']['merchantReference'] = sale_order_id.name
+            transactionDetails['additionalInformation']['returnUrl'] = return_url
+            transactionDetails['additionalInformation']['cancelUrl'] = cancel_url
+            transactionDetails['additionalInformation']['supportedPaymentMethods'] = 'CREDITCARD'
+            transactionDetails['additionalInformation']['demoMode'] = False
+            transactionDetails['Stage'] = False
+            transactionDetails['customer'] = {}
+            transactionDetails['customer']['email'] = sale_order_id.partner_id.email
+            transactionDetails['customer']['firstName'] = name_split[0] if name_split else ''
+            transactionDetails['customer']['lastName'] = name_split[1] if name_split else ''
+            transactionDetails['customer']['mobile'] = sale_order_id.partner_id.mobile
+
+
+        if payment_acquire:
+            payu_tx_values.update({
+                'x_login': payment_acquire.payu_api_username,
+                'x_merchant_id': payment_acquire.payu_seller_account,
+                'x_trans_key': payment_acquire.payu_api_password,
+                'x_fp_timestamp': str(int(time.time())),
+                'x_fp_sequence': '%s%s' % (payment_acquire.id, int(time.time())),
+                'currency_code': currency.name,
+                'return': '%s' % urljoin(base_url, PayuController._return_url)
+            })
+
+        tx_values = {
+            'acquirer_id': payment_acquire.id,
+            'type': 'form',
+            'amount': "{0:.2f}".format(sale_order_id.due_amount or 0),
+            'currency_id': sale_order_id.pricelist_id.currency_id.id,
+            'partner_id': sale_order_id.partner_id.id,
+            'partner_country_id': sale_order_id.partner_id.country_id.id,
+            'reference': request.env['payment.transaction'].get_next_reference(sale_order_id.name),
+            'sale_order_id': sale_order_id.id,
+        }
+        tx = request.env['payment.transaction'].sudo().create(tx_values)
+        url = PayuController.payuMeaSetTransactionApiCall('',transactionDetails)
+        return werkzeug.utils.redirect(url)
+
+    @http.route('/event/payment/payu_com/cancel', type='http', auth="none", methods=['POST', 'GET'])
+    def payu_com_cancel(self, **post):
+        """ When the user cancels its Payu payment: GET on this route """
+        cr, uid, context = request.cr, SUPERUSER_ID, request.context
+        return werkzeug.utils.redirect('/event/unsuccessful')
+
+    @http.route(['/event/unsuccessful'], type='http', auth="public", website=True)
+    def unsuccessful(self, **post):
+
+        """ End of checkout process controller. Confirmation is basically seing
+        the status of a sale.order. State at this point :
+
+         - should not have any context / session info: clean them
+         - take a sale.order id, because we request a sale.order and are not
+           session dependant anymore
+        """
+        cr, uid, context = request.cr, request.uid, request.context
+
+        sale_order_id = request.session.get('sale_last_order_id')
+        if sale_order_id:
+            order = request.env['sale.order'].sudo().browse(sale_order_id)
+        else:
+            return request.redirect('/enrolment_book')
+        request.website.sale_reset()
+        return request.render("cfo_snr_jnr.event_unsuccessful", {'order': order})
+
+    @http.route('/event/payment/payu_com/dpn', type='http', auth="public", methods=['POST', 'GET'], website=True)
+    def event_payu_com_dpn(self, **post):
+        """This method is used for getting response from Payu and create invoice automatically if successful"""
+        cr, uid, context = request.cr, request.uid, request.context
+        payment_acquire = request.env['payment.acquirer'].sudo().search([('provider', '=', 'payu')])
+        transactionDetails = {}
+        transactionDetails['store'] = {}
+        transactionDetails['store']['soapUsername'] = payment_acquire.payu_api_username
+        transactionDetails['store']['soapPassword'] = payment_acquire.payu_api_password
+        transactionDetails['store']['safekey'] = payment_acquire.payu_seller_account
+        transactionDetails['store']['environment'] = payment_acquire.environment
+        transactionDetails['additionalInformation'] = {}
+        transactionDetails['additionalInformation']['payUReference'] = post['PayUReference']
+        try:
+            result = PayuController.payuMeaGetTransactionApiCall('',transactionDetails)
+            payment_transation_id = request.env['payment.transaction'].sudo().search([('reference', '=', result['merchantReference'])])
+
+
+            payu_response = {}
+            if result:
+                payu_response['TRANSACTION_STATUS'] = result['transactionState']
+                # payu_response['SUCCESSFUL'] = result['successful']
+                payu_response['AMOUNT'] = payment_transation_id.amount*100 if payment_transation_id else 0.00
+                payu_response['CURRENCYCODE'] = result['basket']['currencyCode']
+                payu_response['PAYUREFERENCE'] = result['payUReference']
+                payu_response['REFERENCE'] = result['merchantReference']
+                payu_response['RESULTMESSAGE'] = result['resultMessage']
+            response_state = request.env['payment.transaction'].sudo().form_feedback(payu_response, 'payu')
+            # response_state = PaymentTransactionCus.form_feedback('', payu_response, 'payu')
+            # if response_state:
+            #     return werkzeug.utils.redirect('/shop/payment/validate')
+            # else:
+            #     return werkzeug.utils.redirect('/shop/unsuccessful')
+
+            sale_order_id = request.env['sale.order'].sudo().search([('name', '=', result['merchantReference'])])
+            sale_order_data = sale_order_id
+            request.session['sale_last_order_id'] = sale_order_id.id
+            tx_id = request.env['payment.transaction'].sudo().search([('reference', '=', result['merchantReference'])])
+            tx = tx_id
+            if not sale_order_id or (sale_order_id.amount_total and not tx):
+                return request.redirect('/shop')
+            if (not sale_order_id.amount_total and not tx) or tx.state in ['pending']:
+                if sale_order_id.state in ['draft', 'sent']:
+                    if (not sale_order_id.amount_total and not tx):
+                        sale_order_id.action_button_confirm()
+                    email_act = sale_order_id.action_quotation_send()
+            elif tx and tx.state == 'cancel':
+                sale_order_id.action_cancel()
+            elif tx and (tx.state == 'draft' or tx.state == 'sent' or tx.state == 'done'):
+                #             if result and payu_response['successful'] and payu_response['TRANSACTION_STATUS'] in ['SUCCESSFUL', 'PARTIAL_PAYMENT', 'OVER_PAYMENT']:
+                if result and payu_response['TRANSACTION_STATUS'] in ['SUCCESSFUL', 'PARTIAL_PAYMENT', 'OVER_PAYMENT']:
+                    transaction = tx.sudo().write(
+                        {'state': 'done', 'date_validate': datetime.now(),
+                         'acquirer_reference': result['payUReference']})
+                    email_act = sale_order_id.action_quotation_send()
+                    action_confirm_res = sale_order_id.action_confirm()
+                    sale_order = sale_order_id.read([])
+                #             if sale_order_id.state == 'sale':
+                #                 print '\n\nif state= sale'
+                #                 journal_ids = request.env['account.journal'].sudo().search([('name', '=', 'FNB 62085815143')], limit=1)
+                #                 journal = journal_ids.read([])
+                currency = request.env['res.currency'].sudo().search([('name', '=', 'ZAR')], limit=1)
+                method = request.env['account.payment.method'].sudo().search([('name', '=', 'Manual')], limit=1)
+                journal_id = request.env['account.journal'].search(
+                    [('name', '=', 'FNB - Cheque Account 6208585815143')],
+                    limit=1, order="id desc")
+                if journal_id:
+                    account_payment = {
+                        'partner_id': sale_order[0]['partner_id'][0],
+                        'partner_type': 'customer',
+                        'journal_id': journal_id.id,
+                        # 'invoice_ids':[(4,inv_obj.id,0)],
+                        'amount': sale_order[0]['amount_total'],
+                        'communication': sale_order_id.name,
+                        'currency_id': currency.id,
+                        'payment_type': 'inbound',
+                        'payment_method_id': method.id,
+                        'payment_transaction_id': tx.id,
+                    }
+                    acc_payment = request.env['account.payment'].sudo().create(account_payment)
+                    acc_payment.sudo().post()
+                sale_order_id = request.session.get('sale_last_order_id')
+                sale_order_data = request.env['sale.order'].sudo().browse(sale_order_id)
+                # if sale_order_data.project_project_id:
+                #     request.session['last_project_id'] = sale_order_data.project_project_id.id
+            if response_state:
+                sale_order_data.message_post(subject="T&C's Privacy Policy",
+                                             body="%s accepted T&C's and Privacy Policy." % sale_order_data.partner_id.name)
+                return werkzeug.utils.redirect('/pay/thankyou')
+                # return werkzeug.utils.redirect('/shop/confirmation')
+            else:
+                return werkzeug.utils.redirect('/event/unsuccessful')
+        except Exception as e:
+            return werkzeug.utils.redirect('/event/unsuccessful')
 
     @http.route(['/pay/thankyou'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def pay_thankyou(self, **post):
@@ -916,6 +1157,8 @@ class EnrolmentProcess(http.Controller):
             sale_order = post.get('sale_order')
         if request.session.get('sale_order'):
             sale_order = request.session['sale_order']
+        if request.session.get('sale_last_order_id'):
+            sale_order = request.session.get('sale_last_order_id')
 
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
         for each_order_line in sale_order_id.order_line:
@@ -923,6 +1166,7 @@ class EnrolmentProcess(http.Controller):
                                         'name': each_order_line.name,
                                         'quantity': 1.0,
                                         'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
+                                        'invoice_line_tax_ids': [(6, 0,[each_tax.id for each_tax in each_order_line.tax_id])],
                                         'price_unit': each_order_line.price_unit,
                                         'discount': each_order_line.discount}])
         invoice_id = invoice_obj.create({'partner_id': sale_order_id.partner_id.id,
@@ -933,6 +1177,7 @@ class EnrolmentProcess(http.Controller):
                                          'invoice_line_ids': invoice_line,
                                          'residual': sale_order_id.out_standing_balance_incl_vat,
                                          })
+        invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:
                 debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
@@ -948,7 +1193,6 @@ class EnrolmentProcess(http.Controller):
                                         'bank_type_id': each_debit_order.bank_type_id.id,
                                         'invoice_id': invoice_id.id
                                         })
-
         template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
         if template_id:
             # template_id.send_mail(sale_order_id.id, force_send=True)
@@ -1022,7 +1266,7 @@ class EnrolmentProcess(http.Controller):
         invoice_obj = request.env['account.invoice'].sudo()
         debit_order_obj = request.env['debit.order.details'].sudo()
         mail_obj = request.env['mail.mail'].sudo()
-        user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
+        user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else False
         attchment_list = []
         invoice_line = []
         invoice_id = False
@@ -1128,7 +1372,8 @@ class EnrolmentProcess(http.Controller):
                 }
                 msg_id = mail_obj.create(mail_values)
                 msg_id.send()
-                if user_select.get('self_or_company') == 'cmp_sponosored':
+
+                if user_select and user_select.get('self_or_company') == 'cmp_sponosored':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                           {'self_or_cmp': user_select['self_or_company'] if user_select.get(
                                               'self_or_company') else ''})
@@ -1173,14 +1418,10 @@ class EnrolmentProcess(http.Controller):
                 body_html += "<br><br>"
                 body_html += "Thank you for your Enrolment Application."
                 body_html += "<br><br>"
-                body_html += "Please find	attached Invoice as	well as	copy of	the	Student	Agreement you just accepted	during enrolment."
+                body_html += "Please find attached Invoice as well as copy of the Student Agreement you just accepted during enrolment."
                 body_html += "<br><br>"
                 body_html += "Your sponsor/company can pay using the Invoice no. as reference and return proof of payment to: accounts@charterquest.co.za"
                 body_html += " to process your enrolment. You can email accounts should you wish to make special payment arrangements."
-                body_html += "<br><br>"
-                body_html += "Should your company require	an invoice, please forward this	proforma to	the	above email requesting its conversion into an invoice. We will need your company's details to generate an invoice for you!"
-                body_html += "<br><br>"
-                body_html += "Once we issue an invoice, this becomes binding as you will be	expected to	settle the amount in full should your company not honour the agreement. So please kindly ensure your company has pre-approved your bursary or training expenditure before you request conversion to an Invoice."
                 body_html += "<br><br>"
                 body_html += "We look forward to seeing	you	during our course and helping you, in achieving	a 1st Time Pass!"
                 body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
@@ -1228,7 +1469,7 @@ class EnrolmentProcess(http.Controller):
                 body_html += "<br><br>"
                 body_html += "Thank you for your Enrolment Application."
                 body_html += "<br><br>"
-                body_html += "Please find attached proforma Invoice as	well as	copy of	the	Student	Agreement you just accepted	during enrolment."
+                body_html += "Please find attached Proforma Invoice as	well as	copy of	the	Student	Agreement you just accepted	during enrolment."
                 body_html += "<br><br>"
                 body_html += "Your sponsor/company can pay using the Invoice no. as reference and return proof of payment to: accounts@charterquest.co.za"
                 body_html += " to process your enrolment. You can email accounts should you wish to make special payment arrangements."
@@ -1274,7 +1515,7 @@ class EnrolmentProcess(http.Controller):
         if post.get('sale_order'):
             sale_order_id = request.env['sale.order'].sudo().browse(int(post.get('sale_order')))
             debit_order_mandet.append([0, 0, {'partner_id': sale_order_id.partner_id.id,
-                                              'dbo_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
+                                              'dbo_amount': post.get('inputtotalandInterest') if post.get('inputtotalandInterest') else 0,
                                               'course_fee': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
                                               'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
                                               'interest': post.get('inputInterest') if post.get('inputInterest') else 0,
@@ -1294,7 +1535,7 @@ class EnrolmentProcess(http.Controller):
                                  'debit_order_mandat': debit_order_mandet})
 
         if post.get('Pay Via Bank Deposit'):
-            return request.render('cfo_snr_jnr.enrolment_process_validate_payment', {'post_data': post if post else '', 'button_hide':True})
+            return request.render('cfo_snr_jnr.enrolment_process_validate_payment', {'post_data': post if post else '', 'button_hide': True})
         else:
             return request.render('cfo_snr_jnr.enrolment_process_validate_payment', {'post_data': post if post else '', 'button_hide':False})
 

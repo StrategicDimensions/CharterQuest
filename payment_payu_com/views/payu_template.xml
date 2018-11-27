@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!--<template id="payumoney_form">-->
+			<!--<input type="hidden" name="data_set" t-att-data-action-url="tx_url" data-remove-me=""/>-->
+			<!--<input type="hidden" name="key" t-att-value='key' />-->
+			<!--<input type="hidden" name="txnid" t-att-value='txnid' />-->
+			<!--<input type="hidden" name="amount" t-att-value='amount' />-->
+			<!--<input type="hidden" name="productinfo" t-att-value='productinfo' />-->
+			<!--<input type="hidden" name="firstname" t-att-value='firstname' />-->
+			<!--<input type="hidden" name="email" t-att-value='email' />-->
+			<!--<input type="hidden" name="phone" t-att-value='phone'/>-->
+			<!--<input type="hidden" name="service_provider" t-att-value='service_provider' />-->
+			<!--<input type="hidden" name="hash" t-att-value='hash' />-->
+			<!--<input type="hidden" name="surl" t-att-value='surl' />-->
+			<!--<input type="hidden" name="furl" t-att-value='furl' />-->
+			<!--<input type="hidden" name="curl" t-att-value='curl' />-->
+			<!--<input type="hidden" name="udf1" t-att-value='udf1'/>-->
+		<!--</template>-->
+
+		<template id="payu_acquirer_button">
+			<!--<form t-if="acquirer" action="/shop/redirect_payu" method="post" target="_self">-->
+			<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+			<t t-if="return_url">
+				<input type="hidden" name="return_url" t-att-value="return_url" />
+			</t>
+			<input type="hidden" name="data_set" t-att-data-action-url="tx_url" data-remove-me=""/>
+			<input type="hidden" name="key" t-att-value='key' />
+			<input type="hidden" name="reference" t-att-value="reference" />
+			<input type="hidden" name="amount" t-att-value="amount" />
+			<input type="hidden" name="currency" t-att-value="currency.name" />
+			<input type="hidden" name="item_name" t-att_value="item_name" />
+			<input type="hidden" name="email" t-att_value="email" />
+			<input type="hidden" name="first_name" t-att-value="first_name" />
+			<input type="hidden" name="last_name" t-att-value="last_name" />
+			<input type="hidden" name="phone" t-att-value="phone" />
+			<input type="hidden" name="service_provider" t-att-value='service_provider' />
+			<input type="hidden" name="hash" t-att-value='hash' />
+			<input type="hidden" name="surl" t-att-value='surl' />
+			<input type="hidden" name="furl" t-att-value='furl' />
+			<input type="hidden" name="curl" t-att-value='curl' />
+			<input type="hidden" name="udf1" t-att-value='udf1'/>
+				<!-- submit -->
+				<!--<button type="submit" width="100px"-->
+					<!--t-att-class="submit_class">-->
+					<!--<img t-if="not submit_txt"-->
+						<!--src="/payment_payu_com/static/src/img/payu_icon.png" />-->
+					<!--<span t-if="submit_txt">-->
+						<!--<t t-esc="submit_txt" />-->
+						<!--<span class="fa fa-long-arrow-right" />-->
+					<!--</span>-->
+				<!--</button>-->
+			<!--</form>-->
+		</template>
+
+		<template id="unsuccessful">
+			<t t-call="website.layout">
+				<t t-set="additional_title">Shop - Confirmed</t>
+				<div id="wrap">
+					<div class="container oe_website_sale">
+
+						<ul class="wizard pull-right">
+							<li class="text-muted">
+								Review Order
+								<span class="chevron"></span>
+							</li>
+							<li class="text-muted">Shipping &amp; Billing
+								<span class="chevron"></span>
+							</li>
+							<li class="text-muted">Payment
+								<span class="chevron"></span>
+							</li>
+							<li class="text-primary">Confirmation
+								<span class="chevron"></span>
+							</li>
+						</ul>
+						<div class="row">
+							<div class="col-md-8 oe_cart">
+								<h4>Oops:</h4>
+								<br></br>
+								<p>Payment Unsuccessful!<br></br><br></br>
+									Please repeat the process and choose EFT as your payment method
+									and we will send you a proforma invoice with our banking
+									details for you to make the payment for your order. Once your
+									payment is received your order will be processed immediately;
+									<br></br><br></br>
+									Thank you
+								</p>
+								<div class="clearfix" />
+								<div class="oe_structure" />
+							</div>
+							<div class="col-md-3 col-md-offset-1 text-muted"
+								id="right_column">
+								<h4>Bill To:</h4>
+								<div t-field="order.partner_invoice_id"
+									t-field-options='{
+                    "widget": "contact",
+                    "fields": ["address", "name", "phone", "email"]
+                    }' />
+								<t>
+									<h4 class="mt32">Ship To:</h4>
+									<t
+										t-if="order.partner_shipping_id and order.partner_shipping_id.id != order.partner_invoice_id.id">
+										<div t-field="order.partner_shipping_id"
+											t-field-options='{
+                        "widget": "contact",
+                        "fields": ["address", "name", "phone"]
+                        }' />
+									</t>
+									<address
+										t-if="order.partner_shipping_id.id == order.partner_invoice_id.id">Ship to the same address</address>
+								</t>
+							</div>
+						</div>
+					</div>
+					<div class="oe_structure" />
+				</div>
+			</t>
+		</template>
+	</data>
+</odoo>

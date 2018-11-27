@@ -27,6 +27,16 @@
                     <separator string="Redeemed Vouchers"/>
                     <field name="redeemed_voucher_ids" />
                 </page>
+                <page string="Payment">
+                    <field name="payment_move_line_ids">
+                        <field name="date"/>
+                        <field name="move_id"/>
+                        <field name="ref"/>
+                        <field name="journal_id"/>
+                        <field name="debit"/>
+                        <field name="credit"/>
+                    </field>
+                </page>
             </notebook>
         </field>
         </record>

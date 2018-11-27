@@ -177,7 +177,7 @@
                                                     <i class="fa fa-check" aria-hidden="true"> </i>
                                                 </span>
                                             </div>
-                                                <p>Discount</p>
+                                            <p>Discount</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -320,20 +320,20 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group form-field o_website_form_custom">
-                        <div class="col-md-3 col-sm-4 text-right-not-xs">
-                            <label class="control-label" for="Are You Registered with a Professional Body?">
-                                Are You Registered with a Professional Body?
-                            </label>
-                        </div>
-                        <div class="col-md-7 col-sm-8">
-                            <select class="form-control o_website_form_input"
-                                    name="registered_professional_body?" required="false">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
+                    <!--<div class="form-group form-field o_website_form_custom">-->
+                        <!--<div class="col-md-3 col-sm-4 text-right-not-xs">-->
+                            <!--<label class="control-label" for="Are You Registered with a Professional Body?">-->
+                                <!--Are You Registered with a Professional Body?-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-7 col-sm-8">-->
+                            <!--<select class="form-control o_website_form_input"-->
+                                    <!--name="registered_professional_body?" required="false">-->
+                                <!--<option value="Yes">Yes</option>-->
+                                <!--<option value="No">No</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <div class="form-group form-field o_website_form_custom">
                         <div class="col-md-3 col-sm-4 text-right-not-xs">
                             <label class="control-label" for="Are You Registered with a Professional Body?">
@@ -366,7 +366,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group form-field o_website_form_custom">
+                    <div class="form-group form-field o_website_form_custom" id="reg_campus">
                         <div class="col-md-3 col-sm-4 text-right-not-xs">
                             <label for="campus" class="control-label">Select Campus
                             </label>
@@ -379,19 +379,19 @@
                         </div>
                     </div>
 
-                    <div class="form-group form-field o_website_form_custom">
-                        <div class="col-md-3 col-sm-4 text-right-not-xs">
-                            <label class="control-label" for="Enrol for?">Enrol for?</label>
-                        </div>
-                        <div class="col-md-7 col-sm-8">
-                            <select class="form-control o_website_form_input" name="Enrol for?"
-                                    required="false">
-                                <option value="Part Time">Part Time</option>
-                                <option value="Full Time">Full Time</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group form-field o_website_form_custom">
+                    <!--<div class="form-group form-field o_website_form_custom" id="reg_enrol_for">-->
+                        <!--<div class="col-md-3 col-sm-4 text-right-not-xs">-->
+                            <!--<label class="control-label" for="Enrol for?">Enrol for?</label>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-7 col-sm-8">-->
+                            <!--<select class="form-control o_website_form_input" name="Enrol for?"-->
+                                    <!--required="false">-->
+                                <!--<option value="Part Time">Part Time</option>-->
+                                <!--<option value="Full Time">Full Time</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="form-group form-field o_website_form_custom" id="reg_sem">
                         <div class="col-md-3 col-sm-4 text-right-not-xs">
                             <label class="control-label" for="Semester">Semester</label>
                         </div>
@@ -424,9 +424,9 @@
                     <form action="/fees_level" method="post"
                         class="s_website_form form-horizontal container-fluid mt32"
                         enctype="multipart/form-data" data-success_page="">
-                        <h1 class="mt0">
-                            <font class="bg-gamma" style="">Select Level and Courses</font>
-                        </h1>
+                        <h4 class="mt0">
+                            <font class="bg-gamma" style="font-size: 60px;">Select Level and Courses</font>
+                        </h4>
 
                         <t t-if="not enrolment_data">
                             <div class="container" style="color:black;">
@@ -478,7 +478,7 @@
                                                                 <t t-if="not event_record.price">
                                                                     <input type="checkbox" class="event_course" t-att-name="'event-%s' % (event_record.id)" t-att-value="event_record.id" disabled="disabled"/>
                                                                 </t>
-                                                                <span t-esc="event_record.price if event_record.price else 'N/A'"/>
+                                                                <span t-esc="'%.2f'%(event_record.price) if event_record.price else 'N/A'"/>
                                                             </td>
                                                         </t>
                                                     </tr>
@@ -596,10 +596,10 @@
                             <table class="table table-bordered" style="color:black;background-color:azure;">
                                 <thead>
                                     <tr style="background-color:red;">
-                                        <th>Discount Type</th>
+                                        <th style="width:150px;">Discount Type</th>
                                         <th>Requirements (All discounts must be verifiably claimed and included in the free quote or final invoice prior to making the first payment or will be forfeited).</th>
-                                        <th>Tick for Yes</th>
-                                        <th>Discount %</th>
+                                        <th style="width:100px;">Tick for Yes</th>
+                                        <th style="width:110px;">Discount %</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -754,14 +754,15 @@
                         </tbody>
                     </table>
                     <center>
+                        
                         <table>
                             <tbody>
                                 <tr>
-                                    <t t-if="not btn_display">
+                                    
                                         <td>
                                             <button id="btn_get_free_email" style="margin-top: 30px;" class="btn btn-primary" name="button" type="button" value="Get Free Quote Emailed">Get Free Quote Emailed</button>
                                         </td>
-                                    </t>
+                                    
                                     <t t-if="btn_display">
                                         <td> </td>
                                     </t>
@@ -911,17 +912,17 @@
                 <form action="/page/thank-you" method="post"
                         class="s_website_form form-horizontal container-fluid mt32"
                         enctype="multipart/form-data" data-model_name="mail.mail" data-success_page="">
-                    <table class="table table-bordered" style="color:black;background-color:lightyellow;">
+                    <table class="table table-bordered payment_table" style="color:black;background-color:lightyellow;">
                         <tbody>
                             <input id="mandate_link" type="hidden" t-att-value="mandate_link"/>
                             <tr style="background-color:#DA4F49;">
-                                <th>Charge description</th>
+                                <th style="width:200px;">Charge description</th>
                                 <th>% and/or Amount in Rands</th>
                                 <th>Guidance / How to:</th>
                             </tr>
                             <tr>
                                 <td>Course Fees</td>
-                                <td><span id="grand_total_amount" t-esc="grand_tot"> </span></td>
+                                <td style="font-size:16px !important;"><span id="grand_total_amount" t-esc="grand_tot"> </span></td>
                                 <td> </td>
                             </tr>
                             <tr>
@@ -930,11 +931,26 @@
                                 <td><input type="checkbox" name="inputNoRemittance" class="remove_fee" id="inputNoRemittance"/>Remove Remittance Fees</td>
                             </tr>
                             <tr>
+                                <t t-set="total_tax_pay" t-value="0"/>
+                                <t t-if="sale_order">
+                                    <t t-set="sale_order_detail" t-value="request.env['sale.order'].sudo().search([('id', '=', sale_order)])"/>
+                                    <t t-if="sale_order_detail.amount_tax">
+                                        <t t-set="total_tax_pay" t-value="sale_order_detail.amount_tax"/>
+                                    </t>
+                                </t>
                                 <t t-set="total_payment" t-value="0"/>
-                                <t t-set="total_payment" t-value="float(grand_tot) + float(product_tot)"/>
+                                <t t-set="total_payment" t-value="'%.2f'%(float(grand_tot) + float(product_tot))"/>
+                                <t t-if="total_tax_pay">
+                                    <t t-set="total_payment" t-value="'%.2f'%(float(total_payment) + float(total_tax_pay))"/>
+                                </t>
                                 <td style="background-color: -moz-MenuBarText;">Total</td>
                                 <td style="background-color: -moz-MenuBarText;"><input type="text" name="toalamount" id="totalamount" readonly="" t-att-value="'%s' %(total_payment)"/></td>
-                                <td> </td>
+                                <t t-if="total_tax_pay">
+                                    <td>(Included Tax:-  <span t-esc="total_tax_pay" style="color:black;"/>)</td>
+                                </t>
+                                <t t-if="not total_tax_pay">
+                                    <td> </td>
+                                </t>
                             </tr>
                             <tr style="background-color:#DA4F49;">
                                 <th>Deposit Payment Info</th>
@@ -956,6 +972,17 @@
                                                 <option value="80" t-att-selected="80 == (sale_order_id.diposit_selected)"> 80 %</option>
                                                 <option value="90" t-att-selected="90 == (sale_order_id.diposit_selected)"> 90 %</option>
                                                 <option value="100" t-att-selected="100 == (sale_order_id.diposit_selected)"> 100 %</option>
+                                            </t>
+                                            <t t-if="not sale_order_id.diposit_selected">
+                                                <option value="20"> 20 %</option>
+                                                <option value="30"> 30 %</option>
+                                                <option value="40"> 40 %</option>
+                                                <option value="50"> 50 %</option>
+                                                <option value="60"> 60 %</option>
+                                                <option value="70"> 70 %</option>
+                                                <option value="80"> 80 %</option>
+                                                <option value="90"> 90 %</option>
+                                                <option value="100"> 100 %</option>
                                             </t>
                                         </t>
                                         <t t-if="sale_order">
@@ -981,6 +1008,9 @@
                                         <t t-if="sale_order_id.due_amount">
                                             <input type="text" name="inputTotalDue" id="inputTotalDue" t-att-value="sale_order_id.due_amount" readonly=""/>
                                         </t>
+                                        <t t-if="not sale_order_id.due_amount">
+                                            <input type="text" name="inputTotalDue" id="inputTotalDue" t-att-value="due" readonly=""/>
+                                        </t>
                                     </t>
                                     <t t-if="sale_order">
                                         <input type="text" name="inputTotalDue" id="inputTotalDue" t-att-value="due" readonly=""/>
@@ -998,9 +1028,12 @@
                                 <td>Outstanding Balance</td>
                                 <td>
                                     <t t-if="sale_order_id">
-                                            <t t-if="sale_order_id.outstanding_amount">
-                                                <input type="text" name="inputOutstanding" id="inputOutstanding" t-att-value="sale_order_id.outstanding_amount" readonly=""/>
-                                            </t>
+                                        <t t-if="sale_order_id.outstanding_amount">
+                                            <input type="text" name="inputOutstanding" id="inputOutstanding" t-att-value="sale_order_id.outstanding_amount" readonly=""/>
+                                        </t>
+                                        <t t-if="not sale_order_id.outstanding_amount">
+                                            <input type="text" name="inputOutstanding" id="inputOutstanding" t-att-value="out_standing" readonly=""/>
+                                        </t>
                                     </t>
                                     <t t-if="sale_order">
                                         <input type="text" name="inputOutstanding" id="inputOutstanding" t-att-value="out_standing" readonly=""/>
@@ -1034,6 +1067,9 @@
                                         <t t-if="sale_order_id.interest_amount">
                                             <input type="text" name="inputInterest" t-att-value="sale_order_id.interest_amount" id="inputInterest" readonly=""/>
                                         </t>
+                                        <t t-if="not sale_order_id.interest_amount">
+                                            <input type="text" name="inputInterest" value="0.0" id="inputInterest" readonly=""/>
+                                        </t>
                                     </t>
                                     <t t-if="sale_order">
                                         <input type="text" name="inputInterest" value="0.0" id="inputInterest" readonly=""/>
@@ -1062,9 +1098,13 @@
                                 <t t-set="due" t-value="(float(total_payment)*20)/100"/>
                                 <td style="background-color: -moz-MenuBarText;">Total (inclusive of VAT AND Interest)</td>
                                 <td style="background-color: -moz-MenuBarText;">
+
                                     <t t-if="sale_order_id">
                                         <t t-if="sale_order_id.outstanding_amount">
                                             <input type="text" name="inputtotalandInterest" id="inputtotalandInterest" t-att-value="sale_order_id.out_standing_balance_incl_vat" readonly=""/>
+                                        </t>
+                                        <t t-if="not sale_order_id.outstanding_amount">
+                                            <input type="text" name="inputtotalandInterest" id="inputtotalandInterest" t-att-value="out_standing" readonly=""/>
                                         </t>
                                     </t>
                                     <t t-if="sale_order">
@@ -1079,6 +1119,9 @@
                                     <t t-if="sale_order_id">
                                         <t t-if="sale_order_id.outstanding_amount">
                                             <input type="text" name="inputpaymentpermonth" id="inputpaymentpermonth" t-att-value="sale_order_id.monthly_amount" readonly=""/>
+                                        </t>
+                                        <t t-if="not sale_order_id.outstanding_amount">
+                                            <input type="text" name="inputpaymentpermonth" id="inputpaymentpermonth" t-att-value="out_standing" readonly=""/>
                                         </t>
                                     </t>
                                     <t t-if="sale_order">
@@ -1097,7 +1140,7 @@
                         </tbody>
                     </table>
                     <t t-if="page_confirm or bank_detail">
-                        <table id="debit_order_section" class="table table-bordered" style="color:black;background-color:lightyellow;margin-bottom:20px;">
+                        <table id="debit_order_section" class="table table-bordered debit_order_section" style="color:black;background-color:lightyellow;margin-bottom:20px;">
 	                        <tbody>
                                 <tr>
                                     <td>Debit Order Date</td>
@@ -1165,12 +1208,15 @@
                                                 </t>
                                                 <input type="text" name="inputAccholderName" id="inputAccholderName" t-att-value="acc_holder_name"/>
                                             </t>
+                                            <t t-if="not sale_order_id.debit_order_mandat">
+                                                <input type="text" name="inputAccholderName" id="inputAccholderName" t-att-value="sale_order_id.partner_id.name"/>
+                                            </t>
                                         </t>
                                         <t t-if="sale_order">
-                                            <input type="text" name="inputAccholderName" id="inputAccholderName"/>
+                                            <t t-set="sale_order_detail" t-value="request.env['sale.order'].sudo().search([('id', '=', sale_order)])"/>
+                                            <input type="text" name="inputAccholderName" id="inputAccholderName" required="" t-att-value="sale_order_detail.partner_id.name"/>
                                         </t>
                                     </td>
-
                                     <td> </td>
                                 </tr>
                                 <tr>
@@ -1186,6 +1232,9 @@
                                                             <t t-set="mandat_bank_id" t-value="each_mandat.bank_name.id"/>
                                                         </t>
                                                         <option t-att-bank-id="each_bank.id" t-att-value="each_bank.id" t-att-selected="each_bank.id == (mandat_bank_id)"><span t-esc="each_bank.name"/></option>
+                                                    </t>
+                                                    <t t-if="not sale_order_id.debit_order_mandat">
+                                                        <option t-att-bank-id="each_bank.id" t-att-value="each_bank.id"><span t-esc="each_bank.name"/></option>
                                                     </t>
                                                 </t>
                                                 <t t-if="sale_order">
@@ -1207,9 +1256,12 @@
                                                     </t>
                                                 <input type="text" name="inputAccount" id="inputAccount" t-att-value="mandat_account_number"/>
                                             </t>
+                                            <t t-if="not sale_order_id.debit_order_mandat">
+                                                <input type="text" name="inputAccount" id="inputAccount"/>
+                                            </t>
                                         </t>
                                         <t t-if="sale_order">
-                                            <input type="text" name="inputAccount" id="inputAccount"/>
+                                            <input type="text" name="inputAccount" id="inputAccount" required=""/>
                                         </t>
                                     </td>
                                     <td> </td>
@@ -1275,14 +1327,37 @@
                                 <input id="sale_order" class="form-field" name="sale_order" t-att-value="sale_order_id.id" type="hidden"/>
                             </t>
 
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
                             <button id="back_button" class="btn btn-primary" type="button">Back</button>
-                            <button type="submit" style="margin-left:10px;" formaction="/pay/thankyou" id="credit-button" class="btn btn-primary">Pay Via Credit Card</button>
+                            <button type="submit" style="margin-left:10px;" formaction="/event/redirect_payu" id="credit-button" class="btn btn-primary">Pay Via Credit Card</button>
                             <button type="submit" style="margin-left:10px;" formaction="/validate_payment" id="eft-button" class="btn btn-primary">Pay Via EFT</button>
                             <button type="submit" style="margin-left:10px;" formaction="/validate_payment" id="bankdeposit-button" value="true" name="Pay Via Bank Deposit" class="btn btn-primary">Pay Via Bank Deposit</button>
                         </div>
                     </t>
                 </form>
                 <div class="oe_structure"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="event_unsuccessful" name="Unsuccessful">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <div class="oe_structure"/>
+
+                <div class="col-sm-12" style="color:black;">
+                    <!--<h3>Payment Unsuccessful!</h3>-->
+                    <!--<h4>Please repeat the process and choose EFT as your payment method and we will send you a proforma invoice with our banking details for you to make the payment for your order. Once your payment is received your order will be processed immediately;</h4>-->
+                    <!--<h4>Thank you</h4>-->
+                    <center>
+                        <h2 style="color:red;">OOPS!</h2>
+                        <h3>Payment Unsuccessful!</h3>
+                        <h5>Your request has been send to our Enrollment Team and you have been booked provisionally.</h5>
+                        <h5>We have sent you a Proforma Invoice with our Banking details;</h5>
+                        <h5>please make sure to make payment to secure your place for your Enrollment.</h5>
+                    </center>
+                </div>
             </t>
         </t>
     </template>
@@ -1345,10 +1420,10 @@
                                 <tr>
                                     <td>
                                         <t t-if="self_or_cmp == 'cmp_sponosored'">
-                                            <div class="control-group">
-                                                <label class="control-label" for="invoicegenerated">* Do you require an invoice to be generated ?</label>
-                                                <div class="controls">
-                                                    <select class="requiredValue form-control1" name="do_invoice" required="false">
+                                            <div class="control-group" style="width: 470px;float: left;">
+                                                <label class="control-label" style="margin-left: 22px;width: 70%;" for="invoicegenerated">* Do you require an invoice to be generated ?</label>
+                                                <div class="controls" style="margin-left: 0 !important;float: left;">
+                                                    <select class="requiredValue form-control1" name="do_invoice" required="false" style="margin-left: 6px;width: 100px;">
                                                         <option value="No">No</option>
                                                         <option value="Yes">Yes</option>
                                                     </select>
@@ -1559,7 +1634,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div id="new_text" style="background-color: rgba(239, 25, 9, 1); color: white;">
+                                        <div id="new_text" style="background-color: rgba(239, 25, 9, 1); color: white;width:95%">
                                             Before ACCEPTING this Enrolment Form, students are reminded to ensure that they have clearly understood all the terms of their enrolment
                                             With CHARTERQUEST, in particular clauses concerning refunds, deferments, waivers, course transfers and visa
                                             applications (when applicable).
@@ -1593,14 +1668,15 @@
             <t t-call="cfo_snr_jnr.header_template">
                 <div class="oe_structure"/>
                 <form action="/page/thank-you" class="form-horizontal-validate-payment" method="post" style="color:black;">
-
-
                     <t t-if="button_hide">
                         <h2>Pay Later</h2>
                         <h3>
                             See below banking details. Ensure you use your unique reference number below.  Bank deposits may attract bank charges, ensure you cover any charges related to your transaction.
                         </h3>
                         <center>
+                            <t t-if="post_data">
+                                <input id="sale_oder" name="sale_order" t-att-value="post_data['sale_order']" type="hidden"/>
+                            </t>
                             <button id="btn_pay_later" formaction="/pay/bank/thankyou" type="submit" style="margin-top: 30px;" class="btn btn-primary">Get Quote and Banking details Emailed</button>
                         </center><br/>
                     </t>
@@ -1669,7 +1745,7 @@
                                 </tr>
                                 <tr>
                                     <td>Amount:</td>
-                                    <td><span t-esc="post_data['inputTotalDue']" t-options=""/>  <t/><t/>Please enter the amount to be paid exactly as shown. Do not round off.</td>
+                                    <td><span t-esc="post_data.get('inputTotalDue')" t-options=""/>  <t/><t/>Please enter the amount to be paid exactly as shown. Do not round off.</td>
                                 </tr>
 
                             </tbody>

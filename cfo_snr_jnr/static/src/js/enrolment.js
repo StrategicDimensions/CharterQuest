@@ -23,8 +23,23 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
                 $('select[id="select_semester"]').append(semesteroptions);
             });
         }
+        if($('select[id="professional_body"]').val() == ''){
+            $('#reg_campus').hide();
+            $('#reg_enrol_for').hide();
+            $('#reg_sem').hide();
+        }
 
         $('select[id="professional_body"]').on('change', function () {
+            if($('select[id="professional_body"]').val() == ''){
+                $('#reg_campus').hide();
+                $('#reg_enrol_for').hide();
+                $('#reg_sem').hide();
+            }
+            else{
+                $('#reg_campus').show();
+                $('#reg_enrol_for').show();
+                $('#reg_sem').show();
+            }
             profbody_campus_sem($(this).val())
         });
 
@@ -194,8 +209,6 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
             var grand_tot = $('#grand_tot_val').find('.oe_currency_value').text()
             var product_tot = $('#product_total').find('.oe_currency_value').text()
             $(document).find('#product_total')
-            console.log('product-----------', product_tot)
-            console.log('grand-----------', grand_tot)
             ajax.jsonRpc("/get_free_email", 'call', {'grand_tot': grand_tot, 'product_tot':product_tot}).then(
                 function (result) {
                 if (result){
@@ -278,29 +291,28 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
             });
 
             if($('#mandate_link').val() == ""){
-            console.log('hello============= ')
                 var input_per = $("#inputPaypercentage").val();
             var total_amount = $(document).find('#totalamount').val();
             var due_amount = (parseFloat(total_amount) * parseFloat(input_per)) /100;
-            $("#inputTotalDue").val(parseFloat(due_amount.toFixed(2)));
+            $("#inputTotalDue").val(due_amount.toFixed(2));
             var out_standing = (parseFloat(total_amount) - parseFloat(due_amount));
-            $("#inputOutstanding").val(parseFloat(out_standing.toFixed(2)));
+            $("#inputOutstanding").val(out_standing.toFixed(2));
             var payment_month = $("#inputPaymonths").val();
             var interest = $('#inputPaymonths option:selected').attr('data-interest')
             if (interest > 0){
                 var tax_amount = (parseFloat(out_standing) * parseFloat(interest)) /100;
                 var payment_with_tax = parseFloat(out_standing) + parseFloat(tax_amount);
                 var per_mnth_payment = parseFloat(payment_with_tax) / parseFloat(payment_month);
-                $("#inputInterest").val(parseFloat(tax_amount.toFixed(2)));
-                $("#inputtotalandInterest").val(parseFloat(payment_with_tax.toFixed(2)));
-                $("#inputpaymentpermonth").val(parseFloat(per_mnth_payment.toFixed(2)));
+                $("#inputInterest").val(tax_amount.toFixed(2));
+                $("#inputtotalandInterest").val(payment_with_tax.toFixed(2));
+                $("#inputpaymentpermonth").val(per_mnth_payment.toFixed(2));
             }
             else{
                 var out_standing_amount = $(document).find('#inputOutstanding').val();
-                $("#inputInterest").val('0.0');
-                $("#inputtotalandInterest").val(parseFloat(out_standing_amount));
+                $("#inputInterest").val('0.00');
+                $("#inputtotalandInterest").val(out_standing_amount);
                 var per_mnth_payment = parseFloat(out_standing_amount) / parseFloat(payment_month)
-                $("#inputpaymentpermonth").val(parseFloat(per_mnth_payment.toFixed(2)));
+                $("#inputpaymentpermonth").val(per_mnth_payment.toFixed(2));
             }
             }
 
@@ -342,9 +354,9 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
                 $('#inputPaymonths').prop("disabled", true);
                 var total_amount = $(document).find('#totalamount').val();
                 var due_amount = (parseFloat(total_amount) * parseFloat(input_per)) /100;
-                document.getElementById("inputTotalDue").value = parseFloat(due_amount.toFixed(2));
+                document.getElementById("inputTotalDue").value = due_amount.toFixed(2);
                 var out_standing = (parseFloat(total_amount) - parseFloat(due_amount.toFixed(2)));
-                document.getElementById("inputOutstanding").value = parseFloat(out_standing.toFixed(2));
+                document.getElementById("inputOutstanding").value = out_standing.toFixed(2);
                 var payment_month = $("#inputPaymonths").val();
                 var interest = $('#inputPaymonths option:selected').attr('data-interest')
                 if (interest > 0){
@@ -382,25 +394,25 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
                 $("#inputPaymonths option[value='0']").remove();
                 var total_amount = $(document).find('#totalamount').val();
                 var due_amount = (parseFloat(total_amount) * parseFloat(input_per)) /100;
-                document.getElementById("inputTotalDue").value = parseFloat(due_amount.toFixed(2));
+                document.getElementById("inputTotalDue").value = due_amount.toFixed(2);
                 var out_standing = (parseFloat(total_amount) - parseFloat(due_amount.toFixed(2)));
-                document.getElementById("inputOutstanding").value = parseFloat(out_standing.toFixed(2));
+                document.getElementById("inputOutstanding").value = out_standing.toFixed(2);
                 var payment_month = $("#inputPaymonths").val();
                 var interest = $('#inputPaymonths option:selected').attr('data-interest')
                 if (interest > 0){
                     var tax_amount = (parseFloat(out_standing) * parseFloat(interest)) /100;
                     var payment_with_tax = parseFloat(out_standing) + parseFloat(tax_amount.toFixed(2));
                     var per_mnth_payment = parseFloat(payment_with_tax) / parseFloat(payment_month);
-                    document.getElementById("inputInterest").value = parseFloat(tax_amount.toFixed(2));
-                    document.getElementById("inputtotalandInterest").value = parseFloat(payment_with_tax.toFixed(2));
-                    document.getElementById("inputpaymentpermonth").value = parseFloat(per_mnth_payment.toFixed(2));
+                    document.getElementById("inputInterest").value = tax_amount.toFixed(2);
+                    document.getElementById("inputtotalandInterest").value = payment_with_tax.toFixed(2);
+                    document.getElementById("inputpaymentpermonth").value = per_mnth_payment.toFixed(2);
                 }
                 else{
                     var out_standing_amount = $(document).find('#inputOutstanding').val();
                     document.getElementById("inputInterest").value = '0.0';
                     document.getElementById("inputtotalandInterest").value = parseFloat(out_standing_amount);
                     var per_mnth_payment = parseFloat(out_standing_amount) / parseFloat(payment_month)
-                    document.getElementById("inputpaymentpermonth").value = parseFloat(per_mnth_payment.toFixed(2));
+                    document.getElementById("inputpaymentpermonth").value = per_mnth_payment.toFixed(2);
                 }
             }
         });
@@ -414,16 +426,16 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
                 var tax_amount = (parseFloat(out_standing_amount ) * parseFloat(interest)) /100;
                 var payment_with_tax = parseFloat(out_standing_amount) + parseFloat(tax_amount);
                 var per_mnth_payment = parseFloat(payment_with_tax) / parseFloat(payment_month);
-                document.getElementById("inputInterest").value = parseFloat(tax_amount.toFixed(2));
-                document.getElementById("inputtotalandInterest").value = parseFloat(payment_with_tax.toFixed(2));
-                document.getElementById("inputpaymentpermonth").value = parseFloat(per_mnth_payment.toFixed(2));
+                document.getElementById("inputInterest").value = tax_amount.toFixed(2);
+                document.getElementById("inputtotalandInterest").value = payment_with_tax.toFixed(2);
+                document.getElementById("inputpaymentpermonth").value = per_mnth_payment.toFixed(2);
             }
             else{
                 var out_standing_amount = $(document).find('#inputOutstanding').val();
                 document.getElementById("inputInterest").value = '0.0';
                 document.getElementById("inputtotalandInterest").value = parseFloat(out_standing_amount);
                 var per_mnth_payment = parseFloat(out_standing_amount) / parseFloat(payment_month)
-                document.getElementById("inputpaymentpermonth").value = parseFloat(per_mnth_payment.toFixed(2));
+                document.getElementById("inputpaymentpermonth").value = per_mnth_payment.toFixed(2);
             }
         });
 
@@ -432,14 +444,15 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
 		        document.getElementById("inputRemittancefee").value = sessionStorage.getItem('rem_fee')
 		        var rem_fee = $(document).find("#inputRemittancefee").val()
 		        var total_amount = $(document).find('#grand_total_amount')[0].innerHTML;
-		        document.getElementById("totalamount").value = parseFloat(total_amount) + parseFloat(rem_fee)
+		        var add_total_amount = parseFloat(total_amount) + parseFloat(rem_fee)
+		        document.getElementById("totalamount").value = add_total_amount.toFixed(2)
 		        var add_total_amount = $(document).find('#totalamount')[0].value;
                 var input_per = document.getElementById('inputPaypercentage').value;
                 var due_amount = (parseFloat(add_total_amount) * parseFloat(input_per)) /100;
                 var payment_month = $("#inputPaymonths").val();
-                document.getElementById("inputTotalDue").value = parseFloat(due_amount.toFixed(2));
+                document.getElementById("inputTotalDue").value = due_amount.toFixed(2);
                 var out_standing = (parseFloat(add_total_amount) - parseFloat(due_amount));
-                document.getElementById("inputOutstanding").value = parseFloat(out_standing.toFixed(2));
+                document.getElementById("inputOutstanding").value = out_standing.toFixed(2);
                 var interest = $('#inputPaymonths option:selected').attr('data-interest');
 
                 if (interest > 0){
@@ -447,9 +460,9 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
                     var tax_amount = (parseFloat(out_standing_amount ) * parseFloat(interest)) /100;
                     var payment_with_tax = parseFloat(out_standing_amount) + parseFloat(tax_amount);
                     var per_mnth_payment = parseFloat(payment_with_tax) / parseFloat(payment_month);
-                    document.getElementById("inputInterest").value = parseFloat(tax_amount.toFixed(2));
-                    document.getElementById("inputtotalandInterest").value = parseFloat(payment_with_tax.toFixed(2));
-                    document.getElementById("inputpaymentpermonth").value = parseFloat(per_mnth_payment.toFixed(2));
+                    document.getElementById("inputInterest").value = tax_amount.toFixed(2);
+                    document.getElementById("inputtotalandInterest").value = payment_with_tax.toFixed(2);
+                    document.getElementById("inputpaymentpermonth").value = per_mnth_payment.toFixed(2);
                     }
                 else{
                     var out_standing_amount = $(document).find('#inputOutstanding').val();
@@ -470,9 +483,9 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
 		        var input_per = document.getElementById('inputPaypercentage').value;
                 var payment_month = $("#inputPaymonths").val();
 		        var due_amount = (parseFloat(add_total_amount) * parseFloat(input_per)) /100;
-                document.getElementById("inputTotalDue").value = parseFloat(due_amount.toFixed(2));
+                document.getElementById("inputTotalDue").value = due_amount.toFixed(2);
                 var out_standing = (parseFloat(add_total_amount) - parseFloat(due_amount));
-                document.getElementById("inputOutstanding").value = parseFloat(out_standing.toFixed(2));
+                document.getElementById("inputOutstanding").value = out_standing.toFixed(2);
                 var interest = $('#inputPaymonths option:selected').attr('data-interest')
 
                 if (interest > 0){
@@ -480,16 +493,16 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
                     var tax_amount = (parseFloat(out_standing_amount ) * parseFloat(interest)) /100;
                     var payment_with_tax = parseFloat(out_standing_amount) + parseFloat(tax_amount);
                     var per_mnth_payment = parseFloat(payment_with_tax) / parseFloat(payment_month);
-                    document.getElementById("inputInterest").value = parseFloat(tax_amount.toFixed(2));
-                    document.getElementById("inputtotalandInterest").value = parseFloat(payment_with_tax.toFixed(2));
-                    document.getElementById("inputpaymentpermonth").value = parseFloat(per_mnth_payment.toFixed(2));
+                    document.getElementById("inputInterest").value = tax_amount.toFixed(2);
+                    document.getElementById("inputtotalandInterest").value = payment_with_tax.toFixed(2);
+                    document.getElementById("inputpaymentpermonth").value = per_mnth_payment.toFixed(2);
                     }
                 else{
                     var out_standing_amount = $(document).find('#inputOutstanding').val();
                     document.getElementById("inputInterest").value = '0.0';
                     document.getElementById("inputtotalandInterest").value = parseFloat(out_standing_amount);
                     var per_mnth_payment = parseFloat(out_standing_amount) / parseFloat(payment_month)
-                    document.getElementById("inputpaymentpermonth").value = parseFloat(per_mnth_payment.toFixed(2));
+                    document.getElementById("inputpaymentpermonth").value = per_mnth_payment.toFixed(2);
                 }
 	        });
         });
