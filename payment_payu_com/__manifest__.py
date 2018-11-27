@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'PayU',
-    'version': '20.1',
+    'version': '21.0.0.1',
     'depends': ['payment'],
     'author': 'Strategic Dimensions',
     'category': 'payment',
