@@ -20,7 +20,7 @@
 
 {
     'name': 'CFO Senior Junior',
-    'version': '14.1',
+    'version': '20.0',
     'category': 'Website',
     'summary': 'CFO Senior and Junior Competition',
     'description': """CFO Senior and Junior Competition.""",
