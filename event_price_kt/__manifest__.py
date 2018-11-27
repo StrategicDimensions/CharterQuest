@@ -1,6 +1,6 @@
 {
     "name": "Event Customization",
-    "version": "20.0",
+    "version": "20.1",
     "depends": ["base",
                 "sale_management",
                 "event_sale",

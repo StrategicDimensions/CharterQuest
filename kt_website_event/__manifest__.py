@@ -2,7 +2,7 @@
 
 {
     'name': 'Website Events Changes',
-    'version': '20.0',
+    'version': '20.1',
     'sequence':6,
     'website': 'https://www.odoo.com/page/events',
     'category': 'Tools',
