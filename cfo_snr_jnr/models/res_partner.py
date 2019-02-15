@@ -21,6 +21,12 @@
 from odoo import api, fields, models, _
 
 
+class Country(models.Model):
+    _inherit = 'res.country'
+
+    active = fields.Boolean(default=True)
+
+
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 

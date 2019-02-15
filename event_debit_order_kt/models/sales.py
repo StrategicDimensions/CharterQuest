@@ -119,7 +119,6 @@ class payment_confirmation(models.Model):
     
     @api.multi
     def button_create_saleorder(self):
-        print('create a sale order', self, self.order_id)
         # 5/0
         # pass
         dic = {
@@ -179,7 +178,6 @@ class payment_confirmation(models.Model):
                 #     mail_message = self.pool.get('email.template').send_mail(cr,uid,template_id[0],invoice_obj['invoice_ids'][0])
         # else:
         quote_name = "SO{0}WEB".format(str(self.order_id.id).zfill(3))
-        print('quote_name===========>', quote_name)
         5/0
         m = hashlib.md5()
         m.update(quote_name)

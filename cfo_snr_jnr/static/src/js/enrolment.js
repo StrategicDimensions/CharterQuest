@@ -24,6 +24,7 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
             });
         }
         if($('select[id="professional_body"]').val() == ''){
+            $('#reg_campus_info').hide();
             $('#reg_campus').hide();
             $('#reg_enrol_for').hide();
             $('#reg_sem').hide();
@@ -31,11 +32,13 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
 
         $('select[id="professional_body"]').on('change', function () {
             if($('select[id="professional_body"]').val() == ''){
+                $('#reg_campus_info').hide();
                 $('#reg_campus').hide();
                 $('#reg_enrol_for').hide();
                 $('#reg_sem').hide();
             }
             else{
+                $('#reg_campus_info').show();
                 $('#reg_campus').show();
                 $('#reg_enrol_for').show();
                 $('#reg_sem').show();
@@ -57,6 +60,35 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
             });
          }
 
+        $('#contactus_recaptcha').on('submit',function(e){
+            alert()
+            var response = grecaptcha.getResponse();
+            if(response.length == 0){
+                $('.g-recaptcha').css('border','1px solid red');
+                e.preventDefault();
+                $('button[type="submit"]').removeAttr('disabled');
+            }
+        });
+//        grecaptcha.ready(function() {
+//            grecaptcha.execute('6Ld_voIUAAAAAPPtBmHjiXkQOXQjLilUcVY2aLg8', {action: 'action_name'})
+//            .then(function(token) {
+//            // Verify the token on the server.
+//            });
+//        });
+
+        if ($('.selectdiv').length) {
+            var state_options = $("select[name='inputState']:enabled option");
+            $('.selectdiv').on('change', "select[name='country_id']", function () {
+                var select = $("select[name='inputState']");
+                console.log("hello=======",$(this).val())
+                state_options.detach();
+                var displayed_state = state_options.filter("[data-country_id=" + ($(this).val() || 0) + "]");
+                console.log("hello=======",displayed_state)
+                var nb = displayed_state.appendTo(select).show().size();
+                select.parent().toggle(nb >= 1);
+            });
+            $('.selectdiv').find("select[name='country_id']").change();
+        }
 
         if ($(document).find("#Studentnumber").css("display") != 'none'){
             $("#Studentnumber").keyup(function(){
@@ -507,6 +539,33 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
 	        });
         });
 
+//      var $payment = $("#payment_method");
+//
+//      $payment.on("click", 'button[type="submit"],button[name="submit"]', function (ev) {
+//      ev.preventDefault();
+//      ev.stopPropagation();
+//      var $form = $(ev.currentTarget).parents('form');
+//      console.log('')
+//      var acquirer_id = $(ev.currentTarget).parents('div.oe_sale_acquirer_button').first().data('id');
+//      console.log('acquirer_id', acquirer_id)
+//      if (!$('#terms').is(':checked')){
+//        console.log('click')
+//        if ($('p#msg')){
+//        console.log('inside')
+//        $('p#msg').remove()
+//        }
+//        $('div p').append(' <p id="msg" style="color:red">Please accept Terms &amp; Conditions to continue')
+//        return false;
+//        }
+//
+//      if (! acquirer_id) {
+//        return false;
+//      }
+//      ajax.jsonRpc('/shop/payment/transaction/' + acquirer_id, 'call', {}).then(function (data) {
+//        $form.submit();
+//      });
+//   });
+
         $('input[id="discount_type_id"]').on('click', function (ev) {
             var discount_count = 0.0;
             var chkArray = [];
@@ -560,7 +619,7 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
                         $('#discount_val').val(discount_count);
                     }
                 }
-                else{
+                else {
                         document.getElementById("total_discount_count").innerHTML = '';
                         document.getElementById("total_discount_count").innerHTML = discount_count;
                         $('#discount_val').val(discount_count);

@@ -5,7 +5,7 @@
 
        <record id="email_template_freequote" model="mail.template">
             <field name="name">Charterquest FreeQuote/Enrolment</field>
-            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
             <field name="email_to">${object.user_id.email or ''}</field>
             <field name="subject">Charterquest FreeQuote/Enrolment ${object.name}</field>
             <field name="model_id" ref="sale.model_sale_order"/>
@@ -57,7 +57,7 @@
 
        <record id="email_template_payvia_bank_deposit" model="mail.template">
             <field name="name">Charterquest Pay Via Bank Deposit</field>
-            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
             <field name="email_to">${object.user_id.email or ''}</field>
             <field name="subject">Charterquest FreeQuote/Enrolment ${object.name}</field>
             <field name="model_id" ref="sale.model_sale_order"/>
@@ -134,7 +134,7 @@
 
         <record id="email_template_paid_success" model="mail.template">
             <field name="name">Paid Fees Email</field>
-            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
             <field name="email_to">${object.user_id.email or ''}</field>
             <field name="subject">Charterquest FreeQuote/Enrolment ${object.name}</field>
             <field name="model_id" ref="sale.model_sale_order"/>
@@ -178,7 +178,7 @@ Confirm discounts requirements below and double check your attached quote to ens
 
         <record id="email_template_paid_later_success" model="mail.template">
             <field name="name">Fees Pay Later Email</field>
-            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
             <field name="email_to">${object.partner_id.email or ''}</field>
             <field name="subject">Charterquest FreeQuote/Enrolment ${object.name}</field>
             <field name="model_id" ref="sale.model_sale_order"/>

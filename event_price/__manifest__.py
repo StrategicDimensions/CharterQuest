@@ -1,6 +1,6 @@
 {
     "name": "Event Price",
-    "version": "21.0.0.1",
+    "version": "11.2",
     "depends": ["base", "sale_management", "event_sale", "event"],
     "author": "Acespritech Solutions Pvt. Ltd.",
     "category": "Custom",

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'PayU',
-    'version': '21.0.0.1',
+    'version': '11.2',
     'depends': ['payment'],
     'author': 'Strategic Dimensions',
     'category': 'payment',
@@ -15,6 +15,7 @@
         'views/payu_template.xml',
         'data/payu_data.xml',
         'views/payu.xml',
+        'views/emailtemplate_view.xml',
     ],
     'demo': [],
     'installable': True,

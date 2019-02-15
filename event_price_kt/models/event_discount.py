@@ -32,6 +32,7 @@ class sale_order(models.Model):
 
     @api.model
     def send_early_bird_discount_email(self):
+        pass
         """ This Function is used to send the Early Bird Discount
         Expiry Notification to Student."""
         today = datetime.today()
@@ -91,6 +92,7 @@ class sale_order(models.Model):
 
     @api.model
     def send_early_settlement_discount_email(self):
+        pass
         today = date.today()
         sale_ids = self.search([('state', '=', 'draft'), ('affiliation', '=', '1')])
         #  sale_ids = [1937]
@@ -112,6 +114,7 @@ class sale_order(models.Model):
 
     @api.model
     def get_early_settlement_discount(self):
+          pass
           today = date.today()
           sale_ids = self.search([('state', '=', 'draft'), ('affiliation', '=', '1')])
           for sale_id in sale_ids:

@@ -184,7 +184,6 @@ class PayuController(http.Controller):
 
         amount = post['amount']
         # convert amount to cent
-        print ("\n asd",len(amount.split('.')[1]))
         if len(amount.split('.')[1]) == 1:
             amount = amount + '0'
             amount = amount.replace('.', '')

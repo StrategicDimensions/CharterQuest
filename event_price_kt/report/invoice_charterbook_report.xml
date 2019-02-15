@@ -32,9 +32,9 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <td style="width:20%;">
+                                <td style="width: 165px;">
                                     <t t-if="res_company.logo">
-                                        <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="border:auto; height:70px;width:120px;"/>
+                                        <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="border:auto; height:130px;width:190px;"/>
                                     </t>
                                 </td>
                                 <td>

@@ -34,6 +34,9 @@ import base64
 import pytz
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
+from odoo.addons.website_sale.controllers.main import WebsiteSale
+
+
 _logger = logging.getLogger(__name__)
 
 
@@ -609,8 +612,7 @@ class CfoHome(web.Home):
                         'updated_social_media_bio': True
                     })
         return request.render('cfo_snr_jnr.cfo_senior', values)
-
-    @http.route('/web/login', type='http', auth="none", sitemap=False)
+    @http.route()
     def web_login(self, redirect=None, **kw):
         cfo_aspirant_id = request.env['cfo.snr.aspirants'].sudo().search([('email_1', '=', kw.get('login')), ('is_request', '=', True)])
         web.ensure_db()
@@ -644,8 +646,9 @@ class CfoHome(web.Home):
                     if kw.get('cfo_login'):
                         request.session['cfo_login'] = True
                         return http.request.redirect('/my/home')
+                    return http.redirect_with_hash(self._login_redirect(uid, redirect='/'))
                 request.uid = old_uid
-                values['error'] = _("Your Email Address/Password is Incorrect")
+                values['error'] = _('Your Email Address/Password is Incorrect')
         else:
             if 'error' in request.params and request.params.get('error') == 'access':
                 values['error'] = _('Only employee can access this database. Please contact the administrator.')
@@ -2172,5 +2175,28 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
         response = request.render('auth_signup.signup', qcontext)
         response.headers['X-Frame-Options'] = 'DENY'
         return response
+
+
+
+
+class WebsiteSaleController(WebsiteSale):
+
+    @http.route(['/shop/product/<model("product.template"):product>'], type='http', auth="public", website=True)
+    def product(self, product, category='', search='', **kwargs):
+        res = super(WebsiteSaleController, self).product(product, category, search)
+        categs = request.env['product.public.category'].search([('parent_id', '=', False)])
+
+        parent_category_ids = []
+        if category:
+            category = request.env['product.public.category'].search([('id', '=', int(category))])
+            parent_category_ids = [category.id]
+            current_category = category
+            while current_category.parent_id:
+                parent_category_ids.append(current_category.parent_id.id)
+                current_category = current_category.parent_id
+        res.qcontext['parent_category_ids'] = parent_category_ids
+        res.qcontext['categories'] = categs
+        return res
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -5,7 +5,7 @@
         <record id="email_template_edi_invoice" model="mail.template">
             <field name="name">Debit Order Going of in two days</field>
 <!--            <field name="email_from">${object.partner_id.user_id.email}</field> -->
-	        <field name='email_from'>enquiries@charterquest.co.za</field>
+	        <field name='email_from'>patience.m@charterquest.co.za</field>
             <field name="subject">Debit Order going of in two days</field>
 	        <field name='email_to'>${object.partner_id.email}</field>
             <field name="model_id" ref="model_debit_order_details"/>

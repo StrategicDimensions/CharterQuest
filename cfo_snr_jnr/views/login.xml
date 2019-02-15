@@ -53,11 +53,9 @@
             <xpath expr="//header">
                 <t id="breadcrumb"
                    t-if="request.env['website.menu'].search([('url', '=', request.httprequest.path)], limit=1)">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <t t-call="cfo_snr_jnr.breadcrumb"/>
-                            </div>
+                    <div class="container" style="margin: 0px;padding: 0px;">
+                        <div class="">
+                            <t t-call="cfo_snr_jnr.breadcrumb"/>
                         </div>
                     </div>
                 </t>

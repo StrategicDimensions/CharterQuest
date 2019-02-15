@@ -25,7 +25,7 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     price = fields.Float(string='Price',
-                         digits_compute=dp.get_precision('Product Price')),
+                         digits_compute=dp.get_precision('Product Price'))
     author_id = fields.Many2one('res.partner', 'Author')
     format = fields.Char('Format')
     publisher = fields.Char('Publisher')
@@ -33,6 +33,5 @@ class ProductTemplate(models.Model):
     date_of_publish = fields.Date('Date of Publish')
     course_code = fields.Char('Course Code')
     book_edition = fields.Char('Book Edition')
-
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

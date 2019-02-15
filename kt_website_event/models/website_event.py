@@ -31,3 +31,11 @@ class Dynamic_menu(models.Model):
     #         obj = self.search([('menu_sequence', '=', record.menu_sequence), ('id', '!=', record.id)])
     #         if obj:
     #             raise ValidationError("Sequence must be unique")
+
+
+class DynamicButtons(models.Model):
+    _name = 'dynamic.buttons'
+
+    name = fields.Char(string="Name")
+    menu_url = fields.Char(string="Url")
+

@@ -52,7 +52,7 @@ Charter Quest
         <!--Email template for Free Quote reminder email -->
         <record id="email_template_edi_sale_order_reminder" model="mail.template">
             <field name="name">Freequote Reminder Email</field>
-            <field name="email_from">ravi.acespritech@gmail.com</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
              <field name="email_to">${object.user_id.email or ''}</field>
             <field name="subject">Charterquest FreeQuote/Enrolment ${object.name}</field>
             <field name="model_id" ref="sale.model_sale_order"/>
@@ -203,8 +203,8 @@ Your assigned Early Bird Discount will expire end of this month and very few ope
         
         <record id="email_template_early_bird_discount_expiry_notice" model="mail.template">
             <field name="name">Early Bird DISCOUNT EXPIRY NOTICE</field>
-            <field name="email_from">ravi.acespritech@gmail.com</field>
-             <field name="email_to">ravi.acespritech@gmail.com</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
+             <field name="email_to">benjamin@strategicdimensions.co.za</field>
             <field name="subject">Early Bird Discount due to Expiry </field>
             <field name="model_id" ref="sale.model_sale_order"/>
             <field name="auto_delete" eval="True"/>
@@ -254,7 +254,7 @@ Email: enquiries@charterquest.co.za<br>
         
         <record id="email_template_early_settelement_discount_expiry_notice" model="mail.template">
             <field name="name">Early Settelement DISCOUNT EXPIRY NOTICE</field>
-            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
              <field name="email_to">benjamin@strategicdimensions.co.za</field>
             <field name="subject">Early Settelement Discount due to Expiry </field>
             <field name="model_id" ref="sale.model_sale_order"/>

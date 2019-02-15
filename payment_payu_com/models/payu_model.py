@@ -79,7 +79,6 @@ class AcquirerPayu(models.Model):
     @api.multi
     def payu_form_generate_values(self, values):
         base_url = self.env['ir.config_parameter'].get_param('web.base.url')
-        print ('------->>>>>>>>>call2222========', values)
         acquirer = self
         payu_tx_values = dict(values)
         if payu_tx_values.get('inputPaymonths'):
@@ -152,7 +151,6 @@ class Payu(models.Model):
 #         return res
     @api.model
     def create(self, vals):
-        print ("-----------callllllllll------266666666payu")
         # The reference is used in the Authorize form to fill a field (invoiceNumber) which is
         # limited to 20 characters. We truncate the reference now, since it will be reused at
         # payment validation to find back the transaction.

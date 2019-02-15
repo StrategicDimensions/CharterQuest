@@ -15,6 +15,10 @@
 		</template>
 		<template id="main_header_layout_id" inherit_id="website.layout"
 			name="Theme Header">
+			<xpath expr="//header//div[2]" position="attributes">
+				<attribute name="class">container navbar navbar-default navbar-static-top</attribute>
+			</xpath>
+
 			<xpath expr="//div[hasclass('navbar-header')]" position="replace">
 				<table>
 					<tr>
@@ -22,7 +26,8 @@
 							<a href="/" class="navbar-brand logo visible-xs-inline-block">
 								<img src="http://charterquest.co.za/web/static/src/img/header1.png"
 									alt="Logo of The CharterQuest Professional Education Institute"
-									title="The CharterQuest Professional Education Institute" />
+									title="The CharterQuest Professional Education Institute"
+									style="height:54px !important; width:300px; !important"/>
 							</a>
 						</td>
 						<td>
@@ -39,7 +44,7 @@
 			</xpath>
 			<xpath expr="//div[@id='wrapwrap']/header/div" position="replace">
 				<meta name="google-site-verification" content="oAc1xhM__sqkHLweAa64_Tt7YGIJmcF8fhV0-_6U-gA" />
-				<div id="preheader_new" class="bg-alpha">
+				<div id="preheader_new" class="bg-alpha container" >
 					<div class="container banner_theme">
 						<div class="row">
 							<div class="col-md-12">
@@ -51,7 +56,7 @@
 													<a class="cq-logo" href="http://www.charterquest.co.za">
 														<img data-pin-nopin="true"
 															src="http://charterquest.co.za/web/static/src/img/header1.png"
-															style="" />
+															style="width: 300px; !important;" />
 													</a>
 												</li>
 											  </td>
@@ -110,8 +115,9 @@
 		<template id="footer_default_inherit" inherit_id="website.footer_custom"
 			customize_show="True" name="Automatic Footer">
 			<xpath expr="//div[@id='footer']" position="replace">
-				<div class="container hidden-print" style="margin-left: 25px;">
-					<div class="row">
+
+				<div class="container hidden-print" style="margin-left: 25px;background-color: #eeeeee">
+					<div class="col-md-12">
 						<div class="col-md-3">
 							<h4>Quick Links</h4>
 							<ul class="list-unstyled" id="products">
@@ -247,6 +253,7 @@
 					</div>
 				</div>
 			</xpath>
+
 		</template>
 
 		<template id="portal_show_cfo_login" inherit_id="portal.portal_show_sign_in"

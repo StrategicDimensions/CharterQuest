@@ -5,7 +5,7 @@
         <!--Email template for Sending Tax Invoice to Student -->
         <record id="email_template_edi_tax_invoice_student" model="mail.template">
             <field name="name">Sending Tax Invoice to Student</field>
-            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
              <field name="email_to">${object.partner_id.email or ''}</field>
             <field name="subject">Charterquest Tax Invoice</field>
             <field name="email_recipients">${object.partner_id.id}</field>
@@ -90,7 +90,7 @@ We look forward to seeing you during our course and helping you, in achieving a 
      <!--Email template for Debit Order Mandate to Student -->
         <record id="email_template_edi_debit_order_mandate" model="mail.template">
             <field name="name">Debit Order Mandate Email</field>
-            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
              <field name="email_to">${object.partner_id.email or ''}</field>
              <field name="email_cc">''</field>
             <field name="subject">CharterQuest Enrolment: Debit Order Mandate</field>
@@ -169,7 +169,7 @@ Your enrolment will be confirmed upon receipt of the completed Debit Order Manda
         <!--Email template for Debit Order Mandate to Student -->
         <record id="email_template_edi_debit_order_mandate_reminder" model="mail.template">
             <field name="name">Debit Order Mandate Reminder Email</field>
-            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
              <field name="email_to">${object.partner_id.email or ''}</field>
             <field name="subject">CharterQuest Debit Order Mandate Submission Reminder</field>
             <field name="email_recipients">${object.partner_id.id}</field>
@@ -245,7 +245,7 @@ Your enrolment will be confirmed upon receipt of the completed Debit Order Manda
      <!--Email template for CharterQuest Debit Order Scheduled -->
         <record id="email_template_edi_debit_order_scheduled" model="mail.template">
             <field name="name">Scheduled Debit Order</field>
-            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
              <field name="email_to">sappa.thirupathi@ktree.com</field>
              <field name="email_cc">''</field>
             <field name="subject">CharterQuest Debit Order Scheduled for ${object.dbo_date}</field>
@@ -317,7 +317,7 @@ The reference for your debit order is ${object.name} amount to go off is (R${obj
     <!--Email template for Sending Enrolement Statement to Student-->
         <record id="email_template_edi_enrolement_statement_student" model="mail.template">
             <field name="name">Sending Enrolment Statement to Student</field>
-            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
              <field name="email_to">${object.partner_id.email or ''}</field>
             <field name="subject">CharterQuest Payment Confirmation And Enrolment Statement </field>
             <field name="email_recipients">${object.partner_id.id}</field>
@@ -471,7 +471,7 @@ Please Find the Attached PDF for Vouchers
 
     <record id="email_template_pcexam_expiry_notification" model="mail.template">
             <field name="name">PC Exam Expiry Notification</field>
-            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
              <field name="email_to">${object.student_id.email}</field>
              <field name="email_cc">''</field>
             <field name="subject">PC Exam Expiry Notification</field>
@@ -541,7 +541,7 @@ Please note that your PC Exam Voucher ${object.voucher_no} has Expired .
 
     <record id="email_template_pcexam_expiry_notification_7days" model="mail.template">
             <field name="name">PC Exam Expiry Notification after 7days</field>
-            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
              <field name="email_to">${object.student_id.email}</field>
              <field name="email_cc">''</field>
             <field name="subject">PC Exam Voucher Expiring in 7 days!</field>
@@ -610,7 +610,7 @@ Please note that your PC Exam Voucher ${object.voucher_no} will expire in 7 days
 
    <record id="email_template_pcexam_expiry_notification_30days" model="mail.template">
             <field name="name">PC Exam Expiry Notification after 30days</field>
-            <field name="email_from">enquiries@charterquest.co.za</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
              <field name="email_to">${object.student_id.email}</field>
              <field name="email_cc">''</field>
             <field name="subject">PC Exam Voucher Expiring in 30 days!</field>

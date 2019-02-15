@@ -4,6 +4,7 @@
         <template id="assets_frontend_cfo" name="website_warranty"
                   inherit_id="website.assets_frontend">
             <xpath expr="." position="inside">
+
                 <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/mediaquery.css"/>
                 <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/snippets_menu.css"/>
                 <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/my_css.css"/>
@@ -19,11 +20,14 @@
                         src="/cfo_snr_jnr/static/src/js/enrolment.js"/>
                 <script type="text/javascript"
                         src="/cfo_snr_jnr/static/src/js/bootstrap-datepicker.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/recaptcha.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/login_page.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/simple-iconpicker.js"/>
                 <!--<script type="text/javascript" src="/cfo_snr_jnr/static/src/js/jquery-ui.js"/>-->
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/contentMenu.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/payment.js"/>
+
             </xpath>
         </template>
         <template id="assets_editor_cfo" name="website_warranty"

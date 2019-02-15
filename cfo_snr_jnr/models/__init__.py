@@ -26,6 +26,9 @@ from . import cfo_junior_member
 from . import res_users
 from . import res_partner
 from . import ir_attachment
+from . import res_config
+from . import blog_post
+from . import website_sale
 # from . import payment_transaction
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

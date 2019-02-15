@@ -1,0 +1,361 @@
+<odoo>
+    <data>
+        <template id="latest_blogs_customized" inherit_id="website_blog.latest_blogs" name="Latest Blogs">
+            <xpath expr="//div[@id='wrap']" position="replace">
+                <div id="wrap">
+                    <div class="oe_structure"/>
+                    <section class="container">
+                        <div class="alert alert-warning alert-dismissable mt16"
+                             groups="website.group_website_publisher">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;
+                            </button>
+                            <p>
+                                This page is great to improve your <strong>Search Engine Optimization</strong>;
+                                You can review titles, keywords and descriptions of all blogs at once.
+                            </p>
+                            <p>
+                                You should <strong>add a banner on the top</strong> as it is a frequent landing page for
+                                new
+                                visitors.
+                                <span class="text-muted">This box will not be visible to your visitors.</span>
+                            </p>
+                        </div>
+                        <t t-call="website.pager">
+                            <t t-set="classname">pull-right</t>
+                        </t>
+                    </section>
+
+                    <!--<section class="container">-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-md-12 text-center">-->
+                                <!--<h1>Latest Posts</h1>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</section>-->
+                    <div class="container">
+                        <div class="col-md-12" style="background: #f1f1f1;font-weight: bold;margin-top:20px;margin-bottom:40px;padding:15px;">
+                        <t t-set="blogs" t-value="request.env['blog.blog'].sudo().search([], order='create_date asc')"/>
+                        <t t-foreach="blogs" t-as="nav_blog">
+                            <div class="col-md-3" style="position: relative;min-height: 1px;padding-left: 15px;padding-right: 15px;float:left;height: 70px;width:25%;font-family: 'Roboto Slab',serif;font-size: 18px;hyphens: none;">
+                                <a class="blogs_a" t-attf-href="/blog/#{slug(nav_blog)}">
+                                    <span t-field="nav_blog.name" style="font-weight: 400;"/>
+                                </a>
+                            </div>
+                        </t>
+                    </div>
+                    </div>
+
+
+
+
+                    <section class="container">
+                        <div class="row">
+                            <t t-set="count" t-value="0"/>
+                            <t t-foreach="posts" t-as="post">
+                                <div class="col-md-4">
+                                    <div class="panel"
+                                         style="font-size:18px;text-align:left;min-height: 380px;box-shadow: 0 0 10px #766200;">
+                                        <h4 style="margin:0;padding:10px;">
+                                            <a t-attf-href="#{blog_url('', ['blog', 'post'], blog=post.blog_id, post=post)}"
+                                               style="font-size: 17px;background: #f1f1d1;">
+                                                <span class="blog_image" t-esc="post.background_image"
+                                                      t-if="post.background_image"
+                                                      t-options="{'widget':'image'}"
+                                                      style="width: 100%;height: 200px;"/>
+                                                <t t-if="not post.background_image">
+                                                    <img src="/cfo_snr_jnr/static/src/img/image_not_found.jpg"
+                                                         style="width: 100%;height: 200px;"/>
+                                                </t>
+                                            </a>
+                                            <a t-attf-href="#{blog_url('', ['blog', 'post'], blog=post.blog_id, post=post)}"
+                                               t-field="post.name" style="    font-size: 17px;background: #f1f1d1;"/>
+                                            <span t-if="not post.website_published" class="text-warning">
+                                                <span class="fa fa-exclamation-triangle ml8" title="Unpublished"/>
+                                            </span>
+                                        </h4>
+                                        <div class="text-muted" style="margin:0;padding:10px;">
+                                            <span class="fa fa-calendar mr8">
+                                                <span t-field="post.post_date"/>
+                                            </span>
+                                            <span class="fa fa-folder-open">In
+                                                <a class="mr8" t-attf-href="#{blog_url(blog=post.blog_id)}">
+                                                    <span t-field="post.blog_id"/>
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <div class="text-muted fa fa-tags" style="margin:0;padding:10px;">
+                                            <span t-field="post.website_meta_keywords"/>
+                                            <span t-if="editable and not post.website_meta_keywords"
+                                                  class="label label-danger">
+                                                No keywords defined!
+                                            </span>
+                                        </div>
+                                        <div class="text-muted" style="margin:0;padding:10px;" t-if="len(post.message_ids) &gt; 0">
+                                            <span class="fa fa-comment-o">
+                                                <a t-attf-href="#{blog_url('', ['blogpost'], blogpost=post)}#comments">
+                                                    <t t-if="len(post.message_ids) &lt;= 1">
+                                                        <t t-esc="len(post.message_ids)"/>
+                                                        comment
+                                                    </t>
+                                                    <t t-if="len(post.message_ids) > 1">
+                                                        <t t-esc="len(post.message_ids)"/>
+                                                        comments
+                                                    </t>
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <div class="text-muted mb16" t-field="post.website_meta_description"/>
+                                    </div>
+                                </div>
+                                <t t-set="count" t-value="count+1"/>
+                                <div class="clearfix" t-if="(count % 3) == 0"/>
+                            </t>
+                        </div>
+                    </section>
+                    <div class="oe_structure"/>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="blog_post_short_inherit" inherit_id="website_blog.blog_post_short" name="Blog Posts">
+            <xpath expr="//div[@class='oe_structure'][2]//div[@class='container']" position="replace">
+                <br></br>
+                <div class="container panel" style="box-shadow: 0 0 10px #766200;background:#f1f1f1;">
+                    <div class="container">
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-12 text-center">
+                                <h1 t-field="blog.name" style="font-size: 50px;margin-top: 24px;margin-bottom: 12px;font-family: 'Roboto Slab',serif;font-weight: 400;line-height: 1.25;"/>
+                                <!--<h3 class="text-muted" t-field="blog.subtitle"/>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@id='main_column']" position="replace">
+
+                <div class="col-md-8" t-ignore="True" id="main_column">
+
+                    <div t-if="not blog_posts" class="container mb64">
+                        <p class="css_editable_hidden">
+                            <h1>No blog post yet.</h1>
+                        </p>
+                        <p groups="website.group_website_designer">
+                            Click on "New Page" in the top-right corner to write your first blog post.
+                        </p>
+                    </div>
+                    <br></br>
+                    <div t-foreach="blog_posts" t-as="blog_post" class="" name="blog_post">
+                        <div class="col-md-6">
+                            <div class="panel"
+                                 style="font-size:18px;text-align:left;min-height: 380px;box-shadow: 0 0 10px #766200;height: 380px;">
+                                <a t-attf-href="/blog/#{ slug(blog_post.blog_id) }/post/#{ slug(blog_post) }"
+                                   style="font-size: 17px;background: #f1f1d1;">
+                                    <span class="blog_image" t-esc="blog_post.background_image"
+                                          t-if="blog_post.background_image"
+                                          t-options="{'widget':'image'}" style="width: 100%;height: 200px;"/>
+                                    <t t-if="not blog_post.background_image">
+                                        <img src="/cfo_snr_jnr/static/src/img/image_not_found.jpg"
+                                             style="width: 100%;height: 200px;"/>
+                                    </t>
+                                </a>
+                                <a t-attf-href="/blog/#{ slug(blog_post.blog_id) }/post/#{ slug(blog_post) }">
+                                    <h2 style="margin:0;padding:10px;font-size:16px;" t-field="blog_post.name"
+                                        class="mb4 o_blog_post_title">Untitled Post
+                                    </h2>
+                                </a>
+                                <div class="text-muted" >
+                                    <div name='blog_post_data' style="margin:0;padding:10px;" class='mb0'>
+                                        <span t-field="blog_post.post_date" t-options='{"format": "MMMM yyyy"}'/>
+                                        <span t-if="len(blog_post.message_ids) &gt; 0">
+                                            &amp;mdash;
+                                            <t t-esc="len(blog_post.message_ids)"/>
+                                            <t t-if="len(blog_post.message_ids) &lt;= 1">comment</t>
+                                            <t t-if="len(blog_post.message_ids) &gt; 1">comments</t>
+                                        </span>
+                                        <span t-if="blog_post.visits &gt; 0">
+                                            &amp;mdash;
+                                            <t t-esc="blog_post.visits"/>
+                                            <t t-if="blog_post.visits &lt;= 1">view</t>
+                                            <t t-if="blog_post.visits &gt; 1">views</t>
+                                        </span>
+                                        <t t-if="blog_post.author_avatar">
+                                            <div t-field="blog_post.author_avatar" class="o_not_editable"
+                                                 style="display:inline"
+                                                 t-field-options='{"widget": "image", "class": "o_author_avatar_little "}'/>
+                                        </t>
+                                        <!--<img src="" author_avatar></img>-->
+                                        <hr/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </xpath>
+        </template>
+
+        <template id="cfo_snr_jnr.blog_detail" name="Blog Post">
+            <t t-call="website_blog.index">
+                <div id="title" class="blog_header" t-ignore="True" style="text-align:center;">
+                    <div class="blog_title">
+                        <h2 t-field="blog_post.name" id="blog_post_name" t-att-data-blog-id="blog_post.id"
+                            placeholder="Blog Post Title" style="text-align:left;font-size:38px;text-align:center;"/>
+                        <p class="post-meta text-muted text-center" name="blog_post_data"/>
+                        <p class="post-meta text-muted text-center" t-if="len(blog_post.tag_ids)">
+                            <span class="fa fa-tags"/>
+                            <t t-foreach="blog_post.tag_ids" t-as="one_tag">
+                                <a class="label label-primary mr8" t-attf-href="#{blog_url(tag=one_tag.id)}"
+                                   t-esc="one_tag.name"/>
+                            </t>
+                        </p>
+                        <div t-if="'cover_full' in blog_post_cover_properties.get('resize_class', '')"
+                             id="blog_angle_down">
+                            <strong>
+                                <a href="#blog_content" class="fa fa-angle-down fa-3x fa-inverse mt4"/>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align:center;">
+                    <h7 style="font-weight: 600;margin: 10px;text-align:center;" data-oe-id="1840"
+                        data-oe-model="ir.ui.view" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/h7[1]">Views:
+                    </h7>
+                    <strong style="text-align:center;" t-esc="blog_post.visits" data-oe-model="blog.post"
+                            data-oe-id="109" data-oe-field="visits" data-oe-type="integer"
+                            data-oe-expression="blog_post.visits" data-oe-translate="0"></strong>
+                    <br></br>
+                </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ol class="breadcrumb" style="text-align:center">
+                                <li>
+                                    <a t-attf-href="#{blog_url(tag=None, date_begin=None, date_end=None)}">
+                                        <span t-field="blog.name"/>
+                                    </a>
+                                </li>
+                                <li t-if="tag">
+                                    <a t-attf-href="#{blog_url(date_begin=None, date_end=None)}">
+                                        <span t-field="tag.name"/>
+                                    </a>
+                                </li>
+                                <li t-if="date">
+                                    <a t-attf-href="#{blog_url(tag=None)}" t-esc="date"/>
+                                </li>
+                                <li class="active">
+                                    <span t-field="blog_post.name"/>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="col-sm-3">
+                        </div>
+                    </div>
+                </div>
+                <span class="detail_blog_image" t-esc="blog_post.background_image"
+                      t-if="blog_post.background_image"
+                      t-options="{'widget':'image'}"
+                      style="width: 100%;max-height: 500px;display: block;text-align: center;margin-left: auto;margin-right: auto;"/>
+                <t t-if="not blog_post.background_image">
+                    <img src="/cfo_snr_jnr/static/src/img/image_not_found.jpg"
+                         style="width: 830px;height: 450px; display: block;margin-left: auto;margin-right: auto;"/>
+                </t>
+                <div id="blog_content" t-field="blog_post.content" class="blog_content mt32"/>
+
+                <div class="o_blog_post_complete o_sharing_links">
+                    <a class="fa fa-twitter-square o_twitter_complete" id="o_twitter_complete"></a>
+                    <a class="fa fa-facebook-square o_facebook_complete" id="o_facebook_complete"></a>
+                    <a class="fa fa-linkedin-square o_linkedin_complete" id="o_linkedin_complete"></a>
+                    <a class="fa fa-google-plus-square o_google_complete" id="o_google_complete"></a>
+                </div>
+                <t t-set='head'>
+                    <t t-raw='head or ""'/>
+                    <!-- Facebook and linkedin sharing data -->
+                    <meta property="og:type" content="website"/>
+                    <meta property="og:url" t-att-content="request.httprequest.url"/>
+                    <meta property="og:image"
+                          t-attf-content="#{request.httprequest.url_root+blog_post_cover_properties.get('background-image', 'none')[5:-1]}"/>
+                    <meta property="og:description" t-att-content="blog_post.subtitle"/>
+                    <!--  Twitter sharing data -->
+                    <meta name="twitter:card" content="summary_large_image"/>
+                    <meta name="twitter:site" t-attf-content="@#{res_company.name}"/>
+                    <meta name="twitter:title" t-att-content="blog_post.name"/>
+                    <meta name="twitter:description" t-att-content="blog_post.subtitle"/>
+                    <meta name="twitter:image"
+                          t-attf-content="#{request.httprequest.url_root+blog_post_cover_properties.get('background-image', 'none')[5:-1]}"/>
+                </t>
+            </t>
+        </template>
+
+
+        <template id="opt_blog_rc_blogs" name="Our Blogs" priority="6"
+                  inherit_id="website_blog.index_right" active="True" customize_show="True">
+            <xpath expr="//div[@id='main_column']" position="attributes">
+                <attribute name="class">col-sm-8</attribute>
+            </xpath>
+            <xpath expr="//div[@id='blog_right_column']//section[@class='mt32'][1]" position="replace">
+                <section class="mt32 mb32">
+                    <h4>Our Blogs</h4>
+                    <ul class="nav nav-pills nav-stacked">
+                        <t t-foreach="blogs" t-as="nav_blog">
+                            <li t-att-class="nav_blog.id == blog.id and 'active' or None">
+                                <a t-attf-href="#{blog_url(blog=nav_blog, tag=False, date_begin=False, date_end=False)}">
+                                    <span t-field="nav_blog.name"/>
+                                </a>
+                            </li>
+                        </t>
+                    </ul>
+                </section>
+                <section class="mt32 mb32">
+
+                    <p class="text-muted mb0 mt16">
+                        Participate on our social stream.
+                    </p>
+                    <h2 class="mt4">
+                        <a t-att-href="website.social_facebook" t-if="website.social_facebook">
+                            <i class="fa fa-facebook-square"/>
+                        </a>
+                        <a t-att-href="website.social_twitter" t-if="website.social_twitter">
+                            <i class="fa fa-twitter"/>
+                        </a>
+                        <a t-att-href="website.social_linkedin" t-if="website.social_linkedin">
+                            <i class="fa fa-linkedin"/>
+                        </a>
+                        <a t-att-href="website.social_youtube" t-if="website.social_youtube">
+                            <i class="fa fa-youtube-play"/>
+                        </a>
+                        <a t-att-href="website.social_googleplus" t-if="website.social_googleplus">
+                            <i class="fa fa-google-plus-square"/>
+                        </a>
+                        <a t-att-href="website.social_github" t-if="website.social_github">
+                            <i class="fa fa-github"/>
+                        </a>
+                    </h2>
+                </section>
+            </xpath>
+
+            <xpath expr="//div[@id='blog_right_column']//section[@class='mt32'][1]" position="replace">
+                <section class="mt32">
+                    <h4>Stay updated :</h4>
+                    <t t-if="blog">
+                        <t t-call="website_mail.follow">
+                            <t t-set="email" t-value="user_id.email"/>
+                            <br/>
+                            <t t-set="object" t-value="blog" style="display:block;"/>
+                        </t>
+                    </t>
+
+                </section>
+
+            </xpath>
+            <xpath expr="//div[@id='blog_right_column']//section[@class='mt32 mb32'][4]" position="replace">
+            </xpath>
+        </template>
+    </data>
+
+</odoo>
