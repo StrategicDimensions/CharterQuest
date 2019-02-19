@@ -6,6 +6,109 @@
         <field name="sequence" type="int">50</field>
     </record>
 
+
+    <template id="cfo_confirmation" inherit_id="website_sale.payment_confirmation_status" name="Confirmation Status">
+        <xpath expr="//div[hasclass('panel-body')]" position="replace">
+            <div class="panel-body" t-if="order.payment_acquirer_id">
+                <t t-if="order.payment_acquirer_id.provider == 'transfer'">
+                    <h3>
+                        <div class="oe_website_sale_tx_status"
+                             style="color: rgb(50, 58, 73); font-family: Roboto, sans-serif; font-size: 16px;">
+                            <p style="margin-bottom: 12px;">Your transaction is waiting confirmation.</p>
+                        </div>
+                        <div style="color: rgb(50, 58, 73); font-family: Roboto, sans-serif; font-size: 16px;">
+                            <p style="margin-bottom: 12px;">Please use the following transfer details</p>
+                            <span style="font-size: 13.3333px; line-height: 1.38; font-family: Verdana; white-space: pre-wrap;">Bank Account</span>
+                            <table  class="table table-bordered" style="width: 750px;">
+                                <tbody>
+                                    <tr>
+                                        <th> Bank: </th>
+                                        <td> FNB </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Beneficiary name: </th>
+                                        <td> CharterQuest Training Institute </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Account type:</th>
+                                        <td> Cheque </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Account no:</th>
+                                        <td>626 8076 7054</td>
+                                    </tr>
+                                    <tr>
+                                        <th> Branch code: </th>
+                                        <td> 250655 </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Reference No. </th>
+                                        <td><span t-esc="order.name"/> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <span style="font-size: 13.3333px;
+                            font-family: Verdana; color: rgb(76, 76, 76); font-variant-numeric: normal;
+                            font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;
+                            background-color: transparent;">Communication</span>
+                            <br/>
+                            <span style="font-family: Verdana; font-size: 13.3333px; white-space: pre-wrap; line-height: 1.38;">Please use the order name as communication reference.</span>
+                        </div>
+                    </h3>
+                </t>
+
+                <t t-if="order.payment_acquirer_id.provider == 'payu'">
+                    <h3>
+                        <div class="oe_website_sale_tx_status"
+                             style="color: rgb(50, 58, 73); font-family: Roboto, sans-serif; font-size: 16px;">
+                            <p style="margin-bottom: 12px;">Your transaction is waiting confirmation.</p>
+                        </div>
+                        <div style="color: rgb(50, 58, 73); font-family: Roboto, sans-serif; font-size: 16px;">
+                            <p style="margin-bottom: 12px;">Please use the following transfer details</p>
+                            <span style="font-size: 13.3333px; line-height: 1.38; font-family: Verdana; white-space: pre-wrap;">Bank Account</span>
+                            <table  class="table table-bordered" style="width: 750px;">
+                                <tbody>
+                                    <tr>
+                                        <th> Bank: </th>
+                                        <td> FNB </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Beneficiary name: </th>
+                                        <td> CharterQuest Training Institute </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Account type:</th>
+                                        <td> Cheque </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Account no:</th>
+                                        <td>626 8076 7054</td>
+                                    </tr>
+                                    <tr>
+                                        <th> Branch code: </th>
+                                        <td> 250655 </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Reference No. </th>
+                                        <td><span t-esc="order.name"/> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <span style="font-size: 13.3333px;
+                            font-family: Verdana; color: rgb(76, 76, 76); font-variant-numeric: normal;
+                            font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;
+                            background-color: transparent;">Communication</span>
+                            <br/>
+                            <span style="font-family: Verdana; font-size: 13.3333px; white-space: pre-wrap; line-height: 1.38;">Please use the order name as communication reference.</span>
+                        </div>
+                    </h3>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+
+
     <template id="cfo_products_categories" inherit_id="website_sale.product" active="False" customize_show="True"
               name="eCommerce Categories">
         <xpath expr="//div[@class='row'][2]/div[@class='col-sm-7']" position="before">
@@ -41,7 +144,7 @@
         </xpath>
     </template>
 
-    <template id="cfo_products_check_available" inherit_id="website_sale.product">
+    <template id="cfo_products_count_available" inherit_id="website_sale.product">
         <xpath expr="//div[@id='product_details']/h1" position="after">
             <t t-if="not product.qty_available">
                 <div class="ribbon-wrapper"
@@ -2536,4 +2639,3 @@
         </t>
     </template>
 </odoo>
-

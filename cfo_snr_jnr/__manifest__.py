@@ -20,11 +20,11 @@
 
 {
     'name': 'CFO Senior Junior',
-    'version': '11.3',
+    'version': '11.0.12',
     'category': 'Website',
     'summary': 'CFO Senior and Junior Competition',
     'description': """CFO Senior and Junior Competition.""",
-    'depends': ['base', 'auth_signup', 'crm', 'website', 'web_editor', 'product', 'theme_zap', 'payment_payu_com', 'website_blog','website_sale'],
+    'depends': ['base', 'auth_signup', 'crm', 'website', 'web_editor', 'product', 'theme_zap', 'payment_payu_com', 'website_blog'],
     'data': [
         'security/ir.model.access.csv',
         'data/snippets.xml',

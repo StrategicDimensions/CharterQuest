@@ -454,3 +454,16 @@ strong{
 .oe_cart .row {
     margin: 0px !important;
 }
+
+.oe_product .ribbon-wrapper{
+    display: block !important;
+    width: 100px !important;
+    height: 100px !important;
+    z-index: 0 !important;
+    border-radius: unset !important;
+}
+
+.list-group .list-group-item .label-optional{
+    width: 90% !important;
+    hyphens: none !important;
+}
