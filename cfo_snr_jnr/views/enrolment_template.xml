@@ -111,7 +111,7 @@
 
     <template id="cfo_products_categories" inherit_id="website_sale.product" active="False" customize_show="True"
               name="eCommerce Categories">
-        <xpath expr="//div[@class='row'][2]/div[@class='col-sm-7']" position="before">
+        <xpath expr="//div[hasclass('row')][2]/div[hasclass('col-sm-7')]" position="before">
             <div id="products_grid_before" class="col-md-3 col-sm-4 col-xs-12">
                 <ul class="nav nav-pills nav-stacked mt16">
                     <li t-att-class=" '' if category else 'active' ">
@@ -124,10 +124,11 @@
             </div>
         </xpath>
 
-        <xpath expr="//div[@class='row'][2]/div[@class='col-sm-7']" position="attributes">
+        <xpath expr="//div[hasclass('row')][2]/div[hasclass('col-sm-7')]" position="attributes">
             <attribute name="class">col-md-4 col-sm-4</attribute>
             <attribute name="id">product_image_cust</attribute>
         </xpath>
+
     </template>
 
 

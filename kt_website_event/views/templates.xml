@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+
         <!--<template id='event_description_full_inherit' inherit_id='website_event.event_description_full'>-->
             <!--<xpath expr="//button[@type='submit']" position='replace'>-->
                 <!--<button type="submit" class="btn btn-primary btn-lg pull-right" t-if="event.seats_available">Register-->
@@ -10,7 +11,12 @@
         <!--</template>-->
 
         <template id='in_out_stock_wrapper' inherit_id='website_sale.products_item' name="Products item">
-            <xpath expr="//div[hasclass('ribbon-wrapper')]" position='after'>
+
+            <xpath expr="//div[@class='ribbon-wrapper']" position='attributes'>
+                <attribute name="t-if">product.website_style_ids and request.env['product.style'].sudo().search([('name','=','Sale Ribbon')]).id in product.website_style_ids.ids</attribute>
+            </xpath>
+
+            <xpath expr="//div[@class='ribbon-wrapper']" position='after'>
                 <t t-if="product.qty_available">
                     <div class="ribbon-wrapper" style="right: 0px !important;width: 145px !important;height: 160px !important;top: 20px !important;display:block;z-index:auto !important">
                         <div class="ribbon btn btn-success" style="width: 160px;top: 36px;background:#4cae4c !important;color: #fff !important;border: 1px solid#fff !important;">In Stock</div>
@@ -22,6 +28,7 @@
                     </div>
                 </t>
             </xpath>
+
         </template>
 
 

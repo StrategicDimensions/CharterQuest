@@ -25,3 +25,6 @@ access_jnr_aspirant_team_member,access_jnr_aspirant_team_member,model_jnr_aspira
 access_jnr_highschool_team_member,access_jnr_highschool_team_member,model_jnr_highschool_team_member,,1,1,1,1
 access_employers_jnr,access_employers_jnr,model_employers_jnr,,1,1,1,1
 access_social_media_contestants_jnr,access_social_media_contestants_jnr,model_social_media_contestants_jnr,,1,1,1,1
+access_volunteers_jnr,access_volunteers_jnr,model_volunteers_jnr,,1,1,1,1
+access_cfo_jnr_member_add,access_cfo_jnr_member_add,model_cfo_jnr_member_add,,1,1,1,1
+access_cfo_snr_member_add,access_cfo_snr_member_add,model_cfo_snr_member_add,,1,1,1,1

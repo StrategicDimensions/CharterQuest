@@ -168,7 +168,7 @@
             <xpath expr="//t/form" position='attributes'>
                 <attribute name='style'>max-width: 615px; !important</attribute>
             </xpath>
-            <xpath expr="//t/form/div[@class='clearfix oe_login_buttons']" position='replace'>
+            <xpath expr="//t/form/div[hasclass('clearfix','oe_login_buttons')]" position='replace'>
                 <div class="clearfix oe_login_buttons">
                     <t t-if="only_passwords">
                         <a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link pull-right">Already have an

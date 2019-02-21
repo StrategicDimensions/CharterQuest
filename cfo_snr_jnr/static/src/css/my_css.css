@@ -456,14 +456,50 @@ strong{
 }
 
 .oe_product .ribbon-wrapper{
-    display: block !important;
+
     width: 100px !important;
     height: 100px !important;
     z-index: 0 !important;
     border-radius: unset !important;
 }
 
+.oe_product.oe_ribbon_promo .ribbon-wrapper {
+  display: block;
+}
+
 .list-group .list-group-item .label-optional{
     width: 90% !important;
     hyphens: none !important;
+}
+
+/* ribbon */
+
+.oe_product.oe_list .ribbon-wrapper {
+  display: block;
+}
+
+.oe_product .ribbon-wrapper {
+  display: none;
+  width: 85px;
+  height: 88px;
+  z-index: 5;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.oe_product .ribbon {
+  font: bold 15px Sans-Serif;
+  color: white;
+  text-align: center;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  position: relative;
+  padding: 7px 0;
+  left: -5px;
+  top: 15px;
+  width: 120px;
+  cursor: default;
 }
