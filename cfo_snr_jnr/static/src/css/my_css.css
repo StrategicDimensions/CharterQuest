@@ -503,3 +503,6 @@ strong{
   width: 120px;
   cursor: default;
 }
+.oe_product.oe_list.oe_product_cart h5{
+    width:100% !important;
+}
