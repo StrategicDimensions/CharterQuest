@@ -507,8 +507,17 @@ strong{
     width:100% !important;
 }
 
+@media (max-width: 320px){
+.table-product-info{
+display: none !important;
+}
+}
 @media (min-width: 320px) and (max-width:800px) {
     .table-product-info{
         display: none !important;
     }
+	.oe_product.oe_list section{
+	    width:100% !important;
+	}
+
 }
