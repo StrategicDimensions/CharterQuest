@@ -42,7 +42,7 @@
                                         <td> 250655 </td>
                                     </tr>
                                     <tr>
-                                        <th> Reference No. </th>
+                                        <th> Reference No: </th>
                                         <td><span t-esc="order.name"/> </td>
                                     </tr>
                                 </tbody>
@@ -50,9 +50,8 @@
                             <span style="font-size: 13.3333px;
                             font-family: Verdana; color: rgb(76, 76, 76); font-variant-numeric: normal;
                             font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;
-                            background-color: transparent;">Communication</span>
+                            background-color: transparent;">Communication Please use the order name as payment refence</span>
                             <br/>
-                            <span style="font-family: Verdana; font-size: 13.3333px; white-space: pre-wrap; line-height: 1.38;">Please use the order name as communication reference.</span>
                         </div>
                     </h3>
                 </t>
@@ -97,9 +96,8 @@
                             <span style="font-size: 13.3333px;
                             font-family: Verdana; color: rgb(76, 76, 76); font-variant-numeric: normal;
                             font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;
-                            background-color: transparent;">Communication</span>
+                            background-color: transparent;">Communication Please use the order name as payment refence</span>
                             <br/>
-                            <span style="font-family: Verdana; font-size: 13.3333px; white-space: pre-wrap; line-height: 1.38;">Please use the order name as communication reference.</span>
                         </div>
                     </h3>
                 </t>
@@ -146,7 +144,13 @@
     </template>
 
     <template id="cfo_products_count_available" inherit_id="website_sale.product">
+
+        <xpath expr="//div[@id='product_details']/h1" position="attributes">
+            <attribute name="t-att-style">'font-size:32px;'</attribute>
+        </xpath>
+
         <xpath expr="//div[@id='product_details']/h1" position="after">
+            <t t-set="product" t-value="product.sudo()"/>
             <t t-if="not product.qty_available">
                 <div class="ribbon-wrapper"
                      style="right: 0px !important;width: 145px !important;top: 20px !important;display:block;z-index:auto !important">
@@ -160,16 +164,18 @@
                 </span>
             </t>
         </xpath>
+
     </template>
 
     <template id="products_list_view" inherit_id="website_sale.products_item">
         <xpath expr="//section" position="after">
             <table class="table table-bordered table-product-info"
                    style="margin-bottom:15px;line-height: 0.7;width: 70%;">
+                <t t-set="product" t-value="product.sudo()"/>
                 <tr style="font-size:12px;">
                     <th>Author</th>
                     <td>
-                        <span t-esc="product.author_id.name if product.author_id.name else ''"/>
+                        <span t-esc="product.author_id.sudo().name if product.author_id.sudo().name else ''"/>
                     </td>
                 </tr>
                 <tr style="font-size:12px;">

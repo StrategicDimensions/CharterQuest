@@ -180,7 +180,7 @@ odoo.define('cfo_snr_jnr.payment', function (require) {
                 }
                 }
                 else{
-                    alert('Please select terms and conditions')
+                    alert('Please accept Terms & Conditions')
                 }
             }
             else {

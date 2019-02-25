@@ -506,3 +506,9 @@ strong{
 .oe_product.oe_list.oe_product_cart h5{
     width:100% !important;
 }
+
+@media (min-width: 320px) and (max-width:800px) {
+    .table-product-info{
+        display: none !important;
+    }
+}

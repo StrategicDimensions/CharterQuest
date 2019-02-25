@@ -30,7 +30,7 @@ class WebsiteSale(website_sale.WebsiteSale):
         if sale_order_id is None:
             order = request.website.sale_get_order()
         else:
-            order = request.env['sale.order'].sudo().browse(sale_order_id)
+            order = sale_order_obj.sudo().browse(sale_order_id)
             assert order.id == request.session.get('sale_last_order_id')
 
         if not order or (order.amount_total and not tx):
@@ -44,7 +44,7 @@ class WebsiteSale(website_sale.WebsiteSale):
             order.action_confirm()
             # send by email
             #   email_act = sale_order_obj.action_quotation_send(cr, SUPERUSER_ID, [order.id], context=request.context)
-            template_id = email_obj.search([('name','=',"CharterBooks Saleorder Confirm Email")])
+            template_id = email_obj.sudo().search([('name','=',"CharterBooks Saleorder Confirm Email")])
             if template_id:
                 mail_message = template_id.send_mail(order.id)  # email_obj.sudo().send_mail(template_id[0],order.id)
         elif tx and tx.state == 'cancel':
