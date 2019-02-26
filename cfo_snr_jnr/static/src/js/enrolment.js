@@ -626,5 +626,22 @@ odoo.define('cfo_snr_jnr.enrolment', function (require) {
                     }
             });
         });
+        if($(document).find('select[name="do_invoice"]').val() == 'No'){
+            $(document).find('#inputVat').parents('.control-group').hide()
+            $(document).find('#inputCompany').parents('.control-group').hide()
+        }else{
+            $(document).find('#inputVat').parents('.control-group').show()
+            $(document).find('#inputCompany').parents('.control-group').show()
+        }
+        $(document).on('change','select[name="do_invoice"]',function(){
+            if($(this).val() == 'No'){
+                $(document).find('#inputVat').parents('.control-group').hide()
+                $(document).find('#inputCompany').parents('.control-group').hide()
+            }else{
+                $(document).find('#inputVat').parents('.control-group').show()
+                $(document).find('#inputCompany').parents('.control-group').show()
+            }
+        });
+
     });
 });

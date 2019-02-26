@@ -17,12 +17,12 @@
             </xpath>
 
             <xpath expr="//div[@class='ribbon-wrapper']" position='after'>
-                <t t-if="product.qty_available">
+                <t t-if="product.sudo().qty_available">
                     <div class="ribbon-wrapper" style="right: 0px !important;width: 145px !important;height: 160px !important;top: 20px !important;display:block;z-index:auto !important">
                         <div class="ribbon btn btn-success" style="width: 160px;top: 36px;background:#4cae4c !important;color: #fff !important;border: 1px solid#fff !important;">In Stock</div>
                     </div>
                 </t>
-                <t t-if="not product.qty_available">
+                <t t-if="not product.sudo().qty_available">
                     <div class="ribbon-wrapper" style="right: 0px !important;width: 145px !important;height: 160px !important;top: 20px !important;display:block;z-index:auto !important">
                         <div class="ribbon btn btn-success" style="padding: 6px 26px;width: 160px;top: 40px;background:red !important;color: #fff !important;border: 1px solid#fff !important;"><center>Out Of Stock</center></div>
                     </div>
