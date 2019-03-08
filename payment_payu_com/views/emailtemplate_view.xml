@@ -190,6 +190,7 @@ Email: enquiries@charterquest.co.za </br>
 
     <p>Proof of payment should be emailed to accounts@charterquest.co.za. You can only come to collect once you receive a collection/delivery notification. </p>
 
+    <p>Sale Order Link: <a href=${object.sale_order_link or ''}>${object.sale_order_link or ''}</a></p>
     <div>
         Thanking You<br/>
         Patience Mukondwa<br/>

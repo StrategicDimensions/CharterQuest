@@ -34,4 +34,36 @@ class ProductTemplate(models.Model):
     course_code = fields.Char('Course Code')
     book_edition = fields.Char('Book Edition')
 
+
+class SaleOrder(models.Model):
+    _inherit = "sale.order"
+
+    sale_order_link = fields.Char(string="Sale Order Link")
+    sale_link = fields.Char(string="Sale Link")
+
+    @api.multi
+    def _prepare_invoice(self):
+        res = super(SaleOrder, self)._prepare_invoice()
+
+        res.update({'sale_order_reference_link': self.sale_order_link})
+
+        return res
+
+class AccountInvoice(models.Model):
+    _inherit = 'account.invoice'
+
+    sale_order_reference_link = fields.Char(string="Sale Order Reference Link")
+
+
+class SaleAdvancePaymentInv(models.TransientModel):
+    _inherit = "sale.advance.payment.inv"
+
+    @api.multi
+    def _create_invoice(self, order, so_line, amount):
+        res = super(SaleAdvancePaymentInv, self)._create_invoice(order, so_line, amount)
+
+        res.write({'sale_order_reference_link': order.sale_order_link})
+
+        return res
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

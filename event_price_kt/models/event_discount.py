@@ -115,33 +115,33 @@ class sale_order(models.Model):
     @api.model
     def get_early_settlement_discount(self):
           pass
-          today = date.today()
-          sale_ids = self.search([('state', '=', 'draft'), ('affiliation', '=', '1')])
-          for sale_id in sale_ids:
-              list = []
-              createdate = datetime.strptime(sale_id.create_date,"%Y-%m-%d %H:%M:%S")
-              after7_days = today - createdate.date()
-              if after7_days.days > 7:
-                 if sale_id.discount_type_ids:
-                     discount = 0.0
-                     for event_obj in sale_id.discount_type_ids:
-                         max_disc = self.env['event.discount'].search([('name', '=', 'Early Settlement Discount'),
-                                                                            ('event_type_id', '=', sale_id.prof_body.id)])
-                         max_discount_id = max_disc and max_disc[0] or False
-                         if event_obj.id != max_discount_id:
-                             list.append(event_obj.id)
-                             discount += event_obj.discount
-                     sale_id.write({'discount_type_ids': [(6, 0, list)], 'discount': discount})
-                     message = self.env['mail.message']
-                     if sale_id.message_ids[0]:
-                          message.create({
-                            'res_id': sale_id.message_ids[0].res_id,
-                            'parent_id': sale_id.message_ids[0].id,
-                            'subject': 'Early Settlement Discount Removed from Quote',
-                            'model': 'sale.order',
-                            'body': 'Early Settlement Discount Removed from Quote'
-                           }, self._context)
-          return True
+          # today = date.today()
+          # sale_ids = self.search([('state', '=', 'draft'), ('affiliation', '=', '1')])
+          # for sale_id in sale_ids:
+          #     list = []
+          #     createdate = datetime.strptime(sale_id.create_date,"%Y-%m-%d %H:%M:%S")
+          #     after7_days = today - createdate.date()
+          #     if after7_days.days > 7:
+          #        if sale_id.discount_type_ids:
+          #            discount = 0.0
+          #            for event_obj in sale_id.discount_type_ids:
+          #                max_disc = self.env['event.discount'].search([('name', '=', 'Early Settlement Discount'),
+          #                                                                   ('event_type_id', '=', sale_id.prof_body.id)])
+          #                max_discount_id = max_disc and max_disc[0] or False
+          #                if event_obj.id != max_discount_id:
+          #                    list.append(event_obj.id)
+          #                    discount += event_obj.discount
+          #            sale_id.write({'discount_type_ids': [(6, 0, list)], 'discount': discount})
+          #            message = self.env['mail.message']
+          #            if sale_id.message_ids[0]:
+          #                 message.create({
+          #                   'res_id': sale_id.message_ids[0].res_id,
+          #                   'parent_id': sale_id.message_ids[0].id,
+          #                   'subject': 'Early Settlement Discount Removed from Quote',
+          #                   'model': 'sale.order',
+          #                   'body': 'Early Settlement Discount Removed from Quote'
+          #                  }, self._context)
+          # return True
 
     # @api.multi
     # def _get_default_discount(self):

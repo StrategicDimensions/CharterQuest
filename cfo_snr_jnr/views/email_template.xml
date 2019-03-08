@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
 <odoo>
 
-   <data noupdate="0">
+    <data noupdate="0">
 
-       <record id="email_template_freequote" model="mail.template">
+        <record id="email_template_freequote" model="mail.template">
             <field name="name">Charterquest FreeQuote/Enrolment</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
             <field name="email_to">${object.user_id.email or ''}</field>
@@ -52,10 +52,10 @@
                 <br/>
                 <div>
             ]]></field>
-       </record>
+        </record>
 
 
-       <record id="email_template_payvia_bank_deposit" model="mail.template">
+        <record id="email_template_payvia_bank_deposit" model="mail.template">
             <field name="name">Charterquest Pay Via Bank Deposit</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
             <field name="email_to">${object.user_id.email or ''}</field>
@@ -129,7 +129,7 @@
                 <br/>
                 <div>
             ]]></field>
-       </record>
+        </record>
 
 
         <record id="email_template_paid_success" model="mail.template">
@@ -224,5 +224,5 @@ Confirm discounts requirements below and double check your attached quote to ens
 		            ]]>
             </field>
         </record>
-   </data>
+    </data>
 </odoo>

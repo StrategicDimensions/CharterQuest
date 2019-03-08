@@ -38,15 +38,19 @@ class WebsiteSale(website_sale.WebsiteSale):
             return request.redirect('/shop/confirmation')
 
         if (not order.amount_total and not tx) or tx.state in ['pending', 'done']:
+            if (not order.amount_total and not tx):
                 # Orders are confirmed by payment transactions, but there is none for free orders,
                 # (e.g. free events), so confirm immediately
-            # if (not order.amount_total and not tx):
-            order.action_confirm()
+                order.action_confirm()
             # send by email
             #   email_act = sale_order_obj.action_quotation_send(cr, SUPERUSER_ID, [order.id], context=request.context)
-            template_id = email_obj.sudo().search([('name','=',"CharterBooks Saleorder Confirm Email")])
-            if template_id:
-                mail_message = template_id.send_mail(order.id)  # email_obj.sudo().send_mail(template_id[0],order.id)
+            # template_id = email_obj.sudo().search([('name','=',"CharterBooks Saleorder Confirm Email")])
+            #
+            # if template_id:
+            #     print('\n\n\n template send===========')
+            #     mail_message = template_id.send_mail(order.id)  # email_obj.sudo().send_mail(template_id[0],order.id)
+            print('\n\n\n order==========', order)
+            order.write({'state':'sent'})
         elif tx and tx.state == 'cancel':
             # cancel the quotation
             sale_order_obj.sudo().action_cancel([order.id])

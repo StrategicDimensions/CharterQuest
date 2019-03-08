@@ -21,4 +21,27 @@
             </xpath>
         </field>
     </record>
+
+    <record model="ir.ui.view" id="sale_order_link_sale_order">
+        <field name="name">sale.order.margin.view.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="sale_order_link" widget="url"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="invoice_form_inherit_sale_order_link" model="ir.ui.view">
+        <field name="name">account.invoice.form.inherit.sale.order.link</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <field name="date_invoice" position="after">
+                <field name="sale_order_reference_link" widget="url"/>
+            </field>
+        </field>
+    </record>
+
 </odoo>

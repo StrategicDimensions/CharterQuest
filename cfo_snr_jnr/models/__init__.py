@@ -29,6 +29,7 @@ from . import ir_attachment
 from . import res_config
 from . import blog_post
 from . import website_sale
+from . import sale_order
 # from . import payment_transaction
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -176,13 +176,14 @@ class PayuController(http.Controller):
         cr, uid, context = request.cr, SUPERUSER_ID, request.context
         return werkzeug.utils.redirect('/shop/unsuccessful')
 
-    @http.route('/shop/redirect_payu', type='http', auth='none',csrf=False, methods=['POST'])
+    @http.route('/shop/redirect_payu', type='http', auth='public',csrf=False, methods=['POST'], website=True)
     def redirect_payu(self, **post):
         base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
         return_url = urljoin(base_url, self._return_url)
         cancle_url = urljoin(base_url, self._cancel_url)
 
-        amount = post['amount']
+        amount = str(round(float(post['amount']),2))
+
         # convert amount to cent
         if len(amount.split('.')[1]) == 1:
             amount = amount + '0'
@@ -199,7 +200,7 @@ class PayuController(http.Controller):
         transactionDetails['store']['environment'] = payment_acquire.environment
         transactionDetails['store']['TransactionType'] = 'PAYMENT'
         transactionDetails['basket'] = {}
-        transactionDetails['basket']['description'] = 'Thirst'
+        transactionDetails['basket']['description'] = 'CFO'
         transactionDetails['basket']['amountInCents'] = amount
         transactionDetails['basket']['currencyCode'] = post['currency']
         transactionDetails['additionalInformation'] = {}

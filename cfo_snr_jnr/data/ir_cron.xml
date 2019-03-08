@@ -10,7 +10,7 @@
         <field name="numbercall">-1</field>
         <field name="doall" eval="False"/>
     </record>
-    
+
     <record id="send_reminder_for_bio_112" model="ir.cron">
         <field name="name">Send Reminder about bio updation</field>
         <field name="model_id" ref="model_cfo_team_snr"/>
@@ -21,7 +21,7 @@
         <field name="numbercall">-1</field>
         <field name="doall" eval="False"/>
     </record>
-     <record id="send_reminder_for_bio_jnr" model="ir.cron">
+    <record id="send_reminder_for_bio_jnr" model="ir.cron">
         <field name="name">Send Reminder about bio updation jnr</field>
         <field name="model_id" ref="model_cfo_team_jnr"/>
         <field name="state">code</field>

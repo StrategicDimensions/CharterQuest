@@ -7,6 +7,186 @@
     </record>
 
 
+    <template id="shop_payment" name="Payment">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Shop - Select Payment Acquirer</t>
+            <t t-set="no_footer">1</t>
+
+            <div id="wrap">
+                <div class="container oe_website_sale">
+                    <div class="row">
+                        <div class="col-md-offset-2 col-lg-8 col-sm-9" t-if="errors">
+                            <t t-foreach="errors" t-as="error">
+                                <div class="alert alert-danger" t-if="error">
+                                    <h4>
+                                        <t t-esc="error[0]"/>
+                                    </h4>
+                                    <t t-esc="error[1]"/>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="col-md-8 col-md-offset-2 oe_cart">
+                            <div class='row'>
+                                <t t-call="website_sale.wizard_checkout">
+                                    <t t-set="step" t-value="40"/>
+                                </t>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-12 o_website_sale_rightfit'>
+                                    <h2 class="mb8 mt8">Confirm Order</h2>
+                                    <table class="table table-striped table-condensed" id="cart_products"
+                                           t-if="website_sale_order and website_sale_order.website_order_line">
+                                        <thead>
+                                            <tr>
+                                                <th class='td-img'>Product</th>
+                                                <th></th>
+                                                <th class='td-qty'>Quantity</th>
+                                                <th class='text-center td-price'>Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="website_sale_order.website_order_line" t-as="line">
+                                                <td class='' colspan="2"
+                                                    t-if="not line.product_id.product_tmpl_id"></td>
+                                                <td class='td-img' t-if="line.product_id.product_tmpl_id">
+                                                    <a t-attf-href="/shop/product/#{ slug(line.product_id.product_tmpl_id) }">
+                                                        <span t-field="line.product_id.image_small"
+                                                              t-options="{'widget': 'image', 'class': 'img-rounded'}"/>
+                                                    </a>
+                                                </td>
+                                                <td class='td-product_name' t-if="line.product_id.product_tmpl_id">
+                                                    <div>
+                                                        <strong t-field="line.product_id.with_context(display_default_code=False).display_name"/>
+                                                    </div>
+                                                    <div class="text-muted hidden-xs small">
+                                                        <t t-foreach="line.name.splitlines()[1:]" t-as="name_line">
+                                                            <span>
+                                                                <t t-esc="name_line"/>
+                                                            </span>
+                                                            <br/>
+                                                        </t>
+                                                    </div>
+                                                </td>
+                                                <td class='td-qty'>
+                                                    <div t-esc="int(line.product_uom_qty) == line.product_uom_qty and int(line.product_uom_qty) or line.product_uom_qty"/>
+                                                </td>
+                                                <td class="text-center td-price">
+                                                    <span t-field="line.price_unit" style="white-space: nowrap;"
+                                                          t-options="{'widget': 'monetary','from_currency': website_sale_order.pricelist_id.currency_id,'display_currency': website.currency_id}"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-12">
+                                    <t t-call="website_sale.total">
+                                        <t t-set='extra_class' t-value='"col-xs-12 col-sm-5 col-sm-push-7"'/>
+                                        <t t-set='redirect'>/shop/payment</t>
+                                    </t>
+                                </div>
+                                <div class="clearfix"/>
+                                <div class="oe_structure"/>
+
+                                <div t-if="deliveries" class="col-md-12 o_website_sale_rightfit" id="delivery_carrier">
+                                    <h3 class="mb24">Choose a delivery method</h3>
+                                    <div class="panel panel-default" id="delivery_method">
+                                        <ul class="list-group">
+                                            <t t-set="delivery_nb" t-value="len(deliveries)"/>
+                                            <t t-foreach="deliveries" t-as="delivery">
+                                                <li class="list-group-item">
+                                                    <input t-att-value="delivery.id"
+                                                           t-att-id="'delivery_%i' % delivery.id" type="radio"
+                                                           name="delivery_type"
+                                                           t-att-checked="order.carrier_id and order.carrier_id.id == delivery.id and 'checked' or False"
+                                                           t-att-class="'hidden' if delivery_nb == 1 else ''"/>
+                                                    <label class="label-optional" t-field="delivery.name"
+                                                           t-att-for="'delivery_%i' % delivery.id"/>
+                                                    <t t-if="delivery.delivery_type == 'fixed'">
+                                                        <span t-if="delivery.fixed_price > 0.0" class="badge pull-right"
+                                                              t-field="delivery.fixed_price"
+                                                              t-options='{"widget": "monetary", "display_currency": website_sale_order.currency_id}'/>
+                                                        <span t-else="" class="badge pull-right">Free</span>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span class="badge pull-right hidden"
+                                                              t-field="delivery.fixed_price" t-options='{"widget": "monetary",
+                                                                                                          "display_currency": website_sale_order.currency_id}'/>
+                                                        <span class="badge pull-right o_delivery_compute">Select to
+                                                            compute delivery rate
+                                                        </span>
+                                                    </t>
+                                                    <t t-if="delivery.website_description">
+                                                        <div t-field="delivery.website_description"
+                                                             class="text-muted mt8"/>
+                                                    </t>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                    <a class="btn-link"
+                                       groups="base.group_system"
+                                       t-attf-href="/web#return_label=Website&amp;action=#{delivery_action_id}">
+                                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                        Add delivery methods
+                                    </a>
+                                </div>
+
+                                <div id="payment_method" class="col-md-12 o_website_sale_rightfit"
+                                     t-if="(form_acquirers or s2s_acquirers or tokens) and website_sale_order.amount_total">
+                                    <h3 class="mb24">Pay with</h3>
+                                    <t t-call="payment.payment_tokens_list">
+                                        <t t-set="mode" t-value="'payment'"/>
+                                        <t t-set="submit_txt">Pay Now</t>
+                                        <t t-set="icon_class" t-value="'fa-lock'"/>
+                                        <t t-set="pms" t-value="tokens"/>
+                                        <t t-set="form_action" t-value="'/shop/payment/token'"/>
+                                        <t t-set="prepare_tx_url" t-value="'/shop/payment/transaction/'"/>
+                                        <t t-set="partner_id" t-value="partner"/>
+                                    </t>
+                                    <div>
+                                        <div>
+                                            <label>
+                                                <h4>Terms &amp; Conditions</h4>
+                                            </label>
+                                        </div>
+                                        <input type='checkbox' id='terms' value='agree'/>
+                                        <label style='color:brown;'>Accept Terms &amp; Conditions</label>
+                                        <label>
+                                            <a href='/' target='_blank'>View Terms</a>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div t-if="not (form_acquirers or s2s_acquirers)">
+                                    <a class="btn-link"
+                                       groups="base.group_system"
+                                       t-attf-href="/web#return_label=Website&amp;action=#{payment_action_id}">
+                                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                        Add payment acquirers
+                                    </a>
+                                </div>
+                                <!--<div class="js_payment mb64 row" t-if="not website_sale_order.amount_total" id="payment_method">-->
+                                <!--<div class="col-sm-12">-->
+                                <!--<form target="_self" action="/shop/payment/validate" method="post" class="pull-right">-->
+                                <!--<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />-->
+                                <!--<a class="btn btn-primary a-submit">-->
+                                <!--<span t-if="order.amount_total &gt; 0">Pay Now <span class="fa fa-long-arrow-right"></span></span>-->
+                                <!--<span t-if="order.amount_total == 0">Confirm Order <span class="fa fa-long-arrow-right"></span></span>-->
+                                <!--</a>-->
+                                <!--</form>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+
     <template id="cfo_confirmation" inherit_id="website_sale.payment_confirmation_status" name="Confirmation Status">
         <xpath expr="//div[hasclass('panel-body')]" position="replace">
             <div class="panel-body" t-if="order.payment_acquirer_id">
@@ -18,39 +198,44 @@
                         </div>
                         <div style="color: rgb(50, 58, 73); font-family: Roboto, sans-serif; font-size: 16px;">
                             <p style="margin-bottom: 12px;">Please use the following transfer details</p>
-                            <span style="font-size: 13.3333px; line-height: 1.38; font-family: Verdana; white-space: pre-wrap;">Bank Account</span>
-                            <table  class="table table-bordered" style="width: 750px;">
+                            <span style="font-size: 13.3333px; line-height: 1.38; font-family: Verdana; white-space: pre-wrap;">
+                                Bank Account
+                            </span>
+                            <table class="table table-bordered" style="width: 750px;">
                                 <tbody>
                                     <tr>
-                                        <th> Bank: </th>
-                                        <td> FNB </td>
+                                        <th>Bank:</th>
+                                        <td>FNB</td>
                                     </tr>
                                     <tr>
-                                        <th> Beneficiary name: </th>
-                                        <td> CharterQuest Training Institute </td>
+                                        <th>Beneficiary name:</th>
+                                        <td>CharterQuest Training Institute</td>
                                     </tr>
                                     <tr>
-                                        <th> Account type:</th>
-                                        <td> Cheque </td>
+                                        <th>Account type:</th>
+                                        <td>Cheque</td>
                                     </tr>
                                     <tr>
                                         <th>Account no:</th>
                                         <td>626 8076 7054</td>
                                     </tr>
                                     <tr>
-                                        <th> Branch code: </th>
-                                        <td> 250655 </td>
+                                        <th>Branch code:</th>
+                                        <td>250655</td>
                                     </tr>
                                     <tr>
-                                        <th> Reference No: </th>
-                                        <td><span t-esc="order.name"/> </td>
+                                        <th>Reference No:</th>
+                                        <td>
+                                            <span t-esc="order.name"/>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
                             <span style="font-size: 13.3333px;
                             font-family: Verdana; color: rgb(76, 76, 76); font-variant-numeric: normal;
                             font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;
-                            background-color: transparent;">Communication Please use the order name as payment refence</span>
+                            background-color: transparent;">Communication Please use the order name as payment refence
+                            </span>
                             <br/>
                         </div>
                     </h3>
@@ -64,39 +249,44 @@
                         </div>
                         <div style="color: rgb(50, 58, 73); font-family: Roboto, sans-serif; font-size: 16px;">
                             <p style="margin-bottom: 12px;">Please use the following transfer details</p>
-                            <span style="font-size: 13.3333px; line-height: 1.38; font-family: Verdana; white-space: pre-wrap;">Bank Account</span>
-                            <table  class="table table-bordered" style="width: 750px;">
+                            <span style="font-size: 13.3333px; line-height: 1.38; font-family: Verdana; white-space: pre-wrap;">
+                                Bank Account
+                            </span>
+                            <table class="table table-bordered" style="width: 750px;">
                                 <tbody>
                                     <tr>
-                                        <th> Bank: </th>
-                                        <td> FNB </td>
+                                        <th>Bank:</th>
+                                        <td>FNB</td>
                                     </tr>
                                     <tr>
-                                        <th> Beneficiary name: </th>
-                                        <td> CharterQuest Training Institute </td>
+                                        <th>Beneficiary name:</th>
+                                        <td>CharterQuest Training Institute</td>
                                     </tr>
                                     <tr>
-                                        <th> Account type:</th>
-                                        <td> Cheque </td>
+                                        <th>Account type:</th>
+                                        <td>Cheque</td>
                                     </tr>
                                     <tr>
                                         <th>Account no:</th>
                                         <td>626 8076 7054</td>
                                     </tr>
                                     <tr>
-                                        <th> Branch code: </th>
-                                        <td> 250655 </td>
+                                        <th>Branch code:</th>
+                                        <td>250655</td>
                                     </tr>
                                     <tr>
-                                        <th> Reference No. </th>
-                                        <td><span t-esc="order.name"/> </td>
+                                        <th>Reference No.</th>
+                                        <td>
+                                            <span t-esc="order.name"/>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
                             <span style="font-size: 13.3333px;
                             font-family: Verdana; color: rgb(76, 76, 76); font-variant-numeric: normal;
                             font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;
-                            background-color: transparent;">Communication Please use the order name as payment refence</span>
+                            background-color: transparent;">Communication Please use the order name as payment refence
+                            </span>
                             <br/>
                         </div>
                     </h3>
@@ -104,7 +294,6 @@
             </div>
         </xpath>
     </template>
-
 
 
     <template id="cfo_products_categories" inherit_id="website_sale.product" active="False" customize_show="True"
@@ -130,7 +319,8 @@
     </template>
 
 
-    <template id="cfo_option_collapse_products_categories" name="Collapsible Category List" inherit_id="cfo_snr_jnr.cfo_products_categories" active="False" customize_show="True">
+    <template id="cfo_option_collapse_products_categories" name="Collapsible Category List"
+              inherit_id="cfo_snr_jnr.cfo_products_categories" active="False" customize_show="True">
         <xpath expr="//div[@id='products_grid_before']/ul" position="replace">
             <ul class="nav nav-pills nav-stacked mt16" id="o_shop_collapse_category">
                 <li t-att-class=" '' if category else 'active' ">
@@ -149,8 +339,41 @@
             <attribute name="t-att-style">'font-size:32px;'</attribute>
         </xpath>
 
+        <xpath expr="//form//div[@class='js_product']" position="before">
+            <div class="controls selectdiv">
+                <t t-set="warehouse"
+                   t-value="request.env['stock.warehouse'].sudo().search([('active', '=', true)])"/>
+                <select name="warehouse_id" id="inputwarehouse"
+                        class="requiredValue form-control1" required=""
+                        style="border-radius: 0px !important;width: 203px;">
+                    <t t-foreach="warehouse" t-as="each_warehouse">
+                        <option t-att-value="each_warehouse.id">
+                            <span t-esc="each_warehouse.name"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+            <br/>
+
+            <div class="product_in_stock" style="display:none;">
+                <i class="fa fa-check in_stock" aria-hidden="true" style="color:green;"/>
+                <span class="stock_msg" style="font-weight: 500; color:green;"> In Stock </span>
+                <br/>
+                <span class="product_qty" style="font-weight: 500"/>
+            </div>
+
+            <div class="product_out_of_stock" style="display:none;">
+                    <i class="fa fa-exclamation-circle out_stock" aria-hidden="true" style="color:red;"/>
+                <span class="out_stock_msg" style="font-weight: 500; color:red;"> Out Of Stock </span>
+            </div>
+
+            <br/>
+
+        </xpath>
+
         <xpath expr="//div[@id='product_details']/h1" position="after">
             <t t-set="product" t-value="product.sudo()"/>
+
             <t t-if="not product.qty_available">
                 <div class="ribbon-wrapper"
                      style="right: 0px !important;width: 145px !important;top: 20px !important;display:block;z-index:auto !important">
@@ -163,8 +386,18 @@
                     This product will only be available within 7-10 working days once payment is confirmed
                 </span>
             </t>
-        </xpath>
 
+            <!--<div>-->
+                <!--<select name="warehouse_location" class="requiredValue" id="inputlocation" disabled="true">-->
+
+                    <!--<t t-foreach="res_bank" t-as="each_bank">-->
+                        <!--<option id="bank_code" t-att-value="each_bank.id">-->
+                            <!--<span t-esc="each_bank.bic"/>-->
+                        <!--</option>-->
+                    <!--</t>-->
+                <!--</select>-->
+            <!--</div>-->
+        </xpath>
     </template>
 
     <template id="products_list_view" inherit_id="website_sale.products_item">
