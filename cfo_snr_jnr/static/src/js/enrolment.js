@@ -3,6 +3,8 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
 
     $(document).ready(function() {
 
+
+
         function profbody_campus_sem(data) {
             ajax.jsonRpc("/get_event_data", 'call', {
                 'professional_body': data
@@ -25,12 +27,32 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                     $('select[id="select_semester"]').append(semesteroptions);
                 });
         }
+
         if ($('select[id="professional_body"]').val() == '') {
             $('#reg_campus_info').hide();
             $('#reg_campus').hide();
             $('#reg_enrol_for').hide();
             $('#reg_sem').hide();
         }
+
+        $('select[name="do_invoice"]').on('change', function() {
+            if ($('select[name="do_invoice"]').val() == 'Yes') {
+                $('#inputCompany').show();
+                $('#inputVat').show();
+                $('#stud_company').show();
+                $('#vat_number').show();
+                $(document).find('#vatNumber').parents('.form-group').show()
+                $(document).find('#company').parents('.form-group').show()
+
+            } else {
+                $('#inputCompany').hide();
+                $('#inputVat').hide();
+                $('#stud_company').hide();
+                $('#vat_number').hide();
+                $(document).find('#vatNumber').parents('.form-group').hide()
+                $(document).find('#company').parents('.form-group').hide()
+            }
+        });
 
         $('select[id="professional_body"]').on('change', function() {
             if ($('select[id="professional_body"]').val() == '') {
@@ -290,6 +312,8 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
             });
 
             $(document).find('select[id="inputwarehouse"]').change()
+
+            $(document).find('select[name="do_invoice"]').change()
 
             $('input[type="checkbox"]').on('change', function() {
                 $('input[data-id="' + $(this).data('id') + '"]').not(this).prop('checked', false);

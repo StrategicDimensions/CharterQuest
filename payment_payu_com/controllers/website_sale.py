@@ -18,6 +18,7 @@ class WebsiteSale(website_sale.WebsiteSale):
 
          - UDPATE ME
         """
+
         cr, uid, context = request.cr, request.uid, request.context
         email_act = None
         sale_order_obj = request.env['sale.order']
@@ -49,7 +50,6 @@ class WebsiteSale(website_sale.WebsiteSale):
             # if template_id:
             #     print('\n\n\n template send===========')
             #     mail_message = template_id.send_mail(order.id)  # email_obj.sudo().send_mail(template_id[0],order.id)
-            print('\n\n\n order==========', order)
             order.write({'state':'sent'})
         elif tx and tx.state == 'cancel':
             # cancel the quotation
