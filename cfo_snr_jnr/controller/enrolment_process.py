@@ -250,7 +250,7 @@ class EnrolmentProcess(http.Controller):
                     if template_id:
                         attchment_list = []
                         pdf_data_invoice = request.env.ref(
-                            'event_price_kt.report_invoice_book').render_qweb_pdf(invoice_details.id)
+                            'event_price_kt.report_invoice_book').sudo().render_qweb_pdf(invoice_details.id)
                         if pdf_data_invoice:
                             pdfvals = {'name': 'Charterbooks Invoice',
                                        'db_datas': base64.b64encode(pdf_data_invoice[0]),
