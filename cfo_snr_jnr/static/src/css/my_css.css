@@ -537,3 +537,11 @@ margin-top:30px;
         width:100% !important;
     }
 }
+
+.shop_company_div{
+    display: none;
+}
+
+.shop_vat_div{
+    display: none;
+}

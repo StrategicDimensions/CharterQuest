@@ -3,8 +3,6 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
 
     $(document).ready(function() {
 
-
-
         function profbody_campus_sem(data) {
             ajax.jsonRpc("/get_event_data", 'call', {
                 'professional_body': data
@@ -51,6 +49,37 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 $('#vat_number').hide();
                 $(document).find('#vatNumber').parents('.form-group').hide()
                 $(document).find('#company').parents('.form-group').hide()
+            }
+        });
+
+        $('input[type=radio][name=pm_id]').change(function() {
+            if ($(this).attr('data-provider') == 'transfer'){
+                $('.shop_invoice').show()
+                var do_invoice = $('input[type=radio][name=shop_do_invoice]:checked').val()
+                if(do_invoice == 'yes'){
+                    $('.shop_company_div').show()
+                    $('.shop_vat_div').show()
+                }
+                else{
+                    $('.shop_company_div').hide()
+                    $('.shop_vat_div').hide()
+                }
+              }
+              else{
+                $('.shop_invoice').hide()
+                $('.shop_company_div').hide()
+                $('.shop_vat_div').hide()
+            }
+        });
+
+        $('input[type=radio][name=shop_do_invoice]').change(function() {
+            if (this.value == 'yes'){
+                $('.shop_company_div').show()
+                $('.shop_vat_div').show()
+              }
+              else{
+                $('.shop_company_div').hide()
+                $('.shop_vat_div').hide()
             }
         });
 
@@ -102,10 +131,8 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
             var state_options = $("select[name='inputState']:enabled option");
             $('.selectdiv').on('change', "select[name='country_id']", function() {
                 var select = $("select[name='inputState']");
-                console.log("hello=======", $(this).val())
                 state_options.detach();
                 var displayed_state = state_options.filter("[data-country_id=" + ($(this).val() || 0) + "]");
-                console.log("hello=======", displayed_state)
                 var nb = displayed_state.appendTo(select).show().size();
                 select.parent().toggle(nb >= 1);
             });
@@ -315,6 +342,7 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
 
             $(document).find('select[name="do_invoice"]').change()
 
+
             $('input[type="checkbox"]').on('change', function() {
                 $('input[data-id="' + $(this).data('id') + '"]').not(this).prop('checked', false);
             });
@@ -412,7 +440,6 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 'product_id': product_id
             }).then(
                 function(result) {
-                    console.log('======result=========', result)
                     if(result.product_stock_qty){
                         $('.product_out_of_stock').hide()
                         $('.product_in_stock').show()

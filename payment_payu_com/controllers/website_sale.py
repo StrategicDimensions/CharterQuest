@@ -18,7 +18,6 @@ class WebsiteSale(website_sale.WebsiteSale):
 
          - UDPATE ME
         """
-
         cr, uid, context = request.cr, request.uid, request.context
         email_act = None
         sale_order_obj = request.env['sale.order']

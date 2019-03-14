@@ -15,14 +15,14 @@ odoo.define('cfo_snr_jnr.payment', function(require) {
             ev.preventDefault();
             var form = this.el;
             var checked_radio = this.$('input[type="radio"]:checked');
-            console.log('checked_radio', checked_radio)
+
             //            var checked_checkbox = this.$('input[type="checkbox"]:checked');
             //            console.log('checked_checkbox', checked_checkbox)
             var self = this;
             var button = ev.target;
 
             // first we check that the user has selected a payment method
-            if (checked_radio.length === 1) {
+            if (checked_radio.length === 2) {
                 checked_radio = checked_radio[0];
                 if ($('input[type="checkbox"]:checked').length === 1) {
 
@@ -125,11 +125,9 @@ odoo.define('cfo_snr_jnr.payment', function(require) {
                         var $tx_url = this.$el.find('input[name="prepare_tx_url"]');
                         // if there's a prepare tx url set
                         if ($tx_url.length === 1) {
-                            console.log('call==========')
                             // if the user wants to save his credit card info
                             var form_save_token = acquirer_form.find('input[name="o_payment_form_save_token"]').prop('checked');
                             // then we call the route to prepare the transaction.
-                            console.log('$tx_url[0].value======', $tx_url[0].value)
                             ajax.jsonRpc($tx_url[0].value, 'call', {
                                 'acquirer_id': parseInt(acquirer_id),
                                 'save_token': form_save_token,
@@ -137,9 +135,11 @@ odoo.define('cfo_snr_jnr.payment', function(require) {
                                 'success_url': self.options.successUrl,
                                 'error_url': self.options.errorUrl,
                                 'callback_method': self.options.callbackMethod,
+                                'do_invoice': $('input[type=radio][name=shop_do_invoice]:checked').val(),
+                                'company_name': $('input[type=text][name=company_name]').val(),
+                                'vat_no': $('input[type=text][name=vat_no]').val(),
                             }).then(function(result) {
                                 if (result) {
-                                    console.log('result=========')
                                     // if the server sent us the html form, we create a form element
                                     var newForm = document.createElement('form');
                                     newForm.setAttribute("method", "post"); // set it to post
@@ -174,7 +174,6 @@ odoo.define('cfo_snr_jnr.payment', function(require) {
                             );
                         }
                     } else { // if the user is using an old payment then we just submit the form
-                        console.log('else=========')
                         form.submit();
                     }
                 } else {

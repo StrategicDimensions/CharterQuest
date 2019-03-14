@@ -8,7 +8,7 @@ from pkg_resources import require
 from odoo import http
 from odoo.http import request
 from datetime import date, datetime
-from odoo import http, SUPERUSER_ID
+from odoo import http, SUPERUSER_ID, _
 import PyPDF2
 import json, base64
 from odoo.addons.payment_payu_com.controllers.main import PayuController
@@ -42,6 +42,67 @@ class WebsiteSaleDelivery(WebsiteSaleDelivery):
 
 class WebsiteSale(website_sale.WebsiteSale):
 
+    def _get_shop_payment_values(self, order, **kwargs):
+        shipping_partner_id = False
+        if order:
+            shipping_partner_id = order.partner_shipping_id.id or order.partner_invoice_id.id
+
+        values = dict(
+            website_sale_order=order,
+            errors=[],
+            partner=order.partner_id.id,
+            order=order,
+            payment_action_id=request.env.ref('payment.action_payment_acquirer').id,
+            return_url='/shop/payment/validate',
+            bootstrap_formatting=True
+        )
+
+        acquirers = request.env['payment.acquirer'].search(
+            [('website_published', '=', True), ('company_id', '=', order.company_id.id)], order='id desc'
+        )
+
+        values['access_token'] = order.access_token
+        values['form_acquirers'] = [acq for acq in acquirers if acq.payment_flow == 'form' and acq.view_template_id]
+        values['s2s_acquirers'] = [acq for acq in acquirers if
+                                   acq.payment_flow == 's2s' and acq.registration_view_template_id]
+        values['tokens'] = request.env['payment.token'].search(
+            [('partner_id', '=', order.partner_id.id),
+             ('acquirer_id', 'in', acquirers.ids)])
+
+        for acq in values['form_acquirers']:
+            acq.form = acq.with_context(submit_class='btn btn-primary', submit_txt=_('Pay Now')).sudo().render(
+                '/',
+                order.amount_total,
+                order.pricelist_id.currency_id.id,
+                values={
+                    'return_url': '/shop/payment/validate',
+                    'partner_id': shipping_partner_id,
+                    'billing_partner_id': order.partner_invoice_id.id,
+                }
+            )
+
+        if not order._get_delivery_methods():
+            values['errors'].append(
+                (_('Sorry, we are unable to ship your order'),
+                 _('No shipping method is available for your current order and shipping address. '
+                   'Please contact us for more information.')))
+
+        has_stockable_products = any(line.product_id.type in ['consu', 'product'] for line in order.order_line)
+        if has_stockable_products:
+            if order.carrier_id and not order.delivery_rating_success:
+                values['errors'].append(
+                    (_("Ouch, you cannot choose this carrier!"),
+                     _("%s does not ship to your address, please choose another one.\n(Error: %s)" % (
+                     order.carrier_id.name, order.delivery_message))))
+                order._remove_delivery_line()
+
+            delivery_carriers = order._get_delivery_methods()
+            values['deliveries'] = delivery_carriers.sudo()
+
+        values['delivery_action_id'] = request.env.ref('delivery.action_delivery_carrier_form').id
+
+        return values
+
     @http.route(['/shop/addpayment/<uuid>'], type='http', auth="public", methods=['POST', 'GET'], website=True,
                 csrf=False)
     def shop_addpayment(self, uuid=False, **post):
@@ -64,6 +125,10 @@ class WebsiteSale(website_sale.WebsiteSale):
         if save_token:
             tx_type = 'form_save'
 
+        request.session['shop_do_invoice'] = kwargs.get('do_invoice')
+        request.session['shop_company_name'] = kwargs.get('company_name') if kwargs.get('company_name') else ''
+        request.session['shop_vat_number'] = kwargs.get('vat_no') if kwargs.get('vat_no') else ''
+
         # In case the route is called directly from the JS (as done in Stripe payment method)
         if so_id and access_token:
             order = request.env['sale.order'].sudo().search([('id', '=', so_id), ('access_token', '=', access_token)])
@@ -81,6 +146,7 @@ class WebsiteSale(website_sale.WebsiteSale):
         # find or create transaction
         tx = request.website.sale_get_transaction() or request.env['payment.transaction'].sudo()
         acquirer = request.env['payment.acquirer'].browse(int(acquirer_id))
+
         payment_token = request.env['payment.token'].sudo().browse(int(token)) if token else None
         tx = tx._check_or_create_sale_tx(order, acquirer, payment_token=payment_token, tx_type=tx_type)
         request.session['sale_transaction_id'] = tx.id
@@ -127,9 +193,100 @@ class EnrolmentProcess(http.Controller):
                 order.sale_order_link = link
                 order.sale_link = decoded_quote_name
 
-            template_id = email_obj.sudo().search([('name', '=', "CharterBooks Saleorder Confirm Email")])
-            if template_id:
-                mail_message = template_id.send_mail(order.id)  # email_obj.sudo().send_mail(template_id[0],order.id)
+            if order.payment_acquirer_id:
+                acquirer_id = request.env['payment.acquirer'].sudo().browse(int(order.payment_acquirer_id))
+
+                if acquirer_id.provider == 'transfer' and request.session.get('shop_do_invoice') and request.session.get('shop_do_invoice') == 'yes':
+                    order.quote_type = 'CharterBooks'
+                    order.partner_id.vat_no_comp = request.session.get('shop_vat_number') if request.session.get('shop_vat_number') else ''
+                    order.partner_id.student_company = request.session.get('shop_company_name') if request.session.get(
+                        'shop_company_name') else ''
+                    inv_line_data = []
+                    for each_line in order.order_line:
+                        if each_line.product_id:
+                            product_id = each_line.product_id
+                            if product_id:
+                                inv_line_data.append((0, 0, {
+                                    'account_id': product_id.property_account_income_id.id or product_id.categ_id.property_account_income_categ_id.id,
+                                    'name': each_line.name,
+                                    'origin': order.name,
+                                    'price_unit': each_line.price_unit,
+                                    'quantity': each_line.product_uom_qty,
+                                    'discount': 0.0,
+                                    'product_id': product_id.id,
+                                    'sale_line_ids': [(6, 0, [each_line.id])],
+                                    'account_analytic_id': order.analytic_account_id.id or False,
+                                }))
+
+                    invoice_details = request.env['account.invoice'].sudo().create({
+                        'name': order.client_order_ref or order.name,
+                        'origin': order.name,
+                        'type': 'out_invoice',
+                        'sale_order_id': order.id,
+                        'reference': False,
+                        'account_id': order.partner_id.property_account_receivable_id.id,
+                        'partner_id': order.partner_invoice_id.id,
+                        'partner_shipping_id': order.partner_shipping_id.id,
+                        'invoice_line_ids': inv_line_data,
+                        'currency_id': order.pricelist_id.currency_id.id,
+                        'payment_term_id': order.payment_term_id.id,
+                        'fiscal_position_id': order.fiscal_position_id.id or order.partner_id.property_account_position_id.id,
+                        'team_id': order.team_id.id,
+                        'user_id': order.user_id.id,
+                        'comment': order.note,
+                    })
+                    invoice_details.compute_taxes()
+                    if invoice_details:
+                        order._get_invoiced()
+                    invoice_details.action_invoice_open()
+
+                    order.sudo().action_confirm()
+                    for line in order.order_line:
+                        line.write({
+                            'qty_invoiced': line.product_uom_qty
+                        })
+                    template_id = email_obj.sudo().search([('name', '=', "Charter Books Invoice Email")])
+                    mail_obj = request.env['mail.mail'].sudo()
+                    if template_id:
+                        attchment_list = []
+                        pdf_data_invoice = request.env.ref(
+                            'event_price_kt.report_invoice_book').render_qweb_pdf(invoice_details.id)
+                        if pdf_data_invoice:
+                            pdfvals = {'name': 'Charterbooks Invoice',
+                                       'db_datas': base64.b64encode(pdf_data_invoice[0]),
+                                       'datas': base64.b64encode(pdf_data_invoice[0]),
+                                       'datas_fname': 'Charterbooks Invoice.pdf',
+                                       'res_model': 'account.invoice',
+                                       'type': 'binary'}
+                            pdf_create = request.env['ir.attachment'].create(pdfvals)
+                            attchment_list.append(pdf_create)
+
+                        agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
+                        if agreement_id:
+                            attchment_list.append(agreement_id)
+
+                        email_data = template_id.generate_email(invoice_details.id)
+
+                        mail_values = {
+                            'email_from': email_data.get('email_from'),
+                            'email_cc': email_data.get('email_cc'),
+                            'reply_to': email_data.get('reply_to'),
+                            'email_to': email_data.get('email_to'),
+                            'subject': email_data.get('subject'),
+                            'body_html': email_data.get('body_html'),
+                            'notification': True,
+                            'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
+                            'auto_delete': False,
+                            'model': 'account.invoice',
+                            'res_id': invoice_details.id
+                        }
+                        msg_id = mail_obj.create(mail_values)
+
+                        msg_id.send()
+                else:
+                    template_id = email_obj.sudo().search([('name', '=', "CharterBooks Saleorder Confirm Email")])
+                    if template_id:
+                        mail_message = template_id.send_mail(order.id)  # email_obj.sudo().send_mail(template_id[0],order.id)
 
             return request.render("website_sale.confirmation", {'order': order})
         else:

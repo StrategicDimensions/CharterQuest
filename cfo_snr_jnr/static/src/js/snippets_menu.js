@@ -51,7 +51,6 @@ odoo.define('cfo_snr_jnr.snippet_menu', function (require) {
             $('.mobicraft_theme_brand_slider .owl-carousel').empty();
         },
         cfo_menu_remove: function () {
-            console.log(this.$el.html());
             this.$target.find('.add_menu_side.active').parent().remove();
             this.$target.find('.content.active').remove();
             this.$target.find('.col-md-1.active').remove();

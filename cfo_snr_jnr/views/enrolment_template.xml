@@ -143,6 +143,7 @@
                                         <t t-set="prepare_tx_url" t-value="'/shop/payment/transaction/'"/>
                                         <t t-set="partner_id" t-value="partner"/>
                                     </t>
+
                                     <div>
                                         <div>
                                             <label>
@@ -357,14 +358,14 @@
 
             <div class="product_in_stock" style="display:none;">
                 <i class="fa fa-check in_stock" aria-hidden="true" style="color:green;"/>
-                <span class="stock_msg" style="font-weight: 500; color:green;"> In Stock </span>
+                <span class="stock_msg" style="font-weight: 500; color:green;">In Stock</span>
                 <br/>
                 <span class="product_qty" style="font-weight: 500"/>
             </div>
 
             <div class="product_out_of_stock" style="display:none;">
-                    <i class="fa fa-exclamation-circle out_stock" aria-hidden="true" style="color:red;"/>
-                <span class="out_stock_msg" style="font-weight: 500; color:red;"> Out Of Stock </span>
+                <i class="fa fa-exclamation-circle out_stock" aria-hidden="true" style="color:red;"/>
+                <span class="out_stock_msg" style="font-weight: 500; color:red;">Out Of Stock</span>
             </div>
 
             <br/>
@@ -388,14 +389,14 @@
             </t>
 
             <!--<div>-->
-                <!--<select name="warehouse_location" class="requiredValue" id="inputlocation" disabled="true">-->
+            <!--<select name="warehouse_location" class="requiredValue" id="inputlocation" disabled="true">-->
 
-                    <!--<t t-foreach="res_bank" t-as="each_bank">-->
-                        <!--<option id="bank_code" t-att-value="each_bank.id">-->
-                            <!--<span t-esc="each_bank.bic"/>-->
-                        <!--</option>-->
-                    <!--</t>-->
-                <!--</select>-->
+            <!--<t t-foreach="res_bank" t-as="each_bank">-->
+            <!--<option id="bank_code" t-att-value="each_bank.id">-->
+            <!--<span t-esc="each_bank.bic"/>-->
+            <!--</option>-->
+            <!--</t>-->
+            <!--</select>-->
             <!--</div>-->
         </xpath>
     </template>
@@ -480,16 +481,44 @@
         </xpath>
     </template>
 
+    <template id='payment_inherit_invoice' inherit_id='payment.payment_tokens_list' name='Payment Inherit'>
+        <xpath expr="//div[hasclass('pull-right')]" position='before'>
+            <div class="col-md-12 form-group shop_invoice" style="display:none;">
+                <label class="col-sm-6 control-label">Do you require an invoice to be generated ?</label>
+                <div class="col-sm-6">
+                    <input type="radio" name="shop_do_invoice" value="no" checked="checked"> No</input>
+                    <input type="radio" name="shop_do_invoice" value="yes"> Yes</input>
+
+                </div>
+            </div>
+
+            <div class="col-md-12 form-group shop_company_div" style="display:none;">
+                <label for="company_name" class="col-sm-6 control-label">Company Name</label>
+                <div class="col-sm-6">
+                    <input class="shop_company_name" type="text" name="company_name" value=""/>
+                </div>
+            </div>
+
+            <div class="col-md-12 form-group shop_vat_div" style="display:none;">
+                <label for="vat_no" class="col-sm-6 control-label">Vat Number</label>
+                <div class="col-sm-6">
+                    <input class="shop_vat_no" type="text" name="vat_no" value=""/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
     <template id='payment_inherit' inherit_id='website_sale.payment' name='Payment Inherit'>
         <xpath expr="//div[@id='payment_method']" position='inside'>
-            <div>
+
+            <div id="accept_terms_and_condition">
                 <div>
                     <label>
                         <h4>Terms &amp; Conditions</h4>
                     </label>
                 </div>
                 <input type='checkbox' id='terms' value='agree'/>
-                <label style='color:brown;'>Accept Terms &amp; Conditions</label>
+                <label for="terms" style='color:brown;'>Accept Terms &amp; Conditions</label>
                 <label>
                     <a href='/' target='_blank'>View Terms</a>
                 </label>
