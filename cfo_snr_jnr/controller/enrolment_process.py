@@ -258,7 +258,7 @@ class EnrolmentProcess(http.Controller):
                                        'datas_fname': 'Charterbooks Invoice.pdf',
                                        'res_model': 'account.invoice',
                                        'type': 'binary'}
-                            pdf_create = request.env['ir.attachment'].create(pdfvals)
+                            pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                             attchment_list.append(pdf_create)
 
                         agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
@@ -280,7 +280,7 @@ class EnrolmentProcess(http.Controller):
                             'model': 'account.invoice',
                             'res_id': invoice_details.id
                         }
-                        msg_id = mail_obj.create(mail_values)
+                        msg_id = mail_obj.sudo().create(mail_values)
 
                         msg_id.send()
                 else:
