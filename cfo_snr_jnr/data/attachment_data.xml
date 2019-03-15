@@ -7,6 +7,13 @@
             <field name="datas" type="base64" file="cfo_snr_jnr/data/agreement.pdf"/>
         </record>
 
+        <record id="charterbook_term_and_condition_pdf" model="ir.attachment">
+            <field name="name">CHARTERBOOKS-AGREEMENT</field>
+            <field name="datas_fname">CHARTERBOOKS-AGREEMENT</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="cfo_snr_jnr/data/charterbooks_agreement.pdf"/>
+        </record>
+
         <record id="banking_data_pdf" model="ir.attachment">
             <field name="name">Banking Detail</field>
             <field name="datas_fname">banking_details</field>

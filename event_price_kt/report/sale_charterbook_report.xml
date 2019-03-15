@@ -322,7 +322,6 @@
                     <br/>
                     <t t-if="o.sale_order_link">
                         <a itemprop="url" t-att-href="o.sale_order_link">
-                            <t t-esc="o.sale_order_link"/>
                         </a>
                     </t>
                     <br/>

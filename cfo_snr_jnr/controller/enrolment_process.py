@@ -93,7 +93,7 @@ class WebsiteSale(website_sale.WebsiteSale):
                 values['errors'].append(
                     (_("Ouch, you cannot choose this carrier!"),
                      _("%s does not ship to your address, please choose another one.\n(Error: %s)" % (
-                     order.carrier_id.name, order.delivery_message))))
+                         order.carrier_id.name, order.delivery_message))))
                 order._remove_delivery_line()
 
             delivery_carriers = order._get_delivery_methods()
@@ -163,8 +163,8 @@ class WebsiteSale(website_sale.WebsiteSale):
         )
         return request.redirect("/shop/cart")
 
-class EnrolmentProcess(http.Controller):
 
+class EnrolmentProcess(http.Controller):
 
     @http.route(['/check_product_stock'], type='json', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def check_product_stock(self, **post):
@@ -172,7 +172,9 @@ class EnrolmentProcess(http.Controller):
             product_id = request.env['product.product'].sudo().browse(int(post.get('product_id')))
             if product_id:
                 ctx = {'warehouse': int(post.get('warehouse_id')), 'product_id': product_id.id}
-                stock = product_id.with_context(ctx)._compute_quantities_dict(lot_id=False, owner_id=False, package_id=False, from_date=False, to_date=False)
+                stock = product_id.with_context(ctx)._compute_quantities_dict(lot_id=False, owner_id=False,
+                                                                              package_id=False, from_date=False,
+                                                                              to_date=False)
                 if stock.get(product_id.id).get('qty_available'):
                     return {'product_stock_qty': stock.get(product_id.id).get('qty_available')}
         return {'product_stock_qty': ''}
@@ -196,15 +198,17 @@ class EnrolmentProcess(http.Controller):
             if order.payment_acquirer_id:
                 acquirer_id = request.env['payment.acquirer'].sudo().browse(int(order.payment_acquirer_id))
 
-                if acquirer_id.provider == 'transfer' and request.session.get('shop_do_invoice') and request.session.get('shop_do_invoice') == 'yes':
+                if acquirer_id.provider == 'transfer' and request.session.get(
+                        'shop_do_invoice') and request.session.get('shop_do_invoice') == 'yes':
                     order.quote_type = 'CharterBooks'
-                    order.partner_id.vat_no_comp = request.session.get('shop_vat_number') if request.session.get('shop_vat_number') else ''
+                    order.partner_id.vat_no_comp = request.session.get('shop_vat_number') if request.session.get(
+                        'shop_vat_number') else ''
                     order.partner_id.student_company = request.session.get('shop_company_name') if request.session.get(
                         'shop_company_name') else ''
                     inv_line_data = []
                     for each_line in order.order_line:
                         if each_line.product_id:
-                            product_id = each_line.product_id
+                            product_id = each_line.product_id.sudo()
                             if product_id:
                                 inv_line_data.append((0, 0, {
                                     'account_id': product_id.property_account_income_id.id or product_id.categ_id.property_account_income_categ_id.id,
@@ -217,7 +221,6 @@ class EnrolmentProcess(http.Controller):
                                     'sale_line_ids': [(6, 0, [each_line.id])],
                                     'account_analytic_id': order.analytic_account_id.id or False,
                                 }))
-
                     invoice_details = request.env['account.invoice'].sudo().create({
                         'name': order.client_order_ref or order.name,
                         'origin': order.name,
@@ -261,7 +264,7 @@ class EnrolmentProcess(http.Controller):
                             pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                             attchment_list.append(pdf_create)
 
-                        agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
+                        agreement_id = request.env.ref('cfo_snr_jnr.charterbook_term_and_condition_pdf')
                         if agreement_id:
                             attchment_list.append(agreement_id)
 
@@ -280,13 +283,14 @@ class EnrolmentProcess(http.Controller):
                             'model': 'account.invoice',
                             'res_id': invoice_details.id
                         }
-                        msg_id = mail_obj.sudo().create(mail_values)
+                        msg_id = mail_obj.create(mail_values)
 
                         msg_id.send()
                 else:
                     template_id = email_obj.sudo().search([('name', '=', "CharterBooks Saleorder Confirm Email")])
                     if template_id:
-                        mail_message = template_id.send_mail(order.id)  # email_obj.sudo().send_mail(template_id[0],order.id)
+                        mail_message = template_id.send_mail(
+                            order.id)  # email_obj.sudo().send_mail(template_id[0],order.id)
 
             return request.render("website_sale.confirmation", {'order': order})
         else:
@@ -1577,7 +1581,7 @@ class EnrolmentProcess(http.Controller):
         debit_order_obj = request.env['debit.order.details'].sudo()
         mail_obj = request.env['mail.mail'].sudo()
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
-        attchment_list = []
+        attachment_list = []
         invoice_line = []
 
         if post.get('sale_order'):
@@ -1636,7 +1640,7 @@ class EnrolmentProcess(http.Controller):
                                'res_model': 'account.invoice',
                                'type': 'binary'}
                     pdf_create = request.env['ir.attachment'].create(pdfvals)
-                    attchment_list.append(pdf_create)
+                    attachment_list.append(pdf_create)
 
                 if pdf_data_statement_invoice:
                     pdfvals = {'name': 'Enrolment Statement',
@@ -1646,15 +1650,15 @@ class EnrolmentProcess(http.Controller):
                                'res_model': 'account.invoice',
                                'type': 'binary'}
                     pdf_create = request.env['ir.attachment'].create(pdfvals)
-                    attchment_list.append(pdf_create)
+                    attachment_list.append(pdf_create)
 
                 agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
                 if agreement_id:
-                    attchment_list.append(agreement_id)
+                    attachment_list.append(agreement_id)
 
                 baking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
                 if baking_detail_id:
-                    attchment_list.append(baking_detail_id)
+                    attachment_list.append(baking_detail_id)
 
                 body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                 body_html += "<br>"
@@ -1678,7 +1682,7 @@ class EnrolmentProcess(http.Controller):
                     'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
                     'body_html': body_html,
                     'notification': True,
-                    'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
+                    'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])],
                     'auto_delete': False,
                 }
                 msg_id = mail_obj.create(mail_values)
