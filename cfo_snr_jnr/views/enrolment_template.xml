@@ -375,7 +375,7 @@
         <xpath expr="//div[@id='product_details']/h1" position="after">
             <t t-set="product" t-value="product.sudo()"/>
 
-            <t t-if="not product.qty_available">
+            <t t-if="not product.qty_available >= 1">
                 <div class="ribbon-wrapper"
                      style="right: 0px !important;width: 145px !important;top: 20px !important;display:block;z-index:auto !important">
                     <div class="ribbon btn btn-danger"

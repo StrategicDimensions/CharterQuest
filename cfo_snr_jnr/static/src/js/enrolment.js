@@ -440,10 +440,12 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 'product_id': product_id
             }).then(
                 function(result) {
-                    if(result.product_stock_qty){
+                    if(result.product_stock_qty >= 1){
                         $('.product_out_of_stock').hide()
                         $('.product_in_stock').show()
-                        $(document).find('span[class="product_qty"]').html('').html('Available Quantity: '+ result.product_stock_qty)
+                        if (result.product_stock_qty <= 5){
+                            $(document).find('span[class="product_qty"]').html('').html('Available Quantity: '+ result.product_stock_qty)
+                        }
                     }
                     else
                     {
