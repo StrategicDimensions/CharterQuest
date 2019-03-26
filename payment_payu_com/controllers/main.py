@@ -117,7 +117,7 @@ class PayuController(http.Controller):
             #                 journal = journal_ids.read([])
             currency = request.env['res.currency'].sudo().search([('name', '=', 'ZAR')], limit=1)
             method = request.env['account.payment.method'].sudo().search([('name', '=', 'Manual')], limit=1)
-            journal_id = request.env['account.journal'].search(
+            journal_id = request.env['account.journal'].sudo().search(
                 [('name', '=', 'FNB - Cheque Account 6208585815143')],
                 limit=1, order="id desc")
             if journal_id:

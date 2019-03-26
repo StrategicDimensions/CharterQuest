@@ -163,6 +163,12 @@ class WebsiteSale(website_sale.WebsiteSale):
         )
         return request.redirect("/shop/cart")
 
+    def _get_mandatory_billing_fields(self):
+        return ["name", "email", "street", "city", "country_id","zip"]
+
+    def _get_mandatory_shipping_fields(self):
+        return ["name", "street", "city", "country_id","zip"]
+
 
 class EnrolmentProcess(http.Controller):
 

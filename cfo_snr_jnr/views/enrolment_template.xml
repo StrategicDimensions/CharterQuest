@@ -296,6 +296,10 @@
         </xpath>
     </template>
 
+    <template id="confirmation_customized" inherit_id="website_sale.confirmation">
+        <xpath expr="//div[@class='thanks_msg']//a" position="replace">
+        </xpath>
+    </template>
 
     <template id="cfo_products_categories" inherit_id="website_sale.product" active="False" customize_show="True"
               name="eCommerce Categories">

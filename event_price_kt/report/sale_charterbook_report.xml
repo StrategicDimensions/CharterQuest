@@ -137,8 +137,8 @@
                     <table class="table">
                         <thead>
                             <tr style="background-color:darkgray;">
-                                <td style="padding: 6px;line-height: 1;font-size: 20px;font-weight: 500;width: 30%;">
-                                    <span>ADDRESSED TO</span>
+                                <td style="padding: 2px;line-height: 1;font-size: 20px;font-weight: 500;width: 30%;">
+                                    <p>ADDRESSED TO</p>
                                 </td>
                                 <td colspan="3">
                                     <sapn>
@@ -256,7 +256,7 @@
                             <t t-foreach="o.order_line" t-as="l">
                                 <tr>
                                     <td style="padding: 2px;line-height: 1;width:45%;">
-                                        <span t-esc="l.name"/>
+                                        <p t-esc="l.name" style="hyphens: none;"/>
                                     </td>
                                     <td style="padding: 2px;line-height: 1;width:10%;">
                                         <t t-foreach="l.tax_id" t-as="lt">
@@ -326,7 +326,7 @@
                     </t>
                     <br/>
                     <br/>
-                    <p style="background-color:darkgray; border: 2px solid black;">OUR TERMS AND CONDITIONS:</p>
+                    <p style="background-color:darkgray; border: 2px solid black;margin:0px;">OUR TERMS AND CONDITIONS:</p>
                     <t t-set="pc_exam"
                        t-value="request.env['terms.conditions'].search([('type','=','CharterBooks')],order='id desc' ,limit=1)"/>
                     <t t-if="pc_exam">
