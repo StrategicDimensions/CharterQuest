@@ -545,3 +545,7 @@ margin-top:30px;
 .shop_vat_div{
     display: none;
 }
+
+.product_detail_img{
+    height: 500px !important;
+}

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <odoo>
-    <data>
+    <data noupdate="0">
         <!--Email template for request to join -->
         <record id="email_template_request_for_join" model="mail.template">
             <field name="name">CFO Request</field>

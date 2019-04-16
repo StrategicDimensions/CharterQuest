@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<data no_update='1'>
+	<data noupdate='0'>
 	<!--Email template for Sending Tax Invoice to Student -->
         <record id="email_template_edi_first_contact_template" model="mail.template">
             <field name="name">Discount about to Expire</field>

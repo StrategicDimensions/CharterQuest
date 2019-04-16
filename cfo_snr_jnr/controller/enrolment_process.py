@@ -189,6 +189,7 @@ class EnrolmentProcess(http.Controller):
     def payment_confirmation(self, **post):
         sale_order_id = request.session.get('sale_last_order_id')
         email_obj = request.env['mail.template']
+        mail_obj = request.env['mail.mail'].sudo()
         if sale_order_id:
             order = request.env['sale.order'].sudo().browse(sale_order_id)
             m = hashlib.md5()
@@ -255,7 +256,6 @@ class EnrolmentProcess(http.Controller):
                             'qty_invoiced': line.product_uom_qty
                         })
                     template_id = email_obj.sudo().search([('name', '=', "Charter Books Invoice Email")])
-                    mail_obj = request.env['mail.mail'].sudo()
                     if template_id:
                         attchment_list = []
                         pdf_data_invoice = request.env.ref(
@@ -293,11 +293,45 @@ class EnrolmentProcess(http.Controller):
 
                         msg_id.send()
                 else:
+                    attchment_list = []
+
                     template_id = email_obj.sudo().search([('name', '=', "CharterBooks Saleorder Confirm Email")])
                     if template_id:
-                        mail_message = template_id.send_mail(
-                            order.id)  # email_obj.sudo().send_mail(template_id[0],order.id)
 
+                        pdf_data_order = request.env.ref(
+                            'event_price_kt.report_sale_book').sudo().render_qweb_pdf(order.id)
+                        if pdf_data_order:
+                            pdfvals = {'name': 'Charterbooks Proforma',
+                                       'db_datas': base64.b64encode(pdf_data_order[0]),
+                                       'datas': base64.b64encode(pdf_data_order[0]),
+                                       'datas_fname': 'Charterbooks_Proforma.pdf',
+                                       'res_model': 'sale.order',
+                                       'type': 'binary'}
+                            pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
+                            attchment_list.append(pdf_create)
+
+                        agreement_id = request.env.ref('cfo_snr_jnr.charterbook_term_and_condition_pdf')
+                        if agreement_id:
+                            attchment_list.append(agreement_id)
+                        email_data = template_id.generate_email(order.id)
+                        mail_values = {
+                            'email_from': email_data.get('email_from'),
+                            'email_cc': email_data.get('email_cc'),
+                            'reply_to': email_data.get('reply_to'),
+                            'email_to': email_data.get('email_to'),
+                            'subject': email_data.get('subject'),
+                            'body_html': email_data.get('body_html'),
+                            'notification': True,
+                            'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
+                            'auto_delete': False,
+                            'model': 'sale.order',
+                            'res_id': order.id
+                        }
+                        msg_id = mail_obj.create(mail_values)
+                        msg_id.send()
+                        # mail_message = template_id.send_mail(
+                        #     order.id)
+                        # email_obj.sudo().send_mail(template_id[0],order.id)
             return request.render("website_sale.confirmation", {'order': order})
         else:
             return request.redirect('/shop')
@@ -428,7 +462,6 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/enrolment_book_prof'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def enrolment_book_prof(self, **post):
-
         today_date = datetime.today()
         str_today_date = datetime.strftime(today_date, '%Y-%m-%d 00:00:00')
         # str_today_end_date = datetime.strftime(today_date, '%Y-%m-%d 23:59:59')
@@ -682,13 +715,12 @@ class EnrolmentProcess(http.Controller):
         display_btn = request.session['reg_enrol_btn'] if request.session.get('reg_enrol_btn') else False
         product_ids = request.session['product_id'] if request.session.get('product_id') else ''
         reg_and_enrol = request.session['reg_and_enrol'] if request.session.get('reg_and_enrol') else ''
-        user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
+        # user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
         discount_id = request.session['discount_id'] if request.session.get('discount_id') else ''
         discount_add = request.session['discount_add'] if request.session.get('discount_add') else 0
         event_tickets = request.session['event_id'] if request.session.get('event_id') else ''
         sale_obj = request.env['sale.order'].sudo()
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
-
         order_line = []
         for each_event_ticket in event_tickets:
             event_ticket = request.env['event.event.ticket'].sudo().search(
@@ -839,6 +871,7 @@ class EnrolmentProcess(http.Controller):
                 if post.get('email'):
                     partner_detail = request.env['res.partner'].sudo().search([('email', '=', post.get('email'))],
                                                                               limit=1)
+
                     if partner_detail:
                         sale_order_id = sale_obj.create({'partner_id': partner_detail.id,
                                                          'affiliation': '1' if user_select.get(
@@ -1019,8 +1052,9 @@ class EnrolmentProcess(http.Controller):
 
             template_id = request.env['mail.template'].sudo().search([('name', '=', 'Paid Fees Email')])
             if template_id:
+                sale_order_id = sale_order_id.sudo()
                 if sale_order_id.affiliation == '1':
-                    pdf_data_enroll = request.env.ref('event_price_kt.report_sale_enrollment').render_qweb_pdf(
+                    pdf_data_enroll = request.env.ref('event_price_kt.report_sale_enrollment').sudo().render_qweb_pdf(
                         sale_order_id.id)
                     enroll_file_name = "Pro-Forma " + sale_order_id.name
                     if pdf_data_enroll:
@@ -1030,7 +1064,7 @@ class EnrolmentProcess(http.Controller):
                                    'datas_fname': enroll_file_name + ".pdf",
                                    'res_model': 'sale.order',
                                    'type': 'binary'}
-                        pdf_create = request.env['ir.attachment'].create(pdfvals)
+                        pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                         attchment_list.append(pdf_create)
 
                     agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
@@ -1121,10 +1155,10 @@ class EnrolmentProcess(http.Controller):
                                                   'self_or_company') else ''})
                 elif sale_order_id.affiliation == '2':
                     if request.session.get('sale_order') and request.session.get('do_invoice') == 'yes':
-                        pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').render_qweb_pdf(
+                        pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').sudo().render_qweb_pdf(
                             invoice_id.id)
                         pdf_data_statement_invoice = request.env.ref(
-                            'event_price_kt.report_statement_enrollment').render_qweb_pdf(invoice_id.id)
+                            'event_price_kt.report_statement_enrollment').sudo().render_qweb_pdf(invoice_id.id)
 
                         if pdf_data:
                             pdfvals = {'name': 'Invoice',
@@ -1133,7 +1167,7 @@ class EnrolmentProcess(http.Controller):
                                        'datas_fname': 'Invoice.pdf',
                                        'res_model': 'account.invoice',
                                        'type': 'binary'}
-                            pdf_create = request.env['ir.attachment'].create(pdfvals)
+                            pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                             attchment_list.append(pdf_create)
 
                         if pdf_data_statement_invoice:
@@ -1143,7 +1177,7 @@ class EnrolmentProcess(http.Controller):
                                        'datas_fname': 'Enrolment Statement.pdf',
                                        'res_model': 'account.invoice',
                                        'type': 'binary'}
-                            pdf_create = request.env['ir.attachment'].create(pdfvals)
+                            pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                             attchment_list.append(pdf_create)
 
                         agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
@@ -1188,7 +1222,7 @@ class EnrolmentProcess(http.Controller):
                                                       'self_or_company') else ''})
 
                     if request.session.get('sale_order') and request.session.get('do_invoice') == 'no':
-                        pdf_data_enroll = request.env.ref('event_price_kt.report_sale_enrollment').render_qweb_pdf(
+                        pdf_data_enroll = request.env.ref('event_price_kt.report_sale_enrollment').sudo().render_qweb_pdf(
                             sale_order_id.id)
                         enroll_file_name = "Pro-Forma " + sale_order_id.name
                         if pdf_data_enroll:
@@ -1198,7 +1232,7 @@ class EnrolmentProcess(http.Controller):
                                        'datas_fname': enroll_file_name + '.pdf',
                                        'res_model': 'sale.order',
                                        'type': 'binary'}
-                            pdf_create = request.env['ir.attachment'].create(pdfvals)
+                            pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                             attchment_list.append(pdf_create)
 
                         agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
@@ -1299,8 +1333,10 @@ class EnrolmentProcess(http.Controller):
         template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
         if template_id:
             # template_id.send_mail(sale_order_id.id, force_send=True)
+
+            sale_order_id = sale_order_id.sudo()
             if sale_order_id.affiliation == '1':
-                pdf_data_enroll = request.env.ref('event_price_kt.report_sale_enrollment').render_qweb_pdf(
+                pdf_data_enroll = request.env.ref('event_price_kt.report_sale_enrollment').sudo().render_qweb_pdf(
                     sale_order_id.id)
                 enroll_file_name = "Pro-Forma " + sale_order_id.name
                 if pdf_data_enroll:
@@ -1310,7 +1346,7 @@ class EnrolmentProcess(http.Controller):
                                'datas_fname': enroll_file_name + '.pdf',
                                'res_model': 'sale.order',
                                'type': 'binary'}
-                    pdf_create = request.env['ir.attachment'].create(pdfvals)
+                    pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                     attchment_list.append(pdf_create)
 
                 agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
@@ -1635,9 +1671,9 @@ class EnrolmentProcess(http.Controller):
         if template_id:
             # template_id.send_mail(sale_order_id.id, force_send=True)
             if sale_order_id.affiliation == '1':
-                pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').render_qweb_pdf(invoice_id.id)
+                pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').sudo().render_qweb_pdf(invoice_id.id)
                 pdf_data_statement_invoice = request.env.ref(
-                    'event_price_kt.report_statement_enrollment').render_qweb_pdf(invoice_id.id)
+                    'event_price_kt.report_statement_enrollment').sudo().render_qweb_pdf(invoice_id.id)
                 if pdf_data:
                     pdfvals = {'name': 'Invoice',
                                'db_datas': base64.b64encode(pdf_data[0]),
@@ -1645,7 +1681,7 @@ class EnrolmentProcess(http.Controller):
                                'datas_fname': 'Invoice.pdf',
                                'res_model': 'account.invoice',
                                'type': 'binary'}
-                    pdf_create = request.env['ir.attachment'].create(pdfvals)
+                    pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                     attachment_list.append(pdf_create)
 
                 if pdf_data_statement_invoice:
@@ -1655,7 +1691,7 @@ class EnrolmentProcess(http.Controller):
                                'datas_fname': 'Enrolment Statement.pdf',
                                'res_model': 'account.invoice',
                                'type': 'binary'}
-                    pdf_create = request.env['ir.attachment'].create(pdfvals)
+                    pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                     attachment_list.append(pdf_create)
 
                 agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
@@ -1755,9 +1791,9 @@ class EnrolmentProcess(http.Controller):
         if template_id:
             # template_id.send_mail(sale_order_id.id, force_send=True)
             if sale_order_id.affiliation == '1':
-                pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').render_qweb_pdf(invoice_id.id)
+                pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').sudo().render_qweb_pdf(invoice_id.id)
                 pdf_data_statement_invoice = request.env.ref(
-                    'event_price_kt.report_statement_enrollment').render_qweb_pdf(invoice_id.id)
+                    'event_price_kt.report_statement_enrollment').sudo().render_qweb_pdf(invoice_id.id)
                 if pdf_data:
                     pdfvals = {'name': 'Invoice',
                                'db_datas': base64.b64encode(pdf_data[0]),
@@ -1765,7 +1801,7 @@ class EnrolmentProcess(http.Controller):
                                'datas_fname': 'Invoice.pdf',
                                'res_model': 'account.invoice',
                                'type': 'binary'}
-                    pdf_create = request.env['ir.attachment'].create(pdfvals)
+                    pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                     attchment_list.append(pdf_create)
 
                 if pdf_data_statement_invoice:
@@ -1775,7 +1811,7 @@ class EnrolmentProcess(http.Controller):
                                'datas_fname': 'Enrolment Statement.pdf',
                                'res_model': 'account.invoice',
                                'type': 'binary'}
-                    pdf_create = request.env['ir.attachment'].create(pdfvals)
+                    pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                     attchment_list.append(pdf_create)
 
                 agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
@@ -1824,7 +1860,7 @@ class EnrolmentProcess(http.Controller):
                 pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').render_qweb_pdf(
                     invoice_id.id)
                 pdf_data_statement_invoice = request.env.ref(
-                    'event_price_kt.report_statement_enrollment').render_qweb_pdf(invoice_id.id)
+                    'event_price_kt.report_statement_enrollment').sudo().render_qweb_pdf(invoice_id.id)
 
                 if pdf_data:
                     pdfvals = {'name': 'Invoice',
@@ -1833,7 +1869,7 @@ class EnrolmentProcess(http.Controller):
                                'datas_fname': 'Invoice.pdf',
                                'res_model': 'account.invoice',
                                'type': 'binary'}
-                    pdf_create = request.env['ir.attachment'].create(pdfvals)
+                    pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                     attchment_list.append(pdf_create)
 
                 if pdf_data_statement_invoice:
@@ -1843,7 +1879,7 @@ class EnrolmentProcess(http.Controller):
                                'datas_fname': 'Enrolment Statement.pdf',
                                'res_model': 'account.invoice',
                                'type': 'binary'}
-                    pdf_create = request.env['ir.attachment'].create(pdfvals)
+                    pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                     attchment_list.append(pdf_create)
 
                 agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
@@ -1888,7 +1924,7 @@ class EnrolmentProcess(http.Controller):
                                               'self_or_company') else ''})
             if sale_order_id.affiliation == '2' and request.session.get('sale_order') and request.session.get(
                     'do_invoice') == 'no':
-                pdf_data_enroll = request.env.ref('event_price_kt.report_sale_enrollment').render_qweb_pdf(
+                pdf_data_enroll = request.env.ref('event_price_kt.report_sale_enrollment').sudo().render_qweb_pdf(
                     sale_order_id.id)
                 enroll_file_name = "Pro-Forma " + sale_order_id.name
                 if pdf_data_enroll:
@@ -1898,7 +1934,7 @@ class EnrolmentProcess(http.Controller):
                                'datas_fname': enroll_file_name + '.pdf',
                                'res_model': 'sale.order',
                                'type': 'binary'}
-                    pdf_create = request.env['ir.attachment'].create(pdfvals)
+                    pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                     attchment_list.append(pdf_create)
 
                 agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')

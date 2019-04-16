@@ -411,7 +411,7 @@ class sale_order(models.Model):
                     sale_order_id.write({'no_of_reminder_emails_sent': no_of_reminder_emails_sent})
                     template_id = self.env['mail.template'].search([('name', '=', "Freequote Reminder Email")])
                     if template_id:
-                            template_id.send_mail(sale_order_id.id)
+                            template_id.send_mail(sale_order_id)
        return True
 
 
