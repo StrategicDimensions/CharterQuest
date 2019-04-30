@@ -256,8 +256,11 @@ class EnrolmentProcess(http.Controller):
                             'qty_invoiced': line.product_uom_qty
                         })
                     template_id = email_obj.sudo().search([('name', '=', "Charter Books Invoice Email")])
+                    print('\n\ntemplate id=====', template_id, invoice_details)
+
                     if template_id:
                         attchment_list = []
+                        print('\n\ntemplate id=====', template_id, invoice_details)
                         pdf_data_invoice = request.env.ref(
                             'event_price_kt.report_invoice_book').sudo().render_qweb_pdf(invoice_details.id)
                         if pdf_data_invoice:
@@ -297,7 +300,6 @@ class EnrolmentProcess(http.Controller):
 
                     template_id = email_obj.sudo().search([('name', '=', "CharterBooks Saleorder Confirm Email")])
                     if template_id:
-
                         pdf_data_order = request.env.ref(
                             'event_price_kt.report_sale_book').sudo().render_qweb_pdf(order.id)
                         if pdf_data_order:

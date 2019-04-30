@@ -1,0 +1,281 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <!-- Mail template is done in a NOUPDATE block
+         so users can freely customize/delete them -->
+    <data noupdate="1">
+
+        <!--Email template -->
+        <record id="email_template_edi_delivery_order" model="mail.template">
+            <field name="name">Delivery Confirmation</field>
+            <field name="email_from">${object.user_id.email}</field>
+            <field name="email_to">${object.partner_id.email or ''}</field>
+            <field name='email_cc'>bookstores@charterquest.co.za,patience.m@charterquest.co.za</field>
+            <field name="subject">Delivery Order ${object.name } Delivered at Campus</field>
+            <field name="email_recipients">${object.partner_id}</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+    <p>Dear ${object.partner_id.name},</p><br>
+    
+	This is to confirm that your study materials have arrived at your selected campus.  Please take note of the following collection schedules:<br>    
+	
+
+		<table border='2' ><br>
+                           <tr bgcolor='#949494' padding:'8px' >
+                              <td>WEEKDAYS</td>
+                              <td>TIMESLOTS</td>
+                           </tr>
+                           <tr>
+                            <td>THURDAYS</td>
+                            <td>16:00 – 17:30PM</td>
+                           </tr>
+                           <tr>
+                             <td>FRIDAYS</td>
+                            <td>12:00 – 14:00 PM</td>
+                           </tr>
+                           <tr>
+                            <td>SATURDAYS</td>
+                            <td>7:30 – 9:00 (Only covers 15th Aug to Sept 30).</td>
+                           </tr>
+                           <tr>
+                            <td>SUNDAYS</td>
+                            <td>7:30 – 9:00 (Only covers 15th Aug to Sept 30).</td>
+                           </tr>
+	        	 </table>
+<br>
+Please indicate your expected arrival by contacting your respective campus using the contact details below.  We will require proof of ID to hand out the materials.<br>
+
+Do not hesitate to contact our bookstore should you have any other queries at privilege.nyasha@charterquest.co.za<br>
+<br>
+
+Thanking you<br>
+
+Valentine D. Nti<br>
+Founding CEO, <br>
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
+
+
+SANDTON CAMPUS:<br>
+
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
+@ CHARTERQUEST HOUSE,<br>
+Metropolitan Park<br>
+374 Rivonia Boulevard<br>
+Rivonia, SANDTON<br>
+South Africa<br>
+
+CONTACT INFORMATION:<br>
+Tel: +27 (0)11 234 9223 [SA & Intl]<br>
+Tel: +27 (0)11 234 9238 [SA & Intl]<br>
+Tel: 0861 131 137 [SA ONLY]<br>
+Fax: 086 218 8713 [SA ONLY]<br>
+Email:enquiries@charterquest.co.za<br>
+
+
+BRAAMFONTEIN CAMPUS:<br>
+ 
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
+@ ORION HOUSE,<br>
+[13th floor] 49 Jorissen Street<br>
+Cnr Biccard and Jorissen Street<br>
+BRAAMFONTEIN<br>
+South Africa<br>
+ 
+CONTACT INFORMATION:<br>
+Tel: +27 [0]11 403 0656 [SA & Intl]<br>
+Tel: +27 [0]11 403 0642 [SA & Intl]<br>
+Fax: 086 218 8713 [SA ONLY]<br>
+Fax: +27 [0]11 791 7703 [SA & Intl]<br>
+Email:enquiries@charterquest.co.za<br>
+
+PRETORIA CAMPUS:<br>
+CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
+367 Hilda Street<br>
+Hatfield Rendez Vous Building<br>
+Hatfield, PRETORIA<br>
+South Africa<br>
+
+CONTACT INFORMATION:<br>
+Tel: +27 [0]12 751 7608 [SA & Intl]<br>
+Email: enquiries@charterquest.co.za<br>
+
+
+<br/>
+</div>
+            ]]></field>
+        </record>
+    </data>
+    
+     <data noupdate="1">
+
+        <!--Email template -->
+        <!--Email template -->
+        <record id="email_template_edi_delivery_order_created" model="mail.template">
+            <field name="name">Delivery Order Created</field>
+            <field name="email_from">bookstore@charterquest.co.za</field>
+            <field name="email_to">${object.partner_id.email or ''}</field>
+            <field name='email_cc'>bookstores@charterquest.co.za,patience.m@charterquest.co.za</field>
+            <field name="subject">CharterBooks: Order in Process</field>
+            <field name="email_recipients">${object.partner_id}</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+    <p>Dear ${object.partner_id.name},</p>
+    
+    <p>
+         Thank you for your order.<br/>
+         This is to confirm that we have received your payment. Your order has been received by our bookstores.<br/>
+         It will take up to 2 working days to dispatch your order as per preferred delivery method.<br/>
+         If you do not receive any communication within 2 working days please escalate to enquries@charterquest.co.za<br/>
+
+    <br/>       
+<br/><br/>
+Thanking You
+<br/>
+    </p>
+</div>
+            ]]></field>
+        </record>
+    </data>
+
+
+      <data noupdate="1">
+
+        <!--Email template -->
+         <record id="email_template_edi_delivery_order_completed" model="mail.template">
+            <field name="name">Delivered to Student</field>
+            <field name="email_from">bookstores@charterquest.co.za</field>
+            <field name="email_to">${object.partner_id.email or ''}</field>
+            <field name='email_cc'>bookstores@charterquest.co.za,patience.m@charterquest.co.za</field>
+            <field name="subject">Delivery Order ${object.name } recieved by student</field>
+            <field name="email_recipients">${object.partner_id}</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+    <p>Dear Bookstore,</p>
+    
+    <p>
+            Meterials has been delivered to ${object.partner_id.name}.
+    <br/>       
+<br/><br/>
+Regards,
+<br/>
+CharterBooks
+    </p>
+</div>
+
+            ]]></field>
+        </record>
+    </data>
+
+       <data noupdate="1">
+
+        <!--Email template -->
+        <record id="delivery_order_collected_by_courier" model="mail.template">
+            <field name="name">Delivery Order Collected by Courier</field>
+            <field name="email_from">bookstore@charterquest.co.za</field>
+            <field name="email_to">${object.partner_id.email or ''}</field>
+            <field name='email_cc'>bookstores@charterquest.co.za,patience.m@charterquest.co.za</field>
+            <field name="subject">CharterBooks: Order Collected by Courier</field>
+            <field name="email_recipients">${object.partner_id}</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+    <p>Dear ${object.partner_id.name},</p>
+    
+    <p>
+         This serves as notification that your study materials has been dispatched and handed over to our couriers as per your invoice instructions. An email will follow with a tracking number and/or with details of your shipping.<br/>
+         Should you not hear from us within 2 working days or receive the courier details please email bookstores@charterquest.co.za<br/>
+        
+
+    <br/>       
+<br/>
+Regards,
+<br/>
+CharterQuest Bookstores<br/>
+CENTRAL CONTACT INFORMATION:<br/>
+Tel: +27 (0)11 234 9223 [SA & Intl]<br/>
+Tel: +27 (0)11 234 9238 [SA & Intl]<br/>
+Tel: 0861 131 137 [SA ONLY]<br/>
+Fax: 086 218 8713 [SA ONLY]<br/>
+Email:enquiries@charterquest.co.za<br/>
+    </p>
+</div>
+<div  style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34);">
+<p>
+This email was intended for ${object.partner_id.name}.<br/>
+@2017 CharterBooks<br/>
+CharterQuest House | Metropolitan Park | 374 Rivonia Boulevard | Rivonia | Sandton |South Africa.<br/>
+Powered by Strategic Dimensions<br/>
+</p>
+            ]]></field>
+        </record>
+        </data>
+    <data>
+        <record id="email_template_edi_delivered_at_campus" model="mail.template">
+            <field name="name">Delivered at Campus</field>
+            <field name="email_from">bookstore@charterquest.co.za</field>
+            <field name="email_to">${object.partner_id.email or ''}</field>
+            <field name='email_cc'>bookstores@charterquest.co.za,patience.m@charterquest.co.za</field>
+            <field name="subject">CharterBooks: Order Delivered at Campus</field>
+            <field name="email_recipients">${object.partner_id}</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+    <p>Dear ${object.partner_id.name},</p>
+    
+    <p>
+           This serves as notification that your study materials have arrived at your preferred campus for collection.</p>
+ 
+<p> Materials can be collected between </p>
+<p> Monday – Fridays (working days) between 9am and 5pm </p>
+ 
+<p> Please make sure you make proper collection arrangements with your preferred campus before going to collect your books. </p>
+
+<p> Your preferred Campus as per your order is: </p>
+${object.carrier_id.name}
+
+    <br/>       
+<br/><br/>
+<p>
+Regards,
+<br/>
+CharterQuest Bookstores<br/>
+CENTRAL CONTACT INFORMATION:<br/>
+CENTRAL CONTACT INFORMATION:<br/>
+Tel: +27 (0)11 234 9223 [SA & Intl]<br/>
+Tel: +27 (0)11 234 9238 [SA & Intl]<br/>
+Tel: 0861 131 137 [SA ONLY]<br/>
+Fax: 086 218 8713 [SA ONLY]<br/>
+Email:enquiries@charterquest.co.za<br/>
+    </p>
+</div>
+<div  style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34);">
+<p>
+This email was intended for ${object.partner_id.name}.<br/>
+@2017 CharterBooks<br/>
+CharterQuest House | Metropolitan Park | 374 Rivonia Boulevard | Rivonia | Sandton |South Africa.<br/>
+Powered by Strategic Dimensions<br/>
+</p>
+            ]]></field>
+        </record>
+        </data>
+
+      
+</odoo>

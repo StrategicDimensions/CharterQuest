@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="account_invoice_view_inh_kt" model="ir.ui.view">
+            <field name="name">account.invoice.form.kt</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <button name="action_invoice_open" position="before">
+                    <button name="action_view_delivery" type="object" states="open,paid" string="View Delivery Order"
+                            class="oe_highlight"/>
+                </button>
+            </field>
+        </record>
+    </data>
+</odoo>
+
