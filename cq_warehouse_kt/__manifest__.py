@@ -1,5 +1,5 @@
 {
-    "name": "Charter Quest Warehouse Customizations",
+    "name": "CharterQuest Warehouse Customizations",
     "version": "1.0",
     "depends": ["base","sale","stock","account_voucher","mail","delivery"],
     "author": "Acespritech Solution PVT. LTD.",

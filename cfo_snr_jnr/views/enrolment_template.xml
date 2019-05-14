@@ -246,50 +246,9 @@
                     <h3>
                         <div class="oe_website_sale_tx_status"
                              style="color: rgb(50, 58, 73); font-family: Roboto, sans-serif; font-size: 16px;">
-                            <p style="margin-bottom: 12px;">Your transaction is waiting confirmation.</p>
+                            <p style="margin-bottom: 12px;">An email with further details has been sent to you instead of showing banking details.</p>
                         </div>
-                        <div style="color: rgb(50, 58, 73); font-family: Roboto, sans-serif; font-size: 16px;">
-                            <p style="margin-bottom: 12px;">Please use the following transfer details</p>
-                            <span style="font-size: 13.3333px; line-height: 1.38; font-family: Verdana; white-space: pre-wrap;">
-                                Bank Account
-                            </span>
-                            <table class="table table-bordered" style="width: 750px;">
-                                <tbody>
-                                    <tr>
-                                        <th>Bank:</th>
-                                        <td>FNB</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Beneficiary name:</th>
-                                        <td>CharterQuest Training Institute</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Account type:</th>
-                                        <td>Cheque</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Account no:</th>
-                                        <td>626 8076 7054</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Branch code:</th>
-                                        <td>250655</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Reference No.</th>
-                                        <td>
-                                            <span t-esc="order.name"/>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <span style="font-size: 13.3333px;
-                            font-family: Verdana; color: rgb(76, 76, 76); font-variant-numeric: normal;
-                            font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;
-                            background-color: transparent;">Communication Please use the order name as payment refence
-                            </span>
-                            <br/>
-                        </div>
+
                     </h3>
                 </t>
             </div>

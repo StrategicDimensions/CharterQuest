@@ -30,13 +30,14 @@ class WebsiteSaleDelivery(WebsiteSaleDelivery):
         carrier_id = int(post['carrier_id'])
         if order:
             order._check_carrier_quotation(force_carrier_id=carrier_id)
+
             return {'status': order.delivery_rating_success,
                     'error_message': order.delivery_message,
                     'carrier_id': carrier_id,
-                    'new_amount_delivery': order.currency_id.round(order.delivery_price),
-                    'new_amount_untaxed': order.amount_untaxed,
-                    'new_amount_tax': order.amount_tax,
-                    'new_amount_total': order.amount_total,
+                    'new_amount_delivery': '%.2f' % order.currency_id.round(order.delivery_price),
+                    'new_amount_untaxed': '%.2f' % order.amount_untaxed,
+                    'new_amount_tax': '%.2f' % order.amount_tax,
+                    'new_amount_total': '%.2f' % order.amount_total,
                     }
 
 
@@ -164,10 +165,10 @@ class WebsiteSale(website_sale.WebsiteSale):
         return request.redirect("/shop/cart")
 
     def _get_mandatory_billing_fields(self):
-        return ["name", "email", "street", "city", "country_id","zip"]
+        return ["name", "email", "street", "city", "country_id", "zip"]
 
     def _get_mandatory_shipping_fields(self):
-        return ["name", "street", "city", "country_id","zip"]
+        return ["name", "street", "city", "country_id", "zip"]
 
 
 class EnrolmentProcess(http.Controller):
@@ -204,7 +205,6 @@ class EnrolmentProcess(http.Controller):
 
             if order.payment_acquirer_id:
                 acquirer_id = request.env['payment.acquirer'].sudo().browse(int(order.payment_acquirer_id))
-
                 if acquirer_id.provider == 'transfer' and request.session.get(
                         'shop_do_invoice') and request.session.get('shop_do_invoice') == 'yes':
                     order.quote_type = 'CharterBooks'
@@ -255,7 +255,7 @@ class EnrolmentProcess(http.Controller):
                         line.write({
                             'qty_invoiced': line.product_uom_qty
                         })
-                    template_id = email_obj.sudo().search([('name', '=', "Charter Books Invoice Email")])
+                    template_id = email_obj.sudo().search([('name', '=', "CharterBooks Saleorder Confirm Email")])
                     if template_id:
                         attchment_list = []
                         pdf_data_invoice = request.env.ref(
@@ -274,7 +274,7 @@ class EnrolmentProcess(http.Controller):
                         if agreement_id:
                             attchment_list.append(agreement_id)
 
-                        email_data = template_id.generate_email(invoice_details.id)
+                        email_data = template_id.generate_email(order.id)
 
                         mail_values = {
                             'email_from': email_data.get('email_from'),
@@ -292,19 +292,57 @@ class EnrolmentProcess(http.Controller):
                         msg_id = mail_obj.create(mail_values)
 
                         msg_id.send()
+                elif acquirer_id.provider == 'transfer' and request.session.get(
+                            'shop_do_invoice') and request.session.get('shop_do_invoice') == 'no':
+                        order.quote_type = 'CharterBooks'
+                        attchment_list = []
+                        template_id = email_obj.sudo().search([('name', '=', "CharterBooks Saleorder Confirm Email")])
+                        if template_id:
+                            pdf_data_order = request.env.ref(
+                                'event_price_kt.report_sale_book').sudo().render_qweb_pdf(order.id)
+                            if pdf_data_order:
+                                pdfvals = {'name': 'Charterbooks Proforma',
+                                           'db_datas': base64.b64encode(pdf_data_order[0]),
+                                           'datas': base64.b64encode(pdf_data_order[0]),
+                                           'datas_fname': 'Charterbooks_Proforma.pdf',
+                                           'res_model': 'sale.order',
+                                           'type': 'binary'}
+                                pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
+                                attchment_list.append(pdf_create)
+
+                            agreement_id = request.env.ref('cfo_snr_jnr.charterbook_term_and_condition_pdf')
+                            if agreement_id:
+                                attchment_list.append(agreement_id)
+                            email_data = template_id.generate_email(order.id)
+                            mail_values = {
+                                'email_from': email_data.get('email_from'),
+                                'email_cc': email_data.get('email_cc'),
+                                'reply_to': email_data.get('reply_to'),
+                                'email_to': email_data.get('email_to'),
+                                'subject': email_data.get('subject'),
+                                'body_html': email_data.get('body_html'),
+                                'notification': True,
+                                'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
+                                'auto_delete': False,
+                                'model': 'sale.order',
+                                'res_id': order.id
+                            }
+                            msg_id = mail_obj.create(mail_values)
+                            msg_id.send()
                 else:
                     attchment_list = []
-
-                    template_id = email_obj.sudo().search([('name', '=', "CharterBooks Saleorder Confirm Email")])
+                    order.quote_type = 'CharterBooks'
+                    # template_id = email_obj.sudo().search([('name', '=', "CharterBooks Saleorder Confirm Email")])
+                    template_id = email_obj.sudo().search([('name', '=', "Delivery Order Created")])
                     if template_id:
                         pdf_data_order = request.env.ref(
-                            'event_price_kt.report_sale_book').sudo().render_qweb_pdf(order.id)
+                            'event_price_kt.report_invoice_book').sudo().render_qweb_pdf(order.invoice_ids.id)
                         if pdf_data_order:
-                            pdfvals = {'name': 'Charterbooks Proforma',
+                            pdfvals = {'name': 'Invoice Report',
                                        'db_datas': base64.b64encode(pdf_data_order[0]),
                                        'datas': base64.b64encode(pdf_data_order[0]),
-                                       'datas_fname': 'Charterbooks_Proforma.pdf',
-                                       'res_model': 'sale.order',
+                                       'datas_fname': 'Invoice Report.pdf',
+                                       'res_model': 'account.invoice',
                                        'type': 'binary'}
                             pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                             attchment_list.append(pdf_create)
@@ -312,7 +350,7 @@ class EnrolmentProcess(http.Controller):
                         agreement_id = request.env.ref('cfo_snr_jnr.charterbook_term_and_condition_pdf')
                         if agreement_id:
                             attchment_list.append(agreement_id)
-                        email_data = template_id.generate_email(order.id)
+                        email_data = template_id.generate_email(order.picking_ids[0].id)
                         mail_values = {
                             'email_from': email_data.get('email_from'),
                             'email_cc': email_data.get('email_cc'),
@@ -1221,7 +1259,8 @@ class EnrolmentProcess(http.Controller):
                                                       'self_or_company') else ''})
 
                     if request.session.get('sale_order') and request.session.get('do_invoice') == 'no':
-                        pdf_data_enroll = request.env.ref('event_price_kt.report_sale_enrollment').sudo().render_qweb_pdf(
+                        pdf_data_enroll = request.env.ref(
+                            'event_price_kt.report_sale_enrollment').sudo().render_qweb_pdf(
                             sale_order_id.id)
                         enroll_file_name = "Pro-Forma " + sale_order_id.name
                         if pdf_data_enroll:
@@ -1670,7 +1709,8 @@ class EnrolmentProcess(http.Controller):
         if template_id:
             # template_id.send_mail(sale_order_id.id, force_send=True)
             if sale_order_id.affiliation == '1':
-                pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').sudo().render_qweb_pdf(invoice_id.id)
+                pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').sudo().render_qweb_pdf(
+                    invoice_id.id)
                 pdf_data_statement_invoice = request.env.ref(
                     'event_price_kt.report_statement_enrollment').sudo().render_qweb_pdf(invoice_id.id)
                 if pdf_data:
@@ -1790,7 +1830,8 @@ class EnrolmentProcess(http.Controller):
         if template_id:
             # template_id.send_mail(sale_order_id.id, force_send=True)
             if sale_order_id.affiliation == '1':
-                pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').sudo().render_qweb_pdf(invoice_id.id)
+                pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').sudo().render_qweb_pdf(
+                    invoice_id.id)
                 pdf_data_statement_invoice = request.env.ref(
                     'event_price_kt.report_statement_enrollment').sudo().render_qweb_pdf(invoice_id.id)
                 if pdf_data:

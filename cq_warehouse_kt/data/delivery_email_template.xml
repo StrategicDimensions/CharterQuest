@@ -21,8 +21,7 @@
 
     <p>Dear ${object.partner_id.name},</p><br>
     
-	This is to confirm that your study materials have arrived at your selected campus.  Please take note of the following collection schedules:<br>    
-	
+	This is to confirm that your study materials have arrived at your selected campus.  Please take note of the following collection schedules:<br>
 
 		<table border='2' ><br>
                            <tr bgcolor='#949494' padding:'8px' >
@@ -118,8 +117,8 @@ Email: enquiries@charterquest.co.za<br>
             <field name="name">Delivery Order Created</field>
             <field name="email_from">bookstore@charterquest.co.za</field>
             <field name="email_to">${object.partner_id.email or ''}</field>
-            <field name='email_cc'>bookstores@charterquest.co.za,patience.m@charterquest.co.za</field>
-            <field name="subject">CharterBooks: Order in Process</field>
+            <field name='email_cc'>accounts@charterquest.co.za,bookstores@charterquest.co.za,cqops@charterquest.co.za</field>
+            <field name="subject">${object.partner_id.name} -CharterBooks: Order Confirmation</field>
             <field name="email_recipients">${object.partner_id}</field>
             <field name="model_id" ref="stock.model_stock_picking"/>
             <field name="auto_delete" eval="True"/>
@@ -130,15 +129,41 @@ Email: enquiries@charterquest.co.za<br>
     <p>Dear ${object.partner_id.name},</p>
     
     <p>
-         Thank you for your order.<br/>
-         This is to confirm that we have received your payment. Your order has been received by our bookstores.<br/>
-         It will take up to 2 working days to dispatch your order as per preferred delivery method.<br/>
-         If you do not receive any communication within 2 working days please escalate to enquries@charterquest.co.za<br/>
+         Thank you for your order and payment received.<br/>
+         <br/>
+         This is to confirm that we have received your payment. Your order has been received by our bookstores.  It will take up to 2 working days to dispatch your order to your preferred campus/delivery method.<br/>
+         <br/>
+         If you do not receive any communication within 2-3 working days, please escalate to enquiries@charterquest.co.za.<br/>
 
     <br/>       
 <br/><br/>
 Thanking You
 <br/>
+Patience Mukondwa
+<br/>
+Head Of Operations
+<br/>
+CharterQuest Financial Training Institute
+<br/><br/>
+CENTRAL CONTACT INFORMATION:
+<br/>
+Tel: +27 (0)11 234 9223 [SA & Intl]
+<br/>
+Tel: +27 (0)11 234 9238 [SA & Intl]
+<br/>
+Tel: 0861 131 137 [SA ONLY]
+<br/>
+Fax: 086 218 8713 [SA ONLY]
+<br/>
+Email:enquiries@charterquest.co.za
+<br/><br/>
+This email was intended for ${object.partner_id.name}.
+<br/>
+@2019 CharterBooks
+<br/>
+CharterQuest House | Metropolitan Park | 374 Rivonia Boulevard | Rivonia | Sandton |South Africa.
+<br/>
+Powered by:Strategic Dimensions
     </p>
 </div>
             ]]></field>
@@ -198,7 +223,7 @@ CharterBooks
     
     <p>
          This serves as notification that your study materials has been dispatched and handed over to our couriers as per your invoice instructions. An email will follow with a tracking number and/or with details of your shipping.<br/>
-         Should you not hear from us within 2 working days or receive the courier details please email bookstores@charterquest.co.za<br/>
+         Should you not hear from us within 2 working days or receive the courier details please email enquiries@charterquest.co.za<br/>
         
 
     <br/>       
@@ -217,19 +242,19 @@ Email:enquiries@charterquest.co.za<br/>
 <div  style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34);">
 <p>
 This email was intended for ${object.partner_id.name}.<br/>
-@2017 CharterBooks<br/>
+@2019 CharterBooks<br/>
 CharterQuest House | Metropolitan Park | 374 Rivonia Boulevard | Rivonia | Sandton |South Africa.<br/>
 Powered by Strategic Dimensions<br/>
 </p>
             ]]></field>
         </record>
         </data>
-    <data>
+    <data noupdate="1">
         <record id="email_template_edi_delivered_at_campus" model="mail.template">
             <field name="name">Delivered at Campus</field>
             <field name="email_from">bookstore@charterquest.co.za</field>
             <field name="email_to">${object.partner_id.email or ''}</field>
-            <field name='email_cc'>bookstores@charterquest.co.za,patience.m@charterquest.co.za</field>
+            <field name='email_cc'>bookstores@charterquest.co.za,cqops@charterquest.co.za</field>
             <field name="subject">CharterBooks: Order Delivered at Campus</field>
             <field name="email_recipients">${object.partner_id}</field>
             <field name="model_id" ref="stock.model_stock_picking"/>
@@ -239,19 +264,19 @@ Powered by Strategic Dimensions<br/>
 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
 
     <p>Dear ${object.partner_id.name},</p>
-    
+
     <p>
            This serves as notification that your study materials have arrived at your preferred campus for collection.</p>
- 
+
 <p> Materials can be collected between </p>
 <p> Monday – Fridays (working days) between 9am and 5pm </p>
- 
+
 <p> Please make sure you make proper collection arrangements with your preferred campus before going to collect your books. </p>
 
 <p> Your preferred Campus as per your order is: </p>
 ${object.carrier_id.name}
 
-    <br/>       
+    <br/>
 <br/><br/>
 <p>
 Regards,
@@ -269,7 +294,7 @@ Email:enquiries@charterquest.co.za<br/>
 <div  style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34);">
 <p>
 This email was intended for ${object.partner_id.name}.<br/>
-@2017 CharterBooks<br/>
+@2019 CharterBooks<br/>
 CharterQuest House | Metropolitan Park | 374 Rivonia Boulevard | Rivonia | Sandton |South Africa.<br/>
 Powered by Strategic Dimensions<br/>
 </p>
