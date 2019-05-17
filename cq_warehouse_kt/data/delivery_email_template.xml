@@ -53,6 +53,7 @@ Do not hesitate to contact our bookstore should you have any other queries at pr
 
 Thanking you<br>
 
+<!--Valentine D. Nti<br>-->
 Valentine D. Nti<br>
 Founding CEO, <br>
 CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
@@ -159,7 +160,7 @@ Email:enquiries@charterquest.co.za
 <br/><br/>
 This email was intended for ${object.partner_id.name}.
 <br/>
-@2019 CharterBooks
+@${datetime.datetime.now().year} CharterBooks
 <br/>
 CharterQuest House | Metropolitan Park | 374 Rivonia Boulevard | Rivonia | Sandton |South Africa.
 <br/>
@@ -242,7 +243,7 @@ Email:enquiries@charterquest.co.za<br/>
 <div  style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34);">
 <p>
 This email was intended for ${object.partner_id.name}.<br/>
-@2019 CharterBooks<br/>
+@${datetime.datetime.now().year} CharterBooks<br/>
 CharterQuest House | Metropolitan Park | 374 Rivonia Boulevard | Rivonia | Sandton |South Africa.<br/>
 Powered by Strategic Dimensions<br/>
 </p>
@@ -294,7 +295,7 @@ Email:enquiries@charterquest.co.za<br/>
 <div  style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 10px; color: rgb(34, 34, 34);">
 <p>
 This email was intended for ${object.partner_id.name}.<br/>
-@2019 CharterBooks<br/>
+@${datetime.datetime.now().year} CharterBooks<br/>
 CharterQuest House | Metropolitan Park | 374 Rivonia Boulevard | Rivonia | Sandton |South Africa.<br/>
 Powered by Strategic Dimensions<br/>
 </p>

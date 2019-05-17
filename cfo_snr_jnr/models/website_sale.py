@@ -17,8 +17,10 @@
 #    <http://www.gnu.org/licenses/gpl.html>.
 #
 ##############################################################################
+
 from odoo import models, fields, api, _
 import odoo.addons.decimal_precision as dp
+import base64
 
 
 class ProductTemplate(models.Model):
@@ -54,6 +56,50 @@ class AccountInvoice(models.Model):
 
     sale_order_reference_link = fields.Char(string="Sale Order Reference Link")
 
+
+class AccountPayment(models.Model):
+    _inherit = 'account.payment'
+
+    def action_validate_invoice_payment(self):
+        res =  super(AccountPayment, self).action_validate_invoice_payment()
+        if res:
+            attchment_list = []
+            email_obj = self.env['mail.template']
+            mail_obj = self.env['mail.mail'].sudo()
+            template_id = email_obj.sudo().search([('name', '=', "Delivery Order Created")])
+            if template_id:
+                pdf_data_order = self.env.ref(
+                    'event_price_kt.report_invoice_book').sudo().render_qweb_pdf(self.invoice_ids[0].id)
+                if pdf_data_order:
+                    pdfvals = {'name': 'Invoice Report',
+                               'db_datas': base64.b64encode(pdf_data_order[0]),
+                               'datas': base64.b64encode(pdf_data_order[0]),
+                               'datas_fname': 'Invoice Report.pdf',
+                               'res_model': 'account.invoice',
+                               'type': 'binary'}
+                    pdf_create = self.env['ir.attachment'].sudo().create(pdfvals)
+                    attchment_list.append(pdf_create)
+
+                agreement_id = self.env.ref('cfo_snr_jnr.charterbook_term_and_condition_pdf')
+                if agreement_id:
+                    attchment_list.append(agreement_id)
+                email_data = template_id.generate_email(self.invoice_ids[0].id)
+                mail_values = {
+                    'email_from': email_data.get('email_from'),
+                    'email_cc': email_data.get('email_cc'),
+                    'reply_to': email_data.get('reply_to'),
+                    'email_to': email_data.get('email_to'),
+                    'subject': email_data.get('subject'),
+                    'body_html': email_data.get('body_html'),
+                    'notification': True,
+                    'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
+                    'auto_delete': False,
+                    'model': 'account.payment',
+                    'res_id': self.id
+                }
+                msg_id = mail_obj.create(mail_values)
+                msg_id.send()
+        return res
 
 class SaleAdvancePaymentInv(models.TransientModel):
     _inherit = "sale.advance.payment.inv"

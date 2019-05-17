@@ -46,7 +46,7 @@
     <br/>
     <div>
         This email was intended for ${object.partner_id.name}.<br/>
-        @2019 CharterBooks<br/>
+        @${datetime.datetime.now().year} CharterBooks<br/>
         CharterQuest House | Metropolitan Park | 374 Rivonia Boulevard | Rivonia | Sandton |South Africa.<br/>
         Powered by:Strategic Dimensions<br/>
     </div>
@@ -184,7 +184,7 @@
 
     <div>
         This email was intended for ${object.partner_id.name}.<br/>
-        @2019 CharterQuest<br/>
+        @${datetime.datetime.now().year} CharterQuest<br/>
         CharterQuest House | Metropolitan Park | 374 Rivonia Boulevard | Rivonia | Sandton |South Africa.<br/>
         Powered by Strategic Dimensions<br/>
     </div>
