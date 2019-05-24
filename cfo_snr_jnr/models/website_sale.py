@@ -83,7 +83,7 @@ class AccountPayment(models.Model):
                 agreement_id = self.env.ref('cfo_snr_jnr.charterbook_term_and_condition_pdf')
                 if agreement_id:
                     attchment_list.append(agreement_id)
-                email_data = template_id.generate_email(self.invoice_ids[0].id)
+                email_data = template_id.generate_email(self.id)
                 mail_values = {
                     'email_from': email_data.get('email_from'),
                     'email_cc': email_data.get('email_cc'),

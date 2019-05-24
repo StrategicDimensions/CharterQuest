@@ -132,8 +132,9 @@
                         </field>
                     </page>
                 </notebook>
+
                 <xpath expr="//notebook//page[1]" position="attributes">
-                        <attribute name="string">Study Options/Tickets</attribute>
+                    <attribute name="string">Study Options/Tickets</attribute>
                 </xpath>
             </field>
         </record>

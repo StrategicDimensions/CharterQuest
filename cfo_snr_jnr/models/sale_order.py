@@ -20,6 +20,7 @@
 from odoo import models, fields, api, _
 import odoo.addons.decimal_precision as dp
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_compare
+from odoo.exceptions import UserError, Warning
 
 
 class SaleOrder(models.Model):
@@ -161,4 +162,27 @@ class SaleOrderLine(models.Model):
                 errors.append(error.name)
         if errors:
             raise UserError('\n'.join(errors))
+        return True
+
+
+class Picking(models.Model):
+    _inherit = "stock.picking"
+
+    @api.multi
+    def action_assign(self):
+        self.filtered(lambda picking: picking.state == 'draft').action_confirm()
+        moves = self.mapped('move_lines').filtered(lambda move: move.state not in ('draft', 'cancel', 'done'))
+        quant_ids = self.env['stock.quant'].sudo().search([('location_id', '=', self.location_id.id), (
+        'product_id', 'in', [each.product_id.id for each in moves])])
+        quantity_total = 0.0
+
+        for each in quant_ids:
+            quantity_total += each.quantity
+
+        if not quantity_total:
+            raise Warning(_('There is no stock in current warehouse "%s"') %self.location_id.display_name)
+
+        if not moves:
+            raise UserError(_('Nothing to check the availability for.'))
+        moves._action_assign()
         return True

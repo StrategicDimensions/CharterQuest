@@ -7,21 +7,21 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <field name="website" position="after">
-                  <field name="student_number"/>
+                    <field name="student_number"/>
+                    <field name="is_campus"/>
+                    <field name="campus_code" attrs="{'required':[('is_campus','=',True)]}"/>
                 </field>
                 <!--
                 <field name="examwritten" position="replace"/>-->
                 <notebook>
-                <page string="Configuration" >
-                    <group>
-                        <field name="student_number_allocated" />
-                        <field name="previous_student"/>
-                        <field name="current_student"/>
-                        <field name="examwritten" />
-                        <field name="is_campus" />
-                        <field name="campus_code" attrs="{'required':[('is_campus','=',True)]}"/>
-                    </group>
-                </page>
+                    <page string="Configuration">
+                        <group>
+                            <field name="student_number_allocated"/>
+                            <field name="previous_student"/>
+                            <field name="current_student"/>
+                            <field name="examwritten"/>
+                        </group>
+                    </page>
                 </notebook>
             </field>
         </record>
@@ -31,10 +31,10 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_res_partner_filter"/>
             <field name="arch" type="xml">
-               <field name="parent_id" position="after" >
-                 <field name="email" />
-                 <field name="student_number" />
-               </field>
+                <field name="parent_id" position="after">
+                    <field name="email"/>
+                    <field name="student_number"/>
+                </field>
             </field>
         </record>
 
@@ -44,13 +44,13 @@
             <field name="model">res.partner.bank</field>
             <field name="inherit_id" ref="base.view_partner_bank_form"/>
             <field name="arch" type="xml">
-                 <field name="acc_number" position="after">
-                     <field name="acc_holder_name"/>
+                <field name="acc_number" position="after">
+                    <field name="acc_holder_name"/>
                     <field name="acc_valid_state"/>
-                 </field>
-                 <!--<field name='bank_bic' position='after'>-->
-                     <!--<field name="acc_valid_state"/>-->
-                 <!--</field>-->
+                </field>
+                <!--<field name='bank_bic' position='after'>-->
+                <!--<field name="acc_valid_state"/>-->
+                <!--</field>-->
             </field>
         </record>
 
