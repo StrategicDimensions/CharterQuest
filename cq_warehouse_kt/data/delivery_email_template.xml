@@ -53,7 +53,6 @@ Do not hesitate to contact our bookstore should you have any other queries at pr
 
 Thanking you<br>
 
-<!--Valentine D. Nti<br>-->
 Valentine D. Nti<br>
 Founding CEO, <br>
 CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
@@ -180,7 +179,7 @@ Powered by:Strategic Dimensions
             <field name="email_from">bookstores@charterquest.co.za</field>
             <field name="email_to">${object.partner_id.email or ''}</field>
             <field name='email_cc'>bookstores@charterquest.co.za,patience.m@charterquest.co.za</field>
-            <field name="subject">Delivery Order ${object.name } recieved by student</field>
+            <field name="subject">Delivery Order ${object.name } received by student</field>
             <field name="email_recipients">${object.partner_id}</field>
             <field name="model_id" ref="stock.model_stock_picking"/>
             <field name="auto_delete" eval="True"/>
@@ -191,7 +190,7 @@ Powered by:Strategic Dimensions
     <p>Dear Bookstore,</p>
     
     <p>
-            Meterials has been delivered to ${object.partner_id.name}.
+            Materials has been delivered to ${object.partner_id.name}.
     <br/>       
 <br/><br/>
 Regards,

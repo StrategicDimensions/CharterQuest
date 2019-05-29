@@ -112,4 +112,11 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
         return res
 
+
+class DeliveryCarrier(models.Model):
+    _inherit = 'delivery.carrier'
+
+    warehouse_id = fields.Many2one('stock.warehouse', string="Warehouse")
+
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

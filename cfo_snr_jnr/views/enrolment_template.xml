@@ -235,7 +235,7 @@
                             <span style="font-size: 13.3333px;
                             font-family: Verdana; color: rgb(76, 76, 76); font-variant-numeric: normal;
                             font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;
-                            background-color: transparent;">Communication Please use the order name as payment refence
+                            background-color: transparent;">Communication Please use the order name as payment reference
                             </span>
                             <br/>
                         </div>
@@ -246,7 +246,7 @@
                     <h3>
                         <div class="oe_website_sale_tx_status"
                              style="color: rgb(50, 58, 73); font-family: Roboto, sans-serif; font-size: 16px;">
-                            <p style="margin-bottom: 12px;">An email with further details has been sent to you instead of showing banking details.</p>
+                            <p style="margin-bottom: 12px;">An email with further details has been sent to you.</p>
                         </div>
 
                     </h3>

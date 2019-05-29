@@ -28,6 +28,10 @@ class WebsiteSaleDelivery(WebsiteSaleDelivery):
         if request.session.get('sale_last_order_id'):
             order = request.env['sale.order'].sudo().browse([request.session.get('sale_last_order_id')])
         carrier_id = int(post['carrier_id'])
+        delivery_carrier_id = request.env['delivery.carrier'].sudo().browse(carrier_id)
+        if delivery_carrier_id:
+            if delivery_carrier_id.warehouse_id:
+                order.warehouse_id = delivery_carrier_id.warehouse_id.id
         if order:
             order._check_carrier_quotation(force_carrier_id=carrier_id)
 
@@ -126,6 +130,8 @@ class WebsiteSale(website_sale.WebsiteSale):
         if save_token:
             tx_type = 'form_save'
 
+        print('\n\n\n========== ', kwargs)
+        5/0
         request.session['shop_do_invoice'] = kwargs.get('do_invoice')
         request.session['shop_company_name'] = kwargs.get('company_name') if kwargs.get('company_name') else ''
         request.session['shop_vat_number'] = kwargs.get('vat_no') if kwargs.get('vat_no') else ''
@@ -155,6 +161,7 @@ class WebsiteSale(website_sale.WebsiteSale):
 
     @http.route(['/shop/cart/update'], type='http', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
+        print('\n\n\n cart update===========', kw)
         request.website.sale_get_order(force_create=1)._cart_update(
             product_id=int(product_id),
             add_qty=add_qty,
