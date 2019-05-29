@@ -130,6 +130,7 @@ class WebsiteSale(website_sale.WebsiteSale):
         if save_token:
             tx_type = 'form_save'
 
+
         request.session['shop_do_invoice'] = kwargs.get('do_invoice')
         request.session['shop_company_name'] = kwargs.get('company_name') if kwargs.get('company_name') else ''
         request.session['shop_vat_number'] = kwargs.get('vat_no') if kwargs.get('vat_no') else ''

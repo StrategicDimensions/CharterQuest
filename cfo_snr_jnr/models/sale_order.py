@@ -150,8 +150,8 @@ class SaleOrderLine(models.Model):
                     group_id.write(updated_vals)
 
             values = line._prepare_procurement_values(group_id=group_id)
-            if line.product_warehouse_id:
-                values['warehouse_id'] = line.product_warehouse_id
+            # if line.product_warehouse_id:
+            #     values['warehouse_id'] = line.product_warehouse_id
 
             product_qty = line.product_uom_qty - qty
             try:
