@@ -174,7 +174,7 @@ class stock_picking(models.Model):
         }
         return {'value': val}
 
-
+    @api.model
     def create(self, vals):
         if vals.get('origin', False):
             sale_id = self.env['sale.order'].search([('name', '=', vals['origin'])])

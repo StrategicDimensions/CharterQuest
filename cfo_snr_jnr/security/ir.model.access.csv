@@ -28,3 +28,5 @@ access_social_media_contestants_jnr,access_social_media_contestants_jnr,model_so
 access_volunteers_jnr,access_volunteers_jnr,model_volunteers_jnr,,1,1,1,1
 access_cfo_jnr_member_add,access_cfo_jnr_member_add,model_cfo_jnr_member_add,,1,1,1,1
 access_cfo_snr_member_add,access_cfo_snr_member_add,model_cfo_snr_member_add,,1,1,1,1
+
+access_user_stock_transfer,access_user_stock_transfer,model_stock_picking,cfo_snr_jnr.stock_transfer,1,0,0,0

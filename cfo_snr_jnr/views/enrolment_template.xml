@@ -365,9 +365,9 @@
     </template>
 
     <template id="products_list_view" inherit_id="website_sale.products_item">
-        <xpath expr="//section" position="after">
+        <xpath expr="//section" position="inside">
             <table class="table table-bordered table-product-info"
-                   style="margin-bottom:15px;line-height: 0.7;width: 70%;">
+                   style="position: relative;margin-bottom:15px;line-height: 0.7;width: 100%;z-index:10">
                 <t t-set="product" t-value="product.sudo()"/>
                 <tr style="font-size:12px;">
                     <th>Author</th>

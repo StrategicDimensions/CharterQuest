@@ -175,10 +175,14 @@ class Picking(models.Model):
         quant_ids = self.env['stock.quant'].sudo().search([('location_id', '=', self.location_id.id), (
         'product_id', 'in', [each.product_id.id for each in moves])])
         quantity_total = 0.0
+        reserved_quantity_total = 0.0
 
         for each in quant_ids:
             quantity_total += each.quantity
+            reserved_quantity_total += each.reserved_quantity
 
+        if reserved_quantity_total >= quantity_total:
+            raise Warning(_('There is no stock in current warehouse "%s"') % self.location_id.display_name)
         if not quantity_total:
             raise Warning(_('There is no stock in current warehouse "%s"') %self.location_id.display_name)
 
@@ -186,3 +190,9 @@ class Picking(models.Model):
             raise UserError(_('Nothing to check the availability for.'))
         moves._action_assign()
         return True
+
+    @api.multi
+    def button_validate(self):
+        if not self.env.user.has_group('cfo_snr_jnr.stock_transfer'):
+            raise Warning(_("You cannot validate a transfer."))
+        return super(Picking, self).button_validate()

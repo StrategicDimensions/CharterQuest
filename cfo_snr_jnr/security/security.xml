@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock_transfer" model="res.groups">
+            <field name="name">Stock Transfer</field>
+        </record>
+    </data>
+</odoo>

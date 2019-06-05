@@ -66,7 +66,7 @@ class AccountPayment(models.Model):
             attchment_list = []
             email_obj = self.env['mail.template']
             mail_obj = self.env['mail.mail'].sudo()
-            template_id = email_obj.sudo().search([('name', '=', "Delivery Order Created")])
+            template_id = email_obj.sudo().search([('name', '=', "Invoice Payment")])
             if template_id:
                 pdf_data_order = self.env.ref(
                     'event_price_kt.report_invoice_book').sudo().render_qweb_pdf(self.invoice_ids[0].id)
@@ -81,21 +81,23 @@ class AccountPayment(models.Model):
                     attchment_list.append(pdf_create)
 
                 agreement_id = self.env.ref('cfo_snr_jnr.charterbook_term_and_condition_pdf')
+
                 if agreement_id:
                     attchment_list.append(agreement_id)
-                email_data = template_id.generate_email(self.id)
+                email_data = template_id.generate_email(self.invoice_ids[0].id)
+
                 mail_values = {
                     'email_from': email_data.get('email_from'),
                     'email_cc': email_data.get('email_cc'),
                     'reply_to': email_data.get('reply_to'),
-                    'email_to': email_data.get('email_to'),
-                    'subject': email_data.get('subject'),
+                    'email_to': self.invoice_ids[0].partner_id.email,
+                    'subject':  self.invoice_ids[0].sale_order_id.carrier_id.name or 'false' + ' -CharterBooks: Order Confirmation',
                     'body_html': email_data.get('body_html'),
                     'notification': True,
                     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
                     'auto_delete': False,
-                    'model': 'account.payment',
-                    'res_id': self.id
+                    'model': 'account.invoice',
+                    'res_id': self.invoice_ids[0].id
                 }
                 msg_id = mail_obj.create(mail_values)
                 msg_id.send()
