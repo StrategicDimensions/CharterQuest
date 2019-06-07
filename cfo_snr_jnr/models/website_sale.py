@@ -91,7 +91,7 @@ class AccountPayment(models.Model):
                     'email_cc': email_data.get('email_cc'),
                     'reply_to': email_data.get('reply_to'),
                     'email_to': self.invoice_ids[0].partner_id.email,
-                    'subject':  self.invoice_ids[0].sale_order_id.carrier_id.name or 'false' + ' -CharterBooks: Order Confirmation',
+                    'subject':  (self.invoice_ids[0].sale_order_id.carrier_id.warehouse_id.name or 'false') + ' - CharterBooks: Order Confirmation',
                     'body_html': email_data.get('body_html'),
                     'notification': True,
                     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],

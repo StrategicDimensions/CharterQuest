@@ -118,7 +118,7 @@ Email: enquiries@charterquest.co.za<br>
             <field name="email_from">bookstore@charterquest.co.za</field>
             <field name="email_to">${object.partner_id.email or ''}</field>
             <field name='email_cc'>accounts@charterquest.co.za,bookstores@charterquest.co.za,cqops@charterquest.co.za</field>
-            <field name="subject">${object.carrier_id.name} -CharterBooks: Order Confirmation</field>
+            <field name="subject">${object.carrier_id.warehouse_id.name} - CharterBooks: Order Confirmation</field>
             <field name="email_recipients">${object.partner_id}</field>
             <field name="model_id" ref="stock.model_stock_picking"/>
             <field name="auto_delete" eval="True"/>
