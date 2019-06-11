@@ -102,7 +102,7 @@
                     <button name="get_attendance_report" icon="fa-users" class="oe_stat_button" type="object" string="Attendance" help="Attendance Register for this event"/>
                 </button>
                 <field name="organizer_id" position="after">
-                    <field name="master_course_id"/>
+                    <field name="event_course_id"/>
                     <field name="pc_exam"/>
                         <field name="type_pc_exam" attrs="{'invisible':[('pc_exam','!=',True)],'required':[('pc_exam','=',True)]}" groups="base.group_no_one"/>
                         <field name="subject" attrs="{'invisible':[('pc_exam','!=',True)],'required':[('pc_exam','=',True)]}"/>
@@ -315,9 +315,9 @@
 
         <menuitem id="menu_action_event_subject" action="action_event_subject"  parent="event.menu_event_configuration" sequence="17"/>
 
-        <record model="ir.ui.view" id="view_master_course_form">
-            <field name="name">Master Course</field>
-            <field name="model">master.course</field>
+        <record model="ir.ui.view" id="view_event_course_form">
+            <field name="name">Courses</field>
+            <field name="model">event.course</field>
             <field name="arch" type="xml">
                 <form string="Master Course">
                     <group>
@@ -327,9 +327,9 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_master_course_tree">
-        <field name="name">Master Course</field>
-        <field name="model">master.course</field>
+        <record model="ir.ui.view" id="view_event_course_tree">
+        <field name="name">Courses</field>
+        <field name="model">event.course</field>
         <field name="arch" type="xml">
             <tree string="Master Course">
                  <field name="name"/>
@@ -337,14 +337,14 @@
         </field>
         </record>
 
-        <record model="ir.actions.act_window" id="action_master_course">
-            <field name="name">Master Course</field>
-            <field name="res_model">master.course</field>
+        <record model="ir.actions.act_window" id="action_event_course">
+            <field name="name">Courses</field>
+            <field name="res_model">event.course</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Master Course" id="menu_master_course" action="action_master_course"
+        <menuitem name="Courses" id="menu_event_course" action="action_event_course"
                   parent="event.menu_event_configuration" sequence="30"/>
 
     </data>
