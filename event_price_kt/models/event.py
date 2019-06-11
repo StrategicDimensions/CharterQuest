@@ -42,6 +42,7 @@ class event_event(models.Model):
     product_ids = fields.Many2many('product.product', 'event_product_rel','event_id', 'product_id', "Products")
     class_attendance_ids = fields.One2many("event.class.attendance", 'event_id', "Class Attendance")
     subject = fields.Many2one("event.subject", "Subject")
+    master_course_id = fields.Many2one('master.course', string="Master Course")
 
     @api.model
     def create(self, vals):
@@ -485,3 +486,9 @@ class account_invoice_line(models.Model):
 
     event_id = fields.Many2one('event.event', "Event")
     pcexam_voucher_id = fields.Many2one('pcexams.voucher', 'PCExams Voucher')
+
+
+class MasterCourses(models.Model):
+    _name ='master.course'
+
+    name = fields.Char(string="Course Name")
