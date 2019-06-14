@@ -42,7 +42,7 @@ class event_event(models.Model):
     product_ids = fields.Many2many('product.product', 'event_product_rel','event_id', 'product_id', "Products")
     class_attendance_ids = fields.One2many("event.class.attendance", 'event_id', "Class Attendance")
     subject = fields.Many2one("event.subject", "Subject")
-    event_course_id = fields.Many2one('event.course', string="Courses")
+    event_course_id = fields.Many2one('event.course', string="Course")
 
     @api.model
     def create(self, vals):
@@ -53,7 +53,6 @@ class event_event(models.Model):
             vals['day'] = date_begin.day
         if 'seats_max' in vals.keys():
              vals['seats_available'] = vals['seats_max']
-
         return super(event_event, self).create(vals)
 
     @api.multi
@@ -492,3 +491,25 @@ class EventCourses(models.Model):
     _name ='event.course'
 
     name = fields.Char(string="Course Name")
+
+
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
+
+    course_material_id = fields.Many2one('course.material', string="Course Material")
+
+
+class CourseMaterial(models.Model):
+    _name = 'course.material'
+
+    name = fields.Char(string='Course Material Name')
+    event_id = fields.Many2one('event.event', string="Event")
+    study_option_id = fields.Many2one('product.product' ,string="Study Option", domain=[('event_ok', '=', True)])
+    material_ids = fields.Many2many('material.product', 'course_material_id', string="Material")
+
+class materialProduct(models.Model):
+    _name = 'material.product'
+
+    material_product_id = fields.Many2one('product.product', 'Material Product')
+    course_material_id = fields.Many2one('course.material', string="Course Material")
+

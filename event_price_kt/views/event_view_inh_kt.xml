@@ -6,9 +6,9 @@
             <field name="model">event.class.attendance</field>
             <field name="arch" type="xml">
                 <tree string="Attended Students for the class">
-                      <field name="class_name"/>
-                      <field name="date"/>
-                      <field name="event_id"/>
+                    <field name="class_name"/>
+                    <field name="date"/>
+                    <field name="event_id"/>
                 </tree>
             </field>
         </record>
@@ -27,7 +27,7 @@
                             <field name="status"/>
                             <field name="student_ids" context="{'event':event_id}"/>
                             <field name="comment"/>
-                       </group>
+                        </group>
                     </sheet>
                 </form>
             </field>
@@ -39,7 +39,8 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-       <menuitem name="Class Attendance" id="menu_class_attendance" action="action_event_class_attendance1" parent="event.menu_event_configuration" groups="base.group_no_one" sequence="15"/>
+        <menuitem name="Class Attendance" id="menu_class_attendance" action="action_event_class_attendance1"
+                  parent="event.menu_event_configuration" groups="base.group_no_one" sequence="15"/>
 
         <record id="view_attendance_sheet_report_wizard11" model="ir.ui.view">
             <field name="name">Export Report</field>
@@ -48,7 +49,7 @@
                 <form string="Export Report">
                     <group>
                         <field name="name"/>
-                        <field name="file_stream" readonly="1"  filename="name"/>
+                        <field name="file_stream" readonly="1" filename="name"/>
                     </group>
                 </form>
             </field>
@@ -64,7 +65,7 @@
                     <group>
                         <field name="professional_body_code"/>
                         <field name="discount"/>
-                        <field name="order" />
+                        <field name="order"/>
                     </group>
                 </field>
             </field>
@@ -99,38 +100,42 @@
             <field name="inherit_id" ref="event.view_event_form"/>
             <field name="arch" type="xml">
                 <button name="toggle_active" position="after">
-                    <button name="get_attendance_report" icon="fa-users" class="oe_stat_button" type="object" string="Attendance" help="Attendance Register for this event"/>
+                    <button name="get_attendance_report" icon="fa-users" class="oe_stat_button" type="object"
+                            string="Attendance" help="Attendance Register for this event"/>
                 </button>
                 <field name="organizer_id" position="after">
                     <field name="event_course_id"/>
                     <field name="pc_exam"/>
-                        <field name="type_pc_exam" attrs="{'invisible':[('pc_exam','!=',True)],'required':[('pc_exam','=',True)]}" groups="base.group_no_one"/>
-                        <field name="subject" attrs="{'invisible':[('pc_exam','!=',True)],'required':[('pc_exam','=',True)]}"/>
-                        <field name="month" invisible="1"/>
-                        <field name="day" invisible="1"/>
-                        <field name="event_course_code"/>
+                    <field name="type_pc_exam"
+                           attrs="{'invisible':[('pc_exam','!=',True)],'required':[('pc_exam','=',True)]}"
+                           groups="base.group_no_one"/>
+                    <field name="subject"
+                           attrs="{'invisible':[('pc_exam','!=',True)],'required':[('pc_exam','=',True)]}"/>
+                    <field name="month" invisible="1"/>
+                    <field name="day" invisible="1"/>
+                    <field name="event_course_code"/>
 
                 </field>
 
                 <field name="seats_min" position="after">
-                        <field name="seats_available"/>
+                    <field name="seats_available"/>
                 </field>
 
                 <notebook>
                     <page string="Materials" attrs="{'invisible':[('pc_exam','=',True)]}">
                         <group>
-                        <field name="product_ids" widget="many2many_tags" string="Materials"/>
+                            <field name="product_ids" widget="many2many_tags" string="Materials"/>
                         </group>
                     </page>
                     <page string="Attendance">
                         <field name="class_attendance_ids">
-                        <tree editable="top">
-                            <field name="class_name" required="1"/>
-                            <field name="date"/>
-                            <field name="status"/>
-                            <field name="student_ids" widget="many2many_tags"/>
-                            <field name="comment"/>
-                        </tree>
+                            <tree editable="top">
+                                <field name="class_name" required="1"/>
+                                <field name="date"/>
+                                <field name="status"/>
+                                <field name="student_ids" widget="many2many_tags"/>
+                                <field name="comment"/>
+                            </tree>
                         </field>
                     </page>
                 </notebook>
@@ -142,20 +147,20 @@
         </record>
 
         <!--<record model="ir.ui.view" id="event_event_inh_kt">-->
-            <!--<field name="name">event.event.inh</field>-->
-            <!--<field name="model">event.event</field>-->
-            <!--<field name="inherit_id" ref="event_price.event_event_inh" />-->
-            <!--<field name="arch" type="xml">-->
-                <!--<field name='qualification' position="replace">-->
-                    <!--<field name="qualification" required="1"/>-->
-                <!--</field>-->
-                <!--<field name='study' position="replace">-->
-                    <!--<field name="study" attrs="{'invisible':[('pc_exam','=',True)],'required':[('pc_exam','!=',True)]}" />-->
-                <!--</field>-->
-                <!--<field name='semester' position="replace">-->
-                    <!--<field name="semester" attrs="{'required':[('pc_exam','!=',True)]}" />-->
-                <!--</field>-->
-            <!--</field>-->
+        <!--<field name="name">event.event.inh</field>-->
+        <!--<field name="model">event.event</field>-->
+        <!--<field name="inherit_id" ref="event_price.event_event_inh" />-->
+        <!--<field name="arch" type="xml">-->
+        <!--<field name='qualification' position="replace">-->
+        <!--<field name="qualification" required="1"/>-->
+        <!--</field>-->
+        <!--<field name='study' position="replace">-->
+        <!--<field name="study" attrs="{'invisible':[('pc_exam','=',True)],'required':[('pc_exam','!=',True)]}" />-->
+        <!--</field>-->
+        <!--<field name='semester' position="replace">-->
+        <!--<field name="semester" attrs="{'required':[('pc_exam','!=',True)]}" />-->
+        <!--</field>-->
+        <!--</field>-->
         <!--</record>-->
 
 
@@ -165,7 +170,8 @@
             <field name="inherit_id" ref="event.view_event_registration_form"/>
             <field name="arch" type="xml">
                 <button name="button_reg_cancel" position="replace">
-                    <button name="%(action_registration_cancel_wizard)d" string="Cancel Registration" states="draft,open" type="action" icon="gtk-cancel"/>
+                    <button name="%(action_registration_cancel_wizard)d" string="Cancel Registration"
+                            states="draft,open" type="action" icon="gtk-cancel"/>
                 </button>
                 <field name="event_id" position="after">
                     <field name="pc_exam"/>
@@ -180,12 +186,12 @@
         </record>
 
         <!--<record model="ir.ui.view" id="view_event_registration_search_inh_kt">-->
-            <!--<field name="name">Registrations</field>-->
-            <!--<field name="model">event.registration</field>-->
-            <!--<field name="inherit_id" ref="event.view_registration_search"/>-->
-            <!--<field name="arch" type="xml">-->
-                    <!--<filter icon="terp-personal" string="Registered with Professional Body" help="Registered with Professional Body" domain="[('reg_prof_body','=',True)]"/>-->
-            <!--</field>-->
+        <!--<field name="name">Registrations</field>-->
+        <!--<field name="model">event.registration</field>-->
+        <!--<field name="inherit_id" ref="event.view_registration_search"/>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<filter icon="terp-personal" string="Registered with Professional Body" help="Registered with Professional Body" domain="[('reg_prof_body','=',True)]"/>-->
+        <!--</field>-->
         <!--</record>-->
 
         <record id="saler_order_event_inh_form_kt" model="ir.ui.view">
@@ -194,8 +200,9 @@
             <field name="inherit_id" ref="event_price.saler_order_event_inh_form"/>
             <field name="arch" type="xml">
                 <button name="action_quotation_send" position="replace"/>
-                    <button name="action_cancel" position="before">
-                    <button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="oe_highlight" groups="event_price_kt.group_quote_sale_invoice" />
+                <button name="action_cancel" position="before">
+                    <button name="action_quotation_send" string="Send by Email" type="object" states="draft"
+                            class="oe_highlight" groups="event_price_kt.group_quote_sale_invoice"/>
                 </button>
                 <!--<button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="oe_highlight" groups="base.group_user" position="replace">-->
                 <!--<button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="oe_highlight" groups="event_price_kt.group_quote_sale_invoice" />-->
@@ -206,11 +213,11 @@
                     <field name="provisional_booking"/>
                 </field>
                 <field name="fiscal_position_id" position="after">
-                    <field name="link_portal"  widget='url'/>
+                    <field name="link_portal" widget='url'/>
                     <field name="no_of_days"/>
                     <field name="current_quote"/>
                     <field name="no_of_reminder_emails_sent" readonly="1"/>
-                    <field name="freequote_opt_out" />
+                    <field name="freequote_opt_out"/>
                 </field>
             </field>
         </record>
@@ -238,24 +245,24 @@
             <field name="arch" type="xml">
                 <form string="PC Exam Type">
                     <group>
-                         <field name="name"/>
-                         <field name="discount_amount"/>
-                         <field name="type_event_id" />
+                        <field name="name"/>
+                        <field name="discount_amount"/>
+                        <field name="type_event_id"/>
                     </group>
                 </form>
             </field>
         </record>
 
         <record model="ir.ui.view" id="view_pcexam_type_tree">
-        <field name="name">Pc Exam Type</field>
-        <field name="model">pc.exam.type</field>
-        <field name="arch" type="xml">
-            <tree string="PC Exam Type">
-                 <field name="name"/>
-                 <field name="discount_amount"/>
-                 <field name="type_event_id" />
-            </tree>
-        </field>
+            <field name="name">Pc Exam Type</field>
+            <field name="model">pc.exam.type</field>
+            <field name="arch" type="xml">
+                <tree string="PC Exam Type">
+                    <field name="name"/>
+                    <field name="discount_amount"/>
+                    <field name="type_event_id"/>
+                </tree>
+            </field>
         </record>
 
         <record model="ir.actions.act_window" id="action_pc_exam_type">
@@ -265,19 +272,20 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="PC Exam Type" id="menu_pcexam_type" action="action_pc_exam_type" parent="event.menu_event_configuration" groups="base.group_no_one" sequence="16"/>
+        <menuitem name="PC Exam Type" id="menu_pcexam_type" action="action_pc_exam_type"
+                  parent="event.menu_event_configuration" groups="base.group_no_one" sequence="16"/>
 
         <record id="view_event_subject_form" model="ir.ui.view">
             <field name="name">event.subject.form</field>
             <field name="model">event.subject</field>
             <field name="arch" type="xml">
                 <form string="Subjects">
-                 <group col="2">
-                   <field name="name" required="1"/>
-                </group>
+                    <group col="2">
+                        <field name="name" required="1"/>
+                    </group>
                 </form>
             </field>
-         </record>
+        </record>
 
 
         <record id="view_event_subject_tree" model="ir.ui.view">
@@ -285,10 +293,10 @@
             <field name="model">event.subject</field>
             <field name="arch" type="xml">
                 <tree string="Subjects">
-                   <field name="name"/>
+                    <field name="name"/>
                 </tree>
             </field>
-         </record>
+        </record>
 
         <record id="action_event_subject" model="ir.actions.act_window">
             <field name="name">Subjects</field>
@@ -297,8 +305,9 @@
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                Click to add Subjects
-                </p><p></p>
+                    Click to add Subjects
+                </p>
+                <p></p>
             </field>
         </record>
 
@@ -306,14 +315,15 @@
         <!--<field name="name">product.template.product.website.form</field>-->
         <!--<field name="model">product.template</field>-->
         <!--<field name="inherit_id" ref="product.product_template_form_view"/>-->
-            <!--<field name="arch" type="xml">-->
-                <!--<field name="website_style_ids" position="attributes">-->
-                    <!--<attribute name="groups"/>-->
-                <!--</field>-->
-            <!--</field>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<field name="website_style_ids" position="attributes">-->
+        <!--<attribute name="groups"/>-->
+        <!--</field>-->
+        <!--</field>-->
         <!--</record>-->
 
-        <menuitem id="menu_action_event_subject" action="action_event_subject"  parent="event.menu_event_configuration" sequence="17"/>
+        <menuitem id="menu_action_event_subject" action="action_event_subject" parent="event.menu_event_configuration"
+                  sequence="17"/>
 
         <record model="ir.ui.view" id="view_event_course_form">
             <field name="name">Courses</field>
@@ -321,20 +331,20 @@
             <field name="arch" type="xml">
                 <form string="Master Course">
                     <group>
-                         <field name="name"/>
+                        <field name="name"/>
                     </group>
                 </form>
             </field>
         </record>
 
         <record model="ir.ui.view" id="view_event_course_tree">
-        <field name="name">Courses</field>
-        <field name="model">event.course</field>
-        <field name="arch" type="xml">
-            <tree string="Master Course">
-                 <field name="name"/>
-            </tree>
-        </field>
+            <field name="name">Courses</field>
+            <field name="model">event.course</field>
+            <field name="arch" type="xml">
+                <tree string="Master Course">
+                    <field name="name"/>
+                </tree>
+            </field>
         </record>
 
         <record model="ir.actions.act_window" id="action_event_course">
@@ -347,5 +357,86 @@
         <menuitem name="Courses" id="menu_event_course" action="action_event_course"
                   parent="event.menu_event_configuration" sequence="30"/>
 
+
+        <record model="ir.ui.view" id="view_course_material_form">
+            <field name="name">Course Material</field>
+            <field name="model">course.material</field>
+            <field name="arch" type="xml">
+                <form string="Course Material">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group col="4">
+                            <field name="event_id"/>
+                            <field name="study_option_id"/>
+                        </group>
+                        <notebook>
+                            <page string="Materials">
+                                <field name="material_ids">
+                                    <tree editable="bottom">
+                                        <field name="material_product_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_course_material_tree">
+            <field name="name">Course Material</field>
+            <field name="model">course.material</field>
+            <field name="arch" type="xml">
+                <tree string="Master Course">
+                    <field name="name"/>
+                    <field name="event_id"/>
+                    <field name="study_option_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_course_material">
+            <field name="name">Course Material</field>
+            <field name="res_model">course.material</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Course Material" id="menu_course_material" action="action_course_material"
+                  parent="event.menu_event_configuration" sequence="31"/>
+
+        <record model="ir.ui.view" id="view_material_product_form">
+            <field name="name">Material Product</field>
+            <field name="model">material.product</field>
+            <field name="arch" type="xml">
+                <form string="Material Product">
+                    <group>
+                        <field name="material_product_id"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_material_product_tree">
+            <field name="name">Material Product</field>
+            <field name="model">material.product</field>
+            <field name="arch" type="xml">
+                <tree string="Material Product">
+                    <field name="material_product_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_material_product">
+            <field name="name">Material Product</field>
+            <field name="res_model">material.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
     </data>
 </odoo>
