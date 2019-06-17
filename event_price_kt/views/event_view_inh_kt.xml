@@ -376,7 +376,7 @@
                         </group>
                         <notebook>
                             <page string="Materials">
-                                <field name="material_ids">
+                                <field name="material_ids" mode="tree" nolable="1" editable="bottom">
                                     <tree editable="bottom">
                                         <field name="material_product_id"/>
                                     </tree>
@@ -409,34 +409,5 @@
 
         <menuitem name="Course Material" id="menu_course_material" action="action_course_material"
                   parent="event.menu_event_configuration" sequence="31"/>
-
-        <record model="ir.ui.view" id="view_material_product_form">
-            <field name="name">Material Product</field>
-            <field name="model">material.product</field>
-            <field name="arch" type="xml">
-                <form string="Material Product">
-                    <group>
-                        <field name="material_product_id"/>
-                    </group>
-                </form>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="view_material_product_tree">
-            <field name="name">Material Product</field>
-            <field name="model">material.product</field>
-            <field name="arch" type="xml">
-                <tree string="Material Product">
-                    <field name="material_product_id"/>
-                </tree>
-            </field>
-        </record>
-
-        <record model="ir.actions.act_window" id="action_material_product">
-            <field name="name">Material Product</field>
-            <field name="res_model">material.product</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
     </data>
 </odoo>

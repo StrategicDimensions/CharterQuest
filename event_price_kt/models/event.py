@@ -505,11 +505,10 @@ class CourseMaterial(models.Model):
     name = fields.Char(string='Course Material Name')
     event_id = fields.Many2one('event.event', string="Event")
     study_option_id = fields.Many2one('product.product' ,string="Study Option", domain=[('event_ok', '=', True)])
-    material_ids = fields.Many2many('material.product', 'course_material_id', string="Material")
+    material_ids = fields.One2many('material.product', 'course_material_id', string="Material")
 
-class materialProduct(models.Model):
+class MaterialProduct(models.Model):
     _name = 'material.product'
 
-    material_product_id = fields.Many2one('product.product', 'Material Product')
+    material_product_id = fields.Many2one('product.product', 'Materials')
     course_material_id = fields.Many2one('course.material', string="Course Material")
-
