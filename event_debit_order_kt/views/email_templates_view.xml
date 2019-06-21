@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <odoo>
-<data noupdate="1">
+<data noupdate="0">
 
         <!--Email template for Sending Tax Invoice to Student -->
         <record id="email_template_edi_tax_invoice_student" model="mail.template">

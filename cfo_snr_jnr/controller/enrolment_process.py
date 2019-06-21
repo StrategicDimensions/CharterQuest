@@ -1036,6 +1036,8 @@ class EnrolmentProcess(http.Controller):
         if post.get('sale_order_id'):
             sale_order = post.get('sale_order_id')
 
+        event_tickets = request.session['event_id'] if request.session.get('event_id') else ''
+
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
 
         if sale_order_id:
@@ -1069,9 +1071,55 @@ class EnrolmentProcess(http.Controller):
                                                      'invoice_line_ids': invoice_line,
                                                      'residual': sale_order_id.out_standing_balance_incl_vat,
                                                      })
-                    sale_order_id.write({'state': 'sale'})
-                    sale_order_id.action_confirm()
                     invoice_id.action_invoice_open()
+            sale_order_id.write({'state': 'sale'})
+            sale_order_id.action_confirm()
+
+            stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
+            stock_location = request.env['stock.location'].sudo().search([('location_id', '=', stock_warehouse.id)])
+
+            line_list = []
+            for each_event_ticket in event_tickets:
+                event_ticket = request.env['event.event.ticket'].sudo().search(
+                    [('id', '=', int(event_tickets[each_event_ticket]))])
+                book_combination = request.env['course.material'].sudo().search(
+                    [('event_id', '=', event_ticket.event_id.id),
+                     ('study_option_id', '=', event_ticket.product_id.id)])
+                if book_combination:
+                    for each_combination in book_combination.material_ids:
+                        line_list.append((0,0,{
+                            'name': 'move out',
+                            'product_id': each_combination.material_product_id.id,
+                            'product_uom': each_combination.material_product_id.uom_id.id,
+                            'product_uom_qty': 1,
+                            'procure_method': 'make_to_stock',
+                            'location_id': stock_location[0].id,
+                            'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+                        }))
+            customer_picking = request.env['stock.picking'].create({
+                'partner_id': sale_order_id.partner_id.id,
+                'campus_id': sale_order_id.campus.id,
+                'prof_body_id': sale_order_id.prof_body.id,
+                'sale_order_id': sale_order_id.id,
+                'sale_id': sale_order_id.id,
+                'semester': sale_order_id.semester_id.id,
+                'delivery_order_source': sale_order_id.quote_type,
+                'location_id': stock_location[0].id,
+                'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+                'picking_type_id': 1,
+                'move_lines': line_list
+            })
+                        # customer_move = request.env['stock.move'].create((0,0,{
+                        #     'name': 'move out',
+                        #     'product_id': each_combination.material_product_id.id,
+                        #     'product_uom': each_combination.material_product_id.uom_id.id,
+                        #     'product_uom_qty': 1,
+                        #     'procure_method': 'make_to_order',
+                        #     'location_id': each_combination.material_product_id.property_stock_production.id,
+                        #     'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+                        #     'picking_id': customer_picking.id,
+                        # })
+
             event_tickets = request.session['event_id'] if request.session.get('event_id') else ''
             event_count = request.session['event_count'] if request.session.get('event_count') else 0
             discount_detail_list = []
@@ -1337,6 +1385,7 @@ class EnrolmentProcess(http.Controller):
         if request.session.get('sale_order'):
             sale_order = request.session['sale_order']
 
+        event_tickets = request.session['event_id'] if request.session.get('event_id') else ''
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
         if sale_order_id:
             for each_order_line in sale_order_id.order_line:
@@ -1356,6 +1405,40 @@ class EnrolmentProcess(http.Controller):
                                              'invoice_line_ids': invoice_line,
                                              'residual': sale_order_id.out_standing_balance_incl_vat,
                                              })
+            stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
+            stock_location = request.env['stock.location'].sudo().search([('location_id', '=', stock_warehouse.id)])
+
+            line_list = []
+            for each_event_ticket in event_tickets:
+                event_ticket = request.env['event.event.ticket'].sudo().search(
+                    [('id', '=', int(event_tickets[each_event_ticket]))])
+                book_combination = request.env['course.material'].sudo().search(
+                    [('event_id', '=', event_ticket.event_id.id),
+                     ('study_option_id', '=', event_ticket.product_id.id)])
+                if book_combination:
+                    for each_combination in book_combination.material_ids:
+                        line_list.append((0, 0, {
+                            'name': 'move out',
+                            'product_id': each_combination.material_product_id.id,
+                            'product_uom': each_combination.material_product_id.uom_id.id,
+                            'product_uom_qty': 1,
+                            'procure_method': 'make_to_stock',
+                            'location_id': stock_location[0].id,
+                            'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+                        }))
+            customer_picking = request.env['stock.picking'].create({
+                'partner_id': sale_order_id.partner_id.id,
+                'campus_id': sale_order_id.campus.id,
+                'prof_body_id': sale_order_id.prof_body.id,
+                'sale_order_id': sale_order_id.id,
+                'sale_id': sale_order_id.id,
+                'semester': sale_order_id.semester_id.id,
+                'delivery_order_source': sale_order_id.quote_type,
+                'location_id': stock_location[0].id,
+                'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+                'picking_type_id': 1,
+                'move_lines': line_list
+            })
             invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:
@@ -1676,6 +1759,8 @@ class EnrolmentProcess(http.Controller):
         if request.session.get('sale_last_order_id'):
             sale_order = request.session.get('sale_last_order_id')
 
+        event_tickets = request.session['event_id'] if request.session.get('event_id') else ''
+
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
         for each_order_line in sale_order_id.order_line:
             invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
@@ -1694,6 +1779,40 @@ class EnrolmentProcess(http.Controller):
                                          'invoice_line_ids': invoice_line,
                                          'residual': sale_order_id.out_standing_balance_incl_vat,
                                          })
+        stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
+        stock_location = request.env['stock.location'].sudo().search([('location_id', '=', stock_warehouse.id)])
+
+        line_list = []
+        for each_event_ticket in event_tickets:
+            event_ticket = request.env['event.event.ticket'].sudo().search(
+                [('id', '=', int(event_tickets[each_event_ticket]))])
+            book_combination = request.env['course.material'].sudo().search(
+                [('event_id', '=', event_ticket.event_id.id),
+                 ('study_option_id', '=', event_ticket.product_id.id)])
+            if book_combination:
+                for each_combination in book_combination.material_ids:
+                    line_list.append((0, 0, {
+                        'name': 'move out',
+                        'product_id': each_combination.material_product_id.id,
+                        'product_uom': each_combination.material_product_id.uom_id.id,
+                        'product_uom_qty': 1,
+                        'procure_method': 'make_to_stock',
+                        'location_id': stock_location[0].id,
+                        'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+                    }))
+        customer_picking = request.env['stock.picking'].create({
+            'partner_id': sale_order_id.partner_id.id,
+            'campus_id': sale_order_id.campus.id,
+            'prof_body_id': sale_order_id.prof_body.id,
+            'sale_order_id': sale_order_id.id,
+            'sale_id': sale_order_id.id,
+            'semester': sale_order_id.semester_id.id,
+            'delivery_order_source': sale_order_id.quote_type,
+            'location_id': stock_location[0].id,
+            'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+            'picking_type_id': 1,
+            'move_lines': line_list
+        })
         invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:
@@ -1794,6 +1913,7 @@ class EnrolmentProcess(http.Controller):
         if request.session.get('sale_order'):
             sale_order = request.session['sale_order']
 
+        event_tickets = request.session['event_id'] if request.session.get('event_id') else ''
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
         # if request.session.get('do_invoice') == 'yes':
         sale_order_id.write({'state': 'sale'})
@@ -1814,6 +1934,40 @@ class EnrolmentProcess(http.Controller):
                                          'invoice_line_ids': invoice_line,
                                          'residual': sale_order_id.out_standing_balance_incl_vat,
                                          })
+        stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
+        stock_location = request.env['stock.location'].sudo().search([('location_id', '=', stock_warehouse.id)])
+
+        line_list = []
+        for each_event_ticket in event_tickets:
+            event_ticket = request.env['event.event.ticket'].sudo().search(
+                [('id', '=', int(event_tickets[each_event_ticket]))])
+            book_combination = request.env['course.material'].sudo().search(
+                [('event_id', '=', event_ticket.event_id.id),
+                 ('study_option_id', '=', event_ticket.product_id.id)])
+            if book_combination:
+                for each_combination in book_combination.material_ids:
+                    line_list.append((0, 0, {
+                        'name': 'move out',
+                        'product_id': each_combination.material_product_id.id,
+                        'product_uom': each_combination.material_product_id.uom_id.id,
+                        'product_uom_qty': 1,
+                        'procure_method': 'make_to_stock',
+                        'location_id': stock_location[0].id,
+                        'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+                    }))
+        customer_picking = request.env['stock.picking'].create({
+            'partner_id': sale_order_id.partner_id.id,
+            'campus_id': sale_order_id.campus.id,
+            'prof_body_id': sale_order_id.prof_body.id,
+            'sale_order_id': sale_order_id.id,
+            'sale_id': sale_order_id.id,
+            'semester': sale_order_id.semester_id.id,
+            'delivery_order_source': sale_order_id.quote_type,
+            'location_id': stock_location[0].id,
+            'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+            'picking_type_id': 1,
+            'move_lines': line_list
+        })
         invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:

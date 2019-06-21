@@ -1,6 +1,6 @@
 {
     "name": "Debit Order Customization",
-    "version": "11.2",
+    "version": "11.0.1",
     "sequence":3,
     "depends": ["base", "account", "account_voucher", "event_price_kt"],
     "author": "Acespritech Solutions Pvt. Ltd.",

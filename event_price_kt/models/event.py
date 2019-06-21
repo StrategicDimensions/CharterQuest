@@ -507,6 +507,18 @@ class CourseMaterial(models.Model):
     study_option_id = fields.Many2one('product.product' ,string="Study Option", domain=[('event_ok', '=', True)])
     material_ids = fields.One2many('material.product', 'course_material_id', string="Material")
 
+    # @api.multi
+    # @api.constrains('material_ids')
+    # def check_order(self):
+    #     material_list = []
+    #     for record in self.material_ids:
+    #         obj = self.env['material.product'].sudo().search([('material_product_id', '=',record.material_product_id),
+    #                                                           ('id', '!=', self.id)])
+    #
+    #         if obj:
+    #             raise ValidationError("Record must be unique")
+
+
 class MaterialProduct(models.Model):
     _name = 'material.product'
 

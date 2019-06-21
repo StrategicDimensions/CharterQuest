@@ -136,8 +136,7 @@ class stock_picking(models.Model):
 
 
     campus_id = fields.Many2one('res.partner', "Campus", store=True)
-    semester = fields.Selection([('1', '1st Semester'), ('2', '2nd Semester'), ('3', '3rd Semester')],
-                                 string='Semester', store=True)
+    semester = fields.Many2one('event.semester', string='Semester')
     prof_body_id = fields.Many2one('event.type', "Professional Body", store=True)
     sale_order_id =  fields.Many2one('sale.order', 'Sale Order Link', store=True)
     student_number =  fields.Char('Student No', size=64, store=True)
@@ -160,8 +159,10 @@ class stock_picking(models.Model):
              " * Ready to Transfer: products reserved, simply waiting for confirmation.\n"
              " * Transferred: has been processed, can't be modified or cancelled anymore\n"
             " * Cancelled: has been cancelled, can't be confirmed anymore""")
-    delivery_order_source =  fields.Selection([('CharterBooks', 'CharterBooks'), ('Enrolments', 'Enrolments')],
-                                              'Delivery Order Source')
+    delivery_order_source = fields.Selection([('freequote', 'Free Quote'),
+                                   ('enrolment', 'Enrolment'),
+                                   ('PC Exam', 'PC Exam'),
+                                   ('CharterBooks', 'CharterBooks')], string='Quote Type')
 
     def onchange_partner_in(self,partner_id=None):
         if not partner_id:

@@ -298,7 +298,7 @@ class debit_order_details(models.Model):
 
     name = fields.Char(string='Order Reference', size=64, readonly=1, default='/')
     partner_id = fields.Many2one('res.partner', string="Student Name")
-    dbo_amount = fields.Float(string='Debit Order Amount', digits_compute=dp.get_precision('Account'))
+    dbo_amount = fields.Float(string='Debit Order Amount', digits=dp.get_precision('Account'))
     course_fee = fields.Float(string='Fee (Less Interest)')
     interest = fields.Float(string='Interest')
     dbo_date = fields.Date(string='Debit Order Date')

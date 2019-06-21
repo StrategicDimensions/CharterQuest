@@ -1,4 +1,4 @@
-from odoo import models,fields, api, _
+from odoo import models, fields, api, _
 from odoo.tools.translate import _
 from odoo import netsvc
 import hashlib
@@ -13,9 +13,10 @@ class sale_order(models.Model):
         if not self.pc_exam and self.affiliation == '1':
             if not self:
                 return []
-            dummy, view_id = self.env['ir.model.data'].get_object_reference('event_debit_order_kt','view_payment_confirmation_form')
+            dummy, view_id = self.env['ir.model.data'].get_object_reference('event_debit_order_kt',
+                                                                            'view_payment_confirmation_form')
             return {
-                'name':_("Payment Confirmation"),
+                'name': _("Payment Confirmation"),
                 'view_mode': 'form',
                 'view_id': view_id,
                 'view_type': 'form',
@@ -24,10 +25,10 @@ class sale_order(models.Model):
                 'target': 'new',
                 'domain': '[]',
                 'context': {
-                       'default_payment_amount': self.amount_total,
-                       'default_payment_ref': self.name,
-                       'default_order_id':self.id,
-                      }
+                    'default_payment_amount': self.amount_total,
+                    'default_payment_ref': self.name,
+                    'default_order_id': self.id,
+                }
             }
         else:
             self._action_confirm()
@@ -48,7 +49,7 @@ class sale_order(models.Model):
     payment_method = fields.Many2one('account.journal', string='Payment Method')
     debit_order_mandate = fields.Boolean(string='Debit Order Mandate Submitted')
     debit_order_mandate_link = fields.Char(string="Debit Order Mandate Link")
-  
+
     @api.model
     def get_debit_order_mandate_reminder(self):
         sale_ids = self.search([('debit_order_mandate', '=', False),
@@ -60,7 +61,7 @@ class sale_order(models.Model):
             if sale_id.debit_order_mandate_link:
                 template_id = self.env['mail.template'].search([('name', '=', "Debit Order Mandate Reminder Email")])
                 if template_id:
-                    mail_message = self.env['mail.template'].send_mail(template_id[0], sale_id)
+                    mail_message = template_id.send_mail(sale_id.id)
         return True
 
     @api.model
@@ -116,88 +117,75 @@ class payment_confirmation(models.Model):
     payment_ref = fields.Char(string='Payment Reference')
     payment_method = fields.Many2one('account.journal', string='Payment Method')
     order_id = fields.Many2one('sale.order', string='Sale Order')
-    
+
     @api.multi
     def button_create_saleorder(self):
-        # 5/0
-        # pass
         dic = {
-                'payment_amount': self.payment_amount,
-                'payment_ref': self.payment_ref,
-                'payment_method': self.payment_method.id
-               }
+            'payment_amount': self.payment_amount,
+            'payment_ref': self.payment_ref,
+            'payment_method': self.payment_method.id
+        }
         self.order_id.write(dic)
-        # self._action_confirm()
+        # self.order_id.action_confirm()
+        self.order_id._action_confirm()
         if self.env['ir.config_parameter'].sudo().get_param('sale.auto_done_setting'):
             self.action_done()
         sale_obj = self.env['sale.order'].browse(self.order_id.id)
-        # if str(sale_obj.payment_amount) == str(sale_obj.amount_total):
-        #     sale_adv_payment = {
-        #                   'advance_payment_method': 'all',
-        #                  }
-        #     advanc_pay_id = self.env['sale.advance.payment.inv'].create(sale_adv_payment)
-        #     result = self.env['sale.advance.payment.inv'].create_invoices(advanc_pay_id)
-        #
-        #     invoice_obj = self.env['sale.order'].read(self._context.get('active_id'),['invoice_ids'])
-        #
-        #     self.pool.get('account.invoice').signal_workflow(cr, uid, invoice_obj['invoice_ids'], 'invoice_open')
-        #
-        #     account_invoice = self.pool.get('account.invoice').browse(cr,uid,invoice_obj['invoice_ids'][0])
-        #     move_line_id = self.pool.get('account.move.line').search(cr, uid, [('name','=ilike','/'),('move_id','=',account_invoice.move_id.id)])
-        #     if account_invoice.state != 'paid':
-        #         journal_ids = self.pool.get('account.journal').search(cr,uid,[('type','=','bank'),('name','=','Bank')])
-        #         journal = self.pool.get('account.journal').browse(cr,uid,journal_ids[0])
-        #         account_voucher = {
-        #              'partner_id': sale_obj.partner_id.id,
-        #              'company_id': sale_obj.company_id.id,
-        #              'type': 'receipt',
-        #              'journal_id': journal_ids[0],
-        #              'reference': sale_obj.name,
-        #              'name': sale_obj.campus.name,
-        #              'account_id': journal.default_credit_account_id.id,
-        #              'payment_method': sale_obj.payment_method,
-        #              'amount': sale_obj.payment_amount,
-        #           }
-        #         account_voucher_id = self.env['account.voucher'].create(account_voucher)
-        #         account_voucher_line = {
-        #             'partner_id': sale_obj.partner_id.id,
-        #             'company_id': sale_obj.company_id.id,
-        #             'type': 'cr',
-        #             'voucher_id': account_voucher_id,
-        #             'amount': sale_obj.payment_amount,
-        #             'name': sale_obj.campus.name,
-        #             'account_id': account_invoice.account_id and account_invoice.account_id.id,
-        #             'move_line_id': move_line_id and move_line_id[0]
-        #           }
-        #         self.env['account.voucher.line'].create(account_voucher_line)
-        #         self.env.get('account.voucher').button_proforma_voucher([account_voucher_id],{'active_model':'account.invoice','invoice_id':invoice_obj['invoice_ids'][0]})
-        #         account_voucher = self.env['account.voucher'].browse(account_voucher_id)
-                #self.pool.get('account.invoice').pay_and_reconcile(cr,uid,invoice_obj['invoice_ids'][0],sale_obj.payment_amount,journal.default_credit_account_id.id,account_voucher.period_id.id,account_voucher.journal_id.id,False,False,'/')
-                # template_id = self.pool.get('email.template').search(cr,uid,[('name','=',"Sending Tax Invoice to Student")])
-                # if template_id:
-                #     mail_message = self.pool.get('email.template').send_mail(cr,uid,template_id[0],invoice_obj['invoice_ids'][0])
-        # else:
-        quote_name = "SO{0}WEB".format(str(self.order_id.id).zfill(3))
-        5/0
-        m = hashlib.md5()
-        m.update(quote_name)
-        decoded_quote_name = m.hexdigest()
-        link = "http://enrolments.charterquest.co.za/debitordermandate/"+decoded_quote_name
-        sale_order_id = self.order_id.write({'debit_order_mandate_link': link})
-        template_id = self.env['mail.template'].search([('name', '=', "Debit Order Mandate Email")])
-        #     if template_id:
-        #         mail_message = template_id.send_mail(self.order_id)
-        #         # template = self.pool.get('email.template').browse(cr, uid, template_id[0])
-        #         template_id.write({'body_html': self.order_id.id})
-        #         template_id.write({'subject': self.order_id.id})
-        #         message = self.env['mail.message']
-        #        # mail_obj = self.pool.get('mail.message').browse(cr,uid,sale_obj.message_ids[0])
-        #         if sale_obj.message_ids:
-        #                message.create({
-        #                         'res_id': sale_obj.message_ids.res_id,
-        #                         'parent_id': sale_obj.message_ids.id,
-        #                         'subject': template_id.subject,
-        #                         'model': 'sale.order',
-        #                         'body': template_id.body_html
-        #                    })
-        # return True
+        if str(sale_obj.payment_amount) == str(sale_obj.amount_total):
+            sale_adv_payment = {
+                'advance_payment_method': 'all',
+            }
+            advanc_pay_id = self.env['sale.advance.payment.inv'].create(sale_adv_payment)
+            advanc_pay_id.create_invoices()
+            #     invoice_obj = self.env['sale.order'].read(self._context.get('active_id'),['invoice_ids'])
+            # 
+            #     self.pool.get('account.invoice').signal_workflow(cr, uid, invoice_obj['invoice_ids'], 'invoice_open')
+            #
+            #     account_invoice = self.pool.get('account.invoice').browse(cr,uid,invoice_obj['invoice_ids'][0])
+            #     move_line_id = self.pool.get('account.move.line').search(cr, uid, [('name','=ilike','/'),('move_id','=',account_invoice.move_id.id)])
+            #     if account_invoice.state != 'paid':
+            #         journal_ids = self.pool.get('account.journal').search(cr,uid,[('type','=','bank'),('name','=','Bank')])
+            #         journal = self.pool.get('account.journal').browse(cr,uid,journal_ids[0])
+            #         account_voucher = {
+            #              'partner_id': sale_obj.partner_id.id,
+            #              'company_id': sale_obj.company_id.id,
+            #              'type': 'receipt',
+            #              'journal_id': journal_ids[0],
+            #              'reference': sale_obj.name,
+            #              'name': sale_obj.campus.name,
+            #              'account_id': journal.default_credit_account_id.id,
+            #              'payment_method': sale_obj.payment_method,
+            #              'amount': sale_obj.payment_amount,
+            #           }
+            #         account_voucher_id = self.env['account.voucher'].create(account_voucher)
+            #         account_voucher_line = {
+            #             'partner_id': sale_obj.partner_id.id,
+            #             'company_id': sale_obj.company_id.id,
+            #             'type': 'cr',
+            #             'voucher_id': account_voucher_id,
+            #             'amount': sale_obj.payment_amount,
+            #             'name': sale_obj.campus.name,
+            #             'account_id': account_invoice.account_id and account_invoice.account_id.id,
+            #             'move_line_id': move_line_id and move_line_id[0]
+            #           }
+            #         self.env['account.voucher.line'].create(account_voucher_line)
+            #         self.env.get('account.voucher').button_proforma_voucher([account_voucher_id],{'active_model':'account.invoice','invoice_id':invoice_obj['invoice_ids'][0]})
+            #         account_voucher = self.env['account.voucher'].browse(account_voucher_id)
+            # self.pool.get('account.invoice').pay_and_reconcile(cr,uid,invoice_obj['invoice_ids'][0],sale_obj.payment_amount,journal.default_credit_account_id.id,account_voucher.period_id.id,account_voucher.journal_id.id,False,False,'/')
+            template_id = self.env['mail.template'].sudo().search([('name','=',"Sending Tax Invoice to Student")])
+            if template_id:
+                mail_message = template_id.send_mail(self.order_id.invoice_ids[0].id)
+        else:
+            template_id = self.env['mail.template'].search([('name', '=', "Debit Order Mandate Email")])
+            if template_id:
+                mail_message = template_id.send_mail(self.order_id.id)
+                message = self.env['mail.message']
+                if sale_obj.message_ids:
+                    message.create({
+                        'res_id': sale_obj.message_ids[0].res_id,
+                        'parent_id': sale_obj.message_ids[0].id,
+                        'subject': template_id.subject,
+                        'model': 'sale.order',
+                        'body': template_id.body_html
+                    })
+        return True
