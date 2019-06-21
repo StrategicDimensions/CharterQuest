@@ -1076,7 +1076,7 @@ class EnrolmentProcess(http.Controller):
             sale_order_id.action_confirm()
 
             stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
-            stock_location = request.env['stock.location'].sudo().search([('location_id', '=', stock_warehouse.id)])
+            stock_location = request.env['stock.location'].sudo().search([('location_id', '=', sale_order_id.warehouse_id.id)])
 
             line_list = []
             for each_event_ticket in event_tickets:
@@ -1406,7 +1406,7 @@ class EnrolmentProcess(http.Controller):
                                              'residual': sale_order_id.out_standing_balance_incl_vat,
                                              })
             stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
-            stock_location = request.env['stock.location'].sudo().search([('location_id', '=', stock_warehouse.id)])
+            stock_location = request.env['stock.location'].sudo().search([('location_id', '=', sale_order_id.warehouse_id.id)])
 
             line_list = []
             for each_event_ticket in event_tickets:
@@ -1780,7 +1780,7 @@ class EnrolmentProcess(http.Controller):
                                          'residual': sale_order_id.out_standing_balance_incl_vat,
                                          })
         stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
-        stock_location = request.env['stock.location'].sudo().search([('location_id', '=', stock_warehouse.id)])
+        stock_location = request.env['stock.location'].sudo().search([('location_id', '=', sale_order_id.warehouse_id.id)])
 
         line_list = []
         for each_event_ticket in event_tickets:
@@ -1935,7 +1935,7 @@ class EnrolmentProcess(http.Controller):
                                          'residual': sale_order_id.out_standing_balance_incl_vat,
                                          })
         stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
-        stock_location = request.env['stock.location'].sudo().search([('location_id', '=', stock_warehouse.id)])
+        stock_location = request.env['stock.location'].sudo().search([('location_id', '=', sale_order_id.warehouse_id.id)])
 
         line_list = []
         for each_event_ticket in event_tickets:
