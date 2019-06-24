@@ -1081,10 +1081,12 @@ class EnrolmentProcess(http.Controller):
             sale_order_id.write({'state': 'sale'})
             sale_order_id.action_confirm()
 
-            stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
-            stock_location = request.env['stock.location'].sudo().search(
-                [('location_id', '=', sale_order_id.warehouse_id.id)])
-
+            # stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
+            # stock_location = request.env['stock.location'].sudo().search(
+            #     [('parent_left', 'in', [sale_order_id.warehouse_id.id])])
+            # print('\n\n\n location========', stock_location, sale_order_id.warehouse_id)
+            picking_type_id = request.env['stock.picking.type'].sudo().search([('name', '=', 'Delivery Orders'),
+                                                                               ('warehouse_id', '=', sale_order_id.warehouse_id.id)])
             line_list = []
             for each_event_ticket in event_tickets:
                 event_ticket = request.env['event.event.ticket'].sudo().search(
@@ -1100,7 +1102,7 @@ class EnrolmentProcess(http.Controller):
                             'product_uom': each_combination.material_product_id.uom_id.id,
                             'product_uom_qty': 1,
                             'procure_method': 'make_to_stock',
-                            'location_id': stock_location[0].id,
+                            'location_id': picking_type_id.default_location_src_id.id,
                             'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
                         }))
             customer_picking = request.env['stock.picking'].create({
@@ -1111,7 +1113,7 @@ class EnrolmentProcess(http.Controller):
                 'sale_id': sale_order_id.id,
                 'semester': sale_order_id.semester_id.id,
                 'delivery_order_source': sale_order_id.quote_type,
-                'location_id': stock_location[0].id,
+                'location_id': picking_type_id.default_location_src_id.id,
                 'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
                 'picking_type_id': 1,
                 'move_lines': line_list
@@ -1413,8 +1415,11 @@ class EnrolmentProcess(http.Controller):
                                              'residual': sale_order_id.out_standing_balance_incl_vat,
                                              })
             stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
-            stock_location = request.env['stock.location'].sudo().search(
-                [('location_id', '=', sale_order_id.warehouse_id.id)])
+            # stock_location = request.env['stock.location'].sudo().search(
+            #     [('location_id', '=', sale_order_id.warehouse_id.id)])
+            picking_type_id = request.env['stock.picking.type'].sudo().search([('name', '=', 'Delivery Orders'),
+                                                                               ('warehouse_id', '=',
+                                                                                sale_order_id.warehouse_id.id)])
 
             line_list = []
             for each_event_ticket in event_tickets:
@@ -1431,7 +1436,7 @@ class EnrolmentProcess(http.Controller):
                             'product_uom': each_combination.material_product_id.uom_id.id,
                             'product_uom_qty': 1,
                             'procure_method': 'make_to_stock',
-                            'location_id': stock_location[0].id,
+                            'location_id': picking_type_id.id,
                             'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
                         }))
             customer_picking = request.env['stock.picking'].create({
@@ -1442,7 +1447,7 @@ class EnrolmentProcess(http.Controller):
                 'sale_id': sale_order_id.id,
                 'semester': sale_order_id.semester_id.id,
                 'delivery_order_source': sale_order_id.quote_type,
-                'location_id': stock_location[0].id,
+                'location_id': picking_type_id.id,
                 'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
                 'picking_type_id': 1,
                 'move_lines': line_list
@@ -1788,8 +1793,11 @@ class EnrolmentProcess(http.Controller):
                                          'residual': sale_order_id.out_standing_balance_incl_vat,
                                          })
         stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
-        stock_location = request.env['stock.location'].sudo().search(
-            [('location_id', '=', sale_order_id.warehouse_id.id)])
+        # stock_location = request.env['stock.location'].sudo().search(
+        #     [('location_id', '=', sale_order_id.warehouse_id.id)])
+        picking_type_id = request.env['stock.picking.type'].sudo().search([('name', '=', 'Delivery Orders'),
+                                                                           ('warehouse_id', '=',
+                                                                            sale_order_id.warehouse_id.id)])
 
         line_list = []
         for each_event_ticket in event_tickets:
@@ -1806,7 +1814,7 @@ class EnrolmentProcess(http.Controller):
                         'product_uom': each_combination.material_product_id.uom_id.id,
                         'product_uom_qty': 1,
                         'procure_method': 'make_to_stock',
-                        'location_id': stock_location[0].id,
+                        'location_id': picking_type_id.id,
                         'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
                     }))
         customer_picking = request.env['stock.picking'].create({
@@ -1817,7 +1825,7 @@ class EnrolmentProcess(http.Controller):
             'sale_id': sale_order_id.id,
             'semester': sale_order_id.semester_id.id,
             'delivery_order_source': sale_order_id.quote_type,
-            'location_id': stock_location[0].id,
+            'location_id': picking_type_id.id,
             'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
             'picking_type_id': 1,
             'move_lines': line_list
@@ -1944,8 +1952,11 @@ class EnrolmentProcess(http.Controller):
                                          'residual': sale_order_id.out_standing_balance_incl_vat,
                                          })
         stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
-        stock_location = request.env['stock.location'].sudo().search(
-            [('location_id', '=', sale_order_id.warehouse_id.id)])
+        # stock_location = request.env['stock.location'].sudo().search(
+        #     [('location_id', '=', sale_order_id.warehouse_id.id)])
+        picking_type_id = request.env['stock.picking.type'].sudo().search([('name', '=', 'Delivery Orders'),
+                                                                           ('warehouse_id', '=',
+                                                                            sale_order_id.warehouse_id.id)])
 
         line_list = []
         for each_event_ticket in event_tickets:
@@ -1962,7 +1973,7 @@ class EnrolmentProcess(http.Controller):
                         'product_uom': each_combination.material_product_id.uom_id.id,
                         'product_uom_qty': 1,
                         'procure_method': 'make_to_stock',
-                        'location_id': stock_location[0].id,
+                        'location_id': picking_type_id.id,
                         'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
                     }))
         customer_picking = request.env['stock.picking'].create({
@@ -1973,7 +1984,7 @@ class EnrolmentProcess(http.Controller):
             'sale_id': sale_order_id.id,
             'semester': sale_order_id.semester_id.id,
             'delivery_order_source': sale_order_id.quote_type,
-            'location_id': stock_location[0].id,
+            'location_id': picking_type_id.id,
             'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
             'picking_type_id': 1,
             'move_lines': line_list
