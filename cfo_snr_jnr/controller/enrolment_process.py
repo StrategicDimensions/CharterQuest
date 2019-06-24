@@ -130,7 +130,6 @@ class WebsiteSale(website_sale.WebsiteSale):
         if save_token:
             tx_type = 'form_save'
 
-
         request.session['shop_do_invoice'] = kwargs.get('do_invoice')
         request.session['shop_company_name'] = kwargs.get('company_name') if kwargs.get('company_name') else ''
         request.session['shop_vat_number'] = kwargs.get('vat_no') if kwargs.get('vat_no') else ''
@@ -298,42 +297,42 @@ class EnrolmentProcess(http.Controller):
 
                         msg_id.send()
                 elif acquirer_id.provider == 'transfer' and request.session.get(
-                            'shop_do_invoice') and request.session.get('shop_do_invoice') == 'no':
-                        order.quote_type = 'CharterBooks'
-                        attchment_list = []
-                        template_id = email_obj.sudo().search([('name', '=', "CharterBooks Saleorder Confirm Email")])
-                        if template_id:
-                            pdf_data_order = request.env.ref(
-                                'event_price_kt.report_sale_book').sudo().render_qweb_pdf(order.id)
-                            if pdf_data_order:
-                                pdfvals = {'name': 'Charterbooks Proforma',
-                                           'db_datas': base64.b64encode(pdf_data_order[0]),
-                                           'datas': base64.b64encode(pdf_data_order[0]),
-                                           'datas_fname': 'Charterbooks_Proforma.pdf',
-                                           'res_model': 'sale.order',
-                                           'type': 'binary'}
-                                pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
-                                attchment_list.append(pdf_create)
+                        'shop_do_invoice') and request.session.get('shop_do_invoice') == 'no':
+                    order.quote_type = 'CharterBooks'
+                    attchment_list = []
+                    template_id = email_obj.sudo().search([('name', '=', "CharterBooks Saleorder Confirm Email")])
+                    if template_id:
+                        pdf_data_order = request.env.ref(
+                            'event_price_kt.report_sale_book').sudo().render_qweb_pdf(order.id)
+                        if pdf_data_order:
+                            pdfvals = {'name': 'Charterbooks Proforma',
+                                       'db_datas': base64.b64encode(pdf_data_order[0]),
+                                       'datas': base64.b64encode(pdf_data_order[0]),
+                                       'datas_fname': 'Charterbooks_Proforma.pdf',
+                                       'res_model': 'sale.order',
+                                       'type': 'binary'}
+                            pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
+                            attchment_list.append(pdf_create)
 
-                            agreement_id = request.env.ref('cfo_snr_jnr.charterbook_term_and_condition_pdf')
-                            if agreement_id:
-                                attchment_list.append(agreement_id)
-                            email_data = template_id.generate_email(order.id)
-                            mail_values = {
-                                'email_from': email_data.get('email_from'),
-                                'email_cc': email_data.get('email_cc'),
-                                'reply_to': email_data.get('reply_to'),
-                                'email_to': email_data.get('email_to'),
-                                'subject': email_data.get('subject'),
-                                'body_html': email_data.get('body_html'),
-                                'notification': True,
-                                'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
-                                'auto_delete': False,
-                                'model': 'sale.order',
-                                'res_id': order.id
-                            }
-                            msg_id = mail_obj.create(mail_values)
-                            msg_id.send()
+                        agreement_id = request.env.ref('cfo_snr_jnr.charterbook_term_and_condition_pdf')
+                        if agreement_id:
+                            attchment_list.append(agreement_id)
+                        email_data = template_id.generate_email(order.id)
+                        mail_values = {
+                            'email_from': email_data.get('email_from'),
+                            'email_cc': email_data.get('email_cc'),
+                            'reply_to': email_data.get('reply_to'),
+                            'email_to': email_data.get('email_to'),
+                            'subject': email_data.get('subject'),
+                            'body_html': email_data.get('body_html'),
+                            'notification': True,
+                            'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
+                            'auto_delete': False,
+                            'model': 'sale.order',
+                            'res_id': order.id
+                        }
+                        msg_id = mail_obj.create(mail_values)
+                        msg_id.send()
                 else:
                     attchment_list = []
                     order.quote_type = 'CharterBooks'
@@ -764,6 +763,10 @@ class EnrolmentProcess(http.Controller):
         sale_obj = request.env['sale.order'].sudo()
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
         order_line = []
+        warehouse_id = False
+        if user_select.get('campus'):
+            campus_id = request.env['res.partner'].sudo().search([('id', '=', user_select.get('campus'))])
+            warehouse_id = request.env['stock.warehouse'].sudo().search([('name', '=', campus_id.name)])
         for each_event_ticket in event_tickets:
             event_ticket = request.env['event.event.ticket'].sudo().search(
                 [('id', '=', int(event_tickets[each_event_ticket]))])
@@ -872,8 +875,7 @@ class EnrolmentProcess(http.Controller):
                                                      'quote_type': 'enrolment',
                                                      'semester_id': user_select['Semester'] if user_select.get(
                                                          'Semester') else '',
-                                                     'warehouse_id': user_select['campus'] if user_select.get(
-                                                         'campus') else '',
+                                                     'warehouse_id': warehouse_id.id,
                                                      'discount_type_ids': [(6, 0, [each for each in discount_id])],
                                                      'order_line': order_line})
                     # sale_order_id.write({'name': sale_order_id.name + 'WEB'})
@@ -929,8 +931,7 @@ class EnrolmentProcess(http.Controller):
                                                          'quote_type': 'enrolment' if display_btn else 'freequote',
                                                          'semester_id': user_select['Semester'] if user_select.get(
                                                              'Semester') else '',
-                                                         'warehouse_id': user_select['campus'] if user_select.get(
-                                                             'campus') else '',
+                                                         'warehouse_id': warehouse_id.id,
                                                          'discount_type_ids': [(6, 0, [each for each in discount_id])],
                                                          'order_line': order_line})
                         # quote_name = sale_order_id.name + 'WEB'
@@ -981,8 +982,7 @@ class EnrolmentProcess(http.Controller):
                                                          'quote_type': 'enrolment',
                                                          'semester_id': user_select['Semester'] if user_select.get(
                                                              'Semester') else '',
-                                                         'warehouse_id': user_select['campus'] if user_select.get(
-                                                             'campus') else '',
+                                                         'warehouse_id': warehouse_id.id,
                                                          'discount_type_ids': [(6, 0, [each for each in discount_id])],
                                                          'order_line': order_line})
                         quote_name = sale_order_id.name + 'WEB'
@@ -1082,7 +1082,8 @@ class EnrolmentProcess(http.Controller):
             sale_order_id.action_confirm()
 
             stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
-            stock_location = request.env['stock.location'].sudo().search([('location_id', '=', sale_order_id.warehouse_id.id)])
+            stock_location = request.env['stock.location'].sudo().search(
+                [('location_id', '=', sale_order_id.warehouse_id.id)])
 
             line_list = []
             for each_event_ticket in event_tickets:
@@ -1093,7 +1094,7 @@ class EnrolmentProcess(http.Controller):
                      ('study_option_id', '=', event_ticket.product_id.id)])
                 if book_combination:
                     for each_combination in book_combination.material_ids:
-                        line_list.append((0,0,{
+                        line_list.append((0, 0, {
                             'name': 'move out',
                             'product_id': each_combination.material_product_id.id,
                             'product_uom': each_combination.material_product_id.uom_id.id,
@@ -1115,16 +1116,16 @@ class EnrolmentProcess(http.Controller):
                 'picking_type_id': 1,
                 'move_lines': line_list
             })
-                        # customer_move = request.env['stock.move'].create((0,0,{
-                        #     'name': 'move out',
-                        #     'product_id': each_combination.material_product_id.id,
-                        #     'product_uom': each_combination.material_product_id.uom_id.id,
-                        #     'product_uom_qty': 1,
-                        #     'procure_method': 'make_to_order',
-                        #     'location_id': each_combination.material_product_id.property_stock_production.id,
-                        #     'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
-                        #     'picking_id': customer_picking.id,
-                        # })
+            # customer_move = request.env['stock.move'].create((0,0,{
+            #     'name': 'move out',
+            #     'product_id': each_combination.material_product_id.id,
+            #     'product_uom': each_combination.material_product_id.uom_id.id,
+            #     'product_uom_qty': 1,
+            #     'procure_method': 'make_to_order',
+            #     'location_id': each_combination.material_product_id.property_stock_production.id,
+            #     'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+            #     'picking_id': customer_picking.id,
+            # })
 
             event_tickets = request.session['event_id'] if request.session.get('event_id') else ''
             event_count = request.session['event_count'] if request.session.get('event_count') else 0
@@ -1412,7 +1413,8 @@ class EnrolmentProcess(http.Controller):
                                              'residual': sale_order_id.out_standing_balance_incl_vat,
                                              })
             stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
-            stock_location = request.env['stock.location'].sudo().search([('location_id', '=', sale_order_id.warehouse_id.id)])
+            stock_location = request.env['stock.location'].sudo().search(
+                [('location_id', '=', sale_order_id.warehouse_id.id)])
 
             line_list = []
             for each_event_ticket in event_tickets:
@@ -1786,7 +1788,8 @@ class EnrolmentProcess(http.Controller):
                                          'residual': sale_order_id.out_standing_balance_incl_vat,
                                          })
         stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
-        stock_location = request.env['stock.location'].sudo().search([('location_id', '=', sale_order_id.warehouse_id.id)])
+        stock_location = request.env['stock.location'].sudo().search(
+            [('location_id', '=', sale_order_id.warehouse_id.id)])
 
         line_list = []
         for each_event_ticket in event_tickets:
@@ -1941,7 +1944,8 @@ class EnrolmentProcess(http.Controller):
                                          'residual': sale_order_id.out_standing_balance_incl_vat,
                                          })
         stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
-        stock_location = request.env['stock.location'].sudo().search([('location_id', '=', sale_order_id.warehouse_id.id)])
+        stock_location = request.env['stock.location'].sudo().search(
+            [('location_id', '=', sale_order_id.warehouse_id.id)])
 
         line_list = []
         for each_event_ticket in event_tickets:
