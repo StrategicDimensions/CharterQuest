@@ -1115,9 +1115,11 @@ class EnrolmentProcess(http.Controller):
                 'delivery_order_source': sale_order_id.quote_type,
                 'location_id': picking_type_id.default_location_src_id.id,
                 'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
-                'picking_type_id': 1,
+                'picking_type_id': picking_type_id.id,
                 'move_lines': line_list
             })
+            customer_picking.sale_id = sale_order_id.id
+            # sale_order_id.write({'picking_ids', (0,0, [])})
             # customer_move = request.env['stock.move'].create((0,0,{
             #     'name': 'move out',
             #     'product_id': each_combination.material_product_id.id,
@@ -1449,9 +1451,10 @@ class EnrolmentProcess(http.Controller):
                 'delivery_order_source': sale_order_id.quote_type,
                 'location_id': picking_type_id.id,
                 'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
-                'picking_type_id': 1,
+                'picking_type_id': picking_type_id.id,
                 'move_lines': line_list
             })
+            customer_picking.sale_id = sale_order_id.id
             invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:
@@ -1827,9 +1830,10 @@ class EnrolmentProcess(http.Controller):
             'delivery_order_source': sale_order_id.quote_type,
             'location_id': picking_type_id.id,
             'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
-            'picking_type_id': 1,
+            'picking_type_id': picking_type_id.id,
             'move_lines': line_list
         })
+        customer_picking.sale_id = sale_order_id.id
         invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:
@@ -1986,9 +1990,10 @@ class EnrolmentProcess(http.Controller):
             'delivery_order_source': sale_order_id.quote_type,
             'location_id': picking_type_id.id,
             'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
-            'picking_type_id': 1,
+            'picking_type_id': picking_type_id.id,
             'move_lines': line_list
         })
+        customer_picking.sale_id = sale_order_id.id
         invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:
