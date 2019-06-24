@@ -872,6 +872,8 @@ class EnrolmentProcess(http.Controller):
                                                      'quote_type': 'enrolment',
                                                      'semester_id': user_select['Semester'] if user_select.get(
                                                          'Semester') else '',
+                                                     'warehouse_id': user_select['campus'] if user_select.get(
+                                                         'campus') else '',
                                                      'discount_type_ids': [(6, 0, [each for each in discount_id])],
                                                      'order_line': order_line})
                     # sale_order_id.write({'name': sale_order_id.name + 'WEB'})
@@ -927,6 +929,8 @@ class EnrolmentProcess(http.Controller):
                                                          'quote_type': 'enrolment' if display_btn else 'freequote',
                                                          'semester_id': user_select['Semester'] if user_select.get(
                                                              'Semester') else '',
+                                                         'warehouse_id': user_select['campus'] if user_select.get(
+                                                             'campus') else '',
                                                          'discount_type_ids': [(6, 0, [each for each in discount_id])],
                                                          'order_line': order_line})
                         # quote_name = sale_order_id.name + 'WEB'
@@ -977,6 +981,8 @@ class EnrolmentProcess(http.Controller):
                                                          'quote_type': 'enrolment',
                                                          'semester_id': user_select['Semester'] if user_select.get(
                                                              'Semester') else '',
+                                                         'warehouse_id': user_select['campus'] if user_select.get(
+                                                             'campus') else '',
                                                          'discount_type_ids': [(6, 0, [each for each in discount_id])],
                                                          'order_line': order_line})
                         quote_name = sale_order_id.name + 'WEB'
