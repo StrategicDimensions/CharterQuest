@@ -354,8 +354,8 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Courses" id="menu_event_course" action="action_event_course"
-                  parent="event.menu_event_configuration" sequence="30"/>
+<!--        <menuitem name="Courses" id="menu_event_course" action="action_event_course"-->
+<!--                  parent="event.menu_event_configuration" sequence="30"/>-->
 
 
         <record model="ir.ui.view" id="view_course_material_form">
