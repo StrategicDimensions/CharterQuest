@@ -30,6 +30,9 @@
             <xpath expr="//field[@name='payment_term_id']" position="after">
                 <field name="sale_order_link" widget="url"/>
             </xpath>
+            <xpath expr="//button[@name='action_view_delivery']" position="attributes">
+                <attribute name="style">pointer-events: none;</attribute>
+            </xpath>
         </field>
     </record>
 
