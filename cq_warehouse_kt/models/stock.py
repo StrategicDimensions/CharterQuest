@@ -60,45 +60,44 @@ class stock_picking(models.Model):
 
     def collected_by_courier(self):
         curr_obj = self
-        sale_id = self.env['sale.order'].search([('name', '=', curr_obj.origin)])
+        sale_id = curr_obj.sale_id
         if sale_id:
-            sale_obj = self.env['sale.order'].browse(sale_id.id)
-        for pick in self:
-            ids2 = [move.id for move in pick.move_lines]
-            location_id = self.env['stock.location'].search([('name', 'ilike', 'Driver (Courier)')])
-            if location_id:
-                pick.move_lines.write({'location_id': location_id.id, 'state': 'collected'})
-                # self.pool.get('stock.move').write(cr,uid,ids2,{'state':'collected'})
-            if (pick.delivery_order_source == 'CharterBooks' or pick.delivery_order_source == 'Enrolments') and (
-                    sale_id.pc_exam == False):
-                pass
-                template_id = self.env['mail.template'].search([('name', '=', 'Delivery Order Collected by Courier')])
-                if template_id:
-                    email_data = template_id.generate_email(self.id)
-                    mail_values = {
-                        'email_from': email_data.get('email_from'),
-                        'email_cc': email_data.get('email_cc'),
-                        'reply_to': email_data.get('reply_to'),
-                        'email_to': email_data.get('email_to'),
-                        'subject': email_data.get('subject'),
-                        'body_html': email_data.get('body_html'),
-                        'notification': False,
-                        'auto_delete': False,
-                        'model': 'stock.picking',
-                        'res_id': self.id
-                    }
-                    mail_obj = self.env['mail.mail'].sudo()
-                    msg_id = mail_obj.create(mail_values)
-                    msg_id.mail_message_id.body= msg_id.body_html
-                    msg_id.send()
+            for pick in self:
+                ids2 = [move.id for move in pick.move_lines]
+                location_id = self.env['stock.location'].search([('name', 'ilike', 'Driver (Courier)')])
+                if location_id:
+                    pick.move_lines.write({'location_id': location_id.id, 'state': 'collected'})
+                    # self.pool.get('stock.move').write(cr,uid,ids2,{'state':'collected'})
+                if (pick.delivery_order_source == 'CharterBooks' or pick.delivery_order_source == 'enrolment') and (
+                        sale_id.pc_exam == False):
+                    pass
+                    template_id = self.env['mail.template'].search([('name', '=', 'Delivery Order Collected by Courier')])
+                    if template_id:
+                        email_data = template_id.generate_email(self.id)
+                        mail_values = {
+                            'email_from': email_data.get('email_from'),
+                            'email_cc': email_data.get('email_cc'),
+                            'reply_to': email_data.get('reply_to'),
+                            'email_to': email_data.get('email_to'),
+                            'subject': email_data.get('subject'),
+                            'body_html': email_data.get('body_html'),
+                            'notification': False,
+                            'auto_delete': False,
+                            'model': 'stock.picking',
+                            'res_id': self.id
+                        }
+                        mail_obj = self.env['mail.mail'].sudo()
+                        msg_id = mail_obj.create(mail_values)
+                        msg_id.mail_message_id.body= msg_id.body_html
+                        msg_id.send()
                     # mail_message = self.env['mail.template'].send_mail(template_id.id)
-        self.write({'state': 'collected'})
+            self.write({'state': 'collected'})
         return True
 
 
     def delivered_at_campus(self):
         curr_obj = self
-        sale_id = self.env['sale.order'].search([('name', '=', curr_obj.origin)])
+        sale_id = curr_obj.sale_id
         if sale_id:
         #     sale_obj = self.pool.get('sale.order').browse(sale_id.id)
             for pick in self:
@@ -180,10 +179,14 @@ class stock_picking(models.Model):
         if vals.get('origin', False):
             sale_id = self.env['sale.order'].search([('name', '=', vals['origin'])])
             if sale_id:
+                vals['campus_id'] = sale_id.campus.id,
+                vals['semester'] = sale_id.semester_id.id,
+                vals['prof_body_id'] = sale_id.prof_body.id,
+                vals['sale_order_id'] = sale_id.id
                 if sale_id.quote_type not in ['freequote', 'enrolment'] and not sale_id.pc_exam:
                     vals['delivery_order_source'] = 'CharterBooks'
                 else:
-                    vals['delivery_order_source'] = 'Enrolments'
+                    vals['delivery_order_source'] = 'enrolment'
 
         if vals.get('partner_id', False):
             onchangeResult = self.onchange_partner_in(vals['partner_id'])
@@ -191,6 +194,58 @@ class stock_picking(models.Model):
         res = super(stock_picking, self).create(vals)
         return res
 
+    @api.multi
+    def action_done(self):
+        """Changes picking state to done by processing the Stock Moves of the Picking
+
+        Normally that happens when the button "Done" is pressed on a Picking view.
+        @return: True
+        """
+        # TDE FIXME: remove decorator when migration the remaining
+        todo_moves = self.mapped('move_lines').filtered(
+            lambda self: self.state in ['draft', 'waiting', 'partially_available', 'assigned', 'confirmed',
+                                        'completed'])
+        # Check if there are ops not linked to moves yet
+        for pick in self:
+            # # Explode manually added packages
+            # for ops in pick.move_line_ids.filtered(lambda x: not x.move_id and not x.product_id):
+            #     for quant in ops.package_id.quant_ids: #Or use get_content for multiple levels
+            #         self.move_line_ids.create({'product_id': quant.product_id.id,
+            #                                    'package_id': quant.package_id.id,
+            #                                    'result_package_id': ops.result_package_id,
+            #                                    'lot_id': quant.lot_id.id,
+            #                                    'owner_id': quant.owner_id.id,
+            #                                    'product_uom_id': quant.product_id.uom_id.id,
+            #                                    'product_qty': quant.qty,
+            #                                    'qty_done': quant.qty,
+            #                                    'location_id': quant.location_id.id, # Could be ops too
+            #                                    'location_dest_id': ops.location_dest_id.id,
+            #                                    'picking_id': pick.id
+            #                                    }) # Might change first element
+            # # Link existing moves or add moves when no one is related
+            for ops in pick.move_line_ids.filtered(lambda x: not x.move_id):
+                # Search move with this product
+                moves = pick.move_lines.filtered(lambda x: x.product_id == ops.product_id)
+                moves = sorted(moves, key=lambda m: m.quantity_done < m.product_qty, reverse=True)
+                if moves:
+                    ops.move_id = moves[0].id
+                else:
+                    new_move = self.env['stock.move'].create({
+                        'name': _('New Move:') + ops.product_id.display_name,
+                        'product_id': ops.product_id.id,
+                        'product_uom_qty': ops.qty_done,
+                        'product_uom': ops.product_uom_id.id,
+                        'location_id': pick.location_id.id,
+                        'location_dest_id': pick.location_dest_id.id,
+                        'picking_id': pick.id,
+                    })
+                    ops.move_id = new_move.id
+                    new_move._action_confirm()
+                    todo_moves |= new_move
+                    # 'qty_done': ops.qty_done})
+        todo_moves._action_done()
+        self.write({'date_done': fields.Datetime.now()})
+        return True
 
 class StockImmediateTransfer(models.TransientModel):
     _inherit = 'stock.immediate.transfer'
