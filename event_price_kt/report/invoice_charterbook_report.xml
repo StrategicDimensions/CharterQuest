@@ -268,7 +268,18 @@
                             <t t-foreach="doc.invoice_line_ids" t-as="l">
                                 <tr>
                                     <td style="padding: 2px;line-height: 1;width:45%;">
-                                        <span t-esc="l.name"/>
+                                        <p t-esc="l.name" style="hyphens: none;float:left;"/>
+                                        <t t-if="l.product_id.sale_ok or l.product_id.purchase_ok">
+                                            <t t-if="l.product_id.public_categ_ids">
+                                                <p>
+                                                    [
+                                                    <t t-foreach="l.product_id.public_categ_ids" t-as="categ_id">
+                                                        <span t-esc="categ_id.display_name"></span>,
+                                                    </t>
+                                                    ]
+                                                </p>
+                                            </t>
+                                        </t>
                                     </td>
 
                                     <td style="padding: 2px;line-height: 1;width:10%;">
