@@ -143,13 +143,12 @@
             ]]></field>
         </record>
     </data>
-
     <record id="email_template_charterbook_confirm_order" model="mail.template">
         <field name="name">CharterBooks Saleorder Confirm Email</field>
-        <field name="email_from">bookstores@charterquest.co.za</field>
+        <field name="email_from">cqops@charterquest.co.za</field>
         <field name="email_to">${object.partner_id.email}</field>
-        <field name="email_cc">bookstores@charterquest.co.za</field>
-        <field name="subject">CharterBooks FreeQuote/Proforma: ${object.name or 'n/a' }</field>
+        <field name="email_cc">cqops@charterquest.co.za,accounts@charterquest.co.za</field>
+        <field name="subject">${object.carrier_id.warehouse_id.name} -Enrolment : Books Confirmation</field>
         <field name="partner_to">${object.partner_invoice_id.id}</field>
         <field name="model_id" ref="sale.model_sale_order"/>
         <!--<field name="auto_delete" eval="True"/>-->
@@ -159,13 +158,15 @@
 
     <p>Dear ${object.partner_id.name},</p>
 
-    <p>Thank you for your order, please send your proof of payment to confirm your order!</p>
+    <p>Thank you for your enrolment!
+    </p>
 
-    <p>For your records, please find attached Proforma Invoice.</p>
+    <p>Your order has been received by our bookstores. It will take up to 9 working days to have your books ready for collection, however in most cases, you will receive your study material earlier. 
+    </p>
 
-    <p>Proof of payment should be emailed to accounts@charterquest.co.za. You can only come to collect once you receive a collection/delivery notification. </p>
+    <p>You should receive a notification to collect your books within the next 9 working days. If you face any delays you can escalate to: enquiries@charterquest.co.za.</p>
 
-    <p>To Process Payment follow link: <a href=${object.sale_order_link or ''}>${object.sale_order_link or ''}</a>.</p>
+   
     <div>
         Thanking You<br/>
         Patience Mukondwa<br/>

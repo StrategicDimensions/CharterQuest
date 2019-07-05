@@ -821,7 +821,7 @@ class EnrolmentProcess(http.Controller):
                                                                       order="id desc")
                 request.session['do_invoice'] = 'yes' if post.get('do_invoice') == 'Yes' else 'no'
                 if not partner_id:
-                    res_partner_obj.create({'name': name,
+                    partner_id = res_partner_obj.create({'name': name,
                                             'student_company': post.get('inputCompany') if post.get(
                                                 'inputCompany') else '',
                                             'email': post.get('inputEmail') if post.get('inputEmail') else '',
@@ -1178,70 +1178,22 @@ class EnrolmentProcess(http.Controller):
                     body_html += "<br><br>"
                     body_html += "Thank you for your course fee/price inquiry."
                     body_html += "<br><br>"
-                    body_html += "<font size='3'>To enrol, please access banking details or pay online by clicking this link:</font>"
+                    body_html += "Kindly review the attached and secure your place by:"
                     body_html += "<br><br>"
-                    body_html += "" + sale_order_id.debit_order_mandate_link + ""
+                    body_html += "<a href='#' style='padding: 15px 10px; line-height: 18px; color: #0e0e0e; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; background-image: none; background-color: #ec0a18; border: 1px solid #875A7B;width:10%;margin-right:10px;'>CONVERT TO INVOIOCE</a>"
+                    body_html += "<a href='#' style='padding: 24px 10px; line-height: 18px; color: #0e0e0e; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; background-image: none; background-color: #ec0a18; border: 1px solid #875A7B;margin-right:10px;'>PAY NOW</a>"
+                    body_html += "<a href='#' style='padding: 15px 10px; line-height: 18px; color: #0e0e0e; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; background-image: none; background-color: #ec0a18; border: 1px solid #875A7B;width:16%;margin-right:10px;'>GET BANKING DETAILS & PAY LATER</a>"
                     body_html += "<br><br>"
-                    body_html += "Confirm discounts requirements below and double check your attached quote to ensure you have claimed all discounts applicable to you before you proceed:"
-                    body_html += "<br><br>"
-                    body_html += "<table border='1' style='width: 630px;max-width: 100%'> <tr style='background-color:lightgray;'> <td style='width:10%;text-align:center;'>Discount Category</td> <td style='width:60%;'>Requirements (All discounts must be claimed and included in the free quote or final invoice prior to making the first payment or will be forfeited).</td> <td>Discount % Available</td></tr>"
-
-                    for each in discount_detail_list:
-                        if event_count == 2:
-                            if each.discount_type == 'combo_2':
-                                body_html += "<tr> <td style='width:10%;'>" + each.name + "</td>"
-                                if each.condition:
-                                    body_html += "<td style='width:50%;'>" + each.condition + "</td>"
-                                else:
-                                    body_html += "<td style='width:50%;'> </td>"
-                                if each.discount:
-                                    body_html += "<td style='width:10%;'>" + str(each.discount) + "</td> </tr>"
-                                else:
-                                    body_html += "<td style='width:10%;'> " + '0.0' + "</td> </tr>"
-                        if event_count == 3:
-                            if each.discount_type == 'combo_3':
-                                body_html += "<tr> <td style='width:10%;'>" + each.name + "</td>"
-                                if each.condition:
-                                    body_html += "<td style='width:50%;'>" + each.condition + "</td>"
-                                else:
-                                    body_html += "<td style='width:50%;'> </td>"
-                                if each.discount:
-                                    body_html += "<td style='width:10%;'>" + str(each.discount) + "</td> </tr>"
-                                else:
-                                    body_html += "<td style='width:10%;'> " + '0.0' + "</td> </tr>"
-                        if event_count == 4:
-                            if each.discount_type == 'combo_4':
-                                body_html += "<tr> <td style='width:10%;'>" + each.name + "</td>"
-                                if each.condition:
-                                    body_html += "<td style='width:50%;'>" + each.condition + "</td>"
-                                else:
-                                    body_html += "<td style='width:50%;'> </td>"
-                                if each.discount:
-                                    body_html += "<td style='width:10%;'>" + str(each.discount) + "</td> </tr>"
-                                else:
-                                    body_html += "<td style='width:10%;'> " + '0.0' + "</td> </tr>"
-                        if each.discount_type != 'combo_2' and each.discount_type != 'combo_3' and each.discount_type != 'combo_4':
-                            body_html += "<tr> <td style='width:10%;'>" + each.name + "</td>"
-                            if each.condition:
-                                body_html += "<td style='width:50%;'>" + each.condition + "</td>"
-                            else:
-                                body_html += "<td style='width:50%;'> </td>"
-                            if each.discount:
-                                body_html += "<td style='width:10%;'>" + str(each.discount) + "</td> </tr>"
-                            else:
-                                body_html += "<td style='width:10%;'> " + '0.0' + "</td> </tr>"
-                    body_html += "<tr><td></td><td><b>Maximum Discount Available</b></td><td>" + str(
-                        max_discount_detail.max_discount) + "</td></tr>"
-                    body_html += "</table><br><br>"
+                    
                     body_html += "We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
                     body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
                     body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
                     body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
-
                     mail_values = {
                         'email_from': template_id.email_from,
                         'reply_to': template_id.reply_to,
                         'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                        'email_cc': 'enquiries@charterquest, accounts@charterquest.co.za, cqops@charterquest.co.za',
                         'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
                         'body_html': body_html,
                         'notification': True,
@@ -1304,7 +1256,6 @@ class EnrolmentProcess(http.Controller):
                         body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
                         body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
                         body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
-
                         mail_values = {
                             'email_from': template_id.email_from,
                             'reply_to': template_id.reply_to,
@@ -1346,26 +1297,23 @@ class EnrolmentProcess(http.Controller):
                         body_html += "<br>"
                         body_html += "Dear " + sale_order_id.partner_id.name + ","
                         body_html += "<br><br>"
-                        body_html += "Thank you for your Enrolment Application."
+                        body_html += "Thank you for your course fee/price enquiry."
                         body_html += "<br><br>"
-                        body_html += "Please find attached Proforma Invoice as	well as	copy of	the	Student	Agreement you just accepted	during enrolment."
+                        body_html += "Kindly review the attached and secure your place by:" 
                         body_html += "<br><br>"
-                        body_html += "Your sponsor/company can pay using the Invoice no. as reference and return proof of payment to: accounts@charterquest.co.za"
-                        body_html += " to process your enrolment. You can email accounts should you wish to make special payment arrangements."
-                        body_html += "<br><br>"
-                        body_html += "Should your company require	an invoice, please forward this	proforma to	the	above email requesting its conversion into an invoice. We will need your company's details to generate an invoice for you!"
-                        body_html += "<br><br>"
-                        body_html += "Once we issue an invoice, this becomes binding as you will be	expected to	settle the amount in full should your company not honour the agreement. So please kindly ensure your company has pre-approved your bursary or training expenditure before you request conversion to an Invoice."
+                        body_html += "<a href='#' style='padding: 15px 10px; line-height: 18px; color: #0e0e0e; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; background-image: none; background-color: #ec0a18; border: 1px solid #875A7B;width:10%;margin-right:10px;'>CONVERT TO INVOIOCE</a>"
+                        body_html += "<a href='#' style='padding: 24px 10px; line-height: 18px; color: #0e0e0e; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; background-image: none; background-color: #ec0a18; border: 1px solid #875A7B;margin-right:10px;'>PAY NOW</a>"
+                        body_html += "<a href='#' style='padding: 15px 10px; line-height: 18px; color: #0e0e0e; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; background-image: none; background-color: #ec0a18; border: 1px solid #875A7B;width:16%;margin-right:10px;'>GET BANKING DETAILS & PAY LATER</a>"
                         body_html += "<br><br>"
                         body_html += "We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
                         body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
                         body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
                         body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
-
                         mail_values = {
                             'email_from': template_id.email_from,
                             'reply_to': template_id.reply_to,
                             'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                            'email_cc': 'enquiries@charterquest,accounts@charterquest.co.za,cqops@charterquest.co.za',
                             'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
                             'body_html': body_html,
                             'notification': True,
@@ -1499,28 +1447,20 @@ class EnrolmentProcess(http.Controller):
                 body_html += "<br>"
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
                 body_html += "<br><br>"
-                body_html += "Thank you for your Enrolment Application."
+                body_html += "Thank you for your enrolment"
                 body_html += "<br><br>"
-                body_html += "Please find attached Proforma Invoice as well as copy of the Student Agreement and Debit Order Mandate you just accepted during enrolment."
+                body_html += "Please find attached Proforma Invoice, Banking details and copy of Student Agreement you just accepted!"
                 body_html += "<br><br>"
-                body_html += "As you opted to 'pay by cash', please follow the steps below to complete your enrolment:"
+                body_html += "Your can pay using the invoice number as reference and return proof of payment to: accounts@charterquest.co.za to process your enrolment." 
                 body_html += "<br><br>"
-                body_html += "1. Click the link below to access our banking details;"
-                body_html += "<br>http://www.charterquest.co.za/page/downloads"
-                body_html += "<br><br>"
-                body_html += "2. Make a cash deposit of at least 20% (taking into account your payment plan on the debit order mandate) of the course fee into our bank account with an additional R90 to cover cash deposit bank charges (use your Proforma Invoice No. as your pay reference to avoid delays in crediting your account, securing your place and releasing your study materials): and"
-                body_html += "<br><br>"
-                body_html += "3. Once the cash deposit is made email your proof of payment to accounts@charterquest.co.za. An email will be sent to you once your payment is allocated and the post-payment procedures defined in your Student Agreement attached will be activated."
-                body_html += "<br><br>"
-                body_html += "<table border=1 style='width: 500px;max-width: 100%'><tr><td>Bank</td><td>FNB</td></tr><tr><td>Beneficiary Name</td><td>The CharterQuest Professional Education Institute</td></tr><tr><td>Account Type</td><td>Current Account</td></tr><tr><td>Account No</td><td>62680767054</td></tr><tr><td>Branch Code</td><td>256755</td></tr></table>"
-                body_html += "<br><br>"
-                body_html += "We look forward seeing you during our course and helping you in achieving a 1st Time Pass!"
+                body_html += "<br><br> We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
                 body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
                 body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
                 mail_values = {
                     'email_from': template_id.email_from,
                     'reply_to': template_id.reply_to,
                     'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                    'email_cc': 'enquiries@charterquest,accounts@charterquest.co.za,cqops@charterquest.co.za',
                     'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
                     'body_html': body_html,
                     'notification': True,
@@ -2051,14 +1991,12 @@ class EnrolmentProcess(http.Controller):
                 body_html += "<br>"
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
                 body_html += "<br><br>"
-                body_html += "Thank you for your enrolment and Please send your proof of payment to confirm your payment!"
+                body_html += "Thank you for your enrolment"
                 body_html += "<br><br>"
-                body_html += "For your records, please find attached Invoice/Full Statement, copy of the Student Agreement as well as the Debit Order Mandate you just accepted Online during enrolment."
+                body_html += "Please find attached Proforma Invoice, Banking details and copy of Student Agreement you just accepted!"
                 body_html += "<br><br>"
-                body_html += "The Student Agreement inter alia covers:"
+                body_html += "Your can pay using the invoice number as reference and return proof of payment to: accounts@charterquest.co.za to process your enrolment." 
                 body_html += "<br><br>"
-                body_html += "1. Exam fee remmittances. <br> 2. How to access your learning materials. <br> 3. Cancellations, change of bookings and postponements."
-                body_html += "<br> 4. Refunds and students complaints. <br> 5. 1st Time Pass Guarantee scheme and other incidental matters."
                 body_html += "<br><br> We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
                 body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
                 body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
@@ -2066,6 +2004,7 @@ class EnrolmentProcess(http.Controller):
                     'email_from': template_id.email_from,
                     'reply_to': template_id.reply_to,
                     'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                    'email_cc': 'enquiries@charterquest,accounts@charterquest.co.za,cqops@charterquest.co.za',
                     'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
                     'body_html': body_html,
                     'notification': True,
@@ -2126,15 +2065,21 @@ class EnrolmentProcess(http.Controller):
                 body_html += "Your sponsor/company can pay using the Invoice no. as reference and return proof of payment to: accounts@charterquest.co.za"
                 body_html += " to process your enrolment. You can email accounts should you wish to make special payment arrangements."
                 body_html += "<br><br>"
+                body_html += "To avoid delays in gaining access to your materials and classes, kindly present a valid pre-authorisation on your company’s letterhead, addressed to us: CharterQuest, stating this invoice number, amount and an irrevocable commitment to settle the payment within 30 days. "
+                body_html += "<br><br>"
+                body_html += "Should obtaining a valid pre-authorisation not be feasible, you could in the interim pay 20% deposit and sign debit order for the balance to get started; once your company pays us in full, we will refund to you all payments received!"
+                body_html += "<br><br>"
+                body_html += "Please note that in any event above, should your company not honour its commitment, we may require you to settle the payment in full! "
+                body_html += "<br><br>"
                 body_html += "We look forward to seeing	you	during our course and helping you, in achieving	a 1st Time Pass!"
                 body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
                 body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
                 body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
-
                 mail_values = {
                     'email_from': template_id.email_from,
                     'reply_to': template_id.reply_to,
                     'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                    'email_cc': 'enquiries@charterquest,accounts@charterquest.co.za,cqops@charterquest.co.za',
                     'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
                     'body_html': body_html,
                     'notification': True,
@@ -2173,24 +2118,25 @@ class EnrolmentProcess(http.Controller):
                 body_html += "<br><br>"
                 body_html += "Thank you for your Enrolment Application."
                 body_html += "<br><br>"
-                body_html += "Please find attached Proforma Invoice as	well as	copy of	the	Student	Agreement you just accepted	during enrolment."
+                body_html += "Please find attached Invoice, Banking details and copy of Student Agreement you just accepted!"
                 body_html += "<br><br>"
                 body_html += "Your sponsor/company can pay using the Invoice no. as reference and return proof of payment to: accounts@charterquest.co.za"
-                body_html += " to process your enrolment. You can email accounts should you wish to make special payment arrangements."
                 body_html += "<br><br>"
-                body_html += "Should your company require	an invoice, please forward this	proforma to	the	above email requesting its conversion into an invoice. We will need your company's details to generate an invoice for you!"
+                body_html += "To avoid delays in gaining access to your materials and classes, kindly present a valid pre-authorisation on your company’s letter head, addressed to us: CharterQuest, stating this invoice number, amount and an irrevocable commitment to settle the payment within 30 days." 
                 body_html += "<br><br>"
-                body_html += "Once we issue an invoice, this becomes binding as you will be	expected to	settle the amount in full should your company not honour the agreement. So please kindly ensure your company has pre-approved your bursary or training expenditure before you request conversion to an Invoice."
+                body_html += "Should obtaining a valid pre-authorisation not be feasible, you could in the interim pay 20% deposit and sign debit order for the balance to get started; once your company pays us in full, we will refund to you all payments received!"
                 body_html += "<br><br>"
+                body_html += "Please note that in any event above, should your company not honour its commitment, we may require you to settle the payment in full!"
+                body_html += "<br><br>" 
                 body_html += "We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
                 body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
                 body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
                 body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
-
                 mail_values = {
                     'email_from': template_id.email_from,
                     'reply_to': template_id.reply_to,
                     'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                    'email_cc': 'enquiries@charterquest,accounts@charterquest.co.za,cqops@charterquest.co.za',
                     'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
                     'body_html': body_html,
                     'notification': True,
