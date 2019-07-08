@@ -280,6 +280,58 @@
             <attribute name="id">product_image_cust</attribute>
         </xpath>
 
+        <xpath expr="//section//div[hasclass('row')][2]/div[2]" position="inside">
+            <table class="table table-bordered table-product-info">
+                <t t-set="product" t-value="product.sudo()"/>
+                <tr>
+                    <th>Author</th>
+                    <td>
+                        <span t-esc="product.author_id.sudo().name if product.author_id.sudo().name else ''"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Format</th>
+                    <td>
+                        <span t-esc="product.format if product.format else ''"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Publisher</th>
+                    <td>
+                        <span t-esc="product.publisher if product.publisher else ''"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>ISBN</th>
+                    <td>
+                        <span t-esc="product.default_code if product.default_code else ''"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Date of Publication</th>
+                    <td>
+                        <span t-esc="product.date_of_publish if product.date_of_publish else ''"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Course Code</th>
+                    <td>
+                        <span t-esc="product.course_code if product.course_code else ''"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Book Edition</th>
+                    <td>
+                        <span t-esc="product.book_edition if product.book_edition else ''"/>
+                    </td>
+                </tr>
+            </table>
+        </xpath>
+
+        <xpath expr="//a[@id='add_to_cart']" position="after">
+            <a class="btn btn-primary" href="/shop" id="back_to_shop">Back</a>
+        </xpath>
+
     </template>
 
 
@@ -364,56 +416,177 @@
         </xpath>
     </template>
 
-    <template id="products_list_view" inherit_id="website_sale.products_item">
-        <xpath expr="//section" position="inside">
-            <table class="table table-bordered table-product-info"
-                   style="position: relative;margin-bottom:15px;line-height: 0.7;width: 100%;z-index:10">
-                <t t-set="product" t-value="product.sudo()"/>
-                <tr style="font-size:12px;">
-                    <th>Author</th>
-                    <td>
-                        <span t-esc="product.author_id.sudo().name if product.author_id.sudo().name else ''"/>
-                    </td>
-                </tr>
-                <tr style="font-size:12px;">
-                    <th>Format</th>
-                    <td>
-                        <span t-esc="product.format if product.format else ''"/>
-                    </td>
-                </tr>
-                <tr style="font-size:12px;">
-                    <th>Publisher</th>
-                    <td>
-                        <span t-esc="product.publisher if product.publisher else ''"/>
-                    </td>
-                </tr>
-                <tr style="font-size:12px;">
-                    <th>ISBN</th>
-                    <td>
-                        <span t-esc="product.default_code if product.default_code else ''"/>
-                    </td>
-                </tr>
-                <tr style="font-size:12px;">
-                    <th>Date of Publication</th>
-                    <td>
-                        <span t-esc="product.date_of_publish if product.date_of_publish else ''"/>
-                    </td>
-                </tr>
-                <tr style="font-size:12px;">
-                    <th>Course Code</th>
-                    <td>
-                        <span t-esc="product.course_code if product.course_code else ''"/>
-                    </td>
-                </tr>
-                <tr style="font-size:12px;">
-                    <th>Book Edition</th>
-                    <td>
-                        <span t-esc="product.book_edition if product.book_edition else ''"/>
-                    </td>
-                </tr>
-            </table>
-
+    <template id="products_main_view_charter" inherit_id="website_sale.products">
+        <xpath expr="//div[@id='products_grid_before']" position="inside">
+            <t t-set="supplier_placeholder_ids"
+               t-value="request.env['website.suppliers'].sudo().search([('active', '=', True), ('is_placeholder','=', True)])"/>
+            <t t-if="supplier_placeholder_ids">
+                <t t-foreach="supplier_placeholder_ids" t-as="supplier_placeholder">
+                    <div style="margin-top: 10px;margin-bottom: 10px;padding:0px;"
+                         t-raw="supplier_placeholder.placeholder"/>
+                </t>
+            </t>
+            <t t-set="supplier_image_ids"
+               t-value="request.env['website.suppliers'].sudo().search([('active', '=', True), ('is_placeholder','=', False)])"/>
+            <t t-if="supplier_image_ids">
+                <t t-foreach="supplier_image_ids" t-as="supplier_img">
+                    <div class="col-md-6" style="margin-top: 10px;margin-bottom: 10px;padding:0px;">
+                        <img t-att-src="'data:image/png;base64,'+to_text(supplier_img.image)"
+                             style="height: 50px;width: 100px;"/>
+                    </div>
+                </t>
+            </t>
         </xpath>
+        <xpath expr="//div[@id='products_grid']" position="replace">
+            <div class="col-md-9" id="products_grid" style="display:block;">
+                <div id="product_grid_inherit">
+                    <t t-foreach="bins" t-as="tr_product">
+                        <t t-foreach="tr_product" t-as="td_product">
+                            <t t-if="td_product">
+                                <t t-set="product" t-value="td_product['product']"/>
+                                <t t-if="product.website_published">
+                                    <div class="col-md-4 oe_product oe_grid products_grid_cfo">
+                                        <div class="oe_product_cart"
+                                             t-att-data-publish="product.website_published and 'on' or 'off'">
+                                            <form action="/shop/cart/update" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <div itemscope="itemscope" itemtype="http://schema.org/Product" class="main_product_block">
+                                                    <h5>
+                                                        <strong>
+                                                            <a itemprop="name"
+                                                               t-att-href="keep('/shop/product/%s' % slug(product), page=(pager['page']['num'] if pager['page']['num']&gt;1 else None))"
+                                                               t-att-content="product.name" t-field="product.name"/>
+                                                        </strong>
+                                                    </h5>
+                                                    <div class="row product_imge_cfo">
+                                                        <div class="col-md-7">
+                                                            <a itemprop="url"
+                                                               t-att-href="keep('/shop/product/%s' % slug(product), page=(pager['page']['num'] if pager['page']['num']&gt;1 else None))">
+                                                                <span itemprop="image" class="product_image" style="display:inline-flex;height:100%"
+                                                                      t-attf-content="{{request.httprequest.url_root}}web/image/product.template/{{product.id}}/image"
+                                                                      t-field="product.image"
+                                                                      t-options="{'widget': 'image', 'resize': None if product_image_big else '300x300', 'zoom': 'image'}"
+                                                                      t-att-alt="product.name"/>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div itemprop="offers" itemscope="itemscope"
+                                                                 itemtype="http://schema.org/Offer"
+                                                                 class="product_price"
+                                                                 t-if="product.product_variant_ids">
+                                                                <div class="ribbon-wrapper" style="height: 100px !important;display: block;position: absolute;float: right;" t-if="product.website_style_ids and request.env['product.style'].sudo().search([('name','=','Sale Ribbon')]).id in product.website_style_ids.ids">
+                                                                    <div class="ribbon btn btn-success" style="background: red !important;color: #fff !important;position: relative;height: 24%;top: 40px;left: -24px;border: unset;border-radius: unset;width: 147px;margin: 0;padding: 2px;">Sale</div>
+                                                                </div>
+                                                                <t t-set="product" t-value="product.sudo()"/>
+                                                                <t t-if="product.qty_available >= 1">
+                                                                    <div class="ribbon-wrapper" style="width: 100% !important;height: 100px !important;display: block;position: relative;float: right;">
+                                                                        <div class="ribbon btn btn-success" style="background: #4cae4c !important;color: #fff !important;position: relative;height: 24%;top: 20px;left: -10px;padding: 5px;border: unset;border-radius: unset;"><center style="font-size: 12px;">In Stock</center></div>
+                                                                    </div>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <div class="ribbon-wrapper" style="width: 100% !important;height: 100px !important;display: block;position: relative;float: right;">
+                                                                        <div class="ribbon btn btn-success" style="background: red !important;color: #fff !important;position: relative;height: 24%;top: 20px;left: -10px;padding: 5px;border: unset;border-radius: unset;"><center style="font-size: 12px;">Out Of Stock</center></div>
+                                                                    </div>
+                                                                </t>
+                                                                <b>
+                                                                    <t t-if="product.website_price_difference and website.get_current_pricelist().discount_policy=='without_discount'">
+                                                                        <del class="text-danger mr8"
+                                                                             style="white-space: nowrap;"
+                                                                             t-esc="compute_currency(product.website_public_price)"
+                                                                             t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}"/>
+                                                                    </t>
+
+                                                                    <span t-esc="product.website_price"
+                                                                          t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                                                    <span itemprop="price" style="display:none;"
+                                                                          t-esc="product.website_price"/>
+                                                                    <span itemprop="priceCurrency" style="display:none;"
+                                                                          t-esc="website.currency_id.name"/>
+                                                                </b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <t t-if="show_publish">
+                                                        <div id="website_published_button" class=""
+                                                             groups="sales_team.group_sale_manager">
+                                                            <t t-call="website.publish_management">
+                                                                <t t-set="object" t-value="product"/>
+                                                                <t t-set="publish_edit" t-value="True"/>
+                                                                <t t-set="action"
+                                                                   t-value="'product.product_template_action'"/>
+                                                            </t>
+                                                        </div>
+                                                    </t>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+                </div>
+                <t t-if="not bins">
+                    <div class="text-center text-muted oe_product">
+                        <h3 class="css_editable_display">No product defined.</h3>
+                        <p groups="sales_team.group_sale_manager">Click <i>'New'</i> in the top-right corner to create
+                            your first product.
+                        </p>
+                    </div>
+                </t>
+            </div>
+        </xpath>
+        <!--        <xpath expr="//section" position="inside">-->
+        <!--            <table class="table table-bordered table-product-info"-->
+        <!--                   style="position: relative;margin-bottom:15px;line-height: 0.7;width: 100%;z-index:10">-->
+        <!--                <t t-set="product" t-value="product.sudo()"/>-->
+        <!--                <tr style="font-size:12px;">-->
+        <!--                    <th>Author</th>-->
+        <!--                    <td>-->
+        <!--                        <span t-esc="product.author_id.sudo().name if product.author_id.sudo().name else ''"/>-->
+        <!--                    </td>-->
+        <!--                </tr>-->
+        <!--                <tr style="font-size:12px;">-->
+        <!--                    <th>Format</th>-->
+        <!--                    <td>-->
+        <!--                        <span t-esc="product.format if product.format else ''"/>-->
+        <!--                    </td>-->
+        <!--                </tr>-->
+        <!--                <tr style="font-size:12px;">-->
+        <!--                    <th>Publisher</th>-->
+        <!--                    <td>-->
+        <!--                        <span t-esc="product.publisher if product.publisher else ''"/>-->
+        <!--                    </td>-->
+        <!--                </tr>-->
+        <!--                <tr style="font-size:12px;">-->
+        <!--                    <th>ISBN</th>-->
+        <!--                    <td>-->
+        <!--                        <span t-esc="product.default_code if product.default_code else ''"/>-->
+        <!--                    </td>-->
+        <!--                </tr>-->
+        <!--                <tr style="font-size:12px;">-->
+        <!--                    <th>Date of Publication</th>-->
+        <!--                    <td>-->
+        <!--                        <span t-esc="product.date_of_publish if product.date_of_publish else ''"/>-->
+        <!--                    </td>-->
+        <!--                </tr>-->
+        <!--                <tr style="font-size:12px;">-->
+        <!--                    <th>Course Code</th>-->
+        <!--                    <td>-->
+        <!--                        <span t-esc="product.course_code if product.course_code else ''"/>-->
+        <!--                    </td>-->
+        <!--                </tr>-->
+        <!--                <tr style="font-size:12px;">-->
+        <!--                    <th>Book Edition</th>-->
+        <!--                    <td>-->
+        <!--                        <span t-esc="product.book_edition if product.book_edition else ''"/>-->
+        <!--                    </td>-->
+        <!--                </tr>-->
+        <!--            </table>-->
+
+        <!--        </xpath>-->
     </template>
 
     <template id="cfo_snf_jnr_cart" inherit_id="website_sale.cart" name="Shopping Cart">
@@ -449,8 +622,8 @@
             <div class="col-md-12 form-group shop_invoice" style="display:none;">
                 <label class="col-sm-6 control-label">Do you require an invoice to be generated ?</label>
                 <div class="col-sm-6">
-                    <input type="radio" name="shop_do_invoice" value="no" checked="checked"> No</input>
-                    <input type="radio" name="shop_do_invoice" value="yes"> Yes</input>
+                    <input type="radio" name="shop_do_invoice" value="no" checked="checked">No</input>
+                    <input type="radio" name="shop_do_invoice" value="yes">Yes</input>
 
                 </div>
             </div>
@@ -630,6 +803,62 @@
                                 </a>
                             </div>
                         </t>
+                        <div style="margin-top:290px;">
+                            <t t-if="page_name == 'course'">
+                                <t t-set="course_placeholder_ids"
+                                   t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'course_page')])"/>
+                                <t t-if="course_placeholder_ids">
+                                    <t t-foreach="course_placeholder_ids" t-as="course_placeholder">
+                                        <div class="well well-sm" t-raw="course_placeholder.placeholder" t-attf-style="background-color: #{course_placeholder.background_color};"/>
+                                    </t>
+                                </t>
+                            </t>
+                            <t t-if="page_name == 'fees'">
+                                <t t-set="fees_placeholder_ids"
+                                   t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'fees_page')])"/>
+                                <t t-if="fees_placeholder_ids">
+                                    <t t-foreach="fees_placeholder_ids" t-as="fees_placeholder">
+                                        <div class="well well-sm" t-raw="fees_placeholder.placeholder" t-attf-style="background-color: #{fees_placeholder.background_color};"/>
+                                    </t>
+                                </t>
+                            </t>
+                            <t t-if="page_name == 'discounts'">
+                                <t t-set="discount_placeholder_ids"
+                                   t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'discount_page')])"/>
+                                <t t-if="discount_placeholder_ids">
+                                    <t t-foreach="discount_placeholder_ids" t-as="discount_placeholder">
+                                        <div class="well well-sm" t-raw="discount_placeholder.placeholder" t-attf-style="background-color: #{discount_placeholder.background_color};"/>
+                                    </t>
+                                </t>
+                            </t>
+                            <t t-if="page_name == 'price'">
+                                <t t-set="price_placeholder_ids"
+                                   t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'price_page')])"/>
+                                <t t-if="price_placeholder_ids">
+                                    <t t-foreach="price_placeholder_ids" t-as="price_placeholder">
+                                        <div class="well well-sm" t-raw="price_placeholder.placeholder" t-attf-style="background-color: #{price_placeholder.background_color};"/>
+                                    </t>
+                                </t>
+                            </t>
+                            <t t-if="page_name == 'registration'">
+                                <t t-set="registration_placeholder_ids"
+                                   t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'registration_page')])"/>
+                                <t t-if="registration_placeholder_ids">
+                                    <t t-foreach="registration_placeholder_ids" t-as="registration_placeholder">
+                                        <div class="well well-sm" t-raw="registration_placeholder.placeholder" t-attf-style="background-color: #{registration_placeholder.background_color};"/>
+                                    </t>
+                                </t>
+                            </t>
+                            <t t-if="page_name == 'payment'">
+                                <t t-set="payment_placeholder_ids"
+                                   t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'payment_page')])"/>
+                                <t t-if="payment_placeholder_ids">
+                                    <t t-foreach="payment_placeholder_ids" t-as="payment_placeholder">
+                                        <div class="well well-sm" t-raw="payment_placeholder.placeholder" t-attf-style="background-color: #{payment_placeholder.background_color};"/>
+                                    </t>
+                                </t>
+                            </t>
+                        </div>
                     </div>
 
                     <div class="row site-identifier ci-red-bg" style="width: 84.5% !important;margin-top:10px;">
@@ -785,6 +1014,7 @@
                     <div class="row menu-content" style="width: 80%;float: left;margin:0px;">
                         <t t-raw="0"/>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -918,6 +1148,24 @@
 
 
                 <!--<t t-call="cfo_snr_jnr.header_template">-->
+                <div style="margin-top:5px;">
+                    <div class="well" style="color: #000000;background-color: #ffe6e6;border-color: #ff8080;">
+                        <h3>Campus</h3>
+                        <t t-set="campus_ids"
+                           t-value="request.env['res.partner'].sudo().search([('is_campus','=', True)])"/>
+                        <t t-if="campus_ids">
+                            <t t-foreach="campus_ids" t-as="campus">
+                                <ul>
+                                    <li style="line-height: 20px;">
+                                        <b><span t-esc="campus.name"/></b>
+                                        -
+                                        <span t-esc="campus.street"/>&amp;nbsp;<span t-esc="campus.street2"/>&amp;nbsp;<span t-esc="campus.city"/>&amp;nbsp;<span t-esc="campus.state_id.name"/>
+                                    </li>
+                                </ul>
+                            </t>
+                        </t>
+                    </div>
+                </div>
                 <div class="row" id="step-2">
 
                     <form action="/enrolment_book_prof" method="post"
@@ -1168,6 +1416,16 @@
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
                 <div class="oe_structure"/>
+                <div>
+                    <t t-set="fees_page_right_side_ids"
+                       t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'fees_page_right_side')])"/>
+                    <t t-if="fees_page_right_side_ids">
+                        <t t-foreach="fees_page_right_side_ids" t-as="fees_page_right_side">
+                            <div class="well" t-raw="fees_page_right_side.placeholder"
+                                 t-attf-style="background-color: #{fees_page_right_side.background_color};"/>
+                        </t>
+                    </t>
+                </div>
                 <div>
                     <form action="/discount" method="post"
                           class="s_website_form form-horizontal container-fluid mt32"

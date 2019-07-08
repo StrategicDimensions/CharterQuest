@@ -433,7 +433,7 @@ body #wrapwrap {
 .table-product-info th{
     line-height: 0.5 !important;
     background: lightgray;
-    width: 30% !important;
+    width: 35% !important;
     border: 1px solid lightgrey;
     padding: 5px;
     font-size: 12px;
@@ -591,3 +591,77 @@ margin-top:30px;
 }
 
 
+/* WEB WORK */
+
+#back_to_shop{
+	float: left;
+	width: 54%;
+	margin: 10px 0px 0px 0px !important;
+	background-color: black !important;
+	border-color: black !important;
+}
+
+#back_to_shop:hover{
+	color: black !important;
+}
+
+#add_to_cart{
+	margin:0 !important;
+	margin-top: 5px !important;
+}
+
+.product_image img{
+	display: flex;
+	align-self: center;
+}
+
+.products_grid_cfo{
+	height: 300px;
+	max-height: 300px;
+	max-width: 300px;
+	padding: 0;
+}
+
+.products_grid_cfo .oe_product_cart{
+	float:left;
+	height:100%;
+}
+
+.products_grid_cfo .oe_product_cart form{
+	float:left;
+	height:100%;
+}
+
+.products_grid_cfo .oe_product_cart .main_product_block{
+	float:left;
+	height:100%;
+}
+
+.products_grid_cfo .oe_product_cart .main_product_block h5{
+	padding-left: 10px;
+	margin-bottom: 5px;
+	font-size:15px;
+}
+
+.products_grid_cfo .oe_product_cart .main_product_block .product_imge_cfo{
+	float:left;
+	height:78%;
+	margin:0px;
+	width:100%;
+}
+
+.products_grid_cfo .oe_product_cart .main_product_block .product_imge_cfo .col-md-7{
+	float:left;
+	height:100%;
+	padding:0px;
+}
+
+.products_grid_cfo .oe_product_cart .main_product_block .product_imge_cfo .col-md-7 a{
+	float:left;
+	height:100%;
+}
+
+.products_grid_cfo .oe_product_cart .main_product_block .product_imge_cfo .col-md-5{
+	padding-right: 0;
+	height: 100%;
+}

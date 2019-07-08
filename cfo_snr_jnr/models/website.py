@@ -17,8 +17,9 @@
 #    <http://www.gnu.org/licenses/gpl.html>.
 #
 ##############################################################################
-from odoo import models,api, _
+from odoo import models, api, fields, _
 from odoo.http import request
+
 
 class WebsiteMenu(models.Model):
     _inherit = "website.menu"
@@ -192,6 +193,34 @@ class Website(models.Model):
             return self.env['sale.order']
 
         return sale_order
+
+
+class WebsiteSuppliers(models.Model):
+    _name = 'website.suppliers'
+
+    name = fields.Char(string="Name")
+    image = fields.Binary(string="Image")
+    is_placeholder = fields.Boolean(string="Is Placeholder ?")
+    placeholder = fields.Html(string="Placeholder")
+    active = fields.Boolean(string="Active", default=True)
+
+
+class EnrolmentPlaceholders(models.Model):
+    _name = 'enrolment.placeholders'
+
+    name = fields.Char(string="Name")
+    page = fields.Selection([
+        ('course_page', 'Course Page'),
+        ('fees_page', 'Fees Page'),
+        ('discount_page', 'Discount Page'),
+        ('price_page', 'Price Page'),
+        ('registration_page', 'Registration Page'),
+        ('payment_page', 'Payment Page'),
+        ('fees_page_right_side', 'Fees Page Right Side'),
+    ], default="course_page", string="Page Visibility")
+    placeholder = fields.Html(string="Placeholder")
+    background_color = fields.Char(string="Background Color of Placeholder")
+    active = fields.Boolean(string="Active", default=True)
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

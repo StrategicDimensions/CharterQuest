@@ -57,4 +57,94 @@
             </field>
         </field>
     </record>
+
+    <record id="website_suppliers_tree_view" model="ir.ui.view">
+        <field name="name">website.suppliers.tree</field>
+        <field name="model">website.suppliers</field>
+        <field name="arch" type="xml">
+            <tree string="Website Suppliers">
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="website_suppliers_form_view" model="ir.ui.view">
+        <field name="name">website.suppliers.form</field>
+        <field name="model">website.suppliers</field>
+        <field name="arch" type="xml">
+            <form string="Website Suppliers">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                   options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" required="True"/>
+                        <field name="is_placeholder"/>
+                        <field name="image" widget="image" options="{'size': [300, 300]}" attrs="{'invisible':[('is_placeholder','=', True)]}"/>
+                        <field name="placeholder" attrs="{'invisible':[('is_placeholder','=', False)]}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_website_suppliers" model="ir.actions.act_window">
+        <field name="name">Website Suppliers</field>
+        <field name="res_model">website.suppliers</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_website_suppliers"
+              action="cfo_snr_jnr.action_website_suppliers"
+              parent="website.menu_website_global_configuration"/>
+
+    <record id="enrolment_placeholders_tree_view" model="ir.ui.view">
+        <field name="name">enrolment.placeholders.tree</field>
+        <field name="model">enrolment.placeholders</field>
+        <field name="arch" type="xml">
+            <tree string="Enrolment Placeholders">
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="enrolment_placeholders_form_view" model="ir.ui.view">
+        <field name="name">enrolment.placeholders.form</field>
+        <field name="model">enrolment.placeholders</field>
+        <field name="arch" type="xml">
+            <form string="Enrolment Placeholders">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                   options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" required="True"/>
+                        <field name="page"/>
+                        <field name="placeholder"/>
+                        <field name="background_color"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_enrolment_placeholders" model="ir.actions.act_window">
+        <field name="name">Enrolment Placeholders</field>
+        <field name="res_model">enrolment.placeholders</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_enrolment_placeholders"
+              action="cfo_snr_jnr.action_enrolment_placeholders"
+              parent="website.menu_website_global_configuration"/>
 </odoo>
