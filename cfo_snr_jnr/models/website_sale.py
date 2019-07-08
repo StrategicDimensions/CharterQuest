@@ -62,10 +62,46 @@ class AccountPayment(models.Model):
 
     def action_validate_invoice_payment(self):
         res =  super(AccountPayment, self).action_validate_invoice_payment()
+        email_obj = self.env['mail.template']
+        mail_obj = self.env['mail.mail'].sudo()
         if res:
+            if self.payment_difference > 0:
+                 partial_template_id = email_obj.sudo().search([('name', '=', "Partly invoice payment")])
+                 if partial_template_id:
+                     email_data = partial_template_id.generate_email(self.invoice_ids[0].id)
+                     mail_values = {
+                        'email_from': email_data.get('email_from'),
+                        'email_cc': email_data.get('email_cc'),
+                        'reply_to': email_data.get('reply_to'),
+                        'email_to': self.invoice_ids[0].partner_id.email,
+                        'subject':  'CharterQuest Enrolment: Debit Order Mandate',
+                        'body_html': email_data.get('body_html'),
+                        'notification': True,
+                        'auto_delete': False,
+                        'model': 'account.invoice',
+                        'res_id': self.invoice_ids[0].id
+                        }
+                     msg_id = mail_obj.create(mail_values)
+                     msg_id.send()
+            if self.payment_difference < 0:
+                 full_template_id = email_obj.sudo().search([('name', '=', "Full invoice payment")])
+                 if full_template_id:
+                     email_data = full_template_id.generate_email(self.invoice_ids[0].id)
+                     mail_values = {
+                        'email_from': email_data.get('email_from'),
+                        'email_cc': email_data.get('email_cc'),
+                        'reply_to': email_data.get('reply_to'),
+                        'email_to': self.invoice_ids[0].partner_id.email,
+                        'subject':  'CharterQuest Tax Invoice',
+                        'body_html': email_data.get('body_html'),
+                        'notification': True,
+                        'auto_delete': False,
+                        'model': 'account.invoice',
+                        'res_id': self.invoice_ids[0].id
+                        }
+                     msg_id = mail_obj.create(mail_values)
+                     msg_id.send()
             attchment_list = []
-            email_obj = self.env['mail.template']
-            mail_obj = self.env['mail.mail'].sudo()
             template_id = email_obj.sudo().search([('name', '=', "Invoice Payment")])
             if template_id:
                 pdf_data_order = self.env.ref(
@@ -101,6 +137,9 @@ class AccountPayment(models.Model):
                 }
                 msg_id = mail_obj.create(mail_values)
                 msg_id.send()
+                
+                
+                
         return res
 
 class SaleAdvancePaymentInv(models.TransientModel):
