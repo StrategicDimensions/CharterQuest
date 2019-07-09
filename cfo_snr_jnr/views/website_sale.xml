@@ -130,9 +130,35 @@
                     <group>
                         <field name="name" required="True"/>
                         <field name="page"/>
-                        <field name="placeholder"/>
-                        <field name="background_color"/>
+                        <field name="is_placeholder"/>
+                        <field name="image" widget="image" options="{'size': [300, 300]}" attrs="{'invisible':[('is_placeholder','=', True)]}"/>
+                        <field name="placeholder" attrs="{'invisible':[('is_placeholder','=', False)]}"/>
+                        <field name="background_color" class="color-picker-cfo" attrs="{'invisible':[('is_placeholder','=', False)]}"/>
                     </group>
+                    <div class="row" attrs="{'invisible':[('is_placeholder','=', True)]}">
+                        <div class="col-md-2" style="width:11%;">
+                            <b>Height Width</b>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-10">
+                                <field name="height"/>
+                            </div>
+                            <div class="col-md-2">
+                                <b>px</b>
+                            </div>
+                        </div>
+                        <div class="col-md-1" style="width:0%;">
+                            <b>X</b>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-10">
+                                <field name="width"/>
+                            </div>
+                            <div class="col-md-2">
+                                <b>px</b>
+                            </div>
+                        </div>
+                    </div>
                 </sheet>
             </form>
         </field>

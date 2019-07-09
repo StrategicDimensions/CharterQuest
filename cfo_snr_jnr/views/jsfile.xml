@@ -43,5 +43,13 @@
             </xpath>
         </template>
 
+        <template id="assets_backend_color_picker" name="Color Picker Assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link type="text/css" rel="stylesheet" href="/cfo_snr_jnr/static/src/css/spectrum.css"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/spectrum.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/color_picker.js"/>
+            </xpath>
+        </template>
+
     </data>
 </openerp>

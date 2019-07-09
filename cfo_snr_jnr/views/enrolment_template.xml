@@ -809,7 +809,14 @@
                                    t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'course_page')])"/>
                                 <t t-if="course_placeholder_ids">
                                     <t t-foreach="course_placeholder_ids" t-as="course_placeholder">
-                                        <div class="well well-sm" t-raw="course_placeholder.placeholder" t-attf-style="background-color: #{course_placeholder.background_color};"/>
+                                        <t t-if="course_placeholder.is_placeholder and course_placeholder.placeholder">
+                                            <div class="well well-sm" t-raw="course_placeholder.placeholder"
+                                                 t-attf-style="background-color: #{course_placeholder.background_color};"/>
+                                        </t>
+                                        <t t-elif="not course_placeholder.is_placeholder and course_placeholder.image">
+                                            <img t-att-src="'data:image/png;base64,'+to_text(course_placeholder.image)"
+                                                     style="height: 50px;width: 100px;"/>
+                                        </t>
                                     </t>
                                 </t>
                             </t>
@@ -818,7 +825,14 @@
                                    t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'fees_page')])"/>
                                 <t t-if="fees_placeholder_ids">
                                     <t t-foreach="fees_placeholder_ids" t-as="fees_placeholder">
-                                        <div class="well well-sm" t-raw="fees_placeholder.placeholder" t-attf-style="background-color: #{fees_placeholder.background_color};"/>
+                                        <t t-if="fees_placeholder.is_placeholder and fees_placeholder.placeholder">
+                                            <div class="well well-sm" t-raw="fees_placeholder.placeholder"
+                                                 t-attf-style="background-color: #{fees_placeholder.background_color};"/>
+                                        </t>
+                                        <t t-elif="not fees_placeholder.is_placeholder and fees_placeholder.image">
+                                            <img t-att-src="'data:image/png;base64,'+to_text(fees_placeholder.image)"
+                                                     style="height: 50px;width: 100px;"/>
+                                        </t>
                                     </t>
                                 </t>
                             </t>
@@ -827,7 +841,14 @@
                                    t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'discount_page')])"/>
                                 <t t-if="discount_placeholder_ids">
                                     <t t-foreach="discount_placeholder_ids" t-as="discount_placeholder">
-                                        <div class="well well-sm" t-raw="discount_placeholder.placeholder" t-attf-style="background-color: #{discount_placeholder.background_color};"/>
+                                        <t t-if="discount_placeholder.is_placeholder and discount_placeholder.placeholder">
+                                            <div class="well well-sm" t-raw="discount_placeholder.placeholder"
+                                                 t-attf-style="background-color: #{discount_placeholder.background_color};"/>
+                                        </t>
+                                        <t t-elif="not discount_placeholder.is_placeholder and discount_placeholder.image">
+                                            <img t-att-src="'data:image/png;base64,'+to_text(discount_placeholder.image)"
+                                                     style="height: 50px;width: 100px;"/>
+                                        </t>
                                     </t>
                                 </t>
                             </t>
@@ -836,7 +857,14 @@
                                    t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'price_page')])"/>
                                 <t t-if="price_placeholder_ids">
                                     <t t-foreach="price_placeholder_ids" t-as="price_placeholder">
-                                        <div class="well well-sm" t-raw="price_placeholder.placeholder" t-attf-style="background-color: #{price_placeholder.background_color};"/>
+                                        <t t-if="price_placeholder.is_placeholder and price_placeholder.placeholder">
+                                            <div class="well well-sm" t-raw="price_placeholder.placeholder"
+                                                 t-attf-style="background-color: #{price_placeholder.background_color};"/>
+                                        </t>
+                                        <t t-elif="not price_placeholder.is_placeholder and price_placeholder.image">
+                                            <img t-att-src="'data:image/png;base64,'+to_text(price_placeholder.image)"
+                                                     style="height: 50px;width: 100px;"/>
+                                        </t>
                                     </t>
                                 </t>
                             </t>
@@ -845,7 +873,14 @@
                                    t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'registration_page')])"/>
                                 <t t-if="registration_placeholder_ids">
                                     <t t-foreach="registration_placeholder_ids" t-as="registration_placeholder">
-                                        <div class="well well-sm" t-raw="registration_placeholder.placeholder" t-attf-style="background-color: #{registration_placeholder.background_color};"/>
+                                        <t t-if="registration_placeholder.is_placeholder and registration_placeholder.placeholder">
+                                            <div class="well well-sm" t-raw="registration_placeholder.placeholder"
+                                                 t-attf-style="background-color: #{registration_placeholder.background_color};"/>
+                                        </t>
+                                        <t t-elif="not registration_placeholder.is_placeholder and registration_placeholder.image">
+                                            <img t-att-src="'data:image/png;base64,'+to_text(registration_placeholder.image)"
+                                                     style="height: 50px;width: 100px;"/>
+                                        </t>
                                     </t>
                                 </t>
                             </t>
@@ -854,7 +889,14 @@
                                    t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'payment_page')])"/>
                                 <t t-if="payment_placeholder_ids">
                                     <t t-foreach="payment_placeholder_ids" t-as="payment_placeholder">
-                                        <div class="well well-sm" t-raw="payment_placeholder.placeholder" t-attf-style="background-color: #{payment_placeholder.background_color};"/>
+                                        <t t-if="payment_placeholder.is_placeholder and payment_placeholder.placeholder">
+                                            <div class="well well-sm" t-raw="payment_placeholder.placeholder"
+                                                 t-attf-style="background-color: #{payment_placeholder.background_color};"/>
+                                        </t>
+                                        <t t-elif="not payment_placeholder.is_placeholder and payment_placeholder.image">
+                                            <img t-att-src="'data:image/png;base64,'+to_text(payment_placeholder.image)"
+                                                     style="height: 50px;width: 100px;"/>
+                                        </t>
                                     </t>
                                 </t>
                             </t>
@@ -1165,6 +1207,20 @@
                             </t>
                         </t>
                     </div>
+                    <t t-set="after_campus_ids"
+                       t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'after_campus')])"/>
+                    <t t-if="after_campus_ids">
+                        <t t-foreach="after_campus_ids" t-as="after_campus">
+                            <t t-if="after_campus.is_placeholder and after_campus.placeholder">
+                                <div class="well" t-raw="after_campus.placeholder"
+                                     t-attf-style="background-color: #{after_campus.background_color};"/>
+                            </t>
+                            <t t-elif="not after_campus.is_placeholder and after_campus.image">
+                                <img t-att-src="'data:image/png;base64,'+to_text(after_campus.image)"
+                                         style="height: 50px;width: 100px;"/>
+                            </t>
+                        </t>
+                    </t>
                 </div>
                 <div class="row" id="step-2">
 
@@ -1421,8 +1477,14 @@
                        t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'fees_page_right_side')])"/>
                     <t t-if="fees_page_right_side_ids">
                         <t t-foreach="fees_page_right_side_ids" t-as="fees_page_right_side">
-                            <div class="well" t-raw="fees_page_right_side.placeholder"
-                                 t-attf-style="background-color: #{fees_page_right_side.background_color};"/>
+                            <t t-if="fees_page_right_side.is_placeholder and fees_page_right_side.placeholder">
+                                <div class="well" t-raw="fees_page_right_side.placeholder"
+                                     t-attf-style="background-color: #{fees_page_right_side.background_color};"/>
+                            </t>
+                            <t t-elif="not fees_page_right_side.is_placeholder and fees_page_right_side.image">
+                                <img t-att-src="'data:image/png;base64,'+to_text(fees_page_right_side.image)"
+                                         style="height: 50px;width: 100px;"/>
+                            </t>
                         </t>
                     </t>
                 </div>

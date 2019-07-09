@@ -202,7 +202,7 @@
                 <div id="title" class="blog_header" t-ignore="True" style="text-align:center;">
                     <div class="blog_title">
                         <h2 t-field="blog_post.name" id="blog_post_name" t-att-data-blog-id="blog_post.id"
-                            placeholder="Blog Post Title" style="text-align:left;font-size:38px;text-align:center;"/>
+                            placeholder="Blog Post Title"/>
                         <p class="post-meta text-muted text-center" name="blog_post_data"/>
                         <p class="post-meta text-muted text-center" t-if="len(blog_post.tag_ids)">
                             <span class="fa fa-tags"/>
