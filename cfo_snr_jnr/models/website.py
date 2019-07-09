@@ -217,9 +217,14 @@ class EnrolmentPlaceholders(models.Model):
         ('registration_page', 'Registration Page'),
         ('payment_page', 'Payment Page'),
         ('fees_page_right_side', 'Fees Page Right Side'),
+        ('after_campus', 'After Campus'),
     ], default="course_page", string="Page Visibility")
+    is_placeholder = fields.Boolean(string="Is Placeholder ?")
     placeholder = fields.Html(string="Placeholder")
+    image = fields.Binary(string="Image")
     background_color = fields.Char(string="Background Color of Placeholder")
+    height = fields.Char(string="Height")
+    width = fields.Char(string="Width")
     active = fields.Boolean(string="Active", default=True)
 
 
