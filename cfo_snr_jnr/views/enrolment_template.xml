@@ -2350,6 +2350,8 @@
                             </tr>
                         </tbody>
                     </table>
+                    <t t-esc='page_confirm'/>
+                    <t t-esc='bank_detail'/>
                     <t t-if="page_confirm or bank_detail">
                         <table id="debit_order_section" class="table table-bordered debit_order_section"
                                style="color:black;background-color:gainsboro;margin-bottom:20px;">
@@ -2403,10 +2405,10 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr style="background-color: #DA4F49;">
+                                <tr style="background-color: #DA4F49;"  t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <th colspan="3" style="color:white;">Your Account Details for Debit Orders</th>
                                 </tr>
-                                <tr>
+                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Please enter your bank account details where the Debit
                                         Orders will be run.
                                     </td>
@@ -2415,7 +2417,7 @@
                                         provided.
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Account Holder Name</td>
                                     <td>
                                         <t t-if="sale_order_id">
@@ -2442,7 +2444,7 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr>
+                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Bank Name</td>
                                     <td>
                                         <select name="inputBankName" class="requiredValue" id="inputBankName">
@@ -2477,7 +2479,7 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr>
+                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Account No.</td>
                                     <td>
                                         <t t-if="sale_order_id">
@@ -2499,7 +2501,7 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr>
+                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Bank Code</td>
                                     <td>
                                         <select name="inputBCode" class="requiredValue" id="inputBCode" disabled="true">
@@ -2512,7 +2514,7 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr>
+                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Account Type</td>
                                     <td>
                                         <select name="inputAtype" class="requiredValue" id="inputAtype">
@@ -2527,7 +2529,7 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr>
+                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td colspan="3">
                                         <div class="control-group">
                                             <div class="controls">
@@ -2548,7 +2550,7 @@
                             </tbody>
                         </table>
                     </t>
-                    <t t-if="not page_confirm and not bank_detail">
+                    <t t-if="not page_confirm and not bank_detail and sale_order_id.affiliation == '1'">
                         <div class="control-group">
                             <t t-if="sale_order">
                                 <input class="form-field" name="sale_order" t-att-value="sale_order" type="hidden"/>
@@ -2679,6 +2681,7 @@
                 <form action="/payment" class="form-horizontal-enroll" name="registrationform" method="post">
                     <fieldset>
                         <table class="table" style="color:black;">
+                         <input id="uuid" type="hidden" t-att-value="uuid" name='uuid'/> 
                             <tbody>
                                 <tr>
                                     <td>
@@ -3000,6 +3003,7 @@
                         </div>
                     </fieldset>
                 </form>
+                
                 <div class="oe_structure"/>
             </t>
         </t>
