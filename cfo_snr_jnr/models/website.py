@@ -199,9 +199,12 @@ class WebsiteSuppliers(models.Model):
     _name = 'website.suppliers'
 
     name = fields.Char(string="Name")
-    image = fields.Binary(string="Image")
     is_placeholder = fields.Boolean(string="Is Placeholder ?")
     placeholder = fields.Html(string="Placeholder")
+    image = fields.Binary(string="Image")
+    background_color = fields.Char(string="Background Color of Placeholder")
+    height = fields.Char(string="Height", default="50")
+    width = fields.Char(string="Width", default="100")
     active = fields.Boolean(string="Active", default=True)
 
 
@@ -223,8 +226,8 @@ class EnrolmentPlaceholders(models.Model):
     placeholder = fields.Html(string="Placeholder")
     image = fields.Binary(string="Image")
     background_color = fields.Char(string="Background Color of Placeholder")
-    height = fields.Char(string="Height")
-    width = fields.Char(string="Width")
+    height = fields.Char(string="Height", default="50")
+    width = fields.Char(string="Width", default="100")
     active = fields.Boolean(string="Active", default=True)
 
 

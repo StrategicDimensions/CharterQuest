@@ -240,6 +240,23 @@ ul.breadcrumb-list-new {
     color: white;
 }
 
+.placeholders_enrolment_cfo a {
+    background-color: unset !important;
+    color: unset !important;
+    display: unset !important;
+    padding: unset !important;
+    text-decoration: unset !important;
+}
+
+.placeholders_enrolment_cfo a:hover {
+    background-color: unset !important;
+}
+
+.placeholders_enrolment_cfo a.active {
+    background-color: unset !important;
+    color: unset !important;
+}
+
 .row.site-identifier.ci-red-bg {
     width: 80%;
     float: left;

@@ -18,16 +18,18 @@
 #
 ##############################################################################
 from odoo import models, fields, api, _
-import odoo.addons.decimal_precision as dp
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_compare
-from odoo.exceptions import UserError, Warning
+from odoo.tools import float_compare
+from odoo.exceptions import UserError, Warning, ValidationError
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     @api.multi
-    def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, attributes=None, warehouse_id= None, **kwargs):
+    def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, attributes=None, warehouse_id= 0, **kwargs):
         """ Add or set product quantity, add_qty can be negative """
         self.ensure_one()
 
@@ -82,7 +84,7 @@ class SaleOrder(models.Model):
             values = self._website_product_id_change(self.id, product_id, qty=quantity)
             if not warehouse_id and order_line.product_warehouse_id:
                 warehouse_id = order_line.product_warehouse_id
-            values['product_warehouse_id'] = int(warehouse_id)
+            values['product_warehouse_id'] = int(warehouse_id or 0)
             if self.pricelist_id.discount_policy == 'with_discount' and not self.env.context.get('fixed_price'):
                 order = self.sudo().browse(self.id)
                 product_context = dict(self.env.context)
