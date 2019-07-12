@@ -422,7 +422,7 @@
                t-value="request.env['website.suppliers'].sudo().search([('active', '=', True), ('is_placeholder','=', True)])"/>
             <t t-if="supplier_placeholder_ids">
                 <t t-foreach="supplier_placeholder_ids" t-as="supplier_placeholder">
-                    <div style="margin-top: 10px;margin-bottom: 10px;padding:0px;"
+                    <div t-attf-style="background-color: #{supplier_placeholder.background_color};margin-top: 10px;margin-bottom: 10px;padding:0px;"
                          t-raw="supplier_placeholder.placeholder"/>
                 </t>
             </t>
@@ -432,7 +432,7 @@
                 <t t-foreach="supplier_image_ids" t-as="supplier_img">
                     <div class="col-md-6" style="margin-top: 10px;margin-bottom: 10px;padding:0px;">
                         <img t-att-src="'data:image/png;base64,'+to_text(supplier_img.image)"
-                             style="height: 50px;width: 100px;"/>
+                             t-attf-style="height: #{supplier_img.height}px; width: #{supplier_img.width}px;"/>
                     </div>
                 </t>
             </t>
@@ -451,7 +451,8 @@
                                             <form action="/shop/cart/update" method="post">
                                                 <input type="hidden" name="csrf_token"
                                                        t-att-value="request.csrf_token()"/>
-                                                <div itemscope="itemscope" itemtype="http://schema.org/Product" class="main_product_block">
+                                                <div itemscope="itemscope" itemtype="http://schema.org/Product"
+                                                     class="main_product_block">
                                                     <h5>
                                                         <strong>
                                                             <a itemprop="name"
@@ -463,7 +464,8 @@
                                                         <div class="col-md-7">
                                                             <a itemprop="url"
                                                                t-att-href="keep('/shop/product/%s' % slug(product), page=(pager['page']['num'] if pager['page']['num']&gt;1 else None))">
-                                                                <span itemprop="image" class="product_image" style="display:inline-flex;height:100%"
+                                                                <span itemprop="image" class="product_image"
+                                                                      style="display:inline-flex;height:100%"
                                                                       t-attf-content="{{request.httprequest.url_root}}web/image/product.template/{{product.id}}/image"
                                                                       t-field="product.image"
                                                                       t-options="{'widget': 'image', 'resize': None if product_image_big else '300x300', 'zoom': 'image'}"
@@ -475,18 +477,34 @@
                                                                  itemtype="http://schema.org/Offer"
                                                                  class="product_price"
                                                                  t-if="product.product_variant_ids">
-                                                                <div class="ribbon-wrapper" style="height: 100px !important;display: block;position: absolute;float: right;" t-if="product.website_style_ids and request.env['product.style'].sudo().search([('name','=','Sale Ribbon')]).id in product.website_style_ids.ids">
-                                                                    <div class="ribbon btn btn-success" style="background: red !important;color: #fff !important;position: relative;height: 24%;top: 40px;left: -24px;border: unset;border-radius: unset;width: 147px;margin: 0;padding: 2px;">Sale</div>
+                                                                <div class="ribbon-wrapper"
+                                                                     style="height: 100px !important;display: block;position: absolute;float: right;"
+                                                                     t-if="product.website_style_ids and request.env['product.style'].sudo().search([('name','=','Sale Ribbon')]).id in product.website_style_ids.ids">
+                                                                    <div class="ribbon btn btn-success"
+                                                                         style="background: red !important;color: #fff !important;position: relative;height: 24%;top: 40px;left: -24px;border: unset;border-radius: unset;width: 147px;margin: 0;padding: 2px;">
+                                                                        Sale
+                                                                    </div>
                                                                 </div>
                                                                 <t t-set="product" t-value="product.sudo()"/>
                                                                 <t t-if="product.qty_available >= 1">
-                                                                    <div class="ribbon-wrapper" style="width: 100% !important;height: 100px !important;display: block;position: relative;float: right;">
-                                                                        <div class="ribbon btn btn-success" style="background: #4cae4c !important;color: #fff !important;position: relative;height: 24%;top: 20px;left: -10px;padding: 5px;border: unset;border-radius: unset;"><center style="font-size: 12px;">In Stock</center></div>
+                                                                    <div class="ribbon-wrapper"
+                                                                         style="width: 100% !important;height: 100px !important;display: block;position: relative;float: right;">
+                                                                        <div class="ribbon btn btn-success"
+                                                                             style="background: #4cae4c !important;color: #fff !important;position: relative;height: 24%;top: 20px;left: -10px;padding: 5px;border: unset;border-radius: unset;">
+                                                                            <center style="font-size: 12px;">In Stock
+                                                                            </center>
+                                                                        </div>
                                                                     </div>
                                                                 </t>
                                                                 <t t-else="">
-                                                                    <div class="ribbon-wrapper" style="width: 100% !important;height: 100px !important;display: block;position: relative;float: right;">
-                                                                        <div class="ribbon btn btn-success" style="background: red !important;color: #fff !important;position: relative;height: 24%;top: 20px;left: -10px;padding: 5px;border: unset;border-radius: unset;"><center style="font-size: 12px;">Out Of Stock</center></div>
+                                                                    <div class="ribbon-wrapper"
+                                                                         style="width: 100% !important;height: 100px !important;display: block;position: relative;float: right;">
+                                                                        <div class="ribbon btn btn-success"
+                                                                             style="background: red !important;color: #fff !important;position: relative;height: 24%;top: 20px;left: -10px;padding: 5px;border: unset;border-radius: unset;">
+                                                                            <center style="font-size: 12px;">Out Of
+                                                                                Stock
+                                                                            </center>
+                                                                        </div>
                                                                     </div>
                                                                 </t>
                                                                 <b>
@@ -504,6 +522,14 @@
                                                                     <span itemprop="priceCurrency" style="display:none;"
                                                                           t-esc="website.currency_id.name"/>
                                                                 </b>
+                                                                <input name="product_id"
+                                                                       t-att-value="product.product_variant_id.id"
+                                                                       type="hidden"/>
+                                                                <button type="submit"
+                                                                        class="btn btn-default btn-xs a-submit"
+                                                                        style="margin-left: 10px;border-radius: unset;">
+                                                                    <span class="fa fa-shopping-cart"/>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -520,7 +546,6 @@
                                                     </t>
                                                 </div>
                                             </form>
-
                                         </div>
                                     </div>
                                 </t>
@@ -803,7 +828,7 @@
                                 </a>
                             </div>
                         </t>
-                        <div style="margin-top:290px;">
+                        <div style="margin-top:290px;" class="placeholders_enrolment_cfo">
                             <t t-if="page_name == 'course'">
                                 <t t-set="course_placeholder_ids"
                                    t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'course_page')])"/>
@@ -815,7 +840,7 @@
                                         </t>
                                         <t t-elif="not course_placeholder.is_placeholder and course_placeholder.image">
                                             <img t-att-src="'data:image/png;base64,'+to_text(course_placeholder.image)"
-                                                     style="height: 50px;width: 100px;"/>
+                                                 t-attf-style="height: #{course_placeholder.height}px; width: #{course_placeholder.width}px;"/>
                                         </t>
                                     </t>
                                 </t>
@@ -831,7 +856,7 @@
                                         </t>
                                         <t t-elif="not fees_placeholder.is_placeholder and fees_placeholder.image">
                                             <img t-att-src="'data:image/png;base64,'+to_text(fees_placeholder.image)"
-                                                     style="height: 50px;width: 100px;"/>
+                                                 t-attf-style="height: #{fees_placeholder.height}px; width: #{fees_placeholder.width}px;"/>
                                         </t>
                                     </t>
                                 </t>
@@ -847,7 +872,7 @@
                                         </t>
                                         <t t-elif="not discount_placeholder.is_placeholder and discount_placeholder.image">
                                             <img t-att-src="'data:image/png;base64,'+to_text(discount_placeholder.image)"
-                                                     style="height: 50px;width: 100px;"/>
+                                                 t-attf-style="height: #{discount_placeholder.height}px; width: #{discount_placeholder.width}px;"/>
                                         </t>
                                     </t>
                                 </t>
@@ -863,7 +888,7 @@
                                         </t>
                                         <t t-elif="not price_placeholder.is_placeholder and price_placeholder.image">
                                             <img t-att-src="'data:image/png;base64,'+to_text(price_placeholder.image)"
-                                                     style="height: 50px;width: 100px;"/>
+                                                 t-attf-style="height: #{price_placeholder.height}px; width: #{price_placeholder.width}px;"/>
                                         </t>
                                     </t>
                                 </t>
@@ -879,7 +904,7 @@
                                         </t>
                                         <t t-elif="not registration_placeholder.is_placeholder and registration_placeholder.image">
                                             <img t-att-src="'data:image/png;base64,'+to_text(registration_placeholder.image)"
-                                                     style="height: 50px;width: 100px;"/>
+                                                 t-attf-style="height: #{registration_placeholder.height}px; width: #{registration_placeholder.width}px;"/>
                                         </t>
                                     </t>
                                 </t>
@@ -895,7 +920,7 @@
                                         </t>
                                         <t t-elif="not payment_placeholder.is_placeholder and payment_placeholder.image">
                                             <img t-att-src="'data:image/png;base64,'+to_text(payment_placeholder.image)"
-                                                     style="height: 50px;width: 100px;"/>
+                                                 t-attf-style="height: #{payment_placeholder.height}px; width: #{payment_placeholder.width}px;"/>
                                         </t>
                                     </t>
                                 </t>
@@ -1199,9 +1224,13 @@
                             <t t-foreach="campus_ids" t-as="campus">
                                 <ul>
                                     <li style="line-height: 20px;">
-                                        <b><span t-esc="campus.name"/></b>
+                                        <b>
+                                            <span t-esc="campus.name"/>
+                                        </b>
                                         -
-                                        <span t-esc="campus.street"/>&amp;nbsp;<span t-esc="campus.street2"/>&amp;nbsp;<span t-esc="campus.city"/>&amp;nbsp;<span t-esc="campus.state_id.name"/>
+                                        <span t-esc="campus.street"/>&amp;nbsp;<span t-esc="campus.street2"/>&amp;nbsp;
+                                        <span t-esc="campus.city"/>&amp;nbsp;
+                                        <span t-esc="campus.state_id.name"/>
                                     </li>
                                 </ul>
                             </t>
@@ -1217,7 +1246,7 @@
                             </t>
                             <t t-elif="not after_campus.is_placeholder and after_campus.image">
                                 <img t-att-src="'data:image/png;base64,'+to_text(after_campus.image)"
-                                         style="height: 50px;width: 100px;"/>
+                                     style="height: 50px;width: 100px;"/>
                             </t>
                         </t>
                     </t>
@@ -1483,7 +1512,7 @@
                             </t>
                             <t t-elif="not fees_page_right_side.is_placeholder and fees_page_right_side.image">
                                 <img t-att-src="'data:image/png;base64,'+to_text(fees_page_right_side.image)"
-                                         style="height: 50px;width: 100px;"/>
+                                     style="height: 50px;width: 100px;"/>
                             </t>
                         </t>
                     </t>
@@ -2467,10 +2496,11 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr style="background-color: #DA4F49;"  t-if="sale_order or sale_order_id.affiliation == '1'">
+                                <tr style="background-color: #DA4F49;"
+                                    t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <th colspan="3" style="color:white;">Your Account Details for Debit Orders</th>
                                 </tr>
-                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
+                                <tr t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Please enter your bank account details where the Debit
                                         Orders will be run.
                                     </td>
@@ -2479,7 +2509,7 @@
                                         provided.
                                     </td>
                                 </tr>
-                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
+                                <tr t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Account Holder Name</td>
                                     <td>
                                         <t t-if="sale_order_id">
@@ -2506,7 +2536,7 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
+                                <tr t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Bank Name</td>
                                     <td>
                                         <select name="inputBankName" class="requiredValue" id="inputBankName">
@@ -2541,7 +2571,7 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
+                                <tr t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Account No.</td>
                                     <td>
                                         <t t-if="sale_order_id">
@@ -2563,7 +2593,7 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
+                                <tr t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Bank Code</td>
                                     <td>
                                         <select name="inputBCode" class="requiredValue" id="inputBCode" disabled="true">
@@ -2576,7 +2606,7 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
+                                <tr t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Account Type</td>
                                     <td>
                                         <select name="inputAtype" class="requiredValue" id="inputAtype">
@@ -2591,7 +2621,7 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr  t-if="sale_order or sale_order_id.affiliation == '1'">
+                                <tr t-if="sale_order or sale_order_id.affiliation == '1'">
                                     <td colspan="3">
                                         <div class="control-group">
                                             <div class="controls">
@@ -2743,7 +2773,7 @@
                 <form action="/payment" class="form-horizontal-enroll" name="registrationform" method="post">
                     <fieldset>
                         <table class="table" style="color:black;">
-                         <input id="uuid" type="hidden" t-att-value="uuid" name='uuid'/> 
+                            <input id="uuid" type="hidden" t-att-value="uuid" name='uuid'/>
                             <tbody>
                                 <tr>
                                     <td>
@@ -3065,7 +3095,7 @@
                         </div>
                     </fieldset>
                 </form>
-                
+
                 <div class="oe_structure"/>
             </t>
         </t>

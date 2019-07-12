@@ -58,6 +58,10 @@
         </field>
     </record>
 
+    <menuitem id="menu_website_cfo_main"
+              name="CFO Website"
+              parent="website.menu_website_global_configuration"/>
+
     <record id="website_suppliers_tree_view" model="ir.ui.view">
         <field name="name">website.suppliers.tree</field>
         <field name="model">website.suppliers</field>
@@ -88,6 +92,38 @@
                         <field name="image" widget="image" options="{'size': [300, 300]}" attrs="{'invisible':[('is_placeholder','=', True)]}"/>
                         <field name="placeholder" attrs="{'invisible':[('is_placeholder','=', False)]}"/>
                     </group>
+                    <div class="row" attrs="{'invisible':[('is_placeholder','=', False)]}">
+                        <div class="col-md-2" style="width:13%;">
+                            <b>Background Color of Placeholder</b>
+                        </div>
+                        <div class="col-md-3">
+                            <field name="background_color" class="color-picker-cfo"/>
+                        </div>
+                    </div>
+                    <div class="row" attrs="{'invisible':[('is_placeholder','=', True)]}">
+                        <div class="col-md-2" style="width:11%;">
+                            <b>Height Width</b>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-10">
+                                <field name="height"/>
+                            </div>
+                            <div class="col-md-2">
+                                <b>px</b>
+                            </div>
+                        </div>
+                        <div class="col-md-1" style="width:0%;">
+                            <b>X</b>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-10">
+                                <field name="width"/>
+                            </div>
+                            <div class="col-md-2">
+                                <b>px</b>
+                            </div>
+                        </div>
+                    </div>
                 </sheet>
             </form>
         </field>
@@ -101,7 +137,7 @@
 
     <menuitem id="menu_website_suppliers"
               action="cfo_snr_jnr.action_website_suppliers"
-              parent="website.menu_website_global_configuration"/>
+              parent="cfo_snr_jnr.menu_website_cfo_main"/>
 
     <record id="enrolment_placeholders_tree_view" model="ir.ui.view">
         <field name="name">enrolment.placeholders.tree</field>
@@ -133,8 +169,15 @@
                         <field name="is_placeholder"/>
                         <field name="image" widget="image" options="{'size': [300, 300]}" attrs="{'invisible':[('is_placeholder','=', True)]}"/>
                         <field name="placeholder" attrs="{'invisible':[('is_placeholder','=', False)]}"/>
-                        <field name="background_color" class="color-picker-cfo" attrs="{'invisible':[('is_placeholder','=', False)]}"/>
                     </group>
+                    <div class="row" attrs="{'invisible':[('is_placeholder','=', False)]}">
+                        <div class="col-md-2" style="width:13%;">
+                            <b>Background Color of Placeholder</b>
+                        </div>
+                        <div class="col-md-3">
+                            <field name="background_color" class="color-picker-cfo"/>
+                        </div>
+                    </div>
                     <div class="row" attrs="{'invisible':[('is_placeholder','=', True)]}">
                         <div class="col-md-2" style="width:11%;">
                             <b>Height Width</b>
@@ -172,5 +215,5 @@
 
     <menuitem id="menu_enrolment_placeholders"
               action="cfo_snr_jnr.action_enrolment_placeholders"
-              parent="website.menu_website_global_configuration"/>
+              parent="cfo_snr_jnr.menu_website_cfo_main"/>
 </odoo>
