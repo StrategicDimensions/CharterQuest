@@ -25,6 +25,7 @@
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/simple-iconpicker.js"/>
                 <!--<script type="text/javascript" src="/cfo_snr_jnr/static/src/js/jquery-ui.js"/>-->
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu_tabs.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/contentMenu.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/payment.js"/>
 
