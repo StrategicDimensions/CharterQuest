@@ -1201,7 +1201,6 @@ class EnrolmentProcess(http.Controller):
                     agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
                     if agreement_id:
                         attchment_list.append(agreement_id)
-
                     body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                     body_html += "<br>"
                     body_html += "Dear " + sale_order_id.partner_id.name + ","
@@ -1210,9 +1209,11 @@ class EnrolmentProcess(http.Controller):
                     body_html += "<br><br>"
                     body_html += "Kindly review the attached and secure your place by:"
                     body_html += "<br><br>"
-                    body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right:10px;width: 10%;' '=''>CONVERT TO INVOICE</a>"
-                    body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 35px 35px 11px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right:10px;' '=''>PAY NOW</a>"
-                    body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right:10px;width: 15%;' '=''>GET BANKING DETAILS & PAY LATER</a>"
+                    body_html += "<div>"
+                    body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>CONVERT TO INVOICE</a>"
+                    body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>PAY NOW</a>"
+                    body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-bottom: 10px;'>GET BANKING DETAILS & PAY LATER</a>"
+                    body_html += "</div>"
                     body_html += "<br><br>"
                     
                     body_html += "We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
@@ -1270,7 +1271,6 @@ class EnrolmentProcess(http.Controller):
                         baking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
                         if baking_detail_id:
                             attchment_list.append(baking_detail_id)
-
                         body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                         body_html += "<br>"
                         body_html += "Dear " + sale_order_id.partner_id.name + ","
@@ -1331,9 +1331,11 @@ class EnrolmentProcess(http.Controller):
                         body_html += "<br><br>"
                         body_html += "Kindly review the attached and secure your place by:" 
                         body_html += "<br><br>"
-                        body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;width: 10%;' '=''>CONVERT TO INVOICE</a>"
-                        body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 35px 35px 11px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;' '=''>PAY NOW</a>"
-                        body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;width: 15%;' '=''>GET BANKING DETAILS & PAY LATER</a>"
+                        body_html += "<div>"
+                        body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>CONVERT TO INVOICE</a>"
+                        body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>PAY NOW</a>"
+                        body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>GET BANKING DETAILS & PAY LATER</a>"
+                        body_html += "</div>"
                         body_html += "<br><br>"
                         body_html += "We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
                         body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
@@ -1472,7 +1474,6 @@ class EnrolmentProcess(http.Controller):
                 agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
                 if agreement_id:
                     attchment_list.append(agreement_id)
-
                 body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                 body_html += "<br>"
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
@@ -1854,7 +1855,6 @@ class EnrolmentProcess(http.Controller):
                 baking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
                 if baking_detail_id:
                     attachment_list.append(baking_detail_id)
-
                 body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                 body_html += "<br>"
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
@@ -2015,7 +2015,6 @@ class EnrolmentProcess(http.Controller):
                 baking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
                 if baking_detail_id:
                     attchment_list.append(baking_detail_id)
-
                 body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                 body_html += "<br>"
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
@@ -2137,10 +2136,13 @@ class EnrolmentProcess(http.Controller):
                     attchment_list.append(pdf_create)
 
                 agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
-
+                
                 if agreement_id:
                     attchment_list.append(agreement_id)
-
+                    
+                baking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
+                if baking_detail_id:
+                    attchment_list.append(baking_detail_id)
                 body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                 body_html += "<br>"
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
