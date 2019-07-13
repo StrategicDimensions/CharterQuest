@@ -25,13 +25,13 @@
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/simple-iconpicker.js"/>
                 <!--<script type="text/javascript" src="/cfo_snr_jnr/static/src/js/jquery-ui.js"/>-->
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu_tabs.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/contentMenu.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/payment.js"/>
-
             </xpath>
         </template>
 
-        <template id="assets_editor_cfo" name="website_warranty"
+        <template id="assets_editor"
                   inherit_id="website.assets_editor">
             <xpath expr="." position="inside">
                 <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/snippets_menu.css"/>
@@ -40,6 +40,14 @@
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/simple-iconpicker.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/contentMenu.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_editor_cfo.js"/>
+            </xpath>
+        </template>
+
+        <template id="assets_editor_cfo_web_editor"
+                  inherit_id="web_editor.assets_editor">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_editor_cfo.js"/>
             </xpath>
         </template>
 
