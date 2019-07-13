@@ -294,7 +294,6 @@ class EnrolmentProcess(http.Controller):
                             'res_id': invoice_details.id
                         }
                         msg_id = mail_obj.create(mail_values)
-
                         msg_id.send()
                 elif acquirer_id.provider == 'transfer' and request.session.get(
                         'shop_do_invoice') and request.session.get('shop_do_invoice') == 'no':
@@ -388,10 +387,10 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/registration_form', '/registration_form/<uuid>'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def registration_form(self,uuid=False, **post):
-        user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
+        user_select = request.session['user_selection_type'] if request.session and request.session.get('user_selection_type') else ''
         return request.render('cfo_snr_jnr.enrolment_process_registration_and_enroll', {'page_name': 'registration',
                                                                                         'self_or_cmp': user_select[
-                                                                                            'self_or_company'] if user_select.get(
+                                                                                            'self_or_company'] if user_select and user_select.get(
                                                                                             'self_or_company') else '',
                                                                                             'uuid': uuid
                                                                                         })
@@ -914,7 +913,7 @@ class EnrolmentProcess(http.Controller):
                     decoded_quote_name = m.hexdigest()
                     config_para = request.env['ir.config_parameter'].sudo().search([('key', 'ilike', 'web.base.url')])
                     if config_para:
-                        link = config_para.value + "/debitorder/" + decoded_quote_name
+                        link = config_para.value + "/registration_form/" + decoded_quote_name
                         sale_order_id.write(
                             {'name': quote_name, 'debit_order_mandate_link': link, 'debit_link': decoded_quote_name})
                     else:
@@ -1231,6 +1230,8 @@ class EnrolmentProcess(http.Controller):
                         'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
                         'auto_delete': False,
                     }
+#                     Route Process Self-Sponsored Get free Quote Emailed
+
                     msg_id = mail_obj.create(mail_values)
                     msg_id.send()
                     if user_select.get('self_or_company') == 'cmp_sponosored':
@@ -1477,15 +1478,15 @@ class EnrolmentProcess(http.Controller):
                 body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                 body_html += "<br>"
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
-                body_html += "<br><br>"
+                body_html += "<br>"
                 body_html += "Thank you for your enrolment"
-                body_html += "<br><br>"
+                body_html += "<br>"
                 body_html += "Please find attached Proforma Invoice, Banking details and copy of Student Agreement you just accepted!"
+                body_html += "<br>"
+                body_html += "You can pay using the invoice number as reference and return proof of payment to: accounts@charterquest.co.za to process your enrolment." 
                 body_html += "<br><br>"
-                body_html += "Your can pay using the invoice number as reference and return proof of payment to: accounts@charterquest.co.za to process your enrolment." 
-                body_html += "<br><br>"
-                body_html += "<br><br> We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
-                body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
+                body_html += "We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
+                body_html += "<br><br>Thanking You <br>Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
                 body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
                 mail_values = {
                     'email_from': template_id.email_from,
@@ -2020,11 +2021,10 @@ class EnrolmentProcess(http.Controller):
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
                 body_html += "<br><br>"
                 body_html += "Thank you for your enrolment"
-                body_html += "<br><br>"
+                body_html += "<br>"
                 body_html += "Please find attached Proforma Invoice, Banking details and copy of Student Agreement you just accepted!"
-                body_html += "<br><br>"
-                body_html += "Your can pay using the invoice number as reference and return proof of payment to: accounts@charterquest.co.za to process your enrolment." 
-                body_html += "<br><br>"
+                body_html += "<br>"
+                body_html += "You can pay using the invoice number as reference and return proof of payment to: accounts@charterquest.co.za to process your enrolment." 
                 body_html += "<br><br> We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
                 body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
                 body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
