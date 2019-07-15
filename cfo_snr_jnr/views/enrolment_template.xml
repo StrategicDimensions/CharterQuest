@@ -2621,14 +2621,14 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr t-if="sale_order or sale_order_id.affiliation == '1'">
+                                <tr t-if="sale_order or sale_order_id.affiliation=='1'">
                                     <td colspan="3">
                                         <div class="control-group">
                                             <div class="controls">
                                                 <label class="checkbox">
                                                     <input type="checkbox" id="debitrequiredcheckbox"
                                                            name="debitrequiredcheckbox" data-required="true"
-                                                           class="parsley-validated"/>
+                                                           class="parsley-validated" checked="checked"/>
                                                     I accept Debit Order
                                                     <a target="blank_"
                                                        href=" http://www.charterquest.co.za/page/debit-order-terms">
@@ -2642,7 +2642,7 @@
                             </tbody>
                         </table>
                     </t>
-                    <t t-if="not page_confirm and not bank_detail and sale_order_id.affiliation == '1'">
+                    <t t-if="not page_confirm and not bank_detail and sale_order_id.affiliation and sale_order_id.affiliation=='1'">
                         <div class="control-group">
                             <t t-if="sale_order">
                                 <input class="form-field" name="sale_order" t-att-value="sale_order" type="hidden"/>
