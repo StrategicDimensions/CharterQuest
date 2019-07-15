@@ -32,6 +32,33 @@
         </section>
     </template>
 
+    <template id="cfo_snr_jnr_blocks_tabs" name="Blocks">
+        <section class="cfo_snr_jnr_blocks_new container">
+            <div class="row">
+                <div class="col-md-4 inside_block">
+                    <div class="col-md-12 upper_block">
+                        test
+                    </div>
+                    <div class="col-md-12 low_block">
+                        test content
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="cfo_snr_jnr_blocks_tabs_menu_option" inherit_id="website.snippet_options"
+              name="Add Menu Options">
+        <xpath expr="//div" position="after">
+            <div data-js="cfo_snr_jnr_blocks_tabs" data-selector=".cfo_snr_jnr_blocks_new"
+                 data-snippet-option-id="cfo_snr_jnr_blocks_new">
+                <li data-cfo-snr-jnr-menu="">
+                    <a class="cfo_snr_jnr_edit_block_menu">Edit Block</a>
+                </li>
+            </div>
+        </xpath>
+    </template>
+
     <template id="cfo_snr_jnr_menu_snippet_add_menu_option" inherit_id="website.snippet_options"
               name="Add Menu Options">
         <xpath expr="//div" position="after">
@@ -69,6 +96,8 @@
                    t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/side_menu.jpeg"/>
                 <t t-snippet="cfo_snr_jnr.cfo_snr_jnr_menu_with_tabs_snippet"
                    t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/menu_with_tabs.png"/>
+                <t t-snippet="cfo_snr_jnr.cfo_snr_jnr_blocks_tabs"
+                   t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/blocks.png"/>
             </div>
         </xpath>
     </template>

@@ -1,6 +1,7 @@
 <template>
     <t t-name="cfo_snr_jnr.cfo_snr_jnr_menu_block">
-        <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal" id="cfo_add_menu_modal" contenteditable="False" role="dialog"
+        <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal" id="cfo_add_menu_modal"
+             contenteditable="False" role="dialog"
              style="z-index:2001" tabindex="1">
             <div class="modal-dialog">
                 <div class="modal-content" id="s_media_block_modal">
@@ -69,7 +70,58 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" data-dismiss="modal" id="cancel">Cancel</button>
-                        <button class="btn btn-danger" data-dismiss="modal" id="menu_sub_data_with_tabs" type="submit">Apply
+                        <button class="btn btn-danger" data-dismiss="modal" id="menu_sub_data_with_tabs" type="submit">
+                            Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="cfo_snr_jnr.cfo_snr_jnr_menu_blocks_tabs_mod">
+        <div aria-hidden="true" class="modal" id="cfo_add_menu_blocks_tabs_modal" contenteditable="False" role="dialog"
+             style="z-index:2001" tabindex="1">
+            <div class="modal-dialog">
+                <div class="modal-content" id="s_media_block_modal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Blocks Customization</h4>
+                    </div>
+                    <div class="modal-body" contenteditable="false">
+                        <form class="form-horizontal container-fluid" role="form">
+                            <div class="col-sm-12 form-group">
+                                <label class="col-sm-6 control-label" style="text-align:left;" for="menu-upper-bgcolor">Upper Background Color</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control color-picker-cfo" id="menu-upper-bgcolor" required="required"
+                                           type="text"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <label class="col-sm-6 control-label" style="text-align:left;" for="menu-lower-bgcolor">Lower Background Color</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control color-picker-cfo" id="menu-lower-bgcolor" required="required"
+                                           type="text"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <label class="col-sm-6 control-label" style="text-align:left;" for="middle-border-bgcolor">Middle Border Color</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control color-picker-cfo" id="middle-border-bgcolor" required="required"
+                                           type="text"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <label class="col-sm-6 control-label" style="text-align:left;" for="middle-border-width">Middle Border Width</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="middle-border-width" required="required"
+                                           type="text"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-dismiss="modal" id="cancel">Cancel</button>
+                        <button class="btn btn-danger" data-dismiss="modal" id="menu_blocks_tabs_apply" type="submit">
+                            Apply
                         </button>
                     </div>
                 </div>
