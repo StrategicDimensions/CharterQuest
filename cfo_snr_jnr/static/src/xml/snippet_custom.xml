@@ -89,28 +89,39 @@
                     <div class="modal-body" contenteditable="false">
                         <form class="form-horizontal container-fluid" role="form">
                             <div class="col-sm-12 form-group">
-                                <label class="col-sm-6 control-label" style="text-align:left;" for="menu-upper-bgcolor">Upper Background Color</label>
+                                <label class="col-sm-6 control-label" style="text-align:left;" for="menu-upper-bgcolor">
+                                    Upper Background Color
+                                </label>
                                 <div class="col-sm-6">
-                                    <input class="form-control color-picker-cfo" id="menu-upper-bgcolor" required="required"
+                                    <input class="form-control color-picker-cfo" id="menu-upper-bgcolor"
+                                           required="required"
                                            type="text"/>
                                 </div>
                             </div>
                             <div class="col-sm-12 form-group">
-                                <label class="col-sm-6 control-label" style="text-align:left;" for="menu-lower-bgcolor">Lower Background Color</label>
+                                <label class="col-sm-6 control-label" style="text-align:left;" for="menu-lower-bgcolor">
+                                    Lower Background Color
+                                </label>
                                 <div class="col-sm-6">
-                                    <input class="form-control color-picker-cfo" id="menu-lower-bgcolor" required="required"
+                                    <input class="form-control color-picker-cfo" id="menu-lower-bgcolor"
+                                           required="required"
                                            type="text"/>
                                 </div>
                             </div>
                             <div class="col-sm-12 form-group">
-                                <label class="col-sm-6 control-label" style="text-align:left;" for="middle-border-bgcolor">Middle Border Color</label>
+                                <label class="col-sm-6 control-label" style="text-align:left;"
+                                       for="middle-border-bgcolor">Middle Border Color
+                                </label>
                                 <div class="col-sm-6">
-                                    <input class="form-control color-picker-cfo" id="middle-border-bgcolor" required="required"
+                                    <input class="form-control color-picker-cfo" id="middle-border-bgcolor"
+                                           required="required"
                                            type="text"/>
                                 </div>
                             </div>
                             <div class="col-sm-12 form-group">
-                                <label class="col-sm-6 control-label" style="text-align:left;" for="middle-border-width">Middle Border Width</label>
+                                <label class="col-sm-6 control-label" style="text-align:left;"
+                                       for="middle-border-width">Middle Border Width
+                                </label>
                                 <div class="col-sm-6">
                                     <input class="form-control" id="middle-border-width" required="required"
                                            type="text"/>
@@ -121,6 +132,76 @@
                     <div class="modal-footer">
                         <button class="btn btn-primary" data-dismiss="modal" id="cancel">Cancel</button>
                         <button class="btn btn-danger" data-dismiss="modal" id="menu_blocks_tabs_apply" type="submit">
+                            Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="cfo_snr_jnr.cfo_snr_jnr_comparision_blocks_mod">
+        <div aria-hidden="true" class="modal" id="cfo_comparision_blocks_modal" contenteditable="False" role="dialog"
+             style="z-index:2001" tabindex="1">
+            <div class="modal-dialog">
+                <div class="modal-content" id="s_media_block_modal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Comparision Blocks Customization</h4>
+                    </div>
+                    <div class="modal-body" contenteditable="false">
+                        <form class="form-horizontal container-fluid" role="form">
+                            <div class="col-sm-12 form-group">
+                                <label class="col-sm-6 control-label" style="text-align:left;"
+                                       for="cols_comparision_header">No. Columns Comparision Header
+                                </label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="cols_comparision_header" required="required"
+                                           type="text"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-dismiss="modal" id="cancel">Cancel</button>
+                        <button class="btn btn-danger" data-dismiss="modal" id="comparision_blocks_apply" type="submit">
+                            Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="cfo_snr_jnr.cfo_snr_jnr_comparision_add_row_mod">
+        <div aria-hidden="true" class="modal" id="cfo_comparision_add_row_modal" contenteditable="False" role="dialog"
+             style="z-index:2001" tabindex="1">
+            <div class="modal-dialog">
+                <div class="modal-content" id="s_media_block_modal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Row</h4>
+                    </div>
+                    <div class="modal-body" contenteditable="false">
+                        <form class="form-horizontal container-fluid" role="form">
+                            <div class="col-sm-12 form-group">
+                                <div class="col-sm-2" style="width: 7%;">
+                                    <input type="checkbox" id="is_with_without_colspan"/>
+                                </div>
+                                <label class="col-sm-4 control-label is_with_without_label" style="padding: 0;float: left;width: 24%;"
+                                       for="is_with_without_colspan">Without Colspan
+                                </label>
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <label class="col-sm-6 control-label cols_comparision_label" style="text-align:left;"
+                                       for="cols_comparision">No. Columns
+                                </label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="cols_comparision" required="required"
+                                           type="text"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-dismiss="modal" id="cancel">Cancel</button>
+                        <button class="btn btn-danger" data-dismiss="modal" id="comparision_blocks_apply_add" type="submit">
                             Apply
                         </button>
                     </div>

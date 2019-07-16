@@ -1,0 +1,147 @@
+/* DIRTY Responsive pricing table CSS */
+
+
+/*
+- make mobile switch sticky
+*/
+
+.comparision_article {
+    width:100%;
+  	max-width:1000px;
+  	margin:0 auto;
+  	position:relative;
+}
+
+.comparision_article ul {
+    display: flex;
+    top: 0px;
+    z-index: 10;
+    padding-bottom: 14px;
+}
+
+.comparision_article li {
+    list-style: none;
+    flex: 1;
+}
+
+.comparision_article li:last-child {
+    border-right: 1px solid #DDD;
+}
+
+.comparision_article button {
+    width: 100%;
+    border: 1px solid #DDD;
+    border-right: 0;
+    border-top: 0;
+    padding: 10px;
+    background: #FFF;
+    font-size: 14px;
+    font-weight: bold;
+    height: 60px;
+    color: #999
+}
+
+.comparision_article li.active button {
+    background: #F5F5F5;
+    color: #000;
+}
+
+.comparision_article table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.comparision_article th {
+    background: #F5F5F5;
+    display: none;
+}
+
+.comparision_article td,
+.comparision_article th {
+    height: 53px
+}
+
+.comparision_article td,
+.comparision_article th {
+    border: 1px solid #DDD;
+    padding: 10px;
+    empty-cells: show;
+}
+
+.comparision_article td,
+.comparision_article th {
+    text-align: left;
+}
+
+.comparision_article td+td,
+.comparision_article th+th {
+    text-align: center !important;
+    display: none;
+}
+
+.comparision_article td.default {
+    display: table-cell;
+}
+
+.comparision_article .bg-purple {
+    border-top: 3px solid #A32362 !important;
+}
+
+.comparision_article .bg-blue {
+    border-top: 3px solid #0097CF !important;
+}
+
+.comparision_article .sep {
+    background: #F5F5F5;
+    font-weight: bold;
+}
+
+.comparision_article .txt-l {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.comparision_article .txt-top {
+    position: relative;
+    top: -9px;
+    left: -2px;
+}
+
+.comparision_article .tick {
+    font-size: 18px;
+    color: #2CA01C;
+}
+
+.comparision_article .hide {
+    border: 0 !important;
+    background: none !important;
+}
+.comparision_article tr.active{
+	border-color:black;
+}
+
+
+@media (min-width: 640px) {
+    .comparision_article ul {
+        display: none;
+    }
+    .comparision_article td,
+    .comparision_article th {
+        display: table-cell !important;
+    }
+    .comparision_article td,
+    .comparision_article th {
+        width: 330px;
+    }
+    .comparision_article td+td,
+    .comparision_article th+th {
+        width: auto;
+    }
+}
+
+@media only screen and (max-width:600px){
+	.comparision_article ul{
+		padding:0px;
+	}
+}

@@ -5,6 +5,7 @@
                   inherit_id="website.assets_frontend">
             <xpath expr="." position="inside">
                 <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/mediaquery.css"/>
+                <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/comparison.css"/>
                 <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/snippets_menu.css"/>
                 <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/my_css.css"/>
                 <link rel="stylesheet"
@@ -28,6 +29,7 @@
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu_tabs.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu_block.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_comparision_block.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/contentMenu.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/payment.js"/>
             </xpath>
@@ -39,6 +41,7 @@
                 <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/snippets_menu.css"/>
                 <link rel="stylesheet"
                       href="/cfo_snr_jnr/static/src/css/simple-iconpicker.css"/>
+                <link rel="stylesheet" href="/cfo_snr_jnr/static/src/css/comparison.css"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/simple-iconpicker.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/contentMenu.js"/>
