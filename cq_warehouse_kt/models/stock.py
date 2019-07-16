@@ -178,15 +178,15 @@ class stock_picking(models.Model):
     def create(self, vals):
         if vals.get('origin', False):
             sale_id = self.env['sale.order'].search([('name', '=', vals['origin'])])
-            if sale_id:
+            if sale_id.quote_type in ['freequote','enrolment','PC Exam',]:
                 vals['campus_id'] = sale_id.campus.id,
                 vals['semester'] = sale_id.semester_id.id,
                 vals['prof_body_id'] = sale_id.prof_body.id,
-                vals['sale_order_id'] = sale_id.id
-                if sale_id.quote_type not in ['freequote', 'enrolment'] and not sale_id.pc_exam:
-                    vals['delivery_order_source'] = 'CharterBooks'
-                else:
-                    vals['delivery_order_source'] = 'enrolment'
+            vals['sale_order_id'] = sale_id.id
+            if sale_id.quote_type not in ['freequote', 'enrolment'] and not sale_id.pc_exam:
+                vals['delivery_order_source'] = 'CharterBooks'
+            else:
+                vals['delivery_order_source'] = 'enrolment'
 
         if vals.get('partner_id', False):
             onchangeResult = self.onchange_partner_in(vals['partner_id'])

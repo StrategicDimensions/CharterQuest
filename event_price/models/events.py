@@ -127,6 +127,12 @@ class sale_order(models.Model):
         return super(sale_order, self).create(vals)
 
     @api.multi
+    def action_confirm(self):
+        super(sale_order, self).action_confirm()
+        print("111111")
+        return True
+
+    @api.multi
     def action_invoice_create(self, grouped=False, final=False):
         """
         Create the invoice associated to the SO.
