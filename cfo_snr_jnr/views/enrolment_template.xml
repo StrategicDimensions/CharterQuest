@@ -2143,14 +2143,14 @@
                                 <th>% and/or Amount in Rands</th>
                                 <th>Guidance / How to:</th>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id.affiliation == '1'">
+                            <tr t-if="sale_order and sale_order_id.affiliation and sale_order_id.affiliation == '1'">
                                 <td>Course Fees</td>
                                 <td style="font-size:16px !important;">
                                     <span id="grand_total_amount" t-esc="grand_tot"></span>
                                 </td>
                                 <td></td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id.affiliation == '1'">
+                            <tr t-if="sale_order and sale_order_id.affiliation and sale_order_id.affiliation == '1'">
                                 <td>Remittance Fees</td>
                                 <td>
                                     <input type="text" name="inputRemittancefee" id="inputRemittancefee" readonly=""
@@ -2191,12 +2191,12 @@
                                     <td></td>
                                 </t>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id.affiliation == '1'" style="background-color:#DA4F49;">
+                            <tr t-if="sale_order and sale_order_id.affiliation and sale_order_id.affiliation == '1'" style="background-color:#DA4F49;">
                                 <th>Deposit Payment Info</th>
                                 <th>% and/or Amount in Rands</th>
                                 <th>Guidance / How to:</th>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id.affiliation == '1'">
+                            <tr t-if="sale_order and sale_order_id.affiliation and sale_order_id.affiliation == '1'">
                                 <td>Course Deposit</td>
                                 <td>
                                     <select name="inputPaypercentage" class="requiredValue" id="inputPaypercentage">
@@ -2262,7 +2262,7 @@
                                     self-sponsored student).
                                 </td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id.affiliation == '1'">
+                            <tr t-if="sale_order and sale_order_id.affiliation and sale_order_id.affiliation == '1'">
                                 <t t-set="due" t-value="(float(total_payment)*20)/100"/>
                                 <td style="background-color: -moz-MenuBarText;">Total (Due Now)</td>
                                 <td style="background-color: -moz-MenuBarText;">
@@ -2283,12 +2283,12 @@
                                 </td>
                                 <td></td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id.affiliation == '1'" style="background-color:#DA4F49;">
+                            <tr t-if="sale_order and sale_order_id.affiliation and sale_order_id.affiliation == '1'" style="background-color:#DA4F49;">
                                 <th>Proposed Payment Structure</th>
                                 <th>% and/or Amount in Rands</th>
                                 <th>Guidance / How to:</th>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id.affiliation == '1'">
+                            <tr t-if="sale_order and sale_order_id.affiliation and sale_order_id.affiliation == '1'">
                                 <t t-set="out_standing" t-value="(float(total_payment)) - (float(due))"/>
                                 <td>Outstanding Balance</td>
                                 <td>
@@ -2310,7 +2310,7 @@
 
                                 <td></td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id.affiliation == '1'">
+                            <tr t-if="sale_order and sale_order_id.affiliation and sale_order_id.affiliation == '1'">
                                 <td>No. of payment months desired?</td>
                                 <td>
                                     <select name="inputPaymonths" class="requiredValue parsley-validated"
@@ -2341,7 +2341,7 @@
                                     Quote or invoice/statement to be emailed to you.
                                 </td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id.affiliation == '1'">
+                            <tr t-if="sale_order and sale_order_id.affiliation and sale_order_id.affiliation == '1'">
                                 <td>Interest</td>
                                 <td>
                                     <t t-if="sale_order_id">
@@ -2386,7 +2386,7 @@
                                     </table>
                                 </td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id.affiliation == '1'">
+                            <tr t-if="sale_order and sale_order_id.affiliation and sale_order_id.affiliation == '1'">
                                 <t t-set="due" t-value="(float(total_payment)*20)/100"/>
                                 <td style="background-color: -moz-MenuBarText;">Total (inclusive of VAT AND Interest)
                                 </td>
@@ -2410,7 +2410,7 @@
                                 </td>
                                 <td></td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id.affiliation == '1'">
+                            <tr t-if="sale_order and sale_order_id.affiliation and sale_order_id.affiliation == '1'">
                                 <td>Display of monthly amounts.</td>
                                 <td>
                                     <t t-if="sale_order_id">
@@ -2485,7 +2485,7 @@
                                     </td>
                                     <td>Using the dropdown, please select the preferred date for the debit orders.</td>
                                 </tr>
-                                <tr t-if="sale_order or sale_order_id.affiliation == '1'">
+                                <tr t-if="sale_order and sale_order_id.affiliation and sale_order_id.affiliation == '1'">
                                     <td>Next Debit Order Date</td>
                                     <td>
                                         <t t-set="today_date"
@@ -2642,7 +2642,7 @@
                             </tbody>
                         </table>
                     </t>
-                    <t t-if="not page_confirm and not bank_detail and sale_order_id.affiliation and sale_order_id.affiliation=='1'">
+                    <t t-if="not page_confirm and not bank_detail and sale_order and sale_order_id.affiliation and sale_order_id.affiliation=='1'">
                         <div class="control-group">
                             <t t-if="sale_order">
                                 <input class="form-field" name="sale_order" t-att-value="sale_order" type="hidden"/>
