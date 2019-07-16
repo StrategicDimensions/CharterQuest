@@ -84,7 +84,7 @@ odoo.define('cfo_snr_jnr.snippets_comparision_block', function (require) {
             var self = this;
             if (type != undefined && type.type == "click" || type == undefined) {
                 $(document).find('#cfo_comparision_blocks_modal').remove();
-                self.$modal = $(qweb.render("cfo_snr_jnr.cfo_snr_jnr_comparision_blocks_mod"));
+                self.$modal = $(qweb.render("cfo_snr_jnr.cfo_snr_jnr_comparision_blocks_mod_new"));
                 self.$modal.appendTo('body');
                 self.$modal.modal();
 

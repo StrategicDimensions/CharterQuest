@@ -139,7 +139,7 @@
             </div>
         </div>
     </t>
-    <t t-name="cfo_snr_jnr.cfo_snr_jnr_comparision_blocks_mod">
+    <t t-name="cfo_snr_jnr.cfo_snr_jnr_comparision_blocks_mod_new">
         <div aria-hidden="true" class="modal" id="cfo_comparision_blocks_modal" contenteditable="False" role="dialog"
              style="z-index:2001" tabindex="1">
             <div class="modal-dialog">
