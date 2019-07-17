@@ -767,7 +767,7 @@ class EnrolmentProcess(http.Controller):
                                                                                     'product_tot': round(product_tot,
                                                                                                          2),
                                                                                     'grand_tot': round(grand_tot, 2),
-                                                                                    'sale_order_id': sale_order_id if sale_order_id else '',
+                                                                                    'sale_order_id': sale_order_id if sale_order_id else False,
                                                                                     'mandate_link': 'mandate_link_find',
                                                                                     'page_confirm': 'yes' if sale_order_id.affiliation==1 else 'no',
                                                                                     'bank_detail': True if sale_order_id.affiliation==1 else False})
@@ -776,9 +776,9 @@ class EnrolmentProcess(http.Controller):
                                                                                     'product_tot': round(product_tot,
                                                                                                          2),
                                                                                     'grand_tot': round(grand_tot, 2),
-                                                                                    'sale_order_id': sale_order_id if sale_order_id else '',
+                                                                                    'sale_order_id': sale_order_id if sale_order_id else False,
                                                                                     'mandate_link': 'mandate_link_find',
-                                                                                    'page_confirm': 'yes' if sale_order_id.affiliation==1 else 'no',
+                                                                                    'page_confirm':  'yes' if sale_order_id.affiliation==1 else 'no',
                                                                                     'bank_detail': True if sale_order_id.affiliation==1 else False})
                 
         sale_order_id = False
@@ -934,7 +934,6 @@ class EnrolmentProcess(http.Controller):
                         request.session['discount_add'] = ''
                         request.session['sale_order'] = ''
                         request.session['do_invoice'] = ''
-
                 return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
                                                                                 'product_tot': request.session[
                                                                                     'product_tot'],
@@ -1044,14 +1043,16 @@ class EnrolmentProcess(http.Controller):
                         request.session['discount_add'] = ''
                         request.session['sale_order'] = ''
                         request.session['do_invoice'] = ''
-
                 return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
                                                                                 'product_tot': request.session[
                                                                                     'product_tot'],
                                                                                 'grand_tot': request.session[
                                                                                     'grand_tot'],
                                                                                 'sale_order': sale_order_id.id if sale_order_id else '',
-                                                                                'invoice_generate': 'yes'})
+                                                                                'sale_order_id': sale_order_id if sale_order_id else False,
+                                                                                'invoice_generate': 'yes',
+                                                                                'page_confirm': 'yes' if sale_order_id.affiliation==1 else 'no',
+                                                                                'bank_detail': True if sale_order_id.affiliation==1 else False})
 
     @http.route(['/page/thank-you'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def page_thank_you(self, **post):
@@ -1519,13 +1520,16 @@ class EnrolmentProcess(http.Controller):
             sale_order_id = request.env['sale.order'].sudo().search([('id', '=', int(post.get('sale_order')))])
         payu_tx_values = dict(post)
         payment_acquire = request.env['payment.acquirer'].sudo().search([('provider', '=', 'payu')])
-        amount = post['inputTotalDue']
+        amount = post.get('inputTotalDue') if post.get('inputTotalDue') else post.get('toalamount')
+       
+            
         # convert amount to cent
-        if len(amount.split('.')[1]) == 1:
-            amount = amount + '0'
-            amount = amount.replace('.', '')
-        elif len(amount.split('.')[1]) == 2:
-            amount = amount.replace('.', '')
+        if amount:
+            if len(amount.split('.')[1]) == 1:
+                amount = amount + '0'
+                amount = amount.replace('.', '')
+            elif len(amount.split('.')[1]) == 2:
+                amount = amount.replace('.', '')
         if sale_order_id:
             debit_order_mandet = []
             res_bank_detail = False
