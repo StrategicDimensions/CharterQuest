@@ -93,7 +93,7 @@
                                     Upper Background Color
                                 </label>
                                 <div class="col-sm-6">
-                                    <input class="form-control color-picker-cfo" id="menu-upper-bgcolor"
+                                    <input class="form-control color-picker-cfo-upper" id="menu-upper-bgcolor"
                                            required="required"
                                            type="text"/>
                                 </div>
@@ -103,7 +103,7 @@
                                     Lower Background Color
                                 </label>
                                 <div class="col-sm-6">
-                                    <input class="form-control color-picker-cfo" id="menu-lower-bgcolor"
+                                    <input class="form-control color-picker-cfo-lower" id="menu-lower-bgcolor"
                                            required="required"
                                            type="text"/>
                                 </div>
@@ -113,7 +113,7 @@
                                        for="middle-border-bgcolor">Middle Border Color
                                 </label>
                                 <div class="col-sm-6">
-                                    <input class="form-control color-picker-cfo" id="middle-border-bgcolor"
+                                    <input class="form-control color-picker-cfo-middle" id="middle-border-bgcolor"
                                            required="required"
                                            type="text"/>
                                 </div>

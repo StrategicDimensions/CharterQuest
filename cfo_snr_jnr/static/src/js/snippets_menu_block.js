@@ -27,11 +27,16 @@ odoo.define('cfo_snr_jnr.snippets_menu_block', function (require) {
             var self = this;
             var $target = self.$target.find('.inside_block.active');
             if (type != undefined && type.type == "click" || type == undefined) {
+            	var $upper_block_input_bg = $target.find('.upper_block_input_bg').val();
+            	var $low_block_input_bg = $target.find('.low_block_input_bg').val();
+            	var $upper_block_input_bor_width = $target.find('.upper_block_input_bor_width').val();
+            	var $upper_block_input_bor_bg = $target.find('.upper_block_input_bor_bg').val();
                 $(document).find('#cfo_add_menu_blocks_tabs_modal').remove();
                 self.$modal = $(qweb.render("cfo_snr_jnr.cfo_snr_jnr_menu_blocks_tabs_mod"));
                 self.$modal.appendTo('body');
                 self.$modal.modal();
-				$(self.$modal.find('.color-picker-cfo')).spectrum({
+				$(self.$modal.find('.color-picker-cfo-upper')).spectrum({
+					color:$upper_block_input_bg,
 					showAlpha: true,
 					hideAfterPaletteSelect: true,
 					showInitial: true,
@@ -50,6 +55,47 @@ odoo.define('cfo_snr_jnr.snippets_menu_block', function (require) {
 						["#600", "#783f04", "#7f6000", "#274e13", "#0c343d", "#073763", "#20124d", "#4c1130"]
 					]
 				});
+				$(self.$modal.find('.color-picker-cfo-lower')).spectrum({
+					color:$low_block_input_bg,
+					showAlpha: true,
+					hideAfterPaletteSelect: true,
+					showInitial: true,
+					showPalette: true,
+					showSelectionPalette: true,
+					showInput: true,
+					preferredFormat: "hex",
+					palette: [
+						["#000", "#444", "#666", "#999", "#ccc", "#eee", "#f3f3f3", "#fff"],
+						["#f00", "#f90", "#ff0", "#0f0", "#0ff", "#00f", "#90f", "#f0f"],
+						["#f4cccc", "#fce5cd", "#fff2cc", "#d9ead3", "#d0e0e3", "#cfe2f3", "#d9d2e9", "#ead1dc"],
+						["#ea9999", "#f9cb9c", "#ffe599", "#b6d7a8", "#a2c4c9", "#9fc5e8", "#b4a7d6", "#d5a6bd"],
+						["#e06666", "#f6b26b", "#ffd966", "#93c47d", "#76a5af", "#6fa8dc", "#8e7cc3", "#c27ba0"],
+						["#c00", "#e69138", "#f1c232", "#6aa84f", "#45818e", "#3d85c6", "#674ea7", "#a64d79"],
+						["#900", "#b45f06", "#bf9000", "#38761d", "#134f5c", "#0b5394", "#351c75", "#741b47"],
+						["#600", "#783f04", "#7f6000", "#274e13", "#0c343d", "#073763", "#20124d", "#4c1130"]
+					]
+				});
+				$(self.$modal.find('.color-picker-cfo-middle')).spectrum({
+					color:$upper_block_input_bor_bg,
+					showAlpha: true,
+					hideAfterPaletteSelect: true,
+					showInitial: true,
+					showPalette: true,
+					showSelectionPalette: true,
+					showInput: true,
+					preferredFormat: "hex",
+					palette: [
+						["#000", "#444", "#666", "#999", "#ccc", "#eee", "#f3f3f3", "#fff"],
+						["#f00", "#f90", "#ff0", "#0f0", "#0ff", "#00f", "#90f", "#f0f"],
+						["#f4cccc", "#fce5cd", "#fff2cc", "#d9ead3", "#d0e0e3", "#cfe2f3", "#d9d2e9", "#ead1dc"],
+						["#ea9999", "#f9cb9c", "#ffe599", "#b6d7a8", "#a2c4c9", "#9fc5e8", "#b4a7d6", "#d5a6bd"],
+						["#e06666", "#f6b26b", "#ffd966", "#93c47d", "#76a5af", "#6fa8dc", "#8e7cc3", "#c27ba0"],
+						["#c00", "#e69138", "#f1c232", "#6aa84f", "#45818e", "#3d85c6", "#674ea7", "#a64d79"],
+						["#900", "#b45f06", "#bf9000", "#38761d", "#134f5c", "#0b5394", "#351c75", "#741b47"],
+						["#600", "#783f04", "#7f6000", "#274e13", "#0c343d", "#073763", "#20124d", "#4c1130"]
+					]
+				});
+				$(self.$modal.find('#middle-border-width')).val($upper_block_input_bor_width)
                 var $menu_upper_bg = self.$modal.find("#menu-upper-bgcolor"),
                 	$menu_lower_bg = self.$modal.find("#menu-lower-bgcolor"),
                 	$menu_border_bg = self.$modal.find("#middle-border-bgcolor"),
@@ -96,7 +142,45 @@ odoo.define('cfo_snr_jnr.snippets_menu_block', function (require) {
                 self.$modal = $(qweb.render("cfo_snr_jnr.cfo_snr_jnr_menu_blocks_tabs_mod"));
                 self.$modal.appendTo('body');
                 self.$modal.modal();
-				$(self.$modal.find('.color-picker-cfo')).spectrum({
+				$(self.$modal.find('.color-picker-cfo-upper')).spectrum({
+					showAlpha: true,
+					hideAfterPaletteSelect: true,
+					showInitial: true,
+					showPalette: true,
+					showSelectionPalette: true,
+					showInput: true,
+					preferredFormat: "hex",
+					palette: [
+						["#000", "#444", "#666", "#999", "#ccc", "#eee", "#f3f3f3", "#fff"],
+						["#f00", "#f90", "#ff0", "#0f0", "#0ff", "#00f", "#90f", "#f0f"],
+						["#f4cccc", "#fce5cd", "#fff2cc", "#d9ead3", "#d0e0e3", "#cfe2f3", "#d9d2e9", "#ead1dc"],
+						["#ea9999", "#f9cb9c", "#ffe599", "#b6d7a8", "#a2c4c9", "#9fc5e8", "#b4a7d6", "#d5a6bd"],
+						["#e06666", "#f6b26b", "#ffd966", "#93c47d", "#76a5af", "#6fa8dc", "#8e7cc3", "#c27ba0"],
+						["#c00", "#e69138", "#f1c232", "#6aa84f", "#45818e", "#3d85c6", "#674ea7", "#a64d79"],
+						["#900", "#b45f06", "#bf9000", "#38761d", "#134f5c", "#0b5394", "#351c75", "#741b47"],
+						["#600", "#783f04", "#7f6000", "#274e13", "#0c343d", "#073763", "#20124d", "#4c1130"]
+					]
+				});
+				$(self.$modal.find('.color-picker-cfo-lower')).spectrum({
+					showAlpha: true,
+					hideAfterPaletteSelect: true,
+					showInitial: true,
+					showPalette: true,
+					showSelectionPalette: true,
+					showInput: true,
+					preferredFormat: "hex",
+					palette: [
+						["#000", "#444", "#666", "#999", "#ccc", "#eee", "#f3f3f3", "#fff"],
+						["#f00", "#f90", "#ff0", "#0f0", "#0ff", "#00f", "#90f", "#f0f"],
+						["#f4cccc", "#fce5cd", "#fff2cc", "#d9ead3", "#d0e0e3", "#cfe2f3", "#d9d2e9", "#ead1dc"],
+						["#ea9999", "#f9cb9c", "#ffe599", "#b6d7a8", "#a2c4c9", "#9fc5e8", "#b4a7d6", "#d5a6bd"],
+						["#e06666", "#f6b26b", "#ffd966", "#93c47d", "#76a5af", "#6fa8dc", "#8e7cc3", "#c27ba0"],
+						["#c00", "#e69138", "#f1c232", "#6aa84f", "#45818e", "#3d85c6", "#674ea7", "#a64d79"],
+						["#900", "#b45f06", "#bf9000", "#38761d", "#134f5c", "#0b5394", "#351c75", "#741b47"],
+						["#600", "#783f04", "#7f6000", "#274e13", "#0c343d", "#073763", "#20124d", "#4c1130"]
+					]
+				});
+				$(self.$modal.find('.color-picker-cfo-middle')).spectrum({
 					showAlpha: true,
 					hideAfterPaletteSelect: true,
 					showInitial: true,
@@ -147,6 +231,10 @@ odoo.define('cfo_snr_jnr.snippets_menu_block', function (require) {
                         menu_border_width = '5';
                     }
                     self.$target.find('.upper_block').css({"background-color": menu_upper_bg});
+                    self.$target.find('.upper_block_input_bg').val(menu_upper_bg);
+                    self.$target.find('.low_block_input_bg').val(menu_lower_bg);
+                    self.$target.find('.upper_block_input_bor_width').val(menu_border_width);
+                    self.$target.find('.upper_block_input_bor_bg').val(menu_border_bg);
                     self.$target.find('.low_block').attr('style','background-color: '+menu_lower_bg+'; border-top: '+menu_border_width+'px solid ' + menu_border_bg);
                 });
             } else {

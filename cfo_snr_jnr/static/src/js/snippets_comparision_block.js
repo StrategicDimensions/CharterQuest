@@ -14,6 +14,8 @@ odoo.define('cfo_snr_jnr.snippets_comparision_block', function (require) {
                 self.$el.find(".cfo_snr_jnr_add_row_comp").on("click", _.bind(self.cfo_add_row_comp, self));
                 self.$el.find(".cfo_snr_jnr_copy_row_comp").on("click", _.bind(self.cfo_copy_row_comp, self));
                 self.$el.find(".cfo_snr_jnr_remove_row_comp").on("click", _.bind(self.cfo_remove_row_comp, self));
+                self.$el.find(".cfo_snr_jnr_add_column_comp").on("click", _.bind(self.cfo_add_column_comp, self));
+                self.$el.find(".cfo_snr_jnr_remove_column_comp").on("click", _.bind(self.cfo_remove_column_comp, self));
             }
         },
         onBuilt: function () {
@@ -27,12 +29,41 @@ odoo.define('cfo_snr_jnr.snippets_comparision_block', function (require) {
         },
         cfo_copy_row_comp:function(type,value){
         	var self = this;
-        	var abc = self.$target.find('tr.active').clone();
-        	self.$target.find('tr.active').after(abc);
+        	self.$target.find('tr.active').after(self.$target.find('tr.active').clone());
+        },
+        cfo_add_column_comp:function(type,value){
+        	var self = this;
+        	self.$target.find('tr').each(function (ev){
+        		var $tr = $(this);
+				if ($($tr[0].lastElementChild).is('th')) {
+					$($tr[0].lastElementChild).after("<th class='bg-blue'/>");
+				}
+				else if ($($tr[0].lastElementChild).is('td')){
+					if (!$($tr[0].lastElementChild).hasClass('sep')){
+						$($tr[0].lastElementChild).after("<td/>");
+					}
+				}
+        	});
+        	self.$target.find('td.sep').each(function(){
+        		$(this).attr('colspan',parseInt($(this).attr('colspan')) + 1);
+        	});
         },
         cfo_remove_row_comp:function(type,value){
         	var self = this;
         	self.$target.find('tr.active').remove();
+        },
+        cfo_remove_column_comp:function(type,value){
+        	var self = this;
+        	var index = $(document).find('.comparision_article tr.active td').index($(document).find('.comparision_article td.active'))
+        	self.$target.find('tr').each(function(){
+        		if(!$(this).find('td').eq(parseInt(index)).hasClass('sep')){
+        			$(this).find('td').eq(parseInt(index)).remove();
+				}
+        		$(this).find('th').eq(parseInt(index)).remove();
+        	});
+        	self.$target.find('td.sep').each(function(){
+        		$(this).attr('colspan',parseInt($(this).attr('colspan')) - 1);
+        	})
         },
 		cfo_add_row_comp: function (type, value) {
             var self = this;
@@ -65,7 +96,7 @@ odoo.define('cfo_snr_jnr.snippets_comparision_block', function (require) {
                     }
                     if ($is_with_without_colspan.prop("checked") == true){
 						var with_html = "<tr><td colspan='"+ cols_comparision +"' class='sep'></tr>";
-                    	self.$target.find('.comparision_article table tbody').append(with_html);
+                    	self.$target.find('.comparision_article table tbody tr.active').after(with_html);
                     }
                     else if($is_with_without_colspan.prop("checked") == false){
                     	var without_html = "<tr>";
@@ -73,7 +104,7 @@ odoo.define('cfo_snr_jnr.snippets_comparision_block', function (require) {
                     		without_html += "<td/>";
                     	}
                     	without_html += "<tr/>";
-                    	self.$target.find('.comparision_article table tbody').append(without_html);
+                    	self.$target.find('.comparision_article table tbody tr.active').after(without_html);
                     }
                 });
             } else {
@@ -125,9 +156,12 @@ odoo.define('cfo_snr_jnr.snippets_comparision_block', function (require) {
         },
     });
     $(document).ready(function(){
-    	$(document).on('click','.comparision_article tr',function(){
+    	$(document).on('click','.comparision_article td , .comparision_article th',function(){
     		$(document).find('.comparision_article tr').removeClass('active');
+    		$(document).find('.comparision_article td').removeClass('active');
+    		$(document).find('.comparision_article th').removeClass('active');
     		$(this).addClass('active');
+    		$(this).parents('tr').addClass('active');
     	});
     });
 });
