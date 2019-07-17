@@ -36,6 +36,10 @@
         <section class="cfo_snr_jnr_blocks_new container">
             <div class="row">
                 <div class="col-md-4 inside_block">
+                    <input type="hidden" class="upper_block_input_bg"/>
+                    <input type="hidden" class="low_block_input_bg"/>
+                    <input type="hidden" class="upper_block_input_bor_width"/>
+                    <input type="hidden" class="upper_block_input_bor_bg"/>
                     <div class="col-md-12 upper_block">
                         test
                     </div>
@@ -106,6 +110,12 @@
                 </li>
                 <li data-cfo-snr-jnr-menu="">
                     <a class="cfo_snr_jnr_remove_row_comp"><i class="fa fa-trash"/> Remove Active Row</a>
+                </li>
+                <li data-cfo-snr-jnr-menu="">
+                    <a class="cfo_snr_jnr_add_column_comp"><i class="fa fa-plus"/> Add Column</a>
+                </li>
+                <li data-cfo-snr-jnr-menu="">
+                    <a class="cfo_snr_jnr_remove_column_comp"><i class="fa fa-trash"/> Remove Active Column</a>
                 </li>
             </div>
         </xpath>
