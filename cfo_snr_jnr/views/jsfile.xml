@@ -52,6 +52,7 @@
         <template id="assets_editor_cfo_web_editor"
                   inherit_id="web_editor.assets_editor">
             <xpath expr="." position="inside">
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/rte_font.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_editor_cfo.js"/>
             </xpath>
         </template>

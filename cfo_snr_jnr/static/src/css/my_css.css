@@ -683,3 +683,61 @@ margin-top:30px;
 	width: 66%;
 	margin: auto;
 }
+
+.cfo_snr_jnr_separator_block_container .customs_separator {
+    border-color: inherit;
+	border-top-color: inherit;
+    border-top: 0;
+	border-top-style: none;
+    padding: 8px 0;
+    margin: 0 0 16px 0;
+    height: 1px;
+    display: inline-block;
+    width: 100%;
+    border-style: solid;
+    border-bottom-width: 1px;
+}
+
+.cfo_snr_jnr_separator_block_container .hr-small{
+	width: 20%;
+}
+
+.cfo_snr_jnr_separator_block_container .hr-small{
+	width: 20%;
+}
+
+.cfo_snr_jnr_separator_block_container .hr-half {
+    width: 50%;
+}
+
+.cfo_snr_jnr_separator_block_container .hr-dashed {
+    border-style: dashed;
+}
+
+.cfo_snr_jnr_separator_block_container .hr-dotted {
+    border-style: dotted;
+}
+
+.cfo_snr_jnr_separator_block_container .hr-solid {
+    border-style: solid;
+}
+
+.cfo_snr_jnr_separator_block_container .hr-1px {
+    border-bottom-width: 1px;
+}
+
+.cfo_snr_jnr_separator_block_container .hr-2px {
+    border-bottom-width: 2px;
+}
+
+.cfo_snr_jnr_separator_block_container .hr-3px {
+    border-bottom-width: 3px;
+}
+
+.cfo_snr_jnr_separator_block_container .hr-4px {
+    border-bottom-width: 4px;
+}
+
+.cfo_snr_jnr_separator_block_container .hr-5px {
+    border-bottom-width: 5px;
+}

@@ -73,25 +73,25 @@
 															src="http://www.charterquest.co.za/web/static/src/img/bookings.png" />
 													</a>
 												</li>
-												<div class="Address" style="display:inline-block;position:relative;top: 3px !important;line-height:5px;width: 245px;">
-													<li class="hidden-xs">
-														<a class="cqcolor" href="/page/website.contactus">
-															<i class="fa fa-map-marker fa-1x" />
-															Contact us
-														</a>
-													</li>
-													<br />
-													<li class="hidden-xs">
-														<i class="fa fa-phone fa-1x" />
-														<span t-field="res_company.phone" />
-													</li>
-													<br />
-													<li class="hidden-xs">
-														<i class="fa fa-envelope fa-1x" />
-														<a class="cqcolor" t-attf-href="mailto:{{ res_company.email }}"
-															t-field="res_company.email" />
-													</li>
-												</div>
+<!--												<div class="Address" style="display:inline-block;position:relative;top: 3px !important;line-height:5px;width: 245px;">-->
+<!--													<li class="hidden-xs">-->
+<!--														<a class="cqcolor" href="/page/website.contactus">-->
+<!--															<i class="fa fa-map-marker fa-1x" />-->
+<!--															Contact us-->
+<!--														</a>-->
+<!--													</li>-->
+<!--													<br />-->
+<!--													<li class="hidden-xs">-->
+<!--														<i class="fa fa-phone fa-1x" />-->
+<!--														<span t-field="res_company.phone" />-->
+<!--													</li>-->
+<!--													<br />-->
+<!--													<li class="hidden-xs">-->
+<!--														<i class="fa fa-envelope fa-1x" />-->
+<!--														<a class="cqcolor" t-attf-href="mailto:{{ res_company.email }}"-->
+<!--															t-field="res_company.email" />-->
+<!--													</li>-->
+<!--												</div>-->
 												</td>
 												<td>
 												<li class="hidden-xs">
