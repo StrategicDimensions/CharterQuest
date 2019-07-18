@@ -378,6 +378,7 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/enrolment_reg'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def enrolment_reg(self):
+        reg_and_enrol = request.session['reg_and_enrol'] if request.session.get('reg_and_enrol') else ''
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
         request.session['reg_and_enrol'] = ''
         return request.render('cfo_snr_jnr.enrolment_process_registration', {'page_name': 'registration',
@@ -899,11 +900,11 @@ class EnrolmentProcess(http.Controller):
                                                          'self_or_company') == 'self' else '2',
                                                      'campus': user_select['campus'] if user_select.get(
                                                          'campus') else '',
-                                                     'prof_body': user_select['Select Prof Body'] if user_select.get(
-                                                         'Select Prof Body') else '',
+                                                     'prof_body': user_select.get('Select Prof Body') if user_select.get(
+                                                         'Select Prof Body') else False,
                                                      'quote_type': 'enrolment',
-                                                     'semester_id': user_select['Semester'] if user_select.get(
-                                                         'Semester') else '',
+                                                     'semester_id': user_select.get('Semester') if user_select.get(
+                                                         'Semester') else False,
                                                      'warehouse_id': warehouse_id.id,
                                                      'discount_type_ids': [(6, 0, [each for each in discount_id])],
                                                      'order_line': order_line})
