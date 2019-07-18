@@ -2041,21 +2041,21 @@
                               class="s_website_form form-horizontal container-fluid mt32"
                               enctype="multipart/form-data" data-model_name="mail.mail" data-success_page="">
                             <!--<h2>Registration</h2>-->
-                            <t t-if="self_or_cmp == 'cmp_sponosored'">
-                                <div class="form-group">
-                                    <label for="firstName" class="col-sm-3 control-label">* Do you require an invoice to
-                                        be generated ?
-                                    </label>
-                                    <div class="col-sm-4">
-                                        <select class="form-control o_website_form_input"
-                                                style="border-radius: 0px !important;" name="do_invoice"
-                                                required="false">
-                                            <option value="No">No</option>
-                                            <option value="Yes">Yes</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </t>
+<!--                             <t t-if="self_or_cmp == 'cmp_sponosored'"> -->
+<!--                                 <div class="form-group"> -->
+<!--                                     <label for="firstName" class="col-sm-3 control-label">* Do you require an invoice to -->
+<!--                                         be generated ? -->
+<!--                                     </label> -->
+<!--                                     <div class="col-sm-4"> -->
+<!--                                         <select class="form-control o_website_form_input" -->
+<!--                                                 style="border-radius: 0px !important;" name="do_invoice" -->
+<!--                                                 required="false"> -->
+<!--                                             <option value="No">No</option> -->
+<!--                                             <option value="Yes">Yes</option> -->
+<!--                                         </select> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </t> -->
 
                             <div class="form-group">
                                 <label for="firstName" class="col-sm-3 control-label">* First Name</label>
@@ -2093,20 +2093,22 @@
                                            placeholder="Phone number" class="form-control"/>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="company" class="col-sm-3 control-label">Students Company</label>
-                                <div class="col-sm-4">
-                                    <input type="company" id="company" placeholder="Company" class="form-control"
-                                           name="company"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="vatNumber" class="col-sm-3 control-label">Vat Number</label>
-                                <div class="col-sm-4">
-                                    <input type="company" id="vatNumber" placeholder="Vat" class="form-control"
-                                           name="vatNumber"/>
-                                </div>
-                            </div>
+                            <t t-if="self_or_cmp == 'cmp_sponosored'"> 
+	                            <div class="form-group">
+	                                <label for="company" class="col-sm-3 control-label">Students Company</label>
+	                                <div class="col-sm-4">
+	                                    <input type="company" id="company" placeholder="Company" class="form-control"
+	                                           name="company"/>
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <label for="vatNumber" class="col-sm-3 control-label">Vat Number</label>
+	                                <div class="col-sm-4">
+	                                    <input type="company" id="vatNumber" placeholder="Vat" class="form-control"
+	                                           name="vatNumber"/>
+	                                </div>
+	                            </div>
+	                         </t>
                             <div class="form-group">
                                 <label for="comments" class="col-sm-3 control-label">Comments/Requests?</label>
                                 <div class="col-sm-4">
@@ -2813,7 +2815,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td t-if="self_or_cmp == 'cmp_sponosored'">
                                         <div class="control-group">
                                             <label class="control-label" id="stud_company" for="inputCompany">Students
                                                 Company
@@ -2836,7 +2838,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td t-if="self_or_cmp == 'cmp_sponosored'"> 
                                         <div class="control-group">
                                             <label class="control-label" id="vat_number" for="inputVat">VAT Number
                                             </label>
