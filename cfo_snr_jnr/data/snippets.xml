@@ -24,7 +24,7 @@
     <template id="cfo_snr_jnr_menu_with_tabs_snippet" name="Menu With Tabs">
         <section class="cfo_snr_jnr_menu_with_tabs" contentEditable="true">
             <div class="container">
-                <div class="tab" role="tabpanel">
+                <div class="tab" id="cfo_menu_with_tabs_div_panel" role="tabpanel">
                     <ul class="nav nav-tabs" role="tablist"/>
                     <div class="tab-content tabs"/>
                 </div>
@@ -134,6 +134,21 @@
                  data-snippet-option-id="cfo_snr_jnr_blocks_new">
                 <li data-cfo-snr-jnr-menu="">
                     <a class="cfo_snr_jnr_edit_block_menu">Edit Block</a>
+                </li>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="cfo_snr_jnr_carousel_new_options" inherit_id="website.snippet_options"
+              name="Remove Placeholder">
+        <xpath expr="//div" position="after">
+            <div data-js="cfo_snr_jnr_carousel_remove" data-selector=".s_carousel_boxed"
+                 data-snippet-option-id="s_carousel_boxed">
+                <li>
+                    <a class="cfo_snr_jnr_remove_carousel_placeholder_a"><i class="fa fa-trash"/>Remove Placeholder</a>
+                </li>
+                <li>
+                    <a class="cfo_snr_jnr_add_carousel_placeholder_a"><i class="fa fa-plus"/>Add Placeholder</a>
                 </li>
             </div>
         </xpath>

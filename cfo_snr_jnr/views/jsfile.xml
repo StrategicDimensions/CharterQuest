@@ -30,6 +30,7 @@
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu_tabs.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_menu_block.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_comparision_block.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_carousel.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/contentMenu.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/payment.js"/>
             </xpath>

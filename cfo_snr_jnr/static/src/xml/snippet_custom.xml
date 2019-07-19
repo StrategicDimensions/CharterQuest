@@ -66,6 +66,13 @@
                                            type="text"/>
                                 </div>
                             </div>
+                            <div class="col-sm-12 form-group">
+                                <label class="col-sm-3 control-label" for="menu-url">URL</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="menu-url" required="required"
+                                           type="text" readonly="True"/>
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">

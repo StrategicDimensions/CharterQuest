@@ -40,18 +40,22 @@ odoo.define('cfo_snr_jnr.snippets_menu_tabs', function (require) {
                 self.$modal.appendTo('body');
                 self.$modal.modal();
                 self.$modal.find('#menu-icon').iconpicker('#menu-icon');
-                var $menu_title = self.$modal.find("#menu-title"),
-                	$menu_icon = self.$modal.find("#menu-icon"),
-                	$sub_data = self.$modal.find("#menu_sub_data_with_tabs");
 
-                $sub_data.on('click', function () {
-                    var menu_title = '';
-                    var menu_icon = '';
-					var unique_label =	'xxxxxxxx_'.replace(/[x]/g, function(c) {
+                var unique_label =	'xxxxxxxx_'.replace(/[x]/g, function(c) {
 						var r = (Math.random() * 16) | 0,
 						v = c == 'x' ? r : (r & 0x3) | 0x8;
 						return v.toString(16);
 					}) + new Date().getTime();
+
+                var $menu_title = self.$modal.find("#menu-title"),
+                	$menu_icon = self.$modal.find("#menu-icon"),
+                	$menu_url = self.$modal.find("#menu-url"),
+                	$sub_data = self.$modal.find("#menu_sub_data_with_tabs");
+
+				$menu_url.val(unique_label);
+                $sub_data.on('click', function () {
+                    var menu_title = '';
+                    var menu_icon = '';
                     self.$target.attr("data-menu-title", $menu_title.val());
                     self.$target.attr('data-menu-icon', $menu_icon.val());
                     if ($menu_title.val()) {
@@ -68,7 +72,7 @@ odoo.define('cfo_snr_jnr.snippets_menu_tabs', function (require) {
                     self.$target.find('.tab-content.tabs .tab-pane').removeClass('active');
                     var tab_html = `
                     	<li role="presentation" class="active">
-                            <a href="#`+ unique_label +`" aria-controls="home" role="tab"
+                            <a class="cfo_menu_with_tabs_a_panel" href="#`+ unique_label +`" aria-controls="home" role="tab"
                                data-toggle="tab"><i class="fa `+ menu_icon +`"/> &nbsp;&nbsp;` + menu_title + `
                             </a>
                         </li>
@@ -86,5 +90,31 @@ odoo.define('cfo_snr_jnr.snippets_menu_tabs', function (require) {
             }
         },
     });
+
+    $(document).ready(() => {
+		let url = location.href.replace(/\/$/, "");
+
+		if (location.hash) {
+			const hash = url.split("#");
+			$('#cfo_menu_with_tabs_div_panel a[href="#' + hash[1] + '"]').tab("show");
+			url = location.href.replace(/\/#/, "#");
+			history.replaceState(null, null, url);
+			setTimeout(() => {
+				$(window).scrollTop(0);
+			}, 400);
+		}
+
+		$('.cfo_menu_with_tabs_a_panel').on("click", function() {
+			let newUrl;
+			const hash = $(this).attr("href");
+			if (hash == "#home") {
+				newUrl = url.split("#")[0];
+			} else {
+				newUrl = url.split("#")[0] + hash;
+			}
+			newUrl += "/";
+			history.replaceState(null, null, newUrl);
+		});
+	});
 
 });
