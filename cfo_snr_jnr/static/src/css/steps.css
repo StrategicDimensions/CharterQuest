@@ -1,0 +1,140 @@
+.cfo_snr_jnr_steps_wizard_container .wizard {
+    margin: 20px auto;
+    background: #fff;
+}
+
+.cfo_snr_jnr_steps_wizard_container .wizard .nav-tabs {
+    position: relative;
+    margin: 40px auto;
+    margin-bottom: 0;
+    border-bottom-color: #e0e0e0;
+}
+
+.cfo_snr_jnr_steps_wizard_container .wizard > div.wizard-inner {
+    position: relative;
+}
+
+.cfo_snr_jnr_steps_wizard_container .connecting-line {
+    height: 2px;
+    background: #e0e0e0;
+    position: absolute;
+    width: 80%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    z-index: 1;
+}
+
+.cfo_snr_jnr_steps_wizard_container .wizard .nav-tabs>li.active>a,
+.cfo_snr_jnr_steps_wizard_container .wizard .nav-tabs>li.active>a:hover,
+.cfo_snr_jnr_steps_wizard_container .wizard .nav-tabs>li.active>a:focus {
+    color: #555555;
+    cursor: default;
+    border: 0;
+    border-bottom-color: transparent;
+}
+
+.cfo_snr_jnr_steps_wizard_container span.round-tab {
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    display: inline-block;
+    border-radius: 100px;
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    text-align: center;
+    font-size: 25px;
+}
+
+.cfo_snr_jnr_steps_wizard_container span.round-tab i {
+    color: #555555;
+}
+
+.cfo_snr_jnr_steps_wizard_container .wizard li.active span.round-tab {
+    background: #fff;
+    border: 2px solid #5bc0de;
+}
+
+.cfo_snr_jnr_steps_wizard_container .wizard li.active span.round-tab i {
+    color: #5bc0de;
+}
+
+.cfo_snr_jnr_steps_wizard_container span.round-tab:hover {
+    color: #333;
+    border: 2px solid #333;
+}
+
+.cfo_snr_jnr_steps_wizard_container .wizard .nav-tabs>li {
+    width: 25%;
+}
+
+.cfo_snr_jnr_steps_wizard_container .wizard li:after {
+    content: " ";
+    position: absolute;
+    left: 46%;
+    opacity: 0;
+    margin: 0 auto;
+    bottom: 0px;
+    border: 5px solid transparent;
+    border-bottom-color: #5bc0de;
+    transition: 0.1s ease-in-out;
+}
+
+.cfo_snr_jnr_steps_wizard_container .wizard li.active:after {
+    content: " ";
+    position: absolute;
+    left: 46%;
+    opacity: 1;
+    margin: 0 auto;
+    bottom: 0px;
+    border: 10px solid transparent;
+    border-bottom-color: #5bc0de;
+}
+
+.cfo_snr_jnr_steps_wizard_container .wizard .nav-tabs>li a {
+    width: 70px;
+    height: 70px;
+    margin: 20px auto;
+    border-radius: 100%;
+    padding: 0;
+}
+
+.cfo_snr_jnr_steps_wizard_container .wizard .nav-tabs>li a:hover {
+    background: transparent;
+}
+
+.cfo_snr_jnr_steps_wizard_container .wizard .tab-pane {
+    position: relative;
+    padding-top: 50px;
+}
+
+.cfo_snr_jnr_steps_wizard_container .wizard h3 {
+    margin-top: 0;
+}
+
+@media( max-width: 585px) {
+    .cfo_snr_jnr_steps_wizard_container .wizard {
+        width: 90%;
+        height: auto !important;
+    }
+    .cfo_snr_jnr_steps_wizard_container span.round-tab {
+        font-size: 16px;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+    .cfo_snr_jnr_steps_wizard_container .wizard .nav-tabs>li a {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+    .cfo_snr_jnr_steps_wizard_container .wizard li.active:after {
+        content: " ";
+        position: absolute;
+        left: 35%;
+    }
+}
