@@ -11,6 +11,9 @@ odoo.define('cfo_snr_jnr.snippets_steps_wizard', function (require) {
         start: function (editMode) {
             var self = this;
             this._super();
+            if (!editMode) {
+                self.$el.find(".cfo_snr_jnr_add_step").on("click", _.bind(self.cfo_steps_wizard_configuration, self));
+            }
         },
         onBuilt: function () {
             var self = this;
@@ -46,6 +49,8 @@ odoo.define('cfo_snr_jnr.snippets_steps_wizard', function (require) {
 						v = c == 'x' ? r : (r & 0x3) | 0x8;
 						return v.toString(16);
 					}) + new Date().getTime();
+					self.$target.find('.wizard-inner li').removeClass('active');
+                    self.$target.find('.tab-content .tab-pane').removeClass('active');
                     var tab_html = `
                     	<li role="presentation" class="active">
                             <a href="#`+ unique_label +`" data-toggle="tab" aria-controls="`+ unique_label +`" role="tab">
@@ -57,9 +62,7 @@ odoo.define('cfo_snr_jnr.snippets_steps_wizard', function (require) {
                     `;
 					self.$target.find('.wizard-inner ul').append(tab_html);
                     var content_html = `
-                    	<div class="tab-pane fade in active" role="tabpanel" id="`+ unique_label +`">
-							<h3>This is test content</h3>
-							<p>Test Content</p>
+                    	<div class="tab-pane fade in active oe_structure" role="tabpanel" id="`+ unique_label +`">
 							<ul class="list-inline pull-right">
 								<li>
 									<button type="button" class="btn btn-default prev-step">Previous
