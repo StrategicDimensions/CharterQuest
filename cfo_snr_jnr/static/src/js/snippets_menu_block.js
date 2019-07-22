@@ -128,6 +128,10 @@ odoo.define('cfo_snr_jnr.snippets_menu_block', function (require) {
                         menu_border_width = '5';
                     }
                     $target.find('.upper_block').css({"background-color": menu_upper_bg});
+                    $target.find('.upper_block_input_bg').val(menu_upper_bg);
+                    $target.find('.low_block_input_bg').val(menu_lower_bg);
+                    $target.find('.upper_block_input_bor_width').val(menu_border_width);
+                    $target.find('.upper_block_input_bor_bg').val(menu_border_bg);
                     $target.find('.low_block').attr('style','background-color: '+menu_lower_bg+'; border-top: '+menu_border_width+'px solid ' + menu_border_bg);
                 });
             } else {

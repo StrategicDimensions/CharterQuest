@@ -40,20 +40,29 @@ odoo.define('cfo_snr_jnr.snippets_menu_tabs', function (require) {
                 self.$modal.appendTo('body');
                 self.$modal.modal();
                 self.$modal.find('#menu-icon').iconpicker('#menu-icon');
+                self.$modal.find('#external-icon').iconpicker('#menu-icon');
+
+                var unique_label =	'xxxxxxxx_'.replace(/[x]/g, function(c) {
+						var r = (Math.random() * 16) | 0,
+						v = c == 'x' ? r : (r & 0x3) | 0x8;
+						return v.toString(16);
+					}) + new Date().getTime();
+
                 var $menu_title = self.$modal.find("#menu-title"),
                 	$menu_icon = self.$modal.find("#menu-icon"),
+                	$menu_url = self.$modal.find("#menu-url"),
+                	$external_url = self.$modal.find("#external-url"),
                 	$sub_data = self.$modal.find("#menu_sub_data_with_tabs");
 
                 $sub_data.on('click', function () {
                     var menu_title = '';
                     var menu_icon = '';
-					var unique_label =	'xxxxxxxx_'.replace(/[x]/g, function(c) {
-						var r = (Math.random() * 16) | 0,
-						v = c == 'x' ? r : (r & 0x3) | 0x8;
-						return v.toString(16);
-					}) + new Date().getTime();
+                    var menu_url = '';
+                    var external_url = '';
                     self.$target.attr("data-menu-title", $menu_title.val());
                     self.$target.attr('data-menu-icon', $menu_icon.val());
+                    self.$target.attr('data-menu-url', $menu_url.val());
+                    self.$target.attr('data-menu-external-url', $external_url.val());
                     if ($menu_title.val()) {
                         menu_title = $menu_title.val();
                     } else {
@@ -64,18 +73,28 @@ odoo.define('cfo_snr_jnr.snippets_menu_tabs', function (require) {
                     } else {
                         menu_icon = _t("fa-check");
                     }
+                    if ($menu_url.val()) {
+                        menu_url = $menu_url.val().replace(/\s/g, "_");
+                    } else {
+                        menu_url = _t("#");
+                    }
+                    if ($external_url.val()) {
+                        external_url = $external_url.val().replace(/\s/g, "_");
+                    } else {
+                        external_url = _t("#");
+                    }
                     self.$target.find('.nav.nav-tabs li').removeClass('active');
                     self.$target.find('.tab-content.tabs .tab-pane').removeClass('active');
                     var tab_html = `
                     	<li role="presentation" class="active">
-                            <a href="#`+ unique_label +`" aria-controls="home" role="tab"
+                            <a class="cfo_menu_with_tabs_a_panel" external-href="`+ external_url +`" href="#`+ menu_url +`" aria-controls="home" role="tab"
                                data-toggle="tab"><i class="fa `+ menu_icon +`"/> &nbsp;&nbsp;` + menu_title + `
                             </a>
                         </li>
                     `;
 					self.$target.find('.nav.nav-tabs').append(tab_html);
                     var content_html = `
-                    	<div role="tabpanel" class="tab-pane fade in active" id="`+ unique_label +`">
+                    	<div role="tabpanel" class="tab-pane fade in active" id="`+ menu_url +`">
 							<div class="row oe_structure" style="min-height:150px;"/>
                         </div>
                     `;
@@ -86,5 +105,38 @@ odoo.define('cfo_snr_jnr.snippets_menu_tabs', function (require) {
             }
         },
     });
+
+    $(document).ready(() => {
+		let url = location.href.replace(/\/$/, "");
+
+		if (location.hash) {
+			const hash = url.split("#");
+			$('#cfo_menu_with_tabs_div_panel a[href="#' + hash[1] + '"]').tab("show");
+			url = location.href.replace(/\/#/, "#");
+			history.replaceState(null, null, url);
+			setTimeout(() => {
+				$(window).scrollTop(0);
+			}, 400);
+		}
+
+		$('.cfo_menu_with_tabs_a_panel').on("click", function(event) {
+			if (event.ctrlKey)
+			{
+				const hash = $(this).attr("external-href");
+				window.open(hash);
+			}
+			else{
+				let newUrl;
+				const hash = $(this).attr("href");
+				if (hash == "#home") {
+					newUrl = url.split("#")[0];
+				} else {
+					newUrl = url.split("#")[0] + hash;
+				}
+				newUrl += "/";
+				history.replaceState(null, null, newUrl);
+			}
+		});
+	});
 
 });

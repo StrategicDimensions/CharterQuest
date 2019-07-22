@@ -48,19 +48,19 @@
                 <li class="active" t-esc="bc_item.name_get()[0][1]"/>
             </ol>
         </template>
-        <template id="layout" inherit_id="website.layout"
-                  customize_show="True" name="Breadcrumbs">
-            <xpath expr="//header">
-                <t id="breadcrumb"
-                   t-if="request.env['website.menu'].search([('url', '=', request.httprequest.path)], limit=1)">
-                    <div class="container" style="margin: 0px;padding: 0px;">
-                        <div class="">
-                            <t t-call="cfo_snr_jnr.breadcrumb"/>
-                        </div>
-                    </div>
-                </t>
-            </xpath>
-        </template>
+<!--        <template id="layout" inherit_id="website.layout"-->
+<!--                  customize_show="True" name="Breadcrumbs">-->
+<!--            <xpath expr="//header">-->
+<!--                <t id="breadcrumb"-->
+<!--                   t-if="request.env['website.menu'].search([('url', '=', request.httprequest.path)], limit=1)">-->
+<!--                    <div class="container" style="margin: 0px;padding: 0px;">-->
+<!--                        <div class="">-->
+<!--                            <t t-call="cfo_snr_jnr.breadcrumb"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </t>-->
+<!--            </xpath>-->
+<!--        </template>-->
         <template id="cfo_login" name="login">
             <t t-set="additional_title">Login</t>
             <t t-call="web.login_layout">
