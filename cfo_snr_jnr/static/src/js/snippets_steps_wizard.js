@@ -13,6 +13,7 @@ odoo.define('cfo_snr_jnr.snippets_steps_wizard', function (require) {
             this._super();
             if (!editMode) {
                 self.$el.find(".cfo_snr_jnr_add_step").on("click", _.bind(self.cfo_steps_wizard_configuration, self));
+                self.$el.find(".cfo_snr_jnr_remove_step").on("click", _.bind(self.cfo_steps_wizard_remove_steps_configuration, self));
             }
         },
         onBuilt: function () {
@@ -23,6 +24,17 @@ odoo.define('cfo_snr_jnr.snippets_steps_wizard', function (require) {
                     self.getParent()._removeSnippet();
                 });
             }
+        },
+        cfo_steps_wizard_remove_steps_configuration: function (type, value) {
+            var target = this.$target.find('li.active');
+            var id = $(target).find('a').attr('href');
+            this.$target.find(id).remove();
+            if(typeof target.next().find('a[data-toggle="tab"]').html() != 'undefined'){
+            	target.next().find('a[data-toggle="tab"]').click();
+            }else{
+            	target.prev().find('a[data-toggle="tab"]').click();
+            }
+           	target.remove();
         },
         cfo_steps_wizard_configuration: function (type, value) {
             var self = this;
@@ -82,5 +94,16 @@ odoo.define('cfo_snr_jnr.snippets_steps_wizard', function (require) {
             }
         },
     });
+	$(document).ready(function () {
+		$('.cfo_snr_jnr_steps_wizard_container .nav-tabs > li a[title]').tooltip();
+
+		$(".cfo_snr_jnr_steps_wizard_container .next-step").click(function (e) {
+			$(this).parents('section.cfo_snr_jnr_steps_wizard_container').find('.wizard .nav-tabs li.active').next().find('a[data-toggle="tab"]').click();
+		});
+
+		$(".cfo_snr_jnr_steps_wizard_container .prev-step").click(function (e) {
+			$(this).parents('section.cfo_snr_jnr_steps_wizard_container').find('.wizard .nav-tabs li.active').prev().find('a[data-toggle="tab"]').click();
+		});
+	});
 
 });

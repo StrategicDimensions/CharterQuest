@@ -101,48 +101,17 @@
         <section class="cfo_snr_jnr_steps_wizard_container container">
             <div class="container">
                 <div class="row">
-                    <section>
-                        <div class="wizard">
-                            <div class="wizard-inner">
-                                <div class="connecting-line"/>
-                                <ul class="nav nav-tabs" role="tablist"/>
-                            </div>
-                            <form role="form">
-                                <div class="tab-content"/>
-                            </form>
+                    <div class="wizard">
+                        <div class="wizard-inner">
+                            <div class="connecting-line"/>
+                            <ul class="nav nav-tabs" role="tablist"/>
                         </div>
-                    </section>
+                        <form role="form">
+                            <div class="tab-content"/>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                $('.cfo_snr_jnr_steps_wizard_container .nav-tabs > li a[title]').tooltip();
-
-                $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-                var $target = $(e.target);
-                if ($target.parent().hasClass('disabled')) {
-                return false;
-                }
-                });
-
-                $(".cfo_snr_jnr_steps_wizard_container .next-step").click(function (e) {
-                var $active = $('.cfo_snr_jnr_steps_wizard_container .wizard .nav-tabs li.active');
-                $active.next().removeClass('disabled');
-                nextTab($active);
-                });
-                $(".cfo_snr_jnr_steps_wizard_container .prev-step").click(function (e) {
-                var $active = $('.cfo_snr_jnr_steps_wizard_container .wizard .nav-tabs li.active');
-                prevTab($active);
-                });
-                });
-
-                function nextTab(elem) {
-                $(elem).next().find('a[data-toggle="tab"]').click();
-                }
-                function prevTab(elem) {
-                $(elem).prev().find('a[data-toggle="tab"]').click();
-                }
-            </script>
         </section>
     </template>
 
