@@ -1586,8 +1586,13 @@ class EnrolmentProcess(http.Controller):
                  'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
                  'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0,
                  'debit_order_mandat': debit_order_mandet})
-
-            name_split = sale_order_id.partner_id.name.split(' ')
+            
+            first_name = ''
+            last_name = ''
+            if ' ' in sale_order_id.partner_id.name:
+                first_name,last_name = sale_order_id.partner_id.name.split(' ', 1)
+            else:
+                first_name = sale_order_id.partner_id.name
             transactionDetails = {}
             transactionDetails['store'] = {}
             transactionDetails['store']['soapUsername'] = payment_acquire.payu_api_username
@@ -1608,8 +1613,8 @@ class EnrolmentProcess(http.Controller):
             transactionDetails['Stage'] = False
             transactionDetails['customer'] = {}
             transactionDetails['customer']['email'] = sale_order_id.partner_id.email
-            transactionDetails['customer']['firstName'] = name_split[0] if name_split else ''
-            transactionDetails['customer']['lastName'] = name_split[1] if name_split else ''
+            transactionDetails['customer']['firstName'] = first_name if first_name else ''
+            transactionDetails['customer']['lastName'] = last_name if last_name else ''
             transactionDetails['customer']['mobile'] = sale_order_id.partner_id.mobile
 
         if payment_acquire:
