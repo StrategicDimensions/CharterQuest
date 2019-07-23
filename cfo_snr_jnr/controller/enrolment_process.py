@@ -1289,6 +1289,7 @@ class EnrolmentProcess(http.Controller):
                         body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
                         body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
                         body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
+                        
                         mail_values = {
                             'email_from': template_id.email_from,
                             'reply_to': template_id.reply_to,
@@ -1307,7 +1308,7 @@ class EnrolmentProcess(http.Controller):
                                                       'self_or_company') else ''})
 
                     if request.session.get('sale_order') and request.session.get('do_invoice') == 'no':
-                        com_spo_free_quote = request.env['mail.template'].sudo().search([('name', '=', 'Company Sponsored/ Get free quote email')])
+                        com_spo_free_quote = request.env.ref('cfo_snr_jnr.company_sponsored_free_quote_email_template')
                         pdf_data_enroll = request.env.ref(
                             'event_price_kt.report_sale_enrollment').sudo().render_qweb_pdf(
                             sale_order_id.id)
@@ -2074,6 +2075,7 @@ class EnrolmentProcess(http.Controller):
 
             if sale_order_id.affiliation == '2' and request.session.get('sale_order') and request.session.get(
                     'do_invoice') == 'yes':
+                com_spo_reg_enrol = request.env.ref('cfo_snr_jnr.company_sponsored_register_enrol_email_template') 
                 pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').render_qweb_pdf(
                     invoice_id.id)
                 pdf_data_statement_invoice = request.env.ref(
@@ -2107,38 +2109,65 @@ class EnrolmentProcess(http.Controller):
                 if baking_detail_id:
                     attchment_list.append(baking_detail_id)
 
-                body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
-                body_html += "<br>"
-                body_html += "Dear " + sale_order_id.partner_id.name + ","
-                body_html += "<br><br>"
-                body_html += "Thank you for your Enrolment Application."
-                body_html += "<br><br>"
-                body_html += "Please find attached Invoice as well as copy of the Student Agreement you just accepted during enrolment."
-                body_html += "<br><br>"
-                body_html += "Your sponsor/company can pay using the Invoice no. as reference and return proof of payment to: accounts@charterquest.co.za"
-                body_html += " to process your enrolment. You can email accounts should you wish to make special payment arrangements."
-                body_html += "<br><br>"
-                body_html += "To avoid delays in gaining access to your materials and classes, kindly present a valid pre-authorisation on your company’s letterhead, addressed to us: CharterQuest, stating this invoice number, amount and an irrevocable commitment to settle the payment within 30 days. "
-                body_html += "<br><br>"
-                body_html += "Should obtaining a valid pre-authorisation not be feasible, you could in the interim pay 20% deposit and sign debit order for the balance to get started; once your company pays us in full, we will refund to you all payments received!"
-                body_html += "<br><br>"
-                body_html += "Please note that in any event above, should your company not honour its commitment, we may require you to settle the payment in full! "
-                body_html += "<br><br>"
-                body_html += "We look forward to seeing	you	during our course and helping you, in achieving	a 1st Time Pass!"
-                body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
-                body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
-                body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
+#                 body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
+#                 body_html += "<br>"
+#                 body_html += "Dear " + sale_order_id.partner_id.name + ","
+#                 body_html += "<br><br>"
+#                 body_html += "Thank you for your Enrolment Application."
+#                 body_html += "<br><br>"
+#                 body_html += "Please find attached Invoice as well as copy of the Student Agreement you just accepted during enrolment."
+#                 body_html += "<br><br>"
+#                 body_html += "Your sponsor/company can pay using the Invoice no. as reference and return proof of payment to: accounts@charterquest.co.za"
+#                 body_html += " to process your enrolment. You can email accounts should you wish to make special payment arrangements."
+#                 body_html += "<br><br>"
+#                 body_html += "To avoid delays in gaining access to your materials and classes, kindly present a valid pre-authorisation on your company’s letterhead, addressed to us: CharterQuest, stating this invoice number, amount and an irrevocable commitment to settle the payment within 30 days. "
+#                 body_html += "<br><br>"
+#                 body_html += "Should obtaining a valid pre-authorisation not be feasible, you could in the interim pay 20% deposit and sign debit order for the balance to get started; once your company pays us in full, we will refund to you all payments received!"
+#                 body_html += "<br><br>"
+#                 body_html += "Please note that in any event above, should your company not honour its commitment, we may require you to settle the payment in full! "
+#                 body_html += "<br><br>"
+#                 body_html += "We look forward to seeing	you	during our course and helping you, in achieving	a 1st Time Pass!"
+#                 body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
+#                 body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
+#                 body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
+#                 print ("\n\n\n--------->>>template calll555555>>>>>>>test",)
+                
+                
+                ctx = {
+                        'model': 'sale.order',
+                        'res_id': sale_order_id.id,
+                        'use_template': True,
+                        'template_id': com_spo_reg_enrol.id,
+                        'mark_so_as_sent': True,
+                        'force_email': True
+                    }
+                mail_compose_id = request.env['mail.compose.message'].sudo().generate_email_for_composer(com_spo_reg_enrol.id,sale_order_id.id)
+                bodies = request.env['mail.template'].render_template(com_spo_reg_enrol, 'sale.order', sale_order_id.id, post_process=True)
+                
+                mail_compose_id.update({'email_to': sale_order_id.partner_id.email})
                 mail_values = {
-                    'email_from': template_id.email_from,
-                    'reply_to': template_id.reply_to,
-                    'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
-                    'email_cc': 'enquiries@charterquest.co.za,accounts@charterquest.co.za,cqops@charterquest.co.za',
-                    'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
-                    'body_html': body_html,
-                    'notification': True,
+                    'email_from': com_spo_reg_enrol.email_from,
+                    'reply_to': com_spo_reg_enrol.reply_to,
+                    'email_to': mail_compose_id.get('email_to'),
+                    'email_cc': com_spo_reg_enrol.email_cc,
+                    'subject': mail_compose_id.get('subject'),
+                    'body_html': mail_compose_id.get('body'),
                     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
-                    'auto_delete': False,
+                    'auto_delete': com_spo_reg_enrol.auto_delete,
                 }
+                
+                
+#                 mail_values = {
+#                     'email_from': template_id.email_from,
+#                     'reply_to': template_id.reply_to,
+#                     'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+#                     'email_cc': 'enquiries@charterquest.co.za,accounts@charterquest.co.za,cqops@charterquest.co.za',
+#                     'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
+#                     'body_html': body_html,
+#                     'notification': True,
+#                     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
+#                     'auto_delete': False,
+#                 }
                 msg_id = mail_obj.create(mail_values)
                 msg_id.send()
                 if user_select.get('self_or_company') == 'cmp_sponosored':
