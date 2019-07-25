@@ -3621,19 +3621,44 @@
                      <br/><br/>
                      Kindly review the attached and secure your place by: 
                      <br/><br/>
-                     <div>
-                          <a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>CONVERT TO INVOICE</a>
-                          <a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>PAY NOW</a>
-                          <a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>GET BANKING DETAILS & PAY LATER</a>
-                    </div>
+                     
+                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+						  <tr>
+						    <td>
+						      <div>
+						        <!--[if mso]>
+						          <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://charterquest.odoo.com/registration_form" style="height:60px;v-text-anchor:middle;width:150px;" arcsize="15%" strokecolor="#EB7035" fillcolor="#ff0000">
+						            <w:anchorlock/>
+						            <center style="color:#ffffff;font-family:Helvetica, Arial,sans-serif;font-size:12px;">CONVERT TO INVOICE</center>
+						          </v:roundrect>
+						           <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://charterquest.odoo.com/registration_form" style="height:60px;v-text-anchor:middle;width:150px;" arcsize="15%" strokecolor="#EB7035" fillcolor="#ff0000">
+                                    <w:anchorlock/>
+                                    <center style="color:#ffffff;font-family:Helvetica, Arial,sans-serif;font-size:12px;">PAY NOW</center>
+                                  </v:roundrect>
+                                  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://charterquest.odoo.com/registration_form" style="height:60px;v-text-anchor:middle;width:150px;" arcsize="15%" strokecolor="#EB7035" fillcolor="#ff0000">
+                                    <w:anchorlock/>
+                                    <center style="color:#ffffff;font-family:Helvetica, Arial,sans-serif;font-size:12px;">GET BANKING DETAILS & PAY LATER</center>
+                                  </v:roundrect>
+						          
+						        <![endif]-->
+						         <a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;mso-hide:all;'>CONVERT TO INVOICE</a>
+						         <a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;mso-hide:all;'>PAY NOW</a>
+						          <a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;mso-hide:all;'>GET BANKING DETAILS & PAY LATER</a>
+						      </div>
+						    </td>
+						  </tr>
+						</table>
+<!--                      <div> -->
+<!--                           <a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>CONVERT TO INVOICE</a> -->
+<!--                           <a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>PAY NOW</a> -->
+<!--                           <a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>GET BANKING DETAILS & PAY LATER</a> -->
+<!--                     </div> -->
                     <br/><br/>
                     We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
                     <br/><br/><br/> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br/>
                     Tel: +27 (0)11 234 9223 [SA & Intl]<br/> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br/>
                     Email:enquiries@charterquest.co.za<br><br/>
-                    
                     </div>
-                             
                    </body>
                 </html>    
         ]]>
@@ -3642,7 +3667,7 @@
         
 <!--         Route Process 🞆Company Sponsored 🡺Register and Enrol 🡺 Yes to Invoice -->
         
-            <record id="company_sponsored_register_enrol_email_template" model="mail.template">
+            <record id="company_sponsored_regist_enrol_email_template" model="mail.template">
             <field name="name">Company Sponsored/ Register and Enrol</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
             <field name="email_to">${object.partner_id.email}</field>
@@ -3674,6 +3699,8 @@
                      <br/><br/>
                      Please note that in any event above, should your company not honour its commitment, we may require you to settle the payment in full!
                      <br/><br/>
+                     We look forward to seeing  you during our course and helping you, in achieving a 1st Time Pass! 
+                    <br/><br/>
                     We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
                     <br/><br/><br/> Thanking You <br><br> Patience Mukondwa<br/> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br/>
                     Tel: +27 (0)11 234 9223 [SA & Intl]<br/> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br/>

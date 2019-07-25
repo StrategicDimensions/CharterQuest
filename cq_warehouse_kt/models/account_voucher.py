@@ -45,7 +45,7 @@ class account_invoice(models.Model):
                 pick_ids += [picking.id for picking in so.picking_ids]
         # pickings = self.mapped('picking_ids')
         if len(pick_ids) > 1:
-            action['domain'] = [('id', 'in', ["+','.join(map(str, pick_ids))+"])]
+            action['domain'] = [('id', 'in', pick_ids)]
         else:
             action['views'] = [(self.env.ref('stock.view_picking_form').id, 'form')]
             action['res_id'] = pick_ids and pick_ids[0] or False

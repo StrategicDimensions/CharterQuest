@@ -2981,7 +2981,7 @@
                                             <label class="control-label" for="inputFax">Fax</label>
                                             <div class="controls">
                                                 <input type="text" name="inputFax" id="inputFax" placeholder="Fax"
-                                                       class="form-control1"/>
+                                                       class="form-control1" pattern="[0-9]+" title= "Please enter digit only"/>
                                             </div>
                                         </div>
                                     </td>
