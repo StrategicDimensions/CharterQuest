@@ -2444,7 +2444,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <t t-if="page_confirm or bank_detail">
+                    <t t-if="uuid or register_enrol and page_confirm or bank_detail  ">
                         <table id="debit_order_section" class="table table-bordered debit_order_section"
                                style="color:black;background-color:gainsboro;margin-bottom:20px;">
                             <tbody>
@@ -2643,7 +2643,7 @@
                             </tbody>
                         </table>
                     </t>
-                    <t t-if="not page_confirm and not bank_detail">
+                    <t t-if="not uuid and not register_enrol">
                         <div class="control-group">
                             <t t-if="sale_order">
                                 <input class="form-field" name="sale_order" t-att-value="sale_order" type="hidden"/>
@@ -2658,7 +2658,7 @@
                             </button>
                         </div>
                     </t>
-                    <t t-if="page_confirm or bank_detail">
+                    <t t-if="uuid or register_enrol and page_confirm or bank_detail">
                         <div class="control-group">
                             <label class="checkbox" style="color:black;padding-left: 35px;padding-bottom: 10px;">
                                 <input type="checkbox" id="requiredcheckbox" name="requiredcheckbox"

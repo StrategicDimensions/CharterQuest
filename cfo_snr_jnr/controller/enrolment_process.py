@@ -383,7 +383,7 @@ class EnrolmentProcess(http.Controller):
         request.session['reg_and_enrol'] = ''
         return request.render('cfo_snr_jnr.enrolment_process_registration', {'page_name': 'registration',
                                                                              'self_or_cmp': user_select[
-                                                                                 'self_or_company'] if user_select.get(
+                                                                                 'self_or_company'] if user_select and user_select.get(
                                                                                  'self_or_company') else ''})
 
     @http.route(['/registration_form', '/registration_form/<uuid>'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
@@ -391,7 +391,7 @@ class EnrolmentProcess(http.Controller):
         user_select = request.session['user_selection_type'] if request.session and request.session.get('user_selection_type') else ''
         return request.render('cfo_snr_jnr.enrolment_process_registration_and_enroll', {'page_name': 'registration',
                                                                                         'self_or_cmp': user_select[
-                                                                                            'self_or_company'] if user_select and user_select.get(
+                                                                                            'self_or_company'] if user_select and user_select and user_select.get(
                                                                                             'self_or_company') else '',
                                                                                             'uuid': uuid
                                                                                         })
@@ -753,6 +753,7 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/payment'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def payment(self, **post):
+        
         if post.get('uuid'):
             sale_order_id = request.env['sale.order'].sudo().search([('debit_link', '=', post.get('uuid'))])
             product_tot = 0.00
@@ -771,7 +772,9 @@ class EnrolmentProcess(http.Controller):
                                                                                     'sale_order_id': sale_order_id if sale_order_id else False,
                                                                                     'mandate_link': 'mandate_link_find',
                                                                                     'page_confirm': 'yes' if sale_order_id.affiliation==1 else 'no',
-                                                                                    'bank_detail': True if sale_order_id.affiliation==1 else False})
+                                                                                    'bank_detail': True if sale_order_id.affiliation==1 else False,
+                                                                                    'uuid': post.get('uuid'),
+                                                                                    })
                 if sale_order_id.quote_type == 'freequote':
                     return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
                                                                                     'product_tot': round(product_tot,
@@ -780,7 +783,9 @@ class EnrolmentProcess(http.Controller):
                                                                                     'sale_order_id': sale_order_id if sale_order_id else False,
                                                                                     'mandate_link': 'mandate_link_find',
                                                                                     'page_confirm':  'yes' if sale_order_id.affiliation==1 else 'no',
-                                                                                    'bank_detail': True if sale_order_id.affiliation==1 else False})
+                                                                                    'bank_detail': True if sale_order_id.affiliation==1 else False,
+                                                                                    'uuid': post.get('uuid'),
+                                                                                    })
                 
         sale_order_id = False
         display_btn = request.session['reg_enrol_btn'] if request.session.get('reg_enrol_btn') else False
@@ -794,7 +799,7 @@ class EnrolmentProcess(http.Controller):
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
         order_line = []
         warehouse_id = False
-        if user_select.get('campus'):
+        if user_select and user_select.get('campus'):
             campus_id = request.env['res.partner'].sudo().search([('id', '=', user_select.get('campus'))])
             warehouse_id = request.env['stock.warehouse'].sudo().search([('name', '=', campus_id.name)])
         for each_event_ticket in event_tickets:
@@ -916,7 +921,7 @@ class EnrolmentProcess(http.Controller):
                     if config_para:
                         link = config_para.value + "/registration_form/" + decoded_quote_name
                         sale_order_id.write(
-                            {'name': quote_name, 'debit_order_mandate_link': link, 'debit_link': decoded_quote_name})
+                            {'name': quote_name, 'link_portal': link, 'debit_link': decoded_quote_name})
                     else:
                         sale_order_id.write({'name': quote_name})
                     for each_line in sale_order_id.order_line:
@@ -935,32 +940,34 @@ class EnrolmentProcess(http.Controller):
                         request.session['discount_add'] = ''
                         request.session['sale_order'] = ''
                         request.session['do_invoice'] = ''
+                        
                 return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
                                                                                 'product_tot': request.session[
                                                                                     'product_tot'],
                                                                                 'grand_tot': request.session[
                                                                                     'grand_tot'],
                                                                                 'page_confirm': 'yes',
-                                                                                'sale_order': sale_order_id.id})
+                                                                                'sale_order': sale_order_id.id,
+                                                                                'register_enrol': True})
             else:
                 if post.get('email'):
                     partner_detail = request.env['res.partner'].sudo().search([('email', '=', post.get('email'))],
                                                                               limit=1)
 
-                    if partner_detail:
+                    if partner_detail :
                         sale_order_id = sale_obj.create({'partner_id': partner_detail.id,
-                                                         'affiliation': '1' if user_select.get(
+                                                         'affiliation': '1' if user_select and user_select.get(
                                                              'self_or_company') and user_select.get(
                                                              'self_or_company') == 'self' else '2',
-                                                         'campus': user_select['campus'] if user_select.get(
+                                                         'campus': user_select['campus'] if user_select and user_select.get(
                                                              'campus') else '',
                                                          'prof_body': user_select[
-                                                             'Select Prof Body'] if user_select.get(
+                                                             'Select Prof Body'] if user_select and user_select.get(
                                                              'Select Prof Body') else '',
                                                          'quote_type': 'enrolment' if display_btn else 'freequote',
-                                                         'semester_id': user_select['Semester'] if user_select.get(
+                                                         'semester_id': user_select['Semester'] if user_select and user_select.get(
                                                              'Semester') else '',
-                                                         'warehouse_id': warehouse_id.id,
+                                                         'warehouse_id':  warehouse_id.id if warehouse_id else False,
                                                          'discount_type_ids': [(6, 0, [each for each in discount_id])],
                                                          'order_line': order_line})
                         # quote_name = sale_order_id.name + 'WEB'
@@ -971,7 +978,7 @@ class EnrolmentProcess(http.Controller):
                             [('key', 'ilike', 'web.base.url')])
                         if config_para:
                             link = config_para.value + "/registration_form/"+decoded_quote_name
-                            sale_order_id.write({'name': quote_name, 'debit_order_mandate_link': link,
+                            sale_order_id.write({'name': quote_name, 'link_portal': link,
                                                  'debit_link': decoded_quote_name})
                         else:
                             sale_order_id.write({'name': quote_name})
@@ -1053,7 +1060,8 @@ class EnrolmentProcess(http.Controller):
                                                                                 'sale_order_id': sale_order_id if sale_order_id else False,
                                                                                 'invoice_generate': 'yes',
                                                                                 'page_confirm': 'yes' if sale_order_id.affiliation==1 else 'no',
-                                                                                'bank_detail': True if sale_order_id.affiliation==1 else False})
+                                                                                'bank_detail': True if sale_order_id.affiliation==1 else False,
+                                                                                'register_enrol': False})
 
     @http.route(['/page/thank-you'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def page_thank_you(self, **post):
@@ -1136,7 +1144,7 @@ class EnrolmentProcess(http.Controller):
                             'location_id': picking_type_id.default_location_src_id.id,
                             'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
                         }))
-            customer_picking = request.env['stock.picking'].create({
+            customer_picking = request.env['stock.picking'].sudo().create({
                 'partner_id': sale_order_id.partner_id.id,
                 'campus_id': sale_order_id.campus.id,
                 'prof_body_id': sale_order_id.prof_body.id,
@@ -1236,7 +1244,7 @@ class EnrolmentProcess(http.Controller):
 
                     msg_id = mail_obj.create(mail_values)
                     msg_id.send()
-                    if user_select.get('self_or_company') == 'cmp_sponosored':
+                    if user_select and user_select.get('self_or_company') == 'cmp_sponosored':
                         return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                               {'self_or_cmp': user_select['self_or_company'] if user_select.get(
                                                   'self_or_company') else ''})
@@ -1822,7 +1830,7 @@ class EnrolmentProcess(http.Controller):
                         'location_id': picking_type_id.id,
                         'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
                     }))
-        customer_picking = request.env['stock.picking'].create({
+        customer_picking = request.env['stock.picking'].sudo().create({
             'partner_id': sale_order_id.partner_id.id,
             'campus_id': sale_order_id.campus.id,
             'prof_body_id': sale_order_id.prof_body.id,
