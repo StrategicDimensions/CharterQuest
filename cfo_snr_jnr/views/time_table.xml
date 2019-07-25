@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="website_time_table_view" model="website.menu">
+        <field name="name">Time Table</field>
+        <field name="url">/time_table</field>
+        <field name="parent_id" ref="website.main_menu"/>
+    </record>
+
+    <template id="time_table_template" name="Time Table">
+        <t t-call="portal.portal_layout">
+            <div id='calendar_time_table'/>
+        </t>
+    </template>
+
+</odoo>

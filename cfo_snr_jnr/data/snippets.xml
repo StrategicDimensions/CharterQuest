@@ -98,7 +98,7 @@
     </template>
 
     <template id="cfo_snr_jnr_steps_wizard" name="Steps Wizard Block">
-        <section class="cfo_snr_jnr_steps_wizard_container container">
+        <section class="cfo_snr_jnr_steps_wizard_container container" contentEditable="true">
             <div class="container">
                 <div class="row">
                     <div class="wizard">
@@ -227,6 +227,9 @@
                 <li>
                     <a class="cfo_snr_jnr_add_step">Add Step</a>
                 </li>
+<!--                <li>-->
+<!--                    <a class="cfo_snr_jnr_remove_step">Remove Active Step</a>-->
+<!--                </li>-->
             </div>
         </xpath>
     </template>

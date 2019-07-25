@@ -8,6 +8,7 @@
     margin: 40px auto;
     margin-bottom: 0;
     border-bottom-color: #e0e0e0;
+    height: 162px;
 }
 
 .cfo_snr_jnr_steps_wizard_container .wizard > div.wizard-inner {
@@ -36,27 +37,29 @@
 }
 
 .cfo_snr_jnr_steps_wizard_container span.round-tab {
-    width: 70px;
-    height: 70px;
-    line-height: 70px;
+    width: 200px;
+    height: 120px;
+    line-height: 120px;
     display: inline-block;
-    border-radius: 100px;
-    background: #fff;
-    border: 2px solid #e0e0e0;
+    /* border-radius: 100px; */
+    background: #e7e7e7;
+    border: 2px solid #e7e7e7;
     z-index: 2;
     position: absolute;
     left: 0;
     text-align: center;
     font-size: 25px;
+    color: #337ab7;
 }
 
 .cfo_snr_jnr_steps_wizard_container span.round-tab i {
-    color: #555555;
+    color: #337ab7;
 }
 
 .cfo_snr_jnr_steps_wizard_container .wizard li.active span.round-tab {
-    background: #fff;
-    border: 2px solid #5bc0de;
+    background: #337ab7;
+    border: 2px solid #337ab7;
+	color: white;
 }
 
 .cfo_snr_jnr_steps_wizard_container .wizard li.active span.round-tab i {
@@ -64,8 +67,8 @@
 }
 
 .cfo_snr_jnr_steps_wizard_container span.round-tab:hover {
-    color: #333;
-    border: 2px solid #333;
+    color: #337ab7;
+    border: 2px solid #337ab7;
 }
 
 .cfo_snr_jnr_steps_wizard_container .wizard .nav-tabs>li {
@@ -80,7 +83,7 @@
     margin: 0 auto;
     bottom: 0px;
     border: 5px solid transparent;
-    border-bottom-color: #5bc0de;
+    border-bottom-color: #337ab7;
     transition: 0.1s ease-in-out;
 }
 
@@ -92,12 +95,12 @@
     margin: 0 auto;
     bottom: 0px;
     border: 10px solid transparent;
-    border-bottom-color: #5bc0de;
+    border-bottom-color: #337ab7;
 }
 
 .cfo_snr_jnr_steps_wizard_container .wizard .nav-tabs>li a {
-    width: 70px;
-    height: 70px;
+    width: 200px;
+    height: 120px;
     margin: 20px auto;
     border-radius: 100%;
     padding: 0;
