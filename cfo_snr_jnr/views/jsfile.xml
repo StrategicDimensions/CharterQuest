@@ -35,6 +35,9 @@
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_steps_wizard.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/contentMenu.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/payment.js"/>
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.css" rel="stylesheet" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/time_table.js"/>
             </xpath>
         </template>
 

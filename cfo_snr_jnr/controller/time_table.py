@@ -17,9 +17,12 @@
 #    <http://www.gnu.org/licenses/gpl.html>.
 #
 ##############################################################################
+from odoo import http
+from odoo.http import request
 
-from . import main
-from . import main_cfo_jnr
-from . import enrolment_process
-from . import time_table
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
+class TimeTable(http.Controller):
+
+    @http.route(['/time_table'], type='http', auth="public", website=True)
+    def time_table_view(self, **post):
+        return request.render("cfo_snr_jnr.time_table_template")
