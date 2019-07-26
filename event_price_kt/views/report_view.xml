@@ -80,14 +80,14 @@
                 name="event_price_kt.report_account_statement"
         />
 
-        <report
-                id="account_statement_enrollment"
-                model="debit.order.details"
-                name="account_statement_enrollment"
-                file="event_price_kt/report/account_enrollment_statement.rml"
-                string="Enrollment Statement"
-                usage="default"
-        />
+<!--        <report-->
+<!--                id="account_statement_enrollment_debit"-->
+<!--                model="debit.order.details"-->
+<!--                name="event_price_kt.report_account_statement_enrollment"-->
+<!--                file="event_price_kt.report_account_statement_enrollment"-->
+<!--                string="Enrollment Statement"-->
+<!--                report_type="qweb-pdf"-->
+<!--        />-->
 
     </data>
 </odoo>
