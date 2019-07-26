@@ -183,7 +183,6 @@ class debit_order_details(models.Model):
             do_id.write({'state': 'done'})
         return True
 
-    @api.one
     def register_payment_debit(self):
         if self.invoice_id:
             account_invoice = self.invoice_id
@@ -418,7 +417,7 @@ class debit_order_details(models.Model):
             if vals['state'] == 'failed':
                 for each in self:
                     each.failed_debit_order_notification()
-        if vals.get('state') and vals.get('state') == 'inprogress':
+        if vals.get('state') and vals.get('state') == 'done':
             for each in self:
                 each.register_payment_debit()
         return result
