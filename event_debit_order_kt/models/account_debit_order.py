@@ -173,7 +173,6 @@ class debit_order_details(models.Model):
         ('name_uniq', 'unique(name)', 'Debit Order Reference must be unique!'),
     ]
 
-
     @api.model
     def get_debit_order_status_successful(self):
         todaydate = date.today()
@@ -182,52 +181,53 @@ class debit_order_details(models.Model):
                                                          ('state', '=', 'inprogress')])
         for do_id in do_ids:
             do_id.write({'state': 'done'})
-            if do_id.invoice_id:
-                account_invoice = do_id.invoice_id
-                if account_invoice.state != 'paid':
-                    journal_id = self.env['account.journal'].search([('code', '=', 'EFT')], limit=1)
-                    payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
-                    payment_id = self.env['account.payment'].sudo().create({
-                        'partner_id': do_id.partner_id.id,
-                        'amount': do_id.dbo_amount,
-                        'payment_type': 'inbound',
-                        'partner_type': 'customer',
-                        'invoice_ids': [(6, 0, account_invoice.ids)],
-                        'payment_date': datetime.today(),
-                        'journal_id': journal_id.id,
-                        'payment_method_id': payment_methods[0].id
-                    })
-                    payment_id.action_validate_invoice_payment()
-                    pdf_data = self.env.ref(
-                        'event_price_kt.report_statement_enrollment').sudo().render_qweb_pdf(
-                        do_id.invoice_id.id)
-                    strname = 'Debit Order Statement'
-                    pdfname = 'debit_order_statement.pdf'
-                    if pdf_data:
-                        pdfvals = {'name': strname,
-                                   'db_datas': base64.b64encode(pdf_data[0]),
-                                   'datas': base64.b64encode(pdf_data[0]),
-                                   'datas_fname': pdfname,
-                                   'res_model': self._name,
-                                   'type': 'binary'}
-                    attachment = self.env['ir.attachment'].create(pdfvals)
-                    email = self.env.ref('event_debit_order_kt.email_template_edi_enrolement_statement_student')
-                    mail_compose_id = self.env['mail.compose.message'].sudo().generate_email_for_composer(
-                        email.id, do_id.id)
-                    mail_compose_id.update({'email_to': do_id.partner_id.email})
-                    mail_values = {
-                        'email_from': mail_compose_id.get('email_from'),
-                        'email_to': mail_compose_id.get('email_to'),
-                        'subject': mail_compose_id.get('subject'),
-                        'body_html': mail_compose_id.get('body'),
-                        'attachment_ids': [(6, 0, [attachment.id])],
-                        'auto_delete': True,
-                    }
-                    msg_id = self.env['mail.mail'].create(mail_values)
-                    msg_id.send()
-
-
         return True
+
+    @api.one
+    def register_payment_debit(self):
+        if self.invoice_id:
+            account_invoice = self.invoice_id
+            if account_invoice.state != 'paid':
+                journal_id = self.env['account.journal'].search([('code', '=', 'EFT')], limit=1)
+                payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
+                payment_id = self.env['account.payment'].sudo().create({
+                    'partner_id': self.partner_id.id,
+                    'amount': self.dbo_amount,
+                    'payment_type': 'inbound',
+                    'partner_type': 'customer',
+                    'invoice_ids': [(6, 0, account_invoice.ids)],
+                    'payment_date': datetime.today(),
+                    'journal_id': journal_id.id,
+                    'payment_method_id': payment_methods[0].id
+                })
+                payment_id.action_validate_invoice_payment()
+                pdf_data = self.env.ref(
+                    'event_price_kt.report_statement_enrollment').sudo().render_qweb_pdf(
+                    self.invoice_id.id)
+                strname = 'Debit Order Statement'
+                pdfname = 'debit_order_statement.pdf'
+                if pdf_data:
+                    pdfvals = {'name': strname,
+                               'db_datas': base64.b64encode(pdf_data[0]),
+                               'datas': base64.b64encode(pdf_data[0]),
+                               'datas_fname': pdfname,
+                               'res_model': self._name,
+                               'type': 'binary'}
+                attachment = self.env['ir.attachment'].create(pdfvals)
+                email = self.env.ref('event_debit_order_kt.email_template_edi_enrolement_statement_student')
+                mail_compose_id = self.env['mail.compose.message'].sudo().generate_email_for_composer(
+                    email.id, self.id)
+                mail_compose_id.update({'email_to': self.partner_id.email})
+                mail_values = {
+                    'email_from': mail_compose_id.get('email_from'),
+                    'email_to': mail_compose_id.get('email_to'),
+                    'subject': mail_compose_id.get('subject'),
+                    'body_html': mail_compose_id.get('body'),
+                    'attachment_ids': [(6, 0, [attachment.id])],
+                    'auto_delete': True,
+                }
+                msg_id = self.env['mail.mail'].create(mail_values)
+                msg_id.send()
 
     @api.model
     def search(self, args, offset=0, limit=None, order=None, count=False):
@@ -416,7 +416,11 @@ class debit_order_details(models.Model):
         result = super(debit_order_details, self).write(vals)
         if vals.get('state', False):
             if vals['state'] == 'failed':
-                self.failed_debit_order_notification()
+                for each in self:
+                    each.failed_debit_order_notification()
+        if vals.get('state') and vals.get('state') == 'inprogress':
+            for each in self:
+                each.register_payment_debit()
         return result
 
 
