@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, _
-from datetime import datetime
 from datetime import datetime, timedelta, date
-# import StringIO
-# import cStringIO
 import base64
-from dateutil.relativedelta import relativedelta
-from tempfile import TemporaryFile
 import csv
 import odoo.addons.decimal_precision as dp
 import os
@@ -68,15 +63,15 @@ class exported_debit_order_file(models.Model):
                 date2 = date1 and str(date1.strftime('%y')) + '' + str(date1.strftime('%m')) + '' + str(
                     date1.strftime('%d'))
                 account_type = ''
-                if obj.bank_acc_type == 'CUR':
+                if obj.bank_acc_type == 'Cheque':
                     account_type = 1
-                if obj.bank_acc_type == 'SAV':
+                if obj.bank_acc_type == 'Savings':
                     account_type = 2
                 ownreference = ''
                 if str(obj.name).find('/') > -1:
                     reference = str(obj.name).split('/')
                     cqreference = reference[2] and str(reference[2]).replace('-', '').ljust(14, ' ')
-                    ownreference = "CQuest" + '-' + cqreference + '-' + date2
+                    ownreference = "CHARTERQUE" + '' + cqreference + '' + date2
                 count += 1
                 total = total + obj.dbo_amount
                 writer.writerow((obj.acc_holder, obj.bank_acc_no, account_type, obj.bank_code, obj.dbo_amount,
@@ -96,7 +91,7 @@ class exported_debit_order_file(models.Model):
         final_arr_data['transactions_amount_total'] = total
         pl_report_id = self.env['exported.debit.order.file'].create(final_arr_data)
         mail_mail_obj = self.env['mail.mail']
-        email_cc = 'accounts@charterquest.co.za' + ',' + 'rebecca.tshikadi@charterquest.co.za' + ',' + 'patience.m@charterquest.co.za'
+        email_cc = 'accounts@charterquest.co.za' + ',' + 'desmond.f@charterquest.co.za' + ',' + 'patience.m@charterquest.co.za'
         from_add = 'debitorders@charterquest.co.za'
         To = 'vnti@charterquest.co.za'
         CC = email_cc
@@ -108,7 +103,8 @@ class exported_debit_order_file(models.Model):
             'res_model': 'exported.debit.order.file',
         }
         document_id = self.env['ir.attachment'].create(dic)
-        subject_name = 'Student Debit Orders for ' + str(action_date) + ' to be loaded'
+        subject_name = 'Student Debit Orders for ' + str(action_date) + ' to be loaded' + '(' + str(
+            count) + 'Transactions )' + '-' + 'Value' + str(total)
         body_html = ("""<p><br>
                         Dear Valentine,<br>
                         Please find attached FNB Manual Debit Order csv file for DebitOrders that should go off on %s.<br>
@@ -148,16 +144,6 @@ class debit_order_details(models.Model):
     _description = "Debit Order"
     _inherit = ['mail.thread']
 
-    # def _bank_type_get(self):
-    #     bank_type_obj = self.env['res.partner.bank.type']
-    #     result = []
-    #     type_ids = bank_type_obj.search([])
-    #     bank_types = bank_type_obj.browse(type_ids)
-    #     for bank_type in bank_types:
-    #         result.append((bank_type.code, bank_type.name))
-    #     5/0
-    #     return result
-
     name = fields.Char(string='Order Reference', size=64, readonly=1, default='/')
     partner_id = fields.Many2one('res.partner', string="Student Name")
     dbo_amount = fields.Float(string='Debit Order Amount', digits=dp.get_precision('Account'))
@@ -187,11 +173,6 @@ class debit_order_details(models.Model):
         ('name_uniq', 'unique(name)', 'Debit Order Reference must be unique!'),
     ]
 
-    # @api.multi
-    # @api.onchange('partner_id')
-    # def onchange_partner_id(self):
-    #     if self.partner_id:
-    #         self.update({'student_number': self.partner_id.student_number})
 
     @api.model
     def get_debit_order_status_successful(self):
@@ -217,8 +198,35 @@ class debit_order_details(models.Model):
                         'payment_method_id': payment_methods[0].id
                     })
                     payment_id.action_validate_invoice_payment()
+                    pdf_data = self.env.ref(
+                        'event_price_kt.report_statement_enrollment').sudo().render_qweb_pdf(
+                        do_id.invoice_id.id)
+                    strname = 'Debit Order Statement'
+                    pdfname = 'debit_order_statement.pdf'
+                    if pdf_data:
+                        pdfvals = {'name': strname,
+                                   'db_datas': base64.b64encode(pdf_data[0]),
+                                   'datas': base64.b64encode(pdf_data[0]),
+                                   'datas_fname': pdfname,
+                                   'res_model': self._name,
+                                   'type': 'binary'}
+                    attachment = self.env['ir.attachment'].create(pdfvals)
                     email = self.env.ref('event_debit_order_kt.email_template_edi_enrolement_statement_student')
-                    email.send_mail(do_id.id)
+                    mail_compose_id = self.env['mail.compose.message'].sudo().generate_email_for_composer(
+                        email.id, do_id.id)
+                    mail_compose_id.update({'email_to': do_id.partner_id.email})
+                    mail_values = {
+                        'email_from': mail_compose_id.get('email_from'),
+                        'email_to': mail_compose_id.get('email_to'),
+                        'subject': mail_compose_id.get('subject'),
+                        'body_html': mail_compose_id.get('body'),
+                        'attachment_ids': [(6, 0, [attachment.id])],
+                        'auto_delete': True,
+                    }
+                    msg_id = self.env['mail.mail'].create(mail_values)
+                    msg_id.send()
+
+
         return True
 
     @api.model

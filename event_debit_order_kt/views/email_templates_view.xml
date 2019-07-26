@@ -260,57 +260,22 @@ Dear ${object.partner_id.name}
 <br><br>
 Please note that your CharterQuest Debit Order has been scheduled for ${object.dbo_date}.
 <br><br>
-The reference for your debit order is ${object.name} amount to go off is (R${object.dbo_amount}), this will also appear on your bank statement.
+The reference for your debit order is ${object.name} and the amount to go off is (R${object.dbo_amount}), this will also appear on your bank statement.
 <br><br>
-
+We thank you in advance for providing sufficient funds to meet this payment. It does not only help avoid penalty charges, we depend on it to guarantee the best teaching service you have come to expect from us!
+<br><br>
 	Thanking you,
 	<br><br>
-	Valentine D. Nti<br>
-	Founding CEO,<br>
-	CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
+	Patience Mukondwa<br>
+	Head Of Operations,<br>
+	The CharterQuest Institute<br>
 	<br><br>
-	SANDTON CAMPUS:<br>
-	CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
-	@ CHARTERQUEST HOUSE, <br>
-	Metropolitan Park<br>
-	374 Rivonia Boulevard<br>
-	Rivonia, SANDTON <br>
-	South Africa<br>
-	
-	<br><br>
-	CONTACT INFORMATION:
-	<br><br>
+	CENTRAL CONTACT INFORMATION:<br>
     Tel: +27 (0)11 234 9223 [SA & Intl]<br>
     Tel: +27 (0)11 234 9238 [SA & Intl]<br>
     Tel: 0861 131 137 [SA ONLY]<br>
     Fax: 086 218 8713 [SA ONLY]<br>
-    Email:enquiries@charterquest.co.za<br>
-    <br><br>
-    BRAAMFONTEIN CAMPUS:<br>
-    CHARTERQUEST FINANCIAL TRAINING INSTITUTE @ ORION HOUSE,<br>
-    [13th floor] 49 Jorissen Street<br>
-    Cnr Biccard and Jorissen Street<br>
-    BRAAMFONTEIN<br>
-    South Africa<br>
-    <br><br>
-    CONTACT INFORMATION:<br>
-    Tel: +27 [0]11 403 0656 [SA & Intl]<br>
-    Tel: +27 [0]11 403 0642 [SA & Intl]<br>
-    Fax: 086 218 8713 [SA ONLY]<br>
-    Fax: +27 [0]11 791 7703 [SA & Intl]<br>
-    Email:enquiries@charterquest.co.za<br>
-    <br><br>
-    PRETORIA CAMPUS:<br>
-    CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
-    367 Hilda Street<br>
-    Hatfield Rendez Vous Building<br>
-    Hatfield, PRETORIA<br>
-    South Africa<br>
-    <br><br>
-    CONTACT INFORMATION:
-    Tel: +27 [0]12 751 7608 [SA & Intl]<br>
-    Email: enquiries@charterquest.co.za<br>
-	<br/>
+    Email:enquiries@charterquest.co.za <br>
 	</div>
 		    ]]></field>
         </record>
