@@ -1210,38 +1210,63 @@ class EnrolmentProcess(http.Controller):
                     agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
                     if agreement_id:
                         attchment_list.append(agreement_id)
-                    body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
-                    body_html += "<br>"
-                    body_html += "Dear " + sale_order_id.partner_id.name + ","
-                    body_html += "<br><br>"
-                    body_html += "Thank you for your course fee/price inquiry."
-                    body_html += "<br><br>"
-                    body_html += "Kindly review the attached and secure your place by:"
-                    body_html += "<br><br>"
-                    body_html += "<div>"
-                    body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>CONVERT TO INVOICE</a>"
-                    body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>PAY NOW</a>"
-                    body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-bottom: 10px;'>GET BANKING DETAILS & PAY LATER</a>"
-                    body_html += "</div>"
-                    body_html += "<br><br>"
-                    
-                    body_html += "We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
-                    body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
-                    body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
-                    body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
-                    mail_values = {
-                        'email_from': template_id.email_from,
-                        'reply_to': template_id.reply_to,
-                        'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
-                        'email_cc': 'enquiries@charterquest, accounts@charterquest.co.za, cqops@charterquest.co.za',
-                        'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
-                        'body_html': body_html,
-                        'notification': True,
-                        'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
-                        'auto_delete': False,
-                    }
+#                     body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
+#                     body_html += "<br>"
+#                     body_html += "Dear " + sale_order_id.partner_id.name + ","
+#                     body_html += "<br><br>"
+#                     body_html += "Thank you for your course fee/price inquiry."
+#                     body_html += "<br><br>"
+#                     body_html += "Kindly review the attached and secure your place by:"
+#                     body_html += "<br><br>"
+#                     body_html += "<div>"
+#                     body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>CONVERT TO INVOICE</a>"
+#                     body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>PAY NOW</a>"
+#                     body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-bottom: 10px;'>GET BANKING DETAILS & PAY LATER</a>"
+#                     body_html += "</div>"
+#                     body_html += "<br><br>"
+#                     
+#                     body_html += "We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
+#                     body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
+#                     body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
+#                     body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
+#                     mail_values = {
+#                         'email_from': template_id.email_from,
+#                         'reply_to': template_id.reply_to,
+#                         'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+#                         'email_cc': 'enquiries@charterquest, accounts@charterquest.co.za, cqops@charterquest.co.za',
+#                         'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
+#                         'body_html': body_html,
+#                         'notification': True,
+#                         'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
+#                         'auto_delete': False,
+#                     }
 #                     Route Process Self-Sponsored Get free Quote Emailed
 
+
+                    self_spo_free_quote = request.env.ref('cfo_snr_jnr.company_sponsored_free_quote_email_template')
+                    ctx = {
+                            'model': 'sale.order',
+                            'res_id': sale_order_id.id,
+                            'use_template': True,
+                            'template_id': self_spo_free_quote.id,
+                            'mark_so_as_sent': True,
+                            'force_email': True
+                        }
+                    mail_compose_id = request.env['mail.compose.message'].sudo().generate_email_for_composer(self_spo_free_quote.id,sale_order_id.id)
+                    bodies = request.env['mail.template'].render_template(self_spo_free_quote, 'sale.order', sale_order_id.id, post_process=True)
+                    
+                    mail_compose_id.update({'email_to': sale_order_id.partner_id.email})
+                    mail_values = {
+                        'email_from': self_spo_free_quote.email_from,
+                        'reply_to': self_spo_free_quote.reply_to,
+                        'email_to': mail_compose_id.get('email_to'),
+                        'email_cc': self_spo_free_quote.email_cc,
+                        'subject': mail_compose_id.get('subject'),
+                        'body_html': mail_compose_id.get('body'),
+                        'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
+                        'auto_delete': self_spo_free_quote.auto_delete,
+                    }
+                    
                     msg_id = mail_obj.create(mail_values)
                     msg_id.send()
                     if user_select and user_select.get('self_or_company') == 'cmp_sponosored':
@@ -1297,7 +1322,6 @@ class EnrolmentProcess(http.Controller):
                         body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
                         body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
                         body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
-                        
                         mail_values = {
                             'email_from': template_id.email_from,
                             'reply_to': template_id.reply_to,
@@ -1335,7 +1359,6 @@ class EnrolmentProcess(http.Controller):
 
                         if agreement_id:
                             attchment_list.append(agreement_id)
-                        
 #                         body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
 #                         body_html += "<br>"
 #                         body_html += "Dear " + sale_order_id.partner_id.name + ","
@@ -1910,6 +1933,7 @@ class EnrolmentProcess(http.Controller):
                 body_html += "<br><br> We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
                 body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
                 body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
+                
                 mail_values = {
                     'email_from': template_id.email_from,
                     'reply_to': template_id.reply_to,
@@ -2143,7 +2167,6 @@ class EnrolmentProcess(http.Controller):
 #                 body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
 #                 body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
 #                 body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
-#                 print ("\n\n\n--------->>>template calll555555>>>>>>>test",)
                 
                 
                 ctx = {
