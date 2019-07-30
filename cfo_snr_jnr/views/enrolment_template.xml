@@ -2716,7 +2716,7 @@
                 <div class="col-sm-12" style="color:black;">
                     <!--<h3>Payment Unsuccessful!</h3>-->
                     <!--<h4>Please repeat the process and choose EFT as your payment method and we will send you a proforma invoice with our banking details for you to make the payment for your order. Once your payment is received your order will be processed immediately;</h4>-->
-                    <!--<h4>Thank you</h4>-->
+                    <!--<h4>Thank you</h4>--->
                     <center>
                         <h2 style="color:red;">OOPS!</h2>
                         <h3>Payment Unsuccessful!</h3>
