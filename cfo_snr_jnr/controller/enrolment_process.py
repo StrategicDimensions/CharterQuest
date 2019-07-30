@@ -1254,23 +1254,22 @@ class EnrolmentProcess(http.Controller):
                         }
                     mail_compose_id = request.env['mail.compose.message'].sudo().generate_email_for_composer(self_spo_free_quote.id,sale_order_id.id)
                     bodies = request.env['mail.template'].render_template(self_spo_free_quote, 'sale.order', sale_order_id.id, post_process=True)
-                    
                     mail_compose_id.update({'email_to': sale_order_id.partner_id.email})
                     mail_values = {
-                        'email_from': self_spo_free_quote.email_from,
-                        'reply_to': self_spo_free_quote.reply_to,
+                        'email_from': self_spo_free_quote.sudo().email_from,
+                        'reply_to': self_spo_free_quote.sudo().reply_to,
                         'email_to': mail_compose_id.get('email_to'),
-                        'email_cc': self_spo_free_quote.email_cc,
+                        'email_cc': self_spo_free_quote.sudo().email_cc,
                         'subject': mail_compose_id.get('subject'),
                         'body_html': mail_compose_id.get('body'),
                         'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
-                        'auto_delete': self_spo_free_quote.auto_delete,
+                        'auto_delete': self_spo_free_quote.sudo().auto_delete,
                     }
                     
-                    msg_id = mail_obj.create(mail_values)
-                    msg_id.send()
+                    msg_id = mail_obj.sudo().create(mail_values)
+                    msg_id.sudo().send()
                     if user_select and user_select.get('self_or_company') == 'cmp_sponosored':
-                        return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
+                        return request.sudo().render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                               {'self_or_cmp': user_select['self_or_company'] if user_select.get(
                                                   'self_or_company') else ''})
                 elif sale_order_id.affiliation == '2':
@@ -1332,8 +1331,8 @@ class EnrolmentProcess(http.Controller):
                             'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
                             'auto_delete': False,
                         }
-                        msg_id = mail_obj.create(mail_values)
-                        msg_id.send()
+                        msg_id = mail_obj.sudo().create(mail_values)
+                        msg_id.sudo().send()
                         if user_select.get('self_or_company') == 'cmp_sponosored':
                             return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                                   {'self_or_cmp': user_select['self_or_company'] if user_select.get(
@@ -1407,8 +1406,8 @@ class EnrolmentProcess(http.Controller):
                             'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
                             'auto_delete': com_spo_free_quote.auto_delete,
                         }
-                        msg_id = mail_obj.create(mail_values)
-                        msg_id.send()
+                        msg_id = mail_obj.sudo().create(mail_values)
+                        msg_id.sudo().send()
                         if user_select.get('self_or_company') == 'cmp_sponosored':
                             return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                                   {'self_or_cmp': user_select['self_or_company'] if user_select.get(
@@ -1980,7 +1979,7 @@ class EnrolmentProcess(http.Controller):
                                             (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
                                         'price_unit': each_order_line.price_unit,
                                         'discount': each_order_line.discount}])
-        invoice_id = invoice_obj.create({'partner_id': sale_order_id.partner_id.id,
+        invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
                                          'campus': sale_order_id.campus.id,
                                          'prof_body': sale_order_id.prof_body.id,
                                          'sale_order_id': sale_order_id.id,
@@ -2013,7 +2012,7 @@ class EnrolmentProcess(http.Controller):
                         'location_id': picking_type_id.id,
                         'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
                     }))
-        customer_picking = request.env['stock.picking'].create({
+        customer_picking = request.env['stock.picking'].sudo().create({
             'partner_id': sale_order_id.partner_id.id,
             'campus_id': sale_order_id.campus.id,
             'prof_body_id': sale_order_id.prof_body.id,
@@ -2030,7 +2029,7 @@ class EnrolmentProcess(http.Controller):
         invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:
-                debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
+                debit_order_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
                                         'student_number': '',
                                         'dbo_amount': each_debit_order.dbo_amount,
                                         'course_fee': each_debit_order.course_fee,
@@ -2264,7 +2263,7 @@ class EnrolmentProcess(http.Controller):
                     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
                     'auto_delete': False,
                 }
-                msg_id = mail_obj.create(mail_values)
+                msg_id = mail_obj.sudo().create(mail_values)
                 msg_id.send()
                 if user_select.get('self_or_company') == 'cmp_sponosored':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',

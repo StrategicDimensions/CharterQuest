@@ -406,7 +406,7 @@ class sale_order(models.Model):
                     continue
                 if sale_order_id.no_of_days in ['7', '14 days', '21 days', '28 days']:
                     no_of_reminder_emails_sent = sale_order_id.no_of_reminder_emails_sent + 1
-                    sale_order_id.write({'no_of_reminder_emails_sent': no_of_reminder_emails_sent})
+                    sale_order_id.sudo().write({'no_of_reminder_emails_sent': no_of_reminder_emails_sent})
                     template_id = self.env['mail.template'].search([('name', '=', "Freequote Reminder Email")])
                     if template_id:
                         template_id.send_mail(sale_order_id)

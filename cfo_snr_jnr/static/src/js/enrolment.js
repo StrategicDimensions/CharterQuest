@@ -2,6 +2,15 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
     var ajax = require('web.ajax');
 
     $(document).ready(function() {
+    	
+    	if (window.location.pathname == '/payment') {
+    		 if (parseInt($('#inputPaypercentage').val()) != 100) {
+    			 $('#debitrequiredcheckbox').prop("required", true);
+    		 }else{
+    			 $('#debitrequiredcheckbox').prop("required", false);
+    		 }
+    	
+        }
 
         function profbody_campus_sem(data) {
             ajax.jsonRpc("/get_event_data", 'call', {
@@ -31,8 +40,9 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
             $('#reg_campus').hide();
             $('#reg_enrol_for').hide();
             $('#reg_sem').hide();
+            
         }
-
+        
         $('select[name="do_invoice"]').on('change', function() {
             if ($('select[name="do_invoice"]').val() == 'Yes') {
                 $('#inputCompany').show();
@@ -471,6 +481,7 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 $('#inputtotalandInterest').prop("disabled", true);
                 $('#inputpaymentpermonth').prop("disabled", true);
                 $('#inputPaymonths').prop("disabled", true);
+                $('#debitrequiredcheckbox').prop("required", false);
                 var total_amount = $(document).find('#totalamount').val();
                 var due_amount = (parseFloat(total_amount) * parseFloat(input_per)) / 100;
                 document.getElementById("inputTotalDue").value = due_amount.toFixed(2);
@@ -497,6 +508,7 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                     }
                 }
             } else {
+            	$('#debitrequiredcheckbox').prop("required", true);
                 $('#debit_order_section').show();
                 $('#inputRemittancefee').prop("disabled", false);
                 $('#totalamount').prop("disabled", false);
