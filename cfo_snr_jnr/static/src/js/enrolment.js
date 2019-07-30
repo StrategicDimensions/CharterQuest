@@ -130,7 +130,7 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 $('button[type="submit"]').removeAttr('disabled');
             }
         });
-        //        grecaptcha.ready(function() {
+        ///        grecaptcha.ready(function() {
         //            grecaptcha.execute('6Ld_voIUAAAAAPPtBmHjiXkQOXQjLilUcVY2aLg8', {action: 'action_name'})
         //            .then(function(token) {
         //            // Verify the token on the server.
