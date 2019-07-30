@@ -1352,8 +1352,8 @@
                         <!--<option value="Part Time">Part Time</option>-->
                         <!--<option value="Full Time">Full Time</option>-->
                         <!--</select>-->
-                        <!--</div>-->
-                        <!--</div>-->
+                        <!--</div>--->
+                        <!--</div>--->
                         <div class="form-group form-field o_website_form_custom" id="reg_sem">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
                                 <label class="control-label" for="Semester">Semester</label>
