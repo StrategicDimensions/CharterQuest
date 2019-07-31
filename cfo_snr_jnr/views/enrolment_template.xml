@@ -2454,7 +2454,8 @@
                                 <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1'">
                                     <td>Debit Order Date</td>
                                     <td>
-                                        <select name="inputPaydate" class="requiredValue" id="inputPaydate">
+                                        <select name="inputPaydate" class="requiredValue" id="inputPaydate" required="true">
+                                            <option></option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -2494,9 +2495,9 @@
                                     <td>
                                         <t t-set="today_date"
                                            t-value="datetime.date.today() + relativedelta(months=1)"/>
-                                        <input type="text" t-att-value="today_date.strftime('%d/%m/%Y')"
+                                        <input type="text" value=""
                                                name="inputnextdodate" id="inputnextdodate" placeholder="dd/mm/yyyy"
-                                               readonly=""/>
+                                               readonly="" required='1'/>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -2632,7 +2633,7 @@
                                                 <label class="checkbox">
                                                     <input type="checkbox" id="debitrequiredcheckbox"
                                                            name="debitrequiredcheckbox" data-required="true"
-                                                           class="parsley-validated" checked="checked"/>
+                                                           class="parsley-validated" />
                                                     I accept Debit Order
                                                     <a target="blank_"
                                                        href=" http://www.charterquest.co.za/page/debit-order-terms">
@@ -2842,9 +2843,16 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputFirstName">* First Name</label>
                                             <div class="controls">
-                                                <input type="text" name="inputFirstName" id="inputFirstName"
-                                                       placeholder="First Name" class="requiredValue form-control1"
-                                                       required=""/>
+                                                <t t-if="not sale_order_id">
+	                                                <input type="text" name="inputFirstName" id="inputFirstName"
+	                                                       placeholder="First Name" class="requiredValue form-control1"
+	                                                       required=""/>
+                                                </t>
+                                                <t t-if="sale_order_id">
+                                                    <input type="text" name="inputFirstName" id="inputFirstName"
+                                                           placeholder="First Name" class="requiredValue form-control1"
+                                                           required="" t-att-value="sale_order_id.partner_id.name.split(' ')[0]"/>
+                                                </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2864,9 +2872,17 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputLastName">* Last Name</label>
                                             <div class="controls">
-                                                <input type="text" name="inputLastName" id="inputLastName"
-                                                       placeholder="Last Name" class="requiredValue form-control1"
-                                                       required=""/>
+                                                 <t t-if="not sale_order_id">
+	                                                <input type="text" name="inputLastName" id="inputLastName"
+	                                                       placeholder="Last Name" class="requiredValue form-control1"
+	                                                       required=""/>
+                                                  </t>
+                                                       
+                                                  <t t-if="sale_order_id">
+                                                    <input type="text" name="inputFirstName" id="inputFirstName"
+                                                           placeholder="First Name" class="requiredValue form-control1"
+                                                           required="" t-att-value="sale_order_id.partner_id.name.split(' ')[1]"/>
+                                                </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2874,9 +2890,17 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputStreet">* Address Street</label>
                                             <div class="controls">
-                                                <input type="text" name="inputStreet" id="inputStreet"
-                                                       placeholder="Street" class="requiredValue form-control1"
-                                                       required=""/>
+                                                 <t t-if="not sale_order_id">
+	                                                <input type="text" name="inputStreet" id="inputStreet"
+	                                                       placeholder="Street" class="requiredValue form-control1"
+	                                                       required=""/>
+                                                 </t>
+                                                 <t t-if="sale_order_id">
+                                                    <input type="text" name="inputStreet" id="inputStreet"
+                                                           placeholder="Street" class="requiredValue form-control1"
+                                                           required="" t-att-vallue='sale_order_id.partner_id.street'/>
+                                                 </t>
+                                                 
                                             </div>
                                         </div>
                                     </td>
@@ -2886,9 +2910,16 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputDOB">* Date of Birth</label>
                                             <div class="controls">
+                                                <t t-if='not sale_order_id'>
                                                 <!--<input id="datepicker" type="text" name="inputDOB" class="requiredValue hasDatepicker form-control1" placeholder="MM-DD-YY"/>-->
-                                                <input type="text" id="datepicker" name="inputDOB" class="form-control1"
-                                                       placeholder="MM-DD-YY" required="" readonly=""/>
+	                                                <input type="text" id="datepicker" name="inputDOB" class="form-control1"
+	                                                       placeholder="MM-DD-YY" required="" readonly=""/>
+                                                </t>
+                                                <t t-if='sale_order_id'>
+                                                <!--<input id="datepicker" type="text" name="inputDOB" class="requiredValue hasDatepicker form-control1" placeholder="MM-DD-YY"/>-->
+                                                    <input type="text" id="datepicker" name="inputDOB" class="form-control1"
+                                                           placeholder="MM-DD-YY" required="" readonly="" t-att-value='sale_order_id.partner_id.dob'/>
+                                                </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2896,8 +2927,14 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputStreet2">* Address Street</label>
                                             <div class="controls">
-                                                <input type="text" name="inputStreet2" id="inputStreet2" placeholder=""
-                                                       class="form-control1" required=""/>
+                                                <t t-if='not sale_order_id'>
+	                                                <input type="text" name="inputStreet2" id="inputStreet2" placeholder=""
+	                                                       class="form-control1" required=""/>
+                                                </t>
+                                                <t t-if='sale_order_id and sale_order_id.partner_id and sale_order_id.partner_id.street2'>
+                                                     <input type="text" name="inputStreet2" id="inputStreet2" placeholder=""
+                                                           class="form-control1" required="" t-att-value='sale_order_id.partner_id.street2'/>
+                                                </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2908,9 +2945,18 @@
                                             <label class="control-label" for="inputID_PassportNo.">* ID/Passport No.
                                             </label>
                                             <div class="controls">
-                                                <input type="text" name="inputID_PassportNo." id="inputID_PassportNo."
-                                                       placeholder="ID/Passport No." class="requiredValue form-control1"
-                                                       required=""/>
+                                               <t t-if='not sale_order_id'>
+	                                                <input type="text" name="inputID_PassportNo." id="inputID_PassportNo."
+	                                                       placeholder="ID/Passport No." class="requiredValue form-control1"
+	                                                       required=""/>
+                                                 </t>
+                                                  <t t-if='sale_order_id and sale_order_id.partner_id and sale_order_id.partner_id.idpassport'>
+                                                    <input type="text" name="inputID_PassportNo." id="inputID_PassportNo."
+                                                           placeholder="ID/Passport No." class="requiredValue form-control1"
+                                                           required="" t-att-value='sale_order_id.partner_id.idpassport'/>
+                                                 </t>
+                                                 
+                                                 
                                             </div>
                                         </div>
                                     </td>
@@ -2918,8 +2964,14 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputCity">* Address City</label>
                                             <div class="controls">
-                                                <input type="text" name="inputCity" id="inputCity" placeholder="City"
-                                                       class="requiredValue form-control1" required=""/>
+                                                <t t-if='not sale_order_id'>
+	                                                <input type="text" name="inputCity" id="inputCity" placeholder="City"
+	                                                       class="requiredValue form-control1" required=""/>
+	                                             </t>
+	                                             <t t-if='sale_order_id and sale_order_id.partner_id and sale_order_id.partner_id.city'>
+                                                    <input type="text" name="inputCity" id="inputCity" placeholder="City"
+                                                           class="requiredValue form-control1" required="" t-att-value="sale_order_id.partner_id.city"/>
+                                                 </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2929,9 +2981,16 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputContactNumber">* Cell/Mobile</label>
                                             <div class="controls">
-                                                <input type="text" name="inputContactNumber" id="inputContactNumber"
-                                                       placeholder="Contact Number" class="requiredValue form-control1"
-                                                       required=""/>
+                                                 <t t-if='not sale_order_id'>
+	                                                <input type="text" name="inputContactNumber" id="inputContactNumber"
+	                                                       placeholder="Contact Number" class="requiredValue form-control1"
+	                                                       required=""/>
+                                                 </t>
+                                                  <t t-if='sale_order_id and sale_order_id.partner_id and sale_order_id.partner_id.mobile'>
+                                                    <input type="text" name="inputContactNumber" id="inputContactNumber"
+                                                           placeholder="Contact Number" class="requiredValue form-control1"
+                                                           required="" t-att-value='sale_order_id.partner_id.mobile'/>
+                                                 </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2960,8 +3019,14 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputEmail">* Students Email</label>
                                             <div class="controls">
-                                                <input type="text" name="inputEmail" id="inputEmail" placeholder="Email"
-                                                       class="requiredValue form-control1" required=""/>
+                                                  <t t-if='not sale_order_id'>
+	                                                <input type="text" name="inputEmail" id="inputEmail" placeholder="Email"
+	                                                       class="requiredValue form-control1" required=""/>
+                                                  </t>
+                                                   <t t-if='sale_order_id and sale_order_id.partner_id and sale_order_id.partner_id.email'>
+	                                                    <input type="text" name="inputEmail" id="inputEmail" placeholder="Email"
+	                                                           class="requiredValue form-control1" required="" t-att-value='sale_order_id.partner_id.email'/>
+                                                  </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2990,6 +3055,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputFax">Fax</label>
                                             <div class="controls">
+                                                
                                                 <input type="text" name="inputFax" id="inputFax" placeholder="Fax"
                                                        class="form-control1" pattern="[0-9]+" title= "Please enter digits only"/>
                                             </div>
@@ -2999,8 +3065,15 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputZip">* Zipcode</label>
                                             <div class="controls">
-                                                <input type="text" id="inputZip" name="inputZip" placeholder="Zipcode"
-                                                       class="requiredValue form-control1" required=""/>
+                                              <t t-if='not sale_order_id'>
+	                                                <input type="text" id="inputZip" name="inputZip" placeholder="Zipcode"
+	                                                       class="requiredValue form-control1" required=""/>
+                                                </t>
+                                                  <t t-if="sale_order_id and sale_order_id.partner_id and sale_order_id.partner_id.zip">
+                                                    <input type="text" id="inputZip" name="inputZip" placeholder="Zipcode"
+                                                           class="requiredValue form-control1" required="" t-att-value="sale_order_id.partner_id.zip"/>
+                                                </t>
+                                                
                                             </div>
                                         </div>
                                     </td>
@@ -3012,8 +3085,14 @@
                                                 No.
                                             </label>
                                             <div class="controls">
-                                                <input type="text" name="inputId" class="requiredValue form-control1"
-                                                       id="inputId" placeholder="" required=""/>
+	                                            <t t-if='not sale_order_id'>
+	                                                <input type="text" name="inputId" class="requiredValue form-control1"
+	                                                       id="inputId" placeholder="" required=""/>
+                                                </t>
+                                                <t t-if='sale_order_id and sale_order_id.partner_id and sale_order_id.partner_id.prof_body_id'>
+                                                    <input type="text" name="inputId" class="requiredValue form-control1"
+                                                           id="inputId" placeholder="" required="" t-att-value='sale_order_id.partner_id.prof_body_id'/>
+                                                </t>
                                             </div>
                                         </div>
                                     </td>

@@ -388,12 +388,16 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/registration_form', '/registration_form/<uuid>'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def registration_form(self,uuid=False, **post):
+        sale_order_id = False
+        if uuid:
+            sale_order_id = request.env['sale.order'].sudo().search([('debit_link', '=', uuid)])
         user_select = request.session['user_selection_type'] if request.session and request.session.get('user_selection_type') else ''
         return request.render('cfo_snr_jnr.enrolment_process_registration_and_enroll', {'page_name': 'registration',
                                                                                         'self_or_cmp': user_select[
                                                                                             'self_or_company'] if user_select and user_select and user_select.get(
                                                                                             'self_or_company') else '',
-                                                                                            'uuid': uuid
+                                                                                            'uuid': uuid,
+                                                                                            'sale_order_id': sale_order_id if sale_order_id else False
                                                                                         })
 
     @http.route(['/enrolment_book'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
@@ -1573,8 +1577,6 @@ class EnrolmentProcess(http.Controller):
         payu_tx_values = dict(post)
         payment_acquire = request.env['payment.acquirer'].sudo().search([('provider', '=', 'payu')])
         amount = post.get('inputTotalDue') if post.get('inputTotalDue') else post.get('toalamount')
-       
-            
         # convert amount to cent
         if amount:
             if len(amount.split('.')[1]) == 1:
@@ -1582,6 +1584,10 @@ class EnrolmentProcess(http.Controller):
                 amount = amount.replace('.', '')
             elif len(amount.split('.')[1]) == 2:
                 amount = amount.replace('.', '')
+        elif sale_order_id:
+            amount = str(sale_order_id.amount_total) + '0'
+            amount = amount.replace('.', '')
+            
         if sale_order_id:
             debit_order_mandet = []
             res_bank_detail = False
@@ -1668,6 +1674,7 @@ class EnrolmentProcess(http.Controller):
             'reference': request.env['payment.transaction'].get_next_reference(sale_order_id.name),
             'sale_order_id': sale_order_id.id,
         }
+        
         tx = request.env['payment.transaction'].sudo().create(tx_values)
         url = PayuController.payuMeaSetTransactionApiCall('', transactionDetails)
         return werkzeug.utils.redirect(url)

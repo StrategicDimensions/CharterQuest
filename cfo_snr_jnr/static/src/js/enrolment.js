@@ -474,7 +474,7 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 $('#inputPaymonths').append('<option value="0" selected="selected">0 Month</option>')
                 $('#debit_order_section').hide();
                 $('#inputRemittancefee').prop("disabled", true);
-                $('#totalamount').prop("disabled", true);
+                $('#totalamount').prop("disabled", false);
                 $('#inputTotalDue').prop("disabled", true);
                 $('#inputOutstanding').prop("disabled", true);
                 $('#inputInterest').prop("disabled", true);
@@ -482,6 +482,7 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 $('#inputpaymentpermonth').prop("disabled", true);
                 $('#inputPaymonths').prop("disabled", true);
                 $('#debitrequiredcheckbox').prop("required", false);
+                $('#inputAccount').prop("required", false);
                 var total_amount = $(document).find('#totalamount').val();
                 var due_amount = (parseFloat(total_amount) * parseFloat(input_per)) / 100;
                 document.getElementById("inputTotalDue").value = due_amount.toFixed(2);

@@ -103,7 +103,7 @@ class AccountPayment(models.Model):
                      msg_id.send()
             attchment_list = []
             template_id = email_obj.sudo().search([('name', '=', "Invoice Payment")])
-            if template_id:
+            if template_id and self.invoice_ids[0].quote_type == 'CharterBooks':
                 pdf_data_order = self.env.ref(
                     'event_price_kt.report_invoice_book').sudo().render_qweb_pdf(self.invoice_ids[0].id)
                 if pdf_data_order:
