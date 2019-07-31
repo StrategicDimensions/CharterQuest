@@ -45,7 +45,7 @@ class event_event(models.Model):
     price = fields.Float('Course Fees', help="Fees of the Course.")
     semester_id = fields.Many2one('event.semester', string="Semester")
     qualification = fields.Many2one('event.qual', string='Qualification Level')
-    # study = fields.Many2one('event.options', string='Study Options')
+    ## study = fields.Many2one('event.options', string='Study Options')
     online_registration_ids = fields.One2many('event.online.registration', 'event_id', string='Online Registrations abc',
                                             required=True)
     online_register_current = fields.Float(compute='get_online_register', string='Online Registrations Current',

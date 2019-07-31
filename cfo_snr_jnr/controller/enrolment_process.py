@@ -1380,7 +1380,7 @@ class EnrolmentProcess(http.Controller):
 #                         body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
 #                         body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
 #                         body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
-#                         print ("\n\n\n------2222-->>>>>>>>>>>",template_id.reply_to, template_id.email_from)
+#                         print ("\n\n\n------2222-->>>>>>>>>>>>",template_id.reply_to, template_id.email_from)
                         
                         ir_model_data = request.env['ir.model.data'].sudo()
                         try:
