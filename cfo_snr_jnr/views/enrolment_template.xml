@@ -3003,12 +3003,13 @@
                                                 <select name="country_id" id="inputCountry"
                                                         class="requiredValue form-control1" required=""
                                                         style="border-radius: 0px !important;width: 203px;">
-                                                    <t t-foreach="country" t-as="each_country">
-                                                        <option t-att-value="each_country.id"
-                                                                t-att-selected="'selected' if each_country.name == 'South Africa' else False">
-                                                            <span t-esc="each_country.name"/>
-                                                        </option>
-                                                    </t>
+	                                                    <t t-foreach="country" t-as="each_country">
+	                                                        <option t-att-value="each_country.id"
+	                                                                t-att-selected="'selected' if each_country.name == 'South Africa' else False">
+	                                                            <span t-esc="each_country.name"/>
+	                                                        </option>
+	                                                    </t>
+	                                                
                                                 </select>
                                             </div>
                                         </div>

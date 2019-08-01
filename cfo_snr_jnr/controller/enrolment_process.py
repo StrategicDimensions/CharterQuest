@@ -1247,7 +1247,7 @@ class EnrolmentProcess(http.Controller):
 #                     Route Process Self-Sponsored Get free Quote Emailed
 
 
-                    self_spo_free_quote = request.env.ref('cfo_snr_jnr.company_sponsored_free_quote_email_template')
+                    self_spo_free_quote = request.env.ref('cfo_snr_jnr.self_sponsored_free_quote_email_template')
                     ctx = {
                             'model': 'sale.order',
                             'res_id': sale_order_id.id,

@@ -129,7 +129,6 @@ class sale_order(models.Model):
     @api.multi
     def action_confirm(self):
         super(sale_order, self).action_confirm()
-        print("111111")
         return True
 
     @api.multi
