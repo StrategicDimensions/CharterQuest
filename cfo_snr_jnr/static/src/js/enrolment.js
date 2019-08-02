@@ -565,7 +565,10 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 document.getElementById("inputpaymentpermonth").value = per_mnth_payment.toFixed(2);
             }
         });
-
+        setTimeout(function(){
+        	$(document).find('input[id="inputNoRemittance"]').click();
+            $(document).find('input[id="inputNoRemittance"]').click();
+        },1000)
         $('input[id="inputNoRemittance"]').on('click', function(ev) {
             $(".remove_fee:not(:checked)").each(function(ev) {
                 document.getElementById("inputRemittancefee").value = sessionStorage.getItem('rem_fee')

@@ -757,7 +757,6 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/payment'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def payment(self, **post):
-        
         if post.get('uuid'):
             sale_order_id = request.env['sale.order'].sudo().search([('debit_link', '=', post.get('uuid'))])
             product_tot = 0.00
@@ -768,6 +767,50 @@ class EnrolmentProcess(http.Controller):
                         product_tot += each.price_subtotal
                     if each.product_id.event_ok:
                         grand_tot += each.price_subtotal
+                        
+                name = False
+                res_partner_obj = request.env['res.partner'].sudo()
+                if post.get('inputFirstName'):
+                    name = post.get('inputFirstName')
+                else:
+                    name += ''
+                if post.get('inputLastName'):
+                    name += ' ' + post.get('inputLastName')
+                    
+                account_rec_type_id = request.env['account.account.type'].sudo().search(
+                    [('name', 'ilike', 'Receivable')])
+                account_pay_type_id = request.env['account.account.type'].sudo().search(
+                    [('name', 'ilike', 'Payable')])
+                if account_rec_type_id:
+                    account_rec_id = request.env['account.account'].sudo().search(
+                        [('user_type_id', '=', account_rec_type_id.id)], limit=1)
+
+                if account_pay_type_id:
+                    account_pay_id = request.env['account.account'].sudo().search(
+                        [('user_type_id', '=', account_pay_type_id.id)], limit=1)
+                partner_id = request.env['res.partner'].sudo().search([('email', '=', post.get('inputEmail'))], limit=1,
+                                                                      order="id desc")
+                
+                partner_id.write({'name': name,
+                                      'student_company': post.get('inputCompany') if post.get('inputCompany') else '',
+                                      'email': post.get('inputEmail') if post.get('inputEmail') else '',
+                                      'vat_no_comp': post.get('inputVat') if post.get('inputVat') else '',
+                                      'idpassport': post.get('inputID_PassportNo.') if post.get(
+                                          'inputID_PassportNo.') else '',
+                                      'cq_password': post.get('inputPassword') if post.get('inputPassword') else '',
+                                      'mobile': post.get('inputContactNumber') if post.get(
+                                          'inputContactNumber') else '',
+                                      'street': post.get('inputStreet') if post.get('inputStreet') else '',
+                                      'street2': post.get('inputStreet2') if post.get('inputStreet2') else '',
+                                      'city': post.get('inputCity') if post.get('inputCity') else '',
+                                      'country_id': int(post.get('country_id')) if post.get('country_id') else '',
+                                      'state_id': int(post.get('inputState')) if post.get('inputState') else '',
+                                      'zip': post.get('inputZip') if post.get('inputZip') else '',
+                                      'findout': post.get('inputFindout') if post.get('inputFindout') else '',
+                                      'prof_body_id': post.get('inputId') if post.get('inputId') else '',
+                                      'property_account_receivable_id': account_rec_id.id,
+                                      'property_account_payable_id': account_pay_id.id})
+                
                 if sale_order_id.quote_type == 'enrolment':
                     return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
                                                                                     'product_tot': round(product_tot,
@@ -790,6 +833,8 @@ class EnrolmentProcess(http.Controller):
                                                                                     'bank_detail': True if sale_order_id.affiliation==1 else False,
                                                                                     'uuid': post.get('uuid'),
                                                                                     })
+                
+                
                 
         sale_order_id = False
         display_btn = request.session['reg_enrol_btn'] if request.session.get('reg_enrol_btn') else False
