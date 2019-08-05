@@ -2147,9 +2147,17 @@
                             </tr>
                             <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1'">
                                 <td>Course Fees</td>
-                                <td style="font-size:16px !important;">
-                                    <span id="grand_total_amount" t-esc="grand_tot"></span>
-                                </td>
+                                 <t t-if='not uuid'>
+	                                <td style="font-size:16px !important;">
+	                                    <span id="grand_total_amount" t-esc="grand_tot"></span>
+	                                </td>
+                                </t>
+                                <t t-if='uuid'>
+                                    <td style="font-size:16px !important;">
+                                        <span id="grand_total_amount" t-esc="grand_tot-product_tot"></span>
+                                    </td>
+                                </t>
+                                
                                 <td></td>
                             </tr>
                             
@@ -2182,10 +2190,21 @@
                                        t-value="'%.2f'%(float(total_payment) + float(total_tax_pay))"/>
                                 </t>
                                 <td style="background-color: -moz-MenuBarText;">Total</td>
-                                <td style="background-color: -moz-MenuBarText;">
+                                <t t-if="not uuid">
+                                    <td style="background-color: -moz-MenuBarText;">
                                     <input type="text" name="toalamount" id="totalamount" readonly=""
                                            t-att-value="'%s' %(total_payment)"/>
-                                </td>
+                                    </td>
+                                </t>
+                                
+                                <t t-if='uuid'>
+                                     <td style="background-color: -moz-MenuBarText;">
+                                    <input type="text" name="toalamount" id="totalamount" readonly=""
+                                           t-att-value="'%s' %(grand_tot)"/>
+                                    </td>
+                                   
+                               </t>
+                                
                                 <t t-if="total_tax_pay">
                                     <td>(Included Tax:-<span t-esc="total_tax_pay" style="color:black;"/>)
                                     </td>
@@ -2194,10 +2213,10 @@
                                     <td></td>
                                 </t>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1'" style="background-color:#DA4F49;">
+                            <tr t-if="sale_order or register_enrol or sale_order_id and sale_order_id.affiliation == '1'" style="background-color:#DA4F49;">
                                 <th>Deposit Payment Info</th>
                                 <th>% and/or Amount in Rands</th>
-                                <th>Guidance / How to:<span t-esc="sale_order_id"/></th>
+                                <th>Guidance / How to:</th>
                             </tr>
                             <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1'">
                                 <td>Course Deposit</td>
@@ -2265,7 +2284,7 @@
                                     self-sponsored student).
                                 </td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
+                            <tr t-if="sale_order or uuid or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
                                 <t t-set="due" t-value="(float(total_payment)*20)/100"/>
                                 <td style="background-color: -moz-MenuBarText;">Total (Due Now)</td>
                                 <td style="background-color: -moz-MenuBarText;">
@@ -2279,22 +2298,25 @@
                                                    readonly=""/>
                                         </t>
                                     </t>
-                                    <!-- <t t-if="sale_order">
+                                    <t t-if="sale_order and register_enrol">
                                         <input type="text" name="inputTotalDue" id="inputTotalDue" t-att-value="due"
                                                readonly=""/>
-                                    </t> -->
+                                    </t>
                                 </td>
                                 <td></td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1" style="background-color:#DA4F49;">
+                            <tr t-if="sale_order or uuid or register_enrol or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1" style="background-color:#DA4F49;">
                                 <th>Proposed Payment Structure</th>
                                 <th>% and/or Amount in Rands</th>
                                 <th>Guidance / How to:</th>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
-                                <t t-set="out_standing" t-value="(float(total_payment)) - (float(due))"/>
+                            <tr>
+                                <t t-if='total_payment and due'>
+                                    <t t-set="out_standing" t-value="(float(total_payment)) - (float(due))"/>
+                                </t>
                                 <td>Outstanding Balance</td>
                                 <td>
+                                
                                     <t t-if="sale_order_id">
                                         <t t-if="sale_order_id.outstanding_amount">
                                             <input type="text" name="inputOutstanding" id="inputOutstanding"
@@ -2305,15 +2327,15 @@
                                                    t-att-value="out_standing" readonly=""/>
                                         </t>
                                     </t>
-                                    <!-- <t t-if="sale_order">
+                                    <t t-if="sale_order and register_enrol">
                                         <input type="text" name="inputOutstanding" id="inputOutstanding"
                                                t-att-value="out_standing" readonly=""/>
-                                    </t> -->
+                                    </t>
                                 </td>
 
                                 <td></td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
+                            <tr t-if="sale_order or uuid or register_enrol or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
                                 <td>No. of payment months desired?</td>
                                 <td>
                                     <select name="inputPaymonths" class="requiredValue parsley-validated"
@@ -2329,7 +2351,7 @@
                                                     <span>Months</span>
                                                 </option>
                                             </t>
-                                            <t t-if="sale_order">
+                                            <t t-if="sale_order and register_enrol">
                                                 <option t-att-data-interest="each_interest.interest_per"
                                                         t-att-value="each_interest.no_months">
                                                     <span t-esc="each_interest.no_months"/>
@@ -2344,7 +2366,7 @@
                                     Quote or invoice/statement to be emailed to you.
                                 </td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
+                            <tr t-if="sale_order or uuid or register_enrol or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
                                 <td>Interest</td>
                                 <td>
                                     <t t-if="sale_order_id">
@@ -2358,10 +2380,10 @@
                                                    readonly=""/>
                                         </t>
                                     </t>
-                                    <!-- <t t-if="sale_order">
+                                    <t t-if="sale_order and register_enrol">
                                         <input type="text" name="inputInterest" value="0.0" id="inputInterest"
                                                readonly=""/>
-                                    </t> -->
+                                    </t>
                                 </td>
 
 
@@ -2389,7 +2411,7 @@
                                     </table>
                                 </td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
+                            <tr t-if="sale_order or uuid or register_enrol or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
                                 <t t-set="due" t-value="(float(total_payment)*20)/100"/>
                                 <td style="background-color: -moz-MenuBarText;">Total (inclusive of VAT AND Interest)
                                 </td>
@@ -2406,14 +2428,14 @@
                                                    t-att-value="out_standing" readonly=""/>
                                         </t>
                                     </t>
-<!--                                     <t t-if="sale_order"> -->
-<!--                                         <input type="text" name="inputtotalandInterest" id="inputtotalandInterest" -->
-<!--                                                t-att-value="out_standing" readonly=""/> -->
-<!--                                     </t> -->
+                                     <t t-if="sale_order and register_enrol">
+                                         <input type="text" name="inputtotalandInterest" id="inputtotalandInterest"
+                                                t-att-value="out_standing" readonly=""/>
+                                     </t>
                                 </td>
                                 <td></td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
+                            <tr t-if="sale_order or uuid or register_enrol or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
                                 <td>Display of monthly amounts.</td>
                                 <td>
                                     <t t-if="sale_order_id">
@@ -2426,10 +2448,10 @@
                                                    t-att-value="out_standing" readonly=""/>
                                         </t>
                                     </t>
-<!--                                     <t t-if="sale_order"> -->
-<!--                                         <input type="text" name="inputpaymentpermonth" id="inputpaymentpermonth" -->
-<!--                                                t-att-value="out_standing" readonly=""/> -->
-<!--                                     </t> -->
+                                     <t t-if="sale_order and register_enrol">
+                                        <input type="text" name="inputpaymentpermonth" id="inputpaymentpermonth"
+                                               t-att-value="out_standing" readonly=""/>
+                                    </t>
                                 </td>
 
 
@@ -2451,7 +2473,8 @@
                                 <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1'">
                                     <td>Debit Order Date</td>
                                     <td>
-                                        <select name="inputPaydate" class="requiredValue" id="inputPaydate">
+                                        <select name="inputPaydate" class="requiredValue" id="inputPaydate" required="true">
+                                            <option></option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -2491,9 +2514,9 @@
                                     <td>
                                         <t t-set="today_date"
                                            t-value="datetime.date.today() + relativedelta(months=1)"/>
-                                        <input type="text" t-att-value="today_date.strftime('%d/%m/%Y')"
+                                        <input type="text" value=""
                                                name="inputnextdodate" id="inputnextdodate" placeholder="dd/mm/yyyy"
-                                               readonly=""/>
+                                               readonly="" required='1'/>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -2523,12 +2546,12 @@
                                                 <input type="text" name="inputAccholderName" id="inputAccholderName"
                                                        t-att-value="acc_holder_name"/>
                                             </t>
-<!--                                             <t t-if="not sale_order_id.debit_order_mandat"> -->
-<!--                                                 <input type="text" name="inputAccholderName" id="inputAccholderName" -->
-<!--                                                        t-att-value="sale_order_id.partner_id.name"/> -->
-<!--                                             </t> -->
+                                             <t t-if="not sale_order_id.debit_order_mandat">
+                                                 <input type="text" name="inputAccholderName" id="inputAccholderName"
+                                                        t-att-value="sale_order_id.partner_id.name"/>
+                                             </t>
                                         </t>
-                                        <t t-if="sale_order">
+                                        <t t-if="sale_order and register_enrol">
                                             <t t-set="sale_order_detail"
                                                t-value="request.env['sale.order'].sudo().search([('id', '=', sale_order)])"/>
                                             <input type="text" name="inputAccholderName" id="inputAccholderName"
@@ -2588,15 +2611,15 @@
                                                 <input type="text" name="inputAccount" id="inputAccount"/>
                                             </t>
                                         </t>
-<!--                                         <t t-if="sale_order"> -->
-<!--                                             <input type="text" name="inputAccount" id="inputAccount" required=""/> -->
-<!--                                         </t> -->
+                                         <t t-if="sale_order">
+                                             <input type="text" name="inputAccount" id="inputAccount" required=""/>
+                                         </t>
                                     </td>
                                     <td></td>
                                 </tr>
                                 <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Bank Code</td>
-                                    <td>
+                                    <td>    
                                         <select name="inputBCode" class="requiredValue" id="inputBCode" disabled="true">
                                             <t t-foreach="res_bank" t-as="each_bank">
                                                 <option id="bank_code" t-att-value="each_bank.id">
@@ -2629,7 +2652,7 @@
                                                 <label class="checkbox">
                                                     <input type="checkbox" id="debitrequiredcheckbox"
                                                            name="debitrequiredcheckbox" data-required="true"
-                                                           class="parsley-validated" checked="checked"/>
+                                                           class="parsley-validated" />
                                                     I accept Debit Order
                                                     <a target="blank_"
                                                        href=" http://www.charterquest.co.za/page/debit-order-terms">
@@ -2645,6 +2668,13 @@
                     </t>
                     <t t-if="not uuid and not register_enrol">
                         <div class="control-group">
+                             <div class="controls" style='margin-top: 23px;'>
+                                     <a target="blank_"
+                                        href="http://www.charterquest.co.za/page/terms-and-conditions">
+                                        Please view our Terms  &amp; Conditions for your free quote
+                                     </a>
+                             </div>
+                        
                             <t t-if="sale_order">
                                 <input class="form-field" name="sale_order" t-att-value="sale_order" type="hidden"/>
                             </t>
@@ -2832,9 +2862,16 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputFirstName">* First Name</label>
                                             <div class="controls">
-                                                <input type="text" name="inputFirstName" id="inputFirstName"
-                                                       placeholder="First Name" class="requiredValue form-control1"
-                                                       required=""/>
+                                                <t t-if="not sale_order_id">
+	                                                <input type="text" name="inputFirstName" id="inputFirstName"
+	                                                       placeholder="First Name" class="requiredValue form-control1"
+	                                                       required=""/>
+                                                </t>
+                                                <t t-if="sale_order_id">
+                                                    <input type="text" name="inputFirstName" id="inputFirstName"
+                                                           placeholder="First Name" class="requiredValue form-control1"
+                                                           required="" t-att-value="sale_order_id.partner_id.name.split(' ')[0] if sale_order_id.partner_id.name.split(' ') else ''"/>
+                                                </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2854,9 +2891,16 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputLastName">* Last Name</label>
                                             <div class="controls">
-                                                <input type="text" name="inputLastName" id="inputLastName"
-                                                       placeholder="Last Name" class="requiredValue form-control1"
-                                                       required=""/>
+                                                 <t t-if="not sale_order_id">
+	                                                <input type="text" name="inputLastName" id="inputLastName"
+	                                                       placeholder="Last Name" class="requiredValue form-control1"
+	                                                       required=""/>
+                                                  </t>
+                                                  <t t-if="sale_order_id">
+                                                     <input type="text" name="inputLastName" id="inputLastName"
+                                                           placeholder="Last Name" class="requiredValue form-control1"
+                                                           required="" t-att-value="sale_order_id.partner_id.name.split(' ')[1] if len(sale_order_id.partner_id.name.split(' ')) == 2 else ''"/>   
+                                                </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2864,9 +2908,17 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputStreet">* Address Street</label>
                                             <div class="controls">
-                                                <input type="text" name="inputStreet" id="inputStreet"
-                                                       placeholder="Street" class="requiredValue form-control1"
-                                                       required=""/>
+                                                 <t t-if="not sale_order_id">
+	                                                <input type="text" name="inputStreet" id="inputStreet"
+	                                                       placeholder="Street" class="requiredValue form-control1"
+	                                                       required=""/>
+                                                 </t>
+                                                 <t t-if="sale_order_id">
+                                                    <input type="text" name="inputStreet" id="inputStreet"
+                                                           placeholder="Street" class="requiredValue form-control1"
+                                                           required="" t-att-value="sale_order_id.partner_id.street if sale_order_id.partner_id and sale_order_id.partner_id.street else ''"/>
+                                                 </t>
+                                                 
                                             </div>
                                         </div>
                                     </td>
@@ -2876,9 +2928,16 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputDOB">* Date of Birth</label>
                                             <div class="controls">
+                                                <t t-if='not sale_order_id'>
                                                 <!--<input id="datepicker" type="text" name="inputDOB" class="requiredValue hasDatepicker form-control1" placeholder="MM-DD-YY"/>-->
-                                                <input type="text" id="datepicker" name="inputDOB" class="form-control1"
-                                                       placeholder="MM-DD-YY" required="" readonly=""/>
+	                                                <input type="text" id="datepicker" name="inputDOB" class="form-control1"
+	                                                       placeholder="MM-DD-YY" required="" readonly=""/>
+                                                </t>
+                                                <t t-if='sale_order_id'>
+                                                <!--<input id="datepicker" type="text" name="inputDOB" class="requiredValue hasDatepicker form-control1" placeholder="MM-DD-YY"/>-->
+                                                    <input type="text" id="datepicker" name="inputDOB" class="form-control1"
+                                                           placeholder="MM-DD-YY" required="" readonly="" t-att-value="sale_order_id.partner_id.dob if sale_order_id.partner_id and sale_order_id.partner_id.dob else '' " />
+                                                </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2886,8 +2945,14 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputStreet2">* Address Street</label>
                                             <div class="controls">
-                                                <input type="text" name="inputStreet2" id="inputStreet2" placeholder=""
-                                                       class="form-control1" required=""/>
+                                                <t t-if='not sale_order_id'>
+	                                                <input type="text" name="inputStreet2" id="inputStreet2" placeholder=""
+	                                                       class="form-control1" required=""/>
+                                                </t>
+                                                <t t-if='sale_order_id'>
+                                                     <input type="text" name="inputStreet2" id="inputStreet2" placeholder=""
+                                                           class="form-control1" required="" t-att-value="sale_order_id.partner_id.street2 if sale_order_id.partner_id and sale_order_id.partner_id.street2 else ''"/>
+                                                </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2898,9 +2963,18 @@
                                             <label class="control-label" for="inputID_PassportNo.">* ID/Passport No.
                                             </label>
                                             <div class="controls">
-                                                <input type="text" name="inputID_PassportNo." id="inputID_PassportNo."
-                                                       placeholder="ID/Passport No." class="requiredValue form-control1"
-                                                       required=""/>
+                                               <t t-if='not sale_order_id'>
+	                                                <input type="text" name="inputID_PassportNo." id="inputID_PassportNo."
+	                                                       placeholder="ID/Passport No." class="requiredValue form-control1"
+	                                                       required=""/>
+                                                 </t>
+                                                  <t t-if='sale_order_id'>
+                                                    <input type="text" name="inputID_PassportNo." id="inputID_PassportNo."
+                                                           placeholder="ID/Passport No." class="requiredValue form-control1"
+                                                           required="" t-att-value="sale_order_id.partner_id.idpassport if sale_order_id.partner_id and sale_order_id.partner_id.idpassport else ''"/>
+                                                 </t>
+                                                 
+                                                 
                                             </div>
                                         </div>
                                     </td>
@@ -2908,8 +2982,14 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputCity">* Address City</label>
                                             <div class="controls">
-                                                <input type="text" name="inputCity" id="inputCity" placeholder="City"
-                                                       class="requiredValue form-control1" required=""/>
+                                                <t t-if='not sale_order_id'>
+	                                                <input type="text" name="inputCity" id="inputCity" placeholder="City"
+	                                                       class="requiredValue form-control1" required=""/>
+	                                             </t>
+	                                             <t t-if='sale_order_id'>
+                                                    <input type="text" name="inputCity" id="inputCity" placeholder="City"
+                                                           class="requiredValue form-control1" required="" t-att-value="sale_order_id.partner_id.city if sale_order_id and sale_order_id.partner_id else ''"/>
+                                                 </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2919,9 +2999,16 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputContactNumber">* Cell/Mobile</label>
                                             <div class="controls">
-                                                <input type="text" name="inputContactNumber" id="inputContactNumber"
-                                                       placeholder="Contact Number" class="requiredValue form-control1"
-                                                       required=""/>
+                                                 <t t-if='not sale_order_id'>
+	                                                <input type="text" name="inputContactNumber" id="inputContactNumber"
+	                                                       placeholder="Contact Number" class="requiredValue form-control1"
+	                                                       required=""/>
+                                                 </t>
+                                                  <t t-if='sale_order_id'>
+                                                    <input type="text" name="inputContactNumber" id="inputContactNumber"
+                                                           placeholder="Contact Number" class="requiredValue form-control1"
+                                                           required="" t-att-value="sale_order_id.partner_id.mobile if sale_order_id.partner_id and sale_order_id.partner_id.mobile else ''"/>
+                                                 </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2934,12 +3021,13 @@
                                                 <select name="country_id" id="inputCountry"
                                                         class="requiredValue form-control1" required=""
                                                         style="border-radius: 0px !important;width: 203px;">
-                                                    <t t-foreach="country" t-as="each_country">
-                                                        <option t-att-value="each_country.id"
-                                                                t-att-selected="'selected' if each_country.name == 'South Africa' else False">
-                                                            <span t-esc="each_country.name"/>
-                                                        </option>
-                                                    </t>
+	                                                    <t t-foreach="country" t-as="each_country">
+	                                                        <option t-att-value="each_country.id"
+	                                                                t-att-selected="'selected' if each_country.name == 'South Africa' else False">
+	                                                            <span t-esc="each_country.name"/>
+	                                                        </option>
+	                                                    </t>
+	                                                
                                                 </select>
                                             </div>
                                         </div>
@@ -2950,8 +3038,14 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputEmail">* Students Email</label>
                                             <div class="controls">
-                                                <input type="text" name="inputEmail" id="inputEmail" placeholder="Email"
-                                                       class="requiredValue form-control1" required=""/>
+                                                  <t t-if='not sale_order_id'>
+	                                                <input type="text" name="inputEmail" id="inputEmail" placeholder="Email"
+	                                                       class="requiredValue form-control1" required=""/>
+                                                  </t>
+                                                   <t t-if='sale_order_id and sale_order_id.partner_id and sale_order_id.partner_id.email'>
+	                                                    <input type="text" name="inputEmail" id="inputEmail" placeholder="Email"
+	                                                           class="requiredValue form-control1" required="" t-att-value='sale_order_id.partner_id.email'/>
+                                                  </t>
                                             </div>
                                         </div>
                                     </td>
@@ -2980,8 +3074,9 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputFax">Fax</label>
                                             <div class="controls">
+                                                
                                                 <input type="text" name="inputFax" id="inputFax" placeholder="Fax"
-                                                       class="form-control1" pattern="[0-9]+" title= "Please enter digit only"/>
+                                                       class="form-control1" pattern="[0-9]+" title= "Please enter digits only"/>
                                             </div>
                                         </div>
                                     </td>
@@ -2989,8 +3084,15 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputZip">* Zipcode</label>
                                             <div class="controls">
-                                                <input type="text" id="inputZip" name="inputZip" placeholder="Zipcode"
-                                                       class="requiredValue form-control1" required=""/>
+                                              <t t-if='not sale_order_id'>
+	                                                <input type="text" id="inputZip" name="inputZip" placeholder="Zipcode"
+	                                                       class="requiredValue form-control1" required=""/>
+                                                </t>
+                                                  <t t-if="sale_order_id">
+                                                    <input type="text" id="inputZip" name="inputZip" placeholder="Zipcode"
+                                                           class="requiredValue form-control1" required="" t-att-value="sale_order_id.partner_id.zip if sale_order_id.partner_id and sale_order_id.partner_id.zip else ''"/>
+                                                </t>
+                                                
                                             </div>
                                         </div>
                                     </td>
@@ -3002,8 +3104,14 @@
                                                 No.
                                             </label>
                                             <div class="controls">
-                                                <input type="text" name="inputId" class="requiredValue form-control1"
-                                                       id="inputId" placeholder="" required=""/>
+	                                            <t t-if='not sale_order_id'>
+	                                                <input type="text" name="inputId" class="requiredValue form-control1"
+	                                                       id="inputId" placeholder="" required=""/>
+                                                </t>
+                                                <t t-if='sale_order_id'>
+                                                    <input type="text" name="inputId" class="requiredValue form-control1"
+                                                           id="inputId" placeholder="" required="" t-att-value="sale_order_id.partner_id.prof_body_id if sale_order_id.partner_id and sale_order_id.partner_id.prof_body_id else ''"/>
+                                                </t>
                                             </div>
                                         </div>
                                     </td>

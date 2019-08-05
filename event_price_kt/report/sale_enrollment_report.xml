@@ -410,8 +410,8 @@
                         <p>1. This free quote/invoice is valid for 90 days and ONLY for the benefits as specified in the table below.</p>
                         <b><p>2.The Student Agreement is integral to this quote and attached separately and/or accessible from the link <a href="http://www.charterquest.co.za/page/terms-and-conditions">http://www.charterquest.co.za/page/terms-and-conditions</a></p></b>
                         <p style="color:red;">TO ENROL/ACCEPT THIS QUOTE, CLICK LINK:</p>
-                        <t t-if="o.debit_order_mandate_link">
-                            <a itemprop="url" t-att-href="o.debit_order_mandate_link"><t t-esc="o.debit_order_mandate_link"/></a>
+                        <t t-if="o.link_portal">
+                            <a itemprop="url" t-att-href="o.link_portal"><t t-esc="o.link_portal"/></a>
                         </t>
 
                         <!--[ [  setTag('para','a',{'href':o.link_portal or 'http://enrolments.charterquest.co.za/'}) ]] [[ o.link_portal ]]</para></p>-->

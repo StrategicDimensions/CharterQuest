@@ -147,7 +147,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr t-if="doc.affiliation=='2'"> 
                                 <td>
                                     <p>Company</p>
                                 </td>

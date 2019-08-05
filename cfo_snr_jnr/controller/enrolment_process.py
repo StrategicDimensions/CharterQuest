@@ -388,12 +388,16 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/registration_form', '/registration_form/<uuid>'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def registration_form(self,uuid=False, **post):
+        sale_order_id = False
+        if uuid:
+            sale_order_id = request.env['sale.order'].sudo().search([('debit_link', '=', uuid)])
         user_select = request.session['user_selection_type'] if request.session and request.session.get('user_selection_type') else ''
         return request.render('cfo_snr_jnr.enrolment_process_registration_and_enroll', {'page_name': 'registration',
                                                                                         'self_or_cmp': user_select[
                                                                                             'self_or_company'] if user_select and user_select and user_select.get(
                                                                                             'self_or_company') else '',
-                                                                                            'uuid': uuid
+                                                                                            'uuid': uuid,
+                                                                                            'sale_order_id': sale_order_id if sale_order_id else False
                                                                                         })
 
     @http.route(['/enrolment_book'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
@@ -753,7 +757,6 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/payment'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def payment(self, **post):
-        
         if post.get('uuid'):
             sale_order_id = request.env['sale.order'].sudo().search([('debit_link', '=', post.get('uuid'))])
             product_tot = 0.00
@@ -764,6 +767,50 @@ class EnrolmentProcess(http.Controller):
                         product_tot += each.price_subtotal
                     if each.product_id.event_ok:
                         grand_tot += each.price_subtotal
+                        
+                name = False
+                res_partner_obj = request.env['res.partner'].sudo()
+                if post.get('inputFirstName'):
+                    name = post.get('inputFirstName')
+                else:
+                    name += ''
+                if post.get('inputLastName'):
+                    name += ' ' + post.get('inputLastName')
+                    
+                account_rec_type_id = request.env['account.account.type'].sudo().search(
+                    [('name', 'ilike', 'Receivable')])
+                account_pay_type_id = request.env['account.account.type'].sudo().search(
+                    [('name', 'ilike', 'Payable')])
+                if account_rec_type_id:
+                    account_rec_id = request.env['account.account'].sudo().search(
+                        [('user_type_id', '=', account_rec_type_id.id)], limit=1)
+
+                if account_pay_type_id:
+                    account_pay_id = request.env['account.account'].sudo().search(
+                        [('user_type_id', '=', account_pay_type_id.id)], limit=1)
+                partner_id = request.env['res.partner'].sudo().search([('email', '=', post.get('inputEmail'))], limit=1,
+                                                                      order="id desc")
+                
+                partner_id.write({'name': name,
+                                      'student_company': post.get('inputCompany') if post.get('inputCompany') else '',
+                                      'email': post.get('inputEmail') if post.get('inputEmail') else '',
+                                      'vat_no_comp': post.get('inputVat') if post.get('inputVat') else '',
+                                      'idpassport': post.get('inputID_PassportNo.') if post.get(
+                                          'inputID_PassportNo.') else '',
+                                      'cq_password': post.get('inputPassword') if post.get('inputPassword') else '',
+                                      'mobile': post.get('inputContactNumber') if post.get(
+                                          'inputContactNumber') else '',
+                                      'street': post.get('inputStreet') if post.get('inputStreet') else '',
+                                      'street2': post.get('inputStreet2') if post.get('inputStreet2') else '',
+                                      'city': post.get('inputCity') if post.get('inputCity') else '',
+                                      'country_id': int(post.get('country_id')) if post.get('country_id') else '',
+                                      'state_id': int(post.get('inputState')) if post.get('inputState') else '',
+                                      'zip': post.get('inputZip') if post.get('inputZip') else '',
+                                      'findout': post.get('inputFindout') if post.get('inputFindout') else '',
+                                      'prof_body_id': post.get('inputId') if post.get('inputId') else '',
+                                      'property_account_receivable_id': account_rec_id.id,
+                                      'property_account_payable_id': account_pay_id.id})
+                
                 if sale_order_id.quote_type == 'enrolment':
                     return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
                                                                                     'product_tot': round(product_tot,
@@ -786,6 +833,8 @@ class EnrolmentProcess(http.Controller):
                                                                                     'bank_detail': True if sale_order_id.affiliation==1 else False,
                                                                                     'uuid': post.get('uuid'),
                                                                                     })
+                
+                
                 
         sale_order_id = False
         display_btn = request.session['reg_enrol_btn'] if request.session.get('reg_enrol_btn') else False
@@ -1210,42 +1259,66 @@ class EnrolmentProcess(http.Controller):
                     agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
                     if agreement_id:
                         attchment_list.append(agreement_id)
-                    body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
-                    body_html += "<br>"
-                    body_html += "Dear " + sale_order_id.partner_id.name + ","
-                    body_html += "<br><br>"
-                    body_html += "Thank you for your course fee/price inquiry."
-                    body_html += "<br><br>"
-                    body_html += "Kindly review the attached and secure your place by:"
-                    body_html += "<br><br>"
-                    body_html += "<div>"
-                    body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>CONVERT TO INVOICE</a>"
-                    body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>PAY NOW</a>"
-                    body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-bottom: 10px;'>GET BANKING DETAILS & PAY LATER</a>"
-                    body_html += "</div>"
-                    body_html += "<br><br>"
-                    
-                    body_html += "We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
-                    body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
-                    body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
-                    body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
-                    mail_values = {
-                        'email_from': template_id.email_from,
-                        'reply_to': template_id.reply_to,
-                        'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
-                        'email_cc': 'enquiries@charterquest, accounts@charterquest.co.za, cqops@charterquest.co.za',
-                        'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
-                        'body_html': body_html,
-                        'notification': True,
-                        'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
-                        'auto_delete': False,
-                    }
+#                     body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
+#                     body_html += "<br>"
+#                     body_html += "Dear " + sale_order_id.partner_id.name + ","
+#                     body_html += "<br><br>"
+#                     body_html += "Thank you for your course fee/price inquiry."
+#                     body_html += "<br><br>"
+#                     body_html += "Kindly review the attached and secure your place by:"
+#                     body_html += "<br><br>"
+#                     body_html += "<div>"
+#                     body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>CONVERT TO INVOICE</a>"
+#                     body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-right: 10px;margin-bottom: 10px;'>PAY NOW</a>"
+#                     body_html += "<a href='https://charterquest.odoo.com/registration_form' style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: &quot;Open Sans&quot;,sans-serif;background-color: #ff0000;margin-bottom: 10px;'>GET BANKING DETAILS & PAY LATER</a>"
+#                     body_html += "</div>"
+#                     body_html += "<br><br>"
+#                     
+#                     body_html += "We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
+#                     body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
+#                     body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
+#                     body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
+#                     mail_values = {
+#                         'email_from': template_id.email_from,
+#                         'reply_to': template_id.reply_to,
+#                         'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+#                         'email_cc': 'enquiries@charterquest, accounts@charterquest.co.za, cqops@charterquest.co.za',
+#                         'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
+#                         'body_html': body_html,
+#                         'notification': True,
+#                         'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
+#                         'auto_delete': False,
+#                     }
 #                     Route Process Self-Sponsored Get free Quote Emailed
 
-                    msg_id = mail_obj.create(mail_values)
-                    msg_id.send()
+
+                    self_spo_free_quote = request.env.ref('cfo_snr_jnr.self_sponsored_free_quote_email_template')
+                    ctx = {
+                            'model': 'sale.order',
+                            'res_id': sale_order_id.id,
+                            'use_template': True,
+                            'template_id': self_spo_free_quote.id,
+                            'mark_so_as_sent': True,
+                            'force_email': True
+                        }
+                    mail_compose_id = request.env['mail.compose.message'].sudo().generate_email_for_composer(self_spo_free_quote.id,sale_order_id.id)
+                    bodies = request.env['mail.template'].render_template(self_spo_free_quote, 'sale.order', sale_order_id.id, post_process=True)
+                    mail_compose_id.update({'email_to': sale_order_id.partner_id.email})
+                    mail_values = {
+                        'email_from': self_spo_free_quote.sudo().email_from,
+                        'reply_to': self_spo_free_quote.sudo().reply_to,
+                        'email_to': mail_compose_id.get('email_to'),
+                        'email_cc': self_spo_free_quote.sudo().email_cc,
+                        'subject': mail_compose_id.get('subject'),
+                        'body_html': mail_compose_id.get('body'),
+                        'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
+                        'auto_delete': self_spo_free_quote.sudo().auto_delete,
+                    }
+                    
+                    msg_id = mail_obj.sudo().create(mail_values)
+                    msg_id.sudo().send()
                     if user_select and user_select.get('self_or_company') == 'cmp_sponosored':
-                        return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
+                        return request.sudo().render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                               {'self_or_cmp': user_select['self_or_company'] if user_select.get(
                                                   'self_or_company') else ''})
                 elif sale_order_id.affiliation == '2':
@@ -1297,7 +1370,6 @@ class EnrolmentProcess(http.Controller):
                         body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
                         body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
                         body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
-                        
                         mail_values = {
                             'email_from': template_id.email_from,
                             'reply_to': template_id.reply_to,
@@ -1308,8 +1380,8 @@ class EnrolmentProcess(http.Controller):
                             'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
                             'auto_delete': False,
                         }
-                        msg_id = mail_obj.create(mail_values)
-                        msg_id.send()
+                        msg_id = mail_obj.sudo().create(mail_values)
+                        msg_id.sudo().send()
                         if user_select.get('self_or_company') == 'cmp_sponosored':
                             return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                                   {'self_or_cmp': user_select['self_or_company'] if user_select.get(
@@ -1335,7 +1407,6 @@ class EnrolmentProcess(http.Controller):
 
                         if agreement_id:
                             attchment_list.append(agreement_id)
-                        
 #                         body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
 #                         body_html += "<br>"
 #                         body_html += "Dear " + sale_order_id.partner_id.name + ","
@@ -1354,7 +1425,7 @@ class EnrolmentProcess(http.Controller):
 #                         body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
 #                         body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
 #                         body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
-#                         print ("\n\n\n------2222-->>>>>>>>>>>",template_id.reply_to, template_id.email_from)
+#                         print ("\n\n\n------2222-->>>>>>>>>>>>",template_id.reply_to, template_id.email_from)
                         
                         ir_model_data = request.env['ir.model.data'].sudo()
                         try:
@@ -1384,8 +1455,8 @@ class EnrolmentProcess(http.Controller):
                             'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
                             'auto_delete': com_spo_free_quote.auto_delete,
                         }
-                        msg_id = mail_obj.create(mail_values)
-                        msg_id.send()
+                        msg_id = mail_obj.sudo().create(mail_values)
+                        msg_id.sudo().send()
                         if user_select.get('self_or_company') == 'cmp_sponosored':
                             return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                                   {'self_or_cmp': user_select['self_or_company'] if user_select.get(
@@ -1551,8 +1622,6 @@ class EnrolmentProcess(http.Controller):
         payu_tx_values = dict(post)
         payment_acquire = request.env['payment.acquirer'].sudo().search([('provider', '=', 'payu')])
         amount = post.get('inputTotalDue') if post.get('inputTotalDue') else post.get('toalamount')
-       
-            
         # convert amount to cent
         if amount:
             if len(amount.split('.')[1]) == 1:
@@ -1560,6 +1629,10 @@ class EnrolmentProcess(http.Controller):
                 amount = amount.replace('.', '')
             elif len(amount.split('.')[1]) == 2:
                 amount = amount.replace('.', '')
+        elif sale_order_id:
+            amount = str(sale_order_id.amount_total) + '0'
+            amount = amount.replace('.', '')
+            
         if sale_order_id:
             debit_order_mandet = []
             res_bank_detail = False
@@ -1646,6 +1719,7 @@ class EnrolmentProcess(http.Controller):
             'reference': request.env['payment.transaction'].get_next_reference(sale_order_id.name),
             'sale_order_id': sale_order_id.id,
         }
+        
         tx = request.env['payment.transaction'].sudo().create(tx_values)
         url = PayuController.payuMeaSetTransactionApiCall('', transactionDetails)
         return werkzeug.utils.redirect(url)
@@ -1910,6 +1984,7 @@ class EnrolmentProcess(http.Controller):
                 body_html += "<br><br> We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
                 body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
                 body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
+                
                 mail_values = {
                     'email_from': template_id.email_from,
                     'reply_to': template_id.reply_to,
@@ -1956,7 +2031,7 @@ class EnrolmentProcess(http.Controller):
                                             (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
                                         'price_unit': each_order_line.price_unit,
                                         'discount': each_order_line.discount}])
-        invoice_id = invoice_obj.create({'partner_id': sale_order_id.partner_id.id,
+        invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
                                          'campus': sale_order_id.campus.id,
                                          'prof_body': sale_order_id.prof_body.id,
                                          'sale_order_id': sale_order_id.id,
@@ -1989,7 +2064,7 @@ class EnrolmentProcess(http.Controller):
                         'location_id': picking_type_id.id,
                         'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
                     }))
-        customer_picking = request.env['stock.picking'].create({
+        customer_picking = request.env['stock.picking'].sudo().create({
             'partner_id': sale_order_id.partner_id.id,
             'campus_id': sale_order_id.campus.id,
             'prof_body_id': sale_order_id.prof_body.id,
@@ -2006,7 +2081,7 @@ class EnrolmentProcess(http.Controller):
         invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:
-                debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
+                debit_order_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
                                         'student_number': '',
                                         'dbo_amount': each_debit_order.dbo_amount,
                                         'course_fee': each_debit_order.course_fee,
@@ -2143,7 +2218,6 @@ class EnrolmentProcess(http.Controller):
 #                 body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
 #                 body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
 #                 body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
-#                 print ("\n\n\n--------->>>template calll555555>>>>>>>test",)
                 
                 
                 ctx = {
@@ -2241,7 +2315,7 @@ class EnrolmentProcess(http.Controller):
                     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
                     'auto_delete': False,
                 }
-                msg_id = mail_obj.create(mail_values)
+                msg_id = mail_obj.sudo().create(mail_values)
                 msg_id.send()
                 if user_select.get('self_or_company') == 'cmp_sponosored':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
