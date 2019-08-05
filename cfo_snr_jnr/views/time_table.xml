@@ -1,15 +1,475 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <menuitem id="menu_cfo_time_table_root" name="CFO Time Table" sequence="34"/>
+
+    <record id="cfo_time_table_tree_view" model="ir.ui.view">
+        <field name="name">cfo.time.table.tree</field>
+        <field name="model">cfo.time.table</field>
+        <field name="arch" type="xml">
+            <tree string="Time Table">
+                <field name="semester_id"/>
+                <field name="qualification_id"/>
+                <field name="name"/>
+                <field name="course_option_id"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="cfo_time_table_form_view" model="ir.ui.view">
+        <field name="name">cfo.time.table.form</field>
+        <field name="model">cfo.time.table</field>
+        <field name="arch" type="xml">
+            <form string="Time Table">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                   options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <group col="4">
+                        <field name="name" required="True"/>
+                        <field name="semester_id"/>
+                        <field name="course_option_id"/>
+                        <field name="qualification_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Time Table">
+                            <field name="time_table_line_ids">
+                                <tree>
+                                    <field name="course_code_id"/>
+                                    <field name="day_selection"/>
+                                    <field name="start_time"/>
+                                    <field name="end_time"/>
+                                    <field name="time_table_week_ids" invisible="1"/>
+                                    <field name="time_table_id" invisible="1"/>
+                                </tree>
+                                <form>
+                                    <sheet>
+                                        <group col="4">
+                                            <field name="course_code_id"/>
+                                            <field name="day_selection"/>
+                                            <field name="start_time" widget="float_time"/>
+                                            <field name="end_time" widget="float_time"/>
+                                        </group>
+                                        <notebook>
+                                            <page string="Time Table Weeks">
+                                                <field name="time_table_week_ids" mode="tree">
+                                                    <tree editable="bottom">
+                                                        <field name="name"/>
+                                                        <field name='date'/>
+                                                        <field name="time_table_line_id" invisible="1"/>
+                                                    </tree>
+                                                </field>
+                                            </page>
+                                        </notebook>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cfo_time_table" model="ir.actions.act_window">
+        <field name="name">Time Table</field>
+        <field name="res_model">cfo.time.table</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_cfo_time_table"
+              action="cfo_snr_jnr.action_cfo_time_table"
+              parent="cfo_snr_jnr.menu_cfo_time_table_root"/>
+
+    <menuitem id="menu_cfo_configuration"
+              name="Configuration"
+              parent="cfo_snr_jnr.menu_cfo_time_table_root"/>
+
+    <record id="cfo_course_code_tree_view" model="ir.ui.view">
+        <field name="name">cfo.course.code.tree</field>
+        <field name="model">cfo.course.code</field>
+        <field name="arch" type="xml">
+            <tree string="Course Code">
+                <field name="campus_id"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="cfo_course_code_form_view" model="ir.ui.view">
+        <field name="name">cfo.course.code.form</field>
+        <field name="model">cfo.course.code</field>
+        <field name="arch" type="xml">
+            <form string="Course Code">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                   options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" required="True"/>
+                        <field name="description"/>
+                        <field name="campus_id" domain="[('is_campus', '=', True)]" options="{'no_create_edit': True}"/>
+                        <field name="lecturer_ids" domain="[('is_lecturer', '=', True)]" widget="many2many_tags"
+                               options="{'no_create_edit': True}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cfo_course_code" model="ir.actions.act_window">
+        <field name="name">Course Code</field>
+        <field name="res_model">cfo.course.code</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_cfo_course_code"
+              action="cfo_snr_jnr.action_cfo_course_code"
+              parent="cfo_snr_jnr.menu_cfo_configuration"/>
+
+    <record id="cfo_course_option_tree_view" model="ir.ui.view">
+        <field name="name">cfo.course.option.tree</field>
+        <field name="model">cfo.course.option</field>
+        <field name="arch" type="xml">
+            <tree string="Course Option">
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="cfo_course_option_form_view" model="ir.ui.view">
+        <field name="name">cfo.course.option.form</field>
+        <field name="model">cfo.course.option</field>
+        <field name="arch" type="xml">
+            <form string="Course Option">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                   options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" required="True"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cfo_course_option" model="ir.actions.act_window">
+        <field name="name">Course Option</field>
+        <field name="res_model">cfo.course.option</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_cfo_course_option"
+              action="cfo_snr_jnr.action_cfo_course_option"
+              parent="cfo_snr_jnr.menu_cfo_configuration"/>
+
+    <record id="cfo_semester_information_tree_view" model="ir.ui.view">
+        <field name="name">cfo.semester.information.tree</field>
+        <field name="model">cfo.semester.information</field>
+        <field name="arch" type="xml">
+            <tree string="Semester Information">
+                <field name="name"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="cfo_semester_information_form_view" model="ir.ui.view">
+        <field name="name">cfo.semester.information.form</field>
+        <field name="model">cfo.semester.information</field>
+        <field name="arch" type="xml">
+            <form string="Semester Information">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                   options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" required="True"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_semester_information" model="ir.actions.act_window">
+        <field name="name">Semester Information</field>
+        <field name="res_model">cfo.semester.information</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_cfo_semester_information"
+              action="cfo_snr_jnr.action_semester_information"
+              parent="cfo_snr_jnr.menu_cfo_configuration"/>
+
     <record id="website_time_table_view" model="website.menu">
         <field name="name">Time Table</field>
         <field name="url">/time_table</field>
         <field name="parent_id" ref="website.main_menu"/>
     </record>
 
+    <record id="action_res_partner_lecturer" model="ir.actions.act_window">
+        <field name="name">Lecturers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_lecturer', '=', True)]</field>
+        <field name="context">{'default_is_lecturer':True}</field>
+    </record>
+
+    <menuitem id="menu_res_partner_lecturer"
+              action="cfo_snr_jnr.action_res_partner_lecturer"
+              parent="cfo_snr_jnr.menu_cfo_configuration"/>
+
     <template id="time_table_template" name="Time Table">
         <t t-call="portal.portal_layout">
-            <div id='calendar_time_table'/>
+            <div class="panel panel-default" style="margin-top:10px;">
+                <div class="panel-heading">
+                    <form action="/time_table" method="POST">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="campus_select"/>
+                        <select class="form-control multiple-campus-select" id="campus_select"
+                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                            <t t-foreach="request.env['res.partner'].sudo().search([('is_campus', '=', True)])"
+                               t-as="campus">
+                                <option t-att-value="campus.id">
+                                    <span t-esc="campus.name"/>
+                                </option>
+                            </t>
+                        </select>
+                        <input type="hidden" name="level_select"/>
+                        <select class="form-control multiple-levels-select" id="level_select"
+                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                            <t t-foreach="request.env['event.qual'].sudo().search([])" t-as="qualification">
+                                <option t-att-value="qualification.id">
+                                    <span t-esc="qualification.name"/>
+                                </option>
+                            </t>
+                        </select>
+                        <input type="hidden" name="course_code_select"/>
+                        <select class="form-control multiple-codes-select" id="course_code_select"
+                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                            <!--                            <option value="all" t-att-selected="'selected' if course_code_select == 'all' else False">-->
+                            <!--                                All Codes-->
+                            <!--                            </option>-->
+                            <t t-foreach="request.env['cfo.course.code'].sudo().search([])" t-as="code">
+                                <option t-att-value="code.id">
+                                    <!--                                        t-att-selected="'selected' if course_code_select != 'all' and int(course_code_select) == code.id else False">-->
+                                    <span t-esc="code.name"/>
+                                </option>
+                            </t>
+                        </select>
+                        <input type="hidden" name="semester_select"/>
+                        <select class="form-control multiple-semester-select" id="semester_select"
+                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                            <t t-foreach="request.env['cfo.semester.information'].sudo().search([])" t-as="semester">
+                                <option t-att-value="semester.id">
+                                    <span t-esc="semester.name"/>
+                                </option>
+                            </t>
+                        </select>
+                        <input type="hidden" name="option_select"/>
+                        <select class="form-control multiple-option-select" id="option_select"
+                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                            <t t-foreach="request.env['cfo.course.option'].sudo().search([])" t-as="option">
+                                <option t-att-value="option.id">
+                                    <span t-esc="option.name"/>
+                                </option>
+                            </t>
+                        </select>
+                        <button type="submit" title="Filter" style="height:38px;transition:unset;">
+                            <i class="fa fa-filter"/>
+                        </button>
+                    </form>
+                </div>
+                <div class="panel-body">
+                    <t t-foreach="time_table" t-as="time">
+                        <div style="margin-top:5px;">
+                            <div class="form-group">
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered time_table_main">
+                                <caption
+                                        style="color:black;border: 1px solid gainsboro;padding: 5px;background:#d9edf7;">
+                                    <b>
+                                        <span t-esc="time.semester_id.name"/>
+                                        -
+                                        <span t-esc="time.qualification_id.name"/>
+                                        -
+                                        <span t-esc="time.name"/>
+                                        -
+                                        <span t-esc="time.course_option_id.name"/>
+                                    </b>
+                                </caption>
+                                <tr>
+                                    <th style="width: 80px;">Subject</th>
+                                    <th style="width: 80px;">Campus</th>
+                                    <th style="width: 87px;">Time</th>
+                                    <th>Sessions</th>
+                                </tr>
+                                <t t-set="lines"
+                                   t-value="time.time_table_line_ids.filtered(lambda l: l.course_code_id.id in [int(i) for i in course_code_select.split(',')])"/>
+                                <!--                                <t t-set="lines"-->
+                                <!--                                   t-value="time.time_table_line_ids.filtered(lambda l: l.course_code_id.campus_id.id in [int(i) for i in campus_select.split(',')])"/>-->
+                                <!--                                   t-if="course_code_select and course_code_select != 'all'"/>-->
+                                <!--                                <t t-set="lines" t-value="time.time_table_line_ids" t-else=""/>-->
+                                <t t-foreach="lines" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <a style="cursor:pointer;" class="info_time_table_course"
+                                               data-placement="left" t-att-data-popover-content="'#info_%s'%line.id"
+                                               data-toggle="popover"
+                                               tabindex="0">
+                                                <i class="fa fa-info"/>
+                                            </a>
+                                            <div class="hidden" t-att-id="'info_%s'%line.id">
+                                                <div class="popover-heading">
+                                                    <span t-esc="line.course_code_id.name"/>
+                                                </div>
+                                                <div class="popover-body">
+                                                    <div t-esc="line.course_code_id.description"
+                                                         style="border-bottom:1px solid;"/>
+                                                    <t t-if="line.course_code_id.lecturer_ids">
+                                                        <div>
+                                                            <h6>Lecturers</h6>
+                                                            <div style="list-style:none;padding:0px;line-height:46px;">
+                                                                <t t-foreach="line.course_code_id.lecturer_ids"
+                                                                   t-as="lecturer">
+                                                                    <a style="color:black;cursor:pointer"
+                                                                       data-toggle="modal"
+                                                                       t-att-data-target="'#lecturerModal%s'%lecturer.id">
+                                                                        <div class="col-md-12"
+                                                                             style="margin-bottom:5px;">
+                                                                            <div class="col-md-4">
+                                                                                <img class="img-circle"
+                                                                                     t-att-src="'data:image/png;base64,'+to_text(lecturer.image)"
+                                                                                     style="height:50px;width:50px;"/>
+                                                                            </div>
+                                                                            <div class="col-md-8"
+                                                                                 t-esc="lecturer.name"/>
+                                                                        </div>
+                                                                    </a>
+                                                                    <div t-att-id="'lecturerModal%s'%lecturer.id"
+                                                                         class="modal fade infoModal" role="dialog">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-body">
+                                                                                    <button type="button" class="close"
+                                                                                            data-dismiss="modal">
+                                                                                        <i class="fa fa-times"/>
+                                                                                    </button>
+                                                                                    <div>
+                                                                                        <img class="img-circle"
+                                                                                             t-att-src="'data:image/png;base64,'+to_text(lecturer.image)"
+                                                                                             style="width:200px;height: 200px;"/>
+                                                                                        <div style="text-align:center;">
+                                                                                            <h4>
+                                                                                                <b>
+                                                                                                    <span t-esc="lecturer.name"/>
+                                                                                                </b>
+                                                                                            </h4>
+                                                                                            <h6>
+                                                                                                <span t-esc="lecturer.function"/>
+                                                                                            </h6>
+                                                                                            <div style="height:40px;overflow:hidden">
+                                                                                                <span t-esc="lecturer.comment"/>
+                                                                                            </div>
+                                                                                            <h4>
+                                                                                                <button type="button" t-att-data-href="'/view_lecturer/%s'%lecturer.id" class="details_view_lecturer">
+                                                                                                    View Profile
+                                                                                                </button>
+                                                                                            </h4>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </t>
+                                                </div>
+                                            </div>
+                                            <span t-esc="line.course_code_id.name"/>
+                                        </td>
+                                        <td>
+                                            <div t-esc="line.course_code_id.campus_id.name"/>
+                                        </td>
+                                        <td>
+                                            <div t-esc="line.day_selection.title()"/>
+                                            <span t-esc="line.start_time" t-options="{'widget':'float_time'}"/>
+                                            -
+                                            <span t-esc="line.end_time" t-options="{'widget':'float_time'}"/>
+                                        </td>
+                                        <td>
+                                            <t t-foreach="line.time_table_week_ids" t-as="week">
+                                                <t t-if="week.date or week.name">
+                                                    <div class="col-md-2 time_table_div">
+                                                        <div t-esc="week.date"/>
+                                                        <div t-esc="week.name"/>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="view_lecturer_details" name="Lecturer">
+        <t t-set="additional_title" t-value="lecturer.name"/>
+        <t t-call="portal.portal_layout">
+            <div class="row detail_lecturer" style="margin-top:15px;">
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <img t-att-src="'data:image/png;base64,'+to_text(lecturer.image)"
+                             style="width:100%;border: 1px solid gainsboro;padding: 8px;"/>
+                    </div>
+                    <div class="col-md-8">
+                        <div>
+                            <h2>
+                                <span t-esc="lecturer.name"/>
+                            </h2>
+                            <h6>
+                                <span t-esc="lecturer.function"/>
+                            </h6>
+                        </div>
+                        <div>
+                            <span t-esc="lecturer.comment"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </t>
     </template>
 

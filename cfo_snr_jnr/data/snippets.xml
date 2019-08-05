@@ -121,6 +121,60 @@
         </section>
     </template>
 
+    <template id="cfo_snr_jnr_cards_block" name="Card">
+        <section class="container cfo_snr_jnr_cards_block_container" style="margin-top:15px;">
+            <div class="row active-with-click">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <article class="material-card">
+                        <h2>
+                            <span class="lecturer-name">Test Content</span>
+                            <strong class="lecturer-qualification">
+                                Qualification
+                            </strong>
+                        </h2>
+                        <div class="mc-content">
+                            <div class="img-container">
+                                <img class="img-responsive lecturer-image"
+                                     src="http://u.lorenzoferrara.net/marlenesco/material-card/thumb-christopher-walken.jpg"/>
+                            </div>
+                            <div class="mc-description">
+                                Test Content
+                            </div>
+                        </div>
+                        <a class="mc-btn-action">
+                            <i class="fa fa-bars"/>
+                        </a>
+                        <div class="mc-footer">
+                            <h4>
+                                <button class="details_view_lecturer">View Profile</button>
+                            </h4>
+                            <div class="social_icons"/>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="cfo_snr_jnr_cards_block_option" inherit_id="website.snippet_options"
+              name="Cards Options">
+        <xpath expr="//div" position="after">
+            <div data-js="cfo_snr_jnr_cards" data-selector=".cfo_snr_jnr_cards_block_container"
+                 data-snippet-option-id="cfo_snr_jnr_cards_block_container">
+                <li>
+                    <a class="cfo_snr_jnr_add_card">
+                        <i class="fa fa-plus"/>Add Card
+                    </a>
+                </li>
+                <li>
+                    <a class="cfo_snr_jnr_remove_card">
+                        <i class="fa fa-trash"/>Remove Card
+                    </a>
+                </li>
+            </div>
+        </xpath>
+    </template>
+
     <template id="cfo_snr_jnr_comparision_blocks_option" inherit_id="website.snippet_options"
               name="Add Menu Options">
         <xpath expr="//div" position="after">
@@ -227,9 +281,9 @@
                 <li>
                     <a class="cfo_snr_jnr_add_step">Add Step</a>
                 </li>
-<!--                <li>-->
-<!--                    <a class="cfo_snr_jnr_remove_step">Remove Active Step</a>-->
-<!--                </li>-->
+                <!--                <li>-->
+                <!--                    <a class="cfo_snr_jnr_remove_step">Remove Active Step</a>-->
+                <!--                </li>-->
             </div>
         </xpath>
     </template>
@@ -249,6 +303,8 @@
                    t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/separator_block.png"/>
                 <t t-snippet="cfo_snr_jnr.cfo_snr_jnr_steps_wizard"
                    t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/steps_wizard.png"/>
+                <t t-snippet="cfo_snr_jnr.cfo_snr_jnr_cards_block"
+                   t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/card_layout.png"/>
             </div>
         </xpath>
     </template>

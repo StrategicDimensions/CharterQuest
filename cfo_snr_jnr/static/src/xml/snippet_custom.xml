@@ -252,4 +252,103 @@
             </div>
         </div>
     </t>
+    <t t-name="cfo_snr_jnr.cfo_snr_jnr_cards_blocks_cfo">
+        <div aria-hidden="true" class="modal" id="cfo_cards_block_modal" contenteditable="False" role="dialog"
+             style="z-index:2001" tabindex="1">
+            <div class="modal-dialog">
+                <div class="modal-content" id="s_media_block_modal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Customization</h4>
+                    </div>
+                    <div class="modal-body" contenteditable="false">
+                        <form class="form-horizontal container-fluid" role="form">
+                            <div class="col-sm-12 form-group">
+                                <label class="col-sm-3 control-label" for="lecturer_id">Lecturer</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="lecturer_id"
+                                           type="text"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <label class="col-sm-3 control-label" for="color_card">
+                                    Card Color
+                                </label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="color_card">
+                                        <option value="Red">Red</option>
+                                        <option value="Pink">Pink</option>
+                                        <option value="Purple">Purple</option>
+                                        <option value="Deep-Purple">Deep-Purple</option>
+                                        <option value="Indigo">Indigo</option>
+                                        <option value="Blue">Blue</option>
+                                        <option value="Light-Blue">Light-Blue</option>
+                                        <option value="Cyan">Cyan</option>
+                                        <option value="Teal">Teal</option>
+                                        <option value="Green">Green</option>
+                                        <option value="Light-Green">Light-Green</option>
+                                        <option value="Lime">Lime</option>
+                                        <option value="Yellow">Yellow</option>
+                                        <option value="Amber">Amber</option>
+                                        <option value="Orange">Orange</option>
+                                        <option value="Deep-Orange">Deep-Orange</option>
+                                        <option value="Brown">Brown</option>
+                                        <option value="Grey">Grey</option>
+                                        <option value="Blue-Grey">Blue-Grey</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <div class="col-sm-3">
+                                    <input type="checkbox" id="is_facebook"/> Facebook
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="checkbox" id="is_twitter"/> Twitter
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="checkbox" id="is_linkedin"/> LinkedIn
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="checkbox" id="is_google"/> Google
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group facebook_is hidden">
+                                <label class="col-sm-3 control-label" for="facebook_href">Facebook Link</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="facebook_href"
+                                           type="text"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group twitter_is hidden">
+                                <label class="col-sm-3 control-label" for="twitter_href">Twitter Link</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="twitter_href"
+                                           type="text"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group linkedin_is hidden">
+                                <label class="col-sm-3 control-label" for="linkedin_href">LinkedIn Link</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="linkedin_href"
+                                           type="text"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group google_is hidden">
+                                <label class="col-sm-3 control-label" for="google_href">Google Link</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="google_href"
+                                           type="text"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-dismiss="modal" id="cancel">Cancel</button>
+                        <button class="btn btn-danger" data-dismiss="modal" id="cards_block_submit" type="submit">
+                            Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
 </template>
