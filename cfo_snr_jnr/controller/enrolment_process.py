@@ -809,7 +809,8 @@ class EnrolmentProcess(http.Controller):
                                       'findout': post.get('inputFindout') if post.get('inputFindout') else '',
                                       'prof_body_id': post.get('inputId') if post.get('inputId') else '',
                                       'property_account_receivable_id': account_rec_id.id,
-                                      'property_account_payable_id': account_pay_id.id})
+                                      'property_account_payable_id': account_pay_id.id,
+                                      'dob': post.get('inputDOB') if post.get('inputDOB') else ''})
                 
                 if sale_order_id.quote_type == 'enrolment':
                     return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
