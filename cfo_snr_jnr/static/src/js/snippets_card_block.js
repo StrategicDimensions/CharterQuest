@@ -299,6 +299,8 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
                     self.$target.find('.mc-description').html($lec_desc);
                     self.$target.find('.lecturer-qualification').html($lec_qualification);
                     self.$target.find('.details_view_lecturer').attr('data-href',"/view_lecturer/"+ $lec_id);
+//                    self.$target.find('.info_lecturers_study').attr('data-popover-content',"#info_let_"+ $lec_id);
+//                    self.$target.find('.hidden').attr('id',"info_let_"+ $lec_id);
                 });
             } else {
                 return false;

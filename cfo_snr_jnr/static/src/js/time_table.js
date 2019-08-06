@@ -21,48 +21,90 @@ $(document).ready(function(){
 		});
 	});
 
-	$('.multiple-codes-select').select2({
-		placeholder: "Select a Subject"
-	});
+	if(window.location.pathname == '/time_table'){
 
-	$('.multiple-levels-select').select2({
-		placeholder: "Select a Level"
-	});
+		$('.multiple-codes-select').select2({
+			placeholder: "Select a Subject"
+		});
 
-	$('.multiple-option-select').select2({
-		placeholder: "Select a Study Option"
-	});
+		var codes_list = [];
+		$.each($(document).find("input[name=course_code_select]").val().split(','), function (key, val){
+			codes_list.push(parseInt(val));
+		});
 
-	$('.multiple-semester-select').select2({
-		placeholder: "Select a Semester"
-	});
+	//	$('.multiple-codes-select').select2('val', codes_list);
 
-	$('.multiple-campus-select').select2({
-		placeholder: "Select a Campus"
-	});
+		$('.multiple-levels-select').select2({
+			placeholder: "Select a Level"
+		});
 
-	$(document).on("click", ".details_view_lecturer", function(event){
-		window.location.href = $(this).attr('data-href');
-	});
+		var level_list = [];
+		$.each($(document).find("input[name=level_select]").val().split(','), function (key, val){
+			level_list.push(parseInt(val));
+		});
 
-	$(document).on('change','#course_code_select',function(){
-		$(document).find('input[name="course_code_select"]').val($('.multiple-codes-select').select2('val'));
-	});
+		$('.multiple-levels-select').select2('val', level_list);
 
-	$(document).on('change','#level_select',function(){
-		$(document).find('input[name="level_select"]').val($('.multiple-levels-select').select2('val'));
-	});
+		$('.multiple-option-select').select2({
+			placeholder: "Select a Study Option"
+		});
 
-	$(document).on('change','#option_select',function(){
-		$(document).find('input[name="option_select"]').val($('.multiple-option-select').select2('val'));
-	});
+		var option_list = [];
+		$.each($(document).find("input[name=option_select]").val().split(','), function (key, val){
+			option_list.push(parseInt(val));
+		});
 
-	$(document).on('change','#semester_select',function(){
-		$(document).find('input[name="semester_select"]').val($('.multiple-semester-select').select2('val'));
-	});
+		$('.multiple-option-select').select2('val', option_list);
 
-	$(document).on('change','#campus_select',function(){
-		$(document).find('input[name="campus_select"]').val($('.multiple-campus-select').select2('val'));
+		$('.multiple-semester-select').select2({
+			placeholder: "Select a Semester"
+		});
+
+		var semester_list = [];
+		$.each($(document).find("input[name=semester_select]").val().split(','), function (key, val){
+			semester_list.push(parseInt(val));
+		});
+
+		$('.multiple-campus-select').select2('val', semester_list);
+
+		$('.multiple-campus-select').select2({
+			placeholder: "Select a Campus"
+		});
+
+		var campus_list = [];
+		$.each($(document).find("input[name=campus_select]").val().split(','), function (key, val){
+			campus_list.push(parseInt(val));
+		});
+
+		$('.multiple-campus-select').select2('val', campus_list);
+
+		$(document).on("click", ".details_view_lecturer", function(event){
+			window.location.href = $(this).attr('data-href');
+		});
+
+		$(document).on('change','#course_code_select',function(){
+			$(document).find('input[name="course_code_select"]').val($('.multiple-codes-select').select2('val'));
+		});
+
+		$(document).on('change','#level_select',function(){
+			$(document).find('input[name="level_select"]').val($('.multiple-levels-select').select2('val'));
+		});
+
+		$(document).on('change','#option_select',function(){
+			$(document).find('input[name="option_select"]').val($('.multiple-option-select').select2('val'));
+		});
+
+		$(document).on('change','#semester_select',function(){
+			$(document).find('input[name="semester_select"]').val($('.multiple-semester-select').select2('val'));
+		});
+
+		$(document).on('change','#campus_select',function(){
+			$(document).find('input[name="campus_select"]').val($('.multiple-campus-select').select2('val'));
+		});
+	}
+
+	$('.back_to_lecturers').on('click', function(){
+		window.history.back();
 	});
 
 });

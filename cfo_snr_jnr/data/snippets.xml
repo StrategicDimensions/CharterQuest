@@ -131,8 +131,17 @@
                             <strong class="lecturer-qualification">
                                 Qualification
                             </strong>
+<!--                            <a style="cursor:pointer;" class="info_lecturers_study" data-placement="left"-->
+<!--                               data-toggle="popover" tabindex="0">-->
+<!--                                <i class="fa fa-info"/>-->
+<!--                            </a>-->
+<!--                            <div class="hidden">-->
+<!--                                <div class="popover-heading"/>-->
+<!--                                <div class="popover-body"/>-->
+<!--                            </div>-->
                         </h2>
                         <div class="mc-content">
+                            <div class="lecturer-study"/>
                             <div class="img-container">
                                 <img class="img-responsive lecturer-image"
                                      src="http://u.lorenzoferrara.net/marlenesco/material-card/thumb-christopher-walken.jpg"/>
