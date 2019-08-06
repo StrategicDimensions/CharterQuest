@@ -98,6 +98,7 @@
                 <field name="campus_id"/>
                 <field name="name"/>
                 <field name="description"/>
+                <field name="short_description"/>
                 <field name="active"/>
             </tree>
         </field>
@@ -119,6 +120,7 @@
                     <group>
                         <field name="name" required="True"/>
                         <field name="description"/>
+                        <field name="short_description"/>
                         <field name="campus_id" domain="[('is_campus', '=', True)]" options="{'no_create_edit': True}"/>
                         <field name="lecturer_ids" domain="[('is_lecturer', '=', True)]" widget="many2many_tags"
                                options="{'no_create_edit': True}"/>
@@ -250,7 +252,7 @@
                 <div class="panel-heading">
                     <form action="/time_table" method="POST">
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                        <input type="hidden" name="campus_select"/>
+                        <input type="hidden" name="campus_select" t-att-value="campus_select"/>
                         <select class="form-control multiple-campus-select" id="campus_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
                             <t t-foreach="request.env['res.partner'].sudo().search([('is_campus', '=', True)])"
@@ -260,7 +262,7 @@
                                 </option>
                             </t>
                         </select>
-                        <input type="hidden" name="level_select"/>
+                        <input type="hidden" name="level_select" t-att-value="level_select"/>
                         <select class="form-control multiple-levels-select" id="level_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
                             <t t-foreach="request.env['event.qual'].sudo().search([])" t-as="qualification">
@@ -269,7 +271,7 @@
                                 </option>
                             </t>
                         </select>
-                        <input type="hidden" name="course_code_select"/>
+                        <input type="hidden" name="course_code_select" t-att-value="course_code_select"/>
                         <select class="form-control multiple-codes-select" id="course_code_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
                             <!--                            <option value="all" t-att-selected="'selected' if course_code_select == 'all' else False">-->
@@ -282,7 +284,7 @@
                                 </option>
                             </t>
                         </select>
-                        <input type="hidden" name="semester_select"/>
+                        <input type="hidden" name="semester_select" t-att-value="semester_select"/>
                         <select class="form-control multiple-semester-select" id="semester_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
                             <t t-foreach="request.env['cfo.semester.information'].sudo().search([])" t-as="semester">
@@ -291,7 +293,7 @@
                                 </option>
                             </t>
                         </select>
-                        <input type="hidden" name="option_select"/>
+                        <input type="hidden" name="option_select" t-att-value="option_select"/>
                         <select class="form-control multiple-option-select" id="option_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
                             <t t-foreach="request.env['cfo.course.option'].sudo().search([])" t-as="option">
@@ -394,12 +396,25 @@
                                                                                             </h4>
                                                                                             <h6>
                                                                                                 <span t-esc="lecturer.function"/>
+                                                                                                <br/>
+                                                                                                <ul style="list-style: none;padding: 0;">
+                                                                                                    <t t-foreach="request.env['cfo.course.code'].sudo().search([('lecturer_ids', '=', lecturer.id)])"
+                                                                                                       t-as="course">
+                                                                                                        <li>
+                                                                                                            <span t-esc="course.name"/>
+                                                                                                            ,
+                                                                                                            <span t-esc="course.short_description"/>
+                                                                                                        </li>
+                                                                                                    </t>
+                                                                                                </ul>
                                                                                             </h6>
                                                                                             <div style="height:40px;overflow:hidden">
                                                                                                 <span t-esc="lecturer.comment"/>
                                                                                             </div>
                                                                                             <h4>
-                                                                                                <button type="button" t-att-data-href="'/view_lecturer/%s'%lecturer.id" class="details_view_lecturer">
+                                                                                                <button type="button"
+                                                                                                        t-att-data-href="'/view_lecturer/%s'%lecturer.id"
+                                                                                                        class="details_view_lecturer">
                                                                                                     View Profile
                                                                                                 </button>
                                                                                             </h4>
@@ -449,6 +464,9 @@
     <template id="view_lecturer_details" name="Lecturer">
         <t t-set="additional_title" t-value="lecturer.name"/>
         <t t-call="portal.portal_layout">
+            <a style="font-size: 30px;" title="Back" class="back_to_lecturers">
+                <i class="fa fa-arrow-left"/>
+            </a>
             <div class="row detail_lecturer" style="margin-top:15px;">
                 <div class="col-md-12">
                     <div class="col-md-4">
@@ -462,6 +480,16 @@
                             </h2>
                             <h6>
                                 <span t-esc="lecturer.function"/>
+                                <br/>
+                                <ul style="list-style: none;padding: 0;">
+                                    <t t-foreach="request.env['cfo.course.code'].sudo().search([('lecturer_ids', '=', lecturer.id)])"
+                                       t-as="course">
+                                        <li>
+                                            <span t-esc="course.name"/>,
+                                            <span t-esc="course.short_description"/>
+                                        </li>
+                                    </t>
+                                </ul>
                             </h6>
                         </div>
                         <div>

@@ -48,6 +48,7 @@ class CFOCourseCode(models.Model):
 
     name = fields.Char(string="Course Code")
     description = fields.Text(string="Description")
+    short_description = fields.Char(string="Short Description")
     lecturer_ids = fields.Many2many('res.partner', string="Lecturer(s)")
     campus_id = fields.Many2one('res.partner', string="Campus")
     active = fields.Boolean(string="Active", default=True)
