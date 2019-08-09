@@ -18,7 +18,7 @@
 ##############################################################################
 
 
-from odoo import models, fields
+from odoo import models, fields, api, _
 
 
 class ResPartner(models.Model):
@@ -65,6 +65,32 @@ class CFOTimeTable(models.Model):
     time_table_line_ids = fields.One2many("cfo.time.table.line", 'time_table_id', string="Time Table Lines")
     active = fields.Boolean(string="Active", default=True)
 
+    @api.model
+    def get_data(self,qua_ids,campus_ids):
+        val=[]
+        subject=[]
+        semester=[]
+        study_option=[]
+        if qua_ids and campus_ids:
+            res=self.env['cfo.time.table'].search([('qualification_id','in',[int(id) for id in qua_ids])])
+            print("\n\n\n res",res)
+            print("\n\n\n ")
+            for record in res:
+                for line in record.time_table_line_ids:
+                    if line.course_code_id.campus_id.id in [int(id) for id in campus_ids]:
+                        subject.append({'id':line.course_code_id.id,'name':line.course_code_id.name})
+                semester.append({'id':record.semester_id.id,'name':record.semester_id.name})
+                study_option.append({'id':record.course_option_id.id,'name':record.course_option_id.name})
+        else:
+            subject=self.env['cfo.course.code'].sudo().search_read([],['id','name'])
+            semester=self.env['cfo.semester.information'].sudo().search_read([],['id','name'])
+            study_option= self.env['cfo.course.option'].sudo().search_read([], ['id', 'name'])
+
+        print("\n\n\n subject",subject)
+        print("\n\n\n semester",semester)
+        print("\n\n\n study_option",study_option)
+
+        return [subject,semester,study_option]
 
 class CFOTimeTableLines(models.Model):
     _name = "cfo.time.table.line"

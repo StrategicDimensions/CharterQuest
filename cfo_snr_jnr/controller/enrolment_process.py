@@ -1447,14 +1447,14 @@ class EnrolmentProcess(http.Controller):
                         
                         mail_compose_id.update({'email_to': sale_order_id.partner_id.email})
                         mail_values = {
-                            'email_from': com_spo_free_quote.email_from,
-                            'reply_to': com_spo_free_quote.reply_to,
+                            'email_from': com_spo_free_quote.sudo().email_from,
+                            'reply_to': com_spo_free_quote.sudo().reply_to,
                             'email_to': mail_compose_id.get('email_to'),
-                            'email_cc': com_spo_free_quote.email_cc,
+                            'email_cc': com_spo_free_quote.sudo().email_cc,
                             'subject': mail_compose_id.get('subject'),
                             'body_html': mail_compose_id.get('body'),
                             'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
-                            'auto_delete': com_spo_free_quote.auto_delete,
+                            'auto_delete': com_spo_free_quote.sudo().auto_delete,
                         }
                         msg_id = mail_obj.sudo().create(mail_values)
                         msg_id.sudo().send()
@@ -1852,7 +1852,8 @@ class EnrolmentProcess(http.Controller):
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
         attachment_list = []
         invoice_line = []
-
+        print("\n\n\n post",post)
+        print("\n\n\n request.session.get('sale_order')",request.session.get('sale_order'))
         if post.get('sale_order'):
             sale_order = post.get('sale_order')
         if request.session.get('sale_order'):
@@ -1948,19 +1949,23 @@ class EnrolmentProcess(http.Controller):
             payment_id.action_validate_invoice_payment()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:
-                debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
-                                        'student_number': '',
-                                        'dbo_amount': each_debit_order.dbo_amount,
-                                        'course_fee': each_debit_order.course_fee,
-                                        'interest': each_debit_order.interest,
-                                        'acc_holder': sale_order_id.partner_id.name,
-                                        'bank_name': each_debit_order.bank_name.id,
-                                        'bank_acc_no': each_debit_order.bank_acc_no,
-                                        'bank_code': each_debit_order.bank_name.bic,
-                                        'state': 'pending',
-                                        'bank_type_id': each_debit_order.bank_type_id.id,
-                                        'invoice_id': invoice_id.id if invoice_id else False
-                                        })
+                print("\n\n\n sale_order_id.months",sale_order_id.months)
+                for i in range(sale_order_id.months):
+                    print("\n\n\n i",i)
+                    res=debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
+                                            'student_number': '',
+                                            'dbo_amount': sale_order_id.monthly_amount,
+                                            'course_fee': each_debit_order.course_fee,
+                                            'interest': each_debit_order.interest,
+                                            'acc_holder': sale_order_id.partner_id.name,
+                                            'bank_name': each_debit_order.bank_name.id,
+                                            'bank_acc_no': each_debit_order.bank_acc_no,
+                                            'bank_code': each_debit_order.bank_name.bic,
+                                            'state': 'pending',
+                                            'bank_type_id': each_debit_order.bank_type_id.id,
+                                            'invoice_id': invoice_id.id if invoice_id else False
+                                            })
+                    print("\n\n\n\n res>>>",res)
         template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
         if template_id:
             # template_id.send_mail(sale_order_id.id, force_send=True)

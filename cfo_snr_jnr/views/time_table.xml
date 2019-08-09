@@ -339,6 +339,7 @@
                                 <!--                                   t-value="time.time_table_line_ids.filtered(lambda l: l.course_code_id.campus_id.id in [int(i) for i in campus_select.split(',')])"/>-->
                                 <!--                                   t-if="course_code_select and course_code_select != 'all'"/>-->
                                 <!--                                <t t-set="lines" t-value="time.time_table_line_ids" t-else=""/>-->
+                                <t t-esc="lines"/>
                                 <t t-foreach="lines" t-as="line">
                                     <tr>
                                         <td>
@@ -499,6 +500,53 @@
                 </div>
             </div>
         </t>
+
+        <t t-name="semester_select_template">
+            <select class="form-control multiple-codes-select" id="semester_select"
+                    style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                <t t-if="model_name and model_name.length > 0">
+                    <t t-foreach="model_name" t-as="each_model">
+                        <t t-if="each_model">
+                            <option t-att-value="each_model.id">
+                                <t t-esc="each_model.name"/>
+                            </option>
+                        </t>
+                    </t>
+                </t>
+            </select>
+        </t>
+
+        <t t-name="course_code_template">
+            <select class="form-control multiple-codes-select" id="course_code_select"
+                    style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                <t t-if="model_name and model_name.length > 0">
+                    <t t-foreach="model_name" t-as="each_model">
+                        <t t-if="each_model">
+                            <option t-att-value="each_model.id">
+                                <t t-esc="each_model.name"/>
+                            </option>
+                        </t>
+                    </t>
+                </t>
+            </select>
+        </t>
+
+        <t t-name="option_select_template">
+            <select class="form-control multiple-codes-select" id="option_select"
+                    style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                <t t-if="model_name and model_name.length > 0">
+                    <t t-foreach="model_name" t-as="each_model">
+                        <t t-if="each_model">
+                            <option t-att-value="each_model.id">
+                                <t t-esc="each_model.name"/>
+                            </option>
+                        </t>
+                    </t>
+                </t>
+            </select>
+        </t>
+
+
     </template>
 
 </odoo>
