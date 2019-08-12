@@ -67,14 +67,11 @@ class CFOTimeTable(models.Model):
 
     @api.model
     def get_data(self,qua_ids,campus_ids):
-        val=[]
         subject=[]
         semester=[]
         study_option=[]
         if qua_ids and campus_ids:
             res=self.env['cfo.time.table'].search([('qualification_id','in',[int(id) for id in qua_ids])])
-            print("\n\n\n res",res)
-            print("\n\n\n ")
             for record in res:
                 for line in record.time_table_line_ids:
                     if line.course_code_id.campus_id.id in [int(id) for id in campus_ids]:
@@ -85,10 +82,6 @@ class CFOTimeTable(models.Model):
             subject=self.env['cfo.course.code'].sudo().search_read([],['id','name'])
             semester=self.env['cfo.semester.information'].sudo().search_read([],['id','name'])
             study_option= self.env['cfo.course.option'].sudo().search_read([], ['id', 'name'])
-
-        print("\n\n\n subject",subject)
-        print("\n\n\n semester",semester)
-        print("\n\n\n study_option",study_option)
 
         return [subject,semester,study_option]
 

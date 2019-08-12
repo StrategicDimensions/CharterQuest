@@ -44,12 +44,6 @@ class TimeTable(http.Controller):
         campus_select = post.get('campus_select') if post.get('campus_select') else ','.join(
             [str(i.id) for i in request.env['res.partner'].sudo().search([('is_campus', '=', True)])])
 
-        print("\n\n\n called")
-        print("\n\n\n time_table_ids",time_table_ids)
-        print("\n\n\n campus_select",campus_select)
-        print("\n\n\n level_select",level_select)
-        print("\n\n\n option_select",option_select)
-        print("\n\n\n semester_select",semester_select)
         return request.render("cfo_snr_jnr.time_table_template", {
             'time_table': time_table_ids, 'course_code_select': course_code,
             'campus_select': post.get('campus_select') if post.get('campus_select') else '',

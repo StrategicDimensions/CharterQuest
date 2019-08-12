@@ -339,7 +339,7 @@
                                 <!--                                   t-value="time.time_table_line_ids.filtered(lambda l: l.course_code_id.campus_id.id in [int(i) for i in campus_select.split(',')])"/>-->
                                 <!--                                   t-if="course_code_select and course_code_select != 'all'"/>-->
                                 <!--                                <t t-set="lines" t-value="time.time_table_line_ids" t-else=""/>-->
-                                <t t-esc="lines"/>
+<!--                                <t t-esc="lines"/>-->
                                 <t t-foreach="lines" t-as="line">
                                     <tr>
                                         <td>
