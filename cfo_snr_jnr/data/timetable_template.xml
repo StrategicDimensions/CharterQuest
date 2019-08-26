@@ -46,7 +46,7 @@
                                                     <span t-esc="line.end_time" t-options="{'widget':'float_time'}"/>
                                                 </td>
                                                 <td>
-                                                    <div style="position:relative;">
+                                                    <div style="position:relative;white-space: initial;">
                                                         <t t-foreach="line.time_table_week_ids" t-as="week">
                                                             <t t-if="week.date or week.name">
                                                                 <div style="max-width: 20.1%;margin-left: 5px;min-height: 53px;max-height: 53px;margin-bottom: 5px;text-align: center;border: 2px solid gainsboro;border-radius: 7px;padding: 3px; float:left;">
