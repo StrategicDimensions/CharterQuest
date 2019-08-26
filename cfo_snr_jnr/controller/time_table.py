@@ -21,11 +21,11 @@ from odoo import http
 from odoo.http import request
 
 
+
 class TimeTable(http.Controller):
 
     @http.route(['/time_table'], type='http', auth="public", website=True)
     def time_table_view(self, **post):
-        print("\n\n\n\n\n post",post)
         level_select = post.get('level_select') if post.get('level_select') else ','.join(
             [str(i.id) for i in request.env['event.qual'].sudo().search([])])
         option_select = post.get('option_select') if post.get('option_select') else ','.join(
@@ -49,6 +49,7 @@ class TimeTable(http.Controller):
             'campus_select': post.get('campus_select') if post.get('campus_select') else '',
             'option_select': post.get('option_select') if post.get('option_select') else '',
             'semester_select': post.get('semester_select') if post.get('semester_select') else '',
+            'ids': str(time_table_ids.ids).strip('[]'),'is_visible':True if post.get('course_code_select') else False,
         })
 
     @http.route(['/view_lecturer/<int:lecturer_id>'], type='http', auth="public", website=True)
@@ -56,3 +57,21 @@ class TimeTable(http.Controller):
         if lecturer_id:
             lecturer_id = request.env['res.partner'].sudo().browse([lecturer_id])
             return request.render("cfo_snr_jnr.view_lecturer_details", {'lecturer': lecturer_id})
+
+    @http.route('/time_table/report/print', methods=['POST', 'GET'], csrf=False, type='http', auth="user", website=True)
+    def print_id(self, **kw):
+        time_table_ids = [int(i) for i in kw['id'].split(",")]
+        course_code = [int(i) for i in kw['code'].split(",")]
+        timetable_ids=request.env['cfo.time.table'].sudo().search([('id','in',time_table_ids)])
+        timetable_ids1= request.env['cfo.time.table'].sudo().search([('id', 'in', time_table_ids)],limit=1)
+        datas={'course_code':course_code}
+        if timetable_ids and course_code:
+            report_id = request.env.ref('cfo_snr_jnr.report_time_table')
+            pdf = report_id.sudo().render_qweb_pdf(timetable_ids, data=datas)[0]
+            pdfhttpheaders = [
+                ('Content-Type', 'application/pdf'),
+                ('Content-Length', len(pdf)),
+                ('Content-Disposition', 'attachment'),
+                ('target', '_blank'),
+            ]
+            return request.make_response(pdf, headers=pdfhttpheaders)

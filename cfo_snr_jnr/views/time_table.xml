@@ -257,12 +257,12 @@
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
                             <t t-foreach="request.env['res.partner'].sudo().search([('is_campus', '=', True)])"
                                t-as="campus">
-                                <option t-att-value="campus.id">
+                                <option t-att-class="class1" t-att-value="campus.id">
                                     <span t-esc="campus.name"/>
                                 </option>
                             </t>
                         </select>
-                        <input type="hidden" name="level_select" t-att-value="level_select"/>
+                        <input type="hidden" name="level_select" t-att-value="level_select" class="level_select"/>
                         <select class="form-control multiple-levels-select" id="level_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
                             <t t-foreach="request.env['event.qual'].sudo().search([])" t-as="qualification">
@@ -274,12 +274,8 @@
                         <input type="hidden" name="course_code_select" t-att-value="course_code_select"/>
                         <select class="form-control multiple-codes-select" id="course_code_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
-                            <!--                            <option value="all" t-att-selected="'selected' if course_code_select == 'all' else False">-->
-                            <!--                                All Codes-->
-                            <!--                            </option>-->
                             <t t-foreach="request.env['cfo.course.code'].sudo().search([])" t-as="code">
                                 <option t-att-value="code.id">
-                                    <!--                                        t-att-selected="'selected' if course_code_select != 'all' and int(course_code_select) == code.id else False">-->
                                     <span t-esc="code.name"/>
                                 </option>
                             </t>
@@ -303,9 +299,16 @@
                             </t>
                         </select>
                         <button type="submit" title="Filter" style="height:38px;transition:unset;">
-                            <i class="fa fa-filter"/>
+                            <i class="fa fa-filter o_fillter_click"/>
                         </button>
                     </form>
+                </div>
+                <div>
+                    <t t-if="is_visible and time_table">
+                        <a class="btn btn-primary hidden-print cms-print-pdf" t-att-href="'/time_table/report/print?id=%s&amp;code=%s'%(ids,course_code_select)">
+                                <span><i class="fa fa-print" aria-hidden="true"></i></span>Print
+                        </a>
+                    </t>
                 </div>
                 <div class="panel-body">
                     <t t-foreach="time_table" t-as="time">
@@ -548,5 +551,14 @@
 
 
     </template>
+
+    <report
+            id="report_time_table"
+            string="Time Table"
+            model="cfo.time.table"
+            report_type="qweb-pdf"
+            name="cfo_snr_jnr.report_timetable"
+            file="cfo_snr_jnr.report_timetable"
+            print_report_name="CharterQuest(Time-Table).pdf"/>
 
 </odoo>

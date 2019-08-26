@@ -21,6 +21,30 @@
         </section>
     </template>
 
+    <template id="cfo_snr_jnr_time_table_snippet" name="time_table">
+        <section class="cfo_snr_jnr_time_table" contentEditable="true">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                      <img alt="client" class="img-circle" src="/theme_tutorial/static/src/img/client_1.jpg"/>
+                      <h3>Client Name</h3>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                    <div class="col-md-4">
+                      <img alt="client" class="img-circle" src="/theme_tutorial/static/src/img/client_2.jpg"/>
+                      <h3>Client Name</h3>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                    <div class="col-md-4">
+                      <img alt="client" class="img-circle" src="/theme_tutorial/static/src/img/client_3.jpg"/>
+                      <h3>Client Name</h3>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
     <template id="cfo_snr_jnr_menu_with_tabs_snippet" name="Menu With Tabs">
         <section class="cfo_snr_jnr_menu_with_tabs" contentEditable="true">
             <div class="container">
@@ -314,6 +338,8 @@
                    t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/steps_wizard.png"/>
                 <t t-snippet="cfo_snr_jnr.cfo_snr_jnr_cards_block"
                    t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/card_layout.png"/>
+                <t t-snippet="cfo_snr_jnr.cfo_snr_jnr_time_table_snippet"
+                   t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/time_table.png"/>
             </div>
         </xpath>
     </template>

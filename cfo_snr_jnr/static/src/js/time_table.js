@@ -1,6 +1,8 @@
 odoo.define(function (require) {
 var rpc = require('web.rpc');
 var self = this;
+var flag = false;
+var localStorage = window.localStorage;
 $(document).ready(function(){
 
 	$('.info_time_table_course').popover({
@@ -24,63 +26,64 @@ $(document).ready(function(){
 		});
 	});
 
+	$('.o_fillter_click').on('click',function(){
+	    console.log("\n\n\n calll>>",flag)
+	    flag = true;
+	    console.log("\n\n\n calll111>>",flag)
+	});
+
+	$('.multiple-campus-select').on('change',function(){
+//    alert()
+        var value=$(this).val();
+        localStorage.setItem("campus",value);
+    });
+
+    $('.multiple-levels-select').on('change',function(){
+//    alert()
+        var value=$(this).val();
+        localStorage.setItem("levels",value);
+    });
+
+    $('.multiple-codes-select').on('change',function(){
+//    alert()
+        var value=$(this).val();
+        localStorage.setItem("codes",value);
+    });
+
+    $('.multiple-semester-select').on('change',function(){
+//    alert()
+        var value=$(this).val();
+        localStorage.setItem("semester",value);
+    });
+
+    $('.multiple-option-select').on('change',function(){
+//    alert()
+        var value=$(this).val();
+        localStorage.setItem("option",value);
+    });
+
+
 	if(window.location.pathname == '/time_table'){
 
-		$('.multiple-codes-select').select2({
-			placeholder: "Select a Subject"
-		});
+        $('#campus_select').select2().select2({
+			    placeholder: "Select a Campus"
+		    });
 
-		var codes_list = [];
-		$.each($(document).find("input[name=course_code_select]").val().split(','), function (key, val){
-			codes_list.push(parseInt(val));
-		});
+		$('#level_select').select2().select2({
+			    placeholder: "Select a level"
+		    });
 
-	//	$('.multiple-codes-select').select2('val', codes_list);
+		$('#course_code_select').select2().select2({
+			    placeholder: "Select a Subject"
+		    });
 
-		$('.multiple-levels-select').select2({
-			placeholder: "Select a Level"
-		});
+		$('#semester_select').select2().select2({
+			    placeholder: "Select a Semester"
+		    });
 
-		var level_list = [];
-		$.each($(document).find("input[name=level_select]").val().split(','), function (key, val){
-			level_list.push(parseInt(val));
-		});
-
-		$('.multiple-levels-select').select2('val', level_list);
-
-		$('.multiple-option-select').select2({
-			placeholder: "Select a Study Option"
-		});
-
-		var option_list = [];
-		$.each($(document).find("input[name=option_select]").val().split(','), function (key, val){
-			option_list.push(parseInt(val));
-		});
-
-		$('.multiple-option-select').select2('val', option_list);
-
-		$('.multiple-semester-select').select2({
-			placeholder: "Select a Semester"
-		});
-
-		var semester_list = [];
-		$.each($(document).find("input[name=semester_select]").val().split(','), function (key, val){
-			semester_list.push(parseInt(val));
-		});
-
-		$('.multiple-campus-select').select2('val', semester_list);
-
-		$('.multiple-campus-select').select2({
-			placeholder: "Select a Campus"
-		});
-
-		var campus_list = [];
-		$.each($(document).find("input[name=campus_select]").val().split(','), function (key, val){
-			campus_list.push(parseInt(val));
-		});
-
-		$('.multiple-campus-select').select2('val', campus_list);
-
+		$('#option_select').select2().select2({
+			    placeholder: "Select a Study Option"
+		    });
 		$(document).on("click", ".details_view_lecturer", function(event){
 			window.location.href = $(this).attr('data-href');
 		});
@@ -102,7 +105,7 @@ $(document).ready(function(){
 		});
 
 		$(document).on('change','#campus_select',function(){
-			$(document).find('input[name="campus_select"]').val($('.multiple-campus-select').select2('val'));
+                $(document).find('input[name="campus_select"]').val($('.multiple-campus-select').select2('val'));
 		});
 	}
 
@@ -121,7 +124,6 @@ $(document).ready(function(){
                 method:'get_data',
                 args:[qua_ids,campus_ids]
         }).then(function (data){
-            console.log("calllllll>>>",data)
             for(var i=0; i<data[0].length; i++)
             {
                 subject.push('<option value="' + data[0][i].id + '">' + data[0][i].name + '</option>\n')
@@ -167,5 +169,73 @@ $(document).ready(function(){
             $(document).find('#option_select').html(study_option)
         })
     });
+
+    $(window).on("load",function(){
+    
+        var campus = localStorage.getItem("campus")
+        if (campus){
+            $('#campus_select').select2().select2('val',campus.split(","));
+        }
+        else
+        {
+           $('#campus_select').select2().select2({
+			    placeholder: "Select a Campus"
+		    });
+        }
+
+        var levels = localStorage.getItem("levels")
+        console.log("\n\n\n levels",levels)
+        if (levels){
+            $('#level_select').select2().select2('val',levels.split(","));
+        }
+        else
+        {
+           $('#level_select').select2().select2({
+			    placeholder: "Select a level"
+		    });
+        }
+
+        var codes = localStorage.getItem("codes")
+        console.log("\n\n\n codes",codes)
+        if (codes){
+            $('#course_code_select').select2().select2('val',codes.split(","));
+        }
+        else
+        {
+           $('#course_code_select').select2().select2({
+			    placeholder: "Select a Subject"
+		    });
+        }
+
+        var semester = localStorage.getItem("semester")
+        console.log("\n\n\n semester",semester)
+        if (semester){
+            $('#semester_select').select2().select2('val',semester.split(","));
+        }
+        else
+        {
+           $('#semester_select').select2().select2({
+			    placeholder: "Select a Semester"
+		    });
+        }
+
+        var option = localStorage.getItem("option")
+        console.log("\n\n\n option",option)
+        if (option){
+        $('#option_select').select2().select2('val',option.split(","));
+        }
+        else
+        {
+           $('#option_select').select2().select2({
+			    placeholder: "Select a Study Option"
+		    });
+        }
+
+        localStorage.clear();
+
+
+    });
+
+
 });
 });
