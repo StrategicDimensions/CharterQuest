@@ -19,6 +19,7 @@
 ##############################################################################
 from odoo import models, fields, api, _
 from odoo.tools import float_compare
+from odoo.http import request
 from odoo.exceptions import UserError, Warning, ValidationError
 import logging
 
@@ -27,6 +28,8 @@ _logger = logging.getLogger(__name__)
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
+
+    debitorder_link= fields.Boolean(string="Debit Order Mandate Link")
 
     @api.multi
     def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, attributes=None, warehouse_id= 0, **kwargs):
@@ -106,6 +109,9 @@ class SaleOrder(models.Model):
             order_line.write(values)
 
         return {'line_id': order_line.id, 'quantity': quantity}
+
+
+
 
 
 class SaleOrderLine(models.Model):

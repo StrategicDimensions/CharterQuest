@@ -1,8 +1,11 @@
 from odoo import models, fields, api, _
 from odoo.tools.translate import _
 from odoo import netsvc
-import hashlib
 import urllib
+from odoo.http import request
+import hashlib
+from urllib.parse import urljoin
+
 
 
 class sale_order(models.Model):
@@ -120,17 +123,30 @@ class payment_confirmation(models.Model):
 
     @api.multi
     def button_create_saleorder(self):
+        sale_obj = self.env['sale.order'].browse(self.order_id.id)
         dic = {
             'payment_amount': self.payment_amount,
             'payment_ref': self.payment_ref,
             'payment_method': self.payment_method.id
         }
+        if self.payment_amount < sale_obj.amount_total:
+            template_id=self.env.ref('event_debit_order_kt.email_template_edi_debit_order_mandate')
+            template_id.send_mail(self.id,force_send=True)
+        quote_name = "SO{0}WEB".format(str(sale_obj.id).zfill(3))
+        m = hashlib.md5(quote_name.encode())
+        decoded_quote_name = m.hexdigest()
+        config_para = request.env['ir.config_parameter'].sudo().search(
+            [('key', 'ilike', 'web.base.url')])
+        if config_para:
+            link = config_para.value + "/payment/" + decoded_quote_name + '&' + decoded_quote_name
+            print("\n\n\n link>", link)
+            sale_obj.write({'debit_order_mandate_link': link,'debitorder_link':True})
         self.order_id.write(dic)
         # self.order_id.action_confirm()
         self.order_id._action_confirm()
         if self.env['ir.config_parameter'].sudo().get_param('sale.auto_done_setting'):
             self.action_done()
-        sale_obj = self.env['sale.order'].browse(self.order_id.id)
+
         if str(sale_obj.payment_amount) == str(sale_obj.amount_total):
             sale_adv_payment = {
                 'advance_payment_method': 'all',

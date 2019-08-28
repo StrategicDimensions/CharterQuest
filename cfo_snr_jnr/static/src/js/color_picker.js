@@ -40,3 +40,4 @@ odoo.define('web_theme_color.main', function (require) {
 
 
 });
+

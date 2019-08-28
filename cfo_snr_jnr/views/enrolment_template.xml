@@ -2174,6 +2174,7 @@
                                     </t>
                                 </td>
                             </tr>
+
                             <tr>
                                 <t t-set="total_tax_pay" t-value="0"/>
                                 <t t-if="sale_order">
@@ -2210,62 +2211,37 @@
                                     </td>
                                 </t>
                                 <t t-if="not total_tax_pay">
-                                    <td></td>
+                                    <td><span t-esc="uuid2"></span> </td>
                                 </t>
                             </tr>
-                            <tr t-if="sale_order or register_enrol or sale_order_id and sale_order_id.affiliation == '1'" style="background-color:#DA4F49;">
+                            <tr t-if="uuid2">
+                                <td>Deposit Paid</td>
+                                <td>
+                                    <input type="text" name="depositamount" id="depositamount" readonly=""
+                                           t-att-value="sale_order_id.payment_amount"/>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr t-if="uuid2">
+                                <t t-set="total_amount_1" t-value="total_amount if total_amount else grand_tot"/>
+                                <t t-set="balance_outstanding_1" t-value="'%.2f'%(float(total_amount_1) - float(sale_order_id.payment_amount))"/>
+                                <td>Balance Outstanding</td>
+                                <td>
+                                    <input type="text" name="inputOutstanding" id="inputOutstanding" readonly=""
+                                           t-att-value="balance_outstanding_1"/>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr t-if="sale_order or register_enrol or sale_order_id and sale_order_id.affiliation == '1' and sale_order_id.debitorder_link != True and not uuid2" style="background-color:#DA4F49;">
                                 <th>Deposit Payment Info</th>
                                 <th>% and/or Amount in Rands</th>
                                 <th>Guidance / How to:</th>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1'">
+                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1' and sale_order_id.debitorder_link != True and not uuid2">
                                 <td>Course Deposit</td>
                                 <td>
                                     <select name="inputPaypercentage" class="requiredValue" id="inputPaypercentage">
-                                        <t t-if="sale_order_id">
-                                            <t t-if="sale_order_id.diposit_selected">
-                                                <option value="20"
-                                                        t-att-selected="20 == (sale_order_id.diposit_selected)">20 %
-                                                </option>
-                                                <option value="30"
-                                                        t-att-selected="30 == (sale_order_id.diposit_selected)">30 %
-                                                </option>
-                                                <option value="40"
-                                                        t-att-selected="40 == (sale_order_id.diposit_selected)">40 %
-                                                </option>
-                                                <option value="50"
-                                                        t-att-selected="50 == (sale_order_id.diposit_selected)">50 %
-                                                </option>
-                                                <option value="60"
-                                                        t-att-selected="60 == (sale_order_id.diposit_selected)">60 %
-                                                </option>
-                                                <option value="70"
-                                                        t-att-selected="70 == (sale_order_id.diposit_selected)">70 %
-                                                </option>
-                                                <option value="80"
-                                                        t-att-selected="80 == (sale_order_id.diposit_selected)">80 %
-                                                </option>
-                                                <option value="90"
-                                                        t-att-selected="90 == (sale_order_id.diposit_selected)">90 %
-                                                </option>
-                                                <option value="100"
-                                                        t-att-selected="100 == (sale_order_id.diposit_selected)">100 %
-                                                </option>
-                                            </t>
 
-                                            <t t-if="not sale_order_id.diposit_selected">
-                                                <option value="20">20 %</option>
-                                                <option value="30">30 %</option>
-                                                <option value="40">40 %</option>
-                                                <option value="50">50 %</option>
-                                                <option value="60">60 %</option>
-                                                <option value="70">70 %</option>
-                                                <option value="80">80 %</option>
-                                                <option value="90">90 %</option>
-                                                <option value="100">100 %</option>
-                                            </t>
-                                        </t>
-                                        <t t-if="sale_order and not sale_order_id">
                                             <option value="20">20 %</option>
                                             <option value="30">30 %</option>
                                             <option value="40">40 %</option>
@@ -2275,7 +2251,7 @@
                                             <option value="80">80 %</option>
                                             <option value="90">90 %</option>
                                             <option value="100">100 %</option>
-                                        </t>
+
                                     </select>
                                 </td>
                                 <td>Please use the dropdown arrow to select the deposit % you would like to pay. Minimum
@@ -2284,7 +2260,7 @@
                                     self-sponsored student).
                                 </td>
                             </tr>
-                            <tr t-if="sale_order or uuid or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
+                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1' and sale_order_id.debitorder_link != True and not uuid2  ">
                                 <t t-set="due" t-value="(float(total_payment)*20)/100"/>
                                 <td style="background-color: -moz-MenuBarText;">Total (Due Now)</td>
                                 <td style="background-color: -moz-MenuBarText;">
@@ -2310,7 +2286,7 @@
                                 <th>% and/or Amount in Rands</th>
                                 <th>Guidance / How to:</th>
                             </tr>
-                            <tr>
+                            <tr t-if="not uuid2">
                                 <t t-if='total_payment and due'>
                                     <t t-set="out_standing" t-value="(float(total_payment)) - (float(due))"/>
                                 </t>
@@ -2318,7 +2294,7 @@
                                 <td>
                                 
                                     <t t-if="sale_order_id">
-                                        <t t-if="sale_order_id.outstanding_amount">
+                                        <t t-if="sale_order or sale_order_id.outstanding_amount">
                                             <input type="text" name="inputOutstanding" id="inputOutstanding"
                                                    t-att-value="sale_order_id.outstanding_amount" readonly=""/>
                                         </t>
@@ -2417,8 +2393,8 @@
                                 </td>
                                 <td style="background-color: -moz-MenuBarText;">
 
-                                    <t t-if="sale_order_id">
-                                        <t t-if="sale_order_id.outstanding_amount">
+                                    <t t-if="not uuid2">
+                                        <t t-if="sale_order_id and sale_order_id.outstanding_amount">
                                             <input type="text" name="inputtotalandInterest" id="inputtotalandInterest"
                                                    t-att-value="sale_order_id.out_standing_balance_incl_vat"
                                                    readonly=""/>
@@ -2428,9 +2404,13 @@
                                                    t-att-value="out_standing" readonly=""/>
                                         </t>
                                     </t>
-                                     <t t-if="sale_order and register_enrol">
+<!--                                     <t t-if="not uuid2">-->
+<!--                                         <input type="text" name="inputtotalandInterest" id="inputtotalandInterest"-->
+<!--                                                t-att-value="out_standing" readonly=""/>-->
+<!--                                     </t>-->
+                                    <t t-if="uuid2">
                                          <input type="text" name="inputtotalandInterest" id="inputtotalandInterest"
-                                                t-att-value="out_standing" readonly=""/>
+                                                t-att-value="balance_outstanding_1" readonly=""/>
                                      </t>
                                 </td>
                                 <td></td>
@@ -2438,7 +2418,7 @@
                             <tr t-if="sale_order or uuid or register_enrol or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
                                 <td>Display of monthly amounts.</td>
                                 <td>
-                                    <t t-if="sale_order_id">
+                                    <t t-if="not uuid2">
                                         <t t-if="sale_order_id.outstanding_amount">
                                             <input type="text" name="inputpaymentpermonth" id="inputpaymentpermonth"
                                                    t-att-value="sale_order_id.monthly_amount" readonly=""/>
@@ -2448,9 +2428,13 @@
                                                    t-att-value="out_standing" readonly=""/>
                                         </t>
                                     </t>
-                                     <t t-if="sale_order and register_enrol">
+<!--                                     <t t-if="not uuid2">-->
+<!--                                        <input type="text" name="inputpaymentpermonth" id="inputpaymentpermonth"-->
+<!--                                               t-att-value="out_standing" readonly=""/>-->
+<!--                                    </t>-->
+                                    <t t-if="uuid2">
                                         <input type="text" name="inputpaymentpermonth" id="inputpaymentpermonth"
-                                               t-att-value="out_standing" readonly=""/>
+                                               t-att-value="balance_outstanding_1" readonly=""/>
                                     </t>
                                 </td>
 
@@ -2466,7 +2450,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <t t-if="uuid or register_enrol and page_confirm or bank_detail  ">
+                    <t t-if="uuid or register_enrol and page_confirm or bank_detail">
                         <table id="debit_order_section" class="table table-bordered debit_order_section"
                                style="color:black;background-color:gainsboro;margin-bottom:20px;">
                             <tbody>
@@ -2645,7 +2629,7 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation=='1'">
+                                <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation=='1' and not uuid2">
                                     <td colspan="3">
                                         <div class="control-group">
                                             <div class="controls">
@@ -2690,14 +2674,16 @@
                     </t>
                     <t t-if="uuid or register_enrol and page_confirm or bank_detail">
                         <div class="control-group">
-                            <label class="checkbox" style="color:black;padding-left: 35px;padding-bottom: 10px;">
-                                <input type="checkbox" id="requiredcheckbox" name="requiredcheckbox"
-                                       data-required="true" class="parsley-validated" required=""/>
-                                I accept the
-                                <a target="blank_" href="http://www.charterquest.co.za/page/terms-and-conditions">Terms
-                                    and Conditions
-                                </a>
-                            </label>
+                            <t t-if="sale_order or sale_order_id and sale_order_id.affiliation=='1' and not uuid2">
+                                <label class="checkbox" style="color:black;padding-left: 35px;padding-bottom: 10px;">
+                                    <input type="checkbox" id="requiredcheckbox" name="requiredcheckbox"
+                                           data-required="true" class="parsley-validated" required=""/>
+                                    I accept the
+                                    <a target="blank_" href="http://www.charterquest.co.za/page/terms-and-conditions">Terms
+                                        and Conditions
+                                    </a>
+                                </label>
+                            </t>
                             <t t-if="sale_order">
                                 <input id="sale_order" class="form-field" name="sale_order" t-att-value="sale_order"
                                        type="hidden"/>
@@ -2708,18 +2694,25 @@
                             </t>
 
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-
-                            <button id="back_button" class="btn btn-primary" type="button">Back</button>
-                            <button type="submit" style="margin-left:10px;" formaction="/event/redirect_payu"
-                                    id="credit-button" class="btn btn-primary">Pay Via Credit Card
-                            </button>
-                            <button type="submit" style="margin-left:10px;" formaction="/validate_payment"
-                                    id="eft-button" class="btn btn-primary">Pay Via EFT
-                            </button>
-                            <button type="submit" style="margin-left:10px;" formaction="/validate_payment"
-                                    id="bankdeposit-button" value="true" name="Pay Via Bank Deposit"
-                                    class="btn btn-primary">Pay Via Bank Deposit
-                            </button>
+                            <t t-if="not uuid2">
+                                <button id="back_button" class="btn btn-primary" type="button">Back</button>
+                                <button type="submit" style="margin-left:10px;" formaction="/event/redirect_payu"
+                                        id="credit-button" class="btn btn-primary">Pay Via Credit Card
+                                </button>
+                                <button type="submit" style="margin-left:10px;" formaction="/validate_payment"
+                                        id="eft-button" class="btn btn-primary">Pay Via EFT
+                                </button>
+                                <button type="submit" style="margin-left:10px;" formaction="/validate_payment"
+                                        id="bankdeposit-button" value="true" name="Pay Via Bank Deposit"
+                                        class="btn btn-primary">Pay Via Bank Deposit
+                                </button>
+                            </t>
+                            <t t-if="uuid2">
+                                <button type="submit" style="margin-left:268px;" formaction="/Page/Thank-you"
+                                        id="debitordermandate-button" value="true" name="Submit Debit Order Mandate"
+                                        class="btn btn-primary">Submit Debit Order Mandate
+                                </button>
+                            </t>
                         </div>
                     </t>
                 </form>

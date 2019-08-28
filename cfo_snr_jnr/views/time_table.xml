@@ -446,14 +446,16 @@
                                             <span t-esc="line.end_time" t-options="{'widget':'float_time'}"/>
                                         </td>
                                         <td>
-                                            <t t-foreach="line.time_table_week_ids" t-as="week">
-                                                <t t-if="week.date or week.name">
-                                                    <div class="col-md-2 time_table_div">
-                                                        <div t-esc="week.date"/>
-                                                        <div t-esc="week.name"/>
-                                                    </div>
+                                            <div class="cfo-cnr-jnr-color-picker">
+                                                <t t-foreach="line.time_table_week_ids" t-as="week">
+                                                    <t t-if="week.date or week.name">
+                                                        <div class="col-md-2 time_table_div">
+                                                            <div t-esc="week.date"/>
+                                                            <div t-esc="week.name"/>
+                                                        </div>
+                                                    </t>
                                                 </t>
-                                            </t>
+                                            </div>
                                         </td>
                                     </tr>
                                 </t>
@@ -560,5 +562,16 @@
             name="cfo_snr_jnr.report_timetable"
             file="cfo_snr_jnr.report_timetable"
             print_report_name="CharterQuest(Time-Table).pdf"/>
+
+        <record id="sale_order_form_view_inherit_11" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet//notebook//page[2]" position='inside'>
+                    <field name='debitorder_link' invisible="1"/>
+                </xpath>
+            </field>
+        </record>
 
 </odoo>

@@ -235,7 +235,34 @@ $(document).ready(function(){
 
 
     });
+    var i=0;
+    $('.time_table_div').each(function(){
+        i++;
+        var newID='sesson'+i;
+        $(this).attr('id',newID);
+        $(this).val(i);
+    });
 
+    $(".cfo-cnr-jnr-color-picker").on("click",function(e){
+        var id="#"+ e.target.offsetParent.id
+        if (e.target.offsetParent.id){
+            $(id).spectrum({
+            chooseText:'clear'
+            });
+            $('.sp-choose').hide();
+            $(id).on('move.spectrum', function(e, tinyColor) {
+                var hexVal = tinyColor.toHexString();
+                $(id).css('backgroundColor', '#' + hexVal);
+            });
+        }
+    });
+
+//    $(".cms-print-pdf").on('click',function(){
+//            alert()
+//            var html=$("panel-body").html(body);
+//            var base64String = window.btoa(html);
+//            console.log("\n\n\n html>>>",base64String)
+//    });
 
 });
 });
