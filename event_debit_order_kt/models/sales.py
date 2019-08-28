@@ -138,7 +138,7 @@ class payment_confirmation(models.Model):
         config_para = request.env['ir.config_parameter'].sudo().search(
             [('key', 'ilike', 'web.base.url')])
         if config_para:
-            link = config_para.value + "/payment/" + decoded_quote_name + '&' + decoded_quote_name
+            link = config_para.value + "/payment/" + decoded_quote_name + '/' + decoded_quote_name
             print("\n\n\n link>", link)
             sale_obj.write({'debit_order_mandate_link': link,'debitorder_link':True})
         self.order_id.write(dic)

@@ -2211,7 +2211,7 @@
                                     </td>
                                 </t>
                                 <t t-if="not total_tax_pay">
-                                    <td><span t-esc="uuid2"></span> </td>
+                                    <td></td>
                                 </t>
                             </tr>
                             <tr t-if="uuid2">
@@ -2232,12 +2232,12 @@
                                 </td>
                                 <td></td>
                             </tr>
-                            <tr t-if="sale_order or register_enrol or sale_order_id and sale_order_id.affiliation == '1' and sale_order_id.debitorder_link != True and not uuid2" style="background-color:#DA4F49;">
+                            <tr t-if="sale_order or register_enrol or sale_order_id and sale_order_id.affiliation == '1' and not uuid2" style="background-color:#DA4F49;">
                                 <th>Deposit Payment Info</th>
                                 <th>% and/or Amount in Rands</th>
                                 <th>Guidance / How to:</th>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1' and sale_order_id.debitorder_link != True and not uuid2">
+                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1' and not uuid2">
                                 <td>Course Deposit</td>
                                 <td>
                                     <select name="inputPaypercentage" class="requiredValue" id="inputPaypercentage">
@@ -2260,7 +2260,7 @@
                                     self-sponsored student).
                                 </td>
                             </tr>
-                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1' and sale_order_id.debitorder_link != True and not uuid2  ">
+                            <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1'  and not uuid2  ">
                                 <t t-set="due" t-value="(float(total_payment)*20)/100"/>
                                 <td style="background-color: -moz-MenuBarText;">Total (Due Now)</td>
                                 <td style="background-color: -moz-MenuBarText;">
@@ -2292,9 +2292,8 @@
                                 </t>
                                 <td>Outstanding Balance</td>
                                 <td>
-                                
                                     <t t-if="sale_order_id">
-                                        <t t-if="sale_order or sale_order_id.outstanding_amount">
+                                        <t t-if="sale_order_id.outstanding_amount">
                                             <input type="text" name="inputOutstanding" id="inputOutstanding"
                                                    t-att-value="sale_order_id.outstanding_amount" readonly=""/>
                                         </t>
@@ -2674,7 +2673,7 @@
                     </t>
                     <t t-if="uuid or register_enrol and page_confirm or bank_detail">
                         <div class="control-group">
-                            <t t-if="sale_order or sale_order_id and sale_order_id.affiliation=='1' and not uuid2">
+                            <t t-if="sale_order or sale_order_id and sale_order_id.affiliation=='1'and not uuid2">
                                 <label class="checkbox" style="color:black;padding-left: 35px;padding-bottom: 10px;">
                                     <input type="checkbox" id="requiredcheckbox" name="requiredcheckbox"
                                            data-required="true" class="parsley-validated" required=""/>

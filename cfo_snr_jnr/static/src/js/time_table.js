@@ -257,12 +257,6 @@ $(document).ready(function(){
         }
     });
 
-//    $(".cms-print-pdf").on('click',function(){
-//            alert()
-//            var html=$("panel-body").html(body);
-//            var base64String = window.btoa(html);
-//            console.log("\n\n\n html>>>",base64String)
-//    });
 
 });
 });

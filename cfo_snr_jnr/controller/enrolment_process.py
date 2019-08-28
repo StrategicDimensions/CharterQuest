@@ -816,7 +816,7 @@ class EnrolmentProcess(http.Controller):
                 print()
                 
                 if sale_order_id.quote_type == 'enrolment':
-
+                    print("call>>> 111")
                     return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
                                                                                     'product_tot': round(product_tot,
                                                                                                          2),
@@ -829,7 +829,6 @@ class EnrolmentProcess(http.Controller):
                                                                                     'uuid2':post.get('uuid2') if post.get('uuid2') else False,
                                                                                     })
                 if sale_order_id.quote_type == 'freequote':
-
                     return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
                                                                                     'product_tot': round(product_tot,
                                                                                                          2),
