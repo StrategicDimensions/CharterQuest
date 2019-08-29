@@ -244,7 +244,8 @@ $(document).ready(function(){
     });
 
     $(".cfo-cnr-jnr-color-picker").on("click",function(e){
-        var id="#"+ e.target.offsetParent.id
+        var id="#"+ e.target.offsetParent.id;
+        var timetable_id=$(e.target.offsetParent).attr('data');
         if (e.target.offsetParent.id){
             $(id).spectrum({
             chooseText:'clear'
@@ -253,6 +254,12 @@ $(document).ready(function(){
             $(id).on('move.spectrum', function(e, tinyColor) {
                 var hexVal = tinyColor.toHexString();
                 $(id).css('backgroundColor', '#' + hexVal);
+                rpc.query({
+                    model:'cfo.time.table.weeks',
+                    method:'add_color',
+                    args:[timetable_id,hexVal]
+                });
+
             });
         }
     });

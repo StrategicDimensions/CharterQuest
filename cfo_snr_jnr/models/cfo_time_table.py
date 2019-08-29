@@ -105,6 +105,15 @@ class CFOTimeTableWeeks(models.Model):
 
     name = fields.Char(string="Name")
     date = fields.Date(string="Date")
+    color=fields.Char(string="color")
     time_table_line_id = fields.Many2one('cfo.time.table.line', string="Time Table Line")
+
+    @api.model
+    def add_color(self,id,color_val):
+        print("callll>>",id)
+        print("callll>>",color_val)
+        res=self.env['cfo.time.table.weeks'].browse(id)
+        print("\n\n\n id>>",res)
+        res.write({'color':color_val})
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -2417,7 +2417,6 @@ class EnrolmentProcess(http.Controller):
         debit_order_mandet = []
         res_bank_detail = False
         account_type = False
-
         if post.get('inputBankName'):
             res_bank_detail = request.env['res.bank'].sudo().search([('id', '=', int(post['inputBankName']))])
         if post.get('inputAtype'):
@@ -2449,5 +2448,189 @@ class EnrolmentProcess(http.Controller):
                  'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
                  'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0,
                  'debit_order_mandat': debit_order_mandet})
+            invoice_obj = request.env['account.invoice'].sudo()
+            debit_order_obj = request.env['debit.order.details'].sudo()
+            mail_obj = request.env['mail.mail'].sudo()
+            # user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
+            attachment_list = []
+            invoice_line = []
+            if post.get('sale_order'):
+                sale_order = post.get('sale_order')
+            if request.session.get('sale_order'):
+                sale_order = request.session['sale_order']
+            if request.session.get('sale_last_order_id'):
+                sale_order = request.session.get('sale_last_order_id')
 
+            event_tickets = request.session['event_id'] if request.session.get('event_id') else ''
+
+            sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
+            if sale_order_id and sale_order_id.quote_type == 'freequote':
+                ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
+                       'company_id': sale_order_id.company_id.id}
+                inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
+                ctx.update({'journal_id': inv_default_vals.get('journal_id')})
+                invoice_id = sale_order_id.with_context(ctx).sudo().action_invoice_create()
+                invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
+                invoice_id.action_invoice_open()
+                journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
+                print("\n\n\n invoice_id",invoice_id.ids)
+                payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
+                payment_id = request.env['account.payment'].sudo().create({
+                    'partner_id': sale_order_id.partner_id.id,
+                    'amount': sale_order_id.due_amount,
+                    'payment_type': 'inbound',
+                    'partner_type': 'customer',
+                    'invoice_ids': [(6, 0, invoice_id.ids)],
+                    'payment_date': datetime.today(),
+                    'journal_id': journal_id.id,
+                    'payment_method_id': payment_methods[0].id,
+                    'amount':sale_order_id.payment_amount,
+                })
+
+
+            if sale_order_id and sale_order_id.quote_type == 'enrolment':
+                for each_order_line in sale_order_id.order_line:
+                    invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
+                                                'name': each_order_line.name,
+                                                'quantity': 1.0,
+                                                'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
+                                                'invoice_line_tax_ids': [
+                                                    (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
+                                                'price_unit': each_order_line.price_unit,
+                                                'discount': each_order_line.discount}])
+                invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
+                                                        'campus': sale_order_id.campus.id,
+                                                        'prof_body': sale_order_id.prof_body.id,
+                                                        'sale_order_id': sale_order_id.id,
+                                                        'semester_id': sale_order_id.semester_id.id,
+                                                        'invoice_line_ids': invoice_line,
+                                                        'residual': sale_order_id.out_standing_balance_incl_vat,
+                                                        })
+
+            #         print ("\n\n--------------invoice_id--->>>>>>>>>>>>>>>>>>>>>>>>",invoice_id,sale_order_id)
+            #         sale_order_id.invoice_ids = [(4,invoice_id.id)]
+            stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
+            # stock_location = request.env['stock.location'].sudo().search(
+            #     [('location_id', '=', sale_order_id.warehouse_id.id)])
+            picking_type_id = request.env['stock.picking.type'].sudo().search([('name', '=', 'Delivery Orders'),
+                                                                               ('warehouse_id', '=',
+                                                                                sale_order_id.warehouse_id.id)])
+
+            line_list = []
+            for each_event_ticket in event_tickets:
+                event_ticket = request.env['event.event.ticket'].sudo().search(
+                    [('id', '=', int(event_tickets[each_event_ticket]))])
+                book_combination = request.env['course.material'].sudo().search(
+                    [('event_id', '=', event_ticket.event_id.id),
+                     ('study_option_id', '=', event_ticket.product_id.id)])
+                if book_combination:
+                    for each_combination in book_combination.material_ids:
+                        line_list.append((0, 0, {
+                            'name': 'move out',
+                            'product_id': each_combination.material_product_id.id,
+                            'product_uom': each_combination.material_product_id.uom_id.id,
+                            'product_uom_qty': 1,
+                            'procure_method': 'make_to_stock',
+                            'location_id': picking_type_id.id,
+                            'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+                        }))
+            customer_picking = request.env['stock.picking'].sudo().create({
+                'partner_id': sale_order_id.partner_id.id,
+                'campus_id': sale_order_id.campus.id,
+                'prof_body_id': sale_order_id.prof_body.id,
+                'sale_order_id': sale_order_id.id,
+                'sale_id': sale_order_id.id,
+                'semester': sale_order_id.semester_id.id,
+                'delivery_order_source': sale_order_id.quote_type,
+                'location_id': picking_type_id.id,
+                'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+                'picking_type_id': picking_type_id.id,
+                'move_lines': line_list
+            })
+            customer_picking.sale_id = sale_order_id.id
+            invoice_id.action_invoice_open()
+            if sale_order_id and sale_order_id.quote_type == 'freequote':
+                payment_id.action_validate_invoice_payment()
+            if sale_order_id.debit_order_mandat:
+                for each_debit_order in sale_order_id.debit_order_mandat:
+                    print("\n\n\n sale_order_id.months", sale_order_id.months)
+                    for i in range(sale_order_id.months):
+                        print("\n\n\n i", i)
+                        res = debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
+                                                      'student_number': '',
+                                                      'dbo_amount': sale_order_id.monthly_amount,
+                                                      'course_fee': each_debit_order.course_fee,
+                                                      'interest': each_debit_order.interest,
+                                                      'acc_holder': sale_order_id.partner_id.name,
+                                                      'bank_name': each_debit_order.bank_name.id,
+                                                      'bank_acc_no': each_debit_order.bank_acc_no,
+                                                      'bank_code': each_debit_order.bank_name.bic,
+                                                      'state': 'pending',
+                                                      'bank_type_id': each_debit_order.bank_type_id.id,
+                                                      'invoice_id': invoice_id.id if invoice_id else False
+                                                      })
+                        print("\n\n\n\n res>>>", res)
+            template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
+            if template_id:
+                # template_id.send_mail(sale_order_id.id, force_send=True)
+                if sale_order_id.affiliation == '1':
+                    pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').sudo().render_qweb_pdf(
+                        invoice_id.id)
+                    pdf_data_statement_invoice = request.env.ref(
+                        'event_price_kt.report_statement_enrollment').sudo().render_qweb_pdf(invoice_id.id)
+                    if pdf_data:
+                        pdfvals = {'name': 'Invoice',
+                                   'db_datas': base64.b64encode(pdf_data[0]),
+                                   'datas': base64.b64encode(pdf_data[0]),
+                                   'datas_fname': 'Invoice.pdf',
+                                   'res_model': 'account.invoice',
+                                   'type': 'binary'}
+                        pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
+                        attachment_list.append(pdf_create)
+
+                    if pdf_data_statement_invoice:
+                        pdfvals = {'name': 'Enrolment Statement',
+                                   'db_datas': base64.b64encode(pdf_data_statement_invoice[0]),
+                                   'datas': base64.b64encode(pdf_data_statement_invoice[0]),
+                                   'datas_fname': 'Enrolment Statement.pdf',
+                                   'res_model': 'account.invoice',
+                                   'type': 'binary'}
+                        pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
+                        attachment_list.append(pdf_create)
+
+                    agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
+                    if agreement_id:
+                        attachment_list.append(agreement_id)
+
+                    baking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
+                    if baking_detail_id:
+                        attachment_list.append(baking_detail_id)
+                    body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
+                    body_html += "<br>"
+                    body_html += "Dear " + sale_order_id.partner_id.name + ","
+                    body_html += "<br><br>"
+                    body_html += "Thank	you	for	your enrolment and payment received!"
+                    body_html += "<br><br>"
+                    body_html += "For your records,	please find	attached invoice/Full Statement, copy of the Student Agreement as well as the Debit	Order Mandate you just accepted	Online during enrolment."
+                    body_html += "<br><br>"
+                    body_html += "The Student Agreement inter alia covers:"
+                    body_html += "<br><br>"
+                    body_html += "1. Exam fee remmittances. <br> 2. How to access your learning materials. <br> 3. Cancellations, change of bookings and postponements."
+                    body_html += "<br> 4. Refunds and students complaints. <br> 5. 1st Time Pass Guarantee scheme and other incidental matters."
+                    body_html += "<br><br> We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
+                    body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
+                    body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
+
+                    mail_values = {
+                        'email_from': template_id.email_from,
+                        'reply_to': template_id.reply_to,
+                        'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                        'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
+                        'body_html': body_html,
+                        'notification': True,
+                        'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])],
+                        'auto_delete': False,
+                    }
+                    msg_id = mail_obj.create(mail_values)
+                    msg_id.send()
             return request.render('cfo_snr_jnr.enrolment_process_page_thankyou')

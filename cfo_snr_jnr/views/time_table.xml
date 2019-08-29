@@ -61,6 +61,7 @@
                                                     <tree editable="bottom">
                                                         <field name="name"/>
                                                         <field name='date'/>
+                                                        <field name="color"/>
                                                         <field name="time_table_line_id" invisible="1"/>
                                                     </tree>
                                                 </field>
@@ -449,7 +450,7 @@
                                             <div class="cfo-cnr-jnr-color-picker">
                                                 <t t-foreach="line.time_table_week_ids" t-as="week">
                                                     <t t-if="week.date or week.name">
-                                                        <div class="col-md-2 time_table_div" t-att-id="week.id">
+                                                        <div class="col-md-2 time_table_div" t-att-data="week.id">
                                                             <div t-esc="week.date"/>
                                                             <div t-esc="week.name"/>
                                                         </div>

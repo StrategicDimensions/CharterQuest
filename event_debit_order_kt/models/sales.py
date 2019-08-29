@@ -129,9 +129,6 @@ class payment_confirmation(models.Model):
             'payment_ref': self.payment_ref,
             'payment_method': self.payment_method.id
         }
-        if self.payment_amount < sale_obj.amount_total:
-            template_id=self.env.ref('event_debit_order_kt.email_template_edi_debit_order_mandate')
-            template_id.send_mail(self.id,force_send=True)
         quote_name = "SO{0}WEB".format(str(sale_obj.id).zfill(3))
         m = hashlib.md5(quote_name.encode())
         decoded_quote_name = m.hexdigest()
@@ -142,11 +139,9 @@ class payment_confirmation(models.Model):
             print("\n\n\n link>", link)
             sale_obj.write({'debit_order_mandate_link': link,'debitorder_link':True})
         self.order_id.write(dic)
-        # self.order_id.action_confirm()
         self.order_id._action_confirm()
         if self.env['ir.config_parameter'].sudo().get_param('sale.auto_done_setting'):
             self.action_done()
-
         if str(sale_obj.payment_amount) == str(sale_obj.amount_total):
             sale_adv_payment = {
                 'advance_payment_method': 'all',
@@ -194,7 +189,7 @@ class payment_confirmation(models.Model):
         else:
             template_id = self.env['mail.template'].search([('name', '=', "Debit Order Mandate Email")])
             if template_id:
-                mail_message = template_id.send_mail(self.order_id.id)
+                mail_message = template_id.send_mail(self.order_id.id,force_send=True)
                 message = self.env['mail.message']
                 if sale_obj.message_ids:
                     message.create({
