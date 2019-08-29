@@ -63,7 +63,6 @@ class TimeTable(http.Controller):
         time_table_ids = [int(i) for i in kw['id'].split(",")]
         course_code = [int(i) for i in kw['code'].split(",")]
         timetable_ids=request.env['cfo.time.table'].sudo().search([('id','in',time_table_ids)])
-        timetable_ids1= request.env['cfo.time.table'].sudo().search([('id', 'in', time_table_ids)],limit=1)
         datas={'course_code':course_code}
         if timetable_ids and course_code:
             report_id = request.env.ref('cfo_snr_jnr.report_time_table')

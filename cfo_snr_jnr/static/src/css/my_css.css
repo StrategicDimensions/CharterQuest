@@ -792,6 +792,18 @@ strong {
     border-radius: 7px;
     padding: 3px;
 }
+.time_table_div1 {
+    max-width: 20.1%;
+    margin-left: 5px;
+    min-height: 53px;
+    max-height: 53px;
+    margin-bottom: 5px;
+    text-align: center;
+    border: 2px solid gainsboro;
+    border-radius: 7px;
+    padding: 3px;
+    float:left;
+}
 
 .time_table_main,
 .time_table_main thead,

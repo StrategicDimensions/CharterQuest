@@ -171,6 +171,12 @@ $(document).ready(function(){
     });
 
     $(window).on("load",function(){
+
+        rpc.query({
+            model:'cfo.time.table.weeks',
+            method:'remove_color',
+            args:[]
+        });
     
         var campus = localStorage.getItem("campus")
         if (campus){
@@ -248,11 +254,11 @@ $(document).ready(function(){
         var timetable_id=$(e.target.offsetParent).attr('data');
         if (e.target.offsetParent.id){
             $(id).spectrum({
-            chooseText:'clear'
             });
             $('.sp-choose').hide();
             $(id).on('move.spectrum', function(e, tinyColor) {
                 var hexVal = tinyColor.toHexString();
+                var Val = tinyColor.toString();
                 $(id).css('backgroundColor', '#' + hexVal);
                 rpc.query({
                     model:'cfo.time.table.weeks',

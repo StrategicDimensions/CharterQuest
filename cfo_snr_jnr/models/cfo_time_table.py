@@ -110,10 +110,14 @@ class CFOTimeTableWeeks(models.Model):
 
     @api.model
     def add_color(self,id,color_val):
-        print("callll>>",id)
-        print("callll>>",color_val)
         res=self.env['cfo.time.table.weeks'].browse(id)
-        print("\n\n\n id>>",res)
         res.write({'color':color_val})
+
+    @api.model
+    def remove_color(self):
+        query = """
+                       update cfo_time_table_weeks set color='' where id in (select id from cfo_time_table_weeks);
+                   """
+        self._cr.execute(query)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
