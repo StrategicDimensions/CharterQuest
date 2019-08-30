@@ -1005,8 +1005,9 @@ class EnrolmentProcess(http.Controller):
                                                                                     'grand_tot'],
                                                                                 'page_confirm': 'yes',
                                                                                 'sale_order': sale_order_id.id,
+                                                                                'sale_order_id':sale_order_id if sale_order_id else False,
                                                                                 'register_enrol': True,
-                                                                                'uuid':post.get('uuid') if post.get('uuid') else False})
+                                                                                 })
             else:
                 if post.get('email'):
                     partner_detail = request.env['res.partner'].sudo().search([('email', '=', post.get('email'))],
@@ -2438,6 +2439,19 @@ class EnrolmentProcess(http.Controller):
                                               'bank_type_id': int(post['inputAtype']) if post.get(
                                                   'inputAtype') else ''}])
 
+            account_id=request.env['account.account'].sudo().search([('name','=','200000 Product Sales')],limit=1)
+            product_id = request.env['product.product'].sudo().search([('name', '=', 'Interest Amount')], limit=1)
+            interest_amount_line=[[0,0,{'price_unit': post.get('inputInterest') if post.get('inputInterest') else 0,
+                                  'name':'Interest Amount',
+                                  'product_id':product_id.id,
+                                  'product_uom_qty':1,
+                                  'invoice_lines':[0,0,{'name':'Interest Amount',
+                                                     'account_id':account_id.id,
+                                                     'quantity':1,
+                                                     'price_unit':post.get('inputInterest') if post.get('inputInterest') else 0,
+                                                     'price_subtotal':post.get('inputInterest') if post.get('inputInterest') else 0}],
+                                  'price_subtotal':post.get('inputInterest') if post.get('inputInterest') else 0}]]
+
             sale_order_id.write(
                 {'diposit_selected': post.get('inputPaypercentage') if post.get('inputPaypercentage') else 0,
                  'due_amount': post.get('inputTotalDue') if post.get('inputTotalDue') else 0,
@@ -2447,7 +2461,8 @@ class EnrolmentProcess(http.Controller):
                  'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
                  'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
                  'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0,
-                 'debit_order_mandat': debit_order_mandet})
+                 'debit_order_mandat': debit_order_mandet,
+                 'order_line':interest_amount_line})
             invoice_obj = request.env['account.invoice'].sudo()
             debit_order_obj = request.env['debit.order.details'].sudo()
             mail_obj = request.env['mail.mail'].sudo()

@@ -105,18 +105,20 @@ class CFOTimeTableWeeks(models.Model):
 
     name = fields.Char(string="Name")
     date = fields.Date(string="Date")
-    color=fields.Char(string="color")
+    color=fields.Char(string="color",invisible=True)
     time_table_line_id = fields.Many2one('cfo.time.table.line', string="Time Table Line")
 
     @api.model
     def add_color(self,id,color_val):
+        print("\n\n\n id",id)
+        print("\n\n\n color_val",color_val)
         res=self.env['cfo.time.table.weeks'].browse(id)
         res.write({'color':color_val})
 
     @api.model
     def remove_color(self):
         query = """
-                       update cfo_time_table_weeks set color='' where id in (select id from cfo_time_table_weeks);
+                       update cfo_time_table_weeks set color='#ffffff' where id in (select id from cfo_time_table_weeks);
                    """
         self._cr.execute(query)
 

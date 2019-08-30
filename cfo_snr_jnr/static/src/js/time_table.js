@@ -1,4 +1,6 @@
-odoo.define(function (require) {
+odoo.define('cfo_snr_jnr.time_table',function (require) {
+"use strict";
+
 var rpc = require('web.rpc');
 var self = this;
 var flag = false;
@@ -250,24 +252,41 @@ $(document).ready(function(){
     });
 
     $(".cfo-cnr-jnr-color-picker").on("click",function(e){
-        var id="#"+ e.target.offsetParent.id;
-        var timetable_id=$(e.target.offsetParent).attr('data');
-        if (e.target.offsetParent.id){
-            $(id).spectrum({
+        var id="#"+ e.toElement.id;
+        var data_id=$(id).attr('data')
+        console.log("\n\n\n data_id",data_id)
+        var hexVal=null
+        $(id).spectrum();
+        $(id).on('move.spectrum', function(e, tinyColor) {
+            hexVal = tinyColor.toHexString();
+            console.log("\n\n\n val>>>",hexVal)
+            $(id).css('backgroundColor', '#' + hexVal);
+        });
+        $('.sp-choose').on("click",  function(){
+             rpc.query({
+                model:'cfo.time.table.weeks',
+                method:'add_color',
+                args:[data_id,hexVal]
             });
-            $('.sp-choose').hide();
-            $(id).on('move.spectrum', function(e, tinyColor) {
-                var hexVal = tinyColor.toHexString();
-                var Val = tinyColor.toString();
-                $(id).css('backgroundColor', '#' + hexVal);
-                rpc.query({
-                    model:'cfo.time.table.weeks',
-                    method:'add_color',
-                    args:[timetable_id,hexVal]
-                });
 
-            });
-        }
+        });
+//        $(id).colorpicker({
+//            useAlpha:false
+//        });
+//        $(id).colorpicker().on('changeColor', function() {
+//            var val=$(this).colorpicker('getValue', '#ffffff')
+//            $(id).css('background-color',val);
+////            rpc.query({
+////                model:'cfo.time.table.weeks',
+////                method:'add_color',
+////                args:[data_id,val]
+////            });
+//        });
+//        $(id).colorpicker().on('onHide', function() {
+//         var val=$(this).colorpicker('getValue', '#ffffff')
+//         console.log("\n\n\n data_id",data_id)
+//        });
+//
     });
 
 

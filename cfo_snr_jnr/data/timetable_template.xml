@@ -46,12 +46,13 @@
                                                     <span t-esc="line.end_time" t-options="{'widget':'float_time'}"/>
                                                 </td>
                                                 <td>
-                                                    <div style="position:relative;white-space: initial;" class="cfo-cnr-jnr-color-picker">
+                                                    <div style="position:relative;white-space: initial;" id="cfo-cnr-jnr-color-picker">
                                                         <t t-foreach="line.time_table_week_ids" t-as="week">
                                                             <t t-set="val" t-value="week.color"/>
                                                             <t t-if="week.date or week.name">
-                                                                <div class="time_table_div1" t-attf-style="background-color: #{val};max-width: 20.1%;margin-left: 5px;min-height: 53px;max-height: 53px;margin-bottom: 5px;text-align: center;border: 2px solid gainsboro;border-radius: 7px;padding: 3px;float:left;">                                                                        <span t-esc="week.date"/><br></br>
-                                                                        <span t-esc="week.name"/>
+                                                                <div class="time_table_div1" t-attf-style="background-color: #{val};max-width: 23.1%;margin-left: 5px;min-height: 53px;max-height: 53px;margin-bottom: 5px;text-align: center;border: 2px solid gainsboro;border-radius: 7px;padding: 3px;float:left;">
+                                                                    <span t-esc="week.date"/><br></br>
+                                                                    <span t-esc="week.name"/>
                                                                 </div>
                                                             </t>
                                                         </t>

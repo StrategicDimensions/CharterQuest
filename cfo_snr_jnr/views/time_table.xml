@@ -61,7 +61,7 @@
                                                     <tree editable="bottom">
                                                         <field name="name"/>
                                                         <field name='date'/>
-                                                        <field name="color"/>
+                                                        <field name="color" invisible="1"/>
                                                         <field name="time_table_line_id" invisible="1"/>
                                                     </tree>
                                                 </field>
@@ -451,8 +451,8 @@
                                                 <t t-foreach="line.time_table_week_ids" t-as="week">
                                                     <t t-if="week.date or week.name">
                                                         <div class="col-md-2 time_table_div" t-att-data="week.id">
-                                                            <div t-esc="week.date"/>
-                                                            <div t-esc="week.name"/>
+                                                            <span t-esc="week.date"/><br/>
+                                                            <span t-esc="week.name"/>
                                                         </div>
                                                     </t>
                                                 </t>

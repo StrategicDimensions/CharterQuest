@@ -2264,7 +2264,7 @@
                                 <t t-set="due" t-value="(float(total_payment)*20)/100"/>
                                 <td style="background-color: -moz-MenuBarText;">Total (Due Now)</td>
                                 <td style="background-color: -moz-MenuBarText;">
-                                    <t t-if="sale_order_id">
+                                    <t t-if="sale_order_id and not register_enrol">
                                         <t t-if="sale_order_id.due_amount">
                                             <input type="text" name="inputTotalDue" id="inputTotalDue"
                                                    t-att-value="sale_order_id.due_amount" readonly=""/>
@@ -2292,7 +2292,7 @@
                                 </t>
                                 <td>Outstanding Balance</td>
                                 <td>
-                                    <t t-if="sale_order_id">
+                                    <t t-if="sale_order_id and not register_enrol">
                                         <t t-if="sale_order_id.outstanding_amount">
                                             <input type="text" name="inputOutstanding" id="inputOutstanding"
                                                    t-att-value="sale_order_id.outstanding_amount" readonly=""/>
@@ -2344,7 +2344,7 @@
                             <tr t-if="sale_order or uuid or register_enrol or sale_order_id and sale_order_id.affiliation and sale_order_id.affiliation == 1">
                                 <td>Interest</td>
                                 <td>
-                                    <t t-if="sale_order_id">
+                                    <t t-if="sale_order_id and not register_enrol">
                                         <t t-if="sale_order_id.interest_amount">
                                             <input type="text" name="inputInterest"
                                                    t-att-value="sale_order_id.interest_amount" id="inputInterest"
@@ -2519,7 +2519,7 @@
                                 <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Account Holder Name</td>
                                     <td>
-                                        <t t-if="sale_order_id">
+                                        <t t-if="sale_order_id and not register_enrol">
                                             <t t-if="sale_order_id.debit_order_mandat">
                                                 <t t-set="acc_holder_name" t-value="True"/>
                                                 <t t-foreach="sale_order_id.debit_order_mandat" t-as="each_mandat">
@@ -2581,7 +2581,7 @@
                                 <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation == '1'">
                                     <td style="width:25.6%;">Account No.</td>
                                     <td>
-                                        <t t-if="sale_order_id">
+                                        <t t-if="sale_order_id and not register_enrol">
                                             <t t-if="sale_order_id.debit_order_mandat">
                                                 <t t-set="mandat_account_number" t-value="True"/>
                                                 <t t-foreach="sale_order_id.debit_order_mandat" t-as="each_mandat">
@@ -2594,7 +2594,7 @@
                                                 <input type="text" name="inputAccount" id="inputAccount"/>
                                             </t>
                                         </t>
-                                         <t t-if="sale_order">
+                                         <t t-if="sale_order and register_enrol">
                                              <input type="text" name="inputAccount" id="inputAccount" required=""/>
                                          </t>
                                     </td>

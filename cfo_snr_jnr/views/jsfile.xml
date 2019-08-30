@@ -17,10 +17,12 @@
                       href="/cfo_snr_jnr/static/src/css/jquery-ui.css"/>
                 <link rel="stylesheet"
                       href="/cfo_snr_jnr/static/src/css/backend.css"/>
+                <link rel="stylesheet"
+                      href="/cfo_snr_jnr/static/src/css/bootstrap-colorpicker.min.css"/>
                 <script type="text/javascript"
                         src="/cfo_snr_jnr/static/src/js/enrolment.js"/>
-                <script type="text/javascript"
-                        src="/cfo_snr_jnr/static/src/js/bootstrap-datepicker.js"/>
+<!--                <script type="text/javascript"-->
+<!--                        src="/cfo_snr_jnr/static/src/js/bootstrap-datepicker.js"/>-->
                 <link type="text/css" rel="stylesheet" href="/cfo_snr_jnr/static/src/css/spectrum.css"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/spectrum.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/recaptcha.js"/>
@@ -36,6 +38,7 @@
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_card_block.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/contentMenu.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/payment.js"/>
+<!--                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/bootstrap-colorpicker.js"/>-->
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/time_table.js"/>
             </xpath>
         </template>
