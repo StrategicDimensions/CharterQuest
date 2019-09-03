@@ -71,19 +71,19 @@ $(document).ready(function(){
 			    placeholder: "Select a Campus"
 		    });
 
-		$('#level_select').select2().select2({
+		$('#level_select').select2({
 			    placeholder: "Select a level"
 		    });
 
-		$('#course_code_select').select2().select2({
+		$('#course_code_select').select2({
 			    placeholder: "Select a Subject"
 		    });
 
-		$('#semester_select').select2().select2({
+		$('#semester_select').select2({
 			    placeholder: "Select a Semester"
 		    });
 
-		$('#option_select').select2().select2({
+		$('#option_select').select2({
 			    placeholder: "Select a Study Option"
 		    });
 		$(document).on("click", ".details_view_lecturer", function(event){
@@ -174,11 +174,11 @@ $(document).ready(function(){
 
     $(window).on("load",function(){
 
-        rpc.query({
-            model:'cfo.time.table.weeks',
-            method:'remove_color',
-            args:[]
-        });
+//        rpc.query({
+//            model:'cfo.time.table.weeks',
+//            method:'remove_color',
+//            args:[]
+//        });
     
         var campus = localStorage.getItem("campus")
         if (campus){
@@ -186,7 +186,7 @@ $(document).ready(function(){
         }
         else
         {
-           $('#campus_select').select2().select2({
+           $('#campus_select').select2({
 			    placeholder: "Select a Campus"
 		    });
         }
@@ -198,7 +198,7 @@ $(document).ready(function(){
         }
         else
         {
-           $('#level_select').select2().select2({
+           $('#level_select').select2({
 			    placeholder: "Select a level"
 		    });
         }
@@ -210,7 +210,7 @@ $(document).ready(function(){
         }
         else
         {
-           $('#course_code_select').select2().select2({
+           $('#course_code_select').select2({
 			    placeholder: "Select a Subject"
 		    });
         }
@@ -222,7 +222,7 @@ $(document).ready(function(){
         }
         else
         {
-           $('#semester_select').select2().select2({
+           $('#semester_select').select2({
 			    placeholder: "Select a Semester"
 		    });
         }
@@ -234,7 +234,7 @@ $(document).ready(function(){
         }
         else
         {
-           $('#option_select').select2().select2({
+           $('#option_select').select2({
 			    placeholder: "Select a Study Option"
 		    });
         }
@@ -268,25 +268,7 @@ $(document).ready(function(){
                 method:'add_color',
                 args:[data_id,hexVal]
             });
-
         });
-//        $(id).colorpicker({
-//            useAlpha:false
-//        });
-//        $(id).colorpicker().on('changeColor', function() {
-//            var val=$(this).colorpicker('getValue', '#ffffff')
-//            $(id).css('background-color',val);
-////            rpc.query({
-////                model:'cfo.time.table.weeks',
-////                method:'add_color',
-////                args:[data_id,val]
-////            });
-//        });
-//        $(id).colorpicker().on('onHide', function() {
-//         var val=$(this).colorpicker('getValue', '#ffffff')
-//         console.log("\n\n\n data_id",data_id)
-//        });
-//
     });
 
 

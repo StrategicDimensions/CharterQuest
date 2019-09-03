@@ -26,6 +26,7 @@
                                     </caption>
                                     <tr>
                                         <th style="width: 80px;">Subject</th>
+                                        <th style="width: 80px;">Lecturer</th>
                                         <th style="width: 80px;">Campus</th>
                                         <th style="width: 87px;">Time</th>
                                         <th>Sessions</th>
@@ -34,12 +35,20 @@
                                         <t t-if="line.course_code_id.id in data.get('course_code')">
                                             <tr>
                                                 <td width="10%">
-                                                    <span t-esc="line.course_code_id.name"/>
+                                                    <span t-esc="line.course_code_id.name"/><br/>
+                                                    <span t-esc="line.course_code_id.short_description"/>
+                                                </td>
+                                                <td width="15%">
+                                                    <t t-if="line.course_code_id.lecturer_ids">
+                                                        <t t-foreach="line.course_code_id.lecturer_ids" t-as="lecturer">
+                                                            <span t-esc="lecturer.name"/><br/>
+                                                        </t>
+                                                    </t>
                                                 </td>
                                                 <td width="15%">
                                                     <div t-esc="line.course_code_id.campus_id.name"/>
                                                 </td>
-                                                <td width="15%">
+                                                <td width="12%">
                                                     <div t-esc="line.day_selection.title()"/>
                                                     <span t-esc="line.start_time" t-options="{'widget':'float_time'}"/>
                                                     -

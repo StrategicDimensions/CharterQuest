@@ -449,8 +449,9 @@
                                         <td>
                                             <div class="cfo-cnr-jnr-color-picker">
                                                 <t t-foreach="line.time_table_week_ids" t-as="week">
+                                                    <t t-set="val" t-value="week.color"/>
                                                     <t t-if="week.date or week.name">
-                                                        <div class="col-md-2 time_table_div" t-att-data="week.id">
+                                                        <div class="col-md-2 time_table_div" t-att-data="week.id" t-attf-style="background-color: #{val};">
                                                             <span t-esc="week.date"/><br/>
                                                             <span t-esc="week.name"/>
                                                         </div>
