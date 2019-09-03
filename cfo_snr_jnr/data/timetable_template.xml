@@ -36,7 +36,7 @@
                                             <tr>
                                                 <td width="10%">
                                                     <span t-esc="line.course_code_id.name"/><br/>
-                                                    <span t-esc="line.course_code_id.short_description"/>
+                                                    <span t-esc="line.course_code_id.description"/>
                                                 </td>
                                                 <td width="15%">
                                                     <t t-if="line.course_code_id.lecturer_ids">
