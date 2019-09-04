@@ -66,6 +66,7 @@ class TimeTable(http.Controller):
         datas={'course_code':course_code}
         if timetable_ids and course_code:
             report_id = request.env.ref('cfo_snr_jnr.report_time_table')
+            # report_id=request.env['ir.actions.report'].search([('name','=','Time Table')])
             pdf = report_id.sudo().render_qweb_pdf(timetable_ids, data=datas)[0]
             pdfhttpheaders = [
                 ('Content-Type', 'application/pdf'),

@@ -61,7 +61,7 @@
                                                     <tree editable="bottom">
                                                         <field name="name"/>
                                                         <field name='date'/>
-                                                        <field name="color" invisible="1"/>
+                                                        <field name="color" class="color-picker"/>
                                                         <field name="time_table_line_id" invisible="1"/>
                                                     </tree>
                                                 </field>
@@ -219,6 +219,23 @@
         </field>
     </record>
 
+    <record id="cfo_weeks_information_form_view_1" model="ir.ui.view">
+        <field name="name">cfo.time.table.weeks.form</field>
+        <field name="model">cfo.time.table.weeks</field>
+        <field name="arch" type="xml">
+            <form string="Sessions">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name='date'/>
+                        <field name="color" class="color-picker"/>
+                        <field name="time_table_line_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <record id="action_semester_information" model="ir.actions.act_window">
         <field name="name">Semester Information</field>
         <field name="res_model">cfo.semester.information</field>
@@ -311,7 +328,8 @@
                         </a>
                     </t>
                 </div>
-                <div class="panel-body">
+                <t t-if="is_visible">
+                    <div class="panel-body">
                     <t t-foreach="time_table" t-as="time">
                         <div style="margin-top:5px;">
                             <div class="form-group">
@@ -451,7 +469,7 @@
                                                 <t t-foreach="line.time_table_week_ids" t-as="week">
                                                     <t t-set="val" t-value="week.color"/>
                                                     <t t-if="week.date or week.name">
-                                                        <div class="col-md-2 time_table_div" t-att-data="week.id" t-attf-style="background-color: #{val};">
+                                                        <div class="col-md-2 time_table_div" t-att-data="week.id" t-attf-style="background-color: #{val};text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                                                             <span t-esc="week.date"/><br/>
                                                             <span t-esc="week.name"/>
                                                         </div>
@@ -465,6 +483,7 @@
                         </div>
                     </t>
                 </div>
+                </t>
             </div>
         </t>
     </template>

@@ -105,7 +105,7 @@ class CFOTimeTableWeeks(models.Model):
 
     name = fields.Char(string="Name")
     date = fields.Date(string="Date")
-    color=fields.Char(string="color",invisible=True)
+    color=fields.Char(string="color")
     time_table_line_id = fields.Many2one('cfo.time.table.line', string="Time Table Line")
 
     @api.model

@@ -2425,7 +2425,7 @@ class EnrolmentProcess(http.Controller):
                  'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
                  'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0,
                  'debit_order_mandat': debit_order_mandet})
-            sale_order_id.action_confirm()
+            # sale_order_id.action_confirm()
         if post.get('Pay Via Bank Deposit'):
             return request.render('cfo_snr_jnr.enrolment_process_validate_payment', {'post_data': post if post else '',
                                                                                      'button_hide': True,

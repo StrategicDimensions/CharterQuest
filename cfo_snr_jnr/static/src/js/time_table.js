@@ -28,47 +28,73 @@ $(document).ready(function(){
 		});
 	});
 
-	$('.o_fillter_click').on('click',function(){
-	    console.log("\n\n\n calll>>",flag)
-	    flag = true;
-	    console.log("\n\n\n calll111>>",flag)
-	});
-
 	$('.multiple-campus-select').on('change',function(){
-//    alert()
         var value=$(this).val();
-        localStorage.setItem("campus",value);
+        if (value){
+            $("#level_select").prop('disabled', false);
+        }
+        else
+        {
+            $("#level_select").prop('disabled', true);
+        }
+            localStorage.setItem("campus",value);
     });
 
     $('.multiple-levels-select').on('change',function(){
-//    alert()
-        var value=$(this).val();
+       var value=$(this).val();
+        if (value){
+            $("#course_code_select").prop('disabled', false);
+        }
+        else
+        {
+            $("#course_code_select").prop('disabled', true);
+        }
         localStorage.setItem("levels",value);
     });
 
     $('.multiple-codes-select').on('change',function(){
-//    alert()
         var value=$(this).val();
+        if (value){
+            $("#semester_select").prop('disabled', false);
+        }
+        else
+        {
+            $("#semester_select").prop('disabled', true);
+        }
         localStorage.setItem("codes",value);
     });
 
     $('.multiple-semester-select').on('change',function(){
-//    alert()
         var value=$(this).val();
+        if (value){
+            $("#option_select").prop('disabled', false);
+        }
+        else
+        {
+            $("#option_select").prop('disabled', true);
+        }   
         localStorage.setItem("semester",value);
     });
 
-    $('.multiple-option-select').on('change',function(){
-//    alert()
-        var value=$(this).val();
-        localStorage.setItem("option",value);
-    });
+//    $('.multiple-option-select').on('change',function(){
+////    alert()
+//        var value=$(this).val();
+//        localStorage.setItem("option",value);
+//    });
+
 
 
 	if(window.location.pathname == '/time_table'){
 
+	    $("#level_select").prop('disabled', true);
+	    $("#course_code_select").prop('disabled', true);
+	    $("#semester_select").prop('disabled', true);
+	    $("#option_select").prop('disabled', true);
+
+
         $('#campus_select').select2({
-			    placeholder: "Select a Campus"
+			    placeholder: "Select a Campus",
+
 		    });
 
 		$('#level_select').select2({
@@ -179,67 +205,67 @@ $(document).ready(function(){
 //            method:'remove_color',
 //            args:[]
 //        });
-    
-        var campus = localStorage.getItem("campus")
-        if (campus){
-            $('#campus_select').select2().select2('val',campus.split(","));
-        }
-        else
-        {
-           $('#campus_select').select2({
-			    placeholder: "Select a Campus"
-		    });
-        }
 
-        var levels = localStorage.getItem("levels")
-        console.log("\n\n\n levels",levels)
-        if (levels){
-            $('#level_select').select2().select2('val',levels.split(","));
-        }
-        else
-        {
-           $('#level_select').select2({
-			    placeholder: "Select a level"
-		    });
-        }
-
-        var codes = localStorage.getItem("codes")
-        console.log("\n\n\n codes",codes)
-        if (codes){
-            $('#course_code_select').select2().select2('val',codes.split(","));
-        }
-        else
-        {
-           $('#course_code_select').select2({
-			    placeholder: "Select a Subject"
-		    });
-        }
-
-        var semester = localStorage.getItem("semester")
-        console.log("\n\n\n semester",semester)
-        if (semester){
-            $('#semester_select').select2().select2('val',semester.split(","));
-        }
-        else
-        {
-           $('#semester_select').select2({
-			    placeholder: "Select a Semester"
-		    });
-        }
-
-        var option = localStorage.getItem("option")
-        console.log("\n\n\n option",option)
-        if (option){
-        $('#option_select').select2().select2('val',option.split(","));
-        }
-        else
-        {
-           $('#option_select').select2({
-			    placeholder: "Select a Study Option"
-		    });
-        }
-
-        localStorage.clear();
+//        var campus = localStorage.getItem("campus")
+//        if (campus){
+//            $('#campus_select').select2().select2('val',campus.split(","));
+//        }
+//        else
+//        {
+//           $('#campus_select').select2({
+//			    placeholder: "Select a Campus"
+//		    });
+//        }
+//
+//        var levels = localStorage.getItem("levels")
+//        console.log("\n\n\n levels",levels)
+//        if (levels){
+//            $('#level_select').select2().select2('val',levels.split(","));
+//        }
+//        else
+//        {
+//           $('#level_select').select2({
+//			    placeholder: "Select a level"
+//		    });
+//        }
+//
+//        var codes = localStorage.getItem("codes")
+//        console.log("\n\n\n codes",codes)
+//        if (codes){
+//            $('#course_code_select').select2().select2('val',codes.split(","));
+//        }
+//        else
+//        {
+//           $('#course_code_select').select2({
+//			    placeholder: "Select a Subject"
+//		    });
+//        }
+//
+//        var semester = localStorage.getItem("semester")
+//        console.log("\n\n\n semester",semester)
+//        if (semester){
+//            $('#semester_select').select2().select2('val',semester.split(","));
+//        }
+//        else
+//        {
+//           $('#semester_select').select2({
+//			    placeholder: "Select a Semester"
+//		    });
+//        }
+//
+//        var option = localStorage.getItem("option")
+//        console.log("\n\n\n option",option)
+//        if (option){
+//        $('#option_select').select2().select2('val',option.split(","));
+//        }
+//        else
+//        {
+//           $('#option_select').select2({
+//			    placeholder: "Select a Study Option"
+//		    });
+//        }
+//
+//        localStorage.clear();
 
 
     });
