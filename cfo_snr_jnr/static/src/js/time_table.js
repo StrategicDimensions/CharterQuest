@@ -67,7 +67,7 @@ $(document).ready(function(){
 
 	if(window.location.pathname == '/time_table'){
 
-        $('#campus_select').select2().select2({
+        $('#campus_select').select2({
 			    placeholder: "Select a Campus"
 		    });
 
