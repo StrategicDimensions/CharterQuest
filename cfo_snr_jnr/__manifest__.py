@@ -31,7 +31,7 @@
         'security/ir.model.access.csv',
         'data/snippets.xml',
         'data/attachment_data.xml',
-        'data/timetable_template.xml',
+        'views/timetable_template.xml',
         'views/login.xml',
         'views/login_cfo_jnr.xml',
         'views/jsfile.xml',

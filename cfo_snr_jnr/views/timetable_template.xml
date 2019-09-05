@@ -10,8 +10,8 @@
             <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" class="pull-left"/>
             <div>
                 <div class="pull-right">
-                    <b><span class="pull-right">TP - Tuition Phase</span></b><br/>
-                    <b><span class="pull-right">EXPP - Exam Preparation Phase</span></b>
+                    <b><strong class="pull-right">TP - Tuition Phase</strong></b><br/>
+                    <b><strong class="pull-right">EXPP - Exam Preparation Phase</strong></b>
                 </div>
 <!--                <span t-field="company.partner_id"-->
 <!--                    t-field-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>-->
@@ -102,7 +102,7 @@
                                             <tr>
                                                 <td>
                                                     <div t-esc="line.course_code_id.name"/>
-                                                    <div style="word-wrap:break-word;max-width:10%" t-esc="line.course_code_id.description"/>
+                                                    <div style="width:100px;white-space: pre-wrap;" t-esc="line.course_code_id.description"/>
                                                 </td>
                                                 <td width="15%">
                                                     <t t-if="line.course_code_id.lecturer_ids">
@@ -112,7 +112,7 @@
                                                     </t>
                                                 </td>
                                                 <td width="10%">
-                                                    <div t-esc="line.course_code_id.campus_id.name"/>
+                                                    <div style="width:70px;white-space: pre-wrap;" t-esc="line.course_code_id.campus_id.name"/>
                                                 </td>
                                                 <td width="12%">
                                                     <div t-esc="line.day_selection.title()"/>
