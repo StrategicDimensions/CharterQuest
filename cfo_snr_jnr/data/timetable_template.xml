@@ -1,8 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 <data>
+
+    <template id="external_layout_background_custom">
+        <div class="header o_background_header">
+            <div class="pull-right">
+                <h3 class="mt0 text-right" t-field="company.report_header"/>
+            </div>
+            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" class="pull-left"/>
+            <div>
+                <div >
+                    <b><span style="float:right;">TP - Tuition Phase</span></b><br/>
+                    <b><span style="float:right;">EXPP - Exam Preparation Phase</span></b>
+                </div>
+<!--                <span t-field="company.partner_id"-->
+<!--                    t-field-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>-->
+            </div>
+            <div class="clearfix mb8"/>
+        </div>
+
+        <div class="article o_report_layout_background">
+            <t t-raw="0" />
+        </div>
+<!--        <div class="footer">-->
+<!--            <div class="text-center">-->
+<!--                -->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="footer o_background_footer">
+            <div class="text-center">
+                <strong>Disclaimer:</strong><span t-esc="company.disclaimer_text"></span>
+                <ul class="list-inline">
+                    <li t-if="company.phone"><i class="fa fa-phone"/> <span t-field="company.phone"/></li>
+                    <li t-if="company.email"><i class="fa fa-at"/> <span t-field="company.email"/></li>
+                    <li t-if="company.website"><i class="fa fa-globe"/> <span t-field="company.website"/></li>
+                    <li t-if="company.vat"><i class="fa fa-building-o"/><t t-esc="company.country_id.vat_label or 'TIN'"/>: <span t-field="company.vat"/></li>
+                </ul>
+                <div t-field="company.report_footer"/>
+                <div class="text-muted">
+                    Page:
+                    <span class="page"/>
+                    of
+                    <span class="topage"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+
+    <template id="external_layout_custom">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id.sudo()"/>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+
+        <t t-if="company.external_report_layout == 'background'">
+            <t t-call="cfo_snr_jnr.external_layout_background_custom"><t t-raw="0"/></t>
+        </t>
+
+    </template>
+
     <template id="time_table_report">
-            <t t-call="web.external_layout">
+            <t t-call="cfo_snr_jnr.external_layout_custom">
                 <center><h2>Time Table</h2></center>
                 <div class="page" id="time_table">
                         <t t-foreach="docids" t-as="time">
@@ -25,7 +91,7 @@
                                         </b>
                                     </caption>
                                     <tr>
-                                        <th style="width: 80px;">Subject</th>
+                                        <th style="width: 10px;">Subject</th>
                                         <th style="width: 80px;">Lecturer</th>
                                         <th style="width: 80px;">Campus</th>
                                         <th style="width: 87px;">Time</th>
@@ -34,9 +100,9 @@
                                     <t t-foreach="time.time_table_line_ids" t-as="line">
                                         <t t-if="line.course_code_id.id in data.get('course_code')">
                                             <tr>
-                                                <td>
+                                                <td width="10%">
                                                     <div t-esc="line.course_code_id.name"/>
-                                                    <div style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" t-esc="line.course_code_id.description"/>
+                                                    <div style="overflow-wrap:break-word;" t-esc="line.course_code_id.description"/>
                                                 </td>
                                                 <td width="15%">
                                                     <t t-if="line.course_code_id.lecturer_ids">
@@ -87,5 +153,18 @@
 <!--            </t>-->
         </t>
     </template>
+
+     <record model="ir.ui.view" id="company_disclaimer">
+        <field name="name">res.company.view.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook/page/group/group//field[@name='report_header']" position="after">
+                <field name="disclaimer_text"/>
+            </xpath>
+        </field>
+    </record>
+
+
 </data>
 </odoo>

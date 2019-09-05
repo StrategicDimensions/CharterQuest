@@ -316,7 +316,7 @@
                                 </option>
                             </t>
                         </select>
-                        <button type="submit" title="Filter" style="height:38px;transition:unset;">
+                        <button type="submit" title="Filter" style="height:38px;transition:unset;" class="fillter_timetable">
                             <i class="fa fa-filter o_fillter_click"/>
                         </button>
                     </form>
@@ -469,7 +469,7 @@
                                                 <t t-foreach="line.time_table_week_ids" t-as="week">
                                                     <t t-set="val" t-value="week.color"/>
                                                     <t t-if="week.date or week.name">
-                                                        <div class="col-md-2 time_table_div" t-att-data="week.id" t-attf-style="background-color: #{val};text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                        <div class="col-md-2 time_table_div" t-att-data-popover-content="week.name" t-att-data="week.id" t-attf-style="background-color: #{val};text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                                                             <span t-esc="week.date"/><br/>
                                                             <span t-esc="week.name"/>
                                                         </div>

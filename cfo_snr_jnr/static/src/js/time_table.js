@@ -20,6 +20,15 @@ $(document).ready(function(){
         }
 	});
 
+    $('.time_table_div').popover({
+		animation: true,
+		html: true,
+		trigger : 'hover',
+        content: function() {
+			var content = $(this).attr("data-popover-content");
+			return content;
+        },
+	});
 	$('body').on('click', function (e) {
 		$('.info_time_table_course').each(function () {
 			if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
@@ -27,6 +36,7 @@ $(document).ready(function(){
 			}
 		});
 	});
+
 
 	$('.multiple-campus-select').on('change',function(){
         var value=$(this).val();
@@ -72,13 +82,19 @@ $(document).ready(function(){
         else
         {
             $("#option_select").prop('disabled', true);
-        }   
+        }
         localStorage.setItem("semester",value);
     });
 
 //    $('.multiple-option-select').on('change',function(){
-////    alert()
 //        var value=$(this).val();
+//         if (value){
+//            $(".o_fillter_timetable").prop('disabled', false);
+//        }
+//        else
+//        {
+//            $(".o_fillter_timetable").prop('disabled', true);
+//        }
 //        localStorage.setItem("option",value);
 //    });
 
@@ -90,6 +106,7 @@ $(document).ready(function(){
 	    $("#course_code_select").prop('disabled', true);
 	    $("#semester_select").prop('disabled', true);
 	    $("#option_select").prop('disabled', true);
+//	    $(".o_fillter_click").prop('disabled', true);
 
 
         $('#campus_select').select2({

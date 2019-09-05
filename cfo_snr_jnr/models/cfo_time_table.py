@@ -115,11 +115,9 @@ class CFOTimeTableWeeks(models.Model):
         res=self.env['cfo.time.table.weeks'].browse(id)
         res.write({'color':color_val})
 
-    @api.model
-    def remove_color(self):
-        query = """
-                       update cfo_time_table_weeks set color='#ffffff' where id in (select id from cfo_time_table_weeks);
-                   """
-        self._cr.execute(query)
+class ResCompany(models.Model):
+    _inherit="res.company"
+
+    disclaimer_text=fields.Text(string="Disclaimer")
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
