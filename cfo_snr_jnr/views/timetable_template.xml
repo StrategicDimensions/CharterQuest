@@ -10,8 +10,8 @@
             <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" class="pull-left"/>
             <div>
                 <div class="pull-right">
-                    <b><strong class="pull-right">TP - Tuition Phase</strong></b><br/>
-                    <b><strong class="pull-right">EXPP - Exam Preparation Phase</strong></b>
+                    <b><strong>TP - Tuition Phase</strong></b><br/>
+                    <b><strong>EXPP - Exam Preparation Phase</strong></b>
                 </div>
 <!--                <span t-field="company.partner_id"-->
 <!--                    t-field-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>-->
