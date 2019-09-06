@@ -44,6 +44,8 @@ class TimeTable(http.Controller):
         campus_select = post.get('campus_select') if post.get('campus_select') else ','.join(
             [str(i.id) for i in request.env['res.partner'].sudo().search([('is_campus', '=', True)])])
 
+        print("\n\n\n course_code",course_code)
+        print("\n\n\n time_table_ids",time_table_ids)
         return request.render("cfo_snr_jnr.time_table_template", {
             'time_table': time_table_ids, 'course_code_select': course_code,
             'campus_select': post.get('campus_select') if post.get('campus_select') else '',
@@ -66,7 +68,6 @@ class TimeTable(http.Controller):
         datas={'course_code':course_code}
         if timetable_ids and course_code:
             report_id = request.env.ref('cfo_snr_jnr.report_time_table')
-            # report_id=request.env['ir.actions.report'].search([('name','=','Time Table')])
             pdf = report_id.sudo().render_qweb_pdf(timetable_ids, data=datas)[0]
             pdfhttpheaders = [
                 ('Content-Type', 'application/pdf'),

@@ -13,8 +13,6 @@
                     <b><strong>TP - Tuition Phase</strong></b><br/>
                     <b><strong>EXPP - Exam Preparation Phase</strong></b>
                 </div>
-<!--                <span t-field="company.partner_id"-->
-<!--                    t-field-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>-->
             </div>
             <div class="clearfix mb8"/>
         </div>
@@ -22,11 +20,6 @@
         <div class="article o_report_layout_background">
             <t t-raw="0" />
         </div>
-<!--        <div class="footer">-->
-<!--            <div class="text-center">-->
-<!--                -->
-<!--            </div>-->
-<!--        </div>-->
         <div class="footer o_background_footer">
             <div class="text-center">
                 <strong>Disclaimer:</strong><span t-esc="company.disclaimer_text"></span>

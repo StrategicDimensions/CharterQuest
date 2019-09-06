@@ -267,9 +267,10 @@
     <template id="time_table_template" name="Time Table">
         <t t-call="portal.portal_layout">
             <div class="panel panel-default" style="margin-top:10px;">
-                <div class="panel-heading">
+                <div class="panel-heading" style="padding: 28px 15px;">
                     <form action="/time_table" method="POST">
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <span style="margin: -26px 48px;float: left;"><b>Select Campus</b></span>
                         <input type="hidden" name="campus_select" t-att-value="campus_select"/>
                         <select class="form-control multiple-campus-select" id="campus_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
@@ -280,24 +281,8 @@
                                 </option>
                             </t>
                         </select>
-                        <input type="hidden" name="level_select" t-att-value="level_select" class="level_select"/>
-                        <select class="form-control multiple-levels-select" id="level_select"
-                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
-                            <t t-foreach="request.env['event.qual'].sudo().search([])" t-as="qualification">
-                                <option t-att-value="qualification.id">
-                                    <span t-esc="qualification.name"/>
-                                </option>
-                            </t>
-                        </select>
-                        <input type="hidden" name="course_code_select" t-att-value="course_code_select"/>
-                        <select class="form-control multiple-codes-select" id="course_code_select"
-                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
-                            <t t-foreach="request.env['cfo.course.code'].sudo().search([])" t-as="code">
-                                <option t-att-value="code.id">
-                                    <span t-esc="code.name"/>
-                                </option>
-                            </t>
-                        </select>
+
+                        <span style="margin: -26px 38px;float: left;"><b>Select Semester</b></span>
                         <input type="hidden" name="semester_select" t-att-value="semester_select"/>
                         <select class="form-control multiple-semester-select" id="semester_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
@@ -307,6 +292,30 @@
                                 </option>
                             </t>
                         </select>
+
+                        <span style="margin: -26px 53px;float: left;"><b>Select Level</b></span>
+                        <input type="hidden" name="level_select" t-att-value="level_select" class="level_select"/>
+                        <select class="form-control multiple-levels-select" id="level_select"
+                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                            <t t-foreach="request.env['event.qual'].sudo().search([])" t-as="qualification">
+                                <option t-att-value="qualification.id">
+                                    <span t-esc="qualification.name"/>
+                                </option>
+                            </t>
+                        </select>
+
+                        <span style="margin: -26px 45px;float: left;"><b>Select Subject</b></span>
+                        <input type="hidden" name="course_code_select" t-att-value="course_code_select"/>
+                        <select class="form-control multiple-codes-select" id="course_code_select"
+                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                            <t t-foreach="request.env['cfo.course.code'].sudo().search([])" t-as="code">
+                                <option t-att-value="code.id">
+                                    <span t-esc="code.name"/>
+                                </option>
+                            </t>
+                        </select>
+
+                        <span style="margin: -26px 29px;float: left;"><b>Select Study Option</b></span>
                         <input type="hidden" name="option_select" t-att-value="option_select"/>
                         <select class="form-control multiple-option-select" id="option_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
@@ -316,9 +325,7 @@
                                 </option>
                             </t>
                         </select>
-                        <button type="submit" title="Filter" style="height:38px;transition:unset;" class="fillter_timetable">
-                            <i class="fa fa-filter o_fillter_click"/>
-                        </button>
+                        <button  type="submit" title="Filter" style="height:38px;transition:unset;width:63px;font-size:15px;" class="fillter_timetable" ><b>Search</b></button>
                     </form>
                 </div>
                 <div>
