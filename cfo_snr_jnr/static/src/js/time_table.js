@@ -6,7 +6,6 @@ var self = this;
 var flag = false;
 var localStorage = window.localStorage;
 $(document).ready(function(){
-
 	$('.info_time_table_course').popover({
 		animation: true,
 		html: true,
@@ -106,7 +105,6 @@ $(document).ready(function(){
 	    $("#course_code_select").prop('disabled', true);
 	    $("#semester_select").prop('disabled', true);
 	    $("#option_select").prop('disabled', true);
-//	    $(".o_fillter_click").prop('disabled', true);
 
 
         $('#campus_select').select2({
@@ -241,12 +239,10 @@ $(document).ready(function(){
     $(".cfo-cnr-jnr-color-picker").on("click",function(e){
         var id="#"+ e.toElement.id;
         var data_id=$(id).attr('data')
-        console.log("\n\n\n data_id",data_id)
-        var hexVal=null
+            var hexVal=null
         $(id).spectrum();
         $(id).on('move.spectrum', function(e, tinyColor) {
             hexVal = tinyColor.toHexString();
-            console.log("\n\n\n val>>>",hexVal)
             $(id).css('backgroundColor', '#' + hexVal);
         });
         $('.sp-choose').on("click",  function(){
@@ -258,6 +254,22 @@ $(document).ready(function(){
         });
     });
 
+    $(window).on("load",function(){
+        rpc.query({
+                model:'cfo.semester.information',
+                method:'get_data',
+                args:[]
+        }).then(function (data){
+            console.log("\n\n\n data",data)
+            var semester=[]
+            for(var i=0; i<data.length; i++)
+            {
+                semester.push('<option value=' + data[i].id + '>' + data[i].name + '</option>\n')
+            }
+            $(document).find('#semester_select').html(semester)
+
+        })
+    });
 
 });
 });

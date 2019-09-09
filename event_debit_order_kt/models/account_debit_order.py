@@ -187,7 +187,7 @@ class debit_order_details(models.Model):
         if self.invoice_id:
             account_invoice = self.invoice_id
             if account_invoice.state != 'paid':
-                journal_id = self.env['account.journal'].search([('code', '=', 'EFT')], limit=1)
+                journal_id = self.env['account.journal'].search([('code', '=', 'CSH1')], limit=1)
                 payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
                 payment_id = self.env['account.payment'].sudo().create({
                     'partner_id': self.partner_id.id,

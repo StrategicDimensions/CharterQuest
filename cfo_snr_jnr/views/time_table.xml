@@ -191,6 +191,7 @@
                 <field name="name"/>
                 <field name="start_date"/>
                 <field name="end_date"/>
+                <field name="sequence"/>
                 <field name="active"/>
             </tree>
         </field>
@@ -213,6 +214,7 @@
                         <field name="name" required="True"/>
                         <field name="start_date"/>
                         <field name="end_date"/>
+                        <field name="sequence"/>
                     </group>
                 </sheet>
             </form>
