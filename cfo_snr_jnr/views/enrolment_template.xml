@@ -2241,7 +2241,6 @@
                                 <td>Course Deposit</td>
                                 <td>
                                     <select name="inputPaypercentage" class="requiredValue" id="inputPaypercentage">
-
                                             <option value="20">20 %</option>
                                             <option value="30">30 %</option>
                                             <option value="40">40 %</option>
@@ -2251,7 +2250,6 @@
                                             <option value="80">80 %</option>
                                             <option value="90">90 %</option>
                                             <option value="100">100 %</option>
-
                                     </select>
                                 </td>
                                 <td>Please use the dropdown arrow to select the deposit % you would like to pay. Minimum

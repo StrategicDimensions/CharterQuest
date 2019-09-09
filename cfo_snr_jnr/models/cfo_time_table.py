@@ -43,12 +43,6 @@ class CFOSemesterInformation(models.Model):
     sequence=fields.Integer(string="Sequence")
     active = fields.Boolean(string="Active", default=True)
 
-    @api.model
-    def get_data(self):
-        record=self.env['cfo.semester.information'].search_read([],['id','name'],order='sequence')
-        return record
-
-
 class CFOCourseCode(models.Model):
     _name = 'cfo.course.code'
 
@@ -71,22 +65,6 @@ class CFOTimeTable(models.Model):
     time_table_line_ids = fields.One2many("cfo.time.table.line", 'time_table_id', string="Time Table Lines")
     active = fields.Boolean(string="Active", default=True)
 
-    @api.model
-    def get_data(self,qua_ids,campus_ids,semester_ids):
-        subject=[]
-        study_option=[]
-        if qua_ids and campus_ids and semester_ids:
-            res=self.env['cfo.time.table'].search([('qualification_id','in',[int(id) for id in qua_ids]),('semester_id','in',[int(id) for id in semester_ids])])
-            for record in res:
-                for line in record.time_table_line_ids:
-                    if line.course_code_id.campus_id.id in [int(id) for id in campus_ids]:
-                        subject.append({'id':line.course_code_id.id,'name':line.course_code_id.name})
-                study_option.append({'id':record.course_option_id.id,'name':record.course_option_id.name})
-        else:
-            subject=self.env['cfo.course.code'].sudo().search_read([],['id','name'])
-            study_option= self.env['cfo.course.option'].sudo().search_read([], ['id', 'name'])
-
-        return [subject,study_option]
 
 class CFOTimeTableLines(models.Model):
     _name = "cfo.time.table.line"
@@ -111,10 +89,6 @@ class CFOTimeTableWeeks(models.Model):
     color=fields.Char(string="color")
     time_table_line_id = fields.Many2one('cfo.time.table.line', string="Time Table Line")
 
-    @api.model
-    def add_color(self,id,color_val):
-        res=self.env['cfo.time.table.weeks'].browse(id)
-        res.write({'color':color_val})
 
 class ResCompany(models.Model):
     _inherit="res.company"
