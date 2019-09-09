@@ -62,9 +62,10 @@
 
     <template id="time_table_report">
             <t t-call="cfo_snr_jnr.external_layout_custom">
-                <center><h2>Time Table</h2></center>
+                <center><h2>Class Timetable</h2></center>
                 <div class="page" id="time_table">
                         <t t-foreach="docids" t-as="time">
+                            <t t-if="time.time_table_line_ids">
                             <div style="margin-top:5px;">
                                 <div class="form-group">
                                 </div>
@@ -132,6 +133,7 @@
                                 </table>
                             </div>
                         </t>
+                            </t>
                 </div>
                 <div id="footer">
                     <center></center>

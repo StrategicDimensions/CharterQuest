@@ -74,13 +74,14 @@ class TimeTable(http.Controller):
             pdfhttpheaders = [
                 ('Content-Type', 'application/pdf'),
                 ('Content-Length', len(pdf)),
-                ('Content-Disposition', 'attachment'),
+                ('Content-Disposition', 'attachment;filename=Class TimeTable.pdf;'),
                 ('target', '_blank'),
             ]
             return request.make_response(pdf, headers=pdfhttpheaders)
 
     @http.route(['/get_timetable_data'], type='json', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
-    def get_campus(self, **kw):
+    def get_timetable_data(self, **kw):
+        print("\n\n\n calll")
         subject = []
         study_option = []
         if kw.get('qua_ids') and kw.get('campus_ids') and kw.get('semester_ids'):
@@ -107,6 +108,11 @@ class TimeTable(http.Controller):
         }
 
     @http.route(['/set_color'], type='json', auth="public", website=True)
-    def get_campus1(self, **kw):
+    def set_color(self, **kw):
         res = request.env['cfo.time.table.weeks'].sudo().browse(kw.get('data_id'))
         res.write({'color': kw.get('hex_val')})
+
+    @http.route(['/get_campus'], type='json', auth="public", website=True)
+    def get_campus(self, **kw):
+        res = request.env['res.partner'].sudo().search_read([('is_campus', '=', True)],['id','name'])
+        return {'campus':res}

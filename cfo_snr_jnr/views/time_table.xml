@@ -345,7 +345,8 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-bordered time_table_main">
+                            <t t-if="time.time_table_line_ids">
+                                <table class="table table-bordered time_table_main">
                                 <caption
                                         style="color:black;border: 1px solid gainsboro;padding: 5px;background:#d9edf7;">
                                     <b>
@@ -489,6 +490,7 @@
                                     </tr>
                                 </t>
                             </table>
+                            </t>
                         </div>
                     </t>
                 </div>

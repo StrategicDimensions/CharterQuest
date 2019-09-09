@@ -11,6 +11,7 @@ $(document).ready(function(){
 	$('.info_time_table_course').popover({
 		animation: true,
 		html: true,
+		placement: 'right',
         content: function() {
 			var content = $(this).attr("data-popover-content");
 			return $(content).children(".popover-body").html();
@@ -42,10 +43,21 @@ $(document).ready(function(){
 	$('.multiple-campus-select').on('change',function(){
         var value=$(this).val();
         if (value){
+            $('#campus_select').find('option').not(':selected').remove();
             $("#semester_select").prop('disabled', false);
         }
         else
         {
+            ajax.jsonRpc('/get_campus', 'call',{
+
+            }).then(function (data) {
+                var campus=[]
+                for(var i=0; i<data['campus'].length; i++)
+                {
+                    campus.push('<option value=' + data['campus'][i].id + '>' + data['campus'][i].name + '</option>\n')
+                }
+                $(document).find('#campus_select').html(campus)
+                });
             $("#semester_select").prop('disabled', true);
         }
             localStorage.setItem("campus",value);
@@ -163,6 +175,9 @@ $(document).ready(function(){
         var qua_ids=$('#level_select').val()
         var campus_ids=$('#campus_select').val()
         var semester_ids=$('#semester_select').val()
+        console.log("\n\n\n\n qua_ids",qua_ids)
+        console.log("\n\n\n\n campus_ids",campus_ids)
+        console.log("\n\n\n\n semester_ids",semester_ids)
         var subject=[]
         var study_option=[]
         ajax.jsonRpc('/get_timetable_data', 'call', {
@@ -170,11 +185,13 @@ $(document).ready(function(){
             'campus_ids': campus_ids,
             'semester_ids': semester_ids
         }).then(function (data) {
+            $(document).find('#course_code_select').html("")
             for(var i=0; i<data['subject'].length; i++)
             {
                 subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
             }
             $(document).find('#course_code_select').html(subject)
+            $(document).find('#option_select').html("")
             for(var i=0; i<data['study_option'].length; i++)
             {
                 study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
@@ -185,7 +202,7 @@ $(document).ready(function(){
 
     $('#campus_select').on('click',function(){
         var qua_ids=$('#level_select').val()
-        var campus_ids=$('#campus_select').val()
+        var campus_ids=$('.campus_select').val()
         var semester_ids=$('#semester_select').val()
         var subject=[]
         var study_option=[]
@@ -194,11 +211,13 @@ $(document).ready(function(){
             'campus_ids': campus_ids,
             'semester_ids': semester_ids
         }).then(function (data) {
+            $(document).find('#course_code_select').html("")
             for(var i=0; i<data['subject'].length; i++)
             {
                 subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
             }
             $(document).find('#course_code_select').html(subject)
+            $(document).find('#option_select').html("")
             for(var i=0; i<data['study_option'].length; i++)
             {
                 study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
@@ -219,11 +238,13 @@ $(document).ready(function(){
             'semester_ids': semester_ids
         }).then(function (data) {
         console.log("\n\n\n data...",data)
+            $(document).find('#course_code_select').html("")
             for(var i=0; i<data['subject'].length; i++)
             {
                 subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
             }
             $(document).find('#course_code_select').html(subject)
+            $(document).find('#option_select').html("")
             for(var i=0; i<data['study_option'].length; i++)
             {
                 study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
