@@ -40,7 +40,13 @@ class CFOSemesterInformation(models.Model):
     name = fields.Char(string="Name")
     start_date = fields.Date(string="Start Date")
     end_date = fields.Date(string="End Date")
+    sequence=fields.Integer(string="Sequence")
     active = fields.Boolean(string="Active", default=True)
+
+    @api.model
+    def get_data(self):
+        record=self.env['cfo.semester.information'].search_read([],['id','name'],order='sequence')
+        return record
 
 
 class CFOCourseCode(models.Model):

@@ -162,7 +162,7 @@ odoo.define('cfo_snr_jnr.payment', function(require) {
                             }).fail(function(message, data) {
                                 self.displayError(
                                     _t('Server Error'),
-                                    _t("We are not able to redirect you to the payment form.<") +
+                                    _t("We are not able to redirect you to the payment form.") +
                                     data.data.message
                                 );
                             });
