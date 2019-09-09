@@ -4,6 +4,7 @@ import time
 from urllib.parse import urljoin
 
 import werkzeug
+from dateutil.relativedelta import relativedelta
 from pkg_resources import require
 from odoo import http
 from odoo.http import request
@@ -2594,14 +2595,16 @@ class EnrolmentProcess(http.Controller):
             invoice_id.action_invoice_open()
             if sale_order_id and sale_order_id.quote_type == 'freequote':
                 payment_id.action_validate_invoice_payment()
+
             if sale_order_id.debit_order_mandat:
+                date_day = int(post.get('inputPaydate'))
+                dbo_date=date(year= datetime.now().year,month=datetime.now().month,day=date_day)
                 for each_debit_order in sale_order_id.debit_order_mandat:
-                    print("\n\n\n sale_order_id.months", sale_order_id.months)
                     for i in range(sale_order_id.months):
-                        print("\n\n\n i", i)
                         res = debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
                                                       'student_number': '',
                                                       'dbo_amount': sale_order_id.monthly_amount,
+                                                      'dbo_date':dbo_date,
                                                       'course_fee': each_debit_order.course_fee,
                                                       'interest': each_debit_order.interest,
                                                       'acc_holder': sale_order_id.partner_id.name,
@@ -2612,7 +2615,8 @@ class EnrolmentProcess(http.Controller):
                                                       'bank_type_id': each_debit_order.bank_type_id.id,
                                                       'invoice_id': invoice_id.id if invoice_id else False
                                                       })
-                        print("\n\n\n\n res>>>", res)
+                        dbo_date = dbo_date +relativedelta(months=+1)
+
             template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
             if template_id:
                 # template_id.send_mail(sale_order_id.id, force_send=True)
