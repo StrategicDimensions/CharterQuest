@@ -6,8 +6,6 @@ class TimeTablereport(models.AbstractModel):
 
     @api.model
     def get_report_values(self, docids, data=None):
-        print("\n\n\n docids",docids)
-        print("\n\n\n data>>>>", data)
         return {
             'docids':docids,
             'data': data,
