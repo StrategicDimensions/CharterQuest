@@ -2324,13 +2324,13 @@
                                                     <span>Months</span>
                                                 </option>
                                             </t>
-                                            <t t-if="sale_order and register_enrol">
-                                                <option t-att-data-interest="each_interest.interest_per"
-                                                        t-att-value="each_interest.no_months">
-                                                    <span t-esc="each_interest.no_months"/>
-                                                    <span>Months</span>
-                                                </option>
-                                            </t>
+<!--                                            <t t-if="sale_order and register_enrol">-->
+<!--                                                <option t-att-data-interest="each_interest.interest_per"-->
+<!--                                                        t-att-value="each_interest.no_months">-->
+<!--                                                    <span t-esc="each_interest.no_months"/>-->
+<!--                                                    <span>Months</span>-->
+<!--                                                </option>-->
+<!--                                            </t>-->
 
                                         </t>
                                     </select>
@@ -2566,11 +2566,11 @@
                                                         </option>
                                                     </t>
                                                 </t>
-                                                <t t-if="sale_order">
-                                                    <option t-att-bank-id="each_bank.id" t-att-value="each_bank.id">
-                                                        <span t-esc="each_bank.name"/>
-                                                    </option>
-                                                </t>
+<!--                                                <t t-if="sale_order">-->
+<!--                                                    <option t-att-bank-id="each_bank.id" t-att-value="each_bank.id">-->
+<!--                                                        <span t-esc="each_bank.name"/>-->
+<!--                                                    </option>-->
+<!--                                                </t>-->
                                             </t>
                                         </select>
                                     </td>
