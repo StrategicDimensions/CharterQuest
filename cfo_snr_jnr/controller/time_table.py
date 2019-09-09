@@ -39,6 +39,7 @@ class TimeTable(http.Controller):
             lambda l: l.course_option_id.id in [int(i) for i in option_select.split(',')])
         time_table_ids = time_table_ids.filtered(
             lambda l: l.semester_id.id in [int(i) for i in semester_select.split(',')])
+        time_table_ids=time_table_ids.sorted(key= lambda l: l.semester_id.sequence)
         course_code = post.get('course_code_select') if post.get('course_code_select') else ','.join(
             [str(i.id) for i in request.env['cfo.course.code'].sudo().search([])])
         campus_select = post.get('campus_select') if post.get('campus_select') else ','.join(
@@ -60,11 +61,12 @@ class TimeTable(http.Controller):
             lecturer_id = request.env['res.partner'].sudo().browse([lecturer_id])
             return request.render("cfo_snr_jnr.view_lecturer_details", {'lecturer': lecturer_id})
 
-    @http.route('/time_table/report/print', methods=['POST', 'GET'], csrf=False, type='http', auth="user", website=True)
+    @http.route('/time_table/report/print', methods=['POST', 'GET'], csrf=False, type='http', auth="public", website=True)
     def print_id(self, **kw):
         time_table_ids = [int(i) for i in kw['id'].split(",")]
         course_code = [int(i) for i in kw['code'].split(",")]
         timetable_ids=request.env['cfo.time.table'].sudo().search([('id','in',time_table_ids)])
+        timetable_ids = timetable_ids.sorted(key=lambda l: l.semester_id.sequence)
         datas={'course_code':course_code}
         if timetable_ids and course_code:
             report_id = request.env.ref('cfo_snr_jnr.report_time_table')
@@ -76,3 +78,35 @@ class TimeTable(http.Controller):
                 ('target', '_blank'),
             ]
             return request.make_response(pdf, headers=pdfhttpheaders)
+
+    @http.route(['/get_timetable_data'], type='json', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
+    def get_campus(self, **kw):
+        subject = []
+        study_option = []
+        if kw.get('qua_ids') and kw.get('campus_ids') and kw.get('semester_ids'):
+
+            res = request.env['cfo.time.table'].sudo().search([('qualification_id', 'in', [int(id) for id in kw.get('qua_ids')]),
+                                                            ('semester_id', 'in', [int(id) for id in kw.get('semester_ids')])])
+
+            print("\n\n\n res>>",res)
+            for record in res:
+                for line in record.time_table_line_ids:
+                    if line.course_code_id.campus_id.id in [int(id) for id in kw.get('campus_ids')]:
+                        subject.append({'id': line.course_code_id.id, 'name': line.course_code_id.name})
+                study_option.append({'id': record.course_option_id.id, 'name': record.course_option_id.name})
+            print("\n\n\n subject...",subject)
+            print("\n\n\n study_option...", study_option)
+        else:
+            subject = request.env['cfo.course.code'].sudo().search_read([], ['id', 'name'])
+            study_option = request.env['cfo.course.option'].sudo().search_read([], ['id', 'name'])
+
+
+        return {
+            'subject':subject,
+            'study_option':study_option
+        }
+
+    @http.route(['/set_color'], type='json', auth="public", website=True)
+    def get_campus1(self, **kw):
+        res = request.env['cfo.time.table.weeks'].sudo().browse(kw.get('data_id'))
+        res.write({'color': kw.get('hex_val')})

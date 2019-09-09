@@ -288,7 +288,7 @@
                         <input type="hidden" name="semester_select" t-att-value="semester_select"/>
                         <select class="form-control multiple-semester-select" id="semester_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
-                            <t t-foreach="request.env['cfo.semester.information'].sudo().search([])" t-as="semester">
+                            <t t-foreach="request.env['cfo.semester.information'].sudo().search([],order='sequence')" t-as="semester">
                                 <option t-att-value="semester.id">
                                     <span t-esc="semester.name"/>
                                 </option>

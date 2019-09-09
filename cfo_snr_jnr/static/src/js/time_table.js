@@ -2,10 +2,12 @@ odoo.define('cfo_snr_jnr.time_table',function (require) {
 "use strict";
 
 var rpc = require('web.rpc');
+var ajax = require('web.ajax');
 var self = this;
 var flag = false;
 var localStorage = window.localStorage;
 $(document).ready(function(){
+//    alert()
 	$('.info_time_table_course').popover({
 		animation: true,
 		html: true,
@@ -157,76 +159,78 @@ $(document).ready(function(){
 	});
 
 
-    $('#campus_select').on('click',function(){
-        var qua_ids=$('#level_select').val()
-        var campus_ids=$('#campus_select').val()
-        var semester_ids=$('#semester_select').val()
-        var subject=[]
-        var study_option=[]
-        rpc.query({
-                model:'cfo.time.table',
-                method:'get_data',
-                args:[qua_ids,campus_ids,semester_ids]
-        }).then(function (data){
-            for(var i=0; i<data[0].length; i++)
-            {
-                subject.push('<option value=' + data[0][i].id + '>' + data[0][i].name + '</option>\n')
-            }
-            $(document).find('#course_code_select').html(subject)
-            for(var i=0; i<data[1].length; i++)
-            {
-                study_option.push('<option value=' + data[1][i].id + '>' + data[1][i].name + '</option>\n')
-            }
-            $(document).find('#option_select').html(study_option)
-        })
-    });
     $('#level_select').on('click',function(){
         var qua_ids=$('#level_select').val()
         var campus_ids=$('#campus_select').val()
         var semester_ids=$('#semester_select').val()
         var subject=[]
         var study_option=[]
-        rpc.query({
-                model:'cfo.time.table',
-                method:'get_data',
-                args:[qua_ids,campus_ids,semester_ids]
-        }).then(function (data){
-            for(var i=0; i<data[0].length; i++)
+        ajax.jsonRpc('/get_timetable_data', 'call', {
+            'qua_ids': qua_ids,
+            'campus_ids': campus_ids,
+            'semester_ids': semester_ids
+        }).then(function (data) {
+            for(var i=0; i<data['subject'].length; i++)
             {
-                subject.push('<option value=' + data[0][i].id + '>' + data[0][i].name + '</option>\n')
+                subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
             }
             $(document).find('#course_code_select').html(subject)
-            for(var i=0; i<data[1].length; i++)
+            for(var i=0; i<data['study_option'].length; i++)
             {
-                study_option.push('<option value=' + data[1][i].id + '>' + data[1][i].name + '</option>\n')
+                study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
             }
             $(document).find('#option_select').html(study_option)
-        })
+            });
     });
+
+    $('#campus_select').on('click',function(){
+        var qua_ids=$('#level_select').val()
+        var campus_ids=$('#campus_select').val()
+        var semester_ids=$('#semester_select').val()
+        var subject=[]
+        var study_option=[]
+        ajax.jsonRpc('/get_timetable_data', 'call', {
+            'qua_ids': qua_ids,
+            'campus_ids': campus_ids,
+            'semester_ids': semester_ids
+        }).then(function (data) {
+            for(var i=0; i<data['subject'].length; i++)
+            {
+                subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
+            }
+            $(document).find('#course_code_select').html(subject)
+            for(var i=0; i<data['study_option'].length; i++)
+            {
+                study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
+            }
+            $(document).find('#option_select').html(study_option)
+            });
+    });
+
     $('#semester_select').on('click',function(){
         var qua_ids=$('#level_select').val()
         var campus_ids=$('#campus_select').val()
         var semester_ids=$('#semester_select').val()
         var subject=[]
         var study_option=[]
-        rpc.query({
-                model:'cfo.time.table',
-                method:'get_data',
-                args:[qua_ids,campus_ids,semester_ids]
-        }).then(function (data){
-            for(var i=0; i<data[0].length; i++)
+        ajax.jsonRpc('/get_timetable_data', 'call', {
+            'qua_ids': qua_ids,
+            'campus_ids': campus_ids,
+            'semester_ids': semester_ids
+        }).then(function (data) {
+        console.log("\n\n\n data...",data)
+            for(var i=0; i<data['subject'].length; i++)
             {
-                subject.push('<option value=' + data[0][i].id + '>' + data[0][i].name + '</option>\n')
+                subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
             }
             $(document).find('#course_code_select').html(subject)
-            for(var i=0; i<data[1].length; i++)
+            for(var i=0; i<data['study_option'].length; i++)
             {
-                study_option.push('<option value=' + data[1][i].id + '>' + data[1][i].name + '</option>\n')
+                study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
             }
             $(document).find('#option_select').html(study_option)
-        })
+            });
     });
-
 
     var i=0;
     $('.time_table_div').each(function(){
@@ -246,30 +250,15 @@ $(document).ready(function(){
             $(id).css('backgroundColor', '#' + hexVal);
         });
         $('.sp-choose').on("click",  function(){
-             rpc.query({
-                model:'cfo.time.table.weeks',
-                method:'add_color',
-                args:[data_id,hexVal]
-            });
+              ajax.jsonRpc('/set_color', 'call',{
+                    'data_id':data_id,
+                    'hex_val':hexVal
+              })
+
         });
     });
 
-    $(window).on("load",function(){
-        rpc.query({
-                model:'cfo.semester.information',
-                method:'get_data',
-                args:[]
-        }).then(function (data){
-            console.log("\n\n\n data",data)
-            var semester=[]
-            for(var i=0; i<data.length; i++)
-            {
-                semester.push('<option value=' + data[i].id + '>' + data[i].name + '</option>\n')
-            }
-            $(document).find('#semester_select').html(semester)
 
-        })
-    });
 
 });
 });
