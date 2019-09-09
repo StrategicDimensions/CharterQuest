@@ -3219,7 +3219,8 @@
                             <t t-if="post_data">
                                 <input id="sale_oder" name="sale_order" t-att-value="post_data['sale_order']"
                                        type="hidden"/>
-
+                                 <input id="dbo_date_id" name="dbo_date" t-att-value="dbo_date"
+                                       type="hidden"/>
                             </t>
                             <button id="btn_pay_later" formaction="/pay/bank/thankyou" type="submit"
                                     style="margin-top: 30px;" class="btn btn-primary">Get Quote and Banking details
@@ -3240,6 +3241,7 @@
                             </button>
                             <input id="interest_amount_id" name="interest_amount" t-att-value="interest_amount"
                                        type="hidden"/>
+
                             <input id="eft_id" name="eft" t-att-value="eft" type="hidden"/>
                             <button id="btn_pay_later" type="submit" style="margin-top: 30px;" class="btn btn-primary">
                                 Pay Later

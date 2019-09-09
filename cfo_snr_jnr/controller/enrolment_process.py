@@ -1512,6 +1512,7 @@ class EnrolmentProcess(http.Controller):
                                              'invoice_line_ids': invoice_line,
                                              'residual': sale_order_id.out_standing_balance_incl_vat,
                                              })
+            print ("\n\n\n\ninvoice",invoice_id)
             stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
             # stock_location = request.env['stock.location'].sudo().search(
             #     [('location_id', '=', sale_order_id.warehouse_id.id)])
@@ -1552,21 +1553,26 @@ class EnrolmentProcess(http.Controller):
             })
             customer_picking.sale_id = sale_order_id.id
             invoice_id.action_invoice_open()
-        if sale_order_id.debit_order_mandat:
+        if sale_order_id.debit_order_mandat and post.get('dbo_date') :
+            date_day = int(post.get('dbo_date'))
+            dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
             for each_debit_order in sale_order_id.debit_order_mandat:
-                debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
-                                        'student_number': '',
-                                        'dbo_amount': each_debit_order.dbo_amount,
-                                        'course_fee': each_debit_order.course_fee,
-                                        'interest': each_debit_order.interest,
-                                        'acc_holder': sale_order_id.partner_id.name,
-                                        'bank_name': each_debit_order.bank_name.id,
-                                        'bank_acc_no': each_debit_order.bank_acc_no,
-                                        'bank_code': each_debit_order.bank_name.bic,
-                                        'state': 'pending',
-                                        'bank_type_id': each_debit_order.bank_type_id.id,
-                                        'invoice_id': invoice_id.id
-                                        })
+                for i in range(sale_order_id.months):
+                    debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
+                                            'student_number': '',
+                                            'dbo_amount': each_debit_order.dbo_amount,
+                                            'course_fee': each_debit_order.course_fee,
+                                            'interest': each_debit_order.interest,
+                                            'dbo_date':dbo_date,
+                                            'acc_holder': sale_order_id.partner_id.name,
+                                            'bank_name': each_debit_order.bank_name.id,
+                                            'bank_acc_no': each_debit_order.bank_acc_no,
+                                            'bank_code': each_debit_order.bank_name.bic,
+                                            'state': 'pending',
+                                            'bank_type_id': each_debit_order.bank_type_id.id,
+                                            'invoice_id': invoice_id.id
+                                            })
+                    dbo_date = dbo_date + relativedelta(months=+1)
 
         template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
         if template_id:
@@ -1864,7 +1870,6 @@ class EnrolmentProcess(http.Controller):
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
         attachment_list = []
         invoice_line = []
-        print("\n\n\n post",post)
         print("\n\n\n request.session.get('sale_order')",request.session.get('sale_order'))
         if post.get('sale_order'):
             sale_order = post.get('sale_order')
@@ -1963,7 +1968,6 @@ class EnrolmentProcess(http.Controller):
             for each_debit_order in sale_order_id.debit_order_mandat:
                 print("\n\n\n sale_order_id.months",sale_order_id.months)
                 for i in range(sale_order_id.months):
-                    print("\n\n\n i",i)
                     res=debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
                                             'student_number': '',
                                             'dbo_amount': sale_order_id.monthly_amount,
@@ -1977,7 +1981,6 @@ class EnrolmentProcess(http.Controller):
                                             'bank_type_id': each_debit_order.bank_type_id.id,
                                             'invoice_id': invoice_id.id if invoice_id else False
                                             })
-                    print("\n\n\n\n res>>>",res)
         template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
         if template_id:
             # template_id.send_mail(sale_order_id.id, force_send=True)
@@ -2395,6 +2398,7 @@ class EnrolmentProcess(http.Controller):
         debit_order_mandet = []
         res_bank_detail = False
         account_type = False
+
         if post.get('inputBankName'):
             res_bank_detail = request.env['res.bank'].sudo().search([('id', '=', int(post['inputBankName']))])
         if post.get('inputAtype'):
@@ -2430,7 +2434,8 @@ class EnrolmentProcess(http.Controller):
         if post.get('Pay Via Bank Deposit'):
             return request.render('cfo_snr_jnr.enrolment_process_validate_payment', {'post_data': post if post else '',
                                                                                      'button_hide': True,
-                                                                                     'hide_bank_detail': True})
+                                                                                     'hide_bank_detail': True,
+                                                                                     'dbo_date':post.get('inputPaydate') if post.get('inputPaydate') else 0,})
         else:
             return request.render('cfo_snr_jnr.enrolment_process_validate_payment', {'post_data': post if post else '',
                                                                                      'button_hide': False,
@@ -2551,7 +2556,7 @@ class EnrolmentProcess(http.Controller):
                                                         'residual': sale_order_id.out_standing_balance_incl_vat,
                                                         })
 
-            #         print ("\n\n--------------invoice_id--->>>>>>>>>>>>>>>>>>>>>>>>",invoice_id,sale_order_id)
+                print ("\n\n--------------invoice_id--->>>>>>>>>>>>>>>>>>>>>>>>",invoice_id,sale_order_id)
             #         sale_order_id.invoice_ids = [(4,invoice_id.id)]
             stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
             # stock_location = request.env['stock.location'].sudo().search(
