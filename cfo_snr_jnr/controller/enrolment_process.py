@@ -1538,7 +1538,7 @@ class EnrolmentProcess(http.Controller):
                             'location_id': picking_type_id.id,
                             'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
                         }))
-            customer_picking = request.env['stock.picking'].create({
+            customer_picking = request.env['stock.picking'].sudo().create({
                 'partner_id': sale_order_id.partner_id.id,
                 'campus_id': sale_order_id.campus.id,
                 'prof_body_id': sale_order_id.prof_body.id,
@@ -2512,7 +2512,7 @@ class EnrolmentProcess(http.Controller):
             event_tickets = request.session['event_id'] if request.session.get('event_id') else ''
 
             sale_order_id = request.env['sale.order'].sudo().browse(int(post.get('sale_order')))
-            
+
             if sale_order_id and sale_order_id.quote_type == 'freequote':
                 print("call")
                 ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
