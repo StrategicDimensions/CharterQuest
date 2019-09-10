@@ -167,7 +167,7 @@ class stock_picking(models.Model):
         if not partner_id:
             return {'value': {'student_number': False}}
 
-        part = self.env['res.partner'].browse(partner_id)
+        part = self.env['res.partner'].sudo().browse(partner_id)
         val = {
             'student_number': part.student_number,
 
@@ -177,7 +177,7 @@ class stock_picking(models.Model):
     @api.model
     def create(self, vals):
         if vals.get('origin', False):
-            sale_id = self.env['sale.order'].search([('name', '=', vals['origin'])])
+            sale_id = self.env['sale.order'].sudo().search([('name', '=', vals['origin'])])
             if sale_id.quote_type in ['freequote','enrolment','PC Exam',]:
                 vals['campus_id'] = sale_id.campus.id,
                 vals['semester'] = sale_id.semester_id.id,
