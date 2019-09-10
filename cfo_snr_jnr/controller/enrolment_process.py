@@ -1504,15 +1504,15 @@ class EnrolmentProcess(http.Controller):
                                                 (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
                                             'price_unit': each_order_line.price_unit,
                                             'discount': each_order_line.discount}])
-            invoice_id = invoice_obj.create({'partner_id': sale_order_id.partner_id.id,
-                                             'campus': sale_order_id.campus.id,
-                                             'prof_body': sale_order_id.prof_body.id,
-                                             'sale_order_id': sale_order_id.id,
-                                             'semester_id': sale_order_id.semester_id.id,
-                                             'invoice_line_ids': invoice_line,
-                                             'residual': sale_order_id.out_standing_balance_incl_vat,
-                                             })
-            print ("\n\n\n\ninvoice",invoice_id)
+            # invoice_id = invoice_obj.create({'partner_id': sale_order_id.partner_id.id,
+            #                                  'campus': sale_order_id.campus.id,
+            #                                  'prof_body': sale_order_id.prof_body.id,
+            #                                  'sale_order_id': sale_order_id.id,
+            #                                  'semester_id': sale_order_id.semester_id.id,
+            #                                  'invoice_line_ids': invoice_line,
+            #                                  'residual': sale_order_id.out_standing_balance_incl_vat,
+            #                                  })
+            # print ("\n\n\n\ninvoice",invoice_id)
             stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
             # stock_location = request.env['stock.location'].sudo().search(
             #     [('location_id', '=', sale_order_id.warehouse_id.id)])
@@ -1538,7 +1538,7 @@ class EnrolmentProcess(http.Controller):
                             'location_id': picking_type_id.id,
                             'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
                         }))
-            customer_picking = request.env['stock.picking'].sudo().create({
+            customer_picking = request.env['stock.picking'].create({
                 'partner_id': sale_order_id.partner_id.id,
                 'campus_id': sale_order_id.campus.id,
                 'prof_body_id': sale_order_id.prof_body.id,
@@ -1552,7 +1552,7 @@ class EnrolmentProcess(http.Controller):
                 'move_lines': line_list
             })
             customer_picking.sale_id = sale_order_id.id
-            invoice_id.action_invoice_open()
+            # invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat and post.get('dbo_date') :
             date_day = int(post.get('dbo_date'))
             dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
@@ -1569,8 +1569,8 @@ class EnrolmentProcess(http.Controller):
                                             'bank_acc_no': each_debit_order.bank_acc_no,
                                             'bank_code': each_debit_order.bank_name.bic,
                                             'state': 'pending',
-                                            'bank_type_id': each_debit_order.bank_type_id.id,
-                                            'invoice_id': invoice_id.id
+                                            'bank_type_id': each_debit_order.bank_type_id.id
+                                            # 'invoice_id': invoice_id.id
                                             })
                     dbo_date = dbo_date + relativedelta(months=+1)
 
@@ -2428,8 +2428,8 @@ class EnrolmentProcess(http.Controller):
                      'inputtotalandInterest') else 0,
                  'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
                  'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
-                 'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0,
-                 'debit_order_mandat': debit_order_mandet})
+                 'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0
+                 })
             # sale_order_id.action_confirm()
         if post.get('Pay Via Bank Deposit'):
             return request.render('cfo_snr_jnr.enrolment_process_validate_payment', {'post_data': post if post else '',
@@ -2513,52 +2513,55 @@ class EnrolmentProcess(http.Controller):
 
             sale_order_id = request.env['sale.order'].sudo().browse(int(post.get('sale_order')))
 
-            if sale_order_id and sale_order_id.quote_type == 'freequote':
-                print("call")
-                ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
-                       'company_id': sale_order_id.company_id.id}
-                inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
-                ctx.update({'journal_id': inv_default_vals.get('journal_id')})
-                invoice_id = sale_order_id.with_context(ctx).sudo().action_invoice_create()
-                invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
-                invoice_id.action_invoice_open()
-                journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
-                print("\n\n\n invoice_id",invoice_id.ids)
-                payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
-                payment_id = request.env['account.payment'].sudo().create({
-                    'partner_id': sale_order_id.partner_id.id,
-                    'amount': sale_order_id.due_amount,
-                    'payment_type': 'inbound',
-                    'partner_type': 'customer',
-                    'invoice_ids': [(6, 0, invoice_id.ids)],
-                    'payment_date': datetime.today(),
-                    'journal_id': journal_id.id,
-                    'payment_method_id': payment_methods[0].id,
-                    'amount':sale_order_id.payment_amount,
-                })
+            # if sale_order_id and sale_order_id.quote_type == 'freequote':
+
+            ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
+                   'company_id': sale_order_id.company_id.id}
+            inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
+            ctx.update({'journal_id': inv_default_vals.get('journal_id')})
+            invoice_id = sale_order_id.with_context(ctx).sudo().action_invoice_create()
+            invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
+            invoice_id.action_invoice_open()
+            journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
+            print("\n\n\n invoice_id",invoice_id.ids)
+            payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
+            payment_id = request.env['account.payment'].sudo().create({
+                'partner_id': sale_order_id.partner_id.id,
+                'amount': sale_order_id.due_amount,
+                'payment_type': 'inbound',
+                'partner_type': 'customer',
+                'invoice_ids': [(6, 0, invoice_id.ids)],
+                'payment_date': datetime.today(),
+                'journal_id': journal_id.id,
+                'payment_method_id': payment_methods[0].id,
+                'amount':sale_order_id.payment_amount,
+            })
 
 
-            if sale_order_id and sale_order_id.quote_type == 'enrolment':
-                for each_order_line in sale_order_id.order_line:
-                    invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
-                                                'name': each_order_line.name,
-                                                'quantity': 1.0,
-                                                'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
-                                                'invoice_line_tax_ids': [
-                                                    (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
-                                                'price_unit': each_order_line.price_unit,
-                                                'discount': each_order_line.discount}])
-                invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
-                                                        'campus': sale_order_id.campus.id,
-                                                        'prof_body': sale_order_id.prof_body.id,
-                                                        'sale_order_id': sale_order_id.id,
-                                                        'semester_id': sale_order_id.semester_id.id,
-                                                        'invoice_line_ids': invoice_line,
-                                                        'residual': sale_order_id.out_standing_balance_incl_vat,
-                                                        })
+            # if sale_order_id and sale_order_id.quote_type == 'enrolment':
 
-                print ("\n\n--------------invoice_id--->>>>>>>>>>>>>>>>>>>>>>>>",invoice_id,sale_order_id)
-            #         sale_order_id.invoice_ids = [(4,invoice_id.id)]
+                # for each_order_line in sale_order_id.order_line:
+                #     invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
+                #                                 'name': each_order_line.name,
+                #                                 'quantity': 1.0,
+                #                                 'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
+                #                                 'invoice_line_tax_ids': [
+                #                                     (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
+                #                                 'price_unit': each_order_line.price_unit,
+                #                                 'discount': each_order_line.discount}])
+                # invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
+                #                                         'campus': sale_order_id.campus.id,
+                #                                         'prof_body': sale_order_id.prof_body.id,
+                #                                         'sale_order_id': sale_order_id.id,
+                #                                         'semester_id': sale_order_id.semester_id.id,
+                #                                         'invoice_line_ids': invoice_line,
+                #                                         'residual': sale_order_id.out_standing_balance_incl_vat,
+                #                                         })
+
+            #     invoice_id=sale_order_id.sudo().action_invoice_create()
+            #     invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
+            #     print ("\n\n--------------invoice_id--->>>>>>>>>>>>>>>>>>>>>>>>",invoice_id,sale_order_id)
+            # #         sale_order_id.invoice_ids = [(4,invoice_id.id)]
             stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
             # stock_location = request.env['stock.location'].sudo().search(
             #     [('location_id', '=', sale_order_id.warehouse_id.id)])
