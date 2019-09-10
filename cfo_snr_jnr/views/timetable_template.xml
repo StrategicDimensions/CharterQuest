@@ -156,6 +156,7 @@
         <field name="arch" type="xml">
             <xpath expr="//sheet/notebook/page/group/group//field[@name='report_header']" position="after">
                 <field name="disclaimer_text"/>
+                <field name="session_text" placeholder="Sessions Not Available??? Write Something here to display there..."/>
             </xpath>
         </field>
     </record>

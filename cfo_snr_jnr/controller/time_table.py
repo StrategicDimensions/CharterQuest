@@ -53,6 +53,7 @@ class TimeTable(http.Controller):
             'option_select': post.get('option_select') if post.get('option_select') else '',
             'semester_select': post.get('semester_select') if post.get('semester_select') else '',
             'ids': str(time_table_ids.ids).strip('[]'),'is_visible':True if post.get('course_code_select') else False,
+            'company':request.env['res.company'].sudo().search([('partner_id.name','=','The CharterQuest Institute')])
         })
 
     @http.route(['/view_lecturer/<int:lecturer_id>'], type='http', auth="public", website=True)
@@ -81,22 +82,23 @@ class TimeTable(http.Controller):
 
     @http.route(['/get_timetable_data'], type='json', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def get_timetable_data(self, **kw):
-        print("\n\n\n calll")
         subject = []
         study_option = []
         if kw.get('qua_ids') and kw.get('campus_ids') and kw.get('semester_ids'):
 
             res = request.env['cfo.time.table'].sudo().search([('qualification_id', 'in', [int(id) for id in kw.get('qua_ids')]),
                                                             ('semester_id', 'in', [int(id) for id in kw.get('semester_ids')])])
-
-            print("\n\n\n res>>",res)
+            sub_list=[]
+            study_option_list=[]
             for record in res:
                 for line in record.time_table_line_ids:
                     if line.course_code_id.campus_id.id in [int(id) for id in kw.get('campus_ids')]:
-                        subject.append({'id': line.course_code_id.id, 'name': line.course_code_id.name})
-                study_option.append({'id': record.course_option_id.id, 'name': record.course_option_id.name})
-            print("\n\n\n subject...",subject)
-            print("\n\n\n study_option...", study_option)
+                        if line.course_code_id.id not in sub_list:
+                            subject.append({'id': line.course_code_id.id, 'name': line.course_code_id.name})
+                            sub_list.append(line.course_code_id.id)
+                if record.course_option_id.id not in study_option_list:
+                    study_option.append({'id': record.course_option_id.id, 'name': record.course_option_id.name})
+                    study_option_list.append(record.course_option_id.id)
         else:
             subject = request.env['cfo.course.code'].sudo().search_read([], ['id', 'name'])
             study_option = request.env['cfo.course.option'].sudo().search_read([], ['id', 'name'])

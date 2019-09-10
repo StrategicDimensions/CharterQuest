@@ -94,5 +94,6 @@ class ResCompany(models.Model):
     _inherit="res.company"
 
     disclaimer_text=fields.Text(string="Disclaimer")
+    session_text=fields.Text(string="")
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

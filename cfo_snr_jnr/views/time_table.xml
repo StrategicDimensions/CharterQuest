@@ -345,7 +345,7 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <t t-if="time.time_table_line_ids">
+<!--                            <t t-if="time.time_table_line_ids">-->
                                 <table class="table table-bordered time_table_main">
                                 <caption
                                         style="color:black;border: 1px solid gainsboro;padding: 5px;background:#d9edf7;">
@@ -372,7 +372,8 @@
                                 <!--                                   t-if="course_code_select and course_code_select != 'all'"/>-->
                                 <!--                                <t t-set="lines" t-value="time.time_table_line_ids" t-else=""/>-->
 <!--                                <t t-esc="lines"/>-->
-                                <t t-foreach="lines" t-as="line">
+                                <t t-if="lines">
+                                    <t t-foreach="lines" t-as="line">
                                     <tr>
                                         <td>
                                             <a style="cursor:pointer;" class="info_time_table_course"
@@ -489,8 +490,14 @@
                                         </td>
                                     </tr>
                                 </t>
+                                </t>
+                                <t t-if="not lines">
+                                    <tr>
+                                        <td colspan="4"><b><span t-esc="company.session_text"></span></b></td>
+                                    </tr>
+                                </t>
                             </table>
-                            </t>
+<!--                            </t>-->
                         </div>
                     </t>
                 </div>

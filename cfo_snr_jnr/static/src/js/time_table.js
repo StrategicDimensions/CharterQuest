@@ -99,17 +99,6 @@ $(document).ready(function(){
             localStorage.setItem("campus",value);
     });
 
-//    $('.multiple-option-select').on('change',function(){
-//        var value=$(this).val();
-//         if (value){
-//            $(".o_fillter_timetable").prop('disabled', false);
-//        }
-//        else
-//        {
-//            $(".o_fillter_timetable").prop('disabled', true);
-//        }
-//        localStorage.setItem("option",value);
-//    });
 
 
 
@@ -175,9 +164,6 @@ $(document).ready(function(){
         var qua_ids=$('#level_select').val()
         var campus_ids=$('#campus_select').val()
         var semester_ids=$('#semester_select').val()
-        console.log("\n\n\n\n qua_ids",qua_ids)
-        console.log("\n\n\n\n campus_ids",campus_ids)
-        console.log("\n\n\n\n semester_ids",semester_ids)
         var subject=[]
         var study_option=[]
         ajax.jsonRpc('/get_timetable_data', 'call', {
@@ -202,7 +188,7 @@ $(document).ready(function(){
 
     $('#campus_select').on('click',function(){
         var qua_ids=$('#level_select').val()
-        var campus_ids=$('.campus_select').val()
+        var campus_ids=$('#campus_select').val()
         var semester_ids=$('#semester_select').val()
         var subject=[]
         var study_option=[]
