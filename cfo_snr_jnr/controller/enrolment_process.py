@@ -2456,6 +2456,7 @@ class EnrolmentProcess(http.Controller):
             account_type = request.env['account.account.type'].sudo().search([('id', '=', int(post['inputAtype']))])
         if post.get('sale_order'):
             sale_order_id = request.env['sale.order'].sudo().browse(int(post.get('sale_order')))
+            debit_order_mandet = []
             debit_order_mandet.append([0, 0, {'partner_id': sale_order_id.partner_id.id,
                                               'dbo_amount': post.get('inputtotalandInterest') if post.get(
                                                   'inputtotalandInterest') else 0,
@@ -2510,8 +2511,8 @@ class EnrolmentProcess(http.Controller):
 
             event_tickets = request.session['event_id'] if request.session.get('event_id') else ''
 
-            sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
-
+            sale_order_id = request.env['sale.order'].sudo().browse(int(post.get('sale_order')))
+            
             if sale_order_id and sale_order_id.quote_type == 'freequote':
                 print("call")
                 ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
@@ -2603,24 +2604,24 @@ class EnrolmentProcess(http.Controller):
 
             if sale_order_id.debit_order_mandat:
                 date_day = int(post.get('inputPaydate'))
-                dbo_date=date(year= datetime.now().year,month=datetime.now().month,day=date_day)
-                for each_debit_order in sale_order_id.debit_order_mandat:
-                    for i in range(sale_order_id.months):
-                        res = debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
-                                                      'student_number': '',
-                                                      'dbo_amount': sale_order_id.monthly_amount,
-                                                      'dbo_date':dbo_date,
-                                                      'course_fee': each_debit_order.course_fee,
-                                                      'interest': each_debit_order.interest,
-                                                      'acc_holder': sale_order_id.partner_id.name,
-                                                      'bank_name': each_debit_order.bank_name.id,
-                                                      'bank_acc_no': each_debit_order.bank_acc_no,
-                                                      'bank_code': each_debit_order.bank_name.bic,
-                                                      'state': 'pending',
-                                                      'bank_type_id': each_debit_order.bank_type_id.id,
-                                                      'invoice_id': invoice_id.id if invoice_id else False
-                                                      })
-                        dbo_date = dbo_date +relativedelta(months=+1)
+                dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
+                debit_order_mandat_id = sale_order_id.debit_order_mandat[-1]
+                for i in range(sale_order_id.months):
+                    res = debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
+                                                  'student_number': '',
+                                                  'dbo_amount': sale_order_id.monthly_amount,
+                                                  'dbo_date': dbo_date,
+                                                  'course_fee': debit_order_mandat_id.course_fee,
+                                                  'interest': debit_order_mandat_id.interest,
+                                                  'acc_holder': sale_order_id.partner_id.name,
+                                                  'bank_name': debit_order_mandat_id.bank_name.id,
+                                                  'bank_acc_no': debit_order_mandat_id.bank_acc_no,
+                                                  'bank_code': debit_order_mandat_id.bank_name.bic,
+                                                  'state': 'pending',
+                                                  'bank_type_id': debit_order_mandat_id.bank_type_id.id,
+                                                  'invoice_id': invoice_id.id if invoice_id else False
+                                                  })
+                    dbo_date = dbo_date + relativedelta(months=+1)
 
             template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
             if template_id:
