@@ -69,7 +69,6 @@ class TimeTable(http.Controller):
         timetable_ids=request.env['cfo.time.table'].sudo().search([('id','in',time_table_ids)])
         timetable_ids = timetable_ids.sorted(key=lambda l: l.semester_id.sequence)
         id=request.env['res.company'].sudo().search([('partner_id.name','=','The CharterQuest Institute')])
-        print('\n\n\n id>>',id.session_text)
         datas={'course_code':course_code,'session_text':id.session_text}
         if timetable_ids and course_code:
             report_id = request.env.ref('cfo_snr_jnr.report_time_table')

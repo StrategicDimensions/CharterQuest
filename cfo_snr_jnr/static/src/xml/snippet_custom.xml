@@ -253,7 +253,7 @@
         </div>
     </t>
     <t t-name="cfo_snr_jnr.cfo_snr_jnr_cards_blocks_cfo">
-        <div aria-hidden="true" class="modal" id="cfo_cards_block_modal" contenteditable="False" role="dialog"
+        <div aria-hidden="true" class="modal" id="cfo_cards_block_modal" contenteditable="true" role="dialog"
              style="z-index:2001" tabindex="1">
             <div class="modal-dialog">
                 <div class="modal-content" id="s_media_block_modal">
@@ -262,13 +262,13 @@
                     </div>
                     <div class="modal-body" contenteditable="false">
                         <form class="form-horizontal container-fluid" role="form">
-                            <div class="col-sm-12 form-group">
-                                <label class="col-sm-3 control-label" for="lecturer_id">Lecturer</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control" id="lecturer_id"
-                                           type="text"/>
-                                </div>
-                            </div>
+<!--                                <div class="col-sm-12 form-group">-->
+<!--                                    <label class="col-sm-3 control-label" for="lecturer_id">Lecturer</label>-->
+<!--                                    <div class="col-sm-9">-->
+<!--                                        <input class="form-control" id="lecturer_id"-->
+<!--                                               type="text"/>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                             <div class="col-sm-12 form-group">
                                 <label class="col-sm-3 control-label" for="color_card">
                                     Card Color
@@ -351,4 +351,44 @@
             </div>
         </div>
     </t>
+
+    <t t-name="cfo_snr_jnr.cfo_snr_jnr_timetable_snippet">
+        <div aria-hidden="true" class="modal" id="cfo_timetable_modal" contenteditable="False" role="dialog"
+             style="z-index:2001" tabindex="1">
+            <div class="modal-dialog">
+                <div class="modal-content" id="s_media_block_modal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">TimeTable Customization</h4>
+                    </div>
+                    <div class="modal-body" contenteditable="false">
+                        <form class="form-horizontal container-fluid" role="form">
+                            <div class="col-sm-12 form-group">
+                                <label class="col-sm-3 control-label" for="event_category">
+                                   Event Category
+                                </label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="event_category">
+                                        <option value="6">CIMA</option>
+                                        <option value="7">SAICA</option>
+                                        <option value="8">CIMA (Full-Time Only)</option>
+                                        <option value="10">CFA</option>
+                                        <option value="4">ACCA</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-dismiss="modal" id="cancel">Cancel</button>
+                        <button class="btn btn-danger" data-dismiss="modal" id="timetable_event_submit" type="submit">
+                            Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+
+
 </template>

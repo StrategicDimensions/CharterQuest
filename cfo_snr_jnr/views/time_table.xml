@@ -268,6 +268,7 @@
 
     <template id="time_table_template" name="Time Table">
         <t t-call="portal.portal_layout">
+
             <div class="panel panel-default" style="margin-top:10px;">
                 <div class="panel-heading" style="padding: 28px 15px;">
                     <form action="/time_table" method="POST">

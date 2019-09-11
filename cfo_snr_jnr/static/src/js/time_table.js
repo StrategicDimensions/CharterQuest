@@ -99,7 +99,55 @@ $(document).ready(function(){
             localStorage.setItem("campus",value);
     });
 
+    $("#level_select").prop('disabled', true);
+	    $("#course_code_select").prop('disabled', true);
+	    $("#semester_select").prop('disabled', true);
+	    $("#option_select").prop('disabled', true);
 
+
+        $('#campus_select').select2({
+			    placeholder: "",
+
+		    });
+
+		$('#level_select').select2({
+			    placeholder: ""
+		    });
+
+		$('#semester_select').select2({
+			    placeholder: ""
+		    });
+
+		$('#course_code_select').select2({
+			    placeholder: ""
+		    });
+
+		$('#option_select').select2({
+			    placeholder: ""
+		    });
+		$(document).on("click", ".details_view_lecturer", function(event){
+			window.location.href = $(this).attr('data-href');
+		});
+
+		$(document).on('change','#course_code_select',function(){
+			$(document).find('input[name="course_code_select"]').val($('.multiple-codes-select').select2('val'));
+		});
+
+		$(document).on('change','#level_select',function(){
+			$(document).find('input[name="level_select"]').val($('.multiple-levels-select').select2('val'));
+		});
+
+		$(document).on('change','#option_select',function(){
+			$(document).find('input[name="option_select"]').val($('.multiple-option-select').select2('val'));
+		});
+
+		$(document).on('change','#semester_select',function(){
+			$(document).find('input[name="semester_select"]').val($('.multiple-semester-select').select2('val'));
+		});
+
+		$(document).on('change','#campus_select',function(){
+                $(document).find('input[name="campus_select"]').val($('.multiple-campus-select').select2('val'));
+		});
 
 
 	if(window.location.pathname == '/time_table'){

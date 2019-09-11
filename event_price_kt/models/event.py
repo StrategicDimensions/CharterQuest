@@ -251,6 +251,7 @@ class event_type(models.Model):
     discount = fields.Float(string='Discount (%)')
     professional_body_code = fields.Char('Professional Body Code', size=64)
     order = fields.Integer(string='Order')
+    qualification_ids = fields.Many2many("event.qual", string="Qualification")
 
     @api.constrains('order')
     def check_order(self):
