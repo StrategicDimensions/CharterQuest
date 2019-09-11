@@ -1538,7 +1538,7 @@ class EnrolmentProcess(http.Controller):
                             'location_id': picking_type_id.id,
                             'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
                         }))
-            customer_picking = request.env['stock.picking'].create({
+            customer_picking = request.env['stock.picking'].sudo().create({
                 'partner_id': sale_order_id.partner_id.id,
                 'campus_id': sale_order_id.campus.id,
                 'prof_body_id': sale_order_id.prof_body.id,
@@ -1558,7 +1558,7 @@ class EnrolmentProcess(http.Controller):
             dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
             for each_debit_order in sale_order_id.debit_order_mandat:
                 for i in range(sale_order_id.months):
-                    debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
+                    debit_order_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
                                             'student_number': '',
                                             'dbo_amount': each_debit_order.dbo_amount,
                                             'course_fee': each_debit_order.course_fee,
