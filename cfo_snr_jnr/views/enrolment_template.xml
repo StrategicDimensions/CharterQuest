@@ -3206,6 +3206,27 @@
                 <div class="oe_structure"/>
                 <form action="/page/thank-you" class="form-horizontal-validate-payment" method="post"
                       style="color:black;">
+                    <input id="payment_amount_id" name="payment_amount" t-att-value="payment_amount"
+                                       type="hidden"/>
+                    <input id="dbo_date_id" name="dbo_date" t-att-value="dbo_date"
+                                       type="hidden"/>
+                    <input id="dbo_amount_id" name="dbo_amount" t-att-value="dbo_amount"
+                                       type="hidden"/>
+                    <input id="course_fee_id" name="course_fee" t-att-value="course_fee"
+                                       type="hidden"/>
+                    <input id="months_id" name="months" t-att-value="months"
+                                       type="hidden"/>
+                    <input id="interest_id" name="interest" t-att-value="interest"
+                                       type="hidden"/>
+                    <input id="bank_acc_no_id" name="bank_acc_no" t-att-value="bank_acc_no"
+                                       type="hidden"/>
+                    <input id="bank_code_id" name="bank_code" t-att-value="bank_code"
+                                       type="hidden"/>
+                    <input id="bank_type_id" name="bank_type_id" t-att-value="bank_type_id"
+                                       type="hidden"/>
+                    <input id="bank_name_id" name="bank_name" t-att-value="bank_name"
+                                       type="hidden"/>
+
                     <t t-if="button_hide">
                         <h2>Pay Later?</h2>
                         <!--<h3>-->
@@ -3219,8 +3240,7 @@
                             <t t-if="post_data">
                                 <input id="sale_oder" name="sale_order" t-att-value="post_data['sale_order']"
                                        type="hidden"/>
-                                 <input id="dbo_date_id" name="dbo_date" t-att-value="dbo_date"
-                                       type="hidden"/>
+
                             </t>
                             <button id="btn_pay_later" formaction="/pay/bank/thankyou" type="submit"
                                     style="margin-top: 30px;" class="btn btn-primary">Get Quote and Banking details

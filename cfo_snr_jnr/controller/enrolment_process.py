@@ -2052,6 +2052,8 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/thank-you'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def thank_you(self, **post):
+        res_bank_detail=False
+        debit_order_mandet = []
         print ("\n\n\n--------thank-you",post)
         invoice_obj = request.env['account.invoice'].sudo()
         debit_order_obj = request.env['debit.order.details'].sudo()
@@ -2090,7 +2092,23 @@ class EnrolmentProcess(http.Controller):
                                          'residual': sale_order_id.out_standing_balance_incl_vat,
                                          })
 
-        if post.get('eft'):
+        if post.get('sale_order'):
+            sale_order_id = request.env['sale.order'].sudo().browse(int(post.get('sale_order')))
+            debit_order_mandet = []
+            debit_order_mandet.append([0, 0, {'partner_id': sale_order_id.partner_id.id,
+                                              'dbo_amount': post.get('dbo_amount') if post.get(
+                                                  'dbo_amount') else 0,
+                                              'course_fee': post.get('course_fee') if post.get(
+                                                  'course_fee') else 0,
+                                              'months': post.get('months') if post.get('months') else 0,
+                                              'interest': post.get('interest') if post.get('interest') else 0,
+                                              'acc_holder': sale_order_id.partner_id.name,
+                                              'bank_name':post.get('bank_name') if post.get('bank_name')else '',
+                                              'bank_acc_no': post.get('bank_acc_no') if post.get(
+                                                  'bank_acc_no') else '',
+                                              'bank_code': res_bank_detail.bic if res_bank_detail else '',
+                                              'bank_type_id': int(post['bank_type_id']) if post.get(
+                                                  'bank_type_id') else ''}])
             account_id = request.env['account.account'].sudo().search([('code', '=', '200000')], limit=1)
             product_id = request.env['product.product'].sudo().search([('name', '=', 'Interest Amount')], limit=1)
             interest_amount_line = [[0, 0, {'price_unit': post.get('interest_amount') if post.get('interest_amount') else 0,
@@ -2107,63 +2125,111 @@ class EnrolmentProcess(http.Controller):
                                                                          'interest_amount') else 0}],
                                             'price_subtotal': post.get('interest_amount') if post.get(
                                                 'interest_amount') else 0}]]
-            sale_order_id.write({'order_line':interest_amount_line})
-        stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
-        # stock_location = request.env['stock.location'].sudo().search(
-        #     [('location_id', '=', sale_order_id.warehouse_id.id)])
-        picking_type_id = request.env['stock.picking.type'].sudo().search([('name', '=', 'Delivery Orders'),
-                                                                           ('warehouse_id', '=',
-                                                                            sale_order_id.warehouse_id.id)])
+            sale_order_id.write({'due_amount': post.get('payment_amount') if post.get('payment_amount') else 0,
+                                 'months': post.get('months') if post.get('months') else 0,
+                                 'out_standing_balance_incl_vat': post.get('dbo_amount') if post.get(
+                                     'dbo_amount') else 0,
+                                 'interest_amount': post.get('interest') if post.get('interest') else 0,
+                                'debit_order_mandat': debit_order_mandet,
+                                 'order_line':interest_amount_line})
+            sale_order_id = request.env['sale.order'].sudo().browse(int(post.get('sale_order')))
+            ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
+                   'company_id': sale_order_id.company_id.id}
+            inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
+            ctx.update({'journal_id': inv_default_vals.get('journal_id')})
+            invoice_id = sale_order_id.with_context(ctx).sudo().action_invoice_create()
+            invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
+            invoice_id.action_invoice_open()
+            journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
+            print("\n\n\n invoice_id", invoice_id.ids)
+            payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
 
-        line_list = []
-        for each_event_ticket in event_tickets:
-            event_ticket = request.env['event.event.ticket'].sudo().search(
-                [('id', '=', int(event_tickets[each_event_ticket]))])
-            book_combination = request.env['course.material'].sudo().search(
-                [('event_id', '=', event_ticket.event_id.id),
-                 ('study_option_id', '=', event_ticket.product_id.id)])
-            if book_combination:
-                for each_combination in book_combination.material_ids:
-                    line_list.append((0, 0, {
-                        'name': 'move out',
-                        'product_id': each_combination.material_product_id.id,
-                        'product_uom': each_combination.material_product_id.uom_id.id,
-                        'product_uom_qty': 1,
-                        'procure_method': 'make_to_stock',
-                        'location_id': picking_type_id.id,
-                        'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
-                    }))
-        customer_picking = request.env['stock.picking'].sudo().create({
-            'partner_id': sale_order_id.partner_id.id,
-            'campus_id': sale_order_id.campus.id,
-            'prof_body_id': sale_order_id.prof_body.id,
-            'sale_order_id': sale_order_id.id,
-            'sale_id': sale_order_id.id,
-            'semester': sale_order_id.semester_id.id,
-            'delivery_order_source': sale_order_id.quote_type,
-            'location_id': picking_type_id.id,
-            'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
-            'picking_type_id': picking_type_id.id,
-            'move_lines': line_list
-        })
-        customer_picking.sale_id = sale_order_id.id
-        invoice_id.action_invoice_open()
-        if sale_order_id.debit_order_mandat:
-            for each_debit_order in sale_order_id.debit_order_mandat:
-                debit_order_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
-                                        'student_number': '',
-                                        'dbo_amount': each_debit_order.dbo_amount,
-                                        'course_fee': each_debit_order.course_fee,
-                                        'interest': each_debit_order.interest,
-                                        'acc_holder': sale_order_id.partner_id.name,
-                                        'bank_name': each_debit_order.bank_name.id,
-                                        'bank_acc_no': each_debit_order.bank_acc_no,
-                                        'bank_code': each_debit_order.bank_name.bic,
-                                        'state': 'pending',
-                                        'bank_type_id': each_debit_order.bank_type_id.id,
-                                        'invoice_id': invoice_id.id
-                                        })
+            payment_id = request.env['account.payment'].sudo().create({
+                'partner_id': sale_order_id.partner_id.id,
+                'amount': sale_order_id.due_amount,
+                'payment_type': 'inbound',
+                'partner_type': 'customer',
+                'invoice_ids': [(6, 0, invoice_id.ids)],
+                'payment_date': datetime.today(),
+                'journal_id': journal_id.id,
+                'payment_method_id': payment_methods[0].id,
+                'amount':post.get('payment_amount'),
+            })
 
+            if sale_order_id:
+                quote_name = sale_order_id.name
+                m = hashlib.md5()
+                m.update(quote_name.encode())
+                decoded_quote_name = m.hexdigest()
+                config_para = request.env['ir.config_parameter'].sudo().search(
+                    [('key', 'ilike', 'web.base.url')])
+                if config_para:
+                    link = config_para.value + "/debitorder/" + decoded_quote_name
+                    # link = "http://enrolments.charterquest.co.za/debitordermandate/" + decoded_quote_name
+                    sale_order_id.write(
+                        {'name': quote_name, 'debit_order_mandate_link': link, 'debit_link': link})
+            stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
+            # stock_location = request.env['stock.location'].sudo().search(
+            #     [('location_id', '=', sale_order_id.warehouse_id.id)])
+            picking_type_id = request.env['stock.picking.type'].sudo().search([('name', '=', 'Delivery Orders'),
+                                                                               ('warehouse_id', '=',
+                                                                                sale_order_id.warehouse_id.id)])
+
+            line_list = []
+            for each_event_ticket in event_tickets:
+                event_ticket = request.env['event.event.ticket'].sudo().search(
+                    [('id', '=', int(event_tickets[each_event_ticket]))])
+                book_combination = request.env['course.material'].sudo().search(
+                    [('event_id', '=', event_ticket.event_id.id),
+                     ('study_option_id', '=', event_ticket.product_id.id)])
+                if book_combination:
+                    for each_combination in book_combination.material_ids:
+                        line_list.append((0, 0, {
+                            'name': 'move out',
+                            'product_id': each_combination.material_product_id.id,
+                            'product_uom': each_combination.material_product_id.uom_id.id,
+                            'product_uom_qty': 1,
+                            'procure_method': 'make_to_stock',
+                            'location_id': picking_type_id.id,
+                            'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+                        }))
+            customer_picking = request.env['stock.picking'].sudo().create({
+                'partner_id': sale_order_id.partner_id.id,
+                'campus_id': sale_order_id.campus.id,
+                'prof_body_id': sale_order_id.prof_body.id,
+                'sale_order_id': sale_order_id.id,
+                'sale_id': sale_order_id.id,
+                'semester': sale_order_id.semester_id.id,
+                'delivery_order_source': sale_order_id.quote_type,
+                'location_id': picking_type_id.id,
+                'location_dest_id': sale_order_id.partner_id.property_stock_customer.id,
+                'picking_type_id': picking_type_id.id,
+                'move_lines': line_list
+            })
+            customer_picking.sale_id = sale_order_id.id
+            invoice_id.action_invoice_open()
+            payment_id.action_validate_invoice_payment()
+
+            if sale_order_id.debit_order_mandat:
+                date_day = int(post.get('dbo_date'))
+                dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
+                debit_order_mandat_id = sale_order_id.debit_order_mandat[-1]
+                for i in range(sale_order_id.months):
+                    res = debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
+                                                  'student_number': '',
+                                                  'dbo_amount': sale_order_id.monthly_amount,
+                                                  'dbo_date': dbo_date,
+                                                  'course_fee': debit_order_mandat_id.course_fee,
+                                                  'interest': debit_order_mandat_id.interest,
+                                                  'acc_holder': sale_order_id.partner_id.name,
+                                                  'bank_name': debit_order_mandat_id.bank_name.id,
+                                                  'bank_acc_no': debit_order_mandat_id.bank_acc_no,
+                                                  'bank_code': debit_order_mandat_id.bank_name.bic,
+                                                  'state': 'pending',
+                                                  'bank_type_id': debit_order_mandat_id.bank_type_id.id,
+                                                  'invoice_id': invoice_id.id if invoice_id else False
+                                                  })
+                    dbo_date = dbo_date + relativedelta(months=+1)
         template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
         if template_id:
             # template_id.send_mail(sale_order_id.id, force_send=True)
@@ -2431,6 +2497,7 @@ class EnrolmentProcess(http.Controller):
                  'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0
                  })
             # sale_order_id.action_confirm()
+
         if post.get('Pay Via Bank Deposit'):
             return request.render('cfo_snr_jnr.enrolment_process_validate_payment', {'post_data': post if post else '',
                                                                                      'button_hide': True,
@@ -2442,6 +2509,15 @@ class EnrolmentProcess(http.Controller):
                                                                                      'hide_bank_detail': False,
                                                                                      'interest_amount':post.get('inputInterest') if post.get('inputInterest') else 0,
                                                                                      'sale_order_id':sale_order_id if sale_order_id else False,
+                                                                                     'payment_amount': post.get('inputTotalDue') if post.get('inputTotalDue') else 0,
+                                                                                     'dbo_date': post.get('inputPaydate') if post.get('inputPaydate') else 0,
+                                                                                     'dbo_amount': post.get('inputtotalandInterest') if post.get('inputtotalandInterest') else 0,
+                                                                                     'course_fee': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
+                                                                                     'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
+                                                                                     'interest': post.get('inputInterest') if post.get('inputInterest') else 0,
+                                                                                     'bank_acc_no': post.get('inputAccount') if post.get('inputAccount') else '',
+                                                                                     'bank_name': post.get('inputBankName') if post.get('inputBankName') else '',
+                                                                                     'bank_type_id': int(post['inputAtype']) if post.get('inputAtype') else '',
                                                                                      'eft':True})
 
 
