@@ -68,7 +68,9 @@ class TimeTable(http.Controller):
         course_code = [int(i) for i in kw['code'].split(",")]
         timetable_ids=request.env['cfo.time.table'].sudo().search([('id','in',time_table_ids)])
         timetable_ids = timetable_ids.sorted(key=lambda l: l.semester_id.sequence)
-        datas={'course_code':course_code}
+        id=request.env['res.company'].sudo().search([('partner_id.name','=','The CharterQuest Institute')])
+        print('\n\n\n id>>',id.session_text)
+        datas={'course_code':course_code,'session_text':id.session_text}
         if timetable_ids and course_code:
             report_id = request.env.ref('cfo_snr_jnr.report_time_table')
             pdf = report_id.sudo().render_qweb_pdf(timetable_ids, data=datas)[0]

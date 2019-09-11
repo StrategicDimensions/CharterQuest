@@ -344,7 +344,7 @@
                             <div class="form-group">
                             </div>
                         </div>
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="border: 6px solid gainsboro;">
 <!--                            <t t-if="time.time_table_line_ids">-->
                                 <table class="table table-bordered time_table_main">
                                 <caption
