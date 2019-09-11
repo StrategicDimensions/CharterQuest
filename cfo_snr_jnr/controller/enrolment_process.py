@@ -2602,8 +2602,8 @@ class EnrolmentProcess(http.Controller):
             })
             customer_picking.sale_id = sale_order_id.id
             invoice_id.action_invoice_open()
-            if sale_order_id and sale_order_id.quote_type == 'freequote':
-                payment_id.action_validate_invoice_payment()
+            # if sale_order_id and sale_order_id.quote_type == 'freequote':
+            payment_id.action_validate_invoice_payment()
 
             if sale_order_id.debit_order_mandat:
                 date_day = int(post.get('inputPaydate'))
