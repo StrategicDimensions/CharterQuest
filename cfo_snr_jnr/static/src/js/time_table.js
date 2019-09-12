@@ -3,6 +3,8 @@ odoo.define('cfo_snr_jnr.time_table',function (require) {
 
 var rpc = require('web.rpc');
 var ajax = require('web.ajax');
+var core = require('web.core');
+var QWeb = core.qweb;
 var self = this;
 var flag = false;
 var localStorage = window.localStorage;
@@ -313,6 +315,37 @@ $(document).ready(function(){
         });
     });
 
+//    $fillter_timetable=self.$modal.find(".fillter_timetable");
+    $(".fillter_timetable").on('click',function(){
+            var id=$(this).attr('data-id')
+            var qua_ids=$('#level_select').val()
+            var campus_ids=$('#campus_select').val()
+            var semester_ids=$('#semester_select').val()
+            var course_code_ids=$('#course_code_select').val()
+            var option_ids=$('#option_select').val()
+            if(id){
+                ajax.jsonRpc('/time_table_snippet', 'call', {
+                'level_select': qua_ids,
+                'campus_select': campus_ids,
+                'semester_select': semester_ids,
+                'option_select':option_ids,
+                'course_code_select':course_code_ids,
+                'id':id
+                }).then(function (data) {
+                console.log("\n\n\n\n\n data",data)
+                    $('.body').html(QWeb.render('snippet_template_timetable',{
+                         widget: this,
+                        'time_table': data['time_table'], 'course_code_select': data['course_code_select'],
+                        'campus_select': data['campus_select'],
+                        'option_select': data['option_select'],
+                        'semester_select': data['semester_select'],
+                        'ids': data['id'],
+                        'is_visible': data['is_visible'],
+                        'company': data['company'],
+                        }));
+                    });
+            }
+    });
 
 
 });

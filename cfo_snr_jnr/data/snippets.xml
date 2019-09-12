@@ -26,8 +26,9 @@
             <div class="container">
                 <div class="panel panel-default" style="margin-top:10px;">
                     <div class="panel-heading" style="padding: 28px 15px;">
-                        <form action="/" method="POST">
+<!--                        <form action="/time_table_snippet" method="POST">-->
 <!--                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
+                            <input type="hidden" name="id" value="1"/>
                             <span style="margin: -26px 48px;float: left;"><b>Select Campus</b></span>
                             <input type="hidden" name="campus_select" t-att-value="campus_select" placeholder=""/>
                             <select class="form-control multiple-campus-select" id="campus_select"
@@ -53,13 +54,13 @@
 
                             <span style="margin: -26px 53px;float: left;"><b>Select Level</b></span>
                             <input type="hidden" name="level_select" t-att-value="level_select" class="level_select"/>
-                            <select class="form-control multiple-levels-select" id="level_select"
+                            <select name="level_select" class="form-control multiple-levels-select" id="level_select"
                                     style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
-<!--                                <t t-foreach="request.env['event.qual'].sudo().search([])" t-as="qualification">-->
-<!--                                    <option t-att-value="qualification.id">-->
-<!--                                        <span t-esc="qualification.name"/>-->
-<!--                                    </option>-->
-<!--                                </t>-->
+                                <t t-foreach="request.env['event.qual'].sudo().search([])" t-as="qualification">
+                                    <option t-att-value="qualification.id">
+                                        <span t-esc="qualification.name"/>
+                                    </option>
+                                </t>
                             </select>
 
                             <span style="margin: -26px 45px;float: left;"><b>Select Subject</b></span>
@@ -83,181 +84,184 @@
                                     </option>
                                 </t>
                             </select>
-                            <button  type="submit" title="Filter" style="height:38px;transition:unset;width:63px;font-size:15px;" class="fillter_timetable" ><b>Search</b></button>
-                        </form>
+                            <button title="Filter" style="height:38px;transition:unset;width:63px;font-size:15px;" class="fillter_timetable" ><b>Search</b></button>
+<!--                        </form>-->
                     </div>
-                    <div>
-                        <t t-if="is_visible and time_table">
-                            <a class="btn btn-primary hidden-print cms-print-pdf" t-att-href="'/time_table/report/print?id=%s&amp;code=%s'%(ids,course_code_select)">
-                                    <span><i class="fa fa-print" aria-hidden="true"></i></span>Print
-                            </a>
-                        </t>
+                    <div class="body">
+
                     </div>
-                    <t t-if="is_visible">
-                        <div class="panel-body">
-                        <t t-foreach="time_table" t-as="time">
-                            <div style="margin-top:5px;">
-                                <div class="form-group">
-                                </div>
-                            </div>
-                            <div class="table-responsive" style="border: 6px solid gainsboro;">
-    <!--                            <t t-if="time.time_table_line_ids">-->
-                                    <table class="table table-bordered time_table_main">
-                                    <caption
-                                            style="color:black;border: 1px solid gainsboro;padding: 5px;background:#d9edf7;">
-                                        <b>
-                                            <span t-esc="time.semester_id.name"/>
-                                            -
-                                            <span t-esc="time.qualification_id.name"/>
-                                            -
-                                            <span t-esc="time.name"/>
-                                            -
-                                            <span t-esc="time.course_option_id.name"/>
-                                        </b>
-                                    </caption>
-                                    <tr>
-                                        <th style="width: 80px;">Subject</th>
-                                        <th style="width: 80px;">Campus</th>
-                                        <th style="width: 87px;">Time</th>
-                                        <th>Sessions</th>
-                                    </tr>
-                                    <t t-set="lines"
-                                       t-value="time.time_table_line_ids.filtered(lambda l: l.course_code_id.id in [int(i) for i in course_code_select.split(',')])"/>
-                                    <!--                                <t t-set="lines"-->
-                                    <!--                                   t-value="time.time_table_line_ids.filtered(lambda l: l.course_code_id.campus_id.id in [int(i) for i in campus_select.split(',')])"/>-->
-                                    <!--                                   t-if="course_code_select and course_code_select != 'all'"/>-->
-                                    <!--                                <t t-set="lines" t-value="time.time_table_line_ids" t-else=""/>-->
-    <!--                                <t t-esc="lines"/>-->
-                                    <t t-if="lines">
-                                        <t t-foreach="lines" t-as="line">
-                                        <tr>
-                                            <td>
-                                                <a style="cursor:pointer;" class="info_time_table_course"
-                                                   data-placement="left" t-att-data-popover-content="'#info_%s'%line.id"
-                                                   data-toggle="popover"
-                                                   tabindex="0">
-                                                    <i class="fa fa-info"/>
-                                                </a>
-                                                <div class="hidden" t-att-id="'info_%s'%line.id">
-                                                    <div class="popover-heading">
-                                                        <span t-esc="line.course_code_id.name"/>
-                                                    </div>
-                                                    <div class="popover-body">
-                                                        <div t-esc="line.course_code_id.description"
-                                                             style="border-bottom:1px solid;"/>
-                                                        <t t-if="line.course_code_id.lecturer_ids">
-                                                            <div>
-                                                                <h6>Lecturers</h6>
-                                                                <div style="list-style:none;padding:0px;line-height:46px;">
-                                                                    <t t-foreach="line.course_code_id.lecturer_ids"
-                                                                       t-as="lecturer">
-                                                                        <a style="color:black;cursor:pointer"
-                                                                           data-toggle="modal"
-                                                                           t-att-data-target="'#lecturerModal%s'%lecturer.id">
-                                                                            <div class="col-md-12"
-                                                                                 style="margin-bottom:5px;">
-                                                                                <div class="col-md-4">
-                                                                                    <img class="img-circle"
-                                                                                         t-att-src="'data:image/png;base64,'+to_text(lecturer.image)"
-                                                                                         style="height:50px;width:50px;"/>
-                                                                                </div>
-                                                                                <div class="col-md-8"
-                                                                                     t-esc="lecturer.name"/>
-                                                                            </div>
-                                                                        </a>
-                                                                        <div t-att-id="'lecturerModal%s'%lecturer.id"
-                                                                             class="modal fade infoModal" role="dialog">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-body">
-                                                                                        <button type="button" class="close"
-                                                                                                data-dismiss="modal">
-                                                                                            <i class="fa fa-times"/>
-                                                                                        </button>
-                                                                                        <div>
-                                                                                            <img class="img-circle"
-                                                                                                 t-att-src="'data:image/png;base64,'+to_text(lecturer.image)"
-                                                                                                 style="width:200px;height: 200px;"/>
-                                                                                            <div style="text-align:center;">
-                                                                                                <h4>
-                                                                                                    <b>
-                                                                                                        <span t-esc="lecturer.name"/>
-                                                                                                    </b>
-                                                                                                </h4>
-                                                                                                <h6>
-                                                                                                    <span t-esc="lecturer.function"/>
-                                                                                                    <br/>
-                                                                                                    <ul style="list-style: none;padding: 0;">
-                                                                                                        <t t-foreach="request.env['cfo.course.code'].sudo().search([('lecturer_ids', '=', lecturer.id)])"
-                                                                                                           t-as="course">
-                                                                                                            <li>
-                                                                                                                <span t-esc="course.name"/>
-                                                                                                                ,
-                                                                                                                <span t-esc="course.short_description"/>
-                                                                                                            </li>
-                                                                                                        </t>
-                                                                                                    </ul>
-                                                                                                </h6>
-                                                                                                <div style="height:40px;overflow:hidden">
-                                                                                                    <span t-esc="lecturer.comment"/>
-                                                                                                </div>
-                                                                                                <h4>
-                                                                                                    <button type="button"
-                                                                                                            t-att-data-href="'/view_lecturer/%s'%lecturer.id"
-                                                                                                            class="details_view_lecturer">
-                                                                                                        View Profile
-                                                                                                    </button>
-                                                                                                </h4>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </t>
-                                                                </div>
-                                                            </div>
-                                                        </t>
-                                                    </div>
-                                                </div>
-                                                <span t-esc="line.course_code_id.name"/>
-                                            </td>
-                                            <td>
-                                                <div t-esc="line.course_code_id.campus_id.name"/>
-                                            </td>
-                                            <td>
-                                                <div t-esc="line.day_selection.title()"/>
-                                                <span t-esc="line.start_time" t-options="{'widget':'float_time'}"/>
-                                                -
-                                                <span t-esc="line.end_time" t-options="{'widget':'float_time'}"/>
-                                            </td>
-                                            <td>
-                                                <div class="cfo-cnr-jnr-color-picker">
-                                                    <t t-foreach="line.time_table_week_ids" t-as="week">
-                                                        <t t-set="val" t-value="week.color"/>
-                                                        <t t-if="week.date or week.name">
-                                                            <div class="col-md-2 time_table_div" t-att-data-popover-content="week.name" t-att-data="week.id" t-attf-style="background-color: #{val};text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                                                                <span t-esc="week.date"/><br/>
-                                                                <span t-esc="week.name"/>
-                                                            </div>
-                                                        </t>
-                                                    </t>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </t>
-                                    </t>
-                                    <t t-if="not lines">
-                                        <tr>
-                                            <td colspan="4"><b><span t-esc="company.session_text"></span></b></td>
-                                        </tr>
-                                    </t>
-                                </table>
-    <!--                            </t>-->
-                            </div>
-                        </t>
-                    </div>
-                    </t>
+<!--                    <div>-->
+<!--                        <t t-if="is_visible and time_table">-->
+<!--                            <a class="btn btn-primary hidden-print cms-print-pdf" t-att-href="'/time_table/report/print?id=%s&amp;code=%s'%(ids,course_code_select)">-->
+<!--                                    <span><i class="fa fa-print" aria-hidden="true"></i></span>Print-->
+<!--                            </a>-->
+<!--                        </t>-->
+<!--                    </div>-->
+<!--                    <t t-if="is_visible">-->
+<!--                        <div class="panel-body">-->
+<!--                            <t t-foreach="time_table" t-as="time">-->
+<!--                            <div style="margin-top:5px;">-->
+<!--                                <div class="form-group">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="table-responsive" style="border: 6px solid gainsboro;">-->
+<!--    &lt;!&ndash;                            <t t-if="time.time_table_line_ids">&ndash;&gt;-->
+<!--                                    <table class="table table-bordered time_table_main">-->
+<!--                                    <caption-->
+<!--                                            style="color:black;border: 1px solid gainsboro;padding: 5px;background:#d9edf7;">-->
+<!--                                        <b>-->
+<!--                                            <span t-esc="time.semester_id.name"/>-->
+<!--                                            - -->
+<!--                                            <span t-esc="time.qualification_id.name"/>-->
+<!--                                            - -->
+<!--                                            <span t-esc="time.name"/>-->
+<!--                                            - -->
+<!--                                            <span t-esc="time.course_option_id.name"/>-->
+<!--                                        </b>-->
+<!--                                    </caption>-->
+<!--                                    <tr>-->
+<!--                                        <th style="width: 80px;">Subject</th>-->
+<!--                                        <th style="width: 80px;">Campus</th>-->
+<!--                                        <th style="width: 87px;">Time</th>-->
+<!--                                        <th>Sessions</th>-->
+<!--                                    </tr>-->
+<!--                                    <t t-set="lines"-->
+<!--                                       t-value="time.time_table_line_ids.filtered(lambda l: l.course_code_id.id in [int(i) for i in course_code_select.split(',')])"/>-->
+<!--                                    &lt;!&ndash;                                <t t-set="lines"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                   t-value="time.time_table_line_ids.filtered(lambda l: l.course_code_id.campus_id.id in [int(i) for i in campus_select.split(',')])"/>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                   t-if="course_code_select and course_code_select != 'all'"/>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                <t t-set="lines" t-value="time.time_table_line_ids" t-else=""/>&ndash;&gt;-->
+<!--    &lt;!&ndash;                                <t t-esc="lines"/>&ndash;&gt;-->
+<!--                                    <t t-if="lines">-->
+<!--                                        <t t-foreach="lines" t-as="line">-->
+<!--                                        <tr>-->
+<!--                                            <td>-->
+<!--                                                <a style="cursor:pointer;" class="info_time_table_course"-->
+<!--                                                   data-placement="left" t-att-data-popover-content="'#info_%s'%line.id"-->
+<!--                                                   data-toggle="popover"-->
+<!--                                                   tabindex="0">-->
+<!--                                                    <i class="fa fa-info"/>-->
+<!--                                                </a>-->
+<!--                                                <div class="hidden" t-att-id="'info_%s'%line.id">-->
+<!--                                                    <div class="popover-heading">-->
+<!--                                                        <span t-esc="line.course_code_id.name"/>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="popover-body">-->
+<!--                                                        <div t-esc="line.course_code_id.description"-->
+<!--                                                             style="border-bottom:1px solid;"/>-->
+<!--                                                        <t t-if="line.course_code_id.lecturer_ids">-->
+<!--                                                            <div>-->
+<!--                                                                <h6>Lecturers</h6>-->
+<!--                                                                <div style="list-style:none;padding:0px;line-height:46px;">-->
+<!--                                                                    <t t-foreach="line.course_code_id.lecturer_ids"-->
+<!--                                                                       t-as="lecturer">-->
+<!--                                                                        <a style="color:black;cursor:pointer"-->
+<!--                                                                           data-toggle="modal"-->
+<!--                                                                           t-att-data-target="'#lecturerModal%s'%lecturer.id">-->
+<!--                                                                            <div class="col-md-12"-->
+<!--                                                                                 style="margin-bottom:5px;">-->
+<!--                                                                                <div class="col-md-4">-->
+<!--                                                                                    <img class="img-circle"-->
+<!--                                                                                         t-att-src="'data:image/png;base64,'+to_text(lecturer.image)"-->
+<!--                                                                                         style="height:50px;width:50px;"/>-->
+<!--                                                                                </div>-->
+<!--                                                                                <div class="col-md-8"-->
+<!--                                                                                     t-esc="lecturer.name"/>-->
+<!--                                                                            </div>-->
+<!--                                                                        </a>-->
+<!--                                                                        <div t-att-id="'lecturerModal%s'%lecturer.id"-->
+<!--                                                                             class="modal fade infoModal" role="dialog">-->
+<!--                                                                            <div class="modal-dialog">-->
+<!--                                                                                <div class="modal-content">-->
+<!--                                                                                    <div class="modal-body">-->
+<!--                                                                                        <button type="button" class="close"-->
+<!--                                                                                                data-dismiss="modal">-->
+<!--                                                                                            <i class="fa fa-times"/>-->
+<!--                                                                                        </button>-->
+<!--                                                                                        <div>-->
+<!--                                                                                            <img class="img-circle"-->
+<!--                                                                                                 t-att-src="'data:image/png;base64,'+to_text(lecturer.image)"-->
+<!--                                                                                                 style="width:200px;height: 200px;"/>-->
+<!--                                                                                            <div style="text-align:center;">-->
+<!--                                                                                                <h4>-->
+<!--                                                                                                    <b>-->
+<!--                                                                                                        <span t-esc="lecturer.name"/>-->
+<!--                                                                                                    </b>-->
+<!--                                                                                                </h4>-->
+<!--                                                                                                <h6>-->
+<!--                                                                                                    <span t-esc="lecturer.function"/>-->
+<!--                                                                                                    <br/>-->
+<!--                                                                                                    <ul style="list-style: none;padding: 0;">-->
+<!--                                                                                                        <t t-foreach="request.env['cfo.course.code'].sudo().search([('lecturer_ids', '=', lecturer.id)])"-->
+<!--                                                                                                           t-as="course">-->
+<!--                                                                                                            <li>-->
+<!--                                                                                                                <span t-esc="course.name"/>-->
+<!--                                                                                                                ,-->
+<!--                                                                                                                <span t-esc="course.short_description"/>-->
+<!--                                                                                                            </li>-->
+<!--                                                                                                        </t>-->
+<!--                                                                                                    </ul>-->
+<!--                                                                                                </h6>-->
+<!--                                                                                                <div style="height:40px;overflow:hidden">-->
+<!--                                                                                                    <span t-esc="lecturer.comment"/>-->
+<!--                                                                                                </div>-->
+<!--                                                                                                <h4>-->
+<!--                                                                                                    <button type="button"-->
+<!--                                                                                                            t-att-data-href="'/view_lecturer/%s'%lecturer.id"-->
+<!--                                                                                                            class="details_view_lecturer">-->
+<!--                                                                                                        View Profile-->
+<!--                                                                                                    </button>-->
+<!--                                                                                                </h4>-->
+<!--                                                                                            </div>-->
+<!--                                                                                        </div>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </div>-->
+<!--                                                                            </div>-->
+<!--                                                                        </div>-->
+<!--                                                                    </t>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                        </t>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                <span t-esc="line.course_code_id.name"/>-->
+<!--                                            </td>-->
+<!--                                            <td>-->
+<!--                                                <div t-esc="line.course_code_id.campus_id.name"/>-->
+<!--                                            </td>-->
+<!--                                            <td>-->
+<!--                                                <div t-esc="line.day_selection.title()"/>-->
+<!--                                                <span t-esc="line.start_time" t-options="{'widget':'float_time'}"/>-->
+<!--                                                - -->
+<!--                                                <span t-esc="line.end_time" t-options="{'widget':'float_time'}"/>-->
+<!--                                            </td>-->
+<!--                                            <td>-->
+<!--                                                <div class="cfo-cnr-jnr-color-picker">-->
+<!--                                                    <t t-foreach="line.time_table_week_ids" t-as="week">-->
+<!--                                                        <t t-set="val" t-value="week.color"/>-->
+<!--                                                        <t t-if="week.date or week.name">-->
+<!--                                                            <div class="col-md-2 time_table_div" t-att-data-popover-content="week.name" t-att-data="week.id" t-attf-style="background-color: #{val};text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">-->
+<!--                                                                <span t-esc="week.date"/><br/>-->
+<!--                                                                <span t-esc="week.name"/>-->
+<!--                                                            </div>-->
+<!--                                                        </t>-->
+<!--                                                    </t>-->
+<!--                                                </div>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                    </t>-->
+<!--                                    </t>-->
+<!--                                    <t t-if="not lines">-->
+<!--                                        <tr>-->
+<!--                                            <td colspan="4"><b><span t-esc="company.session_text"></span></b></td>-->
+<!--                                        </tr>-->
+<!--                                    </t>-->
+<!--                                </table>-->
+<!--    &lt;!&ndash;                            </t>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </t>-->
+<!--                        </div>-->
+<!--                    </t>-->
                 </div>
             </div>
         </section>

@@ -260,6 +260,12 @@ class event_type(models.Model):
             if obj:
                 raise ValidationError("Order must be unique")
 
+    @api.model
+    def get_qualification_level(self,id):
+        res=self.browse(int(id))
+        record=self.env['event.qual'].search_read([('id','in',res.qualification_ids.ids)],['id','name'])
+        return record
+
 
 class event_registration(models.Model):
     _inherit = 'event.registration'

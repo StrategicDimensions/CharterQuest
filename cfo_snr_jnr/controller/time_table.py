@@ -24,7 +24,7 @@ from odoo.http import request
 
 class TimeTable(http.Controller):
 
-    @http.route(['/time_table'], type='http', auth="public", website=True)
+    @http.route(['/time_table','/'], type='http', auth="public", website=True,csrf=False)
     def time_table_view(self, **post):
         level_select = post.get('level_select') if post.get('level_select') else ','.join(
             [str(i.id) for i in request.env['event.qual'].sudo().search([])])
@@ -45,16 +45,116 @@ class TimeTable(http.Controller):
         campus_select = post.get('campus_select') if post.get('campus_select') else ','.join(
             [str(i.id) for i in request.env['res.partner'].sudo().search([('is_campus', '=', True)])])
 
-        print("\n\n\n course_code",course_code)
-        print("\n\n\n time_table_ids",time_table_ids)
-        return request.render("cfo_snr_jnr.time_table_template", {
-            'time_table': time_table_ids, 'course_code_select': course_code,
-            'campus_select': post.get('campus_select') if post.get('campus_select') else '',
-            'option_select': post.get('option_select') if post.get('option_select') else '',
-            'semester_select': post.get('semester_select') if post.get('semester_select') else '',
-            'ids': str(time_table_ids.ids).strip('[]'),'is_visible':True if post.get('course_code_select') else False,
-            'company':request.env['res.company'].sudo().search([('partner_id.name','=','The CharterQuest Institute')])
-        })
+        if post.get('id'):
+            print("\n\n\n\n\ncall")
+            data= request.render("cfo_snr_jnr.cfo_snr_jnr_time_table_snippet_test", {
+                'time_table': time_table_ids, 'course_code_select': course_code,
+                'campus_select': post.get('campus_select') if post.get('campus_select') else '',
+                'option_select': post.get('option_select') if post.get('option_select') else '',
+                'semester_select': post.get('semester_select') if post.get('semester_select') else '',
+                'ids': str(time_table_ids.ids).strip('[]'),
+                'is_visible': True if post.get('course_code_select') else False,
+                'company': request.env['res.company'].sudo().search(
+                    [('partner_id.name', '=', 'The CharterQuest Institute')])
+            })
+            print("\n\n\n\n\n\n\n data",data)
+        else:
+            return request.render("cfo_snr_jnr.time_table_template", {
+                'time_table': time_table_ids, 'course_code_select': course_code,
+                'campus_select': post.get('campus_select') if post.get('campus_select') else '',
+                'option_select': post.get('option_select') if post.get('option_select') else '',
+                'semester_select': post.get('semester_select') if post.get('semester_select') else '',
+                'ids': str(time_table_ids.ids).strip('[]'),'is_visible':True if post.get('course_code_select') else False,
+                'company':request.env['res.company'].sudo().search([('partner_id.name','=','The CharterQuest Institute')])
+            })
+
+    @http.route(['/time_table_snippet'], type='json', auth="public", website=True, csrf=False)
+    def time_table_snippet_view(self, **post):
+        list1=[i.id for i in request.env['event.qual'].sudo().search([])]
+        list2=[i.id for i in request.env['cfo.course.option'].sudo().search([])]
+        list3=[i.id for i in request.env['cfo.semester.information'].sudo().search([])]
+        list4=[i.id for i in request.env['cfo.course.code'].sudo().search([])]
+        list5=[i.id for i in request.env['res.partner'].sudo().search([('is_campus', '=', True)])]
+        level_select = post.get('level_select') if post.get('level_select') else list1
+        option_select = post.get('option_select') if post.get('option_select') else list2
+        semester_select = post.get('semester_select') if post.get('semester_select') else list3
+        print("\n\n\n level_select",level_select)
+        print("\n\n\n option_select", option_select)
+        print("\n\n\n semester_select", semester_select)
+        time_table_ids = request.env['cfo.time.table'].sudo().search([])
+        time_table_ids = time_table_ids.filtered(
+            lambda l: l.qualification_id.id in [int(i) for i in level_select])
+        time_table_ids = time_table_ids.filtered(
+            lambda l: l.course_option_id.id in [int(i) for i in option_select])
+        time_table_ids = time_table_ids.filtered(
+            lambda l: l.semester_id.id in [int(i) for i in semester_select])
+        time_table_ids = time_table_ids.sorted(key=lambda l: l.semester_id.sequence)
+        course_code = post.get('course_code_select') if post.get('course_code_select') else list4
+        campus_select = post.get('campus_select') if post.get('campus_select') else list5
+        time_table_data=[]
+        time_table_line_data=[]
+        time_table_session_data=[]
+        for id in time_table_ids:
+            dict1={}
+            print("\n\n\n\n\n\n\n dict1....>",dict1)
+            if id.time_table_line_ids:
+                for line in id.time_table_line_ids:
+                    dict2 = {}
+                    if line.course_code_id.id in [int(i) for i in course_code]  and line.course_code_id.campus_id.id in [int(i) for i in campus_select]:
+                        print("\n\n\n\n\n ...dict2...>",dict2)
+                        if line.time_table_week_ids:
+                            for session in line.time_table_week_ids:
+                                dict3={}
+                                dict3.update({'name':session.name,'date':session.date,'color':session.color})
+                                print("\n\n\n dict3======>",dict3)
+                                time_table_session_data.append(dict3)
+                                print("\n\n\n time_table_session_data======>", time_table_session_data)
+                            dict2.update({'session':time_table_session_data})
+                            dict2.update(
+                                {'course_code': line.course_code_id.name, 'campus': line.course_code_id.campus_id.name,
+                                 'day': line.day_selection, 'start_time': line.start_time, 'end_time': line.end_time})
+                    print("\n\n\n dict2======>", dict2)
+                    time_table_line_data.append(dict2)
+                    print("\n\n\n time_table_line_data======>", time_table_line_data)
+                dict1.update({"time_table_line":time_table_line_data})
+                dict1.update({'sem': id.semester_id.name, 'qual': id.qualification_id.name, 'name': id.name,
+                              'option': id.course_option_id.name})
+            print("\n\n\n dict1======>", dict1)
+            if dict1:
+                time_table_data.append(dict1)
+            print("\n\n\n time_table_data======>", time_table_data)
+
+        # print("\n\n\n\n time_table_data============>",time_table_data)
+
+
+
+
+
+        if post.get('id'):
+            print("\n\n\n\n\ncall")
+            data = {
+                'time_table': time_table_ids, 'course_code_select': course_code,
+                'campus_select': post.get('campus_select') if post.get('campus_select') else '',
+                'option_select': post.get('option_select') if post.get('option_select') else '',
+                'semester_select': post.get('semester_select') if post.get('semester_select') else '',
+                'ids': str(time_table_ids.ids).strip('[]'),
+                'is_visible': True if post.get('course_code_select') else False,
+                'company': request.env['res.company'].sudo().search(
+                    [('partner_id.name', '=', 'The CharterQuest Institute')])
+            }
+            print("\n\n\n\n\n\n\n data", data)
+            return data
+        # else:
+        #     return request.render("cfo_snr_jnr.time_table_template", {
+        #         'time_table': time_table_ids, 'course_code_select': course_code,
+        #         'campus_select': post.get('campus_select') if post.get('campus_select') else '',
+        #         'option_select': post.get('option_select') if post.get('option_select') else '',
+        #         'semester_select': post.get('semester_select') if post.get('semester_select') else '',
+        #         'ids': str(time_table_ids.ids).strip('[]'),
+        #         'is_visible': True if post.get('course_code_select') else False,
+        #         'company': request.env['res.company'].sudo().search(
+        #             [('partner_id.name', '=', 'The CharterQuest Institute')])
+        #     })
 
     @http.route(['/view_lecturer/<int:lecturer_id>'], type='http', auth="public", website=True)
     def view_lecturer_detail(self, lecturer_id, **post):
