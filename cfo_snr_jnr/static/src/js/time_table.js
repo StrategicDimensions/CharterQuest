@@ -101,7 +101,7 @@ $(document).ready(function(){
             localStorage.setItem("campus",value);
     });
 
-    $("#level_select").prop('disabled', true);
+        $("#level_select").prop('disabled', true);
 	    $("#course_code_select").prop('disabled', true);
 	    $("#semester_select").prop('disabled', true);
 	    $("#option_select").prop('disabled', true);
@@ -152,58 +152,58 @@ $(document).ready(function(){
 		});
 
 
-	if(window.location.pathname == '/time_table'){
-
-	    $("#level_select").prop('disabled', true);
-	    $("#course_code_select").prop('disabled', true);
-	    $("#semester_select").prop('disabled', true);
-	    $("#option_select").prop('disabled', true);
-
-
-        $('#campus_select').select2({
-			    placeholder: "",
-
-		    });
-
-		$('#level_select').select2({
-			    placeholder: ""
-		    });
-
-		$('#semester_select').select2({
-			    placeholder: ""
-		    });
-
-		$('#course_code_select').select2({
-			    placeholder: ""
-		    });
-
-		$('#option_select').select2({
-			    placeholder: ""
-		    });
-		$(document).on("click", ".details_view_lecturer", function(event){
-			window.location.href = $(this).attr('data-href');
-		});
-
-		$(document).on('change','#course_code_select',function(){
-			$(document).find('input[name="course_code_select"]').val($('.multiple-codes-select').select2('val'));
-		});
-
-		$(document).on('change','#level_select',function(){
-			$(document).find('input[name="level_select"]').val($('.multiple-levels-select').select2('val'));
-		});
-
-		$(document).on('change','#option_select',function(){
-			$(document).find('input[name="option_select"]').val($('.multiple-option-select').select2('val'));
-		});
-
-		$(document).on('change','#semester_select',function(){
-			$(document).find('input[name="semester_select"]').val($('.multiple-semester-select').select2('val'));
-		});
-
-		$(document).on('change','#campus_select',function(){
-                $(document).find('input[name="campus_select"]').val($('.multiple-campus-select').select2('val'));
-		});
-	}
+//	if(window.location.pathname == '/time_table'){
+//
+//	    $("#level_select").prop('disabled', true);
+//	    $("#course_code_select").prop('disabled', true);
+//	    $("#semester_select").prop('disabled', true);
+//	    $("#option_select").prop('disabled', true);
+//
+//
+//        $('#campus_select').select2({
+//			    placeholder: "",
+//
+//		    });
+//
+//		$('#level_select').select2({
+//			    placeholder: ""
+//		    });
+//
+//		$('#semester_select').select2({
+//			    placeholder: ""
+//		    });
+//
+//		$('#course_code_select').select2({
+//			    placeholder: ""
+//		    });
+//
+//		$('#option_select').select2({
+//			    placeholder: ""
+//		    });
+//		$(document).on("click", ".details_view_lecturer", function(event){
+//			window.location.href = $(this).attr('data-href');
+//		});
+//
+//		$(document).on('change','#course_code_select',function(){
+//			$(document).find('input[name="course_code_select"]').val($('.multiple-codes-select').select2('val'));
+//		});
+//
+//		$(document).on('change','#level_select',function(){
+//			$(document).find('input[name="level_select"]').val($('.multiple-levels-select').select2('val'));
+//		});
+//
+//		$(document).on('change','#option_select',function(){
+//			$(document).find('input[name="option_select"]').val($('.multiple-option-select').select2('val'));
+//		});
+//
+//		$(document).on('change','#semester_select',function(){
+//			$(document).find('input[name="semester_select"]').val($('.multiple-semester-select').select2('val'));
+//		});
+//
+//		$(document).on('change','#campus_select',function(){
+//                $(document).find('input[name="campus_select"]').val($('.multiple-campus-select').select2('val'));
+//		});
+//	}
 
 	$('.back_to_lecturers').on('click', function(){
 		window.history.back();
@@ -298,6 +298,7 @@ $(document).ready(function(){
     });
 
     $(".cfo-cnr-jnr-color-picker").on("click",function(e){
+        alert()
         var id="#"+ e.toElement.id;
         var data_id=$(id).attr('data')
             var hexVal=null
@@ -315,8 +316,7 @@ $(document).ready(function(){
         });
     });
 
-//    $fillter_timetable=self.$modal.find(".fillter_timetable");
-    $(".fillter_timetable").on('click',function(){
+    $(".fillter_timetable").on('click',function(e){
             var id=$(this).attr('data-id')
             var qua_ids=$('#level_select').val()
             var campus_ids=$('#campus_select').val()
@@ -332,17 +332,19 @@ $(document).ready(function(){
                 'course_code_select':course_code_ids,
                 'id':id
                 }).then(function (data) {
-                console.log("\n\n\n\n\n data",data)
-                    $('.body').html(QWeb.render('snippet_template_timetable',{
-                         widget: this,
-                        'time_table': data['time_table'], 'course_code_select': data['course_code_select'],
-                        'campus_select': data['campus_select'],
-                        'option_select': data['option_select'],
-                        'semester_select': data['semester_select'],
-                        'ids': data['id'],
-                        'is_visible': data['is_visible'],
-                        'company': data['company'],
-                        }));
+                    $("#timetable_body").html(data);
+                    var i=0;
+                    $('.time_table_div').each(function(){
+                        i++;
+                        var newID='sesson'+i;
+                        $(this).attr('id',newID);
+                        $(this).val(i);
+                    });
+                    $('#level_select').remove();
+                    $('#campus_select').remove();
+                    $('#semester_select').remove();
+                    $('#course_code_select').remove();
+                    $('#option_select').remove();
                     });
             }
     });

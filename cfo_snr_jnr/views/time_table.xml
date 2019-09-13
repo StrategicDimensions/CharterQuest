@@ -603,6 +603,15 @@
             file="cfo_snr_jnr.report_timetable"
             print_report_name="CharterQuest(Time-Table).pdf"/>
 
+<!--    <report-->
+<!--            id="snippet_time_table"-->
+<!--            string="Time Table Snippet"-->
+<!--            model="cfo.time.table"-->
+<!--            report_type="qweb-pdf"-->
+<!--            name="cfo_snr_jnr.timetable_snippet_template"-->
+<!--            file="cfo_snr_jnr.timetable_snippet_template"-->
+<!--           />-->
+
 
 
 </odoo>
