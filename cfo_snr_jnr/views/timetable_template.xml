@@ -197,7 +197,7 @@
                             <t t-if="line.course_code_id.id in course_code_select">
                                 <tr>
                                     <td>
-                                        <a style="cursor:pointer;" class="info_time_table_course"
+                                        <a style="cursor:pointer;" class="info_time_table_course_snippet"
                                            data-placement="left" t-att-data-popover-content="'#info_%s'%line.id"
                                            data-toggle="popover"
                                            tabindex="0">
@@ -297,11 +297,11 @@
                                         <span t-esc="line.end_time" t-options="{'widget':'float_time'}"/>
                                     </td>
                                     <td>
-                                        <div id="cfo-cnr-jnr-color-picker">
+                                        <div class="color-picker">
                                             <t t-foreach="line.time_table_week_ids" t-as="week">
                                                 <t t-set="val" t-value="week.color"/>
                                                 <t t-if="week.date or week.name">
-                                                    <div class="col-md-2 time_table_div" t-att-data-popover-content="week.name" t-att-data="week.id" t-attf-style="background-color: #{val};text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                    <div class="col-md-2 time_table_snippet_div" t-att-data-popover-content="week.name" t-att-data="week.id" t-attf-style="background-color: #{val};text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                                                         <span t-esc="week.date"/><br/>
                                                         <span t-esc="week.name"/>
                                                     </div>

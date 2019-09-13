@@ -35,6 +35,7 @@
                         <field name="semester_id"/>
                         <field name="course_option_id"/>
                         <field name="qualification_id"/>
+                        <field name="event_id"/>
                     </group>
                     <notebook>
                         <page string="Time Table">

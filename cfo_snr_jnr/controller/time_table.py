@@ -61,6 +61,7 @@ class TimeTable(http.Controller):
         list3 = [i.id for i in request.env['cfo.semester.information'].sudo().search([])]
         list4 = [i.id for i in request.env['cfo.course.code'].sudo().search([])]
         list5 = [i.id for i in request.env['res.partner'].sudo().search([('is_campus', '=', True)])]
+        event_id=request.env['event.type'].browse(int(post.get('id')))
         level_select = post.get('level_select') if post.get('level_select') else list1
         option_select = post.get('option_select') if post.get('option_select') else list2
         semester_select = post.get('semester_select') if post.get('semester_select') else list3
@@ -69,6 +70,8 @@ class TimeTable(http.Controller):
             lambda l: l.qualification_id.id in [int(i) for i in level_select])
         time_table_ids = time_table_ids.filtered(
             lambda l: l.course_option_id.id in [int(i) for i in option_select])
+        time_table_ids = time_table_ids.filtered(
+            lambda l: l.event_id.id in event_id.ids)
         time_table_ids = time_table_ids.filtered(
             lambda l: l.semester_id.id in [int(i) for i in semester_select])
         time_table_ids = time_table_ids.sorted(key=lambda l: l.semester_id.sequence)

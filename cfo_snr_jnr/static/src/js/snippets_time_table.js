@@ -110,26 +110,7 @@ odoo.define('cfo_snr_jnr.snippets_time_table', function (require) {
 				history.replaceState(null, null, newUrl);
 			}
 		});
-        var self = this;
-        var color_picker=self.$modal.find("#cfo-cnr-jnr-color-picker");
-		$("#cfo-cnr-jnr-color-picker").on("click",function(e){
-            alert()
-            var id="#"+ e.toElement.id;
-            var data_id=$(id).attr('data')
-                var hexVal=null
-            $(id).spectrum();
-            $(id).on('move.spectrum', function(e, tinyColor) {
-                hexVal = tinyColor.toHexString();
-                $(id).css('backgroundColor', '#' + hexVal);
-            });
-            $('.sp-choose').on("click",  function(){
-                  ajax.jsonRpc('/set_color', 'call',{
-                        'data_id':data_id,
-                        'hex_val':hexVal
-                  })
 
-            });
-        });
 
 
 
