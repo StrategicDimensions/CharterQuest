@@ -64,18 +64,12 @@
             <field name="auto_delete" eval="True"/>
             <field name="lang">${object.user_id.lang}</field>
             <field name="body_html"><![CDATA[
-                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
-                <br>
-                Your CIMA enrolment and deposit payment has been received and is being processed. 
-                <br><br>
-                In order to complete your enrolment, you are required to complete a debit order Mandate to structure how you will pay the balance of your fees.
-                <br><br>
-                Please follow the link below to complete your debit order mandate: [link to mandate]
-                <br><br>
-                Your enrolment will be confirmed upon receipt of the completed Debit Order Mandate.              
+                Dear ${object.partner_id.name or ''}
+                Your ${object.prof_body.name}  enrolment debit order mandate has been received.<br/>
+                Please look out for further communication from our accounts team within 1 - 2 working days.<br/>
                 <br><br>
                 Thanking You
-                <br><br>
+                <br>
                 Patience Mukondwa<br>
                 Head Of Operations<br>
                 The CharterQuest Institute<br>

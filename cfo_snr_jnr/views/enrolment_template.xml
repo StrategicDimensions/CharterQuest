@@ -2705,9 +2705,19 @@
                                 </button>
                             </t>
                             <t t-if="uuid2">
-                                <button type="submit" style="margin-left:268px;" formaction="/Page/Thank-you"
-                                        id="debitordermandate-button" value="true" name="Submit Debit Order Mandate"
-                                        class="btn btn-primary">Submit Debit Order Mandate
+<!--                                <button type="submit" style="margin-left:268px;" formaction="/Page/Thank-you"-->
+<!--                                        id="debitordermandate-button" value="true" name="Submit Debit Order Mandate"-->
+<!--                                        class="btn btn-primary">Submit Debit Order Mandate-->
+<!--                                </button>-->
+                                 <button type="submit" style="margin-left:10px;" formaction="/event/redirect_payu"
+                                        id="credit-button" class="btn btn-primary">Pay Via Credit Card
+                                </button>
+                                <button type="submit" style="margin-left:10px;" formaction="/validate_payment"
+                                        id="eft-button" class="btn btn-primary">Pay Via EFT
+                                </button>
+                                <button type="submit" style="margin-left:10px;" formaction="/Page/Thank-you"
+                                        id="bankdeposit-button" value="true" name="Pay Via Bank Deposit"
+                                        class="btn btn-primary">Pay Via Bank Deposit
                                 </button>
                             </t>
                         </div>
@@ -2746,7 +2756,7 @@
                 <div class="oe_structure"/>
 
                 <div class="col-sm-12" style="color:black;">
-                    <h3>Thank You!</h3>
+                    <h3>Submitted.</h3>
                 </div>
             </t>
         </t>
@@ -3256,7 +3266,7 @@
                         </h3>
                         <center>
                             <button id="btn_paid" formaction="/thank-you" type="submit" style="margin-top: 30px;"
-                                    class="btn btn-primary">I’ve Paid
+                                    name="I’ve Paid" class="btn btn-primary">I’ve Paid
 
                             </button>
                             <input id="interest_amount_id" name="interest_amount" t-att-value="interest_amount"
