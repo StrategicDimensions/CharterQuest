@@ -64,6 +64,7 @@ class CFOTimeTable(models.Model):
     description = fields.Text(string="Description")
     time_table_line_ids = fields.One2many("cfo.time.table.line", 'time_table_id', string="Time Table Lines")
     active = fields.Boolean(string="Active", default=True)
+    event_id=fields.Many2one("event.type",string="Event Categories")
 
 
 class CFOTimeTableLines(models.Model):
@@ -95,5 +96,8 @@ class ResCompany(models.Model):
 
     disclaimer_text=fields.Text(string="Disclaimer")
     session_text=fields.Text(string="")
+
+
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

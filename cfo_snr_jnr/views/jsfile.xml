@@ -40,6 +40,9 @@
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/payment.js"/>
 <!--                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/bootstrap-colorpicker.js"/>-->
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/time_table.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/snippets_time_table.js"/>
+                <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/time_table_snippet.js"/>
+
             </xpath>
         </template>
 

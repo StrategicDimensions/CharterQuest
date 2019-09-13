@@ -11,3 +11,14 @@ class TimeTablereport(models.AbstractModel):
             'data': data,
             'doc_model': 'cfo.time.table',
         }
+
+# class TimeTableSnippet(models.AbstractModel):
+#     _name='report.snippet_time_table'
+#
+#     @api.model
+#     def get_report_values(self, docids, data=None):
+#         return {
+#             'time_table': docids,
+#             'data': data,
+#             'doc_model': 'cfo.time.table',
+#         }

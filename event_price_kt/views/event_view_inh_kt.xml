@@ -66,6 +66,7 @@
                         <field name="professional_body_code"/>
                         <field name="discount"/>
                         <field name="order"/>
+                        <field name="qualification_ids" widget="many2many_tags"/>
                     </group>
                 </field>
             </field>

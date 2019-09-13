@@ -21,24 +21,73 @@
         </section>
     </template>
 
-    <template id="cfo_snr_jnr_time_table_snippet" name="time_table">
-        <section class="cfo_snr_jnr_time_table" contentEditable="true">
+    <template id="cfo_snr_jnr_time_table_snippet_test" name="Time Table">
+        <section class="cfo_snr_jnr_time_table cfo_snr_jnr_time_table_snippet" contentEditable="true">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                      <img alt="client" class="img-circle" src="/theme_tutorial/static/src/img/client_1.jpg"/>
-                      <h3>Client Name</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <div class="panel panel-default" style="margin-top:10px;">
+                    <div class="panel-heading" style="padding: 28px 15px;">
+<!--                        <form action="/time_table_snippet" method="POST">-->
+<!--                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
+                            <input type="hidden" name="id" value="1"/>
+                            <span style="margin: -26px 48px;float: left;"><b>Select Campus</b></span>
+                            <input type="hidden" name="campus_select" t-att-value="campus_select" placeholder=""/>
+                            <select class="form-control multiple-campus-select" id="campus_select"
+                                    style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                                <t t-foreach="request.env['res.partner'].sudo().search([('is_campus', '=', True)])"
+                                   t-as="campus">
+                                    <option t-att-class="class1" t-att-value="campus.id">
+                                        <span t-esc="campus.name"/>
+                                    </option>
+                                </t>
+                            </select>
+
+                            <span style="margin: -26px 38px;float: left;"><b>Select Semester</b></span>
+                            <input type="hidden" name="semester_select" t-att-value="semester_select"/>
+                            <select class="form-control multiple-semester-select" id="semester_select"
+                                    style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                                <t t-foreach="request.env['cfo.semester.information'].sudo().search([],order='sequence')" t-as="semester">
+                                    <option t-att-value="semester.id">
+                                        <span t-esc="semester.name"/>
+                                    </option>
+                                </t>
+                            </select>
+
+                            <span style="margin: -26px 53px;float: left;"><b>Select Level</b></span>
+                            <input type="hidden" name="level_select" t-att-value="level_select" class="level_select"/>
+                            <select name="level_select" class="form-control multiple-levels-select" id="level_select"
+                                    style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                                <t t-foreach="request.env['event.qual'].sudo().search([])" t-as="qualification">
+                                    <option t-att-value="qualification.id">
+                                        <span t-esc="qualification.name"/>
+                                    </option>
+                                </t>
+                            </select>
+
+                            <span style="margin: -26px 45px;float: left;"><b>Select Subject</b></span>
+                            <input type="hidden" name="course_code_select" t-att-value="course_code_select"/>
+                            <select class="form-control multiple-codes-select" id="course_code_select"
+                                    style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                                <t t-foreach="request.env['cfo.course.code'].sudo().search([])" t-as="code">
+                                    <option t-att-value="code.id">
+                                        <span t-esc="code.name"/>
+                                    </option>
+                                </t>
+                            </select>
+
+                            <span style="margin: -26px 29px;float: left;"><b>Select Study Option</b></span>
+                            <input type="hidden" name="option_select" t-att-value="option_select"/>
+                            <select class="form-control multiple-option-select" id="option_select"
+                                    style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                                <t t-foreach="request.env['cfo.course.option'].sudo().search([])" t-as="option">
+                                    <option t-att-value="option.id">
+                                        <span t-esc="option.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                            <button title="Filter" style="height:38px;transition:unset;width:63px;font-size:15px;" class="fillter_timetable" ><b>Search</b></button>
+<!--                        </form>-->
                     </div>
-                    <div class="col-md-4">
-                      <img alt="client" class="img-circle" src="/theme_tutorial/static/src/img/client_2.jpg"/>
-                      <h3>Client Name</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                    <div class="col-md-4">
-                      <img alt="client" class="img-circle" src="/theme_tutorial/static/src/img/client_3.jpg"/>
-                      <h3>Client Name</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <div id="timetable_body">
                     </div>
                 </div>
             </div>
@@ -311,9 +360,9 @@
         <xpath expr="//div" position="after">
             <div data-js="cfo_snr_jnr_steps_wizard_option" data-selector=".cfo_snr_jnr_steps_wizard_container"
                  data-snippet-option-id="cfo_snr_jnr_steps_wizard_container">
-                <li>
-                    <a class="cfo_snr_jnr_add_step">Add Step</a>
-                </li>
+<!--                <li>-->
+<!--                    <a class="cfo_snr_jnr_add_step">Add Step</a>-->
+<!--                </li>-->
                 <!--                <li>-->
                 <!--                    <a class="cfo_snr_jnr_remove_step">Remove Active Step</a>-->
                 <!--                </li>-->
@@ -321,9 +370,21 @@
         </xpath>
     </template>
 
+    <template id="cfo_snr_jnr_time_table" inherit_id="website.snippet_options" name="Time Table">
+        <xpath expr="//div" position="after">
+            <div data-js="cfo_snr_jnr_timetable" data-selector=".cfo_snr_jnr_time_table_snippet"
+                 data-snippet-option-id="cfo_snr_jnr_time_table">
+                <li>
+                    <a class="cfo_snr_jnr_time_table_part1">Add Step</a>
+                </li>
+            </div>
+        </xpath>
+    </template>
+
     <template id="cfo_snr_jnr_extra_snippet" inherit_id="website.snippets" name="CFO SNR JNR Extra Snippet">
         <xpath expr="//div[@id='snippet_structure']" position="inside">
             <div class="o_panel_body">
+
                 <t t-snippet="cfo_snr_jnr.cfo_snr_jnr_menu_snippet"
                    t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/side_menu.jpeg"/>
                 <t t-snippet="cfo_snr_jnr.cfo_snr_jnr_menu_with_tabs_snippet"
@@ -338,7 +399,7 @@
                    t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/steps_wizard.png"/>
                 <t t-snippet="cfo_snr_jnr.cfo_snr_jnr_cards_block"
                    t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/card_layout.png"/>
-                <t t-snippet="cfo_snr_jnr.cfo_snr_jnr_time_table_snippet"
+                <t t-snippet="cfo_snr_jnr.cfo_snr_jnr_time_table_snippet_test"
                    t-thumbnail="/cfo_snr_jnr/static/src/img/blocks/time_table.png"/>
             </div>
         </xpath>

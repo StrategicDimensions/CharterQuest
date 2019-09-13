@@ -9,6 +9,7 @@
             <field name="arch" type="xml">
                 <form string="Event Qualification Level">
                     <field name="name"/>
+
                 </form>
             </field>
         </record>

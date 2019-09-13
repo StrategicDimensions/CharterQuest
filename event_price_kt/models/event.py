@@ -251,6 +251,7 @@ class event_type(models.Model):
     discount = fields.Float(string='Discount (%)')
     professional_body_code = fields.Char('Professional Body Code', size=64)
     order = fields.Integer(string='Order')
+    qualification_ids = fields.Many2many("event.qual", string="Qualification")
 
     @api.constrains('order')
     def check_order(self):
@@ -258,6 +259,12 @@ class event_type(models.Model):
             obj = self.search([('order', '=', record.order), ('id', '!=', record.id)])
             if obj:
                 raise ValidationError("Order must be unique")
+
+    @api.model
+    def get_qualification_level(self,id):
+        res=self.browse(int(id))
+        record=self.env['event.qual'].search_read([('id','in',res.qualification_ids.ids)],['id','name'])
+        return record
 
 
 class event_registration(models.Model):

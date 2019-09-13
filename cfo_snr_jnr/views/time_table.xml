@@ -35,6 +35,7 @@
                         <field name="semester_id"/>
                         <field name="course_option_id"/>
                         <field name="qualification_id"/>
+                        <field name="event_id"/>
                     </group>
                     <notebook>
                         <page string="Time Table">
@@ -268,6 +269,7 @@
 
     <template id="time_table_template" name="Time Table">
         <t t-call="portal.portal_layout">
+
             <div class="panel panel-default" style="margin-top:10px;">
                 <div class="panel-heading" style="padding: 28px 15px;">
                     <form action="/time_table" method="POST">
@@ -601,6 +603,15 @@
             name="cfo_snr_jnr.report_timetable"
             file="cfo_snr_jnr.report_timetable"
             print_report_name="CharterQuest(Time-Table).pdf"/>
+
+<!--    <report-->
+<!--            id="snippet_time_table"-->
+<!--            string="Time Table Snippet"-->
+<!--            model="cfo.time.table"-->
+<!--            report_type="qweb-pdf"-->
+<!--            name="cfo_snr_jnr.timetable_snippet_template"-->
+<!--            file="cfo_snr_jnr.timetable_snippet_template"-->
+<!--           />-->
 
 
 

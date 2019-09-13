@@ -26,6 +26,7 @@ odoo.define('cfo_snr_jnr.snippets_steps_wizard', function (require) {
             }
         },
         cfo_steps_wizard_remove_steps_configuration: function (type, value) {
+            alert()
             var target = this.$target.find('li.active');
             var id = $(target).find('a').attr('href');
             this.$target.find(id).remove();
@@ -37,6 +38,7 @@ odoo.define('cfo_snr_jnr.snippets_steps_wizard', function (require) {
            	target.remove();
         },
         cfo_steps_wizard_configuration: function (type, value) {
+            alert()
             var self = this;
             if (type != undefined && type.type == "click" || type == undefined) {
                 $(document).find('#cfo_steps_wizard_modal').remove();
