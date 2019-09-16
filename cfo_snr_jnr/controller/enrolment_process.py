@@ -2283,9 +2283,9 @@ class EnrolmentProcess(http.Controller):
                    'company_id': sale_order_id.company_id.id}
             inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
             ctx.update({'journal_id': inv_default_vals.get('journal_id')})
-            # invoice_id = sale_order_id.with_context(ctx).sudo().action_invoice_create()
-            # invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
-            # invoice_id.action_invoice_open()
+            invoice_id = sale_order_id.with_context(ctx).sudo().action_invoice_create()
+            invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
+            invoice_id.action_invoice_open()
             journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
             print("\n\n\n invoice_id", invoice_id.ids)
             payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
@@ -2445,8 +2445,7 @@ class EnrolmentProcess(http.Controller):
             if sale_order_id.affiliation == '2' and request.session.get('sale_order') and request.session.get(
                     'do_invoice') == 'yes':
                 com_spo_reg_enrol = request.env.ref('cfo_snr_jnr.company_sponsored_regist_enrol_email_template')
-                pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').render_qweb_pdf(
-                    invoice_id.id)
+                pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').sudo().render_qweb_pdf(invoice_id.id)
                 pdf_data_statement_invoice = request.env.ref(
                     'event_price_kt.report_statement_enrollment').sudo().render_qweb_pdf(invoice_id.id)
 
@@ -2510,18 +2509,18 @@ class EnrolmentProcess(http.Controller):
                         'force_email': True
                     }
                 mail_compose_id = request.env['mail.compose.message'].sudo().generate_email_for_composer(com_spo_reg_enrol.id,sale_order_id.id)
-                bodies = request.env['mail.template'].render_template(com_spo_reg_enrol, 'sale.order', sale_order_id.id, post_process=True)
+                bodies = request.env['mail.template'].sudo().render_template(com_spo_reg_enrol, 'sale.order', sale_order_id.id, post_process=True)
                 
                 mail_compose_id.update({'email_to': sale_order_id.partner_id.email})
                 mail_values = {
-                    'email_from': com_spo_reg_enrol.email_from,
-                    'reply_to': com_spo_reg_enrol.reply_to,
+                    'email_from': com_spo_reg_enrol.sudo().email_from,
+                    'reply_to': com_spo_reg_enrol.sudo().reply_to,
                     'email_to': mail_compose_id.get('email_to'),
-                    'email_cc': com_spo_reg_enrol.email_cc,
+                    'email_cc': com_spo_reg_enrol.sudo().email_cc,
                     'subject': mail_compose_id.get('subject'),
                     'body_html': mail_compose_id.get('body'),
                     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
-                    'auto_delete': com_spo_reg_enrol.auto_delete,
+                    'auto_delete': com_spo_reg_enrol.sudo().auto_delete,
                 }
                 
                 

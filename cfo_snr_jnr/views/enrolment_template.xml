@@ -2705,20 +2705,11 @@
                                 </button>
                             </t>
                             <t t-if="uuid2">
-<!--                                <button type="submit" style="margin-left:268px;" formaction="/Page/Thank-you"-->
-<!--                                        id="debitordermandate-button" value="true" name="Submit Debit Order Mandate"-->
-<!--                                        class="btn btn-primary">Submit Debit Order Mandate-->
-<!--                                </button>-->
-                                 <button type="submit" style="margin-left:10px;" formaction="/event/redirect_payu"
-                                        id="credit-button" class="btn btn-primary">Pay Via Credit Card
+                                <button type="submit" style="margin-left:268px;" formaction="/Page/Thank-you"
+                                        id="debitordermandate-button" value="true" name="Submit Debit Order Mandate"
+                                        class="btn btn-primary">Submit Debit Order Mandate
                                 </button>
-                                <button type="submit" style="margin-left:10px;" formaction="/validate_payment"
-                                        id="eft-button" class="btn btn-primary">Pay Via EFT
-                                </button>
-                                <button type="submit" style="margin-left:10px;" formaction="/Page/Thank-you"
-                                        id="bankdeposit-button" value="true" name="Pay Via Bank Deposit"
-                                        class="btn btn-primary">Pay Via Bank Deposit
-                                </button>
+
                             </t>
                         </div>
                     </t>
@@ -2756,7 +2747,7 @@
                 <div class="oe_structure"/>
 
                 <div class="col-sm-12" style="color:black;">
-                    <h3>Submitted.</h3>
+                    <h3>Thank You!</h3>
                 </div>
             </t>
         </t>
