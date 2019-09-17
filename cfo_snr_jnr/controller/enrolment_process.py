@@ -1366,9 +1366,9 @@ class EnrolmentProcess(http.Controller):
                         if agreement_id:
                             attchment_list.append(agreement_id)
 
-                        baking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
-                        if baking_detail_id:
-                            attchment_list.append(baking_detail_id)
+                        banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
+                        if banking_detail_id:
+                            attchment_list.append(banking_detail_id)
                         body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                         body_html += "<br>"
                         body_html += "Dear " + sale_order_id.partner_id.name + ","
@@ -1597,6 +1597,9 @@ class EnrolmentProcess(http.Controller):
                 agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
                 if agreement_id:
                     attchment_list.append(agreement_id)
+                banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
+                if banking_detail_id:
+                    attchment_list.append(banking_detail_id)
                 body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                 body_html += "<br>"
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
@@ -1621,7 +1624,7 @@ class EnrolmentProcess(http.Controller):
                     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
                     'auto_delete': False,
                 }
-                msg_id = mail_obj.create(mail_values)
+                msg_id = mail_obj.sudo().create(mail_values)
                 msg_id.send()
                 if user_select.get('self_or_company') == 'cmp_sponosored':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou_bank',
@@ -2148,9 +2151,9 @@ class EnrolmentProcess(http.Controller):
                 if agreement_id:
                     attachment_list.append(agreement_id)
 
-                baking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
-                if baking_detail_id:
-                    attachment_list.append(baking_detail_id)
+                banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
+                if banking_detail_id:
+                    attachment_list.append(banking_detail_id)
                 body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                 body_html += "<br>"
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
@@ -2410,9 +2413,9 @@ class EnrolmentProcess(http.Controller):
                 if agreement_id:
                     attchment_list.append(agreement_id)
 
-                baking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
-                if baking_detail_id:
-                    attchment_list.append(baking_detail_id)
+                banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
+                if banking_detail_id:
+                    attchment_list.append(banking_detail_id)
                 body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                 body_html += "<br>"
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
@@ -2475,9 +2478,9 @@ class EnrolmentProcess(http.Controller):
                 if agreement_id:
                     attchment_list.append(agreement_id)
 
-                baking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
-                if baking_detail_id:
-                    attchment_list.append(baking_detail_id)
+                banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
+                if banking_detail_id:
+                    attchment_list.append(banking_detail_id)
 
 #                 body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
 #                 body_html += "<br>"
@@ -2563,9 +2566,9 @@ class EnrolmentProcess(http.Controller):
                 if agreement_id:
                     attchment_list.append(agreement_id)
                     
-                baking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
-                if baking_detail_id:
-                    attchment_list.append(baking_detail_id)
+                banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
+                if banking_detail_id:
+                    attchment_list.append(banking_detail_id)
                 body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                 body_html += "<br>"
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
@@ -2883,9 +2886,9 @@ class EnrolmentProcess(http.Controller):
                     if agreement_id:
                         attachment_list.append(agreement_id)
 
-                    baking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
-                    if baking_detail_id:
-                        attachment_list.append(baking_detail_id)
+                    banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
+                    if banking_detail_id:
+                        attachment_list.append(banking_detail_id)
                     body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
                     body_html += "<br>"
                     body_html += "Dear " + sale_order_id.partner_id.name + ","
