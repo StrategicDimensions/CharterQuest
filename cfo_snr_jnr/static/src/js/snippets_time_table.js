@@ -44,13 +44,14 @@ odoo.define('cfo_snr_jnr.snippets_time_table', function (require) {
                 $fillter_timetable=self.$modal.find(".fillter_timetable");
                 $sub_data.on('click', function (event) {
                     var id=$('#event_category').val();
+                    var lecturer_id=$('#lecturer_ids').val();
                     var domain=[('id','=',id)]
                     rpc.query({
                         model: 'event.type',
                         method: 'get_qualification_level',
                         args: [id],
                     }).then(function(data){
-//                        $(document).find('#course_code_select').html("")
+    //                        $(document).find('#course_code_select').html("")
                         self.$target.find('select[name="level_select"]').html("")
                         var level=[]
                         for(var i=0; i<data.length; i++)
@@ -59,11 +60,14 @@ odoo.define('cfo_snr_jnr.snippets_time_table', function (require) {
                         }
                         self.$target.find('select[name="level_select"]').html(level)
                         self.$target.find(".fillter_timetable").attr('data-id',id);
+                        self.$target.find(".fillter_timetable").attr('data-lecturer-id',lecturer_id);
                     });
 
 
-//                    self.$target.find('.tab-content.tabs').append(content_html);
+    //                    self.$target.find('.tab-content.tabs').append(content_html);
                 });
+
+
             } else {
                 return false;
             }

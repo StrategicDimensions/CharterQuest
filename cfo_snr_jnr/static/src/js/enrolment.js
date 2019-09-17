@@ -137,8 +137,9 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
         //            });
         //        });
 
+
         if ($('.selectdiv').length) {
-            var state_options = $("select[name='inputState']:enabled option:not(:first)");
+            var state_options = $("select[name='inputState']:enabled option:not(:first)")
             $('.selectdiv').on('change', "select[name='country_id']", function() {
                 var select = $("select[name='inputState']");
                 state_options.detach();

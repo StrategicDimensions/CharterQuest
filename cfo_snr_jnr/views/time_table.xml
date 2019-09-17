@@ -334,9 +334,11 @@
                 </div>
                 <div>
                     <t t-if="is_visible and time_table">
-                        <a class="btn btn-primary hidden-print cms-print-pdf" t-att-href="'/time_table/report/print?id=%s&amp;code=%s'%(ids,course_code_select)">
-                                <span><i class="fa fa-print" aria-hidden="true"></i></span>Print
-                        </a>
+                        <div class="print_pdf">
+                            <a class="btn btn-primary hidden-print cms-print-pdf" t-att-href="'/time_table/report/print?id=%s&amp;code=%s'%(ids,course_code_select)">
+                                    <span><i class="fa fa-print" aria-hidden="true"></i></span>Print
+                            </a>
+                        </div>
                     </t>
                 </div>
                 <t t-if="is_visible">
