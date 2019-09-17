@@ -3040,7 +3040,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="control-group">
+                                        <div class="control-group country_class">
                                             <label class="control-label" for="inputState">* Province</label>
                                             <div class="controls selectdiv">
                                                 <t t-set="states"

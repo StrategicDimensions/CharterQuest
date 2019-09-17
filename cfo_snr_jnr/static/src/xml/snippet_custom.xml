@@ -262,13 +262,13 @@
                     </div>
                     <div class="modal-body" contenteditable="false">
                         <form class="form-horizontal container-fluid" role="form">
-<!--                                <div class="col-sm-12 form-group">-->
-<!--                                    <label class="col-sm-3 control-label" for="lecturer_id">Lecturer</label>-->
-<!--                                    <div class="col-sm-9">-->
-<!--                                        <input class="form-control" id="lecturer_id"-->
-<!--                                               type="text"/>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                                <div class="col-sm-12 form-group">
+                                    <label class="col-sm-3 control-label" for="lecturer_id">Lecturer</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" id="lecturer_id"
+                                               type="text"/>
+                                    </div>
+                                </div>
                             <div class="col-sm-12 form-group">
                                 <label class="col-sm-3 control-label" for="color_card">
                                     Card Color
@@ -376,6 +376,7 @@
                                     </select>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                     <div class="modal-footer">

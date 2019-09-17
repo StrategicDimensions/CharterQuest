@@ -137,17 +137,26 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
         //            });
         //        });
 
-        if ($('.selectdiv').length) {
+
             var state_options = $("select[name='inputState']:enabled option");
             $('.selectdiv').on('change', "select[name='country_id']", function() {
                 var select = $("select[name='inputState']");
                 state_options.detach();
                 var displayed_state = state_options.filter("[data-country_id=" + ($(this).val() || 0) + "]");
                 var nb = displayed_state.appendTo(select).show().size();
+                if (nb <= 0){
+                    $('.country_class').addClass("hidden");
+                }
+                else if( nb >= 1){
+                    if ($('.country_class').hasClass('hidden'))
+                    {
+                        $('.country_class').removeClass('hidden')
+                    }
+                }
                 select.parent().toggle(nb >= 1);
             });
             $('.selectdiv').find("select[name='country_id']").change();
-        }
+
 
 
         if ($(document).find("#Studentnumber").css("display") != 'none') {

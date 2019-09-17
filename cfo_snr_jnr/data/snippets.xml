@@ -94,6 +94,8 @@
         </section>
     </template>
 
+
+
     <template id="cfo_snr_jnr_menu_with_tabs_snippet" name="Menu With Tabs">
         <section class="cfo_snr_jnr_menu_with_tabs" contentEditable="true">
             <div class="container">

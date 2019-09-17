@@ -164,6 +164,12 @@ class ResPartner(models.Model):
                 partner.signup_url +='&cfo_login=True'
 
 
+    @api.model
+    def get_lecturer(self):
+        data=self.env['res.partner'].search_read([('is_lecturer','=',True)],['id','name'])
+        print("\n\n\n\n\n html",data)
+        return data
+
 # class ResBankType(models.Model):
 #     _name = "res.bank.type"
 #
