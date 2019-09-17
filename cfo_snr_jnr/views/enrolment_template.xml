@@ -2709,6 +2709,7 @@
                                         id="debitordermandate-button" value="true" name="Submit Debit Order Mandate"
                                         class="btn btn-primary">Submit Debit Order Mandate
                                 </button>
+
                             </t>
                         </div>
                     </t>
@@ -3256,7 +3257,7 @@
                         </h3>
                         <center>
                             <button id="btn_paid" formaction="/thank-you" type="submit" style="margin-top: 30px;"
-                                    class="btn btn-primary">I’ve Paid
+                                    name="I’ve Paid" class="btn btn-primary">I’ve Paid
 
                             </button>
                             <input id="interest_amount_id" name="interest_amount" t-att-value="interest_amount"

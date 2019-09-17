@@ -1,18 +1,18 @@
 <?xml version="1.0" ?>
 <odoo>
-<data noupdate="0">
+    <data noupdate="0">
 
         <!--Email template for Sending Tax Invoice to Student -->
         <record id="email_template_edi_tax_invoice_student" model="mail.template">
             <field name="name">Sending Tax Invoice to Student</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
-             <field name="email_to">${object.partner_id.email or ''}</field>
+            <field name="email_to">${object.partner_id.email or ''}</field>
             <field name="subject">Charterquest Tax Invoice</field>
             <field name="email_recipients">${object.partner_id.id}</field>
             <field name="model_id" ref="account.model_account_invoice"/>
             <field name="auto_delete" eval="True"/>
             <field name="lang">${object.user_id.lang}</field>
-	  
+
             <field name="body_html"><![CDATA[
 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
 <br>
@@ -86,13 +86,13 @@ We look forward to seeing you during our course and helping you, in achieving a 
 	</div>
 		    ]]></field>
         </record>
-   
-     <!--Email template for Debit Order Mandate to Student -->
+
+        <!--Email template for Debit Order Mandate to Student -->
         <record id="email_template_edi_debit_order_mandate" model="mail.template">
             <field name="name">Debit Order Mandate Email</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
-             <field name="email_to">${object.partner_id.email or ''}</field>
-             <field name="email_cc">''</field>
+            <field name="email_to">${object.partner_id.email or ''}</field>
+            <field name="email_cc">''</field>
             <field name="subject">CharterQuest Enrolment: Debit Order Mandate</field>
             <field name="email_recipients">${object.partner_id.id}</field>
             <field name="model_id" ref="sale.model_sale_order"/>
@@ -116,61 +116,27 @@ Your enrolment will be confirmed upon receipt of the completed Debit Order Manda
 
 	Thanking you,
 	<br><br>
-	Valentine D. Nti<br>
-	Founding CEO,<br>
-	CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
-	<br><br>
-	SANDTON CAMPUS:<br>
-	CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
-	@ CHARTERQUEST HOUSE, <br>
-	Metropolitan Park<br>
-	374 Rivonia Boulevard<br>
-	Rivonia, SANDTON <br>
-	South Africa<br>
-	
-	<br><br>
-	CONTACT INFORMATION:
-	<br><br>
+	Patience Mukondwa<br>
+    Head Of Operations<br>
+    The CharterQuest Institute<br>
+    <br><br>
+    CENTRAL CONTACT INFORMATION:<br>
     Tel: +27 (0)11 234 9223 [SA & Intl]<br>
     Tel: +27 (0)11 234 9238 [SA & Intl]<br>
     Tel: 0861 131 137 [SA ONLY]<br>
     Fax: 086 218 8713 [SA ONLY]<br>
-    Email:enquiries@charterquest.co.za<br>
+    email:enquiries@charterquest.co.za<br>
+
     <br><br>
-    BRAAMFONTEIN CAMPUS:<br>
-    CHARTERQUEST FINANCIAL TRAINING INSTITUTE @ ORION HOUSE,<br>
-    [13th floor] 49 Jorissen Street<br>
-    Cnr Biccard and Jorissen Street<br>
-    BRAAMFONTEIN<br>
-    South Africa<br>
-    <br><br>
-    CONTACT INFORMATION:<br>
-    Tel: +27 [0]11 403 0656 [SA & Intl]<br>
-    Tel: +27 [0]11 403 0642 [SA & Intl]<br>
-    Fax: 086 218 8713 [SA ONLY]<br>
-    Fax: +27 [0]11 791 7703 [SA & Intl]<br>
-    Email:enquiries@charterquest.co.za<br>
-    <br><br>
-    PRETORIA CAMPUS:<br>
-    CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
-    367 Hilda Street<br>
-    Hatfield Rendez Vous Building<br>
-    Hatfield, PRETORIA<br>
-    South Africa<br>
-    <br><br>
-    CONTACT INFORMATION:
-    Tel: +27 [0]12 751 7608 [SA & Intl]<br>
-    Email: enquiries@charterquest.co.za<br>
-	<br/>
-	</div>
+   </div>
 		    ]]></field>
         </record>
-      
+
         <!--Email template for Debit Order Mandate to Student -->
         <record id="email_template_edi_debit_order_mandate_reminder" model="mail.template">
             <field name="name">Debit Order Mandate Reminder Email</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
-             <field name="email_to">${object.partner_id.email or ''}</field>
+            <field name="email_to">${object.partner_id.email or ''}</field>
             <field name="subject">CharterQuest Debit Order Mandate Submission Reminder</field>
             <field name="email_recipients">${object.partner_id.id}</field>
             <field name="model_id" ref="sale.model_sale_order"/>
@@ -192,62 +158,25 @@ Your enrolment will be confirmed upon receipt of the completed Debit Order Manda
 
 	Thanking you,
 	<br><br>
-	Valentine D. Nti<br>
-	Founding CEO,<br>
-	CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
-	<br><br>
-	SANDTON CAMPUS:<br>
-	CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
-	@ CHARTERQUEST HOUSE, <br>
-	Metropolitan Park<br>
-	374 Rivonia Boulevard<br>
-	Rivonia, SANDTON <br>
-	South Africa<br>
-	
-	<br><br>
-	CONTACT INFORMATION:
-	<br><br>
+	Patience Mukondwa<br>
+    Head Of Operations<br>
+    The CharterQuest Institute<br>
+    CENTRAL CONTACT INFORMATION:<br>
     Tel: +27 (0)11 234 9223 [SA & Intl]<br>
     Tel: +27 (0)11 234 9238 [SA & Intl]<br>
     Tel: 0861 131 137 [SA ONLY]<br>
     Fax: 086 218 8713 [SA ONLY]<br>
-    Email:enquiries@charterquest.co.za<br>
-    <br><br>
-    BRAAMFONTEIN CAMPUS:<br>
-    CHARTERQUEST FINANCIAL TRAINING INSTITUTE @ ORION HOUSE,<br>
-    [13th floor] 49 Jorissen Street<br>
-    Cnr Biccard and Jorissen Street<br>
-    BRAAMFONTEIN<br>
-    South Africa<br>
-    <br><br>
-    CONTACT INFORMATION:<br>
-    Tel: +27 [0]11 403 0656 [SA & Intl]<br>
-    Tel: +27 [0]11 403 0642 [SA & Intl]<br>
-    Fax: 086 218 8713 [SA ONLY]<br>
-    Fax: +27 [0]11 791 7703 [SA & Intl]<br>
-    Email:enquiries@charterquest.co.za<br>
-    <br><br>
-    PRETORIA CAMPUS:<br>
-    CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
-    367 Hilda Street<br>
-    Hatfield Rendez Vous Building<br>
-    Hatfield, PRETORIA<br>
-    South Africa<br>
-    <br><br>
-    CONTACT INFORMATION:
-    Tel: +27 [0]12 751 7608 [SA & Intl]<br>
-    Email: enquiries@charterquest.co.za<br>
-	<br/>
+    email:enquiries@charterquest.co.za<br>
 	</div>
 		    ]]></field>
         </record>
 
-     <!--Email template for CharterQuest Debit Order Scheduled -->
+        <!--Email template for CharterQuest Debit Order Scheduled -->
         <record id="email_template_edi_debit_order_scheduled" model="mail.template">
             <field name="name">Scheduled Debit Order</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
-             <field name="email_to">sappa.thirupathi@ktree.com</field>
-             <field name="email_cc">''</field>
+            <field name="email_to">sappa.thirupathi@ktree.com</field>
+            <field name="email_cc">''</field>
             <field name="subject">CharterQuest Debit Order Scheduled for ${object.dbo_date}</field>
             <field name="email_recipients">${object.partner_id.id}</field>
             <field name="model_id" ref="event_debit_order_kt.model_debit_order_details"/>
@@ -279,12 +208,12 @@ We thank you in advance for providing sufficient funds to meet this payment. It 
 	</div>
 		    ]]></field>
         </record>
-    <!--Email template for Sending Enrolement Statement to Student-->
+        <!--Email template for Sending Enrolement Statement to Student-->
         <record id="email_template_edi_enrolement_statement_student" model="mail.template">
             <field name="name">Sending Enrolment Statement to Student</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
-             <field name="email_to">${object.partner_id.email or ''}</field>
-            <field name="subject">CharterQuest Payment Confirmation And Enrolment Statement </field>
+            <field name="email_to">${object.partner_id.email or ''}</field>
+            <field name="subject">CharterQuest Payment Confirmation And Enrolment Statement</field>
             <field name="email_recipients">${object.partner_id.id}</field>
             <!--<field name="report_template" ref="event_price_kt.account_statement_enrollment"/>-->
             <field name="model_id" ref="event_debit_order_kt.model_debit_order_details"/>
@@ -365,11 +294,11 @@ We look forward to seeing you during our course and helping you, in achieving a 
 		    ]]></field>
         </record>
 
-   <record id="email_template_pcexam_voucher" model="mail.template">
+        <record id="email_template_pcexam_voucher" model="mail.template">
             <field name="name">PC Exams Voucher</field>
             <field name="email_from">accounts@charterquest.co.za</field>
-             <field name="email_to">${object.partner_id.email}</field>
-             <field name="email_cc">accounts@charterquest.co.za</field>
+            <field name="email_to">${object.partner_id.email}</field>
+            <field name="email_cc">accounts@charterquest.co.za</field>
             <field name="subject">PC Exam Voucher</field>
 
             <field name="model_id" ref="account.model_account_invoice"/>
@@ -431,14 +360,14 @@ Please Find the Attached PDF for Vouchers
         <br/>
         </div>
        ]]></field>
-   </record>
+        </record>
 
 
-    <record id="email_template_pcexam_expiry_notification" model="mail.template">
+        <record id="email_template_pcexam_expiry_notification" model="mail.template">
             <field name="name">PC Exam Expiry Notification</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
-             <field name="email_to">${object.student_id.email}</field>
-             <field name="email_cc">''</field>
+            <field name="email_to">${object.student_id.email}</field>
+            <field name="email_cc">''</field>
             <field name="subject">PC Exam Expiry Notification</field>
 
             <field name="model_id" ref="event_price_kt.model_pcexams_voucher"/>
@@ -504,11 +433,11 @@ Please note that your PC Exam Voucher ${object.voucher_no} has Expired .
                     ]]></field>
         </record>
 
-    <record id="email_template_pcexam_expiry_notification_7days" model="mail.template">
+        <record id="email_template_pcexam_expiry_notification_7days" model="mail.template">
             <field name="name">PC Exam Expiry Notification after 7days</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
-             <field name="email_to">${object.student_id.email}</field>
-             <field name="email_cc">''</field>
+            <field name="email_to">${object.student_id.email}</field>
+            <field name="email_cc">''</field>
             <field name="subject">PC Exam Voucher Expiring in 7 days!</field>
 
             <field name="model_id" ref="event_price_kt.model_pcexams_voucher"/>
@@ -570,14 +499,14 @@ Please note that your PC Exam Voucher ${object.voucher_no} will expire in 7 days
         <br/>
         </div>
                     ]]></field>
-   </record>
+        </record>
 
 
-   <record id="email_template_pcexam_expiry_notification_30days" model="mail.template">
+        <record id="email_template_pcexam_expiry_notification_30days" model="mail.template">
             <field name="name">PC Exam Expiry Notification after 30days</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
-             <field name="email_to">${object.student_id.email}</field>
-             <field name="email_cc">''</field>
+            <field name="email_to">${object.student_id.email}</field>
+            <field name="email_cc">''</field>
             <field name="subject">PC Exam Voucher Expiring in 30 days!</field>
 
             <field name="model_id" ref="event_price_kt.model_pcexams_voucher"/>
@@ -639,7 +568,7 @@ Please note that your PC Exam Voucher ${object.voucher_no} will expire in 30 day
         <br/>
         </div>
                     ]]></field>
-   </record>
+        </record>
 
-</data>
+    </data>
 </odoo>
