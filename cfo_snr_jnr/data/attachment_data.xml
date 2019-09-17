@@ -16,7 +16,7 @@
 
         <record id="banking_data_pdf" model="ir.attachment">
             <field name="name">Banking Detail</field>
-            <field name="datas_fname">banking_details</field>
+            <field name="datas_fname">BANKING-DETAILS</field>
             <field name="type">binary</field>
             <field name="datas" type="base64" file="cfo_snr_jnr/data/banking_details.pdf"/>
         </record>
