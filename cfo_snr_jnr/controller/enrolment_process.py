@@ -958,7 +958,7 @@ class EnrolmentProcess(http.Controller):
                                       'property_account_payable_id': account_pay_id.id})
 
                 if partner_id:
-                    sale_order_id = sale_obj.create({'partner_id': partner_id.id,
+                    sale_order_id = sale_obj.sudo().create({'partner_id': partner_id.id,
                                                      'affiliation': '1' if user_select.get(
                                                          'self_or_company') and user_select.get(
                                                          'self_or_company') == 'self' else '2',
@@ -1700,6 +1700,7 @@ class EnrolmentProcess(http.Controller):
                                                   'inputOutstanding') else 0,
                                               'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
                                               'interest': post.get('inputInterest') if post.get('inputInterest') else 0,
+                                              'dbo_date':sale_order_id.confirmation_date,
                                               'acc_holder': sale_order_id.partner_id.name,
                                               'bank_name': res_bank_detail.id if res_bank_detail else '',
                                               'bank_acc_no': post.get('inputAccount') if post.get(
@@ -1736,11 +1737,11 @@ class EnrolmentProcess(http.Controller):
                  'debit_order_mandat': debit_order_mandet})
 
             sale_order_id = request.env['sale.order'].sudo().search([('id', '=', int(post.get('sale_order')))])
-            print ("\n\n\n\n\n----saleorder =====",sale_order_id)
-            ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
-                   'company_id': sale_order_id.company_id.id}
-            inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
-            ctx.update({'journal_id': inv_default_vals.get('journal_id')})
+            # print ("\n\n\n\n\n----saleorder =====",sale_order_id)
+            # ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
+            #        'company_id': sale_order_id.company_id.id}
+            # inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
+            # ctx.update({'journal_id': inv_default_vals.get('journal_id')})
             # invoice_id = sale_order_id.with_context(ctx).sudo().action_invoice_create()
             # invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
             # invoice_id.action_invoice_open()
@@ -2248,6 +2249,7 @@ class EnrolmentProcess(http.Controller):
                                                   'course_fee') else 0,
                                               'months': post.get('months') if post.get('months') else 0,
                                               'interest': post.get('interest') if post.get('interest') else 0,
+                                              'dbo_date': sale_order_id.confirmation_date,
                                               'acc_holder': sale_order_id.partner_id.name,
                                               'bank_name':post.get('bank_name') if post.get('bank_name')else '',
                                               'bank_acc_no': post.get('bank_acc_no') if post.get(
@@ -2623,6 +2625,7 @@ class EnrolmentProcess(http.Controller):
                                                   'inputOutstanding') else 0,
                                               'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
                                               'interest': post.get('inputInterest') if post.get('inputInterest') else 0,
+                                              'dbo_date': sale_order_id.confirmation_date,
                                               'acc_holder': sale_order_id.partner_id.name,
                                               'bank_name': res_bank_detail.id if res_bank_detail else '',
                                               'bank_acc_no': post.get('inputAccount') if post.get(
@@ -2685,6 +2688,7 @@ class EnrolmentProcess(http.Controller):
                                                   'inputOutstanding') else 0,
                                               'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
                                               'interest': post.get('inputInterest') if post.get('inputInterest') else 0,
+                                              'dbo_date':sale_order_id.confirmation_date,
                                               'acc_holder': sale_order_id.partner_id.name,
                                               'bank_name': res_bank_detail.id if res_bank_detail else '',
                                               'bank_acc_no': post.get('inputAccount') if post.get(

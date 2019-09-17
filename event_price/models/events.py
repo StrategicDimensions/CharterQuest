@@ -141,7 +141,7 @@ class sale_order(models.Model):
         :returns: list of created invoices
         """
         inv_obj = self.env['account.invoice']
-        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        precision = self.env['decimal.precision'].sudo().precision_get('Product Unit of Measure')
         invoices = {}
         references = {}
         for order in self:
@@ -151,7 +151,7 @@ class sale_order(models.Model):
                     continue
                 if group_key not in invoices:
                     inv_data = order._prepare_invoice()
-                    invoice = inv_obj.create(inv_data)
+                    invoice = inv_obj.sudo().create(inv_data)
                     references[invoice] = order
                     invoices[group_key] = invoice
                     invoice['sale_order_id'] = order.id
@@ -162,7 +162,7 @@ class sale_order(models.Model):
                     if order.client_order_ref and order.client_order_ref not in invoices[group_key].name.split(
                             ', ') and order.client_order_ref != invoices[group_key].name:
                         vals['name'] = invoices[group_key].name + ', ' + order.client_order_ref
-                    invoices[group_key].write(vals)
+                    invoices[group_key].sudo().write(vals)
                 if line.qty_to_invoice > 0:
                     line.invoice_line_create(invoices[group_key].id, line.qty_to_invoice)
                 elif line.qty_to_invoice < 0 and final:

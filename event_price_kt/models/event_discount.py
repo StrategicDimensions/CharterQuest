@@ -180,9 +180,9 @@ class sale_order(models.Model):
             order_id = self.id
             if isinstance(self.id,int):
                 order_id = [self.id]
-            order_line_ids = self.env['sale.order.line'].search([('order_id', '=', order_id)])
+            order_line_ids = self.env['sale.order.line'].sudo().search([('order_id', '=', order_id)])
             line_ids = []
-            for obj in self.env['sale.order.line'].browse(order_line_ids):
+            for obj in self.env['sale.order.line'].sudo().browse(order_line_ids):
                 if not obj.product_id.fee_ok:
                     line_ids.append(obj.id)
             self.env['sale.order.line'].write(line_ids, {'discount': vals['discount']})
