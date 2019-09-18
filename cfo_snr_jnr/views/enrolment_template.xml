@@ -1380,7 +1380,7 @@
         </t>
     </template>
 
-    <template id="enrolment_process_form2" name="Enrolment Process">
+    <template id="enrolment_process_form_2" name="Enrolment Process">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
                 <div class="oe_structure"/>
@@ -1390,7 +1390,7 @@
                           enctype="multipart/form-data" data-success_page="">
                         <div style="width:930px;background-color:red;">
                             <h3 class="mt0">
-                                <font class="bg-gamma">Select Level And Module</font>
+                                <center><font class="bg-gamma">Select Level And Module</font></center>
                             </h3>
                         </div>
 
@@ -1423,12 +1423,12 @@
                                     <div class="cart-table-wrap"
                                          style="width: 930px;overflow: hidden;overflow-x: auto;">
                                         <table id="event_course" class="table table-bordered"
-                                               style="color:black;margin-bottom: 20px;">
+                                               style="color:black;margin-bottom: 20px;border: 6px solid gainsboro;">
                                             <thead>
                                                 <tr style="background-color: #e9e9e9">
                                                     <th>Course Module</th>
-                                                    <th>Course Name</th>
-                                                    <!--<t t-set="leng" t-value="len(each_level_value['ticket_product'])"/>-->
+<!--                                                            <th>Course Name</th>-->
+<!--                                                    <t t-set="leng" t-value="len(each_level_value['ticket_product'])"/>-->
                                                     <!--<t t-set="ticket_product_list" t-value="each_level_value['ticket_product']"/>-->
                                                     <t t-set="ticket_product_list"
                                                        t-value="each_level_value['ticket_product']"/>
@@ -1437,7 +1437,7 @@
                                                        t-as="each_ticket_product">
                                                         <t t-foreach="each_ticket_product" t-as="l">
                                                             <th>
-                                                                <span t-esc="l.name"/>
+                                                                <center><span t-esc="l.name"/></center>
                                                             </th>
                                                         </t>
                                                     </t>
@@ -1446,31 +1446,33 @@
                                             <tbody>
                                                 <t t-foreach="each_level_value['event']" t-as="each_event">
                                                     <tr>
-                                                        <td style="min-width: 100px;">
-                                                            <span t-esc="each_event.event_course_code"/>
-                                                        </td>
-                                                        <td style="min-width:400px;">
+<!--                                                        <td style="min-width: 100px;">-->
+<!--                                                            <span t-esc="each_event.event_course_code"/>-->
+<!--                                                        </td>-->
+                                                        <td style="min-width:300px;line-height: 17px;margin-left: 4px; ">
+                                                            <span t-esc="each_event.event_course_code"/><br/>
                                                             <span t-esc="each_event.name"/>
                                                         </td>
                                                         <t t-foreach="ticket_product_list" t-as="each_product_list">
                                                             <t t-set="event_record"
                                                                t-value="request.env['event.event.ticket'].sudo().search([('product_id', '=', each_product_list.id), ('event_id', '=', each_event.id)], limit = 1, order='id desc')">
                                                             </t>
-                                                            <td style="min-width: 100px;">
+                                                        <td style="min-width: 100px;line-height: 11px;">
+                                                                <center><span t-esc="int(event_record.price) if event_record.price else 'N/A'"/></center><br/>
                                                                 <t t-if="event_record.price">
-                                                                    <input id="only_one" type="checkbox"
+                                                                    <center><input id="only_one" type="checkbox"
                                                                            class="event_course"
                                                                            t-att-name="'event-%s' % (event_record.id)"
                                                                            t-att-value="event_record.id"
-                                                                           t-att-data-id="'group%s[]'%(each_event.id)"/>
+                                                                           t-att-data-id="'group%s[]'%(each_event.id)"/></center>
                                                                 </t>
                                                                 <t t-if="not event_record.price">
-                                                                    <input type="checkbox" class="event_course"
+                                                                     <center><input type="checkbox" class="event_course"
                                                                            t-att-name="'event-%s' % (event_record.id)"
                                                                            t-att-value="event_record.id"
-                                                                           disabled="disabled"/>
+                                                                           disabled="disabled"/> </center>
                                                                 </t>
-                                                                <span t-esc="int(event_record.price) if event_record.price else 'N/A'"/>
+
                                                             </td>
                                                         </t>
                                                     </tr>
