@@ -90,16 +90,16 @@ We look forward to seeing you during our course and helping you, in achieving a 
         <!--Email template for Debit Order Mandate to Student -->
         <record id="email_template_edi_debit_order_mandate" model="mail.template">
             <field name="name">Debit Order Mandate Email</field>
-            <field name="email_from">patience.m@charterquest.co.za</field>
+            <field name="email_from">accounts@charterquest.co.za</field>
             <field name="email_to">${object.partner_id.email or ''}</field>
-            <field name="email_cc">''</field>
+            <field name="email_cc">patience.m@charterquest.co.za, accounts@charterquest.co.za</field>
             <field name="subject">CharterQuest Enrolment: Debit Order Mandate</field>
             <field name="email_recipients">${object.partner_id.id}</field>
             <field name="model_id" ref="sale.model_sale_order"/>
             <field name="auto_delete" eval="True"/>
             <field name="lang">${object.user_id.lang}</field>
             <field name="body_html"><![CDATA[
-<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+<div>
 <br>
 Dear ${object.partner_id.name}
 <br><br>
