@@ -13,32 +13,32 @@ $(document).ready(function(){
 
 	if(window.location.pathname == '/time_table'){
 
-	    $("#level_select").prop('disabled', true);
-	    $("#course_code_select").prop('disabled', true);
-	    $("#semester_select").prop('disabled', true);
-	    $("#option_select").prop('disabled', true);
+//	    $("#level_select").prop('disabled', true);
+//	    $("#course_code_select").prop('disabled', true);
+//	    $("#semester_select").prop('disabled', true);
+//	    $("#option_select").prop('disabled', true);
 
 
-        $('#campus_select').select2({
-			    placeholder: "",
-
-		    });
-
-		$('#level_select').select2({
-			    placeholder: ""
-		    });
-
-		$('#semester_select').select2({
-			    placeholder: ""
-		    });
-
-		$('#course_code_select').select2({
-			    placeholder: ""
-		    });
-
-		$('#option_select').select2({
-			    placeholder: ""
-		    });
+//        $('#campus_select').select2({
+//			    placeholder: "",
+//
+//		    });
+//
+//		$('#level_select').select2({
+//			    placeholder: ""
+//		    });
+//
+//		$('#semester_select').select2({
+//			    placeholder: ""
+//		    });
+//
+//		$('#course_code_select').select2({
+//			    placeholder: ""
+//		    });
+//
+//		$('#option_select').select2({
+//			    placeholder: ""
+//		    });
 		$(document).on("click", ".details_view_lecturer", function(event){
 			window.location.href = $(this).attr('data-href');
 		});

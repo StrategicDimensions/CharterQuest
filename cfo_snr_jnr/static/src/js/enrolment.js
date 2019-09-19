@@ -12,6 +12,11 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
     	
         }
 
+        $("input[id='only_one']:checked").each(function(){
+                alert()
+                $(this).css('color','green');
+        });
+
         function profbody_campus_sem(data) {
             ajax.jsonRpc("/get_event_data", 'call', {
                 'professional_body': data
@@ -707,6 +712,7 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                     }
                 });
             });
+
             for (var i = 0; i < chkArray.length; i++) {
                 discount_count += parseFloat(chkArray[i], 10); //don't forget to add the base
             }

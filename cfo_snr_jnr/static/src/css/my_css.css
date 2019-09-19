@@ -2580,3 +2580,23 @@ strong {
         color:red;
     }
 }
+
+
+input[id="only_one"]:checked  + span::before  {
+   content: '';
+   position: absolute;
+   width: 1.2ex;
+   height: 0.4ex;
+   background: rgba(0, 0, 0, 24);
+   top: 0.9ex;
+   left: 0.4ex;
+   border: 3px solid #1062a4;
+   border-top: none;
+   border-right: none;
+   -webkit-transform: rotate(-45deg);
+   -moz-transform: rotate(-45deg);
+   -o-transform: rotate(-45deg);
+   -ms-transform: rotate(-45deg);
+   transform: rotate(-45deg);
+
+}

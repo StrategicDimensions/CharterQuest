@@ -590,10 +590,12 @@ class EnrolmentProcess(http.Controller):
                     event_details = request.env['event.event'].sudo().search([('id', 'in', event_order_list)],
                                                                              order="name ASC")
                     event_details_dict[each][each_level]['event'] = event_details
-            return request.render('cfo_snr_jnr.enrolment_process_form2',
+            print("\n\n\n\n calll1111")
+            return request.render('cfo_snr_jnr.enrolment_process_form_2',
                                   {'enrolment_data': dict(sorted(event_details_dict.items())),
                                    'page_name': post.get('page_name'),
                                    'self_or_cmp': post['self_or_company'] if post.get('self_or_company') else ''})
+        print("\n\n\n\n\n\n calll222")
         return request.render('cfo_snr_jnr.enrolment_process_form')
 
     @http.route(['/prof_body_form_render'], type='http', auth="public", methods=['POST', 'GET'], website=True,
