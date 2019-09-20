@@ -1450,15 +1450,15 @@
 <!--                                                            <span t-esc="each_event.event_course_code"/>-->
 <!--                                                        </td>-->
                                                         <td style="min-width:300px;line-height: 17px;margin-left: 4px; ">
-                                                            <span t-esc="each_event.event_course_code"/><br/>
+                                                            <span style="font-weight:bold;" t-esc="each_event.event_course_code"/><br/>
                                                             <span t-esc="each_event.name"/>
                                                         </td>
                                                         <t t-foreach="ticket_product_list" t-as="each_product_list">
                                                             <t t-set="event_record"
                                                                t-value="request.env['event.event.ticket'].sudo().search([('product_id', '=', each_product_list.id), ('event_id', '=', each_event.id)], limit = 1, order='id desc')">
                                                             </t>
-                                                        <td style="min-width: 100px;line-height: 11px;">
-                                                                <center><span t-esc="int(event_record.price) if event_record.price else 'N/A'"/></center><br/>
+                                                        <td style="min-width: 100px;line-height: 17px;">
+                                                                <center><span t-esc="int(event_record.price) if event_record.price else 'N/A'"/></center><n/>
                                                                 <t t-if="event_record.price">
                                                                     <center><input id="only_one" type="checkbox"
                                                                            class="event_course"

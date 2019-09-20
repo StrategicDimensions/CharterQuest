@@ -811,6 +811,11 @@ table {
 	    width: 100%;
 	    margin:10px;
 }
+.timetable_snippet .timetable_span{
+width:50%;
+font-size:12px;
+
+}
 
 /* form report end */
 }

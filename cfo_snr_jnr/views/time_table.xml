@@ -270,11 +270,11 @@
     <template id="time_table_template" name="Time Table">
         <t t-call="portal.portal_layout">
 
-            <div class="panel panel-default" style="margin-top:10px;">
+            <div class="panel panel-default timetable_snippet" style="margin-top:10px;">
                 <div class="panel-heading" style="padding: 28px 15px;">
                     <form action="/time_table" method="POST">
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                        <span style="margin: -26px 48px;float: left;"><b>Select Campus</b></span>
+                        <span class="timetable_span" style="margin: -26px 48px;float: left;"><b>Select Campus</b></span>
                         <input type="hidden" name="campus_select" t-att-value="campus_select"/>
                         <select class="form-control multiple-campus-select" id="campus_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
@@ -616,5 +616,53 @@
 <!--           />-->
 
 
+
+<!--        <template id="responsive_web_layout_mobile_view" inherit_id="web.layout" name="Web layout">-->
+<!--            <xpath expr="html/head" position="replace">-->
+<!--                <head>-->
+<!--                    <title>Home | Charterquest</title>-->
+<!--                    <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon/"/>-->
+
+<!--                    <script type="text/javascript" async="" src="http://static.whatshelp.io/widget-send-button/js/init.js"></script><script type="text/javascript" async="" src="https://www.gstatic.com/recaptcha/api2/v1566858990656/recaptcha__en.js"></script><script type="text/javascript">-->
+<!--                        var odoo = {-->
+<!--                            csrf_token:"<t t-esc="request.csrf_token(None)"/>",,-->
+<!--                        };-->
+<!--                    </script>-->
+<!--                    <meta name="generator" content="Odoo" data-oe-model="ir.ui.view" data-oe-id="420" data-oe-field="arch" data-oe-xpath="/data/xpath[2]/t/meta[1]"/>-->
+<!--                    <meta name="description" data-oe-model="ir.ui.view" data-oe-id="420" data-oe-field="arch" data-oe-xpath="/data/xpath[2]/t/meta[3]"/>-->
+<!--                    <meta name="keywords" data-oe-model="ir.ui.view" data-oe-id="420" data-oe-field="arch" data-oe-xpath="/data/xpath[2]/t/meta[4]"/>-->
+
+<!--                    <meta property="og:title" data-oe-model="ir.ui.view" data-oe-id="420" data-oe-field="arch" data-oe-xpath="/data/xpath[2]/t/meta[5]" content="Home"/>-->
+<!--                    <meta property="og:site_name" data-oe-model="ir.ui.view" data-oe-id="420" data-oe-field="arch" data-oe-xpath="/data/xpath[2]/t/meta[6]" content="The CharterQuest Institute"/>-->
+<!--                    <link rel="alternate" data-oe-model="ir.ui.view" data-oe-id="420" data-oe-field="arch" data-oe-xpath="/data/xpath[2]/t/t[5]/t[1]/link[1]" hreflang="en" href="http://localhost:8090/"/>-->
+<!--                    <script type="text/javascript">-->
+<!--                            odoo.snippetsURL = '/website/snippets';-->
+
+<!--                            odoo.session_info = {-->
+<!--                                is_superuser: true,-->
+<!--                                is_system: true,-->
+<!--                                is_frontend: true,-->
+<!--                                translationURL: '/website/translations',-->
+<!--                                is_website_user: false,-->
+<!--                                user_id: 1-->
+<!--                            };-->
+<!--                    </script>-->
+
+<!--                    <link type="text/css" rel="stylesheet" href="/web/content/6784-d0996f0/web.assets_common.0.css"/>-->
+<!--                    <link type="text/css" rel="stylesheet" href="/web/content/8187-4efeadd/web.assets_frontend.0.css"/>-->
+<!--                    <link type="text/css" rel="stylesheet" href="/web/content/8188-4efeadd/web.assets_frontend.1.css"/>-->
+<!--                    <link type="text/css" rel="stylesheet" href="/web/content/8189-4efeadd/web.assets_frontend.2.css"/>-->
+<!--                    <link type="text/css" rel="stylesheet" href="/web/content/6790-159d10d/web_editor.summernote.0.css"/>-->
+<!--                    <link type="text/css" rel="stylesheet" href="/web/content/8103-16ee9f3/web_editor.assets_editor.0.css"/>-->
+<!--                    <link type="text/css" rel="stylesheet" href="/web/content/6792-c055ee5/website.assets_editor.0.css"/>-->
+
+<!--                    <script type="text/javascript" src="/web/content/6788-d0996f0/web.assets_common.js"></script>-->
+<!--                    <script type="text/javascript" src="/web/content/8190-4efeadd/web.assets_frontend.js"></script><script type="text/javascript" src="/web/webclient/locale/en_US"></script><script src="https://www.google.com/recaptcha/api.js"></script>-->
+<!--                    <script type="text/javascript" src="/web/content/6793-159d10d/web_editor.summernote.js"></script>-->
+<!--                    <script type="text/javascript" src="/web/content/8104-16ee9f3/web_editor.assets_editor.js"></script>-->
+<!--                    <script type="text/javascript" src="/web/content/6795-c055ee5/website.assets_editor.js"></script>-->
+<!--                </head>-->
+<!--            </xpath>-->
+<!--        </template>-->
 
 </odoo>
