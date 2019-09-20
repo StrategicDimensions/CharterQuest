@@ -1347,6 +1347,7 @@ class EnrolmentProcess(http.Controller):
                             'email_from': template_id.email_from,
                             'reply_to': template_id.reply_to,
                             'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                            'email_cc': 'enquiries@charterquest.co.za; accounts@charterquest.co.za; cqops@charterquest.co.za',
                             'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
                             'body_html': body_html,
                             'notification': True,
@@ -1654,15 +1655,17 @@ class EnrolmentProcess(http.Controller):
                 body_html += "<br>"
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
                 body_html += "<br><br>"
-                body_html += "Thank you for your enrolment"
+                body_html += "Thank you for your Enrolment Application"
                 body_html += "<br><br>"
-                body_html += "Please find attached Proforma Invoice, Banking details and copy of Student Agreement you just accepted!"
+                body_html += "Please find attached Invoice as well as copy of the Student Agreement you just accepted during enrolment."
                 body_html += "<br><br>"
-                body_html += "You can pay using the invoice number as reference and return proof of payment to: accounts@charterquest.co.za to process your enrolment." 
+                body_html += "Your sponsor/company can pay using the Invoice no. as reference and return proof of payment to: accounts@charterquest.co.za"
+                body_html += " to process your enrolment. You can email accounts should you wish to make special payment arrangements."
                 body_html += "<br><br>"
-                body_html += "We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
-                body_html += "<br><br>Thanking You <br>Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
-                body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
+                body_html += "We look forward to seeing	you	during our course and helping you, in achieving	a 1st Time Pass!"
+                body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
+                body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
+                body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
                 mail_values = {
                     'email_from': template_id.email_from,
                     'reply_to': template_id.reply_to,
@@ -2691,16 +2694,18 @@ class EnrolmentProcess(http.Controller):
                                               'bank_type_id': int(post['inputAtype']) if post.get(
                                                   'inputAtype') else ''}])
 
-            sale_order_id.write(
-                {'diposit_selected': post.get('inputPaypercentage') if post.get('inputPaypercentage') else 0,
-                 'due_amount': post.get('inputTotalDue') if post.get('inputTotalDue') else 0,
-                 'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
+
+            dict1={'diposit_selected':int(post.get('inputPaypercentage')) if int(post.get('inputPaypercentage')) else 0,
+                 'due_amount': float(post.get('inputTotalDue')) if float(post.get('inputTotalDue')) else 0,
+                 'months': int(post.get('inputPaymonths')) if int(post.get('inputPaymonths')) else 0,
                  'out_standing_balance_incl_vat': post.get('inputtotalandInterest') if post.get(
                      'inputtotalandInterest') else 0,
                  'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
                  'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
-                 'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0
-                 })
+                 'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0,
+                 # 'order_line': interest_amount_line
+                 }
+            sale_order_id.write(dict1)
             # sale_order_id.action_confirm()
 
         if post.get('Pay Via Bank Deposit'):
