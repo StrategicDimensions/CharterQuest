@@ -189,7 +189,9 @@ We thank you in advance for providing sufficient funds to meet this payment. It 
 <br>
 Dear ${object.partner_id.name}
 <br><br>
-Thank you for providing sufficient funds for the payment which was processed and received
+
+Thank you for providing sufficient funds for the payment which was processed and received<br>
+
 via Debit Order on ${object.dbo_date} with the reference ${object.name}.
 <br><br>
 Please find attached Statement which reflects your account status.
