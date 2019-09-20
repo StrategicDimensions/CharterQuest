@@ -95,7 +95,7 @@ class AccountPayment(models.Model):
                      pdf_data = request.env.ref('event_price_kt.report_enrollment_invoice').sudo().render_qweb_pdf(
                          self.invoice_ids[0].id)
                      if pdf_data:
-                         pdfvals = {'name': 'Invoice',
+                         pdfvals = {'name': 'Enrollment Invoice',
                                     'db_datas': base64.b64encode(pdf_data[0]),
                                     'datas': base64.b64encode(pdf_data[0]),
                                     'datas_fname': 'Invoice.pdf',
@@ -103,7 +103,6 @@ class AccountPayment(models.Model):
                                     'type': 'binary'}
                          pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                          attachment_list.append(pdf_create)
-                     print ("\n\n\n\n\n========attachment=====",attachment_list)
                      email_data = full_template_id.generate_email(self.invoice_ids[0].id)
                      mail_values = {
                         'email_from': email_data.get('email_from'),

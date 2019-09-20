@@ -1736,6 +1736,7 @@ class EnrolmentProcess(http.Controller):
                                                 'invoice_line_ids': invoice_line,
                                                 'residual': sale_order_id.out_standing_balance_incl_vat,
                                                 })
+
         if sale_order_id:
             debit_order_mandet = []
             res_bank_detail = False

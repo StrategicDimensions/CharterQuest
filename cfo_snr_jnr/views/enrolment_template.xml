@@ -3049,7 +3049,7 @@
                                                 <t t-set="states"
                                                    t-value="request.env['res.country.state'].sudo().search([])"/>
                                                 <select name="inputState" id="inputState"
-                                                        class="requiredValue form-control1" required=""
+                                                        class="requiredValue form-control1"
                                                         style="border-radius: 0px !important;width: 203px;">
                                                     <t t-foreach="states" t-as="each_state">
                                                         <option t-att-value="each_state.id"

@@ -99,7 +99,7 @@ We look forward to seeing you during our course and helping you, in achieving a 
             <field name="auto_delete" eval="True"/>
             <field name="lang">${object.user_id.lang}</field>
             <field name="body_html"><![CDATA[
-<div>
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 13px; color: rgb(34, 34, 34); background-color: #FFF; ">
 <br>
 Dear ${object.partner_id.name}
 <br><br>
@@ -119,7 +119,6 @@ Your enrolment will be confirmed upon receipt of the completed Debit Order Manda
 	Patience Mukondwa<br>
     Head Of Operations<br>
     The CharterQuest Institute<br>
-    <br><br>
     CENTRAL CONTACT INFORMATION:<br>
     Tel: +27 (0)11 234 9223 [SA & Intl]<br>
     Tel: +27 (0)11 234 9238 [SA & Intl]<br>
@@ -224,72 +223,25 @@ We thank you in advance for providing sufficient funds to meet this payment. It 
 <br>
 Dear ${object.partner_id.name}
 <br><br>
-Thank you for the payment which was processed and received<br>
+Thank you for providing sufficient funds for the payment which was processed and received<br>
 via Debit Order on ${object.dbo_date} with the reference ${object.name}.
 
 <br><br>
-Please find attached Statement which reflects your paymentsreceived.
+Please find attached Statement which reflects your account status.
 <br><br>
-To the extent applicable to you, the Student Agreement covers our T/Cs on the following:
-<br><br>
-1. Discounts allowed<br>
-2. Exam fee remittances<br>
-3. Payment procedures<br>
-4. Post payment procedures and access to learning materials<br>
-5. Cancellations, change of bookings and postponements;<br>
-6. Refunds and students complaints;<br>
-7. 1st Time Pass Guarantee scheme and other incidental matters.<br>
-<br><br>
-We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!
+For all account queries contact us on accounts@charterquest.co.za.
 <br><br>
 <br><br>
-
-	Thanking you,
-	<br><br>
-	Valentine D. Nti<br>
-	Founding CEO,<br>
-	CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
-	@ CHARTERQUEST HOUSE, Metropolitan Park<br>
-	374 Rivonia Boulevard<br>
-	Rivonia, SANDTON, South Africa<br>
-	CONTACT INFORMATION:<br>
-	Tel: +27 (0)11 234 9223 / 9238<br>
-	Email:enquiries@charterquest.co.za<br>
-
-	<br><br>
-	CONTACT INFORMATION:
-	<br><br>
+   
+    Patience Mukondwa<br>
+    Head Of Operations<br>
+    The CharterQuest Institute<br>
+    CENTRAL CONTACT INFORMATION:<br>
     Tel: +27 (0)11 234 9223 [SA & Intl]<br>
     Tel: +27 (0)11 234 9238 [SA & Intl]<br>
     Tel: 0861 131 137 [SA ONLY]<br>
     Fax: 086 218 8713 [SA ONLY]<br>
-    Email:enquiries@charterquest.co.za<br>
-    <br><br>
-    BRAAMFONTEIN CAMPUS:<br>
-    CHARTERQUEST FINANCIAL TRAINING INSTITUTE @ ORION HOUSE,<br>
-    [13th floor] 49 Jorissen Street<br>
-    Cnr Biccard and Jorissen Street<br>
-    BRAAMFONTEIN<br>
-    South Africa<br>
-    <br><br>
-    CONTACT INFORMATION:<br>
-    Tel: +27 [0]11 403 0656 [SA & Intl]<br>
-    Tel: +27 [0]11 403 0642 [SA & Intl]<br>
-    Fax: 086 218 8713 [SA ONLY]<br>
-    Fax: +27 [0]11 791 7703 [SA & Intl]<br>
-    Email:enquiries@charterquest.co.za<br>
-    <br><br>
-    PRETORIA CAMPUS:<br>
-    CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
-    367 Hilda Street<br>
-    Hatfield Rendez Vous Building<br>
-    Hatfield, PRETORIA<br>
-    South Africa<br>
-    <br><br>
-    CONTACT INFORMATION:
-    Tel: +27 [0]12 751 7608 [SA & Intl]<br>
-    Email: enquiries@charterquest.co.za<br>
-	<br/>
+    email:enquiries@charterquest.co.za<br>
 	</div>
 		    ]]></field>
         </record>
