@@ -197,7 +197,7 @@ class debit_order_details(models.Model):
                     'invoice_ids': [(6, 0, account_invoice.ids)],
                     'payment_date': datetime.today(),
                     'journal_id': journal_id.id,
-                    'payment_method_id': payment_methods[0].id
+                    'payment_method_id': payment_methods[0].id if payment_methods else False
                 })
                 payment_id.action_validate_invoice_payment()
                 pdf_data = self.env.ref(
@@ -220,6 +220,7 @@ class debit_order_details(models.Model):
                 mail_values = {
                     'email_from': mail_compose_id.get('email_from'),
                     'email_to': mail_compose_id.get('email_to'),
+                    'email_cc': mail_compose_id.get('email_cc'),
                     'subject': mail_compose_id.get('subject'),
                     'body_html': mail_compose_id.get('body'),
                     'attachment_ids': [(6, 0, [attachment.id])],

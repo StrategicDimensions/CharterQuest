@@ -2071,6 +2071,24 @@ class EnrolmentProcess(http.Controller):
 
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
         if sale_order_id and sale_order_id.quote_type == 'freequote':
+            for each_order_line in sale_order_id.order_line:
+                invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
+                                            'name': each_order_line.name,
+                                            'quantity': 1.0,
+                                            'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
+                                            'invoice_line_tax_ids': [
+                                                (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
+                                            'price_unit': each_order_line.price_unit,
+                                            'discount': each_order_line.discount}])
+            invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
+                                                    'campus': sale_order_id.campus.id,
+                                                    'prof_body': sale_order_id.prof_body.id,
+                                                    'sale_order_id': sale_order_id.id,
+                                                    'semester_id': sale_order_id.semester_id.id,
+                                                    'invoice_line_ids': invoice_line,
+                                                    'residual': sale_order_id.out_standing_balance_incl_vat,
+                                                    })
+            sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
             ctx = {'default_type':'out_invoice', 'type':'out_invoice', 'journal_type':'sale', 'company_id':sale_order_id.company_id.id}
             inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
             ctx.update({'journal_id': inv_default_vals.get('journal_id')})
