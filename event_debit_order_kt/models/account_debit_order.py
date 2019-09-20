@@ -220,7 +220,7 @@ class debit_order_details(models.Model):
                 mail_values = {
                     'email_from': mail_compose_id.get('email_from'),
                     'email_to': mail_compose_id.get('email_to'),
-                    'email_cc': mail_compose_id.get('email_cc'),
+                    'email_cc': email.email_cc,
                     'subject': mail_compose_id.get('subject'),
                     'body_html': mail_compose_id.get('body'),
                     'attachment_ids': [(6, 0, [attachment.id])],

@@ -177,7 +177,7 @@ We thank you in advance for providing sufficient funds to meet this payment. It 
             <field name="name">Sending Enrolment Statement to Student</field>
             <field name="email_from">accounts@charterquest.co.za</field>
             <field name="email_to">${object.partner_id.email or ''}</field>
-             <field name="email_cc">accounts@charterquest.co.za,patience.m@charterquest.co.za</field>
+            <field name="email_cc">accounts@charterquest.co.za,patience.m@charterquest.co.za</field>
             <field name="subject">CharterQuest Payment Confirmation And Enrolment Statement</field>
             <field name="email_recipients">${object.partner_id.id}</field>
             <!--<field name="report_template" ref="event_price_kt.account_statement_enrollment"/>-->
