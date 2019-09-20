@@ -1147,37 +1147,39 @@ class EnrolmentProcess(http.Controller):
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
 
         if sale_order_id:
-            if post.get('sale_order') or post.get('sale_order_id') or request.session.get('sale_order'):
-                sale_order_id.write(
-                    {'diposit_selected': post.get('inputPaypercentage') if post.get('inputPaypercentage') else 0,
-                     'due_amount': post.get('inputTotalDue') if post.get('inputTotalDue') else 0,
-                     'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
-                     'out_standing_balance_incl_vat': post.get('inputtotalandInterest') if post.get(
-                         'inputtotalandInterest') else 0,
-                     'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
-                     'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
-                     'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0
-                     })
-                if request.session.get('do_invoice') == 'yes':
+            print ("\n\n\n--------sale_order_id----call this->>>>>>>",sale_order_id,post)
+            if post.get('sale_order') or post.get('sale_order_id') or request.session.get('sale_order') :
+                if not post.get('eft'):
+                    sale_order_id.write(
+                        {'diposit_selected': int(post.get('inputPaypercentage')) if post.get('inputPaypercentage') else 0,
+                         'due_amount':float(post.get('inputTotalDue')) if post.get('inputTotalDue') else 0,
+                         'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
+                         'out_standing_balance_incl_vat': post.get('inputtotalandInterest') if post.get(
+                             'inputtotalandInterest') else 0,
+                         'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
+                         'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
+                         'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0
+                         })
+                    if request.session.get('do_invoice') == 'yes':
 
-                    for each_order_line in sale_order_id.order_line:
-                        invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
-                                                    'name': each_order_line.name,
-                                                    'quantity': 1.0,
-                                                    'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
-                                                    'invoice_line_tax_ids': [
-                                                        (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
-                                                    'price_unit': each_order_line.price_unit,
-                                                    'discount': each_order_line.discount}])
-                    invoice_id = invoice_obj.create({'partner_id': sale_order_id.partner_id.id,
-                                                     'campus': sale_order_id.campus.id,
-                                                     'prof_body': sale_order_id.prof_body.id,
-                                                     'sale_order_id': sale_order_id.id,
-                                                     'semester_id': sale_order_id.semester_id.id,
-                                                     'invoice_line_ids': invoice_line,
-                                                     'residual': sale_order_id.out_standing_balance_incl_vat,
-                                                     })
-                    invoice_id.action_invoice_open()
+                        for each_order_line in sale_order_id.order_line:
+                            invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
+                                                        'name': each_order_line.name,
+                                                        'quantity': 1.0,
+                                                        'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
+                                                        'invoice_line_tax_ids': [
+                                                            (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
+                                                        'price_unit': each_order_line.price_unit,
+                                                        'discount': each_order_line.discount}])
+                        invoice_id = invoice_obj.create({'partner_id': sale_order_id.partner_id.id,
+                                                         'campus': sale_order_id.campus.id,
+                                                         'prof_body': sale_order_id.prof_body.id,
+                                                         'sale_order_id': sale_order_id.id,
+                                                         'semester_id': sale_order_id.semester_id.id,
+                                                         'invoice_line_ids': invoice_line,
+                                                         'residual': sale_order_id.out_standing_balance_incl_vat,
+                                                         })
+                        invoice_id.action_invoice_open()
             # sale_order_id.write({'state': 'sale'})
             # sale_order_id.action_confirm()
 
