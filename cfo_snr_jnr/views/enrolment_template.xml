@@ -3258,17 +3258,19 @@
                             I’ve Paid button below.
                         </h3>
                         <center>
-                            <button id="btn_paid"  style="margin-top: 30px;background-color: gray;"
-                                    name="I’ve Paid" class="btn btn-primary"  disabled="True">I’ve Paid
-
+                            <t t-if="request.session.uid">
+                                <button id="btn_paid"  style="margin-top: 30px;background-color: gray;"
+                                    name="I’ve Paid" class="btn btn-primary" disabled="true">I’ve Paid
                             </button>
-                            <input id="interest_amount_id" name="interest_amount" t-att-value="interest_amount"
+                            </t>
+                                <input id="interest_amount_id" name="interest_amount" t-att-value="interest_amount"
                                        type="hidden"/>
 
                             <input id="eft_id" name="eft" t-att-value="eft" type="hidden"/>
                             <button id="btn_pay_later" type="submit" style="margin-top: 30px;" class="btn btn-primary">
                                 Pay Later
                             </button>
+
                             <!--<a href="/eft_payment?status=paid" class="btn btn-large btn-danger">I’ve Paid</a>-->
                             <!--<a href="/eft_payment?status=cancel" class="btn btn-large btn-danger">Pay Later</a>-->
                         </center>
