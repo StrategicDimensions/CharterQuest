@@ -10,6 +10,11 @@ var flag = false;
 var localStorage = window.localStorage;
 $(document).ready(function(){
 //    alert()
+//    $('head').find('meta').remove();
+//    $('head').append('<meta charset="utf-8">');
+//    $('head').append('<meta id="wh-viewport" name="viewport" content="width=device-width, initial-scale=1.0">');
+//    $('head').append('<   meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">');
+//    $('head').append('<meta name="HandheldFriendly" content="true">');
 
 	if(window.location.pathname == '/time_table'){
 
@@ -69,7 +74,7 @@ $(document).ready(function(){
         var semester_ids=$('#semester_select').val()
         var subject=[]
         var study_option=[]
-        ajax.jsonRpc('/get_timetable_data', 'call', {
+            ajax.jsonRpc('/get_timetable_data', 'call', {
             'qua_ids': qua_ids,
             'campus_ids': campus_ids,
             'semester_ids': semester_ids
@@ -151,7 +156,6 @@ $(document).ready(function(){
     });
 
     $(".cfo-cnr-jnr-color-picker").on("click",function(e){
-        alert()
         var id="#"+ e.toElement.id;
         var data_id=$(id).attr('data')
             var hexVal=null

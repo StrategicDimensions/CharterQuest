@@ -53,12 +53,12 @@
 	overflow: hidden;
     float: left;
     width: 100%;
-}  
+}
 .form_report_margin{
 	margin: 10px;
-}  
+}
 .fontset_forreport h3{
-	
+
     width: 100%;
     max-width: 66%;
 }
@@ -79,7 +79,7 @@
     float: left;
     margin: 14px;
     max-width: 72%;
-	
+
 }
 .table_report_trset{
 	    width: 100%;
@@ -89,14 +89,14 @@
 	    padding:5px;
 }
 .fontset_forreport1 span{
-	
+
       float: left;
     width: 100%;
     max-width: 67%;
     text-align: left;
     text-align: justify;
     padding: 2px 9px;
-    
+
 
 }
 .fontset_forreport1 h3{
@@ -105,7 +105,7 @@
     max-width: 67%;
     /* text-align: center; */
     padding: 2px 9px;
-    
+
 
 }
 .cforeport_tableset{
@@ -275,7 +275,7 @@
     width: 100%;
     display: block !importanr;
    /*  text-align:center; */
-	
+
 }
 .table_responsive_set2 td{
 	padding:5px;
@@ -302,7 +302,7 @@
 }
 .report_submission_set{
 	width:23%;
-	
+
     text-align: center;
 }
 .team_action_height{
@@ -323,8 +323,8 @@
 	footer #footer {
     padding-top: 0;
 }
-	
-	
+
+
 
 /* chgfvjhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg */
 
@@ -448,7 +448,7 @@
 	 float: left;
  display: inline-grid;
  width: 40%;
-	
+
 }
 .report_download_set{
 	top:3px;
@@ -464,7 +464,7 @@
     display: inline-grid;
     width: 60%;
     overflow: hidden;
-   
+
 }
 .table_responsive_set_padding{
 	  padding: 0px 0px 0px 4px;
@@ -487,7 +487,7 @@
 	height: 49px;
     width: 100%;
     display: block !importanr;
-	
+
 }
 .team_heightset{
 	    height: 186px;
@@ -567,7 +567,7 @@ table {
 	    width: 100%;
     display: block;
     float: left;
-    
+
 }
 footer #footer {
     padding-top: 0;
@@ -650,7 +650,7 @@ footer #footer {
 .team_member_set_51{
 	width:100%;
 	display:block;
-	
+
 }
 
 .team_member_set_52{
@@ -670,13 +670,13 @@ table {
 }
  .table_responsive_set11_set th {
     padding: 0 0 0 4px !important;
-} 
+}
 .margin_btn{
 	margin:4px;
 }
 /* form report start */
 .cfo_snr_reportformset{
-	
+
 }
 .email_width{
 	padding: 5px;
@@ -687,7 +687,7 @@ table {
     padding: 5px;
 }
 .formreport_input1 input{
-	    
+
     font-size:12px;
 }
 .form_report_margin input , select{
@@ -699,11 +699,11 @@ table {
     padding: 5px;
 }
 .add_row_table .formreport_input2{
-	    
+
     padding: 0px !important;
 }
 .add_row_table .formreport_input1{
-	    
+
     padding: 3px !important;
 }
 .widthset_formreport{
@@ -718,7 +718,7 @@ table {
 }
 .form_report_margin{
 	margin: 10px !important;
-}  
+}
 .fontset_forreport h3{
 	    background-color: red;
     width: 100%;
@@ -742,19 +742,19 @@ table {
     border-right: solid;
     /* font-size: 12px; */
     height: 42px;
-        
+
 }
 .cforeport_tableset1{
 	    border-right: none;
 	     float: left;
     width: 33%;
     overflow: hidden;
-    
+
     height: 42px;
         padding: 4px 6px;
 }
 .fontset_forreport1 span{
-	
+
         float: left;
     width: 100%;
     max-width: 94%;
@@ -762,16 +762,16 @@ table {
     text-align: justify;
     /* white-space: inherit; */
     padding: 2px 9px;
-    
+
 
 }
 .fontset_forreport1 h3{
-	
+
        float: left;
     width: 100%;
     max-width: 100%;
     text-align: center;
-    
+
 
 }
 .tableset_part4 {
@@ -785,7 +785,7 @@ table {
     display: inline-table;
 }
 .responsive_form_td_set1 input{
-	
+
 }
 .responsive_form_td_set1{
 	    width: 38%;
@@ -796,7 +796,7 @@ table {
     font-size: 11px;
 }
 .responsive_form_td_set3{
-	 
+
     font-size: 11px;
 }
 .table_report_trset input{
@@ -811,11 +811,34 @@ table {
 	    width: 100%;
 	    margin:10px;
 }
-.timetable_snippet .timetable_span{
-width:50%;
-font-size:12px;
+.timetable_snippet,
+ .multiple-campus-select,
+ .multiple-semester-select,
+ .multiple-levels-select,
+ .multiple-codes-select,
+ .multiple-option-select{
+    width:40%;
+
+
 
 }
+.col-* {
+    width:auto;
+}
+input[id="mySearch"]{
+display:none;
+}
+
+.timetable_snippet{
+width:100%
+}
+.campus_span{
+margin: -26px 7px;
+float: left;
+width: 50%;
+font-size: 11px;
+}
+
 
 /* form report end */
 }
