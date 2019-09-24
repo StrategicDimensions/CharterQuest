@@ -259,31 +259,7 @@
         <menuitem id="menu_cfo_team_snr_2020" action="action_cfo_team_snr_2020" parent="menu_cfo_member_snr_2020_root"
                   sequence="7"/>
 
-        <template id="web_layout_inherit" inherit_id="web.layout" name="Latest Blogs">
-            <xpath expr="//html" position="replace">&lt;!DOCTYPE html&gt;
-                <html t-att="html_data or {}">
-                    <head>
-                        <meta charset="utf-8"/>
-                        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <!--                <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>-->
 
-                        <title t-esc="title or 'Odoo'"/>
-                        <link type="image/x-icon" rel="shortcut icon" t-att-href="x_icon or '/web/static/src/img/favicon.ico'"/>
-
-                        <script type="text/javascript">
-                            var odoo = {
-                                csrf_token: "<t t-esc="request.csrf_token(None)"/>",
-                            };
-                        </script>
-
-                        <t t-raw="head or ''"/>
-                    </head>
-                    <body t-att-class="body_classname">
-                        <t t-raw="0"/>
-                    </body>
-                </html>
-            </xpath>
-        </template>
 
     </data>
 </odoo>
