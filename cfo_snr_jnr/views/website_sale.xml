@@ -33,7 +33,7 @@
             <xpath expr="//button[@name='action_view_delivery']" position="attributes">
                 <attribute name="style">pointer-events: none;</attribute>
             </xpath>
-            <xpath expr="//field[@name='confirmation_date']" position="after">
+            <xpath expr="//sheet/group//group//field[@name='confirmation_date']" position="after">
                 <field name="due_day" invisible="1"/>
             </xpath>
         </field>
