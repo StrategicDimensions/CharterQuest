@@ -927,7 +927,8 @@
                             </t>
                         </div>
                     </div>
-
+                    <div>
+                    </div>
                     <div class="row site-identifier ci-red-bg" style="width: 84.5% !important;margin-top:10px;">
 
                         <h3 class="o_default_snippet_text">FREE QUOTES, ENROLMENTS AND BOOKINGS PORTAL</h3>
@@ -2711,7 +2712,6 @@
                                         id="debitordermandate-button" value="true" name="Submit Debit Order Mandate"
                                         class="btn btn-primary">Submit Debit Order Mandate
                                 </button>
-
                             </t>
                         </div>
                     </t>
@@ -2737,6 +2737,18 @@
                         </h5>
                         <h5>We have sent you a Proforma Invoice with our Banking details;</h5>
                         <h5>please make sure to make payment to secure your place for your Enrollment.</h5>
+                    </center>
+                </div>
+            </t>
+        </t>
+    </template>
+        <template id="debit_order_submitted" name="submitted">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <div class="oe_structure"/>
+                <div class="col-sm-12" style="color:black;">
+                    <center>
+                        <h3>DEBIT ORDER ALREADY SUBMITTED!!!</h3>
                     </center>
                 </div>
             </t>
