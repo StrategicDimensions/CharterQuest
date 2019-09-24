@@ -590,12 +590,10 @@ class EnrolmentProcess(http.Controller):
                     event_details = request.env['event.event'].sudo().search([('id', 'in', event_order_list)],
                                                                              order="name ASC")
                     event_details_dict[each][each_level]['event'] = event_details
-            print("\n\n\n\n calll1111")
             return request.render('cfo_snr_jnr.enrolment_process_form_2',
                                   {'enrolment_data': dict(sorted(event_details_dict.items())),
                                    'page_name': post.get('page_name'),
                                    'self_or_cmp': post['self_or_company'] if post.get('self_or_company') else ''})
-        print("\n\n\n\n\n\n calll222")
         return request.render('cfo_snr_jnr.enrolment_process_form')
 
     @http.route(['/prof_body_form_render'], type='http', auth="public", methods=['POST', 'GET'], website=True,
@@ -1147,37 +1145,38 @@ class EnrolmentProcess(http.Controller):
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
 
         if sale_order_id:
-            if post.get('sale_order') or post.get('sale_order_id') or request.session.get('sale_order'):
-                sale_order_id.write(
-                    {'diposit_selected': post.get('inputPaypercentage') if post.get('inputPaypercentage') else 0,
-                     'due_amount': post.get('inputTotalDue') if post.get('inputTotalDue') else 0,
-                     'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
-                     'out_standing_balance_incl_vat': post.get('inputtotalandInterest') if post.get(
-                         'inputtotalandInterest') else 0,
-                     'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
-                     'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
-                     'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0
-                     })
-                if request.session.get('do_invoice') == 'yes':
+            if post.get('sale_order') or post.get('sale_order_id') or request.session.get('sale_order') :
+                if not post.get('eft'):
+                    sale_order_id.write(
+                        {'diposit_selected': int(post.get('inputPaypercentage')) if post.get('inputPaypercentage') else 0,
+                         'due_amount':float(post.get('inputTotalDue')) if post.get('inputTotalDue') else 0,
+                         'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
+                         'out_standing_balance_incl_vat': post.get('inputtotalandInterest') if post.get(
+                             'inputtotalandInterest') else 0,
+                         'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
+                         'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
+                         'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0
+                         })
+                    if request.session.get('do_invoice') == 'yes':
 
-                    for each_order_line in sale_order_id.order_line:
-                        invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
-                                                    'name': each_order_line.name,
-                                                    'quantity': 1.0,
-                                                    'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
-                                                    'invoice_line_tax_ids': [
-                                                        (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
-                                                    'price_unit': each_order_line.price_unit,
-                                                    'discount': each_order_line.discount}])
-                    invoice_id = invoice_obj.create({'partner_id': sale_order_id.partner_id.id,
-                                                     'campus': sale_order_id.campus.id,
-                                                     'prof_body': sale_order_id.prof_body.id,
-                                                     'sale_order_id': sale_order_id.id,
-                                                     'semester_id': sale_order_id.semester_id.id,
-                                                     'invoice_line_ids': invoice_line,
-                                                     'residual': sale_order_id.out_standing_balance_incl_vat,
-                                                     })
-                    invoice_id.action_invoice_open()
+                        for each_order_line in sale_order_id.order_line:
+                            invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
+                                                        'name': each_order_line.name,
+                                                        'quantity': 1.0,
+                                                        'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
+                                                        'invoice_line_tax_ids': [
+                                                            (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
+                                                        'price_unit': each_order_line.price_unit,
+                                                        'discount': each_order_line.discount}])
+                        invoice_id = invoice_obj.create({'partner_id': sale_order_id.partner_id.id,
+                                                         'campus': sale_order_id.campus.id,
+                                                         'prof_body': sale_order_id.prof_body.id,
+                                                         'sale_order_id': sale_order_id.id,
+                                                         'semester_id': sale_order_id.semester_id.id,
+                                                         'invoice_line_ids': invoice_line,
+                                                         'residual': sale_order_id.out_standing_balance_incl_vat,
+                                                         })
+                        invoice_id.action_invoice_open()
             # sale_order_id.write({'state': 'sale'})
             # sale_order_id.action_confirm()
 
@@ -1347,6 +1346,7 @@ class EnrolmentProcess(http.Controller):
                             'email_from': template_id.email_from,
                             'reply_to': template_id.reply_to,
                             'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                            'email_cc': 'enquiries@charterquest.co.za; accounts@charterquest.co.za; cqops@charterquest.co.za',
                             'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
                             'body_html': body_html,
                             'notification': True,
@@ -1654,15 +1654,17 @@ class EnrolmentProcess(http.Controller):
                 body_html += "<br>"
                 body_html += "Dear " + sale_order_id.partner_id.name + ","
                 body_html += "<br><br>"
-                body_html += "Thank you for your enrolment"
+                body_html += "Thank you for your Enrolment Application"
                 body_html += "<br><br>"
-                body_html += "Please find attached Proforma Invoice, Banking details and copy of Student Agreement you just accepted!"
+                body_html += "Please find attached Invoice as well as copy of the Student Agreement you just accepted during enrolment."
                 body_html += "<br><br>"
-                body_html += "You can pay using the invoice number as reference and return proof of payment to: accounts@charterquest.co.za to process your enrolment." 
+                body_html += "Your sponsor/company can pay using the Invoice no. as reference and return proof of payment to: accounts@charterquest.co.za"
+                body_html += " to process your enrolment. You can email accounts should you wish to make special payment arrangements."
                 body_html += "<br><br>"
-                body_html += "We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
-                body_html += "<br><br>Thanking You <br>Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
-                body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
+                body_html += "We look forward to seeing	you	during our course and helping you, in achieving	a 1st Time Pass!"
+                body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br>"
+                body_html += "Tel: +27 (0)11 234 9223 [SA & Intl]<br> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br>"
+                body_html += "Email:enquiries@charterquest.co.za<br><br/> <div>"
                 mail_values = {
                     'email_from': template_id.email_from,
                     'reply_to': template_id.reply_to,
@@ -1685,6 +1687,7 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/event/redirect_payu'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def event_redirect(self, **post):
+
         sale_order_id = False
         base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
         return_url = urljoin(base_url, '/event/payment/payu_com/dpn/')
@@ -1709,6 +1712,25 @@ class EnrolmentProcess(http.Controller):
 
         event_tickets = request.session['event_id'] if request.session.get('event_id') else ''
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
+        account_id = request.env['account.account'].sudo().search([('code', '=', '200000')], limit=1)
+        product_id = request.env['product.product'].sudo().search([('name', '=', 'Interest Amount')], limit=1)
+
+        interest_amount_line = [
+            [0, 0, {'price_unit': post.get('inputInterest') if post.get('inputInterest') else 0,
+                    'name': 'Interest Amount',
+                    'product_id': product_id.id,
+                    'product_uom_qty': 1,
+                    'invoice_lines': [0, 0, {'name': 'Interest Amount',
+                                             'account_id': account_id.id if account_id else False,
+                                             'quantity': 1,
+                                             'price_unit': post.get('inputInterest') if post.get(
+                                                 'inputInterest') else 0,
+                                             'price_subtotal': post.get(
+                                                 'inputInterest') if post.get(
+                                                 'inputInterest') else 0}],
+                    'price_subtotal': post.get('inputInterest') if post.get(
+                        'interest_amount') else 0}]]
+        sale_order_id.write({'order_line': interest_amount_line})
         if amount:
             if len(amount.split('.')[1]) == 1:
                 amount = amount + '0'
@@ -1764,55 +1786,38 @@ class EnrolmentProcess(http.Controller):
                                                   'inputAtype') else ''}])
             account_id = request.env['account.account'].sudo().search([('code', '=', '200000')], limit=1)
             product_id = request.env['product.product'].sudo().search([('name', '=', 'Interest Amount')], limit=1)
-            interest_amount_line = [
-                [0, 0, {'price_unit': post.get('interest_amount') if post.get('interest_amount') else 0,
-                        'name': 'Interest Amount',
-                        'product_id': product_id.id,
-                        'product_uom_qty': 1,
-                        'invoice_lines': [0, 0, {'name': 'Interest Amount',
-                                                 'account_id': account_id.id if account_id else False,
-                                                 'quantity': 1,
-                                                 'price_unit': post.get('interest_amount') if post.get(
-                                                     'interest_amount') else 0,
-                                                 'price_subtotal': post.get(
-                                                     'interest_amount') if post.get(
-                                                     'interest_amount') else 0}],
-                        'price_subtotal': post.get('interest_amount') if post.get(
-                            'interest_amount') else 0}]]
+
+            print ("\n\n\n\n\n============inputPaypercentage==",post.get('inputPaypercentage'))
+
             sale_order_id.write(
-                {'diposit_selected': post.get('inputPaypercentage') if post.get('inputPaypercentage') else 0,
-                 'due_amount': post.get('inputTotalDue') if post.get('inputTotalDue') else 0,
-                 'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
-                 'out_standing_balance_incl_vat': post.get('inputtotalandInterest') if post.get(
-                     'inputtotalandInterest') else 0,
-                 'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
-                 'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
-                 'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0,
-                 'debit_order_mandat': debit_order_mandet})
+                    {'diposit_selected': post.get('inputPaypercentage') if post.get('inputPaypercentage') else 0,
+                     'due_amount': post.get('inputTotalDue') if post.get('inputTotalDue') else 0,
+                     'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
+                     'out_standing_balance_incl_vat': post.get('inputtotalandInterest') if post.get(
+                         'inputtotalandInterest') else 0,
+                     'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
+                     'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
+                   })
 
-            sale_order_id = request.env['sale.order'].sudo().search([('id', '=', int(post.get('sale_order')))])
-            # print ("\n\n\n\n\n----saleorder =====",sale_order_id)
-            # ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
-            #        'company_id': sale_order_id.company_id.id}
-            # inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
-            # ctx.update({'journal_id': inv_default_vals.get('journal_id')})
-            # invoice_id = sale_order_id.with_context(ctx).sudo().action_invoice_create()
-            # invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
-            # invoice_id.action_invoice_open()
-            # journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
-            # payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
-            # payment_id = request.env['account.payment'].sudo().create({
-            #     'partner_id': sale_order_id.partner_id.id,
-            #     'amount': sale_order_id.due_amount,
-            #     'payment_type': 'inbound',
-            #     'partner_type': 'customer',
-            #     'invoice_ids': [(6, 0, invoice_id.ids)],
-            #     'payment_date': datetime.today(),
-            #     'journal_id': journal_id.id,
-            #     'payment_method_id': payment_methods[0].id,
-            #     'amount': sale_order_id.payment_amount,
-            # })
-
+            if int(post.get('inputPaypercentage')) < 100:
+                interest_amount_line = [
+                    [0, 0, {'price_unit': post.get('interest_amount') if post.get('interest_amount') else 0,
+                            'name': 'Interest Amount',
+                            'product_id': product_id.id,
+                            'product_uom_qty': 1,
+                            'invoice_lines': [0, 0, {'name': 'Interest Amount',
+                                                     'account_id': account_id.id if account_id else False,
+                                                     'quantity': 1,
+                                                     'price_unit': post.get('interest_amount') if post.get(
+                                                         'interest_amount') else 0,
+                                                     'price_subtotal': post.get(
+                                                         'interest_amount') if post.get(
+                                                         'interest_amount') else 0}],
+                            'price_subtotal': post.get('interest_amount') if post.get(
+                                'interest_amount') else 0}]]
+                sale_order_id.write({'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0,
+                                     'debit_order_mandate':True,
+                                     'debit_order_mandat': debit_order_mandet})
 
             stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
 
@@ -1856,25 +1861,27 @@ class EnrolmentProcess(http.Controller):
             # payment_id.action_validate_invoice_payment()
 
             if sale_order_id.debit_order_mandat:
-                date_day = int(post.get('inputPaydate'))
-                dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
-                debit_order_mandat_id = sale_order_id.debit_order_mandat[-1]
-                for i in range(sale_order_id.months):
-                    res = debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
-                                                  'student_number': '',
-                                                  'dbo_amount': sale_order_id.monthly_amount,
-                                                  'dbo_date': dbo_date,
-                                                  'course_fee': debit_order_mandat_id.course_fee,
-                                                  'interest': debit_order_mandat_id.interest,
-                                                  'acc_holder': sale_order_id.partner_id.name,
-                                                  'bank_name': debit_order_mandat_id.bank_name.id,
-                                                  'bank_acc_no': debit_order_mandat_id.bank_acc_no,
-                                                  'bank_code': debit_order_mandat_id.bank_name.bic,
-                                                  'state': 'pending',
-                                                  'bank_type_id': debit_order_mandat_id.bank_type_id.id,
-                                                  'invoice_id': invoice_id.id if invoice_id else False
-                                                  })
-                    dbo_date = dbo_date + relativedelta(months=+1)
+                date_day = int(post.get('inputPaydate')) if post.get('inputPaydate') else False
+                print ("\n\n\n\n\n\n==========day=====",date_day)
+                if date_day:
+                    dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
+                    debit_order_mandat_id = sale_order_id.debit_order_mandat[-1]
+                    for i in range(sale_order_id.months):
+                        res = debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
+                                                      'student_number': '',
+                                                      'dbo_amount': sale_order_id.monthly_amount,
+                                                      'dbo_date': dbo_date,
+                                                      'course_fee': debit_order_mandat_id.course_fee,
+                                                      'interest': debit_order_mandat_id.interest,
+                                                      'acc_holder': sale_order_id.partner_id.name,
+                                                      'bank_name': debit_order_mandat_id.bank_name.id,
+                                                      'bank_acc_no': debit_order_mandat_id.bank_acc_no,
+                                                      'bank_code': debit_order_mandat_id.bank_name.bic,
+                                                      'state': 'pending',
+                                                      'bank_type_id': debit_order_mandat_id.bank_type_id.id,
+                                                      'invoice_id': invoice_id.id if invoice_id else False
+                                                      })
+                        dbo_date = dbo_date + relativedelta(months=+1)
 
             first_name = ''
             last_name = ''
@@ -2059,7 +2066,6 @@ class EnrolmentProcess(http.Controller):
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
         attachment_list = []
         invoice_line = []
-        print("\n\n\n request.session.get('sale_order')",request.session.get('sale_order'))
         if post.get('sale_order'):
             sale_order = post.get('sale_order')
         if request.session.get('sale_order'):
@@ -2071,6 +2077,24 @@ class EnrolmentProcess(http.Controller):
 
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
         if sale_order_id and sale_order_id.quote_type == 'freequote':
+            for each_order_line in sale_order_id.order_line:
+                invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
+                                            'name': each_order_line.name,
+                                            'quantity': 1.0,
+                                            'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
+                                            'invoice_line_tax_ids': [
+                                                (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
+                                            'price_unit': each_order_line.price_unit,
+                                            'discount': each_order_line.discount}])
+            invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
+                                                    'campus': sale_order_id.campus.id,
+                                                    'prof_body': sale_order_id.prof_body.id,
+                                                    'sale_order_id': sale_order_id.id,
+                                                    'semester_id': sale_order_id.semester_id.id,
+                                                    'invoice_line_ids': invoice_line,
+                                                    'residual': sale_order_id.out_standing_balance_incl_vat,
+                                                    })
+            sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
             ctx = {'default_type':'out_invoice', 'type':'out_invoice', 'journal_type':'sale', 'company_id':sale_order_id.company_id.id}
             inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
             ctx.update({'journal_id': inv_default_vals.get('journal_id')})
@@ -2091,26 +2115,32 @@ class EnrolmentProcess(http.Controller):
             # invoice_id._onchange_partner_id()
 
         if sale_order_id and sale_order_id.quote_type == 'enrolment':
-            for each_order_line in sale_order_id.order_line:
-                invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
-                                            'name': each_order_line.name,
-                                            'quantity': 1.0,
-                                            'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
-                                            'invoice_line_tax_ids': [
-                                                (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
-                                            'price_unit': each_order_line.price_unit,
-                                            'discount': each_order_line.discount}])
-            invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
-                                             'campus': sale_order_id.campus.id,
-                                             'prof_body': sale_order_id.prof_body.id,
-                                             'sale_order_id': sale_order_id.id,
-                                             'semester_id': sale_order_id.semester_id.id,
-                                             'invoice_line_ids': invoice_line,
-                                             'residual': sale_order_id.out_standing_balance_incl_vat,
-                                             })
+            print ("\n\n\n\n\n============post=====",post)
+            print ("===============totalamount==============",sale_order_id.amount_total)
+            sale_order_id._action_confirm()
+            sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
+            ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
+                   'company_id': sale_order_id.company_id.id}
+            inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
+            ctx.update({'journal_id': inv_default_vals.get('journal_id')})
+            invoice_id = sale_order_id.with_context(ctx).sudo().action_invoice_create()
+            invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
+            journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
+            payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
+            payment_id = request.env['account.payment'].sudo().create({
+                'partner_id': sale_order_id.partner_id.id,
+                'amount': sale_order_id.due_amount if sale_order_id.due_amount else sale_order_id.amount_total,
+                'payment_type': 'inbound',
+                'partner_type': 'customer',
+                'invoice_ids': [(6, 0, invoice_id.ids)],
+                'payment_date': datetime.today(),
+                'journal_id': journal_id.id,
+                'payment_method_id': payment_methods[0].id
+            })
 
-#         print ("\n\n--------------invoice_id--->>>>>>>>>>>>>>>>>>>>>>>>",invoice_id,sale_order_id)
-#         sale_order_id.invoice_ids = [(4,invoice_id.id)]
+            print("\n\n\n\n==============invoice_id===========", invoice_id)
+            print ("\n\n\n\n==============payment_id===========",payment_id)
+
         stock_warehouse = request.env['stock.warehouse'].sudo().search([('name', '=', sale_order_id.campus.name)])
         # stock_location = request.env['stock.location'].sudo().search(
         #     [('location_id', '=', sale_order_id.warehouse_id.id)])
@@ -2151,8 +2181,10 @@ class EnrolmentProcess(http.Controller):
         })
         customer_picking.sale_id = sale_order_id.id
         invoice_id.action_invoice_open()
-        if sale_order_id and sale_order_id.quote_type == 'freequote':
-            payment_id.action_validate_invoice_payment()
+        # payment_id.post()
+        # if sale_order_id and sale_order_id.quote_type == 'freequote':
+        payment_id.action_validate_invoice_payment()
+        # payment_id.post()
         if sale_order_id.debit_order_mandat:
             for each_debit_order in sale_order_id.debit_order_mandat:
                 for i in range(sale_order_id.months):
@@ -2290,6 +2322,7 @@ class EnrolmentProcess(http.Controller):
 
         if request.session.get('do_invoice') == 'no':
             invoice_id.action_invoice_cancel()
+            sale_order_id.write({'state': 'draft'})
 
         if post.get('sale_order'):
             sale_order_id = request.env['sale.order'].sudo().browse(int(post.get('sale_order')))
@@ -2330,6 +2363,7 @@ class EnrolmentProcess(http.Controller):
                                  'out_standing_balance_incl_vat': post.get('dbo_amount') if post.get(
                                      'dbo_amount') else 0,
                                  'interest_amount': post.get('interest') if post.get('interest') else 0,
+                                 'debit_order_mandate':True,
                                 'debit_order_mandat': debit_order_mandet,
                                  'order_line':interest_amount_line})
             sale_order_id = request.env['sale.order'].sudo().browse(int(post.get('sale_order')))
@@ -2673,16 +2707,18 @@ class EnrolmentProcess(http.Controller):
                                               'bank_type_id': int(post['inputAtype']) if post.get(
                                                   'inputAtype') else ''}])
 
-            sale_order_id.write(
-                {'diposit_selected': post.get('inputPaypercentage') if post.get('inputPaypercentage') else 0,
-                 'due_amount': post.get('inputTotalDue') if post.get('inputTotalDue') else 0,
-                 'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
+
+            dict1={'diposit_selected':int(post.get('inputPaypercentage')) if int(post.get('inputPaypercentage')) else 0,
+                 'due_amount': float(post.get('inputTotalDue')) if float(post.get('inputTotalDue')) else 0,
+                 'months': int(post.get('inputPaymonths')) if int(post.get('inputPaymonths')) else 0,
                  'out_standing_balance_incl_vat': post.get('inputtotalandInterest') if post.get(
                      'inputtotalandInterest') else 0,
                  'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
                  'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
-                 'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0
-                 })
+                 'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0,
+                 # 'order_line': interest_amount_line
+                 }
+            sale_order_id.write(dict1)
             # sale_order_id.action_confirm()
 
         if post.get('Pay Via Bank Deposit'):
@@ -2757,9 +2793,11 @@ class EnrolmentProcess(http.Controller):
                      'inputtotalandInterest') else 0,
                  'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
                  'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
+                 'debit_order_mandate': True,
                  'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0,
                  'debit_order_mandat': debit_order_mandet,
                  'order_line':interest_amount_line})
+
             invoice_obj = request.env['account.invoice'].sudo()
             debit_order_obj = request.env['debit.order.details'].sudo()
             mail_obj = request.env['mail.mail'].sudo()

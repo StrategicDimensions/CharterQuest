@@ -39,50 +39,15 @@ We look forward to seeing you during our course and helping you, in achieving a 
 
 	Thanking you,
 	<br><br>
-	Valentine D. Nti<br>
-	Founding CEO,<br>
-	CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
-	@ CHARTERQUEST HOUSE, Metropolitan Park<br>
-	374 Rivonia Boulevard<br>
-	Rivonia, SANDTON, South Africa<br>
-	CONTACT INFORMATION:<br>
-	Tel: +27 (0)11 234 9223 / 9238<br>
-	Email:enquiries@charterquest.co.za<br>
-	
-	<br><br>
-	CONTACT INFORMATION:
-	<br><br>
+	Patience Mukondwa<br>
+    Head Of Operations<br>
+    The CharterQuest Institute<br>
+    CENTRAL CONTACT INFORMATION:<br>
     Tel: +27 (0)11 234 9223 [SA & Intl]<br>
     Tel: +27 (0)11 234 9238 [SA & Intl]<br>
     Tel: 0861 131 137 [SA ONLY]<br>
     Fax: 086 218 8713 [SA ONLY]<br>
-    Email:enquiries@charterquest.co.za<br>
-    <br><br>
-    BRAAMFONTEIN CAMPUS:<br>
-    CHARTERQUEST FINANCIAL TRAINING INSTITUTE @ ORION HOUSE,<br>
-    [13th floor] 49 Jorissen Street<br>
-    Cnr Biccard and Jorissen Street<br>
-    BRAAMFONTEIN<br>
-    South Africa<br>
-    <br><br>
-    CONTACT INFORMATION:<br>
-    Tel: +27 [0]11 403 0656 [SA & Intl]<br>
-    Tel: +27 [0]11 403 0642 [SA & Intl]<br>
-    Fax: 086 218 8713 [SA ONLY]<br>
-    Fax: +27 [0]11 791 7703 [SA & Intl]<br>
-    Email:enquiries@charterquest.co.za<br>
-    <br><br>
-    PRETORIA CAMPUS:<br>
-    CHARTERQUEST FINANCIAL TRAINING INSTITUTE<br>
-    367 Hilda Street<br>
-    Hatfield Rendez Vous Building<br>
-    Hatfield, PRETORIA<br>
-    South Africa<br>
-    <br><br>
-    CONTACT INFORMATION:
-    Tel: +27 [0]12 751 7608 [SA & Intl]<br>
-    Email: enquiries@charterquest.co.za<br>
-	<br/>
+    email:enquiries@charterquest.co.za<br>
 	</div>
 		    ]]></field>
         </record>
@@ -210,8 +175,9 @@ We thank you in advance for providing sufficient funds to meet this payment. It 
         <!--Email template for Sending Enrolement Statement to Student-->
         <record id="email_template_edi_enrolement_statement_student" model="mail.template">
             <field name="name">Sending Enrolment Statement to Student</field>
-            <field name="email_from">patience.m@charterquest.co.za</field>
+            <field name="email_from">accounts@charterquest.co.za</field>
             <field name="email_to">${object.partner_id.email or ''}</field>
+            <field name="email_cc">accounts@charterquest.co.za,patience.m@charterquest.co.za</field>
             <field name="subject">CharterQuest Payment Confirmation And Enrolment Statement</field>
             <field name="email_recipients">${object.partner_id.id}</field>
             <!--<field name="report_template" ref="event_price_kt.account_statement_enrollment"/>-->
@@ -219,29 +185,32 @@ We thank you in advance for providing sufficient funds to meet this payment. It 
             <field name="auto_delete" eval="True"/>
             <field name="lang">${object.partner_id.lang}</field>
             <field name="body_html"><![CDATA[
-<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+<div>
 <br>
 Dear ${object.partner_id.name}
 <br><br>
-Thank you for providing sufficient funds for the payment which was processed and received<br>
-via Debit Order on ${object.dbo_date} with the reference ${object.name}.
 
+Thank you for providing sufficient funds for the payment which was processed and received<br>
+
+via Debit Order on ${object.dbo_date} with the reference ${object.name}.
 <br><br>
 Please find attached Statement which reflects your account status.
 <br><br>
 For all account queries contact us on accounts@charterquest.co.za.
 <br><br>
-<br><br>
-   
-    Patience Mukondwa<br>
-    Head Of Operations<br>
-    The CharterQuest Institute<br>
-    CENTRAL CONTACT INFORMATION:<br>
+Thanking you,
+	<br><br>
+	Patience Mukondwa<br>
+	Head Of Operations,<br>
+	The CharterQuest Institute<br>
+	<br><br>
+	CENTRAL CONTACT INFORMATION:<br>
     Tel: +27 (0)11 234 9223 [SA & Intl]<br>
     Tel: +27 (0)11 234 9238 [SA & Intl]<br>
     Tel: 0861 131 137 [SA ONLY]<br>
     Fax: 086 218 8713 [SA ONLY]<br>
-    email:enquiries@charterquest.co.za<br>
+    Email:enquiries@charterquest.co.za <br>
+	<br/>
 	</div>
 		    ]]></field>
         </record>
@@ -252,7 +221,6 @@ For all account queries contact us on accounts@charterquest.co.za.
             <field name="email_to">${object.partner_id.email}</field>
             <field name="email_cc">accounts@charterquest.co.za</field>
             <field name="subject">PC Exam Voucher</field>
-
             <field name="model_id" ref="account.model_account_invoice"/>
             <field name="auto_delete" eval="False"/>
             <field name="lang">''</field>
@@ -321,7 +289,6 @@ Please Find the Attached PDF for Vouchers
             <field name="email_to">${object.student_id.email}</field>
             <field name="email_cc">''</field>
             <field name="subject">PC Exam Expiry Notification</field>
-
             <field name="model_id" ref="event_price_kt.model_pcexams_voucher"/>
             <field name="auto_delete" eval="False"/>
             <field name="lang">''</field>
@@ -391,7 +358,6 @@ Please note that your PC Exam Voucher ${object.voucher_no} has Expired .
             <field name="email_to">${object.student_id.email}</field>
             <field name="email_cc">''</field>
             <field name="subject">PC Exam Voucher Expiring in 7 days!</field>
-
             <field name="model_id" ref="event_price_kt.model_pcexams_voucher"/>
             <field name="auto_delete" eval="False"/>
             <field name="lang">''</field>
@@ -453,14 +419,12 @@ Please note that your PC Exam Voucher ${object.voucher_no} will expire in 7 days
                     ]]></field>
         </record>
 
-
         <record id="email_template_pcexam_expiry_notification_30days" model="mail.template">
             <field name="name">PC Exam Expiry Notification after 30days</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
             <field name="email_to">${object.student_id.email}</field>
             <field name="email_cc">''</field>
             <field name="subject">PC Exam Voucher Expiring in 30 days!</field>
-
             <field name="model_id" ref="event_price_kt.model_pcexams_voucher"/>
             <field name="auto_delete" eval="False"/>
             <field name="lang">''</field>
