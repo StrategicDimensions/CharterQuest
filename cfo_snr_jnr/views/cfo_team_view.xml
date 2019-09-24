@@ -259,10 +259,7 @@
         <menuitem id="menu_cfo_team_snr_2020" action="action_cfo_team_snr_2020" parent="menu_cfo_member_snr_2020_root"
                   sequence="7"/>
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 32c33a48189b850424ce0deeb01ee2fd82e80957
 
     </data>
 </odoo>
