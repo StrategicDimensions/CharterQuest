@@ -2569,4 +2569,25 @@ strong {
 	text-align: center;
 }
 
-
+.campus_span{
+margin: -26px 48px;
+float: left;
+}
+.semester_span{
+margin: -26px 38px;float: left;
+}
+.level_span{
+margin: -26px 53px;float: left;
+}
+.course_span{
+margin: -26px 45px;float: left;
+}
+.option_span{
+margin: -26px 29px;float: left;
+}
+.timetable_snippet{
+margin-top:10px;
+}
+.member1{
+padding: 28px 15px;
+}

@@ -10,10 +10,10 @@ var flag = false;
 var localStorage = window.localStorage;
 $(document).ready(function(){
 //    alert()
-    $('head').find('meta').remove();
+//    $('head').find('meta').remove();
 //    $('head').append('<meta charset="utf-8">');
-//    $('head').append('<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">');
-//    $('head').append('<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">');
+//    $('head').append('<meta id="wh-viewport" name="viewport" content="width=device-width, initial-scale=1.0">');
+//    $('head').append('<   meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">');
 //    $('head').append('<meta name="HandheldFriendly" content="true">');
 
 	if(window.location.pathname == '/time_table'){

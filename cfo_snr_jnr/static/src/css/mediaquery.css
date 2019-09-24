@@ -829,6 +829,16 @@ input[id="mySearch"]{
 display:none;
 }
 
+.timetable_snippet{
+width:100%
+}
+.campus_span{
+margin: -26px 7px;
+float: left;
+width: 50%;
+font-size: 11px;
+}
+
 
 /* form report end */
 }
