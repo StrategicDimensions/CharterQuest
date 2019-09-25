@@ -405,7 +405,7 @@ class EnrolmentProcess(http.Controller):
     @http.route(['/enrolment_book'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def enrolment_book(self):
         request.session['reg_and_enrol'] = ''
-        return request.render('cfo_snr_jnr.get_free_quote_email', {'page_name': 'book'})
+        return request.render('cfo_snr_jnr.get_free_quote_email_tmp', {'page_name': 'book'})
 
     @http.route(['/dynamic_login'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def dynamic_login(self):
@@ -687,12 +687,12 @@ class EnrolmentProcess(http.Controller):
                         if each_discount not in discount_detail_list:
                             discount_detail_list.append(each_discount)
                     request.session['event_count'] = len(event_count) if event_count else 0
-                    return request.render('cfo_snr_jnr.enrolment_process_discount_form',
+                    return request.render('cfo_snr_jnr.enrolment_process_discount_form_1',
                                           {'discount_detail': discount_detail_list,
                                            'select_prof': user_select['Select Prof Body'],
                                            'page_name': 'discounts',
                                            'event_len': len(event_count) if event_count else 0})
-                return request.render('cfo_snr_jnr.enrolment_process_discount_form')
+                return request.render('cfo_snr_jnr.enrolment_process_discount_form_1')
 
     @http.route(['/price'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def price(self, **post):

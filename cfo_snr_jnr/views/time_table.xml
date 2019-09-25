@@ -606,7 +606,7 @@
             print_report_name="CharterQuest(Time-Table).pdf"/>
 
 
-<!--        <template id="web_layout_inherit" inherit_id="web.layout" name="Latest Blogs">-->
+<!--        <template id="web_layout_inherit" inherit_id="web.layout" name="Latest html">-->
 <!--            <xpath expr="//html" position="replace">&lt;!DOCTYPE html&gt;-->
 <!--                <html t-att="html_data or {}">-->
 <!--                    <head>-->

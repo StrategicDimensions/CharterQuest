@@ -255,6 +255,7 @@ $(document).ajaxComplete(function(){
 		animation: true,
 		html: true,
 		trigger : 'hover',
+		placement: 'right',
 		selector:$('.time_table_snippet_div'),
         content: function() {
 			var content = $(this).attr("data-popover-content");

@@ -1144,7 +1144,7 @@
     </template>
 
 
-    <template id="get_free_quote_email" name="Book">
+    <template id="get_free_quote_email_tmp" name="Book">
         <t t-call="website.layout">
             <div class="oe_structure"/>
             <!--<t t-call="cfo_snr_jnr.header_template">-->
@@ -1154,26 +1154,26 @@
                         <form action="/prof_body_form_render" method="post"
                               class="s_website_form form-horizontal container-fluid mt32"
                               enctype="multipart/form-data" data-success_page="">
-                            <h3 style="color:black;">FREE QUOTES, ENROLMENTS<br/>AND<br/>BOOKINGS PORTAL
+                            <h3 class="h3set_color" style="color:black;">FREE QUOTES, ENROLMENTS<br/>AND<br/>BOOKINGS PORTAL
                             </h3>
                             <p style="color:black;font-size: 18px;line-height: 3;font-weight: 500;">Please select what
                                 you would like to do.
                             </p>
-                            <table>
+                            <table class="enr_tmp">
                                 <tbody>
                                     <tr>
                                         <td class="custome_btn">
                                             <button id="free_quote_email" style="height:50px;width:300px;"
-                                                    class="my-btn btn-large btn-danger" type="submit">​
+                                                    class="my-btn btn-large btn-danger enr_btn_1" type="submit">​
                                                 <b style="color:white;font-weight: 900;">GET FREE QUOTE EMAILED</b>
                                             </button>
                                         </td>
-                                        <td>
-                                            <h3 style="margin-left: 10px; color:black; font-weight: 700;">OR</h3>
+                                        <td >
+                                            <h3 class="or_css" style="margin-left: 10px; color:black; font-weight: 700;">OR</h3>
                                         </td>
                                         <td>
                                             <button id="reg_and_enrll" style="height:50px;width:300px;"
-                                                    class="my-btn btn-large btn-danger" type="button">​ ​
+                                                    class="my-btn btn-large btn-danger enr_btn_2" type="button">​ ​
                                                 <b style="color:white;font-weight: 900;">REGISTER AND ENROLLment</b>
                                             </button>
                                         </td>
@@ -1182,7 +1182,7 @@
                                     <tr>
                                         <td>
                                             <button id="free_quote_email" style="height:50px;width:300px;"
-                                                    class="my-btn btn-large btn-danger" type="button">​ ​
+                                                    class="my-btn btn-large btn-danger enr_btn_3" type="button">​ ​
                                                 <b style="color:white;font-weight: 900;">BOOK PC EXAM</b>
                                             </button>
                                         </td>
@@ -1190,7 +1190,7 @@
                                             <h3></h3>
                                         </td>
                                         <td>
-                                            <button id="pay_prof_body" class="my-btn btn-large btn-danger"
+                                            <button id="pay_prof_body" class="my-btn btn-large btn-danger enr_btn_4"
                                                     style="margin-top: 45px;height:50px;width:300px;" type="button">​
                                                 <b style="color:white;font-weight: 900;">PAY PROFESSIONAL BODY FESS
                                                     ONLY
@@ -1259,7 +1259,7 @@
                           enctype="multipart/form-data" data-success_page="">
                         <div class="form-group form-field o_website_form_custom">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
-                                <label class="control-label">Are you a new or returning
+                                <label class="control-label" style="margin-left: 16px;">Are you a new or returning
                                     student?
                                 </label>
                             </div>
@@ -1287,7 +1287,7 @@
                         <!--</div>-->
                         <div class="form-group form-field o_website_form_custom">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
-                                <label class="control-label" for="Are You Registered with a Professional Body?">
+                                <label class="control-label" style="margin-left: 16px;" for="Are You Registered with a Professional Body?">
                                     Are You Self Or Company Sponsored?
                                 </label>
                             </div>
@@ -1301,7 +1301,7 @@
                         </div>
                         <div class="form-group form-field o_website_form_custom">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
-                                <label class="control-label" for="Select Prof Body">Select Professional Body/Programme
+                                <label class="control-label" style="margin-left: 16px;" for="Select Prof Body">Select Professional Body/Programme
                                 </label>
                             </div>
                             <div class="col-md-7 col-sm-8">
@@ -1332,7 +1332,7 @@
 
                         <div class="form-group form-field o_website_form_custom" id="reg_campus">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
-                                <label for="campus" class="control-label">Select Campus
+                                <label for="campus" style="margin-left: 16px;" class="control-label">Select Campus
                                 </label>
                             </div>
                             <div class="col-md-7 col-sm-8">
@@ -1357,7 +1357,7 @@
                         <!--</div>-->
                         <div class="form-group form-field o_website_form_custom" id="reg_sem">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
-                                <label class="control-label" for="Semester">Semester</label>
+                                <label class="control-label" style="margin-left: 16px;" for="Semester">Semester</label>
                             </div>
                             <div class="col-md-7 col-sm-8">
                                 <select id="select_semester" class="form-control o_website_form_input" name="Semester"
@@ -1389,7 +1389,7 @@
                     <form action="/fees_level" method="post"
                           class="s_website_form form-horizontal container-fluid mt32"
                           enctype="multipart/form-data" data-success_page="">
-                        <div style="width:930px;background-color:red;">
+                        <div class="feed_tmp_1" style="width:930px;background-color:red;">
                             <h3 class="mt0">
                                 <center><font class="bg-gamma">Select Level And Module</font></center>
                             </h3>
@@ -1480,12 +1480,13 @@
                                                 </t>
                                             </tbody>
                                         </table>
+
                                     </div>
                                 </t>
                             </t>
                             <div class="form-group">
                                 <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
-                                    <button id="check_event" class="btn btn-primary pull-right" type="submit">Next
+                                    <button id="check_event" class="btn btn-primary pull-right" style="margin-right: -83px;" type="submit">Next
                                     </button>
                                     <button id="back_button" class="btn btn-primary pull-right" type="button">Back
                                     </button>
@@ -1606,7 +1607,7 @@
                         </t>
                         <div class="form-group">
                             <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
-                                <button class="btn btn-primary pull-right" type="submit">Next</button>
+                                <button class="btn btn-primary pull-right fees_1" type="submit">Next</button>
                                 <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
                             </div>
                         </div>
@@ -1617,13 +1618,13 @@
         </t>
     </template>
 
-    <template id="enrolment_process_discount_form" name="Discount Process">
+    <template id="enrolment_process_discount_form_1" name="Discount Process">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
                 <div class="oe_structure"/>
                 <div>
                     <form action="/price" method="post"
-                          class="s_website_form form-horizontal container-fluid mt32"
+                          class="s_website_form form-horizontal container-fluid mt32 prc_frm_1"
                           enctype="multipart/form-data" data-model_name="mail.mail" data-success_page="">
                         <t t-if="not discount_detail">
                             <table class="table table-bordered" style="color:black;background-color:azure;">
@@ -1836,7 +1837,7 @@
                         </t>
                         <div class="form-group">
                             <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
-                                <button class="btn btn-primary pull-right" type="submit">Next</button>
+                                <button class="btn btn-primary pull-right" style="margin-right: -72px;" type="submit">Next</button>
                                 <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
                             </div>
                         </div>
@@ -1960,8 +1961,8 @@
 
                                     <td>
                                         <button id="btn_get_free_email" style="margin-top: 30px;"
-                                                class="btn btn-primary" name="button" type="button"
-                                                value="Get Free Quote Emailed">Get Free Quote Emailed
+                                                class="btn btn-primary prc_tmp_1" name="button" type="button"
+                                                value="Get Free Quote Emailed"><center class="prc_1">Get Free Quote Emailed</center>
                                         </button>
                                     </td>
 
@@ -1972,9 +1973,9 @@
                                         <!--<h2 style="color:black;">OR</h2>-->
                                     </td>
                                     <td>
-                                        <button id="btn_reg_enroll" style="margin-top: 30px;" class="btn btn-primary"
-                                                name="button" type="button" value="Register And Enroll">Register And
-                                            Enroll
+                                        <button id="btn_reg_enroll" style="margin-top: 30px;" class="btn btn-primary prc_tmp_2"
+                                                name="button" type="button" value="Register And Enroll"><center class="prc_2">Register And
+                                            Enroll</center>
                                         </button>
                                     </td>
                                 </tr>
@@ -3372,3 +3373,8 @@
 
 
 </odoo>
+<!--.enr_tmp tr td{-->
+<!--float: left;-->
+<!--width: 100%;-->
+<!--text-align: center;-->
+<!--}-->
