@@ -29,7 +29,7 @@ _logger = logging.getLogger(__name__)
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    due_day = fields.Integer('Due Day')
+    due_day = fields.Integer(string='Due Day')
     @api.multi
     def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, attributes=None, warehouse_id= 0, **kwargs):
         """ Add or set product quantity, add_qty can be negative """
