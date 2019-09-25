@@ -2880,7 +2880,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td t-if="self_or_cmp == 'cmp_sponosored'"> 
+                                    <td t-if="self_or_cmp == 'cmp_sponosored'">
                                         <div class="control-group">
                                             <label class="control-label" id="vat_number" for="inputVat">VAT Number
                                             </label>

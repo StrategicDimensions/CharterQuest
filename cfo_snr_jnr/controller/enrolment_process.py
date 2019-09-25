@@ -2721,8 +2721,8 @@ class EnrolmentProcess(http.Controller):
 
 
             dict1={'diposit_selected':int(post.get('inputPaypercentage')) if int(post.get('inputPaypercentage')) else 0,
-                 'due_amount': float(post.get('inputTotalDue')) if float(post.get('inputTotalDue')) else 0,
-                 'months': int(post.get('inputPaymonths')) if int(post.get('inputPaymonths')) else 0,
+                 'due_amount': post.get('inputTotalDue') if post.get('inputTotalDue') else 0,
+                 'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
                  'out_standing_balance_incl_vat': post.get('inputtotalandInterest') if post.get(
                      'inputtotalandInterest') else 0,
                  'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
