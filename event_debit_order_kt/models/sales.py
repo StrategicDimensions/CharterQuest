@@ -4,6 +4,7 @@ from odoo import netsvc
 import urllib
 from odoo.http import request
 import hashlib
+from datetime import date, datetime
 from urllib.parse import urljoin
 
 
@@ -123,6 +124,8 @@ class payment_confirmation(models.Model):
 
     @api.multi
     def button_create_saleorder(self):
+        invoice_line=[]
+        invoice_obj = request.env['account.invoice'].sudo()
         sale_obj = self.env['sale.order'].browse(self.order_id.id)
         dic = {
             'payment_amount': self.payment_amount,
@@ -134,20 +137,41 @@ class payment_confirmation(models.Model):
         decoded_quote_name = m.hexdigest()
         config_para = request.env['ir.config_parameter'].sudo().search(
             [('key', 'ilike', 'web.base.url')])
-        if config_para:
-            link = config_para.value + "/payment/" + decoded_quote_name + '/' + decoded_quote_name
-            print("\n\n\n link>", link)
-            sale_obj.write({'debit_order_mandate_link': link,'debitorder_link':True})
         self.order_id.write(dic)
         self.order_id._action_confirm()
-        if self.env['ir.config_parameter'].sudo().get_param('sale.auto_done_setting'):
-            self.action_done()
         if str(sale_obj.payment_amount) == str(sale_obj.amount_total):
             sale_adv_payment = {
                 'advance_payment_method': 'all',
             }
             advanc_pay_id = self.env['sale.advance.payment.inv'].create(sale_adv_payment)
             advanc_pay_id.create_invoices()
+            invoice_id = request.env['account.invoice'].sudo().search([('sale_order_id','=',sale_obj.name)])
+            ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
+                              'company_id': self.order_id.company_id.id}
+            inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
+            ctx.update({'journal_id': inv_default_vals.get('journal_id')})
+            journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
+            payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
+            payment_id = request.env['account.payment'].sudo().create({
+                'partner_id': self.order_id.partner_id.id,
+                'amount': self.order_id.amount_total,
+                'payment_type': 'inbound',
+                'partner_type': 'customer',
+                'invoice_ids': [(6, 0, invoice_id.ids)],
+                'payment_date': datetime.today(),
+                'journal_id': journal_id.id,
+                'payment_method_id': payment_methods[0].id,
+                'amount':self.order_id.payment_amount,
+            })
+            invoice_id.action_invoice_open()
+            payment_id.action_validate_invoice_payment()
+        if config_para:
+            link = config_para.value + "/payment/" + decoded_quote_name + '/' + decoded_quote_name
+            if sale_obj.amount_total != sale_obj.payment_amount:
+                sale_obj.write({'debit_order_mandate_link': link,'debitorder_link':True})
+        if self.env['ir.config_parameter'].sudo().get_param('sale.auto_done_setting'):
+            self.action_done()
+
             #     invoice_obj = self.env['sale.order'].read(self._context.get('active_id'),['invoice_ids'])
             # 
             #     self.pool.get('account.invoice').signal_workflow(cr, uid, invoice_obj['invoice_ids'], 'invoice_open')
