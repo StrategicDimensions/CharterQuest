@@ -759,7 +759,7 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/payment','/payment/<uuid>','/payment/<uuid>/<uuid2>'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def payment(self,**post):
-
+        print ("\n\n\n\n\n\n============post==========",post)
         if post.get('uuid'):
             sale_order_id = request.env['sale.order'].sudo().search([('debit_link', '=', post.get('uuid'))])
             if sale_order_id and sale_order_id.debit_order_mandate:
@@ -825,20 +825,33 @@ class EnrolmentProcess(http.Controller):
                                                                                         'grand_tot': round(grand_tot, 2),
                                                                                         'sale_order_id': sale_order_id if sale_order_id else False,
                                                                                         'mandate_link': 'mandate_link_find',
-                                                                                        'page_confirm': 'yes' if sale_order_id.affiliation in [1,2] else 'no',
-                                                                                        'bank_detail': True if sale_order_id.affiliation in [1,2] else False,
+                                                                                        'page_confirm': 'yes' if sale_order_id.affiliation in ['1','2'] else 'no',
+                                                                                        'bank_detail': True if sale_order_id.affiliation in ['1','2'] else False,
                                                                                         'uuid': post.get('uuid'),
                                                                                         'uuid2':post.get('uuid2') if post.get('uuid2') else False,
                                                                                         })
                     if sale_order_id.quote_type == 'freequote':
-                        return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
+                            if sale_order_id.affiliation == '2':
+                                request.session['discount_id'] = ''
+                                request.session['discount_add'] = ''
+                                request.session['sale_order'] = sale_order_id.id if sale_order_id else ''
+                                request.session['do_invoice'] = 'yes' if post.get('do_invoice') == 'Yes' else 'no'
+                                sale_order_id.write({'diposit_selected': 100})
+                                return request.redirect('/thank-you')
+                            else:
+                                request.session['discount_id'] = ''
+                                request.session['discount_add'] = ''
+                                request.session['sale_order'] = ''
+                                request.session['do_invoice'] = ''
+
+                            return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
                                                                                         'product_tot': round(product_tot,
                                                                                                              2),
                                                                                         'grand_tot': round(grand_tot, 2),
                                                                                         'sale_order_id': sale_order_id if sale_order_id else False,
                                                                                         'mandate_link': 'mandate_link_find',
-                                                                                        'page_confirm':  'yes' if sale_order_id.affiliation==1 else 'no',
-                                                                                        'bank_detail': True if sale_order_id.affiliation==1 else False,
+                                                                                        'page_confirm':  'yes' if sale_order_id.affiliation == '1' else 'no',
+                                                                                        'bank_detail': True if sale_order_id.affiliation == '1' else False,
                                                                                         'uuid': post.get('uuid'),
                                                                                         'uuid2': post.get('uuid2') if post.get('uuid2') else False,
                                                                                         })
