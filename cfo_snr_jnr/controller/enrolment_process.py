@@ -390,7 +390,6 @@ class EnrolmentProcess(http.Controller):
     @http.route(['/registration_form', '/registration_form/<uuid>'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def registration_form(self,uuid=False, **post):
         sale_order_id = False
-
         if uuid:
             sale_order_id = request.env['sale.order'].sudo().search([('debit_link', '=', uuid)])
         user_select = request.session['user_selection_type'] if request.session and request.session.get('user_selection_type') else ''
