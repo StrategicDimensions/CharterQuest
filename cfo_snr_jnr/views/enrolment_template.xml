@@ -2814,8 +2814,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <t t-if="sale_order_id.affiliation in ['2']">
-                                            <t t-esc="self_or_cmp"></t>
+                                        <t t-if="self_or_cmp == 'cmp_sponosored'">
                                             <div class="control-group" style="width: 470px;float: left;">
                                                 <label class="control-label" style="margin-left: 22px;width: 70%;"
                                                        for="invoicegenerated">* Do you require an invoice to be
@@ -2852,7 +2851,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td t-if="sale_order_id.affiliation in ['2']">
+                                    <td t-if="self_or_cmp == 'cmp_sponosored'">
                                         <div class="control-group">
                                             <label class="control-label" id="stud_company" for="inputCompany">Students
                                                 Company
@@ -2882,7 +2881,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td t-if="sale_order_id.affiliation in ['2']">
+                                    <td t-if="self_or_cmp == 'cmp_sponosored'">
                                         <div class="control-group">
                                             <label class="control-label" id="vat_number" for="inputVat">VAT Number
                                             </label>
