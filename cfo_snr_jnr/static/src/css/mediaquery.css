@@ -870,11 +870,15 @@ img.img-size{
 float: right;
 }
 div.feed_tmp_1[style]{
-width: 369px !important;
+width: 422px !important;
 background-color: red !important;
+margin-left: -29px !important;
 }
-.cart-table-wrap{
+.cart-table-wrap[style]{
 overflow-x: auto !important;
+margin-left: -26px !important;
+width: auto !important;
+margin-right: -77px !important;
 }
 .prc_tmp_1{
 margin-top: 30px !important;
@@ -900,6 +904,16 @@ margin-right: -43px;
 .prc_frm_1{
 margin-left: -34px;
 }
-/* form report end */
+.lbl_1 .lbl_2 .lbl_3 .lbl_4 .lbl_5{
+    margin-left: 16px;
 }
+.lbl_5{
+    margin-left: 16px;
+}
+
+
+}
+
+/* form report end */
+
 
