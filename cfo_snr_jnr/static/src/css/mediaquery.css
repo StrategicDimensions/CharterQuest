@@ -870,7 +870,7 @@ img.img-size{
 float: right;
 }
 div.feed_tmp_1[style]{
-width: 422px !important;
+width: auto !important;
 background-color: red !important;
 margin-left: -29px !important;
 }
@@ -899,19 +899,42 @@ margin-left: -8px !important;
 margin-left: -23px !important;
 }
 .fees_1{
-margin-right: -43px;
+margin-right: -43px !important;
 }
 .prc_frm_1{
-margin-left: -34px;
+margin-left: -34px !important;
 }
 .lbl_1 .lbl_2 .lbl_3 .lbl_4 .lbl_5{
-    margin-left: 16px;
+    margin-left: 16px !important;
 }
 .lbl_5{
-    margin-left: 16px;
+    margin-left: 16px !important;
 }
-
-
+.table_price{
+    overflow-x: auto !important;
+    margin-right: -62px !important;
+}
+.table_price_child{
+    overflow-x: auto !important;
+    margin-right: -81px !important;
+}
+.time_table_css{
+    overflow-x: auto !important;
+}
+.time_table_div[style]{
+    max-width:97.1% !important;
+    margin-left: 5px !important;
+    min-height: 53px !important;
+    max-height: 53px !important;
+    margin-bottom: 5px !important;
+    text-align: center !important;
+    border: 2px solid gainsboro !important;
+    border-radius: 7px !important;
+    padding: 3px !important;
+}
+.nxt_prc_1{
+margin-right: -144px !important;
+}
 }
 
 /* form report end */
