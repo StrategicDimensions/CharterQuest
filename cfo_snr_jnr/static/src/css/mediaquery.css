@@ -882,18 +882,18 @@ margin-right: -77px !important;
 }
 .prc_tmp_1{
 margin-top: 30px !important;
-    width: 190px !important;
-    margin-left: -5px !important;
-    font-size: 11px !important;
+width: 175px !important;
+margin-left: -5px !important;
+font-size: 11px !important;
 }
 .prc_tmp_2{
 margin-top: 30px !important;
-    width: 173px !important;
-    font-size: 12px !important;
-    margin-left: 13px !important;
+width: 173px !important;
+font-size: 12px !important;
+margin-left: 13px !important;
 }
 .prc_1{
-margin-left: -8px !important;
+margin-left: -24px !important;
 }
 .prc_2{
 margin-left: -23px !important;
@@ -933,7 +933,35 @@ margin-left: -34px !important;
     padding: 3px !important;
 }
 .nxt_prc_1{
-margin-right: -144px !important;
+    margin-right: -144px !important;
+}
+.pmt_css_1{
+    overflow-x: auto !important;
+}
+.css_reg_lbl{
+    text-align : center !important;
+}
+.css_reg_inp{
+    width: 177px !important;
+    max-width: 100% !important;
+    margin-left:-1px !important;
+}
+.css_reg_div{
+    margin: 0px 2px !important;
+}
+.css_reg_inp1{
+
+    max-width: 100% !important;
+    margin-left:-15px !important;
+}
+.button-div1{
+display:content;
+}
+.css_reg_div1{
+    margin-top: 22px !important;
+}
+.css_reg_div2{
+    margin-top: 21px !important;
 }
 }
 

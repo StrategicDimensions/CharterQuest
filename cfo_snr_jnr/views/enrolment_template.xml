@@ -2847,418 +2847,449 @@
                 <div class="oe_structure"/>
                 <form action="/payment" class="form-horizontal-enroll" name="registrationform" method="post">
                     <fieldset>
-                        <table class="table" style="color:black;">
-                            <input id="uuid" type="hidden" t-att-value="uuid" name='uuid'/>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <t t-if="self_or_cmp == 'cmp_sponosored'">
-                                            <div class="control-group" style="width: 470px;float: left;">
-                                                <label class="control-label" style="margin-left: 22px;width: 70%;"
-                                                       for="invoicegenerated">* Do you require an invoice to be
-                                                    generated ?
-                                                </label>
-                                                <div class="controls" style="margin-left: 0 !important;float: left;">
-                                                    <select class="requiredValue form-control1" name="do_invoice"
-                                                            required="false"
-                                                            style="margin-left: 6px;width: 100px;border-radius: 0px !important;">
-                                                        <option value="No">No</option>
-                                                        <option value="Yes">Yes</option>
+                        <!--                        <div class="pmt_css_1">-->
+                        <center>
+                            <table class="table" style="color:black;">
+                                <input id="uuid" type="hidden" t-att-value="uuid" name='uuid'/>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <t t-if="self_or_cmp == 'cmp_sponosored'">
+                                                <div class="control-group" style="width: 470px;float: left;">
+                                                    <label class="control-label" style="margin-left: 22px;width: 70%;"
+                                                           for="invoicegenerated">* Do you require an invoice to be
+                                                        generated ?
+                                                    </label>
+                                                    <div class="controls"
+                                                         style="margin-left: 0 !important;float: left; ">
+                                                        <select class="requiredValue form-control1" name="do_invoice"
+                                                                required="false"
+                                                                style="margin-left: 6px;width: 100px;border-radius: 0px !important;">
+                                                            <option value="No">No</option>
+                                                            <option value="Yes">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputTitle">* Title</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <select name="inputTitle" class="requiredValue form-control1"
+                                                            id="inputTitle" required=""
+                                                            style="border-radius: 0px !important;width: 177px;">
+                                                        <t t-set="title"
+                                                           t-value="request.env['res.partner.title'].sudo().search([])"/>
+                                                        <t t-foreach="title" t-as="each_title">
+                                                            <option t-att-value="each_title.id">
+                                                                <span t-esc="each_title.name"/>
+                                                            </option>
+                                                        </t>
                                                     </select>
                                                 </div>
                                             </div>
-                                        </t>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputTitle">* Title</label>
-                                            <div class="controls">
-                                                <select name="inputTitle" class="requiredValue form-control1"
-                                                        id="inputTitle" required=""
-                                                        style="border-radius: 0px !important;width: 203px;">
-                                                    <t t-set="title"
-                                                       t-value="request.env['res.partner.title'].sudo().search([])"/>
-                                                    <t t-foreach="title" t-as="each_title">
-                                                        <option t-att-value="each_title.id">
-                                                            <span t-esc="each_title.name"/>
-                                                        </option>
-                                                    </t>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td t-if="self_or_cmp == 'cmp_sponosored'">
-                                        <div class="control-group">
-                                            <label class="control-label" id="stud_company" for="inputCompany">Students
-                                                Company
-                                            </label>
-                                            <div class="controls">
-                                                <input type="text" class="form-control1" name="inputCompany"
-                                                       id="inputCompany" placeholder="Company"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputFirstName">* First Name</label>
-                                            <div class="controls">
-                                                <t t-if="not sale_order_id">
-                                                    <input type="text" name="inputFirstName" id="inputFirstName"
-                                                           placeholder="First Name" class="requiredValue form-control1"
-                                                           required=""/>
-                                                </t>
-                                                <t t-if="sale_order_id">
-                                                    <input type="text" name="inputFirstName" id="inputFirstName"
-                                                           placeholder="First Name" class="requiredValue form-control1"
-                                                           required=""
-                                                           t-att-value="sale_order_id.partner_id.name.split(' ')[0] if sale_order_id.partner_id.name.split(' ') else ''"/>
-                                                </t>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td t-if="self_or_cmp == 'cmp_sponosored'">
-                                        <div class="control-group">
-                                            <label class="control-label" id="vat_number" for="inputVat">VAT Number
-                                            </label>
-                                            <div class="controls">
-                                                <input type="text" class="form-control1" name="inputVat" id="inputVat"
-                                                       placeholder="vat"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputLastName">* Last Name</label>
-                                            <div class="controls">
-                                                <t t-if="not sale_order_id">
-                                                    <input type="text" name="inputLastName" id="inputLastName"
-                                                           placeholder="Last Name" class="requiredValue form-control1"
-                                                           required=""/>
-                                                </t>
-                                                <t t-if="sale_order_id">
-                                                    <input type="text" name="inputLastName" id="inputLastName"
-                                                           placeholder="Last Name" class="requiredValue form-control1"
-                                                           required=""
-                                                           t-att-value="sale_order_id.partner_id.name.split(' ')[1] if len(sale_order_id.partner_id.name.split(' ')) == 2 else ''"/>
-                                                </t>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputStreet">* Address Street</label>
-                                            <div class="controls">
-                                                <t t-if="not sale_order_id">
-                                                    <input type="text" name="inputStreet" id="inputStreet"
-                                                           placeholder="Street" class="requiredValue form-control1"
-                                                           required=""/>
-                                                </t>
-                                                <t t-if="sale_order_id">
-                                                    <input type="text" name="inputStreet" id="inputStreet"
-                                                           placeholder="Street" class="requiredValue form-control1"
-                                                           required=""
-                                                           t-att-value="sale_order_id.partner_id.street if sale_order_id.partner_id and sale_order_id.partner_id.street else ''"/>
-                                                </t>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputDOB">* Date of Birth</label>
-                                            <div class="controls">
-                                                <t t-if='not sale_order_id'>
-                                                    <!--<input id="datepicker" type="text" name="inputDOB" class="requiredValue hasDatepicker form-control1" placeholder="MM-DD-YY"/>-->
-                                                    <input type="text" id="datepicker" name="inputDOB"
-                                                           class="form-control1"
-                                                           placeholder="MM-DD-YY" required="" readonly=""/>
-                                                </t>
-                                                <t t-if='sale_order_id'>
-                                                    <!--<input id="datepicker" type="text" name="inputDOB" class="requiredValue hasDatepicker form-control1" placeholder="MM-DD-YY"/>-->
-                                                    <input type="text" id="datepicker" name="inputDOB"
-                                                           class="form-control1"
-                                                           placeholder="MM-DD-YY" required="" readonly=""
-                                                           t-att-value="sale_order_id.partner_id.dob if sale_order_id.partner_id and sale_order_id.partner_id.dob else '' "/>
-                                                </t>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputStreet2">* Address Street</label>
-                                            <div class="controls">
-                                                <t t-if='not sale_order_id'>
-                                                    <input type="text" name="inputStreet2" id="inputStreet2"
-                                                           placeholder=""
-                                                           class="form-control1" required=""/>
-                                                </t>
-                                                <t t-if='sale_order_id'>
-                                                    <input type="text" name="inputStreet2" id="inputStreet2"
-                                                           placeholder=""
-                                                           class="form-control1" required=""
-                                                           t-att-value="sale_order_id.partner_id.street2 if sale_order_id.partner_id and sale_order_id.partner_id.street2 else ''"/>
-                                                </t>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputID_PassportNo.">* ID/Passport No.
-                                            </label>
-                                            <div class="controls">
-                                                <t t-if='not sale_order_id'>
-                                                    <input type="text" name="inputID_PassportNo."
-                                                           id="inputID_PassportNo."
-                                                           placeholder="ID/Passport No."
-                                                           class="requiredValue form-control1"
-                                                           required=""/>
-                                                </t>
-                                                <t t-if='sale_order_id'>
-                                                    <input type="text" name="inputID_PassportNo."
-                                                           id="inputID_PassportNo."
-                                                           placeholder="ID/Passport No."
-                                                           class="requiredValue form-control1"
-                                                           required=""
-                                                           t-att-value="sale_order_id.partner_id.idpassport if sale_order_id.partner_id and sale_order_id.partner_id.idpassport else ''"/>
-                                                </t>
-
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputCity">* Address City</label>
-                                            <div class="controls">
-                                                <t t-if='not sale_order_id'>
-                                                    <input type="text" name="inputCity" id="inputCity"
-                                                           placeholder="City"
-                                                           class="requiredValue form-control1" required=""/>
-                                                </t>
-                                                <t t-if='sale_order_id'>
-                                                    <input type="text" name="inputCity" id="inputCity"
-                                                           placeholder="City"
-                                                           class="requiredValue form-control1" required=""
-                                                           t-att-value="sale_order_id.partner_id.city if sale_order_id and sale_order_id.partner_id else ''"/>
-                                                </t>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputContactNumber">* Cell/Mobile</label>
-                                            <div class="controls">
-                                                <t t-if='not sale_order_id'>
-                                                    <input type="text" name="inputContactNumber" id="inputContactNumber"
-                                                           placeholder="Contact Number"
-                                                           class="requiredValue form-control1"
-                                                           required=""/>
-                                                </t>
-                                                <t t-if='sale_order_id'>
-                                                    <input type="text" name="inputContactNumber" id="inputContactNumber"
-                                                           placeholder="Contact Number"
-                                                           class="requiredValue form-control1"
-                                                           required=""
-                                                           t-att-value="sale_order_id.partner_id.mobile if sale_order_id.partner_id and sale_order_id.partner_id.mobile else ''"/>
-                                                </t>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputCountry">* Country</label>
-                                            <div class="controls selectdiv">
-                                                <t t-set="country"
-                                                   t-value="request.env['res.country'].sudo().search([('active', '=', true)])"/>
-                                                <select name="country_id" id="inputCountry"
-                                                        class="requiredValue form-control1" required=""
-                                                        style="border-radius: 0px !important;width: 203px;">
-                                                    <t t-foreach="country" t-as="each_country">
-                                                        <option t-att-value="each_country.id"
-                                                                t-att-selected="'selected' if each_country.name == 'South Africa' else False">
-                                                            <span t-esc="each_country.name"/>
-                                                        </option>
-                                                    </t>
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputEmail">* Students Email</label>
-                                            <div class="controls">
-                                                <t t-if='not sale_order_id'>
-                                                    <input type="text" name="inputEmail" id="inputEmail"
-                                                           placeholder="Email"
-                                                           class="requiredValue form-control1" required=""/>
-                                                </t>
-                                                <t t-if='sale_order_id and sale_order_id.partner_id and sale_order_id.partner_id.email'>
-                                                    <input type="text" name="inputEmail" id="inputEmail"
-                                                           placeholder="Email"
-                                                           class="requiredValue form-control1" required=""
-                                                           t-att-value='sale_order_id.partner_id.email'/>
-                                                </t>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="control-group country_class">
-                                            <label class="control-label" for="inputState">* Province</label>
-                                            <div class="controls selectdiv">
-                                                <t t-set="states"
-                                                   t-value="request.env['res.country.state'].sudo().search([])"/>
-                                                <select name="inputState" id="inputState"
-                                                        class="requiredValue form-control1"
-                                                        style="border-radius: 0px !important;width: 203px;">
-                                                    <t t-foreach="states" t-as="each_state">
-                                                        <option t-att-value="each_state.id"
-                                                                t-att-data-country_id="each_state.country_id.id">
-                                                            <span t-esc="each_state.name"/>
-                                                        </option>
-                                                    </t>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputFax">Fax</label>
-                                            <div class="controls">
-
-                                                <input type="text" name="inputFax" id="inputFax" placeholder="Fax"
-                                                       class="form-control1" pattern="[0-9]+"
-                                                       title="Please enter digits only"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputZip">* Zipcode</label>
-                                            <div class="controls">
-                                                <t t-if='not sale_order_id'>
-                                                    <input type="text" id="inputZip" name="inputZip"
-                                                           placeholder="Zipcode"
-                                                           class="requiredValue form-control1" required=""/>
-                                                </t>
-                                                <t t-if="sale_order_id">
-                                                    <input type="text" id="inputZip" name="inputZip"
-                                                           placeholder="Zipcode"
-                                                           class="requiredValue form-control1" required=""
-                                                           t-att-value="sale_order_id.partner_id.zip if sale_order_id.partner_id and sale_order_id.partner_id.zip else ''"/>
-                                                </t>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputId">* Professional Body Student ID
-                                                No.
-                                            </label>
-                                            <div class="controls">
-                                                <t t-if='not sale_order_id'>
-                                                    <input type="text" name="inputId"
-                                                           class="requiredValue form-control1"
-                                                           id="inputId" placeholder="" required=""/>
-                                                </t>
-                                                <t t-if='sale_order_id'>
-                                                    <input type="text" name="inputId"
-                                                           class="requiredValue form-control1"
-                                                           id="inputId" placeholder="" required=""
-                                                           t-att-value="sale_order_id.partner_id.prof_body_id if sale_order_id.partner_id and sale_order_id.partner_id.prof_body_id else ''"/>
-                                                </t>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="info">* Where did you find out about
-                                                CharterQuest?
-                                            </label>
-                                            <div class="controls">
-                                                <select name="inputFindout" id="inputFindout"
-                                                        class="requiredValue form-control1" required=""
-                                                        style="border-radius: 0px !important;width: 203px;">
-                                                    <option value="1">Friend or Colleague</option>
-                                                    <option value="2">Institute</option>
-                                                    <option value="3">Internet Search Engine</option>
-                                                    <option value="4">Advertisement</option>
-                                                    <option value="5">Other</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="inputPassword">* Create your own
-                                                Password
-                                            </label>
-                                            <div class="controls">
-                                                <input type="password" name="inputPassword" id="inputPassword"
-                                                       placeholder="Password" class="requiredValue form-control1"
-                                                       required=""/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="control-group">
-                                            <label class="control-label" for="comment">Comments/Requests?</label>
-                                            <div class="controls">
-                                                <textarea name="inputComment" rows="3" placeholder="Comments/Requests?"
-                                                          class="form-control1"></textarea>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="control-group">
-                                            <div class="controls">
-                                                <label class="checkbox">
-                                                    <input type="checkbox" id="requiredcheckbox" required=""/>
-                                                    I accept the
-                                                    <a target="blank_"
-                                                       href="http://www.charterquest.co.za/page/terms-and-conditions">
-                                                        Terms and Conditions
-                                                    </a>
+                                        </td>
+                                        <td t-if="self_or_cmp == 'cmp_sponosored'">
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" id="stud_company" for="inputCompany">
+                                                    Students
+                                                    Company
                                                 </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <input type="text" class="form-control1" name="inputCompany"
+                                                           id="inputCompany" placeholder="Company"/>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div id="new_text"
-                                             style="background-color: rgba(239, 25, 9, 1); color: white;width:95%">
-                                            Before ACCEPTING this Enrolment Form, students are reminded to ensure that
-                                            they have clearly understood all the terms of their enrolment
-                                            With CHARTERQUEST, in particular clauses concerning refunds, deferments,
-                                            waivers, course transfers and visa
-                                            applications (when applicable).
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputFirstName">* First Name</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <t t-if="not sale_order_id">
+                                                        <input type="text" name="inputFirstName" id="inputFirstName"
+                                                               placeholder="First Name"
+                                                               class="requiredValue form-control1 "
+                                                               style="width: 177px;"
+                                                               required=""/>
+                                                    </t>
+                                                    <t t-if="sale_order_id">
+                                                        <input type="text" name="inputFirstName" id="inputFirstName"
+                                                               placeholder="First Name"
+                                                               class="requiredValue form-control1"
+                                                               required=""
+                                                               style="width: 177px;"
+                                                               t-att-value="sale_order_id.partner_id.name.split(' ')[0] if sale_order_id.partner_id.name.split(' ') else ''"/>
+                                                    </t>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td t-if="self_or_cmp == 'cmp_sponosored'">
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" id="vat_number" for="inputVat">VAT Number
+                                                </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <input type="text" class="form-control1" name="inputVat"
+                                                           id="inputVat"
+                                                           style="width: 177px;"
+                                                           placeholder="vat"/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputLastName">* Last Name</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <t t-if="not sale_order_id">
+                                                        <input type="text" name="inputLastName" id="inputLastName"
+                                                               placeholder="Last Name"
+                                                               style="width: 177px;"
+                                                               class="requiredValue form-control1"
+                                                               required=""/>
+                                                    </t>
+                                                    <t t-if="sale_order_id">
+                                                        <input type="text" name="inputLastName" id="inputLastName"
+                                                               placeholder="Last Name"
+                                                               class="requiredValue form-control1"
+                                                               required="" style="width: 177px;"
+
+                                                               t-att-value="sale_order_id.partner_id.name.split(' ')[1] if len(sale_order_id.partner_id.name.split(' ')) == 2 else ''"/>
+                                                    </t>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputStreet">* Address Street</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <t t-if="not sale_order_id">
+                                                        <input type="text" name="inputStreet" id="inputStreet"
+                                                               placeholder="Street" class="requiredValue form-control1" style="width: 177px;"
+                                                               required=""/>
+                                                    </t>
+                                                    <t t-if="sale_order_id">
+                                                        <input type="text" name="inputStreet" id="inputStreet"
+                                                               placeholder="Street" class="requiredValue form-control1"
+                                                               required=""
+                                                               style="width: 177px;"
+                                                               t-att-value="sale_order_id.partner_id.street if sale_order_id.partner_id and sale_order_id.partner_id.street else ''"/>
+                                                    </t>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputDOB">* Date of Birth</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <t t-if='not sale_order_id'>
+                                                        <!--<input id="datepicker" type="text" name="inputDOB" class="requiredValue hasDatepicker form-control1" placeholder="MM-DD-YY"/>-->
+                                                        <input type="text" id="datepicker" name="inputDOB"
+                                                               class="form-control1"
+                                                               style="width: 177px;"
+                                                               placeholder="MM-DD-YY" required="" readonly=""/>
+                                                    </t>
+                                                    <t t-if='sale_order_id'>
+                                                        <!--<input id="datepicker" type="text" name="inputDOB" class="requiredValue hasDatepicker form-control1" placeholder="MM-DD-YY"/>-->
+                                                        <input type="text" id="datepicker" name="inputDOB"
+                                                               class="form-control1"
+                                                               placeholder="MM-DD-YY" required="" readonly=""
+                                                               style="width: 177px;"
+                                                               t-att-value="sale_order_id.partner_id.dob if sale_order_id.partner_id and sale_order_id.partner_id.dob else '' "/>
+                                                    </t>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputStreet2">* Address Street</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <t t-if='not sale_order_id'>
+                                                        <input type="text" name="inputStreet2" id="inputStreet2"
+                                                               placeholder=""
+                                                               style="width: 177px;"
+                                                               class="form-control1" required=""/>
+                                                    </t>
+                                                    <t t-if='sale_order_id'>
+                                                        <input type="text" name="inputStreet2" id="inputStreet2"
+                                                               placeholder=""
+                                                               class="form-control1" required=""
+                                                               style="width: 177px;"
+                                                               t-att-value="sale_order_id.partner_id.street2 if sale_order_id.partner_id and sale_order_id.partner_id.street2 else ''"/>
+                                                    </t>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputID_PassportNo.">* ID/Passport No.
+                                                </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <t t-if='not sale_order_id'>
+                                                        <input type="text" name="inputID_PassportNo."
+                                                               id="inputID_PassportNo."
+                                                               placeholder="ID/Passport No."
+                                                               style="width: 177px;"
+                                                               class="requiredValue form-control1"
+                                                               required=""/>
+                                                    </t>
+                                                    <t t-if='sale_order_id'>
+                                                        <input type="text" name="inputID_PassportNo."
+                                                               id="inputID_PassportNo."
+                                                               placeholder="ID/Passport No."
+                                                               class="requiredValue form-control1"
+                                                               style="width: 177px;"
+                                                               required=""
+                                                               t-att-value="sale_order_id.partner_id.idpassport if sale_order_id.partner_id and sale_order_id.partner_id.idpassport else ''"/>
+                                                    </t>
+
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputCity">* Address City</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <t t-if='not sale_order_id'>
+                                                        <input type="text" name="inputCity" id="inputCity"
+                                                               placeholder="City" style="width: 177px;"
+                                                               class="requiredValue form-control1" required=""/>
+                                                    </t>
+                                                    <t t-if='sale_order_id'>
+                                                        <input type="text" name="inputCity" id="inputCity"
+                                                               placeholder="City" style="width: 177px;"
+                                                               class="requiredValue form-control1" required=""
+                                                               t-att-value="sale_order_id.partner_id.city if sale_order_id and sale_order_id.partner_id else ''"/>
+                                                    </t>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputContactNumber">* Cell/Mobile
+                                                </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <t t-if='not sale_order_id'>
+                                                        <input type="text" name="inputContactNumber"
+                                                               id="inputContactNumber"
+                                                               style="width: 177px;"
+                                                               placeholder="Contact Number"
+                                                               class="requiredValue form-control1"
+                                                               required=""/>
+                                                    </t>
+                                                    <t t-if='sale_order_id'>
+                                                        <input type="text" name="inputContactNumber"
+                                                               id="inputContactNumber"
+                                                               placeholder="Contact Number"
+                                                               style="width: 177px;"
+                                                               class="requiredValue form-control1"
+                                                               required=""
+                                                               t-att-value="sale_order_id.partner_id.mobile if sale_order_id.partner_id and sale_order_id.partner_id.mobile else ''"/>
+                                                    </t>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputCountry">* Country</label>
+                                                <div class="css_reg_inp selectdiv" style="margin-left: 180px;">
+                                                    <t t-set="country"
+                                                       t-value="request.env['res.country'].sudo().search([('active', '=', true)])"/>
+                                                    <select name="country_id" id="inputCountry"
+                                                            class="requiredValue form-control1" required=""
+                                                            style="border-radius: 0px !important;width: 177px;">
+                                                        <t t-foreach="country" t-as="each_country">
+                                                            <option t-att-value="each_country.id"
+                                                                    t-att-selected="'selected' if each_country.name == 'South Africa' else False">
+                                                                <span t-esc="each_country.name"/>
+                                                            </option>
+                                                        </t>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputEmail">* Students Email</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <t t-if='not sale_order_id'>
+                                                        <input type="text" name="inputEmail" id="inputEmail"
+                                                               placeholder="Email" style="width: 177px;"
+                                                               class="requiredValue form-control1" required=""/>
+                                                    </t>
+                                                    <t t-if='sale_order_id and sale_order_id.partner_id and sale_order_id.partner_id.email'>
+                                                        <input type="text" name="inputEmail" id="inputEmail"
+                                                               placeholder="Email" style="width: 177px;"
+                                                               class="requiredValue form-control1" required=""
+                                                               t-att-value='sale_order_id.partner_id.email'/>
+                                                    </t>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group country_class css_reg_div" >
+                                                <label class="control-label css_reg_lbl" for="inputState">* Province</label>
+                                                <div class="css_reg_inp selectdiv" style="margin-left: 180px;">
+                                                    <t t-set="states"
+                                                       t-value="request.env['res.country.state'].sudo().search([])"/>
+                                                    <select name="inputState" id="inputState"
+                                                            class="requiredValue form-control1 css_reg_inp"
+                                                            style="border-radius: 0px !important;width: 177px;">
+                                                        <t t-foreach="states" t-as="each_state">
+                                                            <option t-att-value="each_state.id"
+                                                                    t-att-data-country_id="each_state.country_id.id">
+                                                                <span t-esc="each_state.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputFax">Fax</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+
+                                                    <input type="text" name="inputFax" id="inputFax" placeholder="Fax"
+                                                           class="form-control1 css_reg_inp" pattern="[0-9]+" style="width: 177px;"
+                                                           title="Please enter digits only"/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputZip">* Zipcode</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <t t-if='not sale_order_id'>
+                                                        <input type="text" id="inputZip" name="inputZip"
+                                                               placeholder="Zipcode" style="width: 177px;"
+                                                               class="requiredValue form-control1" required=""/>
+                                                    </t>
+                                                    <t t-if="sale_order_id">
+                                                        <input type="text" id="inputZip" name="inputZip"
+                                                               placeholder="Zipcode" style="width: 177px;"
+                                                               class="requiredValue form-control1" required=""
+                                                               t-att-value="sale_order_id.partner_id.zip if sale_order_id.partner_id and sale_order_id.partner_id.zip else ''"/>
+                                                    </t>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div1">
+                                                <label class="control-label css_reg_lbl" for="inputId">* Professional Body Student
+                                                    ID
+                                                    No.
+                                                </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <t t-if='not sale_order_id'>
+                                                        <input type="text" name="inputId"
+                                                               class="requiredValue form-control1" style="width: 177px;"
+                                                               id="inputId" placeholder="" required=""/>
+                                                    </t>
+                                                    <t t-if='sale_order_id'>
+                                                        <input type="text" name="inputId"
+                                                               class="requiredValue form-control1"
+                                                               id="inputId" placeholder="" required="" style="width: 177px;"
+                                                               t-att-value="sale_order_id.partner_id.prof_body_id if sale_order_id.partner_id and sale_order_id.partner_id.prof_body_id else ''"/>
+                                                    </t>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="info">* Where did you find out about
+                                                    CharterQuest?
+                                                </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <select name="inputFindout" id="inputFindout"
+                                                            class="requiredValue form-control1" required=""
+                                                            style="border-radius: 0px !important;width: 177px;">
+                                                        <option value="1">Friend or Colleague</option>
+                                                        <option value="2">Institute</option>
+                                                        <option value="3">Internet Search Engine</option>
+                                                        <option value="4">Advertisement</option>
+                                                        <option value="5">Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputPassword">* Create your own
+                                                    Password
+                                                </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <input type="password" name="inputPassword" id="inputPassword"
+                                                           placeholder="Password" class="requiredValue form-control1" style="width: 177px;"
+                                                           required=""/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div2">
+                                                <label class="control-label css_reg_lbl" for="comment">Comments/Requests?</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <textarea name="inputComment" rows="3"
+                                                              placeholder="Comments/Requests?" style="width: 177px;"
+                                                              class="form-control1"></textarea>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <label class="checkbox css_reg_lbl">
+                                                        <input type="checkbox" id="requiredcheckbox" required=""/>
+                                                        I accept the
+                                                        <a target="blank_"
+                                                           href="http://www.charterquest.co.za/page/terms-and-conditions">
+                                                            Terms and Conditions
+                                                        </a>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div id="new_text"
+                                                 style="background-color: rgba(239, 25, 9, 1); color: white;width:95%">
+                                                Before ACCEPTING this Enrolment Form, students are reminded to ensure
+                                                that
+                                                they have clearly understood all the terms of their enrolment
+                                                With CHARTERQUEST, in particular clauses concerning refunds, deferments,
+                                                waivers, course transfers and visa
+                                                applications (when applicable).
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </center>
+                        <!--                        </div>-->
                         <div class="control-group">
                             <div id="alert-area">
                             </div>
@@ -3266,7 +3297,7 @@
                                 <strong>Warning!</strong>
                                 Please make sure all Fields are filled in
                             </div>
-                            <div class="col-sm-12 button-div">
+                            <div class="col-sm-12 button-div1">
                                 <center>
                                     <input type="hidden" name="register_and_enrollment" value="yes"/>
                                     <button id="reg_and_enrol" type="submit" class="btn btn-primary pull-right">Next
