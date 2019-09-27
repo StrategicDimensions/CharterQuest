@@ -759,7 +759,6 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/payment','/payment/<uuid>','/payment/<uuid>/<uuid2>'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def payment(self,**post):
-        print ("\n\n\n\n\n\n============post==========",post)
         if post.get('uuid'):
             sale_order_id = request.env['sale.order'].sudo().search([('debit_link', '=', post.get('uuid'))])
             if sale_order_id and sale_order_id.debit_order_mandate:
@@ -819,6 +818,22 @@ class EnrolmentProcess(http.Controller):
 
 
                     if sale_order_id.quote_type == 'enrolment':
+                        if sale_order_id.affiliation == '2':
+                            if  post.get('do_invoice') == 'Yes' and (sale_order_id.invoice_status == 'invoiced' or sale_order_id.invoice_count == 1):
+                                return request.render('cfo_snr_jnr.fully_invoiced')
+                            else:
+                                request.session['discount_id'] = ''
+                                request.session['discount_add'] = ''
+                                request.session['sale_order'] = sale_order_id.id if sale_order_id else ''
+                                request.session['do_invoice'] = 'yes' if post.get('do_invoice') == 'Yes' else 'no'
+                                sale_order_id.write({'diposit_selected': 100})
+                                return request.redirect('/thank-you')
+                        else:
+                            request.session['discount_id'] = ''
+                            request.session['discount_add'] = ''
+                            request.session['sale_order'] = ''
+                            request.session['do_invoice'] = ''
+
                         return request.render('cfo_snr_jnr.enrolment_process_payment', {'page_name': 'payment',
                                                                                         'product_tot': round(product_tot,
                                                                                                              2),
@@ -832,12 +847,15 @@ class EnrolmentProcess(http.Controller):
                                                                                         })
                     if sale_order_id.quote_type == 'freequote':
                             if sale_order_id.affiliation == '2':
-                                request.session['discount_id'] = ''
-                                request.session['discount_add'] = ''
-                                request.session['sale_order'] = sale_order_id.id if sale_order_id else ''
-                                request.session['do_invoice'] = 'yes' if post.get('do_invoice') == 'Yes' else 'no'
-                                sale_order_id.write({'diposit_selected': 100})
-                                return request.redirect('/thank-you')
+                                if post.get('do_invoice') == 'Yes' and (sale_order_id.invoice_status == 'invoiced' or sale_order_id.invoice_count == 1):
+                                    return request.render('cfo_snr_jnr.fully_invoiced')
+                                else:
+                                    request.session['discount_id'] = ''
+                                    request.session['discount_add'] = ''
+                                    request.session['sale_order'] = sale_order_id.id if sale_order_id else ''
+                                    request.session['do_invoice'] = 'yes' if post.get('do_invoice') == 'Yes' else 'no'
+                                    sale_order_id.write({'diposit_selected': 100})
+                                    return request.redirect('/thank-you')
                             else:
                                 request.session['discount_id'] = ''
                                 request.session['discount_add'] = ''

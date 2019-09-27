@@ -2743,13 +2743,27 @@
             </t>
         </t>
     </template>
-        <template id="debit_order_submitted" name="submitted">
+
+    <template id="debit_order_submitted" name="submitted">
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_template">
                 <div class="oe_structure"/>
                 <div class="col-sm-12" style="color:black;">
                     <center>
                         <h3>DEBIT ORDER ALREADY SUBMITTED!!!</h3>
+                    </center>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="fully_invoiced" name="invoiced">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_template">
+                <div class="oe_structure"/>
+                <div class="col-sm-12" style="color:black;">
+                    <center>
+                        <h3>"The link has already been used, Please refer to your email for any other information."</h3>
                     </center>
                 </div>
             </t>
