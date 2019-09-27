@@ -738,5 +738,7 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                     }
                 });
         });
+
+
     });
 });

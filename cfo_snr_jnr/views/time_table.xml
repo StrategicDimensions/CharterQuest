@@ -342,12 +342,12 @@
                 </div>
                 <t t-if="is_visible">
                     <div class="panel-body">
-                    <t t-foreach="time_table" t-as="time">
+                    <t t-foreach="time_table" t-as="time">s
                         <div style="margin-top:5px;">
                             <div class="form-group">
                             </div>
                         </div>
-                        <div class="table-responsive" style="border: 6px solid gainsboro;">
+                        <div class="table-responsive time_table_css" style="border: 6px solid gainsboro;">
 <!--                            <t t-if="time.time_table_line_ids">-->
                                 <table class="table table-bordered time_table_main">
                                 <caption
