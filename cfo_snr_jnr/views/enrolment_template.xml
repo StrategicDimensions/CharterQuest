@@ -1577,7 +1577,7 @@
                                                                 <t t-if="each_product.does_not_apply == 'return_student'">
                                                                     <input t-att-name="'product-%s' % (each_product.id)"
                                                                            t-att-value="each_product.id"
-                                                                           class="o_website_form_input" type="checkbox"
+                                                                           class="o_website_form_input" type="checkbox" style="margin-left: 2px;"
                                                                            disabled="disabled"/>
                                                                     <strike>
                                                                         <label id="line-through" class="control-label"
@@ -1589,6 +1589,7 @@
                                                                     <input t-att-name="'product-%s' % (each_product.id)"
                                                                            t-att-value="each_product.id"
                                                                            class="o_website_form_input"
+                                                                           style="margin-left: 2px;"
                                                                            type="checkbox"/>
                                                                     <label class="control-label" for="MyCheckBox"
                                                                            t-esc="each_product.name"></label>
@@ -2175,7 +2176,8 @@
                 <form action="/page/thank-you" method="post"
                       class="s_website_form form-horizontal container-fluid mt32"
                       enctype="multipart/form-data" data-model_name="mail.mail" data-success_page="">
-                    <table class="table table-bordered payment_table" style="color:black;background-color:gainsboro;">
+                    <div class="css_div_5">
+                        <table class="table table-bordered payment_table" style="color:black;background-color:gainsboro;">
                         <tbody>
                             <input id="mandate_link" type="hidden" t-att-value="mandate_link"/>
                             <tr style="background-color:#DA4F49;">
@@ -2488,8 +2490,10 @@
                             </tr>
                         </tbody>
                     </table>
+                    </div>
                     <t t-if="uuid or register_enrol and page_confirm or bank_detail">
-                        <table id="debit_order_section" class="table table-bordered debit_order_section"
+                        <div class="css_div_6">
+                            <table id="debit_order_section" class="table table-bordered debit_order_section"
                                style="color:black;background-color:gainsboro;margin-bottom:20px;">
                             <tbody>
                                 <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation in ['1','2']">
@@ -2687,10 +2691,11 @@
                                 </tr>
                             </tbody>
                         </table>
+                        </div>
                     </t>
                     <t t-if="not uuid and not register_enrol">
                         <div class="control-group">
-                            <div class="controls" style='margin-top: 23px;'>
+                            <div class="controls lbl_css_6" style='margin-top: 23px;'>
                                 <a target="blank_"
                                    href="http://www.charterquest.co.za/page/terms-and-conditions">
                                     Please view our Terms &amp; Conditions for your free quote
@@ -2704,9 +2709,9 @@
                                 <input class="form-field" name="sale_order_id" t-att-value="sale_order_id.id"
                                        type="hidden"/>
                             </t>
-                            <button id="back_button" class="btn btn-primary pull-left" type="button">Back</button>
+                            <button id="back_button" class="btn btn-primary pull-left css_btn_6" type="button">Back</button>
                             <button type="submit" id="getfreequote-button" style="margin-left: 150px;"
-                                    class="col-sm-4 btn btn-primary pull-left">Get Free Quote Emailed
+                                    class="col-sm-4 btn btn-primary pull-left css_btn_7">Get Free Quote Emailed
                             </button>
                         </div>
                     </t>
@@ -2855,14 +2860,14 @@
                                     <tr>
                                         <td>
                                             <t t-if="self_or_cmp == 'cmp_sponosored'">
-                                                <div class="control-group" style="width: 470px;float: left;">
-                                                    <label class="control-label" style="margin-left: 22px;width: 70%;"
+                                                <div class="control-group div_css_4" style="width: 470px;float: left;">
+                                                    <label class="control-label lbl_css_4" style="margin-left: 22px;width: 70%;"
                                                            for="invoicegenerated">* Do you require an invoice to be
                                                         generated ?
                                                     </label>
                                                     <div class="controls"
                                                          style="margin-left: 0 !important;float: left; ">
-                                                        <select class="requiredValue form-control1" name="do_invoice"
+                                                        <select class="requiredValue form-control1 select_css_4" name="do_invoice"
                                                                 required="false"
                                                                 style="margin-left: 6px;width: 100px;border-radius: 0px !important;">
                                                             <option value="No">No</option>
@@ -3204,12 +3209,12 @@
                                                 <div class="css_reg_inp" style="margin-left: 180px;">
                                                     <t t-if='not sale_order_id'>
                                                         <input type="text" name="inputId"
-                                                               class="requiredValue form-control1" style="width: 177px;"
+                                                               class="requiredValue form-control1 div1_css" style="width: 177px;"
                                                                id="inputId" placeholder="" required=""/>
                                                     </t>
                                                     <t t-if='sale_order_id'>
                                                         <input type="text" name="inputId"
-                                                               class="requiredValue form-control1"
+                                                               class="requiredValue form-control1 div1_css"
                                                                id="inputId" placeholder="" required="" style="width: 177px;"
                                                                t-att-value="sale_order_id.partner_id.prof_body_id if sale_order_id.partner_id and sale_order_id.partner_id.prof_body_id else ''"/>
                                                     </t>
@@ -3253,8 +3258,8 @@
                                                 <label class="control-label css_reg_lbl" for="comment">Comments/Requests?</label>
                                                 <div class="css_reg_inp" style="margin-left: 180px;">
                                                     <textarea name="inputComment" rows="3"
-                                                              placeholder="Comments/Requests?" style="width: 177px;"
-                                                              class="form-control1"></textarea>
+                                                              placeholder="Comments/Requests?" style="width: 177px; "
+                                                              class="form-control1 div2_css"></textarea>
                                                 </div>
                                             </div>
                                         </td>
@@ -3263,8 +3268,8 @@
                                         <td>
                                             <div class="control-group css_reg_div">
                                                 <div class="css_reg_inp" style="margin-left: 180px;">
-                                                    <label class="checkbox css_reg_lbl">
-                                                        <input type="checkbox" id="requiredcheckbox" required=""/>
+                                                    <label class="checkbox css_reg_lbl css_lbl">
+                                                        <input type="checkbox" id="requiredcheckbox" required="" />
                                                         I accept the
                                                         <a target="blank_"
                                                            href="http://www.charterquest.co.za/page/terms-and-conditions">
@@ -3358,7 +3363,7 @@
 
                             </t>
                             <button id="btn_pay_later" formaction="/pay/bank/thankyou" type="submit"
-                                    style="margin-top: 30px;" class="btn btn-primary">Get Quote and Banking details
+                                    style="margin-top: 30px;" class="btn btn-primary css_btn_8">Get Quote and Banking details
                                 Emailed
                             </button>
                         </center>
