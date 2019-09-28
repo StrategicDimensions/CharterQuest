@@ -819,7 +819,7 @@ class EnrolmentProcess(http.Controller):
 
                     if sale_order_id.quote_type == 'enrolment':
                         if sale_order_id.affiliation == '2':
-                            if  post.get('do_invoice') == 'Yes' and (sale_order_id.invoice_status == 'invoiced' or sale_order_id.invoice_count == 1):
+                            if (sale_order_id.invoice_status == 'invoiced' or sale_order_id.invoice_count >= 1):
                                 return request.render('cfo_snr_jnr.fully_invoiced')
                             else:
                                 request.session['discount_id'] = ''
@@ -847,7 +847,7 @@ class EnrolmentProcess(http.Controller):
                                                                                         })
                     if sale_order_id.quote_type == 'freequote':
                             if sale_order_id.affiliation == '2':
-                                if post.get('do_invoice') == 'Yes' and (sale_order_id.invoice_status == 'invoiced' or sale_order_id.invoice_count == 1):
+                                if (sale_order_id.invoice_status == 'invoiced' or sale_order_id.invoice_count >= 1):
                                     return request.render('cfo_snr_jnr.fully_invoiced')
                                 else:
                                     request.session['discount_id'] = ''
@@ -1641,13 +1641,15 @@ class EnrolmentProcess(http.Controller):
         if sale_order_id.debit_order_mandat and post.get('dbo_date') :
             date_day = int(post.get('dbo_date'))
             dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
+
             for each_debit_order in sale_order_id.debit_order_mandat:
                 for i in range(sale_order_id.months):
+                    deb_interest = each_debit_order.interest/float(sale_order_id.months)
                     debit_order_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
                                             'student_number': '',
                                             'dbo_amount': each_debit_order.dbo_amount,
-                                            'course_fee': each_debit_order.course_fee,
-                                            'interest': each_debit_order.interest,
+                                            'interest': deb_interest,
+                                            'course_fee': each_debit_order.dbo_amount - deb_interest,
                                             'dbo_date':dbo_date,
                                             'acc_holder': sale_order_id.partner_id.name,
                                             'bank_name': each_debit_order.bank_name.id,
@@ -1908,13 +1910,14 @@ class EnrolmentProcess(http.Controller):
                 if date_day:
                     dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
                     debit_order_mandat_id = sale_order_id.debit_order_mandat[-1]
+                    deb_interest = debit_order_mandat_id.interest / debit_order_mandat_id.months
                     for i in range(sale_order_id.months):
                         res = debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
                                                       'student_number': '',
                                                       'dbo_amount': sale_order_id.monthly_amount,
                                                       'dbo_date': dbo_date,
-                                                      'course_fee': debit_order_mandat_id.course_fee,
-                                                      'interest': debit_order_mandat_id.interest,
+                                                      'course_fee': sale_order_id.monthly_amount - deb_interest,
+                                                      'interest': deb_interest,
                                                       'acc_holder': sale_order_id.partner_id.name,
                                                       'bank_name': debit_order_mandat_id.bank_name.id,
                                                       'bank_acc_no': debit_order_mandat_id.bank_acc_no,
@@ -2227,13 +2230,14 @@ class EnrolmentProcess(http.Controller):
             if date_day:
                 dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
                 debit_order_mandat_id = sale_order_id.debit_order_mandat[-1]
+                deb_interest = debit_order_mandat_id.interest / debit_order_mandat_id.months
                 for i in range(sale_order_id.months):
                     res = debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
                                                   'student_number': '',
                                                   'dbo_amount': sale_order_id.monthly_amount,
                                                   'dbo_date': dbo_date,
-                                                  'course_fee': debit_order_mandat_id.course_fee,
-                                                  'interest': debit_order_mandat_id.interest,
+                                                  'course_fee': sale_order_id.monthly_amount - deb_interest,
+                                                  'interest': deb_interest,
                                                   'acc_holder': sale_order_id.partner_id.name,
                                                   'bank_name': debit_order_mandat_id.bank_name.id,
                                                   'bank_acc_no': debit_order_mandat_id.bank_acc_no,
@@ -2952,13 +2956,14 @@ class EnrolmentProcess(http.Controller):
                 date_day = int(post.get('inputPaydate'))
                 dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
                 debit_order_mandat_id = sale_order_id.debit_order_mandat[-1]
+                debit_intrest = debit_order_mandat_id.interest/int(sale_order_id.months)
                 for i in range(sale_order_id.months):
                     res = debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
                                                   'student_number': '',
                                                   'dbo_amount': sale_order_id.monthly_amount,
                                                   'dbo_date': dbo_date,
-                                                  'course_fee': debit_order_mandat_id.course_fee,
-                                                  'interest': debit_order_mandat_id.interest,
+                                                  'course_fee': sale_order_id.monthly_amount - debit_intrest,
+                                                  'interest': debit_intrest,
                                                   'acc_holder': sale_order_id.partner_id.name,
                                                   'bank_name': debit_order_mandat_id.bank_name.id,
                                                   'bank_acc_no': debit_order_mandat_id.bank_acc_no,
