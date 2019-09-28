@@ -391,8 +391,8 @@
             <t t-set="product" t-value="product.sudo()"/>
 
             <t t-if="not product.qty_available >= 1">
-                <div class="ribbon-wrapper"
-                     style="right: 0px !important;width: 145px !important;top: 20px !important;display:block;z-index:auto !important">
+                <div class="ribbon-wrapper ribbon_css"
+                     style="right: 0px !important;top: 20px !important;display:block;z-index:auto !important">
                     <div class="ribbon btn btn-danger"
                          style="padding: 6px 26px;width: 160px;top: 40px;background:red !important;color: #fff !important;border: 1px solid#fff !important;margin:0px !important; margin-bottom: 5px !important;">
                         <center>Out Of Stock</center>
@@ -477,7 +477,7 @@
                                                                  itemtype="http://schema.org/Offer"
                                                                  class="product_price"
                                                                  t-if="product.product_variant_ids">
-                                                                <div class="ribbon-wrapper"
+                                                                <div class="ribbon-wrapper  ribbon_css"
                                                                      style="height: 100px !important;display: block;position: absolute;float: right;"
                                                                      t-if="product.website_style_ids and request.env['product.style'].sudo().search([('name','=','Sale Ribbon')]).id in product.website_style_ids.ids">
                                                                     <div class="ribbon btn btn-success"
@@ -487,8 +487,8 @@
                                                                 </div>
                                                                 <t t-set="product" t-value="product.sudo()"/>
                                                                 <t t-if="product.qty_available >= 1">
-                                                                    <div class="ribbon-wrapper"
-                                                                         style="width: 100% !important;height: 100px !important;display: block;position: relative;float: right;">
+                                                                    <div class="ribbon-wrapper ribbon_css"
+                                                                         style="height: 100px !important;display: block;position: relative;float: right;">
                                                                         <div class="ribbon btn btn-success"
                                                                              style="background: #4cae4c !important;color: #fff !important;position: relative;height: 24%;top: 20px;left: -10px;padding: 5px;border: unset;border-radius: unset;">
                                                                             <center style="font-size: 12px;">In Stock
@@ -497,8 +497,8 @@
                                                                     </div>
                                                                 </t>
                                                                 <t t-else="">
-                                                                    <div class="ribbon-wrapper"
-                                                                         style="width: 100% !important;height: 100px !important;display: block;position: relative;float: right;">
+                                                                    <div class="ribbon-wrapper ribbon_css"
+                                                                         style="height: 100px !important;display: block;position: relative;float: right;">
                                                                         <div class="ribbon btn btn-success"
                                                                              style="background: red !important;color: #fff !important;position: relative;height: 24%;top: 20px;left: -10px;padding: 5px;border: unset;border-radius: unset;">
                                                                             <center style="font-size: 12px;">Out Of

@@ -141,11 +141,12 @@ odoo.define('cfo_snr_jnr.snippets_comparision_block', function (require) {
                     		ul_html += "<li class='bg-blue'>";
                     		thead_html += "<th class='bg-blue'/>";
                     	}
-						ul_html += "<button/></li>";
+						ul_html += "<button></button></li>";
                     }
                     for (var i = 0; i <= parseInt(cols_comparision_header); i++) {
                     	tbody_html += "<td/>"
                     }
+                    console.log('\n\n\n\n ul_html',ul_html)
 					self.$target.find('.comparision_article ul').append(ul_html);
 					self.$target.find('.comparision_article table thead tr').append(thead_html);
 					self.$target.find('.comparision_article table tbody tr').append(tbody_html);

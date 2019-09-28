@@ -342,7 +342,7 @@
                 </div>
                 <t t-if="is_visible">
                     <div class="panel-body">
-                    <t t-foreach="time_table" t-as="time">s
+                    <t t-foreach="time_table" t-as="time">
                         <div style="margin-top:5px;">
                             <div class="form-group">
                             </div>
