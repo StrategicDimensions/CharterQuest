@@ -1102,6 +1102,15 @@ a.a-submit.btn.btn-default.mb16.btn-block{
 div.col-md-7{
     width: 198px !important;
 }
+h2.mb8.mt8 {
+    font-size: 40px !important;
+}
+.span.badge.pull-right {
+    margin-top: -24px;
+}
+div#products_grid_before {
+    display: block !important;
+}
 }
 
 /* form report end */

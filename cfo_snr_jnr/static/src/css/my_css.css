@@ -569,11 +569,7 @@ strong {
     }
 }
 
-@media (min-width: 320px) and (max-width:800px) {
-    .oe_product.oe_list section {
-        width: 100% !important;
-    }
-}
+
 
 .shop_company_div {
     display: none;
