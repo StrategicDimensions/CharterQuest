@@ -570,9 +570,6 @@ strong {
 }
 
 @media (min-width: 320px) and (max-width:800px) {
-    .table-product-info {
-        display: none !important;
-    }
     .oe_product.oe_list section {
         width: 100% !important;
     }
@@ -2588,7 +2585,7 @@ margin: -26px 29px;float: left;
 .timetable_snippet{
 margin-top:10px;
 }
-.member1{
+.member1
 padding: 28px 15px;
 }
 .table1 {

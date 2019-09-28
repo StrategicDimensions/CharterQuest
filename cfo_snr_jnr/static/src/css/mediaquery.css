@@ -328,6 +328,7 @@
 }
 
 
+
 /* chgfvjhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg */
 
  @media only screen and (max-width: 460px) {
@@ -1033,8 +1034,11 @@ height: 41px !important;
 .css_div_9{
     overflow-x: auto !important;
 }
-.img-responsive{
- width:151px !important;
+img.img.img-responsive{
+    width:151px !important;
+}
+img.img.img-responsive.product_detail_img{
+    width: 300px !important;
 }
 .ribbon_css{
 height: 100px !important;
@@ -1060,7 +1064,42 @@ a.btn.btn-primary.pull-right.mb32.mr8{
     width: 133px !important;
     padding-left: 15px !important;
 }
+a.btn.btn-link.pull-right.fa.fa-edit.js_edit_address.no-decoration{
+    margin-right: 2px !important;
+    margin-top: 2px !important;
 }
+h2.page-header.mt16.mb4{
+    font-size: 40px !important;
+}
+div.col-md-6.one_kanban{
+    margin-top: 84px !important;
+}
+div.col-sm-12.col-md-12.one_kanban{
+    margin-top: 41px !important
+    margin-left: -28px !important
+}
+a[href^="/shop/cart"]{
+    padding-right: 167px !important;
+}
+a[href^='/shop/confirm_order']{
+    width: 181px !important;
+    padding-left: 51px !important;
+}
+
+a.btn.btn-block.btn-primary{
+    margin-left: 2px !important;
+}
+a.btn.btn-block.btn-default{
+    margin-left: 2px !important;
+}
+div.panel.panel-default.js_change_shipping{
+    margin-bottom: 50px !important;
+}
+a.a-submit.btn.btn-default.mb16.btn-block{
+    margin-top: 29px !important;
+}
+}
+
 /* form report end */
 
 
