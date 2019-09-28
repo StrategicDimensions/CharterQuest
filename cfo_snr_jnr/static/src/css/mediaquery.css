@@ -323,6 +323,9 @@
 	footer #footer {
     padding-top: 0;
 }
+.ribbon_css{
+    width:100%;
+}
 
 
 
@@ -1027,6 +1030,86 @@ height: 41px !important;
     font-size: 12px !important;
     padding-left: 17px !important;
     padding-right: 13px !important;
+}
+.css_div_9{
+    overflow-x: auto !important;
+}
+img.img.img-responsive.product_detail_img{
+    width: 300px !important;
+}
+.ribbon_css{
+height: 100px !important;
+display: block;
+position: relative;
+float: right;
+width:auto;
+
+}
+a.js_add_suggested_products{
+    width: 102px !important;
+    margin-left: 0px !important;
+    padding-left: 15px !important;
+    font-size: 12px !important;
+}
+a.btn.btn-default.mb32{
+    margin-left: 0px !important;
+    width: 133px !important;
+    padding-left: 4px !important;
+}
+a.btn.btn-primary.pull-right.mb32.mr8{
+    margin-left: 22px !important;
+    width: 133px !important;
+    padding-left: 15px !important;
+}
+a.btn.btn-link.pull-right.fa.fa-edit.js_edit_address.no-decoration{
+    margin-right: 2px !important;
+    margin-top: 2px !important;
+}
+h2.page-header.mt16.mb4{
+    font-size: 36px !important;
+}
+h2.page-header.mt8{
+    margin-bottom: -41px !important;
+    font-size: 41px !important;
+}
+div.col-md-6.one_kanban{
+    margin-top: 84px !important;
+}
+div.col-sm-12.col-md-12.one_kanban{
+    margin-top: 41px !important
+    margin-left: -28px !important
+}
+a[href^="/shop/cart"]{
+    padding-right: 154px !important;
+}
+a[href^='/shop/confirm_order']{
+    width: 158px !important;
+    padding-left: 33px !important;
+}
+
+a.btn.btn-block.btn-primary{
+    margin-left: 2px !important;
+}
+a.btn.btn-block.btn-default{
+    margin-left: 2px !important;
+}
+div.panel.panel-default.js_change_shipping{
+    margin-bottom: 50px !important;
+}
+a.a-submit.btn.btn-default.mb16.btn-block{
+    margin-top: 29px !important;
+}
+div.col-md-7{
+    width: 198px !important;
+}
+h2.mb8.mt8 {
+    font-size: 40px !important;
+}
+span.badge.pull-right {
+    margin-top: -24px !important;
+}
+div#products_grid_before {
+    display: block !important;
 }
 }
 
