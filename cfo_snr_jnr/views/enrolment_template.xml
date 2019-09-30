@@ -134,16 +134,17 @@
                                 <div id="payment_method" class="col-md-12 o_website_sale_rightfit"
                                      t-if="(form_acquirers or s2s_acquirers or tokens) and website_sale_order.amount_total">
                                     <h3 class="mb24">Pay with</h3>
-                                    <t t-call="payment.payment_tokens_list">
-                                        <t t-set="mode" t-value="'payment'"/>
-                                        <t t-set="submit_txt">Pay Now</t>
-                                        <t t-set="icon_class" t-value="'fa-lock'"/>
-                                        <t t-set="pms" t-value="tokens"/>
-                                        <t t-set="form_action" t-value="'/shop/payment/token'"/>
-                                        <t t-set="prepare_tx_url" t-value="'/shop/payment/transaction/'"/>
-                                        <t t-set="partner_id" t-value="partner"/>
-                                    </t>
-
+                                    <div>
+                                        <t t-call="payment.payment_tokens_list">
+                                            <t t-set="mode" t-value="'payment'"/>
+                                            <t t-set="submit_txt">Pay Now</t>
+                                            <t t-set="icon_class" t-value="'fa-lock'"/>
+                                            <t t-set="pms" t-value="tokens"/>
+                                            <t t-set="form_action" t-value="'/shop/payment/token'"/>
+                                            <t t-set="prepare_tx_url" t-value="'/shop/payment/transaction/'"/>
+                                            <t t-set="partner_id" t-value="partner"/>
+                                        </t>
+                                    </div>
                                     <div>
                                         <div>
                                             <label>
@@ -673,9 +674,9 @@
         <xpath expr="//div[@id='payment_method']" position='inside'>
 
             <div id="accept_terms_and_condition">
-                <div>
+                <div class="terms_condition" style="">
                     <label>
-                        <h4>Terms &amp; Conditions</h4>
+                        <h4 class="h4_ter_con">Terms &amp; Conditions</h4>
                     </label>
                 </div>
                 <input type='checkbox' id='terms' value='agree'/>
@@ -1506,7 +1507,7 @@
                             <div class="form-group">
                                 <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
                                     <button id="check_event" class="btn btn-primary pull-right"
-                                            style="margin-right: -83px;" type="submit">Next
+                                             type="submit">Next
                                     </button>
                                     <button id="back_button" class="btn btn-primary pull-right" type="button">Back
                                     </button>
@@ -1863,7 +1864,7 @@
                         </t>
                         <div class="form-group">
                             <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
-                                <button class="btn btn-primary pull-right" style="margin-right: -72px;" type="submit">
+                                <button class="btn btn-primary pull-right" type="submit">
                                     Next
                                 </button>
                                 <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>

@@ -901,9 +901,6 @@ margin-left: -24px !important;
 .prc_2{
 margin-left: -23px !important;
 }
-.fees_1{
-margin-right: -43px !important;
-}
 .prc_frm_1{
 margin-left: -34px !important;
 }
@@ -1111,6 +1108,16 @@ span.badge.pull-right {
 div#products_grid_before {
     display: block !important;
 }
+ div.col-md-7.col-sm-8{
+    width: 366px !important
+}
+.terms_condition{
+margin-bottom: -48px !important;
+}
+.h4_ter_con{
+display:none !important;
+}
+.
 }
 
 /* form report end */
