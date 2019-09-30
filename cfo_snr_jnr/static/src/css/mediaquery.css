@@ -1106,13 +1106,6 @@ span.badge.pull-right {
 div#products_grid_before {
     display: block !important;
 }
-
-.terms_condition{
-margin-bottom: -48px !important;
-}
-.h4_ter_con{
-display:none !important;
-}
 .bank_details{
     overflow-x: auto !important;
 }
