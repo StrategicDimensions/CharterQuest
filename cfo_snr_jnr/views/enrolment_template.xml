@@ -466,7 +466,7 @@
                                                         </strong>
                                                     </h5>
                                                     <div class="row product_imge_cfo">
-                                                        <div class="col-md-7">
+                                                        <div class="col-md-7 img_book">
                                                             <a itemprop="url"
                                                                t-att-href="keep('/shop/product/%s' % slug(product), page=(pager['page']['num'] if pager['page']['num']&gt;1 else None))">
                                                                 <span itemprop="image" class="product_image"
