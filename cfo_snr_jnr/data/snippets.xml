@@ -142,12 +142,13 @@
                 </table>
             </article>
             <script type="text/javascript">
-                $(".comparision_article ul").on( "click", "li", function() {
+                $(".comparision_article ul").on( "click", "li", function(event) {
                 var pos = $(this).index()+2;
-                $("tr").find('td:not(:eq(0))').hide();
-                $('td:nth-child('+pos+')').css('display','table-cell');
-                $("tr").find('th:not(:eq(0))').hide();
-                $('li').removeClass('active');
+                var $this= $(this).parents('.cfo_snr_jnr_comparision_blocks_container');
+                $this.find("tr").find('td:not(:eq(0))').hide();
+                $this.find('td:nth-child('+pos+')').css('display','table-cell');
+                $this.find("tr").find('th:not(:eq(0))').hide();
+                $this.find('li').removeClass('active');
                 $(this).addClass('active');
                 });
 

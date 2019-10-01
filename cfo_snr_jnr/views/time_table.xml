@@ -269,8 +269,8 @@
 
     <template id="time_table_template" name="Time Table">
         <t t-call="portal.portal_layout">
-            <div class="panel panel-default timetable_snippet">
-                <div class="panel-heading member1">
+            <div class="panel panel-default timetable_snippet" style="margin-top:10px;">
+                <div class="panel-heading member1" style="padding: 28px 15px;" >
                     <form action="/time_table" method="POST">
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                         <span class="campus_span" ><b>Select Campus</b></span>

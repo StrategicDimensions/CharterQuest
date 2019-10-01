@@ -323,9 +323,6 @@
 	footer #footer {
     padding-top: 0;
 }
-.ribbon_css{
-    width:100%;
-}
 
 
 
@@ -1034,14 +1031,7 @@ height: 41px !important;
 img.img.img-responsive.product_detail_img{
     width: 300px !important;
 }
-.ribbon_css{
-height: 100px !important;
-display: block;
-position: relative;
-float: right;
-width:auto;
-
-}
+@
 a.js_add_suggested_products{
     width: 102px !important;
     margin-left: 0px !important;
@@ -1118,6 +1108,7 @@ width: 366px !important
 .img_book{
     width: 196px !important;
 }
+
 }
 
 /* form report end */
