@@ -27,7 +27,8 @@
 								<img src="http://charterquest.co.za/web/static/src/img/header1.png"
 									alt="Logo of The CharterQuest Professional Education Institute"
 									title="The CharterQuest Professional Education Institute"
-									style="height:54px !important; width:300px; !important"/>
+									style="height:54px !important; width:300px; !important" class="img-desktop"/>
+
 							</a>
 						</td>
 						<td>
@@ -70,7 +71,7 @@
 												<li class="home visible-xs-inline">
 													<a href="http://enrolments.charterquest.co.za" target="_blank">
 														<img class="img-size"
-															src="http://www.charterquest.co.za/web/static/src/img/bookings.png" />
+															src="/cfo_snr_jnr/static/description/get_free_quote_image.png" />
 													</a>
 												</li>
 <!--												<div class="Address" style="display:inline-block;position:relative;top: 3px !important;line-height:5px;width: 245px;">-->
@@ -112,6 +113,16 @@
 				</div>
 			</xpath>
 		</template>
+
+		<template id="img_header_change" inherit_id="cfo_snr_jnr.main_header_layout_id">
+			<xpath expr="//a[hasclass('logo')]/img" position="replace">
+				<img class="cq-logo img-mobile" src="http://charterquest.co.za/logo.png" style="height:54px !important;margin: 0 !important;"/>
+			</xpath>
+			<xpath expr="//li[hasclass('visible-xs-inline')]/a/img" position="replace">
+				<img class="img-size" src="/cfo_snr_jnr/static/description/get_free_quote_image.png"/>
+			</xpath>
+		</template>
+
 		<template id="footer_default_inherit" inherit_id="website.footer_custom"
 			customize_show="True" name="Automatic Footer">
 			<xpath expr="//div[@id='footer']" position="replace">

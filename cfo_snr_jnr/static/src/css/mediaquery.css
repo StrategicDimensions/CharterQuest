@@ -1108,7 +1108,16 @@ width: 366px !important
 .img_book{
     width: 196px !important;
 }
-
+.img-desktop{
+    display:none !important;
+}
+.img-mobile{
+    display:block !important
+}
+div.container.navbar.navbar-default.navbar-static-top{
+    margin:0 !important;
+    padding:0 !important;
+}
 }
 
 /* form report end */

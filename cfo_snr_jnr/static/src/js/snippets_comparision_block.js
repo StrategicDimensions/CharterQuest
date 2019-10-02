@@ -169,10 +169,7 @@ odoo.define('cfo_snr_jnr.snippets_comparision_block', function (require) {
     		$(this).parents('tr').addClass('active');
     	});
     	$("body").on('DOMSubtreeModified', ".comparison_block", function() {
-    	     var color=$( this ).css( "background-color" );
-    	     console.log("\n\n\n\n color",color)
              $('button[class=' + $(this).attr('id') + ']').html($(this).html())
-             $('button[class=' + $(this).attr('id') + ']').css("background-color",color)
         });
     });
 });
