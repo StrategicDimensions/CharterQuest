@@ -116,7 +116,8 @@ odoo.define('cfo_snr_jnr.snippet_menu', function (require) {
 
     $(document).ready(function(){
         $('.add_menu_side').on('click',function(){
-            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            var isMobile = window.matchMedia("only screen and (max-width: 460px)").matches;
+            if(isMobile) {
                 $(this).parents('.label_link_list').hide()
             }
         })
