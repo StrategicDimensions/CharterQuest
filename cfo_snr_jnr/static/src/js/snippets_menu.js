@@ -116,9 +116,9 @@ odoo.define('cfo_snr_jnr.snippet_menu', function (require) {
 
     $(document).ready(function(){
         $('.add_menu_side').on('click',function(){
-            var isMobile = window.matchMedia("only screen and (max-width: 460px)").matches;
-            console.log('\n\n\n\n\n isMObile',isMobile)
-            if(isMobile) {
+//            var isMobile = window.matchMedia("only screen and (max-width: 460px)").matches;
+//            console.log('\n\n\n\n\n isMObile',isMobile)
+            if((/Mobi/.test(navigator.userAgent))) {
                 $(this).parents('.label_link_list').hide()
             }
         })
