@@ -118,9 +118,9 @@
 			<xpath expr="//a[hasclass('logo')]/img" position="replace">
 				<img class="cq-logo img-mobile" src="http://charterquest.co.za/logo.png" style="height:54px !important;margin: 0 !important;"/>
 			</xpath>
-			<xpath expr="//li[hasclass('visible-xs-inline')]/a/img" position="replace">
-				<img class="img-size" src="/cfo_snr_jnr/static/description/get_free_quote_image.png"/>
-			</xpath>
+<!--			<xpath expr="//li[hasclass('visible-xs-inline')]/a/img" position="replace">-->
+<!--				<img class="img-size" src="/cfo_snr_jnr/static/description/get_free_quote_image.png"/>-->
+<!--			</xpath>-->
 		</template>
 
 		<template id="footer_default_inherit" inherit_id="website.footer_custom"
