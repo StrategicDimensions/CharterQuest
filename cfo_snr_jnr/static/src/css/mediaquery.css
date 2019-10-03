@@ -867,7 +867,7 @@ h3.h3set_color{
 color:blue;
 }
 img.img-size{
-float: right;
+display: none !important;
 }
 div.feed_tmp_1[style]{
 width: auto !important;
@@ -1031,7 +1031,7 @@ height: 41px !important;
 img.img.img-responsive.product_detail_img{
     width: 300px !important;
 }
-@
+
 a.js_add_suggested_products{
     width: 102px !important;
     margin-left: 0px !important;
@@ -1117,6 +1117,15 @@ width: 366px !important
 div.container.navbar.navbar-default.navbar-static-top{
     margin:0 !important;
     padding:0 !important;
+}
+.banner_theme{
+    margin-top: -55px !important;
+}
+.s_text_block{
+    width: 315px !important;
+}
+h5.bookshop_h5{
+    width: 297px !important;
 }
 }
 

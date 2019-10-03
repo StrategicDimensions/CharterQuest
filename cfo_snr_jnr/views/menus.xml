@@ -118,12 +118,22 @@
 			<xpath expr="//a[hasclass('logo')]/img" position="replace">
 				<img class="cq-logo img-mobile" src="http://charterquest.co.za/logo.png" style="height:54px !important;margin: 0 !important;"/>
 			</xpath>
-		</template>
-		<template id="img_change_header" inherit_id="cfo_snr_jnr.main_header_layout_id">
-			<xpath expr="//li[hasclass('hidden-xs')]/a[hasclass('btn-group')]/img" position="replace">
-				<img class="img-size" src="/cfo_snr_jnr/static/description/get_free_quote_image.png"/>
+			<xpath expr="//a[hasclass('logo')]" position="after">
+				<a href="/enrolment_book" target="_blank">
+					<img class="img-mobile"
+						src="/cfo_snr_jnr/static/description/get_free_quote_image.png" style="width: 174px;
+    					height: 55px;"/>
+				</a>
 			</xpath>
+<!--			<xpath expr="//a[hasclass('visible-xs-inline')]//a/img[hasclass('img-size')]" position="attributes">-->
+<!--				<attribute name="class">img-desktop</attribute>-->
+<!--			</xpath>-->
 		</template>
+<!--		<template id="img_change_header" inherit_id="cfo_snr_jnr.main_header_layout_id">-->
+<!--			<xpath expr="//li[hasclass('visible-xs-inline')]/a/img[hasclass('img-size')]" position="replace">-->
+<!--				<img class="img-size" src="/cfo_snr_jnr/static/description/get_free_quote_image.png"/>-->
+<!--			</xpath>-->
+<!--		</template>-->
 
 		<template id="footer_default_inherit" inherit_id="website.footer_custom"
 			customize_show="True" name="Automatic Footer">

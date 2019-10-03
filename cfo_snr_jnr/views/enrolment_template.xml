@@ -458,7 +458,7 @@
                                                        t-att-value="request.csrf_token()"/>
                                                 <div itemscope="itemscope" itemtype="http://schema.org/Product"
                                                      class="main_product_block">
-                                                    <h5>
+                                                    <h5 class="bookshop_h5">
                                                         <strong>
                                                             <a itemprop="name"
                                                                t-att-href="keep('/shop/product/%s' % slug(product), page=(pager['page']['num'] if pager['page']['num']&gt;1 else None))"
