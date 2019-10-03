@@ -2214,8 +2214,10 @@
                                 </td>
                                 <td>
                                     <t t-if="sale_order or sale_order_id and sale_order_id.affiliation in ['1','2']">
-                                        <input type="checkbox" name="inputNoRemittance" class="remove_fee"
-                                               id="inputNoRemittance"/>Remove Remittance Fees
+                                        <t t-if="not uuid">
+                                            <input type="checkbox" name="inputNoRemittance" class="remove_fee"
+                                                   id="inputNoRemittance"/>Remove Remittance Fees
+                                        </t>
                                     </t>
                                 </td>
                             </tr>
@@ -2287,7 +2289,8 @@
                             <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation in ['1','2'] and not uuid2">
                                 <td>Course Deposit</td>
                                 <td>
-                                    <select name="inputPaypercentage" class="requiredValue" id="inputPaypercentage">
+                                    <select name="inputPaypercentage" class="requiredValue" id="inputPaypercentage" required="true">
+                                        <option></option>
                                         <option value="20">20 %</option>
                                         <option value="30">30 %</option>
                                         <option value="40">40 %</option>
@@ -2360,14 +2363,15 @@
                                 <td>No. of payment months desired?</td>
                                 <td>
                                     <select name="inputPaymonths" class="requiredValue parsley-validated"
-                                            id="inputPaymonths" data-required="true">
+                                            id="inputPaymonths" required="true">
                                         <t t-set="interest_detail"
                                            t-value="request.env['debitorder.interest'].sudo().search([])"/>
+                                        <option></option>
                                         <t t-foreach="interest_detail" t-as="each_interest">
                                             <t t-if="sale_order_id">
                                                 <option t-att-data-interest="each_interest.interest_per"
-                                                        t-att-value="each_interest.no_months"
-                                                        t-att-selected="each_interest.no_months == (sale_order_id.months)">
+                                                        t-att-value="each_interest.no_months">
+<!--                                                        t-att-selected="each_interest.no_months == (sale_order_id.months)">-->
                                                     <span t-esc="each_interest.no_months"/>
                                                     <span>Months</span>
                                                 </option>
@@ -2575,18 +2579,18 @@
                                                     <!--<spam t-esc="acc_holder_name" style="color:black;"></spam>-->
                                                 </t>
                                                 <input type="text" name="inputAccholderName" id="inputAccholderName"
-                                                       t-att-value="acc_holder_name"/>
+                                                       t-att-value="acc_holder_name" required="true"/>
                                             </t>
                                             <t t-if="not sale_order_id.debit_order_mandat">
                                                 <input type="text" name="inputAccholderName" id="inputAccholderName"
-                                                       t-att-value="sale_order_id.partner_id.name"/>
+                                                       t-att-value="sale_order_id.partner_id.name" required="true"/>
                                             </t>
                                         </t>
                                         <t t-if="sale_order and register_enrol">
                                             <t t-set="sale_order_detail"
                                                t-value="request.env['sale.order'].sudo().search([('id', '=', sale_order)])"/>
                                             <input type="text" name="inputAccholderName" id="inputAccholderName"
-                                                   required="" t-att-value="sale_order_detail.partner_id.name"/>
+                                                   required="true" t-att-value="sale_order_detail.partner_id.name"/>
                                         </t>
                                     </td>
                                     <td></td>
@@ -2596,6 +2600,7 @@
                                     <td>
                                         <select name="inputBankName" class="requiredValue" id="inputBankName">
                                             <t t-set="res_bank" t-value="request.env['res.bank'].sudo().search([])"/>
+                                            <option></option>
                                             <t t-foreach="res_bank" t-as="each_bank">
                                                 <t t-if="sale_order_id">
                                                     <t t-if="sale_order_id.debit_order_mandat">
@@ -2605,6 +2610,7 @@
                                                             <t t-set="mandat_bank_id"
                                                                t-value="each_mandat.bank_name.id"/>
                                                         </t>
+
                                                         <option t-att-bank-id="each_bank.id" t-att-value="each_bank.id"
                                                                 t-att-selected="each_bank.id == (mandat_bank_id)">
                                                             <span t-esc="each_bank.name"/>
@@ -2636,14 +2642,14 @@
                                                     <t t-set="mandat_account_number" t-value="each_mandat.bank_acc_no"/>
                                                 </t>
                                                 <input type="text" name="inputAccount" id="inputAccount"
-                                                       t-att-value="mandat_account_number"/>
+                                                           t-att-value="mandat_account_number" required="true"/>
                                             </t>
                                             <t t-if="not sale_order_id.debit_order_mandat">
-                                                <input type="text" name="inputAccount" id="inputAccount"/>
+                                                <input type="text" name="inputAccount" id="inputAccount" required="true"/>
                                             </t>
                                         </t>
                                         <t t-if="sale_order and register_enrol">
-                                            <input type="text" name="inputAccount" id="inputAccount" required=""/>
+                                            <input type="text" name="inputAccount" id="inputAccount" required="true"/>
                                         </t>
                                     </td>
                                     <td></td>
@@ -2651,11 +2657,12 @@
                                 <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation in ['1','2']">
                                     <td style="width:25.6%;">Bank Code</td>
                                     <td>
-                                        <select name="inputBCode" class="requiredValue" id="inputBCode" disabled="true">
+                                        <select name="inputBCode" class="requiredValue" id="inputBCode" required="true">
+                                            <option></option>
                                             <t t-foreach="res_bank" t-as="each_bank">
-                                                <option id="bank_code" t-att-value="each_bank.id">
-                                                    <span t-esc="each_bank.bic"/>
-                                                </option>
+                                                    <option id="bank_code" t-att-value="each_bank.id">
+                                                        <span t-esc="each_bank.bic"/>
+                                                    </option>
                                             </t>
                                         </select>
                                     </td>
@@ -2667,10 +2674,11 @@
                                         <select name="inputAtype" class="requiredValue" id="inputAtype">
                                             <t t-set="bank_type"
                                                t-value="request.env['res.bank.type'].sudo().search([])"/>
+                                            <option></option>
                                             <t t-foreach="bank_type" t-as="each_bank_type">
-                                                <option t-att-value="each_bank_type.id">
-                                                    <span t-esc="each_bank_type.name"/>
-                                                </option>
+                                                    <option t-att-value="each_bank_type.id">
+                                                        <span t-esc="each_bank_type.name"/>
+                                                    </option>
                                             </t>
                                         </select>
                                     </td>

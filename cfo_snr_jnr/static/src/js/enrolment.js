@@ -451,8 +451,9 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
 
         $('select[id="inputBankName"]').on('change', function() {
             var bank_name = document.getElementById("inputBankName").value;
-            var bank_name = document.getElementById("inputBCode").value = bank_name;
-        });
+            var bank_code = document.getElementById("inputBCode").value = bank_name;
+             });
+
 //        if($(document).find('select[id="inputwarehouse"]').length != 0){
 //        $(document).find('select[id="inputwarehouse"]').change()
 //        }
@@ -536,6 +537,10 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 $('#inputPaymonths').prop("disabled", false);
                 $("select[id='inputPaymonths'] option").show();
                 $("#inputPaymonths option[value='0']").remove();
+                $('#inputPaydate').prop("required",true)
+                $('#inputBankName').prop("required",true)
+                $('#inputBCode').prop("required",true)
+                $('#inputAtype').prop("required",true)
                 var total_amount = $(document).find('#totalamount').val();
                 var due_amount = (parseFloat(total_amount) * parseFloat(input_per)) / 100;
                 document.getElementById("inputTotalDue").value = due_amount.toFixed(2);
@@ -564,6 +569,11 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
             var current = $(this);
             var payment_month = $("#inputPaymonths").val();
             var interest = $('#inputPaymonths option:selected').attr('data-interest')
+            $('#inputPaydate').prop("required",true)
+            $('#inputBankName').prop("required",true)
+            $('#inputBCode').prop("required",true)
+            $('#inputAtype').prop("required",true)
+            console.log("==interest======",interest)
             if (interest > 0) {
                 var out_standing_amount = $(document).find('#inputOutstanding').val();
                 var tax_amount = (parseFloat(out_standing_amount) * parseFloat(interest)) / 100;

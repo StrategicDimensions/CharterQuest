@@ -181,7 +181,7 @@
                                         <p>D.O.B</p>
                                     </td>
                                     <td>
-                                        <!--<p><span t-esc="o.partner_id and o.partner_id.dob or 'Not Provided'"/></p>-->
+                                        <p><span t-esc="o.partner_id and o.partner_id.dob or 'Not Provided'"/></p>
                                     </td>
                                     <td>
                                         <p>Prof Body Student ID</p>
@@ -427,6 +427,7 @@
                                 </thead>
                             </table>
 
+
                             <table>
                                 <tr style="background-color:darkgray;">
                                     <td style="text-align:center;">
@@ -500,7 +501,6 @@
                                 </td>
                             </tr>
                         </table>
-
                         <table class="table">
                             <thead>
                                 <tr style="background-color:darkgray;">

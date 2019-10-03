@@ -1647,7 +1647,7 @@ class EnrolmentProcess(http.Controller):
                     deb_interest = each_debit_order.interest/float(sale_order_id.months)
                     debit_order_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
                                             'student_number': '',
-                                            'dbo_amount': each_debit_order.dbo_amount,
+                                            'dbo_amount': sale_order_id.monthly_amount,
                                             'interest': deb_interest,
                                             'course_fee': each_debit_order.dbo_amount - deb_interest,
                                             'dbo_date':dbo_date,
@@ -2842,7 +2842,7 @@ class EnrolmentProcess(http.Controller):
                  'debit_order_mandate': True,
                  'interest_amount': post.get('inputInterest') if post.get('inputInterest') else 0,
                  'debit_order_mandat': debit_order_mandet,
-                 'order_line':interest_amount_line})
+                 'order_line':interest_amount_line if interest_amount_line else 0})
 
             invoice_obj = request.env['account.invoice'].sudo()
             debit_order_obj = request.env['debit.order.details'].sudo()
