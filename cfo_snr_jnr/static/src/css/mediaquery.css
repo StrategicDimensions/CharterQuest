@@ -323,9 +323,6 @@
 	footer #footer {
     padding-top: 0;
 }
-.ribbon_css{
-    width:100%;
-}
 
 
 
@@ -870,7 +867,7 @@ h3.h3set_color{
 color:blue;
 }
 img.img-size{
-float: right;
+display: none !important;
 }
 div.feed_tmp_1[style]{
 width: auto !important;
@@ -900,9 +897,6 @@ margin-left: -24px !important;
 }
 .prc_2{
 margin-left: -23px !important;
-}
-.fees_1{
-margin-right: -43px !important;
 }
 .prc_frm_1{
 margin-left: -34px !important;
@@ -1019,8 +1013,8 @@ height: 41px !important;
 }
 .css_btn_7{
     height: 41px !important;
-    width: 201px !important;
-    margin-left: 7px !important;
+    width: 188px !important;
+    margin-left: 12px !important;
     font-size: 13px !important;
     padding-left: 19px !important;
 }
@@ -1037,14 +1031,7 @@ height: 41px !important;
 img.img.img-responsive.product_detail_img{
     width: 300px !important;
 }
-.ribbon_css{
-height: 100px !important;
-display: block;
-position: relative;
-float: right;
-width:auto;
 
-}
 a.js_add_suggested_products{
     width: 102px !important;
     margin-left: 0px !important;
@@ -1099,9 +1086,7 @@ div.panel.panel-default.js_change_shipping{
 a.a-submit.btn.btn-default.mb16.btn-block{
     margin-top: 29px !important;
 }
-div.col-md-7{
-    width: 198px !important;
-}
+
 h2.mb8.mt8 {
     font-size: 40px !important;
 }
@@ -1110,6 +1095,37 @@ span.badge.pull-right {
 }
 div#products_grid_before {
     display: block !important;
+}
+.bank_details{
+    overflow-x: auto !important;
+}
+.fees_1{
+margin-right: -41px !important;
+}
+div#course_id{
+width: 366px !important
+}
+.img_book{
+    width: 196px !important;
+}
+.img-desktop{
+    display:none !important;
+}
+.img-mobile{
+    display:block !important
+}
+div.container.navbar.navbar-default.navbar-static-top{
+    margin:0 !important;
+    padding:0 !important;
+}
+.banner_theme{
+    margin-top: -55px !important;
+}
+.s_text_block{
+    width: 315px !important;
+}
+h5.bookshop_h5{
+    width: 297px !important;
 }
 }
 

@@ -134,16 +134,17 @@
                                 <div id="payment_method" class="col-md-12 o_website_sale_rightfit"
                                      t-if="(form_acquirers or s2s_acquirers or tokens) and website_sale_order.amount_total">
                                     <h3 class="mb24">Pay with</h3>
-                                    <t t-call="payment.payment_tokens_list">
-                                        <t t-set="mode" t-value="'payment'"/>
-                                        <t t-set="submit_txt">Pay Now</t>
-                                        <t t-set="icon_class" t-value="'fa-lock'"/>
-                                        <t t-set="pms" t-value="tokens"/>
-                                        <t t-set="form_action" t-value="'/shop/payment/token'"/>
-                                        <t t-set="prepare_tx_url" t-value="'/shop/payment/transaction/'"/>
-                                        <t t-set="partner_id" t-value="partner"/>
-                                    </t>
-
+                                    <div>
+                                        <t t-call="payment.payment_tokens_list">
+                                            <t t-set="mode" t-value="'payment'"/>
+                                            <t t-set="submit_txt">Pay Now</t>
+                                            <t t-set="icon_class" t-value="'fa-lock'"/>
+                                            <t t-set="pms" t-value="tokens"/>
+                                            <t t-set="form_action" t-value="'/shop/payment/token'"/>
+                                            <t t-set="prepare_tx_url" t-value="'/shop/payment/transaction/'"/>
+                                            <t t-set="partner_id" t-value="partner"/>
+                                        </t>
+                                    </div>
                                     <div>
                                         <div>
                                             <label>
@@ -202,36 +203,40 @@
                             <span style="font-size: 13.3333px; line-height: 1.38; font-family: Verdana; white-space: pre-wrap;">
                                 Bank Account
                             </span>
-                            <table class="table table-bordered" style="width: 750px;">
-                                <tbody>
-                                    <tr>
-                                        <th>Bank:</th>
-                                        <td>FNB</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Beneficiary name:</th>
-                                        <td>CharterQuest Training Institute</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Account type:</th>
-                                        <td>Cheque</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Account no:</th>
-                                        <td>626 8076 7054</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Branch code:</th>
-                                        <td>250655</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Reference No:</th>
-                                        <td>
-                                            <span t-esc="order.name"/>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="bank_details">
+                                <div class="bank_details_child">
+                                    <table class="table table-bordered" style="width: 750px;">
+                                        <tbody>
+                                            <tr>
+                                                <th>Bank:</th>
+                                                <td>FNB</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Beneficiary name:</th>
+                                                <td>CharterQuest Training Institute</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Account type:</th>
+                                                <td>Cheque</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Account no:</th>
+                                                <td>626 8076 7054</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Branch code:</th>
+                                                <td>250655</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Reference No:</th>
+                                                <td>
+                                                    <span t-esc="order.name"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                             <span style="font-size: 13.3333px;
                             font-family: Verdana; color: rgb(76, 76, 76); font-variant-numeric: normal;
                             font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;
@@ -453,7 +458,7 @@
                                                        t-att-value="request.csrf_token()"/>
                                                 <div itemscope="itemscope" itemtype="http://schema.org/Product"
                                                      class="main_product_block">
-                                                    <h5>
+                                                    <h5 class="bookshop_h5">
                                                         <strong>
                                                             <a itemprop="name"
                                                                t-att-href="keep('/shop/product/%s' % slug(product), page=(pager['page']['num'] if pager['page']['num']&gt;1 else None))"
@@ -461,7 +466,7 @@
                                                         </strong>
                                                     </h5>
                                                     <div class="row product_imge_cfo">
-                                                        <div class="col-md-7">
+                                                        <div class="col-md-7 img_book">
                                                             <a itemprop="url"
                                                                t-att-href="keep('/shop/product/%s' % slug(product), page=(pager['page']['num'] if pager['page']['num']&gt;1 else None))">
                                                                 <span itemprop="image" class="product_image"
@@ -673,9 +678,9 @@
         <xpath expr="//div[@id='payment_method']" position='inside'>
 
             <div id="accept_terms_and_condition">
-                <div>
+                <div class="terms_condition" style="">
                     <label>
-                        <h4>Terms &amp; Conditions</h4>
+                        <h4 class="h4_ter_con">Terms &amp; Conditions</h4>
                     </label>
                 </div>
                 <input type='checkbox' id='terms' value='agree'/>
@@ -1266,7 +1271,7 @@
                                     student?
                                 </label>
                             </div>
-                            <div class="col-md-7 col-sm-8">
+                            <div class="col-md-7 col-sm-8" id="select_css_1">
                                 <select class="form-control o_website_form_input"
                                         name="return_student" required="false">
                                     <option value="Yes">New Student</option>
@@ -1295,7 +1300,7 @@
                                     Are You Self Or Company Sponsored?
                                 </label>
                             </div>
-                            <div class="col-md-7 col-sm-8">
+                            <div class="col-md-7 col-sm-8" id="select_css_1">
                                 <select class="form-control o_website_form_input"
                                         name="self_or_company" required="false">
                                     <option value="self">Self Sponsored</option>
@@ -1309,7 +1314,7 @@
                                     Select Professional Body/Programme
                                 </label>
                             </div>
-                            <div class="col-md-7 col-sm-8">
+                            <div class="col-md-7 col-sm-8" id="select_css_1">
                                 <t t-set="event_type"
                                    t-value="request.env['event.type'].sudo().search([('publish_on_portal','=',True)] , order='order')"/>
                                 <select id="professional_body" class="form-control o_website_form_input"
@@ -1328,7 +1333,7 @@
                         <div class="form-group form-field o_website_form_custom" id="reg_campus_info">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
                             </div>
-                            <div class="col-md-7 col-sm-8">
+                            <div class="col-md-7 col-sm-8" id="course_id">
                                 <span style="color:black;">This Course is only Available in the Campuses displayed
                                     below
                                 </span>
@@ -1340,7 +1345,7 @@
                                 <label for="campus lbl_4" style="margin-left: 16px;" class="control-label">Select Campus
                                 </label>
                             </div>
-                            <div class="col-md-7 col-sm-8">
+                            <div class="col-md-7 col-sm-8" id="select_css_1">
                                 <t t-set="event_ids" t-value="request.env['event.event'].sudo().search([])"/>
                                 <select id="select_campus" class="form-control o_website_form_input" name="campus"
                                         required="false">
@@ -1364,7 +1369,7 @@
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
                                 <label class="control-label lbl_5" for="Semester">Semester</label>
                             </div>
-                            <div class="col-md-7 col-sm-8">
+                            <div class="col-md-7 col-sm-8" id="select_css_1">
                                 <select id="select_semester" class="form-control o_website_form_input" name="Semester"
                                         required="false">
                                 </select>
@@ -1506,9 +1511,9 @@
                             <div class="form-group">
                                 <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
                                     <button id="check_event" class="btn btn-primary pull-right"
-                                            style="margin-right: -83px;" type="submit">Next
+                                             type="submit">Next
                                     </button>
-                                    <button id="back_button" class="btn btn-primary pull-right" type="button">Back
+                                    <button id="back_button" class="btn btn-primary pull-right" style="margin-left: -52px;" type="button">Back
                                     </button>
                                 </div>
                             </div>
@@ -1863,7 +1868,7 @@
                         </t>
                         <div class="form-group">
                             <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
-                                <button class="btn btn-primary pull-right" style="margin-right: -72px;" type="submit">
+                                <button class="btn btn-primary pull-right" type="submit">
                                     Next
                                 </button>
                                 <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>

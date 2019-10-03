@@ -132,16 +132,19 @@ odoo.define('cfo_snr_jnr.snippets_comparision_block', function (require) {
                     var ul_html = "";
                     var thead_html = "";
                     var tbody_html = "";
+                    var j=0;
                     for (var i = 0; i < parseInt(cols_comparision_header); i++) {
+                        j++;
+                        var class_id="block"+j;
                     	if (i==0){
 							ul_html += "<li class='bg-purple'>";
-							thead_html += "<th class='bg-purple'/>";
+							thead_html += "<th class='bg-purple comparison_block' id='"+class_id+"'></th>";
                     	}
                     	else{
                     		ul_html += "<li class='bg-blue'>";
-                    		thead_html += "<th class='bg-blue'/>";
+                    		thead_html += "<th class='bg-blue comparison_block' id='"+class_id+"'></th>";
                     	}
-						ul_html += "<button></button></li>";
+						ul_html += "<button class='"+class_id+"'></button></li>";
                     }
                     for (var i = 0; i <= parseInt(cols_comparision_header); i++) {
                     	tbody_html += "<td/>"
@@ -150,6 +153,7 @@ odoo.define('cfo_snr_jnr.snippets_comparision_block', function (require) {
 					self.$target.find('.comparision_article ul').append(ul_html);
 					self.$target.find('.comparision_article table thead tr').append(thead_html);
 					self.$target.find('.comparision_article table tbody tr').append(tbody_html);
+
                 });
             } else {
                 return false;
@@ -164,5 +168,8 @@ odoo.define('cfo_snr_jnr.snippets_comparision_block', function (require) {
     		$(this).addClass('active');
     		$(this).parents('tr').addClass('active');
     	});
+    	$("body").on('DOMSubtreeModified', ".comparison_block", function() {
+             $('button[class=' + $(this).attr('id') + ']').html($(this).html())
+        });
     });
 });
