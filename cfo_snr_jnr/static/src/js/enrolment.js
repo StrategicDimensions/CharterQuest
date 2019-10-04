@@ -484,47 +484,31 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
         });
 
         $('#bankdeposit-button').on('click',function(e){
-            $('#inputPaydate').prop("required",true)
-            $('#inputBankName').prop("required",true)
-            $('#inputBCode').prop("required",true)
-            $('#inputAtype').prop("required",true)
             var bank_name =$("#inputBCode option:selected").attr('data');
             if(bank_name == undefined){
-                alert("please select other bank");
-                 e.preventDefault();
+                alert("All Fields Are Mandatory.....!!!");
+                     e.preventDefault();
             }
         });
 
         $('#eft-button').on('click',function(e){
-            $('#inputPaydate').prop("required",true)
-            $('#inputBankName').prop("required",true)
-            $('#inputBCode').prop("required",true)
-            $('#inputAtype').prop("required",true)
             var bank_name =$("#inputBCode option:selected").attr('data');
             if(bank_name == undefined){
-                alert("please select other bank");
+                alert("All Fields Are Mandatory.....!!!");
                  e.preventDefault();
             }
         });
         $('#debitordermandate-button').on('click',function(e){
-            $('#inputPaydate').prop("required",true)
-            $('#inputBankName').prop("required",true)
-            $('#inputBCode').prop("required",true)
-            $('#inputAtype').prop("required",true)
             var bank_name =$("#inputBCode option:selected").attr('data');
             if(bank_name == undefined){
-                alert("please select other bank");
+                alert("All Fields Are Mandatory.....!!!");
                  e.preventDefault();
             }
         });
         $('#credit-button').on('click',function(e){
-            $('#inputPaydate').prop("required",true)
-            $('#inputBankName').prop("required",true)
-            $('#inputBCode').prop("required",true)
-            $('#inputAtype').prop("required",true)
-            var bank_name =$("#inputBCode option:selected").attr('data');
+                var bank_name =$("#inputBCode option:selected").attr('data');
             if(bank_name == undefined){
-                alert("please select other bank");
+                alert("All Fields Are Mandatory.....!!!");
                  e.preventDefault();
             }
         });
