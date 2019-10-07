@@ -323,7 +323,7 @@
                         <tbody>
                             <t t-foreach="o.invoice_line_ids" t-as="l">
                                 <tr>
-                                    <td style="padding: 2px;line-height: 1;width:30%;">
+                                    <td style="line-height: 1;width:30%;">
                                         <span t-esc="l.name"/>
                                     </td>
                                     <td style="padding: 2px;line-height: 1;width:15%;">
