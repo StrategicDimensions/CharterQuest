@@ -1958,6 +1958,8 @@ class EnrolmentProcess(http.Controller):
             transactionDetails['customer']['lastName'] = last_name if last_name else ''
             transactionDetails['customer']['mobile'] = sale_order_id.partner_id.mobile
 
+            print ("===========transactiondetails=========",transactionDetails)
+
         if payment_acquire:
             payu_tx_values.update({
                 'x_login': payment_acquire.payu_api_username,
