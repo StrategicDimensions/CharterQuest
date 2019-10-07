@@ -518,7 +518,7 @@ class EnrolmentProcess(http.Controller):
             event_details = request.env['event.event'].sudo().search([('event_type_id', '=',
                                                                        int(post.get('Select Prof Body'))),
                                                                       ('address_ids', 'in', int(post.get('campus'))),
-                                                                      ('semester_id', '=', int(post.get('Semester'))),
+                                                                      ('semester_id', '=', int(post.get('Semester'))) if post.get('Semester') else False,
                                                                       ('state', '!=', 'cancel'),
                                                                       ('date_end', '>=', str_today_date)])
             event_details_dict = {}
@@ -1957,8 +1957,6 @@ class EnrolmentProcess(http.Controller):
             transactionDetails['customer']['firstName'] = first_name if first_name else ''
             transactionDetails['customer']['lastName'] = last_name if last_name else ''
             transactionDetails['customer']['mobile'] = sale_order_id.partner_id.mobile
-
-            print ("===========transactiondetails=========",transactionDetails)
 
         if payment_acquire:
             payu_tx_values.update({

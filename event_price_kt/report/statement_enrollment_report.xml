@@ -138,7 +138,7 @@
                                 <td style="padding: 6px;line-height: 1;font-size: 20px;font-weight: 500;width: 30%;">
                                     <span>INVOICE TO</span>
                                 </td>
-                                <td colspan="3">
+                                <td colspan="4">
                                     <sapn>
 
                                     </sapn>
@@ -150,7 +150,7 @@
                                 <td>
                                     <p>Company</p>
                                 </td>
-                                <td>
+                                <td colspan="2">
                                     <span t-esc="o.partner_id.student_company or ''"></span>
                                 </td>
                                 <td>
@@ -164,7 +164,7 @@
                                 <td>
                                     <p>Name of Student/Sponsor</p>
                                 </td>
-                                <td>
+                                <td colspan="2">
                                     <p>
                                         <span t-esc="o.partner_id.name"/>
                                     </p>
@@ -173,14 +173,14 @@
                                     <p>Student no</p>
                                 </td>
                                 <td>
-                                    <p></p>
+                                    <p><span t-esc="o.partner_id.student_number"/></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <p style="terp_default_8">Student Address</p>
                                 </td>
-                                <td colspan="3">
+                                <td colspan="4">
                                     <p style="terp_default_8">
                                         <span t-esc="o.partner_id and o.partner_id.street or ''"/>
                                         <span>,</span>
@@ -200,7 +200,7 @@
                                 <td>
                                     <p style="terp_default_8">Tel</p>
                                 </td>
-                                <td style="border:2px solid black">
+                                <td style="border:2px solid black" colspan="2">
                                     <p>
                                         <span t-esc="o.partner_id and o.partner_id.phone or 'Not Provided'"/>
                                     </p>
@@ -218,9 +218,17 @@
                                 <td>
                                     <p>Email</p>
                                 </td>
-                                <td colspan="3">
+                                <td colspan="2">
                                     <p>
                                         <span t-esc="o.partner_id and o.partner_id.email or 'Not Provided'"/>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p>Fax</p>
+                                </td>
+                                <td>
+                                    <p>
+                                        <span t-esc="'Not Provided'"/>
                                     </p>
                                 </td>
                             </tr>
@@ -228,7 +236,7 @@
                                 <td>
                                     <p>D.O.B</p>
                                 </td>
-                                <td>
+                                <td colspan="2">
                                     <p>
                                         <span t-esc="o.partner_id and o.partner_id.dob or 'Not Provided'"/>
                                     </p>
@@ -243,7 +251,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="4" style="padding: 10px;">
+                                <td colspan="5" style="padding: 10px;">
                                     <span></span>
                                 </td>
                             </tr>
@@ -251,7 +259,7 @@
                                 <td style="border-top:2px solid black">
                                     <span>Professional Body</span>
                                 </td>
-                                <td style="border-top:2px solid black">
+                                <td style="border-top:2px solid black" colspan="2">
                                     <span t-esc="o.prof_body and o.prof_body.name or 'Not Provided'"/>
                                 </td>
                                 <td style="border-top:2px solid black">
@@ -265,7 +273,7 @@
                                 <td>
                                     <span>Selected Campus</span>
                                 </td>
-                                <td colspan="3">
+                                <td colspan="4">
                                     <span t-esc="o.campus and o.campus.name or 'Not Provided'"/>
                                 </td>
                             </tr>
@@ -355,7 +363,7 @@
                                     <span style="float:right;" t-esc="o.currency_id.symbol"/>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr t-if="o.affiliation == '1'">
                                 <td colspan="3">
                                     <span style="float:right;">TAXES</span>
                                 </td>
@@ -366,6 +374,18 @@
                                 <td>
                                     <span style="float:right;" t-esc="'%.2f'%(o.amount_tax)"/>
                                     <span style="float:right;" t-esc="o.currency_id.symbol"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.affiliation == '2'">
+                                <td colspan="3">
+                                    <span style="float:right;">VAT @ 0%</span>
+                                </td>
+                                <td colspan="3">
+                                    <p>
+                                    </p>
+                                </td>
+                                <td>
+                                    <span style="float:right;">R 0.00</span>
                                 </td>
                             </tr>
                             <tr style="background-color:black;">
@@ -468,7 +488,7 @@
                         </thead>
                     </table>
 
-                    <table class="table" style="background-color:black">
+                    <table class="table" style="background-color:black" t-if="o.affiliation != '2'">
                         <thead>
                             <tr tyle="background-color:black;">
                                 <td>
@@ -478,7 +498,7 @@
                         </thead>
                     </table>
 
-                    <table class="table">
+                    <table class="table" t-if="o.affiliation != '2'">
                         <thead>
                             <tr style="background-color:darkgray;">
                                 <td style="width:15%">
