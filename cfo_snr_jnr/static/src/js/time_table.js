@@ -9,6 +9,11 @@ var self = this;
 var flag = false;
 var localStorage = window.localStorage;
 $(document).ready(function(){
+    $('a.add_menu_side').on('click',function(){
+        if(window.innerWidth <= 460) {
+            $(this).parents('.label_link_list').css('display','none');
+        }
+    })
 //    alert()
 //    $('head').find('meta').remove();
 //    $('head').append('<meta charset="utf-8">');

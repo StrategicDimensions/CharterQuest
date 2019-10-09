@@ -1127,6 +1127,9 @@ div.container.navbar.navbar-default.navbar-static-top{
 h5.bookshop_h5{
     width: 297px !important;
 }
+td.td_time_table{
+width: 900px !important;
+}
 }
 
 /* form report end */
