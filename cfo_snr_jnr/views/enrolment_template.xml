@@ -2657,10 +2657,10 @@
                                 <tr t-if="sale_order or sale_order_id and sale_order_id.affiliation in ['1','2']">
                                     <td style="width:25.6%;">Bank Code</td>
                                     <td>
-                                        <select name="inputBCode" class="requiredValue" id="inputBCode" required="true">
+                                        <select name="inputBCode" class="requiredValue" id="inputBCode" disabled="true">
                                             <option></option>
                                             <t t-foreach="res_bank" t-as="each_bank">
-                                                    <option id="bank_code" t-att-value="each_bank.id">
+                                                    <option id="bank_code" t-att-value="each_bank.id" t-att-data="each_bank.bic">
                                                         <span t-esc="each_bank.bic"/>
                                                     </option>
                                             </t>

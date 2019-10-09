@@ -452,6 +452,7 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
         $('select[id="inputBankName"]').on('change', function() {
             var bank_name = document.getElementById("inputBankName").value;
             var bank_code = document.getElementById("inputBCode").value = bank_name;
+
              });
 
 //        if($(document).find('select[id="inputwarehouse"]').length != 0){
@@ -482,7 +483,35 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 });
         });
 
+        $('#bankdeposit-button').on('click',function(e){
+            var bank_name =$("#inputBCode option:selected").attr('data');
+            if(bank_name == undefined){
+                alert("All Fields Are Mandatory.....!!!");
+                     e.preventDefault();
+            }
+        });
 
+        $('#eft-button').on('click',function(e){
+            var bank_name =$("#inputBCode option:selected").attr('data');
+            if(bank_name == undefined){
+                alert("All Fields Are Mandatory.....!!!");
+                 e.preventDefault();
+            }
+        });
+        $('#debitordermandate-button').on('click',function(e){
+            var bank_name =$("#inputBCode option:selected").attr('data');
+            if(bank_name == undefined){
+                alert("All Fields Are Mandatory.....!!!");
+                 e.preventDefault();
+            }
+        });
+        $('#credit-button').on('click',function(e){
+                var bank_name =$("#inputBCode option:selected").attr('data');
+            if(bank_name == undefined){
+                alert("All Fields Are Mandatory.....!!!");
+                 e.preventDefault();
+            }
+        });
         $('select[id="inputPaypercentage"]').on('change', function() {
             var input_per = $("#inputPaypercentage").val();
             if (parseInt(input_per) == 100) {

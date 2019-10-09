@@ -518,7 +518,7 @@ class EnrolmentProcess(http.Controller):
             event_details = request.env['event.event'].sudo().search([('event_type_id', '=',
                                                                        int(post.get('Select Prof Body'))),
                                                                       ('address_ids', 'in', int(post.get('campus'))),
-                                                                      ('semester_id', '=', int(post.get('Semester'))),
+                                                                      ('semester_id', '=', int(post.get('Semester'))) if post.get('Semester') else False,
                                                                       ('state', '!=', 'cancel'),
                                                                       ('date_end', '>=', str_today_date)])
             event_details_dict = {}
