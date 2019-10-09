@@ -115,12 +115,7 @@ odoo.define('cfo_snr_jnr.snippet_menu', function (require) {
     });
 
     $(document).ready(function(){
-        $('a.add_menu_side').on('click',function(){
-        alert(window.innerWidth);
-            if(window.innerWidth <= 460) {
-                $(this).parents('.label_link_list').toggle()
-            }
-        })
+
     });
 
 });
