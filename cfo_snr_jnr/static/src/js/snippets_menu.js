@@ -115,14 +115,11 @@ odoo.define('cfo_snr_jnr.snippet_menu', function (require) {
     });
 
     $(document).ready(function(){
-        $('.add_menu_side').on('click',function(){
-//            console.log('\n\n===== userAgent', /Mobi/.test(navigator.userAgent))
+        $('a.add_menu_side').on('click',function(){
+        alert(window.innerWidth);
             if(window.innerWidth <= 460) {
-                console.log("\n\n\n\n\n window.innerwidth",window.innerWidth);
                 $(this).parents('.label_link_list').toggle()
             }
-//                $(this).parents('.label_link_list').hide()
-//            }
         })
     });
 
