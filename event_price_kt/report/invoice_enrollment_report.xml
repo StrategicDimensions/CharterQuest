@@ -17,7 +17,7 @@
                             margin: 5px;
                         }
                         span{
-                            margin: 5px;
+                            margin: 1px;
                         }
                         table .header_title{
                             font-size:25px;
@@ -35,7 +35,7 @@
                             <tr>
                                 <td style="width: 165px;">
                                     <t t-if="res_company.logo">
-                                        <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="border:auto; height:130px;width:190px;"/>
+                                        <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="border:auto; height:100px;width:270px;"/>
                                     </t>
                                 </td>
                                 <td>
@@ -57,13 +57,13 @@
                             <thead>
                                 <tr>
                                     <td colspan="3">
-                                        <p>Registration No: 2016/159500/07.</p>
+                                        <p style="color:black;">Registration No: 2016/159500/07.</p>
                                     </td>
                                     <td>
-                                        <p><b>Doc No.</b></p>
+                                        <p style="color:black;"><b>Doc No.</b></p>
                                     </td>
                                     <td>
-                                        <p><b><span t-field="o.number"/></b></p>
+                                        <p style="color:black;"><b><span t-field="o.number"/></b></p>
                                     </td>
                                 </tr>
                             </thead>
@@ -112,7 +112,7 @@
                                         <p style="terp_default_8"><span t-esc="o.date_invoice or 'NA'"/></p>
                                     </td>
                                 </tr>
-                            </tbody>CODE
+                            </tbody>
                         </table>
                         <table class="table">
                             <thead>
@@ -272,7 +272,7 @@
                                 <t t-foreach="o.invoice_line_ids" t-as="l">
                                 <tr>
                                     <td style="line-height: 1;width:45%;">
-                                        <span t-esc="l.name"/>
+                                        <p t-esc="l.name"/>
                                     </td>
                                     <td style="padding: 2px;line-height: 1;width:10%;">
                                         <t t-foreach="l.invoice_line_tax_ids" t-as="lt">
@@ -347,7 +347,7 @@
                                 </tr>
                                 <tr style="background-color:darkgray;">
                                     <td colspan="2">
-                                      <span>(All EFT Payments are subject to confirmation)</span><br/>
+                                      <p>(All EFT Payments are subject to confirmation)</p><br/>
                                       <span style="float:right;">Deposit Paid</span>
                                     </td>
                                     <td colspan="3">

@@ -16,7 +16,7 @@
                             margin: 5px;
                         }
                         span{
-                            margin: 5px;
+                            margin: 1px;
                         }
                         table .header_title{
                             font-size:25px;
@@ -34,7 +34,7 @@
                             <tr>
                                 <td style="width: 165px;">
                                     <t t-if="res_company.logo">
-                                        <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="border:auto; height:130px;width:190px;"/>
+                                        <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="border:auto; height:100px;width:270px;"/>
                                     </t>
                                 </td>
                                 <td>
@@ -56,13 +56,13 @@
                             <tbody>
                                 <tr>
                                     <td colspan="3">
-                                        <p>Registration No: 2016/159500/07.</p>
+                                        <p style="color:black;">Registration No: 2016/159500/07.</p>
                                     </td>
                                     <td>
-                                        <p><b>Doc No.</b></p>
+                                        <p style="color:black;"><b>Doc No.</b></p>
                                     </td>
                                     <td>
-                                        <p><b><span t-field="o.name"/></b></p>
+                                        <p style="color:black;"><b><span t-field="o.name"/></b></p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -220,25 +220,25 @@
                             </thead>
                             <tbody>
                                 <tr style="border-top:2px solid black">
-                                    <td style="border-top:2px solid black;padding: 8px;line-height: 1;">
-                                        <span>Professional Body</span>
+                                    <td style="border-top:2px solid black;padding: 1px;line-height: 1;">
+                                        <p>Professional Body</p>
                                     </td>
-                                    <td style="border-top:2px solid black;padding: 8px;line-height: 1;" colspan="2">
-                                        <span t-esc="o.prof_body and o.prof_body.name or 'Not Provided'"/>
+                                    <td style="border-top:2px solid black;padding: 1px;line-height: 1;" colspan="2">
+                                        <p t-esc="o.prof_body and o.prof_body.name or 'Not Provided'"/>
                                     </td>
-                                    <td style="border-top:2px solid black;padding: 8px;line-height: 1;">
-                                        <span>Semester</span>
+                                    <td style="border-top:2px solid black;padding: 1px;line-height: 1;">
+                                        <p>Semester</p>
                                     </td>
-                                    <td style="border-top:2px solid black;padding: 8px;line-height: 1;">
-                                        <span t-esc="o.semester_id and  o.semester_id.name or 'Not Provided'"/>
+                                    <td style="border-top:2px solid black;padding: 1px;line-height: 1;">
+                                        <p t-esc="o.semester_id and  o.semester_id.name or 'Not Provided'"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 8px;line-height: 1;">
-                                        <span>Selected Campus</span>
+                                    <td style="padding: 1px;line-height: 1;">
+                                        <p>Selected Campus</p>
                                     </td>
-                                    <td colspan="4" style="padding: 8px;line-height: 1;">
-                                        <span t-esc="o.campus and o.campus.name or 'Not Provided'"/>
+                                    <td colspan="4" style="padding: 1px;line-height: 1;">
+                                        <p t-esc="o.campus and o.campus.name or 'Not Provided'"/>
                                     </td>
                                 </tr>
                             </tbody>
@@ -304,7 +304,7 @@
                                 <t t-foreach="o.order_line" t-as="l">
                                 <tr>
                                     <td style="line-height: 1;width:45%;text-align:left;">
-                                        <span t-esc="l.name"/>
+                                        <p t-esc="l.name"/>
                                     </td>
                                     <td style="padding: 2px;line-height: 1;width:10%;text-align:center;">
                                         <t t-foreach="l.tax_id" t-as="lt">
