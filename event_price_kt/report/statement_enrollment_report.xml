@@ -1,7 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <template id="external_layout_boxed_charter">
+        <div class="header o_boxed_header">
+            <div class="row mb8">
+                <div class="col-xs-6">
+                </div>
+                <div class="col-xs-6 text-right mb4">
+                    <h4 class="mt0" t-field="res_company.report_header"/>
+                    <div name="company_address" class="mb4">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="article o_report_layout_boxed">
+          <t t-raw="0" />
+        </div>
+
+        <div class="footer o_boxed_footer">
+
+            <div class="text-center">
+                <t t-if="o.affiliation == '2'">
+                 <table class="table" style="background-color:black;">
+                    <thead>
+                        <tr>
+                            <td>
+                                <p align="center">
+                                    <font color="white">BANKING DETAILS: Business Cheque Account No. 626 8076 7054:
+                                        The CharterQuest Professional Education Institute: First National Bank
+                                        Northgate Center: Branch Code 250655. Swift Code:FIRNZAJJ.Proof of payment
+                                        should contain proforma invoice number as reference and must be sent to
+                                        email or fax number provided above
+                                    </font>
+                                </p>
+                                <p align="center">
+                                    <font color="white">THANK YOU FOR YOUR CONFIDENCE!</font>
+                                </p>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+               </t>
+                <div t-field="res_company.report_footer"/>
+            </div>
+        </div>
+    </template>
+
+
     <template id="report_account_statement_enrollment">
-        <t t-call="web.external_layout">
+        <t t-call="event_price_kt.external_layout_boxed_charter">
         <div class="page">
             <style>
                 table,tbody,thead, tr,th,td{
@@ -783,7 +831,7 @@
                     </tbody>
                 </table>
 
-                <table class="table" style="background-color:black;">
+                <table class="table" style="background-color:black;" t-if="o.affiliation != '2'">
                     <thead>
                         <tr>
                             <td>
