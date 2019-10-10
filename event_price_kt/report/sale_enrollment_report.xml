@@ -372,7 +372,7 @@
                                     <td colspan="3">
                                         <span></span>
                                     </td>
-                                    <td>
+                                    <td style="background-color:black;">
                                         <span style="float:right; color:white;" t-esc="'%.2f'%(o.amount_total)"/>
                                         <span style="float:right; color:white;" t-esc="o.currency_id.symbol"/>
                                     </td>

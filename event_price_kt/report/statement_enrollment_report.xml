@@ -333,12 +333,17 @@
                 <table class="table">
                     <thead>
                         <tr style="background-color:darkgray;">
-                            <td style="padding: 5px;line-height: 1;text-align:center;">
+                            <td style="padding: 5px;line-height: 1;text-align:center;" t-if="o.affiliation == '1'">
                                 <span>
                                     <b>Description</b>
                                 </span>
                             </td>
-                            <td style="padding: 5px;line-height: 1;text-align:center;">
+                            <td colspan="2" style="padding: 5px;line-height: 1;text-align:center;" t-if="o.affiliation == '2'">
+                                <span>
+                                    <b>Description</b>
+                                </span>
+                            </td>
+                            <td style="padding: 5px;line-height: 1;text-align:center;" t-if="o.affiliation == '1'">
                                 <span>
                                     <b>Date</b>
                                 </span>
@@ -373,10 +378,13 @@
                     <tbody>
                         <t t-foreach="o.invoice_line_ids" t-as="l">
                             <tr>
-                                <td style="line-height: 1;width:30%;">
+                                <td style="line-height: 1;width:30%;" t-if="o.affiliation == '1'">
                                     <p t-esc="l.name"/>
                                 </td>
-                                <td style="padding: 2px;line-height: 1;width:15%;">
+                                <td colspan="2" style="line-height: 1;width:45%;" t-if="o.affiliation == '2'">
+                                    <p t-esc="l.name"/>
+                                </td>
+                                <td style="padding: 2px;line-height: 1;width:15%;" t-if="o.affiliation == '1'">
                                     <span t-esc="l.event_id and l.event_id.date_begin or '' "/>
                                 </td>
                                 <td style="padding: 2px;line-height: 1;width:10%;">
@@ -445,7 +453,7 @@
                             <td colspan="3">
                                 <span></span>
                             </td>
-                            <td>
+                            <td style="background-color:black;">
                                 <span style="float:right; color:white;" t-esc="'%.2f'%(o.amount_total)"/>
                                 <span style="float:right; color:white;" t-esc="o.currency_id.symbol"/>
                             </td>
@@ -459,7 +467,7 @@
                             <td colspan="3">
                                 <span></span>
                             </td>
-                            <td>
+                            <td >
                                 <span style="float:right;" t-esc="'%.2f'%(o.amount_total - o.residual)"/>
                                 <span style="float:right;" t-esc="o.currency_id.symbol"/>
                             </td>
@@ -471,7 +479,7 @@
                             <td colspan="3">
                                 <span></span>
                             </td>
-                            <td>
+                            <td style="background-color:black;">
                                 <span style="float:right; color:white;" t-esc="'%.2f'%(o.residual)"/>
                                 <span style="float:right; color:white;" t-esc="o.currency_id.symbol"/>
                             </td>

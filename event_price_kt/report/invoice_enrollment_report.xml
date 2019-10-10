@@ -314,7 +314,7 @@
                                     </td>
                                     <td style="padding: 2px;line-height: 1;width:10%;">
                                         <t t-foreach="l.invoice_line_tax_ids" t-as="lt">
-                                        <span style="float:right;" t-esc="lt.name"/>
+                                        <span style="float:right;" t-esc="lt.name or 'Tax 0%'"/>
                                         </t>
                                     </td>
                                     <td style="padding: 2px;line-height: 1;width:10%;">
@@ -378,7 +378,7 @@
                                     <td colspan="3">
                                         <span></span>
                                     </td>
-                                    <td>
+                                    <td style="background-color:black;">
                                         <span style="float:right; color:white" t-esc="o.amount_total"/>
                                         <span style="float:right; color:white" t-esc="o.currency_id.symbol"/>
                                     </td>
@@ -407,7 +407,7 @@
                                     <td colspan="3">
                                         <span></span>
                                     </td >
-                                    <td >
+                                    <td style="background-color:black;">
                                         <span style="float:right; color:white;" t-esc="o.residual"/>
                                         <span style="float:right; color:white;" t-esc="o.currency_id.symbol"/>
                                     </td>
