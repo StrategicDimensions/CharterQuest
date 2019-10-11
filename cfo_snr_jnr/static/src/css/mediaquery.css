@@ -1124,6 +1124,24 @@ h5.bookshop_h5{
 td.td_time_table{
 width: 900px !important;
 }
+.read-more{
+    display: block !important;
+    width: 68px !important;
+    height: 38px !important;
+    margin-right: 45px !important;
+}
+.read-less{
+    display: block !important;
+    width: 68px !important;
+    height: 38px !important;
+    margin-right: 45px !important;
+}
+.js-read-more{
+    display:block !important;
+}
+.js-read-less{
+     display:none !important;
+}
 }
 
 /* form report end */

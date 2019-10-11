@@ -2610,3 +2610,6 @@ a.btn.btn-block.btn-primary{
 a.btn.btn-block.btn-default{
     margin-left: 2px !important;
 }
+.read-more{
+    display:none;
+}
