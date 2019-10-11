@@ -85,7 +85,7 @@ class AccountPayment(models.Model):
                         }
                      msg_id = mail_obj.create(mail_values)
                      msg_id.send()
-            if self.payment_difference < 0:
+            if self.payment_difference < 0 and self.invoice_ids[0].quote_type != 'CharterBooks':
                  full_template_id = email_obj.sudo().search([('name', '=', "Full invoice payment")])
                  if full_template_id:
                      attachment_list=[]
