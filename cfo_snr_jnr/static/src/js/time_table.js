@@ -14,41 +14,12 @@ $(document).ready(function(){
             $(this).parents('.label_link_list').css('display','none');
         }
     })
-//    alert()
-//    $('head').find('meta').remove();
-//    $('head').append('<meta charset="utf-8">');
-//    $('head').append('<meta id="wh-viewport" name="viewport" content="width=device-width, initial-scale=1.0">');
-//    $('head').append('<   meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">');
-//    $('head').append('<meta name="HandheldFriendly" content="true">');
-
+//    $('#cfo_menu_with_tabs_div_panel ul').readmore({
+//        speed: 1000,
+////        collapsedHeight: lineHeight * 1,
+////        heightMargin: lineHeight * 1
+//    });
 	if(window.location.pathname == '/time_table'){
-
-//	    $("#level_select").prop('disabled', true);
-//	    $("#course_code_select").prop('disabled', true);
-//	    $("#semester_select").prop('disabled', true);
-//	    $("#option_select").prop('disabled', true);
-
-
-//        $('#campus_select').select2({
-//			    placeholder: "",
-//
-//		    });
-//
-//		$('#level_select').select2({
-//			    placeholder: ""
-//		    });
-//
-//		$('#semester_select').select2({
-//			    placeholder: ""
-//		    });
-//
-//		$('#course_code_select').select2({
-//			    placeholder: ""
-//		    });
-//
-//		$('#option_select').select2({
-//			    placeholder: ""
-//		    });
 		$(document).on("click", ".details_view_lecturer", function(event){
 			window.location.href = $(this).attr('data-href');
 		});

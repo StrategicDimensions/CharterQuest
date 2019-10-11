@@ -2604,3 +2604,9 @@ width:100%;
 .img-mobile{
     display:none;
 }
+a.btn.btn-block.btn-primary{
+    margin-left: 2px !important;
+}
+a.btn.btn-block.btn-default{
+    margin-left: 2px !important;
+}

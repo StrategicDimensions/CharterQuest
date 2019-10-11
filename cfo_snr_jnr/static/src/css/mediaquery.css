@@ -1074,12 +1074,6 @@ a[href^='/shop/confirm_order']{
     padding-left: 33px !important;
 }
 
-a.btn.btn-block.btn-primary{
-    margin-left: 2px !important;
-}
-a.btn.btn-block.btn-default{
-    margin-left: 2px !important;
-}
 div.panel.panel-default.js_change_shipping{
     margin-bottom: 50px !important;
 }

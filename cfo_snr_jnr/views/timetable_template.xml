@@ -54,7 +54,7 @@
             <t t-set="company" t-value="res_company"/>
         </t>
 
-        <t t-if="company.external_report_layout == 'background'">
+        <t t-if="company.external_report_layout">
             <t t-call="cfo_snr_jnr.external_layout_background_custom"><t t-raw="0"/></t>
         </t>
 
