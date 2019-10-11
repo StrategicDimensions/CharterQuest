@@ -35,7 +35,6 @@ odoo.define('cfo_snr_jnr.snippets_menu_tabs', function (require) {
         cfo_menu_tabs_configuration: function (type, value) {
             var self = this;
             if (type != undefined && type.type == "click" || type == undefined) {
-            alert()
                 $(document).find('#cfo_add_menu_with_tabs_modal').remove();
                 self.$modal = $(qweb.render("cfo_snr_jnr.cfo_snr_jnr_menu_block_with_tabs"));
                 self.$modal.appendTo('body');
@@ -93,6 +92,7 @@ odoo.define('cfo_snr_jnr.snippets_menu_tabs', function (require) {
                             </a>
                         </li>
                     `;
+
 					self.$target.find('.nav.nav-tabs').append(tab_html);
                     var content_html = `
                     	<div role="tabpanel" class="tab-pane fade in active" id="`+ menu_url +`">
