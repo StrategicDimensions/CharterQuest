@@ -1,808 +1,866 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="report_account_statement_enrollment">
-        <t t-call="web.external_layout">
-            <div class="page">
-                <style>
-                    table,tbody,thead, tr,th,td{
-                    border:2px solid black;
-                    }
-                    tr,td,th{
-                    height:15%;
-                    padding: 0px;
-                    margin: 0px;
-                    }
-                    p{
-                    margin: 5px;
-                    }
-                    span{
-                    margin: 5px;
-                    }
-                    table .header_title{
-                    font-size:25px;
-                    font-color:green;
-                    font-weight: 800;
-                    }
-                    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr >
-                    td, .table > tbody > tr > td, .table > tfoot > tr > td {
-                    padding: 2px;
-                    line-height: 1;
-                    }
-                </style>
-                <div class="row">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <td style="width: 165px;">
-                                    <t t-if="res_company.logo">
-                                        <img class="image"
-                                             t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)"
-                                             style="border:auto; height:130px;width:190px;"/>
-                                    </t>
-                                </td>
-                                <td>
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <td>
-                                                    <center>
-                                                        <b>
-                                                            <p style="color:green;" class="header_title">STATEMENT</p>
-                                                        </b>
-                                                    </center>
-                                                    <p>
-                                                        <font color="white"></font>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </td>
-                            </tr>
-                        </thead>
-                    </table>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <td colspan="3">
-                                    <p>Registration No: 2016/159500/07.</p>
-                                </td>
-                                <td>
-                                    <p>
-                                        <b>Doc No.</b>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p>
-                                        <b>
-                                            <span t-field="o.number"/>
-                                        </b>
-                                    </p>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="5">
-                                    <p style="terp_default_8">CHARTERQUEST HOUSE, Metropolitan Park, 374 Rivonia
-                                        Boulevard, Rivonia, SANDTON, South Africa
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p style="terp_default_8">Tel no.</p>
-                                </td>
-                                <td>
-                                    <p style="terp_default_8">+27 (0)11 234 9223</p>
-                                </td>
-                                <td>
-                                    <p style="terp_default_8">+27 (0)73 174 5454</p>
-                                </td>
-                                <td>
-                                    <p style="terp_default_8">Email</p>
-                                </td>
-                                <td style="border:2px solid black">
-                                    <p style="terp_default_8">accounts@charterquest.co.za</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border:2px solid black">
-                                    <p style="terp_default_8">Fax</p>
-                                </td>
-                                <td colspan="4" style="border:2px solid black">
-                                    <p style="terp_default_8">0862 188 713</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border:2px solid black">
-                                    <p style="terp_default_8">Website</p>
-                                </td>
-                                <td>
-                                    <p style="terp_default_8">www.charterquest.co.za</p>
-                                </td>
-                                <td>
-                                    <p style="terp_default_8">Date</p>
-                                </td>
-                                <td colspan="2">
-                                    <p style="terp_default_8">
-                                        <span t-esc="o.date_invoice or 'Not Provided'"/>
-                                    </p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="table">
-                        <thead>
-                            <tr style="background-color:darkgray;">
-                                <td style="padding: 6px;line-height: 1;font-size: 20px;font-weight: 500;width: 30%;">
-                                    <span>INVOICE TO</span>
-                                </td>
-                                <td colspan="4">
-                                    <sapn>
 
-                                    </sapn>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr t-if="o.affiliation=='2'">
-                                <td>
-                                    <p>Company</p>
-                                </td>
-                                <td colspan="2">
-                                    <span t-esc="o.partner_id.student_company or ''"></span>
-                                </td>
-                                <td>
-                                    <p style="terp_default_8">VAT No</p>
-                                </td>
-                                <td>
-                                    <span t-esc="o.partner_id.vat_no_comp or ''"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>Name of Student/Sponsor</p>
-                                </td>
-                                <td colspan="2">
-                                    <p>
-                                        <span t-esc="o.partner_id.name"/>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p>Student no</p>
-                                </td>
-                                <td>
-                                    <p><span t-esc="o.partner_id.student_number"/></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p style="terp_default_8">Student Address</p>
-                                </td>
-                                <td colspan="4">
-                                    <p style="terp_default_8">
-                                        <span t-esc="o.partner_id and o.partner_id.street or ''"/>
-                                        <span>,</span>
-                                        <span t-esc="o.partner_id and o.partner_id.street2 or  ''"/>
-                                        <span>,</span>
-                                        <span t-esc="o.partner_id and o.partner_id.city or  ''"/>
-                                        <span>,</span>
-                                        <span t-esc="o.partner_id and o.partner_id.state_id and o.partner_id.state_id.name or  ''"/>
-                                        <span>,</span>
-                                        <span t-esc="o.partner_id and o.partner_id.zip or  ''"/>
-                                        <span>,</span>
-                                        <span t-esc="o.partner_id and o.partner_id.country_id and o.partner_id.country_id.name or  '' "/>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p style="terp_default_8">Tel</p>
-                                </td>
-                                <td style="border:2px solid black" colspan="2">
-                                    <p>
-                                        <span t-esc="o.partner_id and o.partner_id.phone or 'Not Provided'"/>
-                                    </p>
-                                </td>
-                                <td style="border:2px solid black">
-                                    <p style="terp_default_8">Mobile</p>
-                                </td>
-                                <td style="border:2px solid black">
-                                    <p>
-                                        <span t-esc="o.partner_id and o.partner_id.mobile or 'Not Provided'"/>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>Email</p>
-                                </td>
-                                <td colspan="2">
-                                    <p>
-                                        <span t-esc="o.partner_id and o.partner_id.email or 'Not Provided'"/>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p>Fax</p>
-                                </td>
-                                <td>
-                                    <p>
-                                        <span t-esc="'Not Provided'"/>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>D.O.B</p>
-                                </td>
-                                <td colspan="2">
-                                    <p>
-                                        <span t-esc="o.partner_id and o.partner_id.dob or 'Not Provided'"/>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p>Prof Body Student ID</p>
-                                </td>
-                                <td>
-                                    <p>
-                                        <span t-esc="o.partner_id and o.partner_id.prof_body_id or 'Not Provided'"/>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="5" style="padding: 10px;">
-                                    <span></span>
-                                </td>
-                            </tr>
-                            <tr style="border-top:2px solid black">
-                                <td style="border-top:2px solid black">
-                                    <span>Professional Body</span>
-                                </td>
-                                <td style="border-top:2px solid black" colspan="2">
-                                    <span t-esc="o.prof_body and o.prof_body.name or 'Not Provided'"/>
-                                </td>
-                                <td style="border-top:2px solid black">
-                                    <span>Semester</span>
-                                </td>
-                                <td style="border-top:2px solid black">
-                                    <span t-esc="o.semester_id and  o.semester_id.name or 'Not Provided'"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Selected Campus</span>
-                                </td>
-                                <td colspan="4">
-                                    <span t-esc="o.campus and o.campus.name or 'Not Provided'"/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table class="table">
-                        <thead>
-                            <tr style="background-color:darkgray;">
-                                <td style="padding: 5px;line-height: 1;text-align:center;">
-                                    <span>
-                                        <b>Description</b>
-                                    </span>
-                                </td>
-                                <td style="padding: 5px;line-height: 1;text-align:center;">
-                                    <span>
-                                        <b>Date</b>
-                                    </span>
-                                </td>
-                                <td style="padding: 5px;line-height: 1;text-align:center;">
-                                    <span>
-                                        <b>Taxes</b>
-                                    </span>
-                                </td>
-                                <td style="padding: 5px;line-height: 1;text-align:center;">
-                                    <span>
-                                        <b>Quantity</b>
-                                    </span>
-                                </td>
-                                <td style="padding: 5px;line-height: 1;text-align:center;">
-                                    <span>
-                                        <b>Unit Price</b>
-                                    </span>
-                                </td>
-                                <td style="padding: 5px;line-height: 1;text-align:center;">
-                                    <span>
-                                        <b>Disc.(%)</b>
-                                    </span>
-                                </td>
-                                <td style="padding: 5px;line-height: 1;text-align:center;">
-                                    <span>
-                                        <b>Price</b>
-                                    </span>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <t t-foreach="o.invoice_line_ids" t-as="l">
-                                <tr>
-                                    <td style="line-height: 1;width:30%;">
-                                        <span t-esc="l.name"/>
-                                    </td>
-                                    <td style="padding: 2px;line-height: 1;width:15%;">
-                                        <span t-esc="l.event_id and l.event_id.date_begin or '' "/>
-                                    </td>
-                                    <td style="padding: 2px;line-height: 1;width:10%;">
-                                        <t t-foreach="l.invoice_line_tax_ids" t-as="lt">
-                                            <span style="float:right;" t-esc="lt.name"/>
-                                        </t>
-                                    </td>
-                                    <td style="padding: 2px;line-height: 1;width:10%;">
-                                        <span style="float:right;" t-esc="l.quantity"/>
-                                    </td>
-                                    <td style="padding: 2px;line-height: 1;width:10%;">
-                                        <span style="float:right;" t-esc="'%.2f'%(l.price_unit)"/>
-                                    </td>
-                                    <td style="padding: 2px;line-height: 1;width:10%;">
-                                        <span style="float:right;" t-esc="'%.2f'%(l.discount)"/>
-                                    </td>
-                                    <td style="padding: 2px;line-height: 1;width:15%;">
-                                        <span style="float:right;" t-esc="'%.2f'%(l.price_subtotal)"/>
-                                        <span style="float:right;" t-esc="o.currency_id.symbol"/>
-                                    </td>
-                                </tr>
-                            </t>
-                            <tr style="background-color:darkgray;">
-                                <td colspan="3">
-                                    <span style="float:right;">SUB TOTAL</span>
-                                </td>
-                                <td colspan="3">
-                                    <p>
-                                        <font color="white"></font>
-                                    </p>
-                                </td>
-                                <td>
-                                    <span style="float:right;" t-esc="'%.2f'%(o.amount_untaxed)"/>
-                                    <span style="float:right;" t-esc="o.currency_id.symbol"/>
-                                </td>
-                            </tr>
-                            <tr t-if="o.affiliation == '1'">
-                                <td colspan="3">
-                                    <span style="float:right;">TAXES</span>
-                                </td>
-                                <td colspan="3">
-                                    <p>
-                                    </p>
-                                </td>
-                                <td>
-                                    <span style="float:right;" t-esc="'%.2f'%(o.amount_tax)"/>
-                                    <span style="float:right;" t-esc="o.currency_id.symbol"/>
-                                </td>
-                            </tr>
-                            <tr t-if="o.affiliation == '2'">
-                                <td colspan="3">
-                                    <span style="float:right;">VAT @ 0%</span>
-                                </td>
-                                <td colspan="3">
-                                    <p>
-                                    </p>
-                                </td>
-                                <td>
-                                    <span style="float:right;">R 0.00</span>
-                                </td>
-                            </tr>
-                            <tr style="background-color:black;">
-                                <td colspan="3">
-                                    <span style="float:right; color:white;">TOTAL FEES</span>
-                                </td>
-                                <td colspan="3">
-                                    <span></span>
-                                </td>
-                                <td>
-                                    <span style="float:right; color:white;" t-esc="'%.2f'%(o.amount_total)"/>
-                                    <span style="float:right; color:white;" t-esc="o.currency_id.symbol"/>
-                                </td>
-                            </tr>
-                            <tr style="background-color:darkgray;">
-                                <td colspan="3">
-                                    <span>(All EFT Payments are subject to confirmation)</span>
-                                    <br/>
-                                    <span style="float:right;">Paid</span>
-                                </td>
-                                <td colspan="3">
-                                    <span></span>
-                                </td>
-                                <td>
-                                    <span style="float:right;" t-esc="'%.2f'%(o.amount_total - o.residual)"/>
-                                    <span style="float:right;" t-esc="o.currency_id.symbol"/>
-                                </td>
-                            </tr>
-                            <tr style="background-color:black;">
-                                <td colspan="3">
-                                    <span style="float:right; color:white;">Outstanding Balance</span>
-                                </td>
-                                <td colspan="3">
-                                    <span></span>
-                                </td>
-                                <td>
-                                    <span style="float:right; color:white;" t-esc="'%.2f'%(o.residual)"/>
-                                    <span style="float:right; color:white;" t-esc="o.currency_id.symbol"/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <br/>
-                    <br/>
-                    <table class="table" t-if="o.affiliation != '2'">
-                        <thead>
-                            <tr>
-                                <td>
-                                    <b>
-                                        <span>Display of Payment Structure:</span>
-                                    </b>
-                                </td>
-                                <td style="padding: 5px;">
-                                    <table class="table" style="margin:0px;">
-                                        <thead>
-                                            <tr style="background-color:gray;">
-                                                <td>
-                                                    <b>
-                                                        <span>Account Holder</span>
-                                                    </b>
-                                                </td>
-                                                <td>
-                                                    <b>
-                                                        <span>Debit Order Date</span>
-                                                    </b>
-                                                </td>
-                                                <td>
-                                                    <b>
-                                                        <span>Debit Order Amount</span>
-                                                    </b>
-                                                </td>
-                                                <td>
-                                                    <b>
-                                                        <span>Debit Order Status</span>
-                                                    </b>
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <t t-foreach="o.debit_order_entry" t-as="l">
-                                                <tr>
-                                                    <td>
-                                                        <span t-esc="l.partner_id.name"/>
-                                                    </td>
-                                                    <td>
-                                                        <span t-esc="l.dbo_date"/>
-                                                    </td>
-                                                    <td>
-                                                        <span t-esc="l.dbo_amount"/>
-                                                    </td>
-                                                    <td>
-                                                        <span t-esc="l.state"/>
-                                                    </td>
-                                                </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </thead>
-                    </table>
-
-                    <table class="table" style="background-color:black" t-if="o.affiliation != '2'">
-                        <thead>
-                            <tr tyle="background-color:black;">
-                                <td>
-                                    <span style="color:white;">A. PRODUCT PACKAGE BENEFIT DESCRIPTIONS:</span>
-                                </td>
-                            </tr>
-                        </thead>
-                    </table>
-
-                    <table class="table" t-if="o.affiliation != '2'">
-                        <thead>
-                            <tr style="background-color:darkgray;">
-                                <td style="width:15%">
-                                    <span>
-                                        <b>CODE</b>
-                                    </span>
-                                </td>
-                                <td style="width:20%">
-                                    <span>
-                                        <b>DESCRIPTION</b>
-                                    </span>
-                                </td>
-                                <td>
-                                    <b>
-                                        <span>INDICATIVE BENEFITS</span>
-                                        <br/>
-                                        <span>Benefits are subject to our advertisments on the timetable/website. ''e''
-                                            means eletronic materials you can download and print or access via tablet
-                                            device)
-                                        </span>
-                                    </b>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span>TEPP -E</span>
-                                </td>
-                                <td>
-                                    <span>Tuition &amp; Exam Prep Package - Evenings</span>
-                                </td>
-                                <td style="padding-left: 25px;">
-                                    <ol>
-                                        <li>
-                                            <span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour
-                                                sessions)
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour
-                                                sessions)
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Study Text and e-Course Notes</span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
-                                        </li>
-                                        <li>
-                                            <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
-                                                feedback.
-                                            </span>
-                                        </li>
-                                    </ol>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>TEPP -W</span>
-                                </td>
-                                <td>
-                                    <span>Tuition &amp; Exam Prep Package -Weekends</span>
-                                </td>
-                                <td style="padding-left: 25px;">
-                                    <ol>
-                                        <li>
-                                            <span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour
-                                                sessions)
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour
-                                                sessions)
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Study Text and e-Course Notes</span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
-                                        </li>
-                                        <li>
-                                            <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
-                                                feedback.
-                                            </span>
-                                        </li>
-                                    </ol>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>TEPP -D</span>
-                                </td>
-                                <td>
-                                    <span>Tuition &amp; Exam Prep Package -Daytime Block Release Package</span>
-                                </td>
-                                <td style="padding-left: 25px;">
-                                    <ol>
-                                        <li>
-                                            <span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour
-                                                sessions)
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour
-                                                sessions)
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Study Text and e-Course Notes</span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
-                                        </li>
-                                        <li>
-                                            <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
-                                                feedback.
-                                            </span>
-                                        </li>
-                                    </ol>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>TEPP -FT</span>
-                                </td>
-                                <td>
-                                    <span>Tuition &amp; Exam Prep Package -Fulltime</span>
-                                </td>
-                                <td style="padding-left: 25px;">
-                                    <ol>
-                                        <li>
-                                            <span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour
-                                                sessions)
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour
-                                                sessions)
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Study Text and e-Course Notes</span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
-                                        </li>
-                                        <li>
-                                            <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
-                                                feedback.
-                                            </span>
-                                        </li>
-                                    </ol>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>TEPP -W(ICS)</span>
-                                </td>
-                                <td>
-                                    <span>Tuition &amp; Exam Prep Package -Weekends(Integrated Case Study Exams)</span>
-                                </td>
-                                <td style="padding-left: 25px;">
-                                    <ol>
-                                        <li>
-                                            <span>18 - 24 hours of Tuition contact time</span>
-                                        </li>
-                                        <li>
-                                            <span>6-18 hours of Exam Preps/Revision time</span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Case Study specific Workbook/e Course Notes</span>
-                                        </li>
-                                        <li>
-                                            <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
-                                                feedback.
-                                            </span>
-                                        </li>
-                                    </ol>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>EPOP (ICS)</span>
-                                </td>
-                                <td>
-                                    <span>Exam Prep ONLY Package (Integrated Case Study Exams)</span>
-                                </td>
-                                <td style="padding-left: 25px;">
-                                    <ol>
-                                        <li>
-                                            <span>6-18 hours of Exam Preps/Revision time</span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Case Study specific Workbook/e Course Notes</span>
-                                        </li>
-                                        <li>
-                                            <span>1 Final Mock all marked with review feedback.</span>
-                                        </li>
-                                    </ol>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>EPOP</span>
-                                </td>
-                                <td>
-                                    <span>Exam Preparatory Only Package (E/W/D/FT) for OT Exams</span>
-                                </td>
-                                <td style="padding-left: 25px;">
-                                    <ol>
-                                        <li>
-                                            <span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour
-                                                sessions)
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
-                                        </li>
-                                        <li>
-                                            <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
-                                                feedback.
-                                            </span>
-                                        </li>
-                                    </ol>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>HSP</span>
-                                </td>
-                                <td>
-                                    <span>Home Study Package</span>
-                                </td>
-                                <td style="padding-left: 25px;">
-                                    <ol>
-                                        <li>
-                                            <span>Home Study Kit/Scheme of Work</span>
-                                        </li>
-                                        <li>
-                                            <span>Interactive online support</span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Study Text and Course Notes</span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
-                                        </li>
-                                        <li>
-                                            <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
-                                                feedback.
-                                            </span>
-                                        </li>
-                                    </ol>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>TEBP</span>
-                                </td>
-                                <td>
-                                    <span>Transition and Exam Booster Package</span>
-                                </td>
-                                <td style="padding-left: 25px;">
-                                    <ol>
-                                        <li>
-                                            <span>6-12 hours of Exam Preps/Revision time</span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan e-Course Notes</span>
-                                        </li>
-                                        <li>
-                                            <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
-                                        </li>
-                                    </ol>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table class="table" style="background-color:black;">
-                        <thead>
-                            <tr>
-                                <td>
-                                    <p align="center">
-                                        <font color="white">BANKING DETAILS: Business Cheque Account No. 626 8076 7054:
-                                            The CharterQuest Professional Education Institute: First National Bank
-                                            Northgate Center: Branch Code 250655. Swift Code:FIRNZAJJ.Proof of payment
-                                            should contain proforma invoice number as reference and must be sent to
-                                            email or fax number provided above
-                                        </font>
-                                    </p>
-                                    <p align="center">
-                                        <font color="white">THANK YOU FOR YOUR CONFIDENCE!</font>
-                                    </p>
-                                </td>
-                            </tr>
-                        </thead>
-                    </table>
+    <template id="external_layout_boxed_charter">
+        <div class="header o_boxed_header">
+            <div class="row mb8">
+                <div class="col-xs-6">
+                </div>
+                <div class="col-xs-6 text-right mb4">
+                    <h4 class="mt0" t-field="res_company.report_header"/>
+                    <div name="company_address" class="mb4">
+                    </div>
                 </div>
             </div>
-        </t>
+        </div>
+
+        <div class="article o_report_layout_boxed">
+          <t t-raw="0" />
+        </div>
+
+        <div class="footer o_boxed_footer">
+
+            <div class="text-center">
+                <t t-if="o.affiliation == '2'">
+                 <table class="table" style="background-color:black;">
+                    <thead>
+                        <tr>
+                            <td>
+                                <p align="center">
+                                    <font color="white">BANKING DETAILS: Business Cheque Account No. 626 8076 7054:
+                                        The CharterQuest Professional Education Institute: First National Bank
+                                        Northgate Center: Branch Code 250655. Swift Code:FIRNZAJJ.Proof of payment
+                                        should contain proforma invoice number as reference and must be sent to
+                                        email or fax number provided above
+                                    </font>
+                                </p>
+                                <p align="center">
+                                    <font color="white">THANK YOU FOR YOUR CONFIDENCE!</font>
+                                </p>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+               </t>
+                <div t-field="res_company.report_footer"/>
+            </div>
+        </div>
+    </template>
+
+
+    <template id="report_account_statement_enrollment">
+        <t t-call="event_price_kt.external_layout_boxed_charter">
+        <div class="page">
+            <style>
+                table,tbody,thead, tr,th,td{
+                border:2px solid black;
+                }
+                tr,td,th{
+                height:15%;
+                padding: 0px;
+                margin: 0px;
+                }
+                p{
+                margin: 5px;
+                }
+                span{
+                margin: 1px;
+                }
+                table .header_title{
+                font-size:25px;
+                font-color:green;
+                font-weight: 800;
+                }
+                .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr >
+                td, .table > tbody > tr > td, .table > tfoot > tr > td {
+                padding: 2px;
+                line-height: 1;
+                }
+            </style>
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td style="width: 165px;">
+                                <t t-if="res_company.logo">
+                                    <img class="image"
+                                         t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)"
+                                         style="border:auto; height:100px;width:270px;"/>
+                                </t>
+                            </td>
+                            <td>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                                <center>
+                                                    <b>
+                                                        <p style="color:green;" class="header_title">STATEMENT</p>
+                                                    </b>
+                                                </center>
+                                                <p>
+                                                    <font color="white"></font>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td colspan="3">
+                                <p style="color:black;">Registration No: 2016/159500/07.</p>
+                            </td>
+                            <td>
+                                <p style="color:black;">
+                                    <b>Doc No.</b>
+                                </p>
+                            </td>
+                            <td>
+                                <p style="color:black;">
+                                    <b>
+                                        <span t-field="o.number"/>
+                                    </b>
+                                </p>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="5">
+                                <p style="terp_default_8">CHARTERQUEST HOUSE, Metropolitan Park, 374 Rivonia
+                                    Boulevard, Rivonia, SANDTON, South Africa
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p style="terp_default_8">Tel no.</p>
+                            </td>
+                            <td>
+                                <p style="terp_default_8">+27 (0)11 234 9223</p>
+                            </td>
+                            <td>
+                                <p style="terp_default_8">+27 (0)73 174 5454</p>
+                            </td>
+                            <td>
+                                <p style="terp_default_8">Email</p>
+                            </td>
+                            <td style="border:2px solid black">
+                                <p style="terp_default_8">accounts@charterquest.co.za</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border:2px solid black">
+                                <p style="terp_default_8">Fax</p>
+                            </td>
+                            <td colspan="4" style="border:2px solid black">
+                                <p style="terp_default_8">0862 188 713</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border:2px solid black">
+                                <p style="terp_default_8">Website</p>
+                            </td>
+                            <td>
+                                <p style="terp_default_8">www.charterquest.co.za</p>
+                            </td>
+                            <td>
+                                <p style="terp_default_8">Date</p>
+                            </td>
+                            <td colspan="2">
+                                <p style="terp_default_8">
+                                    <span t-esc="o.date_invoice or 'Not Provided'"/>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table">
+                    <thead>
+                        <tr style="background-color:darkgray;">
+                            <td style="padding: 6px;line-height: 1;font-size: 20px;font-weight: 500;width: 30%;">
+                                <span>INVOICE TO</span>
+                            </td>
+                            <td colspan="4">
+                                <sapn>
+
+                                </sapn>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-if="o.affiliation=='2'">
+                            <td>
+                                <p>Company</p>
+                            </td>
+                            <td colspan="2">
+                                <span t-esc="o.partner_id.student_company or ''"></span>
+                            </td>
+                            <td>
+                                <p style="terp_default_8">VAT No</p>
+                            </td>
+                            <td>
+                                <span t-esc="o.partner_id.vat_no_comp or ''"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Name of Student/Sponsor</p>
+                            </td>
+                            <td colspan="2">
+                                <p>
+                                    <span t-esc="o.partner_id.name"/>
+                                </p>
+                            </td>
+                            <td>
+                                <p>Student no</p>
+                            </td>
+                            <td>
+                                <p>
+                                    <span t-esc="o.partner_id.student_number"/>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p style="terp_default_8">Student Address</p>
+                            </td>
+                            <td colspan="4">
+                                <p style="terp_default_8">
+                                    <span t-esc="o.partner_id and o.partner_id.street or ''"/>
+                                    <span>,</span>
+                                    <span t-esc="o.partner_id and o.partner_id.street2 or  ''"/>
+                                    <span>,</span>
+                                    <span t-esc="o.partner_id and o.partner_id.city or  ''"/>
+                                    <span>,</span>
+                                    <span t-esc="o.partner_id and o.partner_id.state_id and o.partner_id.state_id.name or  ''"/>
+                                    <span>,</span>
+                                    <span t-esc="o.partner_id and o.partner_id.zip or  ''"/>
+                                    <span>,</span>
+                                    <span t-esc="o.partner_id and o.partner_id.country_id and o.partner_id.country_id.name or  '' "/>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p style="terp_default_8">Tel</p>
+                            </td>
+                            <td style="border:2px solid black" colspan="2">
+                                <p>
+                                    <span t-esc="o.partner_id and o.partner_id.phone or 'Not Provided'"/>
+                                </p>
+                            </td>
+                            <td style="border:2px solid black">
+                                <p style="terp_default_8">Mobile</p>
+                            </td>
+                            <td style="border:2px solid black">
+                                <p>
+                                    <span t-esc="o.partner_id and o.partner_id.mobile or 'Not Provided'"/>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Email</p>
+                            </td>
+                            <td colspan="2">
+                                <p>
+                                    <span t-esc="o.partner_id and o.partner_id.email or 'Not Provided'"/>
+                                </p>
+                            </td>
+                            <td>
+                                <p>Fax</p>
+                            </td>
+                            <td>
+                                <p>
+                                    <span t-esc="'Not Provided'"/>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>D.O.B</p>
+                            </td>
+                            <td colspan="2">
+                                <p>
+                                    <span t-esc="o.partner_id and o.partner_id.dob or 'Not Provided'"/>
+                                </p>
+                            </td>
+                            <td>
+                                <p>Prof Body Student ID</p>
+                            </td>
+                            <td>
+                                <p>
+                                    <span t-esc="o.partner_id and o.partner_id.prof_body_id or 'Not Provided'"/>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="padding: 10px;">
+                                <span></span>
+                            </td>
+                        </tr>
+                        <tr style="border-top:2px solid black">
+                            <td style="border-top:2px solid black">
+                                <p>Professional Body</p>
+                            </td>
+                            <td style="border-top:2px solid black" colspan="2">
+                                <p t-esc="o.prof_body and o.prof_body.name or 'Not Provided'"/>
+                            </td>
+                            <td style="border-top:2px solid black">
+                                <p>Semester</p>
+                            </td>
+                            <td style="border-top:2px solid black">
+                                <p t-esc="o.semester_id and  o.semester_id.name or 'Not Provided'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Selected Campus</p>
+                            </td>
+                            <td colspan="4">
+                                <p t-esc="o.campus and o.campus.name or 'Not Provided'"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table">
+                    <thead>
+                        <tr style="background-color:darkgray;">
+                            <td style="padding: 5px;line-height: 1;text-align:center;" t-if="o.affiliation == '1'">
+                                <span>
+                                    <b>Description</b>
+                                </span>
+                            </td>
+                            <td colspan="2" style="padding: 5px;line-height: 1;text-align:center;" t-if="o.affiliation == '2'">
+                                <span>
+                                    <b>Description</b>
+                                </span>
+                            </td>
+                            <td style="padding: 5px;line-height: 1;text-align:center;" t-if="o.affiliation == '1'">
+                                <span>
+                                    <b>Date</b>
+                                </span>
+                            </td>
+                            <td style="padding: 5px;line-height: 1;text-align:center;">
+                                <span>
+                                    <b>Taxes</b>
+                                </span>
+                            </td>
+                            <td style="padding: 5px;line-height: 1;text-align:center;">
+                                <span>
+                                    <b>Quantity</b>
+                                </span>
+                            </td>
+                            <td style="padding: 5px;line-height: 1;text-align:center;">
+                                <span>
+                                    <b>Unit Price</b>
+                                </span>
+                            </td>
+                            <td style="padding: 5px;line-height: 1;text-align:center;">
+                                <span>
+                                    <b>Disc.(%)</b>
+                                </span>
+                            </td>
+                            <td style="padding: 5px;line-height: 1;text-align:center;">
+                                <span>
+                                    <b>Price</b>
+                                </span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="o.invoice_line_ids" t-as="l">
+                            <tr>
+                                <td style="line-height: 1;width:30%;" t-if="o.affiliation == '1'">
+                                    <p t-esc="l.name"/>
+                                </td>
+                                <td colspan="2" style="line-height: 1;width:45%;" t-if="o.affiliation == '2'">
+                                    <p t-esc="l.name"/>
+                                </td>
+                                <td style="padding: 2px;line-height: 1;width:15%;" t-if="o.affiliation == '1'">
+                                    <span t-esc="l.event_id and l.event_id.date_begin or '' "/>
+                                </td>
+                                <td style="padding: 2px;line-height: 1;width:10%;">
+                                    <t t-foreach="l.invoice_line_tax_ids" t-as="lt">
+                                        <span style="float:right;" t-esc="lt.name"/>
+                                    </t>
+                                </td>
+                                <td style="padding: 2px;line-height: 1;width:10%;">
+                                    <span style="float:right;" t-esc="l.quantity"/>
+                                </td>
+                                <td style="padding: 2px;line-height: 1;width:10%;">
+                                    <span style="float:right;" t-esc="'%.2f'%(l.price_unit)"/>
+                                </td>
+                                <td style="padding: 2px;line-height: 1;width:10%;">
+                                    <span style="float:right;" t-esc="'%.2f'%(l.discount)"/>
+                                </td>
+                                <td style="padding: 2px;line-height: 1;width:15%;">
+                                    <span style="float:right;" t-esc="'%.2f'%(l.price_subtotal)"/>
+                                    <span style="float:right;" t-esc="o.currency_id.symbol"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr style="background-color:darkgray;">
+                            <td colspan="3">
+                                <span style="float:right;">SUB TOTAL</span>
+                            </td>
+                            <td colspan="3">
+                                <p>
+                                    <font color="white"></font>
+                                </p>
+                            </td>
+                            <td>
+                                <span style="float:right;" t-esc="'%.2f'%(o.amount_untaxed)"/>
+                                <span style="float:right;" t-esc="o.currency_id.symbol"/>
+                            </td>
+                        </tr>
+                        <tr t-if="o.affiliation == '1'">
+                            <td colspan="3">
+                                <span style="float:right;">TAXES</span>
+                            </td>
+                            <td colspan="3">
+                                <p>
+                                </p>
+                            </td>
+                            <td>
+                                <span style="float:right;" t-esc="'%.2f'%(o.amount_tax)"/>
+                                <span style="float:right;" t-esc="o.currency_id.symbol"/>
+                            </td>
+                        </tr>
+                        <tr t-if="o.affiliation == '2'">
+                            <td colspan="3">
+                                <span style="float:right;">VAT @ 0%</span>
+                            </td>
+                            <td colspan="3">
+                                <p>
+                                </p>
+                            </td>
+                            <td>
+                                <span style="float:right;">R 0.00</span>
+                            </td>
+                        </tr>
+                        <tr style="background-color:black;">
+                            <td colspan="3">
+                                <span style="float:right; color:white;">TOTAL FEES</span>
+                            </td>
+                            <td colspan="3">
+                                <span></span>
+                            </td>
+                            <td style="background-color:black;">
+                                <span style="float:right; color:white;" t-esc="'%.2f'%(o.amount_total)"/>
+                                <span style="float:right; color:white;" t-esc="o.currency_id.symbol"/>
+                            </td>
+                        </tr>
+                        <tr style="background-color:darkgray;">
+                            <td colspan="3">
+                                <p>(All EFT Payments are subject to confirmation)</p>
+                                <br/>
+                                <span style="float:right;">Paid</span>
+                            </td>
+                            <td colspan="3">
+                                <span></span>
+                            </td>
+                            <td >
+                                <span style="float:right;" t-esc="'%.2f'%(o.amount_total - o.residual)"/>
+                                <span style="float:right;" t-esc="o.currency_id.symbol"/>
+                            </td>
+                        </tr>
+                        <tr style="background-color:black;">
+                            <td colspan="3">
+                                <span style="float:right; color:white;">Outstanding Balance</span>
+                            </td>
+                            <td colspan="3">
+                                <span></span>
+                            </td>
+                            <td style="background-color:black;">
+                                <span style="float:right; color:white;" t-esc="'%.2f'%(o.residual)"/>
+                                <span style="float:right; color:white;" t-esc="o.currency_id.symbol"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>
+                <br/>
+                <table class="table" t-if="o.affiliation != '2'">
+                    <thead>
+                        <tr>
+                            <td>
+                                <b>
+                                    <span>Display of Payment Structure:</span>
+                                </b>
+                            </td>
+                            <td style="padding: 5px;">
+                                <table class="table" style="margin:0px;">
+                                    <thead>
+                                        <tr style="background-color:gray;">
+                                            <td>
+                                                <b>
+                                                    <span>Account Holder</span>
+                                                </b>
+                                            </td>
+                                            <td>
+                                                <b>
+                                                    <span>Debit Order Date</span>
+                                                </b>
+                                            </td>
+                                            <td>
+                                                <b>
+                                                    <span>Debit Order Amount</span>
+                                                </b>
+                                            </td>
+                                            <td>
+                                                <b>
+                                                    <span>Debit Order Status</span>
+                                                </b>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.debit_order_entry" t-as="l">
+                                            <tr>
+                                                <td>
+                                                    <span t-esc="l.partner_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="l.dbo_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="l.dbo_amount"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="l.state"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+
+                <table class="table" style="background-color:black" t-if="o.affiliation != '2'">
+                    <thead>
+                        <tr tyle="background-color:black;">
+                            <td>
+                                <span style="color:white;">A. PRODUCT PACKAGE BENEFIT DESCRIPTIONS:</span>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+
+                <table class="table" t-if="o.affiliation != '2'">
+                    <thead>
+                        <tr style="background-color:darkgray;">
+                            <td style="width:15%">
+                                <span>
+                                    <b>CODE</b>
+                                </span>
+                            </td>
+                            <td style="width:20%">
+                                <span>
+                                    <b>DESCRIPTION</b>
+                                </span>
+                            </td>
+                            <td>
+                                <b>
+                                    <span>INDICATIVE BENEFITS</span>
+                                    <br/>
+                                    <span>Benefits are subject to our advertisments on the timetable/website. ''e''
+                                        means eletronic materials you can download and print or access via tablet
+                                        device)
+                                    </span>
+                                </b>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span>TEPP -E</span>
+                            </td>
+                            <td>
+                                <span>Tuition &amp; Exam Prep Package - Evenings</span>
+                            </td>
+                            <td style="padding-left: 25px;">
+                                <ol>
+                                    <li>
+                                        <span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour
+                                            sessions)
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour
+                                            sessions)
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Study Text and e-Course Notes</span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
+                                    </li>
+                                    <li>
+                                        <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
+                                            feedback.
+                                        </span>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>TEPP -W</span>
+                            </td>
+                            <td>
+                                <span>Tuition &amp; Exam Prep Package -Weekends</span>
+                            </td>
+                            <td style="padding-left: 25px;">
+                                <ol>
+                                    <li>
+                                        <span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour
+                                            sessions)
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour
+                                            sessions)
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Study Text and e-Course Notes</span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
+                                    </li>
+                                    <li>
+                                        <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
+                                            feedback.
+                                        </span>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>TEPP -D</span>
+                            </td>
+                            <td>
+                                <span>Tuition &amp; Exam Prep Package -Daytime Block Release Package</span>
+                            </td>
+                            <td style="padding-left: 25px;">
+                                <ol>
+                                    <li>
+                                        <span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour
+                                            sessions)
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour
+                                            sessions)
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Study Text and e-Course Notes</span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
+                                    </li>
+                                    <li>
+                                        <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
+                                            feedback.
+                                        </span>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>TEPP -FT</span>
+                            </td>
+                            <td>
+                                <span>Tuition &amp; Exam Prep Package -Fulltime</span>
+                            </td>
+                            <td style="padding-left: 25px;">
+                                <ol>
+                                    <li>
+                                        <span>18 - 21 hours of Tuition contact time (structured over 6-9, 3 hour
+                                            sessions)
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour
+                                            sessions)
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Study Text and e-Course Notes</span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
+                                    </li>
+                                    <li>
+                                        <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
+                                            feedback.
+                                        </span>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>TEPP -W(ICS)</span>
+                            </td>
+                            <td>
+                                <span>Tuition &amp; Exam Prep Package -Weekends(Integrated Case Study Exams)</span>
+                            </td>
+                            <td style="padding-left: 25px;">
+                                <ol>
+                                    <li>
+                                        <span>18 - 24 hours of Tuition contact time</span>
+                                    </li>
+                                    <li>
+                                        <span>6-18 hours of Exam Preps/Revision time</span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Case Study specific Workbook/e Course Notes</span>
+                                    </li>
+                                    <li>
+                                        <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
+                                            feedback.
+                                        </span>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>EPOP (ICS)</span>
+                            </td>
+                            <td>
+                                <span>Exam Prep ONLY Package (Integrated Case Study Exams)</span>
+                            </td>
+                            <td style="padding-left: 25px;">
+                                <ol>
+                                    <li>
+                                        <span>6-18 hours of Exam Preps/Revision time</span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Case Study specific Workbook/e Course Notes</span>
+                                    </li>
+                                    <li>
+                                        <span>1 Final Mock all marked with review feedback.</span>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>EPOP</span>
+                            </td>
+                            <td>
+                                <span>Exam Preparatory Only Package (E/W/D/FT) for OT Exams</span>
+                            </td>
+                            <td style="padding-left: 25px;">
+                                <ol>
+                                    <li>
+                                        <span>6-18 hours of Exam Preps/Revision time (structured over 4-5, 3 hour
+                                            sessions)
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
+                                    </li>
+                                    <li>
+                                        <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
+                                            feedback.
+                                        </span>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>HSP</span>
+                            </td>
+                            <td>
+                                <span>Home Study Package</span>
+                            </td>
+                            <td style="padding-left: 25px;">
+                                <ol>
+                                    <li>
+                                        <span>Home Study Kit/Scheme of Work</span>
+                                    </li>
+                                    <li>
+                                        <span>Interactive online support</span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Study Text and Course Notes</span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
+                                    </li>
+                                    <li>
+                                        <span>2 Progress Mocks/Tests + 1 Final Mock all marked with review
+                                            feedback.
+                                        </span>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>TEBP</span>
+                            </td>
+                            <td>
+                                <span>Transition and Exam Booster Package</span>
+                            </td>
+                            <td style="padding-left: 25px;">
+                                <ol>
+                                    <li>
+                                        <span>6-12 hours of Exam Preps/Revision time</span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan e-Course Notes</span>
+                                    </li>
+                                    <li>
+                                        <span>Kaplan Workbook/Exam Bank (OT Practice/Revision Kit)</span>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table" style="background-color:black;" t-if="o.affiliation != '2'">
+                    <thead>
+                        <tr>
+                            <td>
+                                <p align="center">
+                                    <font color="white">BANKING DETAILS: Business Cheque Account No. 626 8076 7054:
+                                        The CharterQuest Professional Education Institute: First National Bank
+                                        Northgate Center: Branch Code 250655. Swift Code:FIRNZAJJ.Proof of payment
+                                        should contain proforma invoice number as reference and must be sent to
+                                        email or fax number provided above
+                                    </font>
+                                </p>
+                                <p align="center">
+                                    <font color="white">THANK YOU FOR YOUR CONFIDENCE!</font>
+                                </p>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+                </t>
     </template>
 
     <template id="report_account_statement">
