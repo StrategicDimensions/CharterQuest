@@ -14,33 +14,12 @@ $(document).ready(function(){
             $(this).parents('.label_link_list').css('display','none');
         }
     })
-//    var cnt=self.$target.find('ul.nav.nav-tabs li').length
-//                    console.log("\n\n\n\n\n\n cnt>>>>",cnt)
-    $('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs').each(function(){
-        var cnt=$('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs li').length
-        if (cnt > 3){
-            for(var i=4;i<=cnt; i++){
-                $('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs li:nth-child('+ i +')').addClass('js-read-less')
-            }
-            $('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs').append(`<a class='read-more fa fa-chevron-circle-down'> More</a>`)
-        }
-    });
-
-    $(document).on('click','a.read-more',function(){
-        $('.js-read-less').addClass('js-read-more');
-        $('.js-read-more').removeClass('js-read-less');
-        $(this).addClass('read-less fa-chevron-circle-up').removeClass('fa-chevron-circle-down read-more');
-        $(this).text(' Less')
-    });
-
-    $(document).on('click','a.read-less',function(){
-        $('.js-read-more').addClass('js-read-less');
-        $('.js-read-less').removeClass('js-read-more');
-        $(this).addClass('read-more fa-chevron-circle-down').removeClass('fa-chevron-circle-up read-less');
-        $(this).text(' More')
-    });
-
-    if(window.location.pathname == '/time_table'){
+//    $('#cfo_menu_with_tabs_div_panel ul').readmore({
+//        speed: 1000,
+////        collapsedHeight: lineHeight * 1,
+////        heightMargin: lineHeight * 1
+//    });
+	if(window.location.pathname == '/time_table'){
 		$(document).on("click", ".details_view_lecturer", function(event){
 			window.location.href = $(this).attr('data-href');
 		});
