@@ -19,7 +19,7 @@
 
           <div class="footer o_boxed_footer">
 
-            <div class="text-center">
+            <div class="last-page text-center">
 <!--                <t t-if="o.affiliation == '2'">-->
                  <table class="table" style="background-color:black;">
                     <thead>
