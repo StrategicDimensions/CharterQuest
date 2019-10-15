@@ -503,7 +503,6 @@
                         <p>1. Secure all your study materials and grant you immediate access to class.</p>
                         <p>2. Remit your registration, annual subscription and/or exam fees in full to your Professional Body or University.</p>
 
-                        <p style="page-break-before:always;" t-if="o.affiliation == '2'"> </p>
                         <table class="table">
                             <thead>
                                 <tr style="background-color:darkgray;">
