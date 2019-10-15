@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="external_layout_boxed_charter_sales">
-        <div class="header o_boxed_header">
-            <div class="row mb8">
-                <div class="col-xs-6">
-                </div>
-                <div class="col-xs-6 text-right mb4">
-                    <h4 class="mt0" t-field="res_company.report_header"/>
-                    <div name="company_address" class="mb4">
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--    <template id="external_layout_boxed_charter_sales">-->
+<!--        <div class="header o_boxed_header">-->
+<!--            <div class="row mb8">-->
+<!--                <div class="col-xs-6">-->
+<!--                </div>-->
+<!--                <div class="col-xs-6 text-right mb4">-->
+<!--                    <h4 class="mt0" t-field="res_company.report_header"/>-->
+<!--                    <div name="company_address" class="mb4">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="article o_report_layout_boxed">
-          <t t-raw="0" />
-        </div>
+<!--        <div class="article o_report_layout_boxed">-->
+<!--          <t t-raw="0" />-->
+<!--        </div>-->
 
-          <div class="footer o_boxed_footer">
+<!--          <div class="footer o_boxed_footer">-->
 
-            <div class="last-page text-center">
+<!--            <div class="last-page text-center">-->
 <!--                <t t-if="o.affiliation == '2'">-->
-                 <table class="table" style="background-color:black;">
-                    <thead>
-                      <tr>
-                        <td>
-                            <center><span style="color:white;">WE LOOK FORWARD TO BEING OF SERVICE TO YOU.THANK YOU!</span></center>
-                        </td>
-                    </tr>
-                    </thead>
-                </table>
+<!--                 <table class="table" style="background-color:black;">-->
+<!--                    <thead>-->
+<!--                      <tr>-->
+<!--                        <td>-->
+<!--                            <center><span style="color:white;">WE LOOK FORWARD TO BEING OF SERVICE TO YOU.THANK YOU!</span></center>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                </table>-->
 <!--               </t>-->
-                <div t-field="res_company.report_footer"/>
-            </div>
-        </div>
-    </template>
+<!--                <div t-field="res_company.report_footer"/>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </template>-->
     <template id="report_enrollment_proforma">
-        <t t-call="event_price_kt.external_layout_boxed_charter_sales">
+        <t t-call="web.external_layout">
                 <div class="page">
                     <style>
                         table,tbody,thead, tr,th,td{
@@ -69,7 +69,7 @@
                             <tr>
                                 <td style="width: 165px;">
                                     <t t-if="res_company.logo">
-                                        <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="border:auto; height:100px;width:270px;"/>
+                                        <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="border:auto; height:100px;width:200px;"/>
                                     </t>
                                 </td>
                                 <td>
@@ -774,15 +774,15 @@
 <!--                            </tbody>-->
 <!--                        </table>-->
 
-<!--                        <table class="table"  style="background-color:black;" t-if="o.affiliation == '2'">-->
-<!--                            <thead>-->
-<!--                                <tr>-->
-<!--                                    <td>-->
-<!--                                        <center><span style="color:white;">WE LOOK FORWARD TO BEING OF SERVICE TO YOU.THANK YOU!</span></center>-->
-<!--                                    </td>-->
-<!--                                </tr>-->
-<!--                            </thead>-->
-<!--                        </table>-->
+                        <table class="table"  style="background-color:black;">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <center><span style="color:white;">WE LOOK FORWARD TO BEING OF SERVICE TO YOU.THANK YOU!</span></center>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </t>
