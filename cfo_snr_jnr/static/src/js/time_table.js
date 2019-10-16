@@ -14,11 +14,62 @@ $(document).ready(function(){
             $(this).parents('.label_link_list').css('display','none');
         }
     })
-//    $('#cfo_menu_with_tabs_div_panel ul').readmore({
-//        speed: 1000,
-////        collapsedHeight: lineHeight * 1,
-////        heightMargin: lineHeight * 1
-//    });
+    var i=0;
+    var list_menu=[]
+    $('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs').each(function(){
+        i++;
+        var newID='ul'+i;
+        $(this).attr('id',newID);
+        $(this).val(i);
+        list_menu.push(newID)
+    });
+    for(var i=0; i<list_menu.length; i++){
+        var id1=list_menu[i];
+        var j=0;
+        var cnt=$(document).find('#'+id1+' li').length;
+        if (cnt > 3){
+            for(j=4;j<=cnt; j++){
+                var $class = $('#'+id1+' li:nth-child('+ j +')');
+                if ($class.hasClass('js-read-less')){}else{
+                $class.addClass('js-read-less')}
+            }
+        }
+        if ($(document).find('#'+id1+' a.read-more').length == 0){
+            var btnid="btn"+id1
+            $('#'+id1).append(`<a class='read-more fa fa-chevron-circle-down' id="`+btnid+`"> More</a>`)
+        }
+
+    }
+
+    $(document).on('click','a.read-more',function(){
+        var id=$(this).attr('id')
+        var pid=$(this).parents().attr('id')
+        $('#'+pid+' li.js-read-less').addClass('js-read-more').removeClass('js-read-less');
+        $(this).addClass('read-less fa-chevron-circle-up').removeClass('fa-chevron-circle-down read-more').text(' Less');
+    });
+
+    $(document).on('click','a.read-less',function(){
+        var id=$(this).attr('id')
+        var pid=$(this).parents().attr('id')
+        $('#'+pid+' li.js-read-more').addClass('js-read-less').removeClass('js-read-more');
+        $(this).addClass('read-more fa-chevron-circle-down').removeClass('fa-chevron-circle-up read-less').text(' More');
+    });
+//        if (window.innerWidth <= 460){
+//        alert()
+//        $('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs').each(function(){
+//            var id1=$('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs').attr('id')
+//                        alert(id1)
+//                $('#'+id1).readmore({
+//                        speed: 300,
+//                        collapsedHeight: 10,
+//                        moreLink: '<a href="#">Read more &gt;</a>',
+//                        lessLink: '<a href="#">Read less</a>',
+//                        heightMargin: 10
+//                    });
+//         });
+//        }
+
+
 	if(window.location.pathname == '/time_table'){
 		$(document).on("click", ".details_view_lecturer", function(event){
 			window.location.href = $(this).attr('data-href');

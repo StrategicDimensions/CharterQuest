@@ -313,7 +313,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Date of Publication</th>
+                    <th class="mobile_css_publication">Date of Publication</th>
                     <td>
                         <span t-esc="product.date_of_publish if product.date_of_publish else ''"/>
                     </td>
