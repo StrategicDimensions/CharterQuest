@@ -44,6 +44,12 @@ class stock_move(models.Model):
                                   "* Available: When products are reserved, it is set to \'Available\'.\n" \
                                   "* Done: When the shipment is processed, the state is \'Done\'.")
 
+class stock_warehouse(models.Model):
+    _inherit = "stock.warehouse"
+
+    hide_in_bookstore = fields.Boolean(string="Hide in Bookstore")
+
+
 
 class stock_picking(models.Model):
     _inherit = "stock.picking"
