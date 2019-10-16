@@ -14,31 +14,61 @@ $(document).ready(function(){
             $(this).parents('.label_link_list').css('display','none');
         }
     })
-//    var cnt=self.$target.find('ul.nav.nav-tabs li').length
-//                    console.log("\n\n\n\n\n\n cnt>>>>",cnt)
+    var i=0;
+    var list_menu=[]
     $('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs').each(function(){
-        var cnt=$('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs li').length
-        if (cnt > 3){
-            for(var i=4;i<=cnt; i++){
-                $('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs li:nth-child('+ i +')').addClass('js-read-less')
-            }
-            $('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs').append(`<a class='read-more fa fa-chevron-circle-down'> More</a>`)
-        }
+        i++;
+        var newID='ul'+i;
+        $(this).attr('id',newID);
+        $(this).val(i);
+        list_menu.push(newID)
     });
+    console.log("\n\n\n\n\n",list_menu.length)
+    for(var i=0; i<list_menu.length; i++){
+        var id1=list_menu[i];
+        var j=0;
+        var cnt=$(document).find('#'+id1+' li').length;
+        if (cnt > 3){
+            for(j=4;j<=cnt; j++){
+                var $class = $('#'+id1+' li:nth-child('+ i +')');
+                if ($class.hasClass('js-read-less')){}else{
+                $class.addClass('js-read-less')}
+            }
+        }
+        if ($(document).find('#'+id1+' a.read-more').length == 0){
+            var btnid="btn"+id1
+            $('#'+id1).append(`<a class='read-more fa fa-chevron-circle-down' id="`+btnid+`"> More</a>`)
+        }
+
+    }
 
     $(document).on('click','a.read-more',function(){
-        $('.js-read-less').addClass('js-read-more');
-        $('.js-read-more').removeClass('js-read-less');
-        $(this).addClass('read-less fa-chevron-circle-up').removeClass('fa-chevron-circle-down read-more');
-        $(this).text(' Less')
+        var id=$(this).attr('id')
+        var pid=$(this).parents().attr('id')
+        $('#'+pid+' li.js-read-less').addClass('js-read-more').removeClass('js-read-less');
+        $(this).addClass('read-less fa-chevron-circle-up').removeClass('fa-chevron-circle-down read-more').text(' Less');
     });
 
     $(document).on('click','a.read-less',function(){
-        $('.js-read-more').addClass('js-read-less');
-        $('.js-read-less').removeClass('js-read-more');
-        $(this).addClass('read-more fa-chevron-circle-down').removeClass('fa-chevron-circle-up read-less');
-        $(this).text(' More')
+        var id=$(this).attr('id')
+        var pid=$(this).parents().attr('id')
+        $('#'+pid+' li.js-read-more').addClass('js-read-less').removeClass('js-read-more');
+        $(this).addClass('read-more fa-chevron-circle-down').removeClass('fa-chevron-circle-up read-less').text(' More');
     });
+//        if (window.innerWidth <= 460){
+//        alert()
+//        $('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs').each(function(){
+//            var id1=$('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs').attr('id')
+//                        alert(id1)
+//                $('#'+id1).readmore({
+//                        speed: 300,
+//                        collapsedHeight: 10,
+//                        moreLink: '<a href="#">Read more &gt;</a>',
+//                        lessLink: '<a href="#">Read less</a>',
+//                        heightMargin: 10
+//                    });
+//         });
+//        }
 
     if(window.location.pathname == '/time_table'){
 		$(document).on("click", ".details_view_lecturer", function(event){

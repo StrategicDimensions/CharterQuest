@@ -9,18 +9,9 @@
 	width:20%;
 }
 .h3set_width{
-	    width: 84%;
-	     margin:10px;
+	width: 84%;
+    margin:10px;
 }
-
-
-
-
-
-
-
-
-
 
 .cfo_snr_reportformset{
 	    width: 100%;
@@ -1141,6 +1132,61 @@ width: 900px !important;
 }
 .js-read-less{
      display:none !important;
+}
+.semester_span{
+    margin-top: 1px !important;
+    margin-left: 94px !important;
+}
+.multiple-semester-select{
+    width: 315px !important;
+    float: left !important;
+    margin-right: 10px !important;
+    margin-top: 35px !important;
+}
+.multiple-campus-select{
+    width: 315px !important;
+    float: left !important;
+    margin-right: 10px !important;
+}
+.multiple-levels-select{
+    width: 315px !important;
+    float: left !important;
+    margin-right: 10px !important;
+    margin-top: 35px !important;
+}
+.multiple-codes-select{
+    width: 315px !important;
+    float: left !important;
+    margin-right: 10px !important;
+    margin-top: 35px !important;
+}
+.multiple-option-select{
+    width: 315px !important;
+    float: left !important;
+    margin-right: 10px !important;
+    margin-top: 35px !important;
+}
+.campus_span{
+    margin-left: 95px !important;
+}
+.level_span{
+    margin-top: 1px !important;
+    margin-left: 110px !important;
+}
+.course_span{
+    margin-top: 1px !important;
+    margin-left: 103px !important;
+}
+.option_span{
+    margin-top: 1px !important;
+    margin-left: 86px !important;
+}
+.fillter_timetable{
+    width: 315px !important;
+    margin-top: 14px !important;
+}
+.mobile_css_publication{
+    white-space: nowrap !important;
 }
 }
 

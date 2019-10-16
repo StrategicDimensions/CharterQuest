@@ -92,8 +92,13 @@ odoo.define('cfo_snr_jnr.snippets_menu_tabs', function (require) {
                             </a>
                         </li>
                     `;
-
+                    var len=self.$target.find('.nav.nav-tabs').find('a.read-more').length
+                    if (len > 0){
+                        self.$target.find('.nav.nav-tabs').find('a.read-more').before(tab_html);
+                    }
+                    else{
 					self.$target.find('.nav.nav-tabs').append(tab_html);
+					}
                     var content_html = `
                     	<div role="tabpanel" class="tab-pane fade in active" id="`+ menu_url +`">
 							<div class="row oe_structure" style="min-height:150px;"/>
@@ -110,34 +115,34 @@ odoo.define('cfo_snr_jnr.snippets_menu_tabs', function (require) {
     $(document).ready(() => {
 		let url = location.href.replace(/\/$/, "");
 
-		if (location.hash) {
-			const hash = url.split("#");
-			$('#cfo_menu_with_tabs_div_panel a[href="#' + hash[1] + '"]').tab("show");
-			url = location.href.replace(/\/#/, "#");
-			history.replaceState(null, null, url);
-			setTimeout(() => {
-				$(window).scrollTop(0);
-			}, 400);
-		}
-
-		$('.cfo_menu_with_tabs_a_panel').on("click", function(event) {
-			if (event.ctrlKey)
-			{
-				const hash = $(this).attr("external-href");
-				window.open(hash);
-			}
-			else{
-				let newUrl;
-				const hash = $(this).attr("href");
-				if (hash == "#home") {
-					newUrl = url.split("#")[0];
-				} else {
-					newUrl = url.split("#")[0] + hash;
-				}
-				newUrl += "/";
-				history.replaceState(null, null, newUrl);
-			}
-		});
+//		if (location.hash) {
+//			const hash = url.split("#");
+//			$('#cfo_menu_with_tabs_div_panel a[href="#' + hash[1] + '"]').tab("show");
+//			url = location.href.replace(/\/#/, "#");
+//			history.replaceState(null, null, url);
+//			setTimeout(() => {
+//				$(window).scrollTop(0);
+//			}, 400);
+//		}
+//
+//		$('.cfo_menu_with_tabs_a_panel').on("click", function(event) {
+//			if (event.ctrlKey)
+//			{
+//				const hash = $(this).attr("external-href");
+//				window.open(hash);
+//			}
+//			else{
+//				let newUrl;
+//				const hash = $(this).attr("href");
+//				if (hash == "#home") {
+//					newUrl = url.split("#")[0];
+//				} else {
+//					newUrl = url.split("#")[0] + hash;
+//				}
+//				newUrl += "/";
+//				history.replaceState(null, null, newUrl);
+//			}
+//		});
 	});
 
 });
