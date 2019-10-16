@@ -25,7 +25,6 @@ $(document).ready(function(){
     });
     for(var i=0; i<list_menu.length; i++){
         var id1=list_menu[i];
-        alert(id1)
         var j=0;
         var cnt=$(document).find('#'+id1+' li').length;
         if (cnt > 3){
