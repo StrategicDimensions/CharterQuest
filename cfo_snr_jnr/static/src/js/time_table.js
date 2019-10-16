@@ -71,6 +71,12 @@ $(document).ready(function(){
 //        }
 
     if(window.location.pathname == '/time_table'){
+//    $('#cfo_menu_with_tabs_div_panel ul').readmore({
+//        speed: 1000,
+////        collapsedHeight: lineHeight * 1,
+////        heightMargin: lineHeight * 1
+//    });
+	if(window.location.pathname == '/time_table'){
 		$(document).on("click", ".details_view_lecturer", function(event){
 			window.location.href = $(this).attr('data-href');
 		});

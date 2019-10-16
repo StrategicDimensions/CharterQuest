@@ -25,6 +25,7 @@
         "views/customer_view.xml",
         "views/event_discount_view.xml",
         "views/semister_view.xml",
+        "views/layouts.xml",
         'wizard/pcexam_wizard_view.xml',
         'report/sale_pcexam_report.xml',
         'report/sale_enrollment_report.xml',

@@ -41,8 +41,6 @@
     </template>
 
 
-
-
     <template id="time_table_report">
             <t t-call="cfo_snr_jnr.external_layout_background_custom">
                 <center><h2>Class TimeTable</h2></center>
