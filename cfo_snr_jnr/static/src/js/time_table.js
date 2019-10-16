@@ -30,7 +30,7 @@ $(document).ready(function(){
         var cnt=$(document).find('#'+id1+' li').length;
         if (cnt > 3){
             for(j=4;j<=cnt; j++){
-                var $class = $('#'+id1+' li:nth-child('+ i +')');
+                var $class = $('#'+id1+' li:nth-child('+ j +')');
                 if ($class.hasClass('js-read-less')){}else{
                 $class.addClass('js-read-less')}
             }
