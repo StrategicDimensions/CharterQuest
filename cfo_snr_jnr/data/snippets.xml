@@ -29,7 +29,7 @@
 <!--                        <form action="/time_table_snippet" method="POST">-->
 <!--                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
                             <input type="hidden" name="id" value="1"/>
-                            <span style="margin: -26px 48px;float: left;"><b>Select Campus</b></span>
+                            <div><span class="campus_span" style="margin: -26px 48px;float: left;"><b>Select Campus</b></span></div>
                             <input type="hidden" name="campus_select" t-att-value="campus_select" placeholder=""/>
                             <select class="form-control multiple-campus-select" id="campus_select"
                                     style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
@@ -41,7 +41,7 @@
                                 </t>
                             </select>
 
-                            <span style="margin: -26px 38px;float: left;"><b>Select Semester</b></span>
+                            <div><span class="semester_span" style="margin: -26px 38px;float: left;"><b>Select Semester</b></span></div>
                             <input type="hidden" name="semester_select" t-att-value="semester_select"/>
                             <select class="form-control multiple-semester-select" id="semester_select"
                                     style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
@@ -52,7 +52,7 @@
                                 </t>
                             </select>
 
-                            <span style="margin: -26px 53px;float: left;"><b>Select Level</b></span>
+                            <div><span class="level_span" style="margin: -26px 53px;float: left;"><b>Select Level</b></span></div>
                             <input type="hidden" name="level_select" t-att-value="level_select" class="level_select"/>
                             <select name="level_select" class="form-control multiple-levels-select" id="level_select"
                                     style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
@@ -63,7 +63,7 @@
                                 </t>
                             </select>
 
-                            <span style="margin: -26px 45px;float: left;"><b>Select Subject</b></span>
+                            <div><span class="course_span" style="margin: -26px 45px;float: left;"><b>Select Subject</b></span></div>
                             <input type="hidden" name="course_code_select" t-att-value="course_code_select"/>
                             <select class="form-control multiple-codes-select" id="course_code_select"
                                     style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
@@ -74,7 +74,7 @@
                                 </t>
                             </select>
 
-                            <span style="margin: -26px 29px;float: left;"><b>Select Study Option</b></span>
+                            <div><span class="option_span" style="margin: -26px 29px;float: left;"><b>Select Study Option</b></span></div>
                             <input type="hidden" name="option_select" t-att-value="option_select"/>
                             <select class="form-control multiple-option-select" id="option_select"
                                     style="width: 18%;float: left;margin-right:10px;" multiple="multiple">

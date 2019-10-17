@@ -46,13 +46,8 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
             }
 		},
         cfo_add_card: function(type, value){
-            alert("add card")
-            console.log('\n\n\ type....',type)
-            console.log('\n\n\ value....',value)
 			var self = this;
-			console.log('\n\n\n\n\n self>>>>>>.',self)
 			var $target = self.$target.find('.material-card.active');
-			console.log('\n\n\ $target....',$target)
             if (type != undefined && type.type == "click" || type == undefined) {
 				$(document).find('#cfo_cards_block_modal').remove();
                 self.$modal = $(qweb.render("cfo_snr_jnr.cfo_snr_jnr_cards_blocks_cfo"));
@@ -73,7 +68,7 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
 						self.$modal.find(".facebook_is").addClass('hidden');
 						$is_facebook = false;
             		}
-				});
+				}); 
 
 				self.$modal.find('#is_twitter').on('change', function() {
 					if($(this).prop("checked") == true){

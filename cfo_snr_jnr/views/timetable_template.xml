@@ -91,7 +91,9 @@
                                                     <div style="width:70px;white-space: pre-wrap;" t-esc="line.course_code_id.campus_id.name"/>
                                                 </td>
                                                 <td width="12%">
-                                                    <div t-esc="line.day_selection.title()"/>
+                                                    <t t-if="line.day_selection.title()">
+                                                        <div t-esc="line.day_selection.title()"/>
+                                                    </t>
                                                     <span t-esc="line.start_time" t-options="{'widget':'float_time'}"/>
                                                     -
                                                     <span t-esc="line.end_time" t-options="{'widget':'float_time'}"/>
@@ -272,7 +274,9 @@
                                         <div t-esc="line.course_code_id.campus_id.name"/>
                                     </td>
                                     <td>
-                                        <div t-esc="line.day_selection.title()"/>
+                                        <t t-if="line.day_selection.title()">
+                                            <div t-esc="line.day_selection.title()"/>
+                                        </t>
                                         <span t-esc="line.start_time" t-options="{'widget':'float_time'}"/>
                                         -
                                         <span t-esc="line.end_time" t-options="{'widget':'float_time'}"/>
