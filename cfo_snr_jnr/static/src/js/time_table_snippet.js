@@ -240,7 +240,7 @@ $(document).ajaxComplete(function(){
     $('.info_time_table_course_snippet').popover({
 		animation: true,
 		html: true,
-//		placement: 'right',
+		placement: 'right',
         content: function() {
 			var content = $(this).attr("data-popover-content");
 			return $(content).children(".popover-body").html();

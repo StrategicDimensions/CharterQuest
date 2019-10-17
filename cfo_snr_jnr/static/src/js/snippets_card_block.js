@@ -68,7 +68,7 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
 						self.$modal.find(".facebook_is").addClass('hidden');
 						$is_facebook = false;
             		}
-				}); 
+				});
 
 				self.$modal.find('#is_twitter').on('change', function() {
 					if($(this).prop("checked") == true){

@@ -920,6 +920,23 @@ margin-left: -34px !important;
     border-radius: 7px !important;
     padding: 3px !important;
 }
+.time_table_snippet_div[style] {
+    max-width:97.1% !important;
+    margin-left: 5px !important;
+    min-height: 53px !important;
+    max-height: 53px !important;
+    margin-bottom: 5px !important;
+    text-align: center !important;
+    border: 2px solid gainsboro !important;
+    border-radius: 7px !important;
+    padding: 3px !important;
+}
+.color-picker{
+    display: flex !important;
+}
+.cfo-cnr-jnr-color-picker{
+   display: flex !important;
+}
 .nxt_prc_1{
     margin-right: -144px !important;
 }
@@ -1133,7 +1150,7 @@ width: 900px !important;
 .js-read-less{
      display:none !important;
 }
-.semester_span{
+span.semester_span{
     margin-top: 1px !important;
     margin-left: 94px !important;
 }
@@ -1166,18 +1183,18 @@ width: 900px !important;
     margin-right: 10px !important;
     margin-top: 35px !important;
 }
-.campus_span{
+span.campus_span{
     margin-left: 95px !important;
 }
-.level_span{
+span.level_span{
     margin-top: 1px !important;
     margin-left: 110px !important;
 }
-.course_span{
+span.course_span{
     margin-top: 1px !important;
     margin-left: 103px !important;
 }
-.option_span{
+span.option_span{
     margin-top: 1px !important;
     margin-left: 86px !important;
 }
