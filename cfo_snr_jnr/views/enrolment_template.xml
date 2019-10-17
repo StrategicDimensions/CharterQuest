@@ -363,7 +363,7 @@
         <xpath expr="//form//div[@class='js_product']" position="before">
             <div class="controls selectdiv">
                 <t t-set="warehouse"
-                   t-value="request.env['stock.warehouse'].sudo().search([('active', '=', true)])"/>
+                   t-value="request.env['stock.warehouse'].sudo().search([('hide_in_bookstore', '=', False)])"/>
                 <select name="warehouse_id" id="inputwarehouse"
                         class="requiredValue form-control1" required=""
                         style="border-radius: 0px !important;width: 203px;">
