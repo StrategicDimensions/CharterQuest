@@ -152,7 +152,6 @@ $(document).ready(function(){
             'campus_ids': campus_ids,
             'semester_ids': semester_ids
         }).then(function (data) {
-            console.log("\n\n\n data...",data)
             $(document).find('#course_code_select').html("")
             for(var i=0; i<data['subject'].length; i++)
             {
@@ -180,8 +179,6 @@ $(document).ready(function(){
             'campus_ids': campus_ids,
             'semester_ids': semester_ids
         }).then(function (data) {
-        console.log("\n\n\n data...",data)
-
             $(document).find('#course_code_select').html("")
             for(var i=0; i<data['subject'].length; i++)
             {

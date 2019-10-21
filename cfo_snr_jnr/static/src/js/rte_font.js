@@ -5,7 +5,6 @@ odoo.define('cfo_snr_jnr.rte_font', function (require) {
 	var rpc = require('web.rpc');
 	rte.Class.include({
 		_getDefaultConfig: function ($editable) {
-		    console.log('editable=====', $editable)
 			var fontSize = ['Default', '8', '9', '10', '11', '12', '14', '18', '24', '36', '48', '62'];
 			try {
 				rpc.query({
@@ -13,11 +12,9 @@ odoo.define('cfo_snr_jnr.rte_font', function (require) {
 					method: 'get_param',
 					args: ['cfo_snr_jnr.font_size_summernote']
 				}, {async: false}).then(function (res) {
-				    console.log('\n\n=====rs', res)
-					if (res){
+    					if (res){
 						fontSize = JSON.parse(res);
 						fontSize.splice(0, 1, "Default", fontSize[0]);
-						console.log('\n\n size', fontSize[0], fontSize)
 					}
 				});
 			}
