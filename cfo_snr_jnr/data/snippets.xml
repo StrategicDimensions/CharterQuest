@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="row">
                     <a class="onlymobilebtn">
-                        <img src="/cfo_snr_jnr/static/src/img/blocks/drop_menu3.png" alt="menu-bar" width="45"
+                    <img src="/cfo_snr_jnr/static/src/img/blocks/drop_menu3.png" alt="menu-bar" width="45"
                              height="45"/>
                     </a>
                     <div class="label_link_list row">

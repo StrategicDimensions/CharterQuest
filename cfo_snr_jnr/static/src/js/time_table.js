@@ -251,6 +251,9 @@ $(document).ready(function(){
         var id1=list_menu[i];
         var j=0;
         var cnt=$(document).find('#'+id1+' li').length;
+        if($(document).find('#'+id1+' a.read-more').length >=1){
+            $(document).find('#'+id1+' a.read-more').remove()
+        }
         if (cnt > 2){
             for(j=2;j<=cnt; j++){
                 var $class = $('#'+id1+' li:nth-child('+ j +')');
@@ -258,7 +261,7 @@ $(document).ready(function(){
                 $class.addClass('js-read-less')}
             }
         }
-        if ($(document).find('#'+id1+' a.read-more').length == 0){
+        if ($(document).find('#'+id1+' button.read-more').length == 0){
             var btnid="btn"+id1
             $('#'+id1).append(`<button type="submit" class='read-more fa fa-arrow-down' id="`+btnid+`"> More</button>`)
         }
@@ -291,5 +294,7 @@ $(document).ready(function(){
             $(this).parents('.label_link_list').css('display','none');
         }
     })
+
+
 });
 });
