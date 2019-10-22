@@ -190,9 +190,7 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
         },
 
         cfo_cards_block_configuration: function (type, value) {
-        alert("configuration block")
             var self = this;
-            console.log('\n\n\n\n\n self>>>>>>.',self)
             if (type != undefined && type.type == "click" || type == undefined) {
                 $(document).find('#cfo_cards_block_modal').remove();
                 self.$modal = $(qweb.render("cfo_snr_jnr.cfo_snr_jnr_cards_blocks_cfo"));
@@ -313,39 +311,6 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
         },
     });
     $(document).ready(function(){
-    	$(document).on('click','.material-card',function(){
-    		$(document).find('.material-card').removeClass('active');
-    		$(this).addClass('active');
-    	});
-    	$('.material-card > .mc-btn-action').click(function () {
-            var card = $(this).parent('.material-card');
-            var icon = $(this).children('i');
-            icon.addClass('fa-spin-fast');
 
-            if (card.hasClass('mc-active')) {
-                card.removeClass('mc-active');
-
-                window.setTimeout(function() {
-                    icon
-                        .removeClass('fa-arrow-left')
-                        .removeClass('fa-spin-fast')
-                        .addClass('fa-bars');
-
-                }, 800);
-            } else {
-                card.addClass('mc-active');
-
-                window.setTimeout(function() {
-                    icon
-                        .removeClass('fa-bars')
-                        .removeClass('fa-spin-fast')
-                        .addClass('fa-arrow-left');
-
-                }, 800);
-            }
-        });
-        $('.details_view_lecturer').on('click', function (){
-        	window.location.href = $(this).attr('data-href');
-        });
     });
 });
