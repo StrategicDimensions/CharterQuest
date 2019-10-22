@@ -168,7 +168,6 @@ $(document).ready(function(){
     });
 
     $('#semester_select').on('click',function(){
-//    alert()
         var qua_ids=$('#level_select').val()
         var campus_ids=$('#campus_select').val()
         var semester_ids=$('#semester_select').val()
@@ -197,7 +196,6 @@ $(document).ready(function(){
 
 
     $(".fillter_timetable").on('click',function(e){
-//        alert()
             var id=$(this).attr('data-id')
             var qua_ids=$('#level_select').val()
             var campus_ids=$('#campus_select').val()

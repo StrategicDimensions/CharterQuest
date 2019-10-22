@@ -24,7 +24,7 @@ from odoo.http import request
 
 class TimeTable(http.Controller):
 
-    @http.route(['/time_table','/'], type='http', auth="public", website=True,csrf=False)
+    @http.route(['/time_table',], type='http', auth="public", website=True,csrf=False)
     def time_table_view(self, **post):
         level_select = post.get('level_select') if post.get('level_select') else ','.join(
             [str(i.id) for i in request.env['event.qual'].sudo().search([])])

@@ -1107,7 +1107,6 @@ margin-right: -41px !important;
 div#course_id{
 width: 366px !important
 }
-
 .img-desktop{
     display:none !important;
 }
@@ -1206,7 +1205,7 @@ a.cfo_menu_with_tabs_a_panel {
     overflow: hidden !important;
     width: 170px !important;
 }
-.img_book.img.img-responsive{
+.img_book {
     width:163px !important;
 }
 button.read-more{
@@ -1224,6 +1223,12 @@ button.read-more{
     border: none !important;
     border-radius: 15px !important;
     box-shadow: 0 9px gainsboro !important;
+}
+i.fa.fa-chevron-left.fa-1x.bg-white{
+    display:none !important;
+}
+i.fa.fa-chevron-right.fa-1x.bg-white{
+    display:none !important;
 }
 }
 
