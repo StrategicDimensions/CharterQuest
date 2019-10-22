@@ -113,39 +113,7 @@ odoo.define('cfo_snr_jnr.snippets_menu_tabs', function (require) {
     });
 
     $(document).ready(function(){
-		let url = location.href.replace(/\/$/, "");
 
-		if (location.hash) {
-			const hash = url.split("#");
-			$('#cfo_menu_with_tabs_div_panel a[href="#' + hash[1] + '"]').tab("show");
-			url = location.href.replace(/\/#/, "#");
-			history.replaceState(null, null, url);
-			setTimeout(() => {
-				$(window).scrollTop(0);
-			}, 400);
-		}
-
-		$('.cfo_menu_with_tabs_a_panel').on("click", function(event) {
-            if($(this).attr("external-href") != '#')
-			{
-				const hash = $(this).attr("external-href");
-				const win=window.open(hash);
-				win.focus();
-				event.preventDefault();
-			}
-			else{
-				let newUrl;
-				const hash = $(this).attr("href");
-				if (hash == "#home") {
-					newUrl = url.split("#")[0];
-				} else {
-					newUrl = url.split("#")[0] + hash;
-				}
-				newUrl += "/";
-				history.replaceState(null, null, newUrl);
-			}
-			event.preventDefault();
-		});
 
 
 	});
