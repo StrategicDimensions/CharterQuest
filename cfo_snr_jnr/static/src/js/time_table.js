@@ -326,19 +326,17 @@ $(document).ready(function(){
 
         let url = location.href.replace(/\/$/, "");
 
-//		if (location.hash) {
-//			const hash = url.split("#");
-//			$('#cfo_menu_with_tabs_div_panel a[href="#' + hash[1] + '"]').tab("show");
-//			url = location.href.replace(/\/#/, "#");
-//			history.replaceState(null, null, url);
-//			setTimeout(() => {
-//				$(window).scrollTop(0);
-//			}, 400);
-//		}
+		if (location.hash) {
+			const hash = url.split("#");
+			$('#cfo_menu_with_tabs_div_panel a[href="#' + hash[1] + '"]').tab("show");
+			url = location.href.replace(/\/#/, "#");
+			history.replaceState(null, null, url);
+			setTimeout(() => {
+				$(window).scrollTop(0);
+			}, 400);
+		}
 
 		$('.cfo_menu_with_tabs_a_panel').on("click", function(event) {
-            alert()
-            console.log('\n\n======= log', $(this).attr("external-href"))
             if($(this).attr("external-href") != '#')
 			{
 				const hash = $(this).attr("external-href");
