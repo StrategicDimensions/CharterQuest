@@ -26,8 +26,6 @@
             <div class="container">
                 <div class="panel panel-default" style="margin-top:10px;">
                     <div class="panel-heading" style="padding: 28px 15px;">
-<!--                        <form action="/time_table_snippet" method="POST">-->
-<!--                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
                             <input type="hidden" name="id" value="1"/>
                             <div><span class="campus_span" style="margin: -26px 48px;float: left;"><b>Select Campus</b></span></div>
                             <input type="hidden" name="campus_select" t-att-value="campus_select" placeholder=""/>
@@ -87,7 +85,11 @@
                             <button title="Filter" style="height:38px;transition:unset;width:63px;font-size:15px;" class="fillter_timetable" ><b>Search</b></button>
 <!--                        </form>-->
                     </div>
+
                     <div id="timetable_body">
+                        <div id="spin_loader" style="display:none;">
+                            <center><img src="/cfo_snr_jnr/static/src/img/giphy.gif"></img></center>
+                        </div>
                     </div>
                 </div>
             </div>

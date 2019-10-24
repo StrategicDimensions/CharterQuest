@@ -54,17 +54,18 @@ class TimeTable(http.Controller):
             'company':request.env['res.company'].sudo().search([('partner_id.name','=','The CharterQuest Institute')])
         })
 
-    @http.route(['/time_table_snippet'], type='json', auth="public", website=True, csrf=False)
+    @http.route(['/time_table_snippet'], type='http', auth="public", website=True, csrf=False)
     def time_table_snippet_view(self, **post):
+        print("\n\n\n\npost???",post)
         list1 = [i.id for i in request.env['event.qual'].sudo().search([])]
         list2 = [i.id for i in request.env['cfo.course.option'].sudo().search([])]
         list3 = [i.id for i in request.env['cfo.semester.information'].sudo().search([])]
         list4 = [i.id for i in request.env['cfo.course.code'].sudo().search([])]
         list5 = [i.id for i in request.env['res.partner'].sudo().search([('is_campus', '=', True)])]
         event_id=request.env['event.type'].browse(int(post.get('id')))
-        level_select = post.get('level_select') if post.get('level_select') else list1
-        option_select = post.get('option_select') if post.get('option_select') else list2
-        semester_select = post.get('semester_select') if post.get('semester_select') else list3
+        level_select = post.get('level_select[]') if post.get('level_select[]') else list1
+        option_select = post.get('option_select[]') if post.get('option_select[]') else list2
+        semester_select = post.get('semester_select[]') if post.get('semester_select[]') else list3
         time_table_ids = request.env['cfo.time.table'].sudo().search([])
         time_table_ids = time_table_ids.filtered(
             lambda l: l.qualification_id.id in [int(i) for i in level_select])
@@ -77,24 +78,25 @@ class TimeTable(http.Controller):
         time_table_ids = time_table_ids.sorted(key=lambda l: l.semester_id.sequence)
         course_code = [int(i) for i in post.get('course_code_select')] if post.get('course_code_select') else list4
         course_code_select = str(course_code).strip('[]')
-        campus_select = post.get('campus_select') if post.get('campus_select') else list5
+        campus_select = post.get('campus_select[]') if post.get('campus_select[]') else list5
 
         datas={
             'course_code_select': course_code,
             'course_code':course_code_select,
             'time_table':time_table_ids,
-            'campus_select': post.get('campus_select') if post.get('campus_select') else '',
-            'option_select': post.get('option_select') if post.get('option_select') else '',
-            'semester_select': post.get('semester_select') if post.get('semester_select') else '',
+            'campus_select': post.get('campus_select[]') if post.get('campus_select[]') else '',
+            'option_select': post.get('option_select[]') if post.get('option_select[]') else '',
+            'semester_select': post.get('semester_select[]') if post.get('semester_select[]') else '',
             'ids': str(time_table_ids.ids).strip('[]'), 'is_visible': True,
             'company': request.env['res.company'].sudo().search(
                 [('partner_id.name', '=', 'The CharterQuest Institute')])
         }
-
+        print("\n\n\n\n\n datas>>>>",datas)
         html = request.env['ir.ui.view'].render_template(
             'cfo_snr_jnr.timetable_snippet_template',
             values=datas,
         )
+        print("\n\n\n\n\n html>>>>",html)
         return html
 
 

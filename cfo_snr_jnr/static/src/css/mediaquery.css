@@ -909,6 +909,14 @@ margin-left: -34px !important;
 .time_table_css{
     overflow-x: auto !important;
 }
+.time_table_css::-webkit-scrollbar{
+    height:5px !important;
+    width:5px !important;
+    background-color:white !important;
+}
+.time_table_css::-webkit-scrollbar-thumb{
+    background:red !important;
+}
 .time_table_div[style]{
     max-width:97.1% !important;
     margin-left: 5px !important;

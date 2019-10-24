@@ -182,7 +182,7 @@
                         <span>
                             <i class="fa fa-print" aria-hidden="true"></i>
                         </span>
-                        Print
+                        Print Format
                     </a>
                 </t>
             </div>
@@ -192,7 +192,7 @@
                         <div class="form-group">
                         </div>
                     </div>
-                    <div class="table-responsive" style="border: 6px solid gainsboro;">
+                    <div  class="time_table_css" style="border: 6px solid gainsboro;">
                         <!--                            <t t-if="time.time_table_line_ids">-->
                         <table class="table table-bordered time_table_main">
                             <caption
