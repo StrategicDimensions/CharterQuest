@@ -43,17 +43,6 @@ $(document).ready(function(){
     $('.multiple-levels-select').on('change',function(){
         var value=$(this).val();
         if (value){
-            $("#course_code_select").prop('disabled', false);
-        }
-        else
-        {
-            $("#course_code_select").prop('disabled', true);
-        }
-    });
-
-    $('.multiple-codes-select').on('change',function(){
-        var value=$(this).val();
-        if (value){
             $("#option_select").prop('disabled', false);
         }
         else
@@ -62,11 +51,21 @@ $(document).ready(function(){
         }
     });
 
-        $("#level_select").prop('disabled', true);
-	    $("#course_code_select").prop('disabled', true);
-	    $("#semester_select").prop('disabled', true);
-	    $("#option_select").prop('disabled', true);
+    $('#option_select').on('change',function(){
+        var value=$(this).val();
+        if (value){
+            $(".multiple-codes-select").prop('disabled', false);
+        }
+        else
+        {
+            $(".multiple-codes-select").prop('disabled', true);
+        }
+    });
 
+        $("#level_select").prop('disabled', true).val('');
+	    $("#course_code_select").prop('disabled', true).val('');
+	    $("#semester_select").prop('disabled', true).val('');
+	    $("#option_select").prop('disabled', true).val('');
 
         $('#campus_select').select2({
 			    placeholder: "",
@@ -112,15 +111,17 @@ $(document).ready(function(){
 		});
 
         $('#level_select').on('click',function(){
-            var qua_ids=$('#level_select').val()
+             var qua_ids=$('#level_select').val()
             var campus_ids=$('#campus_select').val()
             var semester_ids=$('#semester_select').val()
+            var option_ids=$('#option_select').val()
             var subject=[]
             var study_option=[]
-            ajax.jsonRpc('/get_timetable_data', 'call', {
+                ajax.jsonRpc('/get_timetable_data', 'call', {
                 'qua_ids': qua_ids,
                 'campus_ids': campus_ids,
-                'semester_ids': semester_ids
+                'semester_ids': semester_ids,
+                'option_ids':option_ids
             }).then(function (data) {
                 $(document).find('#course_code_select').html("")
                 for(var i=0; i<data['subject'].length; i++)
@@ -128,65 +129,97 @@ $(document).ready(function(){
                     subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
                 }
                 $(document).find('#course_code_select').html(subject)
-                $(document).find('#option_select').html("")
-                for(var i=0; i<data['study_option'].length; i++)
+//                $(document).find('#option_select').html("")
+//                for(var i=0; i<data['study_option'].length; i++)
+//                {
+//                    study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
+//                }
+//                $(document).find('#option_select').html(study_option)
+            });
+        });
+
+        $('#option_select').on('click',function(){
+             var qua_ids=$('#level_select').val()
+            var campus_ids=$('#campus_select').val()
+            var semester_ids=$('#semester_select').val()
+            var option_ids=$('#option_select').val()
+            var subject=[]
+            var study_option=[]
+                ajax.jsonRpc('/get_timetable_data', 'call', {
+                'qua_ids': qua_ids,
+                'campus_ids': campus_ids,
+                'semester_ids': semester_ids,
+                'option_ids':option_ids
+            }).then(function (data) {
+                $(document).find('#course_code_select').html("")
+                for(var i=0; i<data['subject'].length; i++)
                 {
-                    study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
+                    subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
                 }
-                $(document).find('#option_select').html(study_option)
-                });
+                $(document).find('#course_code_select').html(subject)
+//                $(document).find('#option_select').html("")
+//                for(var i=0; i<data['study_option'].length; i++)
+//                {
+//                    study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
+//                }
+//                $(document).find('#option_select').html(study_option)
+            });
         });
 
     $('#campus_select').on('click',function(){
 //    alert()
-        var qua_ids=$('#level_select').val()
-        var campus_ids=$('#campus_select').val()
-        var semester_ids=$('#semester_select').val()
-        var subject=[]
-        var study_option=[]
-        ajax.jsonRpc('/get_timetable_data', 'call', {
-            'qua_ids': qua_ids,
-            'campus_ids': campus_ids,
-            'semester_ids': semester_ids
-        }).then(function (data) {
-            $(document).find('#course_code_select').html("")
-            for(var i=0; i<data['subject'].length; i++)
-            {
-                subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
-            }
-            $(document).find('#course_code_select').html(subject)
-            $(document).find('#option_select').html("")
-            for(var i=0; i<data['study_option'].length; i++)
-            {
-                study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
-            }
-            $(document).find('#option_select').html(study_option)
+         var qua_ids=$('#level_select').val()
+            var campus_ids=$('#campus_select').val()
+            var semester_ids=$('#semester_select').val()
+            var option_ids=$('#option_select').val()
+            var subject=[]
+            var study_option=[]
+                ajax.jsonRpc('/get_timetable_data', 'call', {
+                'qua_ids': qua_ids,
+                'campus_ids': campus_ids,
+                'semester_ids': semester_ids,
+                'option_ids':option_ids
+            }).then(function (data) {
+                $(document).find('#course_code_select').html("")
+                for(var i=0; i<data['subject'].length; i++)
+                {
+                    subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
+                }
+                $(document).find('#course_code_select').html(subject)
+//                $(document).find('#option_select').html("")
+//                for(var i=0; i<data['study_option'].length; i++)
+//                {
+//                    study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
+//                }
+//                $(document).find('#option_select').html(study_option)
             });
     });
 
     $('#semester_select').on('click',function(){
-        var qua_ids=$('#level_select').val()
-        var campus_ids=$('#campus_select').val()
-        var semester_ids=$('#semester_select').val()
-        var subject=[]
-        var study_option=[]
-        ajax.jsonRpc('/get_timetable_data', 'call', {
-            'qua_ids': qua_ids,
-            'campus_ids': campus_ids,
-            'semester_ids': semester_ids
-        }).then(function (data) {
-            $(document).find('#course_code_select').html("")
-            for(var i=0; i<data['subject'].length; i++)
-            {
-                subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
-            }
-            $(document).find('#course_code_select').html(subject)
-            $(document).find('#option_select').html("")
-            for(var i=0; i<data['study_option'].length; i++)
-            {
-                study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
-            }
-            $(document).find('#option_select').html(study_option)
+         var qua_ids=$('#level_select').val()
+            var campus_ids=$('#campus_select').val()
+            var semester_ids=$('#semester_select').val()
+            var option_ids=$('#option_select').val()
+            var subject=[]
+            var study_option=[]
+                ajax.jsonRpc('/get_timetable_data', 'call', {
+                'qua_ids': qua_ids,
+                'campus_ids': campus_ids,
+                'semester_ids': semester_ids,
+                'option_ids':option_ids
+            }).then(function (data) {
+                $(document).find('#course_code_select').html("")
+                for(var i=0; i<data['subject'].length; i++)
+                {
+                    subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
+                }
+                $(document).find('#course_code_select').html(subject)
+//                $(document).find('#option_select').html("")
+//                for(var i=0; i<data['study_option'].length; i++)
+//                {
+//                    study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
+//                }
+//                $(document).find('#option_select').html(study_option)
             });
     });
 
@@ -224,7 +257,6 @@ $(document).ready(function(){
       });
 });
 $(document).ajaxComplete(function(){
-
     $('.info_time_table_course_snippet').popover({
 		animation: true,
 		html: true,

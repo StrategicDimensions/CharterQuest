@@ -48,17 +48,31 @@ odoo.define('cfo_snr_jnr.snippets_time_table', function (require) {
                     var domain=[('id','=',id)]
                     rpc.query({
                         model: 'event.type',
-                        method: 'get_qualification_level',
+                        method: 'get_event_data',
                         args: [id],
                     }).then(function(data){
     //                        $(document).find('#course_code_select').html("")
                         self.$target.find('select[name="level_select"]').html("")
+                        self.$target.find('select[name="campus_select"]').html("")
+                        self.$target.find('select[name="semester_select"]').html("")
                         var level=[]
-                        for(var i=0; i<data.length; i++)
+                        var campus=[]
+                        var sem=[]
+                        for(var i=0; i<data['qua'].length; i++)
                         {
-                            level.push('<option value=' + data[i].id + '>' + data[i].name + '</option>\n')
+                            level.push('<option value=' + data['qua'][i].id + '>' + data['qua'][i].name + '</option>\n')
+                        }
+                        for(var i=0; i<data['sem'].length; i++)
+                        {
+                            sem.push('<option value=' + data['sem'][i].id + '>' + data['sem'][i].name + '</option>\n')
+                        }
+                        for(var i=0; i<data['campus'].length; i++)
+                        {
+                            campus.push('<option value=' + data['campus'][i].id + '>' + data['campus'][i].name + '</option>\n')
                         }
                         self.$target.find('select[name="level_select"]').html(level)
+                        self.$target.find('select[name="campus_select"]').html(campus)
+                        self.$target.find('select[name="semester_select"]').html(sem)
                         self.$target.find(".fillter_timetable").attr('data-id',id);
                         self.$target.find(".fillter_timetable").attr('data-lecturer-id',lecturer_id);
                     });

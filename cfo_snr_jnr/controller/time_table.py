@@ -26,6 +26,7 @@ class TimeTable(http.Controller):
 
     @http.route(['/time_table',], type='http', auth="public", website=True,csrf=False)
     def time_table_view(self, **post):
+        print("\n\n\n\n post>>>",post)
         level_select = post.get('level_select') if post.get('level_select') else ','.join(
             [str(i.id) for i in request.env['event.qual'].sudo().search([])])
         option_select = post.get('option_select') if post.get('option_select') else ','.join(
@@ -76,7 +77,7 @@ class TimeTable(http.Controller):
         time_table_ids = time_table_ids.filtered(
             lambda l: l.semester_id.id in [int(i) for i in semester_select])
         time_table_ids = time_table_ids.sorted(key=lambda l: l.semester_id.sequence)
-        course_code = [int(i) for i in post.get('course_code_select')] if post.get('course_code_select') else list4
+        course_code = [int(i) for i in post.get('course_code_select[]')] if post.get('course_code_select[]') else list4
         course_code_select = str(course_code).strip('[]')
         campus_select = post.get('campus_select[]') if post.get('campus_select[]') else list5
 
@@ -130,24 +131,19 @@ class TimeTable(http.Controller):
     def get_timetable_data(self, **kw):
         subject = []
         study_option = []
-        if kw.get('qua_ids') and kw.get('campus_ids') and kw.get('semester_ids'):
+        if kw.get('qua_ids') and kw.get('campus_ids') and kw.get('semester_ids') and kw.get('option_ids'):
 
             res = request.env['cfo.time.table'].sudo().search([('qualification_id', 'in', [int(id) for id in kw.get('qua_ids')]),
-                                                            ('semester_id', 'in', [int(id) for id in kw.get('semester_ids')])])
+                                                            ('semester_id', 'in', [int(id) for id in kw.get('semester_ids')]),('course_option_id','in',[int(id) for id in kw.get('option_ids')])])
             sub_list=[]
-            study_option_list=[]
             for record in res:
                 for line in record.time_table_line_ids:
                     if line.course_code_id.campus_id.id in [int(id) for id in kw.get('campus_ids')]:
                         if line.course_code_id.id not in sub_list:
                             subject.append({'id': line.course_code_id.id, 'name': line.course_code_id.name})
                             sub_list.append(line.course_code_id.id)
-                if record.course_option_id.id not in study_option_list:
-                    study_option.append({'id': record.course_option_id.id, 'name': record.course_option_id.name})
-                    study_option_list.append(record.course_option_id.id)
         else:
             subject = request.env['cfo.course.code'].sudo().search_read([], ['id', 'name'])
-            study_option = request.env['cfo.course.option'].sudo().search_read([], ['id', 'name'])
 
 
         return {
