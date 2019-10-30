@@ -15,8 +15,9 @@ $(document).ready(function(){
         }
         else
         {
+            var id=$(this).attr('data-id')
             ajax.jsonRpc('/get_campus', 'call',{
-
+                'id':id,
             }).then(function (data) {
                 var campus=[]
                 for(var i=0; i<data['campus'].length; i++)

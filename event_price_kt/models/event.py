@@ -270,6 +270,11 @@ class event_type(models.Model):
         sem_ids=self.env['cfo.semester.information'].search_read([('id','in',res.semester_ids.ids)],['id','name'])
         return {'campus':campus_ids,'qua':qua_ids,'sem':sem_ids}
 
+    @api.model
+    def get_event_category(self):
+        event_categories=self.env['event.type'].search_read([],['id','name']);
+        return event_categories
+
 
 class event_registration(models.Model):
     _inherit = 'event.registration'

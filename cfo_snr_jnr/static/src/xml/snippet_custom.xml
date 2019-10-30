@@ -368,11 +368,6 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <select class="form-control" id="event_category">
-                                        <option value="6">CIMA</option>
-                                        <option value="7">SAICA</option>
-                                        <option value="8">CIMA (Full-Time Only)</option>
-                                        <option value="10">CFA</option>
-                                        <option value="4">ACCA</option>
                                     </select>
                                 </div>
                             </div>

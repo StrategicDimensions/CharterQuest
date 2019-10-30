@@ -158,5 +158,8 @@ class TimeTable(http.Controller):
 
     @http.route(['/get_campus'], type='json', auth="public", website=True)
     def get_campus(self, **kw):
-        res = request.env['res.partner'].sudo().search_read([('is_campus', '=', True)],['id','name'])
-        return {'campus':res}
+        data=[]
+        for id in request.env['event.type'].sudo().browse(int(kw.get('id'))).campus_ids:
+            data.append({'id':id.id,'name':id.name})
+        print("\n\n\n\n dict1",data)
+        return {'campus':data}

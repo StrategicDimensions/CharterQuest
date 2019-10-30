@@ -39,6 +39,19 @@ odoo.define('cfo_snr_jnr.snippets_time_table', function (require) {
                 $(document).find('#cfo_timetable_modal').remove();
                 self.$modal = $(qweb.render("cfo_snr_jnr.cfo_snr_jnr_timetable_snippet"));
                 self.$modal.appendTo('body');
+                $event=self.$modal.find('#event_category');
+                $event.html('');
+                rpc.query({
+                        model: 'event.type',
+                        method: 'get_event_category',
+                }).then(function(data){
+                    var events=[]
+                        for(var i=0; i<data .length; i++)
+                        {
+                            events.push('<option value=' + data[i].id + '>' + data[i].name + '</option>\n')
+                        }
+                    $event.append(events);
+                });
                 self.$modal.modal()
                 $sub_data = self.$modal.find("#timetable_event_submit");
                 $fillter_timetable=self.$modal.find(".fillter_timetable");
@@ -74,65 +87,13 @@ odoo.define('cfo_snr_jnr.snippets_time_table', function (require) {
                         self.$target.find('select[name="campus_select"]').html(campus)
                         self.$target.find('select[name="semester_select"]').html(sem)
                         self.$target.find(".fillter_timetable").attr('data-id',id);
+                        self.$target.find("#campus_select").attr('data-id',id);
                         self.$target.find(".fillter_timetable").attr('data-lecturer-id',lecturer_id);
                     });
-
-
-    //                    self.$target.find('.tab-content.tabs').append(content_html);
                 });
-
-
             } else {
                 return false;
             }
         },
-
-//        $fillter_timetable=self.$modal.find(".fillter_timetable");
-//        self.$modal.find(".fillter_timetable").on('click',function(){
-//            alert()
-//        });
-
     });
-
-
-
-    $(document).ready(() => {
-
-		let url = location.href.replace(/\/$/, "");
-
-		if (location.hash) {
-			const hash = url.split("#");
-			$('#cfo_menu_with_tabs_div_panel a[href="#' + hash[1] + '"]').tab("show");
-			url = location.href.replace(/\/#/, "#");
-			history.replaceState(null, null, url);
-			setTimeout(() => {
-				$(window).scrollTop(0);
-			}, 400);
-		}
-
-		$('.cfo_menu_with_tabs_a_panel').on("click", function(event) {
-			if (event.ctrlKey)
-			{
-				const hash = $(this).attr("external-href");
-				window.open(hash);
-			}
-			else{
-				let newUrl;
-				const hash = $(this).attr("href");
-				if (hash == "#home") {
-					newUrl = url.split("#")[0];
-				} else {
-					newUrl = url.split("#")[0] + hash;
-				}
-				newUrl += "/";
-				history.replaceState(null, null, newUrl);
-			}
-		});
-
-
-
-
-    });
-
-
 });
