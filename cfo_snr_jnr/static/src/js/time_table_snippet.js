@@ -225,25 +225,22 @@ $(document).ready(function(){
     });
 
         $(".fillter_timetable").on('click',function(e){
+            $("#timetable_body").html('');
+            $('#spin_loader').show();
             var id=$(this).attr('data-id')
             var qua_ids=$('#level_select').val()
             var campus_ids=$('#campus_select').val()
             var semester_ids=$('#semester_select').val()
             var course_code_ids=$('#course_code_select').val()
             var option_ids=$('#option_select').val()
-            $.ajax({
-               url: '/time_table_snippet',
-               type: 'post',
-               data: {'level_select': qua_ids,
+
+            ajax.jsonRpc('/time_table_snippet', 'call',{
+                'level_select': qua_ids,
                 'campus_select': campus_ids,
                 'semester_select': semester_ids,
                 'option_select':option_ids,
                 'course_code_select':course_code_ids,
-                'id':id},
-               beforeSend: function(){
-                  $('#spin_loader').show();
-               },
-               success: function(response){
+                'id':id}).then(function(response){
                 $('#spin_loader').hide();
                 $("#timetable_body").html(response);
                     var i=0;
@@ -253,7 +250,12 @@ $(document).ready(function(){
                         $(this).attr('id',newID);
                         $(this).val(i);
                     });
-               },
+                $('#level_select').val('').trigger("change");
+                $('#campus_select').val('').trigger("change");
+                $('#semester_select').val('').trigger("change");
+                $('#course_code_select').val('').trigger("change");
+                $('#option_select').val('').trigger("change");
+
           });
       });
 });
