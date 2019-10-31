@@ -39,3 +39,13 @@ class DynamicButtons(models.Model):
     name = fields.Char(string="Name")
     menu_url = fields.Char(string="Url")
 
+
+    @api.model
+    def create(self, vals):
+        res = super(DynamicButtons, self).create(vals)
+        return  res
+
+    # @api.constrains('dynamic_buttons_id_seq')
+    # def dynamic_buttons_id_seq(self):
+    #     for record in self:
+    #         return True`
