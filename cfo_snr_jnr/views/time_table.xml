@@ -497,7 +497,7 @@
                                 </t>
                                 </t>
                                 <t t-if="not lines">
-                                    <tr>
+                                    <tr class="session_not_available">
                                         <td colspan="4"><b><span t-esc="company.session_text"></span></b></td>
                                     </tr>
                                 </t>

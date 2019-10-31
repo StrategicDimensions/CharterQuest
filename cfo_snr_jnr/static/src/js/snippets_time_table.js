@@ -71,6 +71,7 @@ odoo.define('cfo_snr_jnr.snippets_time_table', function (require) {
                         var level=[]
                         var campus=[]
                         var sem=[]
+                        var options=[]
                         for(var i=0; i<data['qua'].length; i++)
                         {
                             level.push('<option value=' + data['qua'][i].id + '>' + data['qua'][i].name + '</option>\n')
@@ -83,9 +84,14 @@ odoo.define('cfo_snr_jnr.snippets_time_table', function (require) {
                         {
                             campus.push('<option value=' + data['campus'][i].id + '>' + data['campus'][i].name + '</option>\n')
                         }
+                        for(var i=0; i<data['options'].length; i++)
+                        {
+                            options.push('<option value=' + data['options'][i].id + '>' + data['options'][i].name + '</option>\n')
+                        }
                         self.$target.find('select[name="level_select"]').html(level)
                         self.$target.find('select[name="campus_select"]').html(campus)
                         self.$target.find('select[name="semester_select"]').html(sem)
+                        self.$target.find('select[name="option_select"]').html(options)
                         self.$target.find(".fillter_timetable").attr('data-id',id);
                         self.$target.find("#campus_select").attr('data-id',id);
                         self.$target.find(".fillter_timetable").attr('data-lecturer-id',lecturer_id);

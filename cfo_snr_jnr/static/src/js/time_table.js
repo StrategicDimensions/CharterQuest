@@ -4,13 +4,14 @@ odoo.define('cfo_snr_jnr.time_table',function (require) {
 var rpc = require('web.rpc');
 var ajax = require('web.ajax');
 var core = require('web.core');
+var session = require('web.session');
 var QWeb = core.qweb;
 var self = this;
 var flag = false;
 var localStorage = window.localStorage;
 $(document).ready(function(){
-
 	if(window.location.pathname == '/time_table'){
+
 		$(document).on("click", ".details_view_lecturer", function(event){
 			window.location.href = $(this).attr('data-href');
 		});
@@ -62,6 +63,7 @@ $(document).ready(function(){
 //                $(document).find('#option_select').html(study_option)
             });
     });
+
 
     $('#option_select').on('click',function(){
             var qua_ids=$('#level_select').val()
@@ -145,6 +147,12 @@ $(document).ready(function(){
 //                }
 //                $(document).find('#option_select').html(study_option)
             });
+    });
+
+    $('.time_table_css').each(function(){
+        if($(this).children().find('.session_not_available').length > 0){
+            $(this).css('display','none');
+        }
     });
 
     var i=0;
@@ -275,6 +283,7 @@ $(document).ready(function(){
         $(this).attr('id',newID);
         $(this).val(i);
         list_menu.push(newID)
+        $(this).find('li:first-child').addClass('active').siblings().removeClass('active');
     });
 
     for(var i=0; i<list_menu.length; i++){

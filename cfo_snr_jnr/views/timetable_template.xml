@@ -95,9 +95,7 @@
                                 </tr>
                                 <t t-if="time.time_table_line_ids">
                                     <t t-foreach="time.time_table_line_ids" t-as="line">
-                                        <t t-set="i" t-value="0"></t>
                                         <t t-if="line.course_code_id.id in data.get('course_code')">
-                                            <t t-set="i" t-value="1"></t>
                                             <tr>
                                                 <td>
                                                     <div t-esc="line.course_code_id.name"/>
@@ -143,20 +141,6 @@
                                             </tr>
                                         </t>
                                         <!--                                        </t>-->
-
-                                    </t>
-                                    <t t-if="i==0">
-                                        <div>
-                                            <tr>
-                                                <td colspan="5">
-                                                    <center>
-                                                        <b>
-                                                            <span t-esc="data.get('session_text')"/>
-                                                        </b>
-                                                    </center>
-                                                </td>
-                                            </tr>
-                                    </div>
                                     </t>
                                 </t>
                                 <t t-if="not time.time_table_line_ids">

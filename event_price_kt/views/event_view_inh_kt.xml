@@ -69,6 +69,7 @@
                         <field name="campus_ids" widget="many2many_tags"/>
                         <field name="semester_ids" widget="many2many_tags"/>
                         <field name="qualification_ids" widget="many2many_tags"/>
+                        <field name="course_option_ids" widget="many2many_tags"/>
                     </group>
                 </field>
             </field>

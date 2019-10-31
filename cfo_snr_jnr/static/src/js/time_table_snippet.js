@@ -243,11 +243,11 @@ $(document).ready(function(){
                 'id':id}).then(function(response){
                 $('#spin_loader').hide();
                 $("#timetable_body").html(response);
-                $('.time_table_css').each(function(){
-                    if($(this).hasClass('tr.sessions_not_availble')){
-                        $(this).remove();
-                    }
-                });
+//                $('.time_table_css').each(function(){
+//                    if($(this).children().find('.session_not_available').length > 0){
+//                        $(this).css('display','none');
+//                    }
+//                });
                 var i=0;
                 $('.time_table_snippet_div').each(function(){
                     i++;
@@ -263,6 +263,7 @@ $(document).ready(function(){
 
           });
       });
+
 });
 $(document).ajaxComplete(function(){
     $('.info_time_table_course_snippet').popover({
