@@ -26,74 +26,105 @@
             <div class="container">
                 <div class="panel panel-default" style="margin-top:10px;">
                     <div class="panel-heading" style="padding: 28px 15px;">
-<!--                        <form action="/time_table_snippet" method="POST">-->
-<!--                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
-                            <input type="hidden" name="id" value="1"/>
-                            <span style="margin: -26px 48px;float: left;"><b>Select Campus</b></span>
-                            <input type="hidden" name="campus_select" t-att-value="campus_select" placeholder=""/>
-                            <select class="form-control multiple-campus-select" id="campus_select"
-                                    style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
-                                <t t-foreach="request.env['res.partner'].sudo().search([('is_campus', '=', True)])"
-                                   t-as="campus">
-                                    <option t-att-class="class1" t-att-value="campus.id">
-                                        <span t-esc="campus.name"/>
-                                    </option>
-                                </t>
-                            </select>
+                        <input type="hidden" name="id" value="1"/>
+                        <div>
+                            <span class="campus_span" style="margin: -26px 48px;float: left;">
+                                <b>Select Campus</b>
+                            </span>
+                        </div>
+                        <input type="hidden" name="campus_select" t-att-value="campus_select" placeholder=""/>
+                        <select name="campus_select" class="form-control multiple-campus-select" id="campus_select"
+                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                            <t t-foreach="request.env['res.partner'].sudo().search([('is_campus', '=', True)])"
+                               t-as="campus">
+                                <option t-att-class="class1" t-att-value="campus.id">
+                                    <span t-esc="campus.name"/>
+                                </option>
+                            </t>
+                        </select>
 
-                            <span style="margin: -26px 38px;float: left;"><b>Select Semester</b></span>
-                            <input type="hidden" name="semester_select" t-att-value="semester_select"/>
-                            <select class="form-control multiple-semester-select" id="semester_select"
-                                    style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
-                                <t t-foreach="request.env['cfo.semester.information'].sudo().search([],order='sequence')" t-as="semester">
-                                    <option t-att-value="semester.id">
-                                        <span t-esc="semester.name"/>
-                                    </option>
-                                </t>
-                            </select>
+                        <div>
+                            <span class="semester_span" style="margin: -26px 38px;float: left;">
+                                <b>Select Semester</b>
+                            </span>
+                        </div>
+                        <input type="hidden" name="semester_select" t-att-value="semester_select"/>
+                        <select name="semester_select" class="form-control multiple-semester-select"
+                                id="semester_select"
+                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                            <t t-foreach="request.env['cfo.semester.information'].sudo().search([],order='sequence')"
+                               t-as="semester">
+                                <option t-att-value="semester.id">
+                                    <span t-esc="semester.name"/>
+                                </option>
+                            </t>
+                        </select>
 
-                            <span style="margin: -26px 53px;float: left;"><b>Select Level</b></span>
-                            <input type="hidden" name="level_select" t-att-value="level_select" class="level_select"/>
-                            <select name="level_select" class="form-control multiple-levels-select" id="level_select"
-                                    style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
-                                <t t-foreach="request.env['event.qual'].sudo().search([])" t-as="qualification">
-                                    <option t-att-value="qualification.id">
-                                        <span t-esc="qualification.name"/>
-                                    </option>
-                                </t>
-                            </select>
+                        <div>
+                            <span class="level_span" style="margin: -26px 53px;float: left;">
+                                <b>Select Level</b>
+                            </span>
+                        </div>
+                        <input type="hidden" name="level_select" t-att-value="level_select" class="level_select"/>
+                        <select name="level_select" class="form-control multiple-levels-select" id="level_select"
+                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                            <t t-foreach="request.env['event.qual'].sudo().search([])" t-as="qualification">
+                                <option t-att-value="qualification.id">
+                                    <span t-esc="qualification.name"/>
+                                </option>
+                            </t>
+                        </select>
 
-                            <span style="margin: -26px 45px;float: left;"><b>Select Subject</b></span>
-                            <input type="hidden" name="course_code_select" t-att-value="course_code_select"/>
-                            <select class="form-control multiple-codes-select" id="course_code_select"
-                                    style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
-                                <t t-foreach="request.env['cfo.course.code'].sudo().search([])" t-as="code">
-                                    <option t-att-value="code.id">
-                                        <span t-esc="code.name"/>
-                                    </option>
-                                </t>
-                            </select>
+                        <div>
+                            <span class="option_span" style="margin: -26px 29px;float: left;">
+                                <b>Select Study Option</b>
+                            </span>
+                        </div>
+                        <input type="hidden" name="option_select" t-att-value="option_select"/>
+                        <select class="form-control multiple-option-select" id="option_select"
+                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                            <t t-foreach="request.env['cfo.course.option'].sudo().search([])" t-as="option">
+                                <option t-att-value="option.id">
+                                    <span t-esc="option.name"/>
+                                </option>
+                            </t>
+                        </select>
 
-                            <span style="margin: -26px 29px;float: left;"><b>Select Study Option</b></span>
-                            <input type="hidden" name="option_select" t-att-value="option_select"/>
-                            <select class="form-control multiple-option-select" id="option_select"
-                                    style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
-                                <t t-foreach="request.env['cfo.course.option'].sudo().search([])" t-as="option">
-                                    <option t-att-value="option.id">
-                                        <span t-esc="option.name"/>
-                                    </option>
-                                </t>
-                            </select>
-                            <button title="Filter" style="height:38px;transition:unset;width:63px;font-size:15px;" class="fillter_timetable" ><b>Search</b></button>
-<!--                        </form>-->
+                        <div>
+                            <span class="course_span" style="margin: -26px 45px;float: left;">
+                                <b>Select Subject</b>
+                            </span>
+                        </div>
+                        <input type="hidden" name="course_code_select" t-att-value="course_code_select"/>
+                        <select class="form-control multiple-codes-select" id="course_code_select"
+                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                            <t t-foreach="request.env['cfo.course.code'].sudo().search([])" t-as="code">
+                                <option t-att-value="code.id">
+                                    <span t-esc="code.name"/>
+                                </option>
+                            </t>
+                        </select>
+
+                        <button title="Filter" style="height:38px;transition:unset;width:63px;font-size:15px;"
+                                class="fillter_timetable">
+                            <b>Search</b>
+                        </button>
+                        <!--                        </form>-->
                     </div>
-                    <div id="timetable_body">
+
+                    <div id="body">
+                        <div id="spin_loader" style="display:none;">
+                            <center>
+                                <img src="/cfo_snr_jnr/static/src/img/giphy.gif"></img>
+                            </center>
+                        </div>
+                        <div id="timetable_body">
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </template>
-
 
 
     <template id="cfo_snr_jnr_menu_with_tabs_snippet" name="Menu With Tabs">
@@ -207,14 +238,14 @@
                             <strong class="lecturer-qualification">
                                 Qualification
                             </strong>
-<!--                            <a style="cursor:pointer;" class="info_lecturers_study" data-placement="left"-->
-<!--                               data-toggle="popover" tabindex="0">-->
-<!--                                <i class="fa fa-info"/>-->
-<!--                            </a>-->
-<!--                            <div class="hidden">-->
-<!--                                <div class="popover-heading"/>-->
-<!--                                <div class="popover-body"/>-->
-<!--                            </div>-->
+                            <!--                            <a style="cursor:pointer;" class="info_lecturers_study" data-placement="left"-->
+                            <!--                               data-toggle="popover" tabindex="0">-->
+                            <!--                                <i class="fa fa-info"/>-->
+                            <!--                            </a>-->
+                            <!--                            <div class="hidden">-->
+                            <!--                                <div class="popover-heading"/>-->
+                            <!--                                <div class="popover-body"/>-->
+                            <!--                            </div>-->
                         </h2>
                         <div class="mc-content">
                             <div class="lecturer-study"/>
@@ -363,9 +394,9 @@
         <xpath expr="//div" position="after">
             <div data-js="cfo_snr_jnr_steps_wizard_option" data-selector=".cfo_snr_jnr_steps_wizard_container"
                  data-snippet-option-id="cfo_snr_jnr_steps_wizard_container">
-<!--                <li>-->
-<!--                    <a class="cfo_snr_jnr_add_step">Add Step</a>-->
-<!--                </li>-->
+                <!--                <li>-->
+                <!--                    <a class="cfo_snr_jnr_add_step">Add Step</a>-->
+                <!--                </li>-->
                 <!--                <li>-->
                 <!--                    <a class="cfo_snr_jnr_remove_step">Remove Active Step</a>-->
                 <!--                </li>-->

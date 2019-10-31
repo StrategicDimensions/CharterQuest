@@ -9,66 +9,6 @@ var self = this;
 var flag = false;
 var localStorage = window.localStorage;
 $(document).ready(function(){
-    $('a.add_menu_side').on('click',function(){
-        if(window.innerWidth <= 460) {
-            $(this).parents('.label_link_list').css('display','none');
-        }
-    })
-    var i=0;
-    var list_menu=[]
-    $('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs').each(function(){
-        i++;
-        var newID='ul'+i;
-        $(this).attr('id',newID);
-        $(this).val(i);
-        list_menu.push(newID)
-    });
-    for(var i=0; i<list_menu.length; i++){
-        var id1=list_menu[i];
-        var j=0;
-        var cnt=$(document).find('#'+id1+' li').length;
-        if (cnt > 3){
-            for(j=4;j<=cnt; j++){
-                var $class = $('#'+id1+' li:nth-child('+ j +')');
-                if ($class.hasClass('js-read-less')){}else{
-                $class.addClass('js-read-less')}
-            }
-        }
-        if ($(document).find('#'+id1+' a.read-more').length == 0){
-            var btnid="btn"+id1
-            $('#'+id1).append(`<a class='read-more fa fa-chevron-circle-down' id="`+btnid+`"> More</a>`)
-        }
-
-    }
-
-    $(document).on('click','a.read-more',function(){
-        var id=$(this).attr('id')
-        var pid=$(this).parents().attr('id')
-        $('#'+pid+' li.js-read-less').addClass('js-read-more').removeClass('js-read-less');
-        $(this).addClass('read-less fa-chevron-circle-up').removeClass('fa-chevron-circle-down read-more').text(' Less');
-    });
-
-    $(document).on('click','a.read-less',function(){
-        var id=$(this).attr('id')
-        var pid=$(this).parents().attr('id')
-        $('#'+pid+' li.js-read-more').addClass('js-read-less').removeClass('js-read-more');
-        $(this).addClass('read-more fa-chevron-circle-down').removeClass('fa-chevron-circle-up read-less').text(' More');
-    });
-//        if (window.innerWidth <= 460){
-//        alert()
-//        $('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs').each(function(){
-//            var id1=$('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs').attr('id')
-//                        alert(id1)
-//                $('#'+id1).readmore({
-//                        speed: 300,
-//                        collapsedHeight: 10,
-//                        moreLink: '<a href="#">Read more &gt;</a>',
-//                        lessLink: '<a href="#">Read less</a>',
-//                        heightMargin: 10
-//                    });
-//         });
-//        }
-
 
 	if(window.location.pathname == '/time_table'){
 		$(document).on("click", ".details_view_lecturer", function(event){
@@ -92,85 +32,118 @@ $(document).ready(function(){
 		});
 
 		$(document).on('change','#campus_select',function(){
-                $(document).find('input[name="campus_select"]').val($('.multiple-campus-select').select2('val'));
+            $(document).find('input[name="campus_select"]').val($('.multiple-campus-select').select2('val'));
 		});
 
 		$('#level_select').on('click',function(){
-        var qua_ids=$('#level_select').val()
-        var campus_ids=$('#campus_select').val()
-        var semester_ids=$('#semester_select').val()
-        var subject=[]
-        var study_option=[]
-            ajax.jsonRpc('/get_timetable_data', 'call', {
-            'qua_ids': qua_ids,
-            'campus_ids': campus_ids,
-            'semester_ids': semester_ids
-        }).then(function (data) {
-            $(document).find('#course_code_select').html("")
-            for(var i=0; i<data['subject'].length; i++)
-            {
-                subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
-            }
-            $(document).find('#course_code_select').html(subject)
-            $(document).find('#option_select').html("")
-            for(var i=0; i<data['study_option'].length; i++)
-            {
-                study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
-            }
-            $(document).find('#option_select').html(study_option)
+             var qua_ids=$('#level_select').val()
+            var campus_ids=$('#campus_select').val()
+            var semester_ids=$('#semester_select').val()
+            var option_ids=$('#option_select').val()
+            var subject=[]
+            var study_option=[]
+                ajax.jsonRpc('/get_timetable_data', 'call', {
+                'qua_ids': qua_ids,
+                'campus_ids': campus_ids,
+                'semester_ids': semester_ids,
+                'option_ids':option_ids
+            }).then(function (data) {
+                $(document).find('#course_code_select').html("")
+                for(var i=0; i<data['subject'].length; i++)
+                {
+                    subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
+                }
+                $(document).find('#course_code_select').html(subject)
+//                $(document).find('#option_select').html("")
+//                for(var i=0; i<data['study_option'].length; i++)
+//                {
+//                    study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
+//                }
+//                $(document).find('#option_select').html(study_option)
+            });
+    });
+
+    $('#option_select').on('click',function(){
+            var qua_ids=$('#level_select').val()
+            var campus_ids=$('#campus_select').val()
+            var semester_ids=$('#semester_select').val()
+            var option_ids=$('#option_select').val()
+            var subject=[]
+            var study_option=[]
+                ajax.jsonRpc('/get_timetable_data', 'call', {
+                'qua_ids': qua_ids,
+                'campus_ids': campus_ids,
+                'semester_ids': semester_ids,
+                'option_ids':option_ids
+            }).then(function (data) {
+                $(document).find('#course_code_select').html("")
+                for(var i=0; i<data['subject'].length; i++)
+                {
+                    subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
+                }
+                $(document).find('#course_code_select').html(subject)
+//                $(document).find('#option_select').html("")
+//                for(var i=0; i<data['study_option'].length; i++)
+//                {
+//                    study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
+//                }
+//                $(document).find('#option_select').html(study_option)
             });
     });
 
     $('#campus_select').on('click',function(){
         var qua_ids=$('#level_select').val()
-        var campus_ids=$('#campus_select').val()
-        var semester_ids=$('#semester_select').val()
-        var subject=[]
-        var study_option=[]
-        ajax.jsonRpc('/get_timetable_data', 'call', {
-            'qua_ids': qua_ids,
-            'campus_ids': campus_ids,
-            'semester_ids': semester_ids
-        }).then(function (data) {
-            $(document).find('#course_code_select').html("")
-            for(var i=0; i<data['subject'].length; i++)
-            {
-                subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
-            }
-            $(document).find('#course_code_select').html(subject)
-            $(document).find('#option_select').html("")
-            for(var i=0; i<data['study_option'].length; i++)
-            {
-                study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
-            }
-            $(document).find('#option_select').html(study_option)
+            var campus_ids=$('#campus_select').val()
+            var semester_ids=$('#semester_select').val()
+            var option_ids=$('#option_select').val()
+            var subject=[]
+            var study_option=[]
+                ajax.jsonRpc('/get_timetable_data', 'call', {
+                'qua_ids': qua_ids,
+                'campus_ids': campus_ids,
+                'semester_ids': semester_ids,
+                'option_ids':option_ids
+            }).then(function (data) {
+                $(document).find('#course_code_select').html("")
+                for(var i=0; i<data['subject'].length; i++)
+                {
+                    subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
+                }
+                $(document).find('#course_code_select').html(subject)
+//                $(document).find('#option_select').html("")
+//                for(var i=0; i<data['study_option'].length; i++)
+//                {
+//                    study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
+//                }
+//                $(document).find('#option_select').html(study_option)
             });
     });
 
     $('#semester_select').on('click',function(){
         var qua_ids=$('#level_select').val()
-        var campus_ids=$('#campus_select').val()
-        var semester_ids=$('#semester_select').val()
-        var subject=[]
-        var study_option=[]
-        ajax.jsonRpc('/get_timetable_data', 'call', {
-            'qua_ids': qua_ids,
-            'campus_ids': campus_ids,
-            'semester_ids': semester_ids
-        }).then(function (data) {
-        console.log("\n\n\n data...",data)
-            $(document).find('#course_code_select').html("")
-            for(var i=0; i<data['subject'].length; i++)
-            {
-                subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
-            }
-            $(document).find('#course_code_select').html(subject)
-            $(document).find('#option_select').html("")
-            for(var i=0; i<data['study_option'].length; i++)
-            {
-                study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
-            }
-            $(document).find('#option_select').html(study_option)
+            var campus_ids=$('#campus_select').val()
+            var semester_ids=$('#semester_select').val()
+            var option_ids=$('#option_select').val()
+            var subject=[]
+            var study_option=[]
+                ajax.jsonRpc('/get_timetable_data', 'call', {
+                'qua_ids': qua_ids,
+                'campus_ids': campus_ids,
+                'semester_ids': semester_ids,
+                'option_ids':option_ids
+            }).then(function (data) {
+                $(document).find('#course_code_select').html("")
+                for(var i=0; i<data['subject'].length; i++)
+                {
+                    subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
+                }
+                $(document).find('#course_code_select').html(subject)
+//                $(document).find('#option_select').html("")
+//                for(var i=0; i<data['study_option'].length; i++)
+//                {
+//                    study_option.push('<option value=' + data['study_option'][i].id + '>' + data['study_option'][i].name + '</option>\n')
+//                }
+//                $(document).find('#option_select').html(study_option)
             });
     });
 
@@ -199,6 +172,7 @@ $(document).ready(function(){
 
         });
     });
+
     $('.info_time_table_course').popover({
 		animation: true,
 		html: true,
@@ -222,6 +196,7 @@ $(document).ready(function(){
 			return content;
         },
 	});
+
 	$('body').on('click', function (e) {
 		$('.info_time_table_course').each(function () {
 			if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
@@ -239,19 +214,18 @@ $(document).ready(function(){
         }
         else
         {
-            ajax.jsonRpc('/get_campus', 'call',{
+                ajax.jsonRpc('/get_campus', 'call',{
 
-            }).then(function (data) {
-                var campus=[]
-                for(var i=0; i<data['campus'].length; i++)
-                {
-                    campus.push('<option value=' + data['campus'][i].id + '>' + data['campus'][i].name + '</option>\n')
-                }
-                $(document).find('#campus_select').html(campus)
-                });
+                }).then(function (data) {
+                    var campus=[]
+                    for(var i=0; i<data['campus'].length; i++)
+                    {
+                        campus.push('<option value=' + data['campus'][i].id + '>' + data['campus'][i].name + '</option>\n')
+                    }
+                    $(document).find('#campus_select').html(campus)
+                    });
             $("#semester_select").prop('disabled', true);
         }
-            localStorage.setItem("campus",value);
     });
 
     $('.multiple-semester-select').on('change',function(){
@@ -263,23 +237,10 @@ $(document).ready(function(){
         {
             $("#level_select").prop('disabled', true);
         }
-        localStorage.setItem("semester",value);
     });
 
     $('.multiple-levels-select').on('change',function(){
        var value=$(this).val();
-        if (value){
-            $("#course_code_select").prop('disabled', false);
-        }
-        else
-        {
-            $("#course_code_select").prop('disabled', true);
-        }
-        localStorage.setItem("levels",value);
-    });
-
-    $('.multiple-codes-select').on('change',function(){
-        var value=$(this).val();
         if (value){
             $("#option_select").prop('disabled', false);
         }
@@ -287,7 +248,17 @@ $(document).ready(function(){
         {
             $("#option_select").prop('disabled', true);
         }
-            localStorage.setItem("campus",value);
+    });
+
+    $('#option_select').on('change',function(){
+        var value=$(this).val();
+        if (value){
+            $(".multiple-codes-select").prop('disabled', false);
+        }
+        else
+        {
+            $(".multiple-codes-select").prop('disabled', true);
+        }
     });
 
     $('.back_to_lecturers').on('click', function(){
@@ -295,5 +266,127 @@ $(document).ready(function(){
 	});
 
 	}
+
+	var i=0;
+    var list_menu=[]
+    $('#cfo_menu_with_tabs_div_panel ul.nav.nav-tabs').each(function(){
+        i++;
+        var newID='ul'+i;
+        $(this).attr('id',newID);
+        $(this).val(i);
+        list_menu.push(newID)
+    });
+
+    for(var i=0; i<list_menu.length; i++){
+        var id1=list_menu[i];
+        var j=0;
+        var cnt=$(document).find('#'+id1+' li').length;
+        if($(document).find('#'+id1+' a.read-more').length >=1){
+            $(document).find('#'+id1+' a.read-more').remove()
+        }
+        if (cnt > 2){
+            for(j=2;j<=cnt; j++){
+                var $class = $('#'+id1+' li:nth-child('+ j +')');
+                if ($class.hasClass('js-read-less')){}else{
+                $class.addClass('js-read-less')}
+            }
+        }
+        if ($(document).find('#'+id1+' button.read-more').length == 0){
+            var btnid="btn"+id1
+            $('#'+id1).append(`<button type="submit" class='read-more fa fa-arrow-down' id="`+btnid+`"> More</button>`)
+        }
+
+    }
+
+    $(document).on('click','button.read-more',function(){
+        var id=$(this).attr('id')
+        var pid=$(this).parents().attr('id')
+        $('#'+pid+' li.js-read-less').addClass('js-read-more').removeClass('js-read-less');
+        $(document).find('#'+id).addClass('read-less');
+    });
+
+    $(document).on('click','a.cfo_menu_with_tabs_a_panel',function(){
+        $(this).parent().siblings().removeClass();
+        $(this).parent().siblings().addClass('js-read-less');
+        $(this).parent().parent().find('button.js-read-less').addClass('read-more fa fa-arrow-down').removeClass('js-read-less');
+    });
+
+    $('a.add_menu_side').on('click',function(){
+        if(window.innerWidth <= 460) {
+            $(this).parents('.label_link_list').css('display','none');
+        }
+    })
+
+    $(document).on('click','.material-card',function(){
+    		$(document).find('.material-card').removeClass('active');
+    		$(this).addClass('active');
+    	});
+    	$('.material-card > .mc-btn-action').click(function () {
+            var card = $(this).parent('.material-card');
+            var icon = $(this).children('i');
+            icon.addClass('fa-spin-fast');
+
+            if (card.hasClass('mc-active')) {
+                card.removeClass('mc-active');
+
+                window.setTimeout(function() {
+                    icon
+                        .removeClass('fa-arrow-left')
+                        .removeClass('fa-spin-fast')
+                        .addClass('fa-bars');
+
+                }, 800);
+            } else {
+                card.addClass('mc-active');
+
+                window.setTimeout(function() {
+                    icon
+                        .removeClass('fa-bars')
+                        .removeClass('fa-spin-fast')
+                        .addClass('fa-arrow-left');
+
+                }, 800);
+            }
+        });
+        $('.details_view_lecturer').on('click', function (){
+        	window.location.href = $(this).attr('data-href');
+        });
+
+
+        let url = location.href.replace(/\/$/, "");
+
+		if (location.hash) {
+			const hash = url.split("#");
+			$('#cfo_menu_with_tabs_div_panel a[href="#' + hash[1] + '"]').tab("show");
+			url = location.href.replace(/\/#/, "#");
+			history.replaceState(null, null, url);
+			setTimeout(() => {
+				$(window).scrollTop(0);
+			}, 400);
+		}
+
+		$('.cfo_menu_with_tabs_a_panel').on("click", function(event) {
+            if($(this).attr("external-href") != '#')
+			{
+				const hash = $(this).attr("external-href");
+				const win=window.open(hash);
+				win.focus();
+				event.preventDefault();
+			}
+			else{
+				let newUrl;
+				const hash = $(this).attr("href");
+				if (hash == "#home") {
+					newUrl = url.split("#")[0];
+				} else {
+					newUrl = url.split("#")[0] + hash;
+				}
+				newUrl += "/";
+				history.replaceState(null, null, newUrl);
+			}
+			event.preventDefault();
+		});
+
+
 });
 });

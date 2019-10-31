@@ -66,6 +66,8 @@
                         <field name="professional_body_code"/>
                         <field name="discount"/>
                         <field name="order"/>
+                        <field name="campus_ids" widget="many2many_tags"/>
+                        <field name="semester_ids" widget="many2many_tags"/>
                         <field name="qualification_ids" widget="many2many_tags"/>
                     </group>
                 </field>

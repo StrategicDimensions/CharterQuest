@@ -307,17 +307,6 @@
                             </t>
                         </select>
 
-                        <div><span class="course_span" ><b>Select Subject</b></span></div>
-                        <input type="hidden" name="course_code_select" t-att-value="course_code_select"/>
-                        <select class="form-control multiple-codes-select" id="course_code_select"
-                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
-                            <t t-foreach="request.env['cfo.course.code'].sudo().search([])" t-as="code">
-                                <option t-att-value="code.id">
-                                    <span t-esc="code.name"/>
-                                </option>
-                            </t>
-                        </select>
-
                         <div><span class="option_span"><b>Select Study Option</b></span></div>
                         <input type="hidden" name="option_select" t-att-value="option_select"/>
                         <select class="form-control multiple-option-select" id="option_select"
@@ -325,6 +314,17 @@
                             <t t-foreach="request.env['cfo.course.option'].sudo().search([])" t-as="option">
                                 <option t-att-value="option.id">
                                     <span t-esc="option.name"/>
+                                </option>
+                            </t>
+                        </select>
+
+                        <div><span class="course_span" ><b>Select Subject</b></span></div>
+                        <input type="hidden" name="course_code_select" t-att-value="course_code_select"/>
+                        <select class="form-control multiple-codes-select" id="course_code_select"
+                                style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
+                            <t t-foreach="request.env['cfo.course.code'].sudo().search([])" t-as="code">
+                                <option t-att-value="code.id">
+                                    <span t-esc="code.name"/>
                                 </option>
                             </t>
                         </select>
@@ -473,7 +473,9 @@
                                             <div t-esc="line.course_code_id.campus_id.name"/>
                                         </td>
                                         <td>
-                                            <div t-esc="line.day_selection.title()"/>
+                                            <t t-if="line.day_selection">
+                                                <div t-esc="line.day_selection.title()"/>
+                                            </t>
                                             <span t-esc="line.start_time" t-options="{'widget':'float_time'}"/>
                                             -
                                             <span t-esc="line.end_time" t-options="{'widget':'float_time'}"/>

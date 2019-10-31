@@ -251,6 +251,8 @@ class event_type(models.Model):
     discount = fields.Float(string='Discount (%)')
     professional_body_code = fields.Char('Professional Body Code', size=64)
     order = fields.Integer(string='Order')
+    campus_ids=fields.Many2many("res.partner",domain=[('is_campus','=',True)],string="Campus")
+    semester_ids=fields.Many2many('cfo.semester.information',string="Semester")
     qualification_ids = fields.Many2many("event.qual", string="Qualification")
 
     @api.constrains('order')
@@ -261,10 +263,17 @@ class event_type(models.Model):
                 raise ValidationError("Order must be unique")
 
     @api.model
-    def get_qualification_level(self,id):
+    def get_event_data(self,id):
         res=self.browse(int(id))
-        record=self.env['event.qual'].search_read([('id','in',res.qualification_ids.ids)],['id','name'])
-        return record
+        campus_ids=self.env['res.partner'].search_read([('is_campus','=',True),('id','in',res.campus_ids.ids)],['id','name'])
+        qua_ids=self.env['event.qual'].search_read([('id','in',res.qualification_ids.ids)],['id','name'])
+        sem_ids=self.env['cfo.semester.information'].search_read([('id','in',res.semester_ids.ids)],['id','name'])
+        return {'campus':campus_ids,'qua':qua_ids,'sem':sem_ids}
+
+    @api.model
+    def get_event_category(self):
+        event_categories=self.env['event.type'].search_read([],['id','name']);
+        return event_categories
 
 
 class event_registration(models.Model):
