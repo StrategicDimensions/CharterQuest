@@ -243,13 +243,18 @@ $(document).ready(function(){
                 'id':id}).then(function(response){
                 $('#spin_loader').hide();
                 $("#timetable_body").html(response);
-                    var i=0;
-                    $('.time_table_snippet_div').each(function(){
-                        i++;
-                        var newID='sesson'+i;
-                        $(this).attr('id',newID);
-                        $(this).val(i);
-                    });
+                $('.time_table_css').each(function(){
+                    if($(this).hasClass('tr.sessions_not_availble')){
+                        $(this).remove();
+                    }
+                });
+                var i=0;
+                $('.time_table_snippet_div').each(function(){
+                    i++;
+                    var newID='sesson'+i;
+                    $(this).attr('id',newID);
+                    $(this).val(i);
+                });
                 $('#level_select').val('').trigger("change");
                 $('#campus_select').val('').trigger("change");
                 $('#semester_select').val('').trigger("change");
