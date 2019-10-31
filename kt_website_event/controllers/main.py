@@ -368,7 +368,7 @@ class website_event(http.Controller):
                     current_date = date[1]
         if searches["type"] != 'all':
             current_type = type_obj.browse(int(searches['type']))
-            domain_search["type"] = [("type", "=", int(searches["type"]))]
+            domain_search["type"] = [("event_type_id", "=", int(searches["type"]))]
 
         if searches["country"] != 'all' and searches["country"] != 'online':
             current_country = country_obj.browse(int(searches['country']))
@@ -380,7 +380,7 @@ class website_event(http.Controller):
         type_ids = type_obj.search([('publish_on_website', '=', True)])
 
         def dom_without(without):
-            domain = [('state', "in", ['draft', 'confirm', 'done']), ('type', 'in', type_ids)]
+            domain = [('state', "in", ['draft', 'confirm', 'done']), ('event_type_id', 'in', type_ids.ids)]
             for key, search in domain_search.items():
                 if key != without:
                     domain += search
@@ -389,9 +389,9 @@ class website_event(http.Controller):
         # count by domains without self search
         for date in dates:
             if date[0] != 'old':
-                date[3] = event_obj.search(dom_without('date') + date[2], count=True)
+                date[3] = event_obj.search(dom_without('date') + date[2],count=True)
         domain = dom_without('type')
-        types = event_obj.read_group(domain, ["id", "type"], groupby="type", orderby="type")
+        types = event_obj.read_group(domain, ["id", "event_type_id"], groupby="event_type_id", orderby="event_type_id")
         type_count = event_obj.search(domain, count=True)
         types.insert(0, {
             'type_count': type_count,
@@ -419,7 +419,8 @@ class website_event(http.Controller):
         if searches.get('date', 'all') == 'old':
             order = 'website_published desc, date_begin desc'
         if not request.context.get('tz', False):
-            request.context.update({'tz': 'Africa/Johannesburg'})
+            context = dict(request.context)
+            context.update({'tz': 'Africa/Johannesburg'})
         obj_ids = event_obj.search(dom_without("none"), limit=step, offset=pager['offset'], order=order)
 
         events_ids = event_obj.browse(obj_ids)
@@ -428,7 +429,7 @@ class website_event(http.Controller):
             'current_date': current_date,
             'current_country': current_country,
             'current_type': current_type,
-            'event_ids': events_ids,
+            'event_ids': obj_ids,
             'dates': dates,
             'types': types,
             'countries': countries,
@@ -436,7 +437,7 @@ class website_event(http.Controller):
             'searches': searches,
             'search_path': "?%s" % werkzeug.url_encode(searches),
         }
-        return request.website.render("website_event.index", values)
+        return request.render("website_event.index", values)
 
     # overrided to redirect form in case of free event tickets
     @http.route(['/event/cart/update'], type='http', auth="public", methods=['POST'], website=True)

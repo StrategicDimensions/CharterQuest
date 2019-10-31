@@ -86,7 +86,7 @@ class WebsiteSale(website_sale.WebsiteSale):
                     'billing_partner_id': order.partner_invoice_id.id,
                 }
             )
-
+        print("===========method=======",order._get_delivery_methods())
         if not order._get_delivery_methods():
             values['errors'].append(
                 (_('Sorry, we are unable to ship your order'),
@@ -152,10 +152,10 @@ class WebsiteSale(website_sale.WebsiteSale):
         # find or create transaction
         tx = request.website.sale_get_transaction() or request.env['payment.transaction'].sudo()
         acquirer = request.env['payment.acquirer'].browse(int(acquirer_id))
-
         payment_token = request.env['payment.token'].sudo().browse(int(token)) if token else None
         tx = tx._check_or_create_sale_tx(order, acquirer, payment_token=payment_token, tx_type=tx_type)
         request.session['sale_transaction_id'] = tx.id
+        print("===============tx========",tx,order)
         return tx.render_sale_button(order, '/shop/payment/validate')
 
     @http.route(['/shop/cart/update'], type='http', auth="public", methods=['POST'], website=True, csrf=False)
@@ -1750,7 +1750,6 @@ class EnrolmentProcess(http.Controller):
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
         account_id = request.env['account.account'].sudo().search([('code', '=', '200000')], limit=1)
         product_id = request.env['product.product'].sudo().search([('name', '=', 'Interest Amount')], limit=1)
-
         interest_amount_line = [
             [0, 0, {'price_unit': post.get('inputInterest') if post.get('inputInterest') else 0,
                     'name': 'Interest Amount',
@@ -2795,6 +2794,7 @@ class EnrolmentProcess(http.Controller):
         debit_order_mandet = []
         res_bank_detail = False
         account_type = False
+
         if post.get('inputBankName'):
             res_bank_detail = request.env['res.bank'].sudo().search([('id', '=', int(post['inputBankName']))])
         if post.get('inputAtype'):

@@ -4,7 +4,7 @@
             <field name="name">STUDENT-AGREEMENT</field>
             <field name="datas_fname">STUDENT-AGREEMENT</field>
             <field name="type">binary</field>
-            <field name="datas" type="base64" file="cfo_snr_jnr/data/agreement.pdf"/>
+            <field name="datas" type="base64" file="cfo_snr_jnr/data/student_agreement.pdf"/>
         </record>
 
         <record id="charterbook_term_and_condition_pdf" model="ir.attachment">
@@ -15,7 +15,7 @@
         </record>
 
         <record id="banking_data_pdf" model="ir.attachment">
-            <field name="name">Banking Detail</field>
+            <field name="name">BANKING-DETAILS</field>
             <field name="datas_fname">BANKING-DETAILS</field>
             <field name="type">binary</field>
             <field name="datas" type="base64" file="cfo_snr_jnr/data/banking_details.pdf"/>

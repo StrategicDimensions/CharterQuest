@@ -26,7 +26,6 @@ class WebsiteSale(website_sale.WebsiteSale):
             tx = request.website.sale_get_transaction()
         else:
             tx = request.env['payment.transaction'].sudo().browse(transaction_id)
-
         if sale_order_id is None:
             order = request.website.sale_get_order()
         else:
