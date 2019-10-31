@@ -86,7 +86,7 @@ class WebsiteSale(website_sale.WebsiteSale):
                     'billing_partner_id': order.partner_invoice_id.id,
                 }
             )
-
+        print("===========method=======",order._get_delivery_methods())
         if not order._get_delivery_methods():
             values['errors'].append(
                 (_('Sorry, we are unable to ship your order'),
@@ -155,7 +155,7 @@ class WebsiteSale(website_sale.WebsiteSale):
         payment_token = request.env['payment.token'].sudo().browse(int(token)) if token else None
         tx = tx._check_or_create_sale_tx(order, acquirer, payment_token=payment_token, tx_type=tx_type)
         request.session['sale_transaction_id'] = tx.id
-
+        print("===============tx========",tx,order)
         return tx.render_sale_button(order, '/shop/payment/validate')
 
     @http.route(['/shop/cart/update'], type='http', auth="public", methods=['POST'], website=True, csrf=False)
