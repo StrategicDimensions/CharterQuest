@@ -45,8 +45,6 @@ class TimeTable(http.Controller):
             [str(i.id) for i in request.env['cfo.course.code'].sudo().search([])])
         campus_select = post.get('campus_select') if post.get('campus_select') else ','.join(
             [str(i.id) for i in request.env['res.partner'].sudo().search([('is_campus', '=', True)])])
-        print("\n\n\n coursecode>>",type(course_code))
-        print("\n\n\n campus>>>",campus_select)
         for data in time_table_ids:
             for line in data.time_table_line_ids:
                 if line.course_code_id.id in [int(id) for id in course_code.split(',')]:

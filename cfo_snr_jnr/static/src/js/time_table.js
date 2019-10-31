@@ -283,7 +283,7 @@ $(document).ready(function(){
         $(this).attr('id',newID);
         $(this).val(i);
         list_menu.push(newID)
-        $(this).find('li:first-child').addClass('active').siblings().removeClass('active');
+//        $(this).find('li:first-child').addClass('active').siblings().removeClass('active');
     });
 
     for(var i=0; i<list_menu.length; i++){
