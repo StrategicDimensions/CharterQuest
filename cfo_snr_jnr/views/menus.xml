@@ -116,7 +116,7 @@
 
 		<template id="img_header_change" inherit_id="cfo_snr_jnr.main_header_layout_id">
 			<xpath expr="//a[hasclass('logo')]/img" position="replace">
-				<img class="cq-logo img-mobile" src="/cfo_snr_jnr/static/description/charterquest_mobile_image.png" style="height:54px !important;margin: 0 !important;width: 86px !important;"/>
+				<img class="cq-logo img-mobile" src="/cfo_snr_jnr/static/description/charterquest_mobile_image.png" style="height:54px !important;margin: 0 !important;"/>
 			</xpath>
 			<xpath expr="//a[hasclass('logo')]" position="after">
 				<a href="/enrolment_book" target="_blank">
