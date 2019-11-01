@@ -397,8 +397,6 @@ $(document).ready(function(){
 			event.preventDefault();
 		});
 
-        $('.cfo_snr_jnr_time_table_snippet').each(function(){
-            $(this).remove();
-        })
+       
 });
 });
