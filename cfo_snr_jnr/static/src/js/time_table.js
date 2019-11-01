@@ -284,7 +284,7 @@ $(document).ready(function(){
         $(this).val(i);
         list_menu.push(newID)
     });
-    $('##cfo_menu_with_tabs_div_panel div.tab-content.tabs div:nth-child('+1+')').addClass('active in').siblings.removeClass('active in');
+    $('#cfo_menu_with_tabs_div_panel div.tab-content.tabs div:nth-child('+1+')').addClass('active in').siblings.removeClass('active in');
     for(var i=0; i<list_menu.length; i++){
         var id1=list_menu[i];
         var j=0;
