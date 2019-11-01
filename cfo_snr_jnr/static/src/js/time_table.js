@@ -283,9 +283,6 @@ $(document).ready(function(){
         $(this).attr('id',newID);
         $(this).val(i);
         list_menu.push(newID)
-        if(window.innerWidth <= 460) {
-            $(this).find('li:first-child').addClass('active').siblings().removeClass('active');
-        }
     });
 
     for(var i=0; i<list_menu.length; i++){
@@ -296,10 +293,11 @@ $(document).ready(function(){
             $(document).find('#'+id1+' a.read-more').remove()
         }
         if (cnt > 2){
+            $('#'+id1+' li:nth-child('+ 1 +')').addClass('active')
             for(j=2;j<=cnt; j++){
                 var $class = $('#'+id1+' li:nth-child('+ j +')');
                 if ($class.hasClass('js-read-less')){}else{
-                $class.addClass('js-read-less')}
+                $class.addClass('js-read-less').removeClass('active')}
             }
         }
         if ($(document).find('#'+id1+' button.read-more').length == 0){
