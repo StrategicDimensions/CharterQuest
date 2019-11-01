@@ -299,6 +299,7 @@ $(document).ready(function(){
                 if ($class.hasClass('js-read-less')){}else{
                 $class.addClass('js-read-less').removeClass('active')}
             }
+            $('#'+id1+' li:nth-child('+ 1 +')').addClass('active').removeClass('js-read-less')
         }
         if ($(document).find('#'+id1+' button.read-more').length == 0){
             var btnid="btn"+id1
