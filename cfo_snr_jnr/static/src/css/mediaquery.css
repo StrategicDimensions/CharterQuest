@@ -1240,6 +1240,9 @@ i.fa.fa-chevron-left.fa-1x.bg-white{
 i.fa.fa-chevron-right.fa-1x.bg-white{
     display:none !important;
 }
+#products_grid_before div{
+    display:none !important;
+}
 }
 
 /* form report end */
