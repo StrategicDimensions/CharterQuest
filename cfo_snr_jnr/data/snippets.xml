@@ -22,7 +22,7 @@
     </template>
 
     <template id="cfo_snr_jnr_time_table_snippet_test" name="Time Table">
-        <section class="cfo_snr_jnr_time_table cfo_snr_jnr_time_table_snippet" contentEditable="true">
+        <section class="cfo_snr_jnr_time_table cfo_snr_jnr_time_table_snippet_charterquest" contentEditable="true">
             <div class="container">
                 <div class="panel panel-default" style="margin-top:10px;">
                     <div class="panel-heading" style="padding: 28px 15px;">
@@ -406,7 +406,7 @@
 
     <template id="cfo_snr_jnr_time_table" inherit_id="website.snippet_options" name="Time Table">
         <xpath expr="//div" position="after">
-            <div data-js="cfo_snr_jnr_timetable" data-selector=".cfo_snr_jnr_time_table_snippet"
+            <div data-js="cfo_snr_jnr_timetable" data-selector=".cfo_snr_jnr_time_table_snippet_charterquest"
                  data-snippet-option-id="cfo_snr_jnr_time_table">
                 <li>
                     <a class="cfo_snr_jnr_time_table_part1">Add Step</a>
