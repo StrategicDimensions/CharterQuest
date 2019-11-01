@@ -26,7 +26,7 @@ class TimeTable(http.Controller):
 
     @http.route(['/time_table',], type='http', auth="public", website=True,csrf=False)
     def time_table_view(self, **post):
-        print("\n\n\n\n post>>>",post)
+        timetable_ids=[]
         level_select = post.get('level_select') if post.get('level_select') else ','.join(
             [str(i.id) for i in request.env['event.qual'].sudo().search([])])
         option_select = post.get('option_select') if post.get('option_select') else ','.join(
@@ -45,6 +45,11 @@ class TimeTable(http.Controller):
             [str(i.id) for i in request.env['cfo.course.code'].sudo().search([])])
         campus_select = post.get('campus_select') if post.get('campus_select') else ','.join(
             [str(i.id) for i in request.env['res.partner'].sudo().search([('is_campus', '=', True)])])
+        for data in time_table_ids:
+            for line in data.time_table_line_ids:
+                if line.course_code_id.id in [int(id) for id in course_code.split(',')]:
+                    if data not in timetable_ids:
+                        timetable_ids.append(data)
 
         return request.render("cfo_snr_jnr.time_table_template", {
             'time_table': time_table_ids, 'course_code_select': course_code,
@@ -62,6 +67,7 @@ class TimeTable(http.Controller):
         list3 = [i.id for i in request.env['cfo.semester.information'].sudo().search([])]
         list4 = [i.id for i in request.env['cfo.course.code'].sudo().search([])]
         list5 = [i.id for i in request.env['res.partner'].sudo().search([('is_campus', '=', True)])]
+        timetable_ids=[]
         event_id=request.env['event.type'].browse(int(post.get('id')))
         level_select = post.get('level_select') if post.get('level_select') else list1
         option_select = post.get('option_select') if post.get('option_select') else list2
@@ -79,11 +85,15 @@ class TimeTable(http.Controller):
         course_code = [int(i) for i in post.get('course_code_select')] if post.get('course_code_select') else list4
         course_code_select = str(course_code).strip('[]')
         campus_select = [int(id) for id in post.get('campus_select')] if post.get('campus_select') else list5
-
+        for data in time_table_ids:
+            for line in data.time_table_line_ids:
+                if line.course_code_id.id in course_code and line.course_code_id.campus_id.id in campus_select:
+                    if data not in timetable_ids:
+                        timetable_ids.append(data)
         datas={
             'course_code_select': course_code,
             'course_code':course_code_select,
-            'time_table':time_table_ids,
+            'time_table':timetable_ids,
             'campus_select': campus_select,
             'option_select': post.get('option_select[]') if post.get('option_select[]') else '',
             'semester_select': post.get('semester_select[]') if post.get('semester_select[]') else '',
@@ -111,11 +121,17 @@ class TimeTable(http.Controller):
         course_code = [int(i) for i in kw['code'].split(",")]
         timetable_ids=request.env['cfo.time.table'].sudo().search([('id','in',time_table_ids)])
         timetable_ids = timetable_ids.sorted(key=lambda l: l.semester_id.sequence)
+        timetable_ids_list=[]
+        for data in timetable_ids:
+            for line in data.time_table_line_ids:
+                if line.course_code_id.id in course_code:
+                    if data not in timetable_ids_list:
+                        timetable_ids_list.append(data)
         id=request.env['res.company'].sudo().search([('partner_id.name','=','The CharterQuest Institute')])
         datas={'course_code':course_code,'session_text':id.session_text}
         if timetable_ids and course_code:
             report_id = request.env.ref('cfo_snr_jnr.report_time_table')
-            pdf = report_id.sudo().render_qweb_pdf(timetable_ids, data=datas)[0]
+            pdf = report_id.sudo().render_qweb_pdf(timetable_ids_list, data=datas)[0]
             pdfhttpheaders = [
                 ('Content-Type', 'application/pdf'),
                 ('Content-Length', len(pdf)),

@@ -81,7 +81,7 @@
                             </span>
                         </div>
                         <input type="hidden" name="option_select" t-att-value="option_select"/>
-                        <select class="form-control multiple-option-select" id="option_select"
+                        <select name="option_select" class="form-control multiple-option-select" id="option_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
                             <t t-foreach="request.env['cfo.course.option'].sudo().search([])" t-as="option">
                                 <option t-att-value="option.id">
