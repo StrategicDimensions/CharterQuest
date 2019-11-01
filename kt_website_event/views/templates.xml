@@ -2,13 +2,15 @@
 <openerp>
     <data>
 
-        <!--<template id='event_description_full_inherit' inherit_id='website_event.event_description_full'>-->
-            <!--<xpath expr="//button[@type='submit']" position='replace'>-->
-                <!--<button type="submit" class="btn btn-primary btn-lg pull-right" t-if="event.seats_available">Register-->
-                    <!--Now-->
-                <!--</button>-->
-            <!--</xpath>-->
-        <!--</template>-->
+        <template id='registration_template_inherit' inherit_id='website_event.registration_template'>
+            <xpath expr="//form/div/div/div/button[@type='submit']" position='attributes'>
+               <attribute name="style">
+                    margin-left: -30px;
+                    width: 208px;
+                    padding-left: 23px;
+               </attribute>
+            </xpath>
+        </template>
 
         <template id='in_out_stock_wrapper' inherit_id='website_sale.products_item' name="Products item">
 
