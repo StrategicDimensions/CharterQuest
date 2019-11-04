@@ -270,10 +270,10 @@
 			<xpath expr="//footer/div/div/div[4]/h4" position="after">
 				<div>
 					<ul class="list-unstyled">
-						<li><a href="https://www.charterquest.co.za/terms-conditions">Terms &amp; Conditions</a></li>
-						<li><a href="https://www.charterquest.co.za/terms-conditions">Privacy Policy</a></li>
-						<li><a href="https://www.charterquest.co.za/disclaimer">Disclaimer</a></li>
-						<li><a href="https://www.charterquest.co.za/downloads">Downloads</a></li>
+						<li><a class="text-black" href="https://www.charterquest.co.za/terms-conditions">Terms &amp; Conditions</a></li>
+						<li><a class="text-black" href="https://www.charterquest.co.za/privacy-policy">Privacy Policy</a></li>
+						<li><a class="text-black" href="https://www.charterquest.co.za/disclaimer">Disclaimer</a></li>
+						<li><a class="text-black" href="https://www.charterquest.co.za/downloads">Downloads</a></li>
 					</ul>
 				</div>
 			</xpath>
