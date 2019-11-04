@@ -141,7 +141,7 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
                     }
 					var html = `
 						<div class="col-md-3 col-sm-6 col-xs-12">
-							<article class="material-card `+ card_color +`">
+							<div class="material-card `+ card_color +`">
 								<h2>
 									<span class="lecturer-name">` + $lec_name + `</span>
 									<strong class="lecturer-qualification">
@@ -178,11 +178,10 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
 									html += '<a class="fa fa-fw fa-google-plus" href="'+ $google_url +'"/>';
 								}
 								html += `</div></div>
-							</article>
+							</div>
 						</div>
 					`;
-					console.log('\n\n\ html....',html)
-					$target.parents('.row.active-with-click').append(html);
+					$target.parents('.row.active-with-click div:last-child').after(html);
                 });
             } else {
                 return false;
@@ -196,7 +195,6 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
                 self.$modal = $(qweb.render("cfo_snr_jnr.cfo_snr_jnr_cards_blocks_cfo"));
                 self.$modal.appendTo('body');
                 self.$modal.modal();
-                alert()
                 var $is_facebook = false,
 					$is_twitter = false,
 					$is_linkedin = false,
@@ -309,8 +307,5 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
                 return false;
             }
         },
-    });
-    $(document).ready(function(){
-
     });
 });

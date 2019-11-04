@@ -33,7 +33,7 @@
                             </span>
                         </div>
                         <input type="hidden" name="campus_select" t-att-value="campus_select" placeholder=""/>
-                        <select name="campus_select" class="form-control multiple-campus-select" id="campus_select"
+                        <select placeholder="" name="campus_select" class="form-control multiple-campus-select" id="campus_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
                             <t t-foreach="request.env['res.partner'].sudo().search([('is_campus', '=', True)])"
                                t-as="campus">
@@ -49,7 +49,7 @@
                             </span>
                         </div>
                         <input type="hidden" name="semester_select" t-att-value="semester_select"/>
-                        <select name="semester_select" class="form-control multiple-semester-select"
+                        <select placeholder="" name="semester_select" class="form-control multiple-semester-select"
                                 id="semester_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
                             <t t-foreach="request.env['cfo.semester.information'].sudo().search([],order='sequence')"
@@ -66,7 +66,7 @@
                             </span>
                         </div>
                         <input type="hidden" name="level_select" t-att-value="level_select" class="level_select"/>
-                        <select name="level_select" class="form-control multiple-levels-select" id="level_select"
+                        <select placeholder="" name="level_select" class="form-control multiple-levels-select" id="level_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
                             <t t-foreach="request.env['event.qual'].sudo().search([])" t-as="qualification">
                                 <option t-att-value="qualification.id">
@@ -81,7 +81,7 @@
                             </span>
                         </div>
                         <input type="hidden" name="option_select" t-att-value="option_select"/>
-                        <select name="option_select" class="form-control multiple-option-select" id="option_select"
+                        <select placeholder="" name="option_select" class="form-control multiple-option-select" id="option_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
                             <t t-foreach="request.env['cfo.course.option'].sudo().search([])" t-as="option">
                                 <option t-att-value="option.id">
@@ -96,7 +96,7 @@
                             </span>
                         </div>
                         <input type="hidden" name="course_code_select" t-att-value="course_code_select"/>
-                        <select class="form-control multiple-codes-select" id="course_code_select"
+                        <select placeholder="" class="form-control multiple-codes-select" id="course_code_select"
                                 style="width: 18%;float: left;margin-right:10px;" multiple="multiple">
                             <t t-foreach="request.env['cfo.course.code'].sudo().search([])" t-as="code">
                                 <option t-att-value="code.id">
@@ -113,9 +113,9 @@
                     </div>
 
                     <div id="body">
-                        <div id="spin_loader" style="display:none;">
+                        <div id="spin_loader" style="display:none;width: 1044px;">
                             <center>
-                                <img src="/cfo_snr_jnr/static/src/img/giphy.gif"></img>
+                                <img style="margin-left: 150px;" src="/cfo_snr_jnr/static/src/img/giphy.gif"></img>
                             </center>
                         </div>
                         <div id="timetable_body">

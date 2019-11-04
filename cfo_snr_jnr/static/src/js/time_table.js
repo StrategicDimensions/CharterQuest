@@ -328,9 +328,9 @@ $(document).ready(function(){
     })
 
     $(document).on('click','.material-card',function(){
-    		$(document).find('.material-card').removeClass('active');
-    		$(this).addClass('active');
-    	});
+        $(document).find('.material-card').removeClass('active');
+        $(this).addClass('active');
+    });
     	$('.material-card > .mc-btn-action').click(function () {
             var card = $(this).parent('.material-card');
             var icon = $(this).children('i');
