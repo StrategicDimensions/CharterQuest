@@ -1243,6 +1243,35 @@ i.fa.fa-chevron-right.fa-1x.bg-white{
 #products_grid_before div{
     display:none !important;
 }
+.event_name{
+    margin-left: 17px !important;
+    margin-bottom: -26px !important;
+}
+.event_email{
+margin-left: 133px !important;
+    margin-bottom: -26px !important;
+}
+.event_phone{
+margin-left: 243    px !important;
+}
+.optional_mobile{
+    display:none !important;
+}
+.input_name{
+    width:139px !important;
+    margin-top: 3px !important;
+    margin-left: -17px !important;
+}
+.input_email{
+    width: 140px !important;
+    margin-left: 97px !important;
+    margin-top: -38px !important;
+}
+.input_phone{
+    width: 140px !important;
+    margin-left: 211px !important;
+    margin-top: -38px !important;
+}
 }
 
 /* form report end */

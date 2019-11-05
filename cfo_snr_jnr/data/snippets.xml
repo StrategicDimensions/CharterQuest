@@ -232,20 +232,12 @@
         <section class="container cfo_snr_jnr_cards_block_container" style="margin-top:15px;">
             <div class="row active-with-click">
                 <div class="col-md-3 col-sm-6 col-xs-12">
-                    <article class="material-card">
+                    <div class="material-card">
                         <h2>
                             <span class="lecturer-name">Test Content</span>
                             <strong class="lecturer-qualification">
                                 Qualification
                             </strong>
-                            <!--                            <a style="cursor:pointer;" class="info_lecturers_study" data-placement="left"-->
-                            <!--                               data-toggle="popover" tabindex="0">-->
-                            <!--                                <i class="fa fa-info"/>-->
-                            <!--                            </a>-->
-                            <!--                            <div class="hidden">-->
-                            <!--                                <div class="popover-heading"/>-->
-                            <!--                                <div class="popover-body"/>-->
-                            <!--                            </div>-->
                         </h2>
                         <div class="mc-content">
                             <div class="lecturer-study"/>
@@ -266,7 +258,7 @@
                             </h4>
                             <div class="social_icons"/>
                         </div>
-                    </article>
+                    </div>
                 </div>
             </div>
         </section>
