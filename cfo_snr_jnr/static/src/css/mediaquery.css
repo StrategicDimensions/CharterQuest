@@ -1252,7 +1252,7 @@ margin-left: 133px !important;
     margin-bottom: -26px !important;
 }
 .event_phone{
-margin-left: 243    px !important;
+margin-left: 243px !important;
 }
 .optional_mobile{
     display:none !important;
@@ -1271,6 +1271,11 @@ margin-left: 243    px !important;
     width: 140px !important;
     margin-left: 211px !important;
     margin-top: -38px !important;
+}
+.event_register{
+    margin-left: 180px !important;
+    width: 208px !important;
+    padding-left: 23px !important;
 }
 }
 

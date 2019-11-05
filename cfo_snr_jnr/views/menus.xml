@@ -306,6 +306,14 @@
 			</xpath>
 		</template>
 
+		<template id='registration_template_inherit' inherit_id='website_event.registration_template'>
+            <xpath expr="//form/div/div/div/button[@type='submit']" position='attributes'>
+               <attribute name="class">
+                    event_register btn btn-primary btn-lg btn-block
+               </attribute>
+            </xpath>
+        </template>
+
 		<template id="cfo_snr_jnr.portal_layout" inherit_id="portal.portal_layout"
 			name="CFO Portal access">
 			<xpath expr="//t/div/div/div/div/ol/li/a" position='after'>
