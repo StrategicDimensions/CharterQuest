@@ -30,84 +30,136 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     due_day = fields.Integer(string='Due Day')
+
     @api.multi
-    def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, attributes=None, warehouse_id= 0, **kwargs):
-        """ Add or set product quantity, add_qty can be negative """
-        self.ensure_one()
+    def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, **kwargs):
+        OrderLine = self.env['sale.order.line']
 
-        SaleOrderLineSudo = self.env['sale.order.line'].sudo()
-
-        try:
-            if add_qty:
-                add_qty = float(add_qty)
-        except ValueError:
-            add_qty = 1
-        try:
-            if set_qty:
-                set_qty = float(set_qty)
-        except ValueError:
-            set_qty = 0
-        quantity = 0
-        order_line = False
-        if self.state != 'draft':
-            request.session['sale_order_id'] = None
-            raise UserError(_('It is forbidden to modify a sales order which is not in draft status'))
-        if line_id is not False:
-            order_lines = self._cart_find_product_line(product_id, line_id, **kwargs)
-            order_line = order_lines and order_lines[0]
-
-        # Create line if no line with product_id can be located
-        if not order_line:
-            values = self._website_product_id_change(self.id, product_id, qty=1)
-            values['name'] = self._get_line_description(self.id, product_id, attributes=attributes)
-
-            values['product_warehouse_id'] = int(warehouse_id) if warehouse_id else ''
-            order_line = SaleOrderLineSudo.create(values)
-
-            try:
-                order_line._compute_tax_id()
-            except ValidationError as e:
-                # The validation may occur in backend (eg: taxcloud) but should fail silently in frontend
-                _logger.debug("ValidationError occurs during tax compute. %s" % (e))
-            if add_qty:
-                add_qty -= 1
-
-        # compute new quantity
-        if set_qty:
-            quantity = set_qty
-        elif add_qty is not None:
-            quantity = order_line.product_uom_qty + (add_qty or 0)
-
-        # Remove zero of negative lines
-        if quantity <= 0:
-            order_line.unlink()
+        if line_id:
+            line = OrderLine.browse(line_id)
+            ticket = line.event_ticket_id
+            old_qty = int(line.product_uom_qty)
+            if ticket.id:
+                self = self.with_context(event_ticket_id=ticket.id, fixed_price=1)
         else:
-            # update line
-            values = self._website_product_id_change(self.id, product_id, qty=quantity)
-            if not warehouse_id and order_line.product_warehouse_id:
-                warehouse_id = order_line.product_warehouse_id
-            values['product_warehouse_id'] = int(warehouse_id or 0)
-            if self.pricelist_id.discount_policy == 'with_discount' and not self.env.context.get('fixed_price'):
-                order = self.sudo().browse(self.id)
-                product_context = dict(self.env.context)
-                product_context.setdefault('lang', order.partner_id.lang)
-                product_context.update({
-                    'partner': order.partner_id.id,
-                    'quantity': quantity,
-                    'date': order.date_order,
-                    'pricelist': order.pricelist_id.id,
-                })
-                product = self.env['product.product'].with_context(product_context).browse(product_id)
-                values['price_unit'] = self.env['account.tax']._fix_tax_included_price_company(
-                    order_line._get_display_price(product),
-                    order_line.product_id.taxes_id,
-                    order_line.tax_id,
-                    self.company_id
-                )
+            line = None
+            ticket = self.env['event.event.ticket'].search([('product_id', '=', product_id)], limit=1)
+            old_qty = 0
+        new_qty = set_qty if set_qty else (add_qty or 0 + old_qty)
 
-            order_line.write(values)
+        # case: buying tickets for a sold out ticket
+        values = {}
+        if ticket and ticket.seats_availability == 'limited' and ticket.seats_available <= 0:
+            values['warning'] = _('Sorry, The %(ticket)s tickets for the %(event)s event are sold out.') % {
+                'ticket': ticket.name,
+                'event': ticket.event_id.name}
+            new_qty, set_qty, add_qty = 0, 0, 0
+        # case: buying tickets, too much attendees
+        elif ticket and ticket.seats_availability == 'limited' and new_qty > ticket.seats_available:
+            values['warning'] = _(
+                'Sorry, only %(remaining_seats)d seats are still available for the %(ticket)s ticket for the %(event)s event.') % {
+                                    'remaining_seats': ticket.seats_available,
+                                    'ticket': ticket.name,
+                                    'event': ticket.event_id.name}
+            new_qty, set_qty, add_qty = ticket.seats_available, ticket.seats_available, 0
+        values.update(super(SaleOrder, self)._cart_update(product_id, line_id, add_qty, set_qty, **kwargs))
 
-        return {'line_id': order_line.id, 'quantity': quantity}
+        # removing attendees
+        if ticket and new_qty < old_qty:
+            attendees = self.env['event.registration'].search([
+                ('state', '!=', 'cancel'),
+                ('sale_order_id', 'in', self.ids),  # To avoid break on multi record set
+                ('event_ticket_id', '=', ticket.id),
+            ], offset=new_qty, limit=(old_qty - new_qty), order='create_date asc')
+            attendees.button_reg_cancel()
+        # adding attendees
+        elif ticket and new_qty > old_qty:
+            line = OrderLine.browse(values['line_id'])
+            line._update_registrations(confirm=False, cancel_to_draft=True,
+                                       registration_data=kwargs.get('registration_data', []))
+            # add in return values the registrations, to display them on website (or not)
+            values['attendee_ids'] = self.env['event.registration'].search(
+                [('sale_order_line_id', '=', line.id), ('state', '!=', 'cancel')]).ids
+        return values
+
+    # @api.multi
+    # def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, attributes=None, warehouse_id= 0, **kwargs):
+    #     """ Add or set product quantity, add_qty can be negative """
+    #     self.ensure_one()
+    #
+    #     SaleOrderLineSudo = self.env['sale.order.line'].sudo()
+    #
+    #     try:
+    #         if add_qty:
+    #             add_qty = float(add_qty)
+    #     except ValueError:
+    #         add_qty = 1
+    #     try:
+    #         if set_qty:
+    #             set_qty = float(set_qty)
+    #     except ValueError:
+    #         set_qty = 0
+    #     quantity = 0
+    #     order_line = False
+    #     if self.state != 'draft':
+    #         request.session['sale_order_id'] = None
+    #         raise UserError(_('It is forbidden to modify a sales order which is not in draft status'))
+    #     if line_id is not False:
+    #         order_lines = self._cart_find_product_line(product_id, line_id, **kwargs)
+    #         order_line = order_lines and order_lines[0]
+    #
+    #     # Create line if no line with product_id can be located
+    #     if not order_line:
+    #         values = self._website_product_id_change(self.id, product_id, qty=1)
+    #         values['name'] = self._get_line_description(self.id, product_id, attributes=attributes)
+    #
+    #         values['product_warehouse_id'] = int(warehouse_id) if warehouse_id else ''
+    #         order_line = SaleOrderLineSudo.create(values)
+    #
+    #         try:
+    #             order_line._compute_tax_id()
+    #         except ValidationError as e:
+    #             # The validation may occur in backend (eg: taxcloud) but should fail silently in frontend
+    #             _logger.debug("ValidationError occurs during tax compute. %s" % (e))
+    #         if add_qty:
+    #             add_qty -= 1
+    #
+    #     # compute new quantity
+    #     if set_qty:
+    #         quantity = set_qty
+    #     elif add_qty is not None:
+    #         quantity = order_line.product_uom_qty + (add_qty or 0)
+    #
+    #     # Remove zero of negative lines
+    #     if quantity <= 0:
+    #         order_line.unlink()
+    #     else:
+    #         # update line
+    #         values = self._website_product_id_change(self.id, product_id, qty=quantity)
+    #         if not warehouse_id and order_line.product_warehouse_id:
+    #             warehouse_id = order_line.product_warehouse_id
+    #         values['product_warehouse_id'] = int(warehouse_id or 0)
+    #         if self.pricelist_id.discount_policy == 'with_discount' and not self.env.context.get('fixed_price'):
+    #             order = self.sudo().browse(self.id)
+    #             product_context = dict(self.env.context)
+    #             product_context.setdefault('lang', order.partner_id.lang)
+    #             product_context.update({
+    #                 'partner': order.partner_id.id,
+    #                 'quantity': quantity,
+    #                 'date': order.date_order,
+    #                 'pricelist': order.pricelist_id.id,
+    #             })
+    #             product = self.env['product.product'].with_context(product_context).browse(product_id)
+    #             values['price_unit'] = self.env['account.tax']._fix_tax_included_price_company(
+    #                 order_line._get_display_price(product),
+    #                 order_line.product_id.taxes_id,
+    #                 order_line.tax_id,
+    #                 self.company_id
+    #             )
+    #
+    #         order_line.write(values)
+    #
+    #     return {'line_id': order_line.id, 'quantity': quantity}
 
 
 

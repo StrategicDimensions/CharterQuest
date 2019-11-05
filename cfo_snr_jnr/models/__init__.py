@@ -30,7 +30,7 @@ from . import res_config
 from . import blog_post
 from . import website_sale
 from . import sale_order
-# from . import payment_transaction
+from . import payment_transaction
 from . import cfo_time_table
 from . import report
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
