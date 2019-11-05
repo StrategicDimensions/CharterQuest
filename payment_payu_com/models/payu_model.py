@@ -29,7 +29,7 @@ class AcquirerPayu(models.Model):
         """ Paypal URLS """
         if environment == 'prod':
             return {
-                'payu_form_url': 'https://secure.payu.co.za/service/PayUAPI?wsdl',
+                'payu_form_url': '/shop/redirect_payu',
 
             }
             # return {'payumoney_form_url': 'https://secure.payu.in/_payment'}

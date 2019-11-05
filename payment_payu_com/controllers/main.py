@@ -280,6 +280,7 @@ class PayuController(http.Controller):
         s = plugin.last_received_raw
         dic = xmltodict.parse(str(s[2:-1]))
         response = dic['soap:Envelope']['soap:Body']['ns2:setTransactionResponse']['return']
+
         if response['successful'] == 'true':
             number = response['payUReference']
             if (args['store']['environment'] == 'prod'):
