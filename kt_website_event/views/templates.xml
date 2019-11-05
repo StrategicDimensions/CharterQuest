@@ -5,9 +5,9 @@
         <template id='registration_template_inherit' inherit_id='website_event.registration_template'>
             <xpath expr="//form/div/div/div/button[@type='submit']" position='attributes'>
                <attribute name="style">
-                    margin-left: -30px;
-                    width: 208px;
-                    padding-left: 23px;
+                    margin-left: -15px;
+                    width: 191px;
+                    padding-left: 14px;
                </attribute>
             </xpath>
         </template>
