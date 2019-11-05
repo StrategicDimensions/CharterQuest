@@ -1210,6 +1210,11 @@ a.cfo_menu_with_tabs_a_panel {
     overflow: hidden !important;
     width: 170px !important;
 }
+
+a.cfo_menu_with_tabs_a_panel i,
+a.cfo_menu_with_tabs_a_panel span{
+    float:left !important;
+}
 .img_book {
     width:163px !important;
 }
@@ -1233,6 +1238,9 @@ i.fa.fa-chevron-left.fa-1x.bg-white{
     display:none !important;
 }
 i.fa.fa-chevron-right.fa-1x.bg-white{
+    display:none !important;
+}
+#products_grid_before div{
     display:none !important;
 }
 }

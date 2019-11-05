@@ -116,7 +116,7 @@
 
 		<template id="img_header_change" inherit_id="cfo_snr_jnr.main_header_layout_id">
 			<xpath expr="//a[hasclass('logo')]/img" position="replace">
-				<img class="cq-logo img-mobile" src="/cfo_snr_jnr/static/description/charterquest_mobile_image.png" style="height:54px !important;margin: 0 !important;width: 86px !important;"/>
+				<img class="cq-logo img-mobile" src="/cfo_snr_jnr/static/description/charterquest_mobile_image.png" style="height: 55px !important; margin-top: 0px !important;margin-left: -1px !important;"/>
 			</xpath>
 			<xpath expr="//a[hasclass('logo')]" position="after">
 				<a href="/enrolment_book" target="_blank">
@@ -226,7 +226,7 @@
 							</h2>
 						</div>
 						<div class="col-md-3">
-							<h4>Key Brands</h4>
+							<h4>Key Brand</h4>
 							<div>
 								<ul class="list-unstyled" id="products">
 									<li>
@@ -255,28 +255,28 @@
 							</div>
 						</div>
 						<div class="col-md-3">
-							<h4>
+							<h4 class="company_name">
 								<span t-field="res_company.name" class="oe_editable" />
 							</h4>
-							<p>
-								<a href="/page/terms-and-conditions">Terms &amp; Conditions</a>
-								<br />
-								<a href="/page/frequently-asked-questions">FAQs</a>
-								<br />
-								<a href="/page/privacy-policy">Privacy Policy</a>
-								<br />
-								<a href="/page/disclaimer">Disclaimer</a>
-								<br />
-								<a href="/page/downloads">Downloads</a>
-								<br />
-								<a href="/page/thank-you">Thank You</a>
-								<br />
-							</p>
 						</div>
 					</div>
 				</div>
 			</xpath>
 
+		</template>
+
+		<template id="footer_default_inherit_cfo" inherit_id="cfo_snr_jnr.footer_default_inherit"
+				  customize_show="True" name="Automatic Footer Dynamic">
+			<xpath expr="//footer/div/div/div[4]/h4" position="after">
+				<div>
+					<ul class="list-unstyled">
+						<li><a class="text-black" href="https://www.charterquest.co.za/terms-conditions">Terms &amp; Conditions</a></li>
+						<li><a class="text-black" href="https://www.charterquest.co.za/privacy-policy">Privacy Policy</a></li>
+						<li><a class="text-black" href="https://www.charterquest.co.za/disclaimer">Disclaimer</a></li>
+						<li><a class="text-black" href="https://www.charterquest.co.za/downloads">Downloads</a></li>
+					</ul>
+				</div>
+			</xpath>
 		</template>
 
 		<template id="portal_show_cfo_login" inherit_id="portal.portal_show_sign_in"
