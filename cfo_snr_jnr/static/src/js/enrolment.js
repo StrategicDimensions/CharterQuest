@@ -110,6 +110,7 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 $('#reg_enrol_for').show();
                 $('#reg_sem').show();
             }
+            console.log("\n\n\n-------$(this).val()--->>>>>>>>",$(this).val())
             profbody_campus_sem($(this).val())
         });
 
