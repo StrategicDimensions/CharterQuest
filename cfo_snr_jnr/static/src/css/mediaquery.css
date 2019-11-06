@@ -1277,6 +1277,16 @@ margin-left: 243px !important;
     width: 208px !important;
     padding-left: 23px !important;
 }
+.detail_blog_image>img{
+    height:300px !important;
+    width:300px !important;
+}
+#blog_post_name{
+    width:auto !important;
+}
+.blog_class{
+    height:179px !important;
+}
 }
 
 /* form report end */

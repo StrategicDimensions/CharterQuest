@@ -33,7 +33,7 @@
                         <!--</div>-->
                     <!--</section>-->
                     <div class="container">
-                        <div class="col-md-12" style="background: #f1f1f1;font-weight: bold;margin-top:20px;margin-bottom:40px;padding:15px;">
+                        <div class="col-md-12 blog_class" style="background: #f1f1f1;font-weight: bold;margin-top:20px;margin-bottom:40px;padding:15px;">
                         <t t-set="blogs" t-value="request.env['blog.blog'].sudo().search([], order='create_date asc')"/>
                         <t t-foreach="blogs" t-as="nav_blog">
                             <div class="col-md-3" style="position: relative;min-height: 1px;padding-left: 15px;padding-right: 15px;float:left;height: 70px;width:25%;font-family: 'Roboto Slab',serif;font-size: 18px;hyphens: none;">
