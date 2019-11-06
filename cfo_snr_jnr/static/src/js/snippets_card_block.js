@@ -6,7 +6,7 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
     var qweb = core.qweb;
     var _t = core._t;
     ajax.loadXML('/cfo_snr_jnr/static/src/xml/snippet_custom.xml', qweb);
-    options.registry.cfo_snr_jnr_cards = options.Class.extend({
+    options.registry.cfo_snr_jnr_material_cards = options.Class.extend({
         start: function (editMode) {
             var self = this;
             this._super();
@@ -139,6 +139,7 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
                     } else {
                         card_color = 'Red';
                     }
+                    var lec_name=$lec_name.replace(" ","-");
 					var html = `
 						<div class="col-md-3 col-sm-6 col-xs-12">
 							<div class="material-card `+ card_color +`">
@@ -161,7 +162,7 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
 								</a>
 								<div class="mc-footer">
 									<h4>
-										<button class="details_view_lecturer" data-href="/view_lecturer/`+ $lec_id +`">View Profile</button>
+										<button class="details_view_lecturer" data-href="/`+lec_name+`/`+ $lec_id +`">View Profile</button>
 									</h4>
 									<div class="social_icons">
 								`;
@@ -181,7 +182,7 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
 							</div>
 						</div>
 					`;
-					$target.parents('.row.active-with-click div:last-child').after(html);
+					$target.parents('.row.active-with-click').append(html);
                 });
             } else {
                 return false;
@@ -268,7 +269,6 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
 				}).focus(function () {
     				$(this).autocomplete('search', '');
 				});
-
                 $sub_data.on('click', function () {
                 	var card_color = '';
                 	var $facebook_url = self.$modal.find('#facebook_href').val(),
@@ -299,7 +299,7 @@ odoo.define('cfo_snr_jnr.snippets_card_block', function (require) {
                     self.$target.find('.lecturer-name').html($lec_name);
                     self.$target.find('.mc-description').html($lec_desc);
                     self.$target.find('.lecturer-qualification').html($lec_qualification);
-                    self.$target.find('.details_view_lecturer').attr('data-href',"/view_lecturer/"+ $lec_id);
+                    self.$target.find('.details_view_lecturer').attr('data-href',"/"+$lec_name.replace(' ','-')+"/"+ $lec_id);
 //                    self.$target.find('.info_lecturers_study').attr('data-popover-content',"#info_let_"+ $lec_id);
 //                    self.$target.find('.hidden').attr('id',"info_let_"+ $lec_id);
                 });
