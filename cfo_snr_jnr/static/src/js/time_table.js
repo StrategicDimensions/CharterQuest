@@ -302,6 +302,7 @@ $(document).ready(function(){
                 $class.addClass('js-read-less')}
             }
             $('#'+id1+' li:nth-child('+ 1 +')').addClass('active').removeClass('js-read-less')
+            $('#'+id1+' li:last-child').removeClass('active')
         }
         if ($(document).find('#'+id1+' button.read-more').length == 0){
             var btnid="btn"+id1
