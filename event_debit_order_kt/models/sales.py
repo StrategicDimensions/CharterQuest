@@ -14,6 +14,7 @@ class sale_order(models.Model):
 
     @api.multi
     def action_confirm(self):
+        super(sale_order, self).action_confirm()
         if not self.pc_exam and self.affiliation == '1':
             if not self:
                 return []
