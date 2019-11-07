@@ -267,7 +267,7 @@
     <template id="cfo_snr_jnr_cards_block_option" inherit_id="website.snippet_options"
               name="Cards Options">
         <xpath expr="//div" position="after">
-            <div data-js="cfo_snr_jnr_cards" data-selector=".cfo_snr_jnr_cards_block_container"
+            <div data-js="cfo_snr_jnr_material_cards" data-selector=".cfo_snr_jnr_cards_block_container"
                  data-snippet-option-id="cfo_snr_jnr_cards_block_container">
                 <li>
                     <a class="cfo_snr_jnr_add_card">

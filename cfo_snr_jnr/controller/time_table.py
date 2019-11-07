@@ -109,7 +109,7 @@ class TimeTable(http.Controller):
 
 
 
-    @http.route(['/view_lecturer/<int:lecturer_id>'], type='http', auth="public", website=True)
+    @http.route(['/<string:lecturer_name>/<int:lecturer_id>'], type='http', auth="public", website=True)
     def view_lecturer_detail(self, lecturer_id, **post):
         if lecturer_id:
             lecturer_id = request.env['res.partner'].sudo().browse([lecturer_id])

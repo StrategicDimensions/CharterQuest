@@ -284,7 +284,7 @@ $(document).ready(function(){
         $(this).val(i);
         list_menu.push(newID)
     });
-    $('#cfo_menu_with_tabs_div_panel div.tab-content.tabs div:nth-child('+1+')').addClass('active in').siblings().removeClass('active in');
+
     for(var i=0; i<list_menu.length; i++){
         var id1=list_menu[i];
         var j=0;
@@ -294,12 +294,15 @@ $(document).ready(function(){
         }
         if (cnt > 2){
             $('#'+id1+' li:nth-child('+ 1 +')').addClass('active')
+            $('#cfo_menu_with_tabs_div_panel div.tab-content.tabs div:nth-child('+1+')').addClass('active in').siblings().removeClass('active in');
             for(j=2;j<=cnt; j++){
                 var $class = $('#'+id1+' li:nth-child('+ j +')');
+                $class.removeClass('active')
                 if ($class.hasClass('js-read-less')){}else{
-                $class.addClass('js-read-less').removeClass('active')}
+                $class.addClass('js-read-less')}
             }
             $('#'+id1+' li:nth-child('+ 1 +')').addClass('active').removeClass('js-read-less')
+            $('#'+id1+' li:last-child').removeClass('active')
         }
         if ($(document).find('#'+id1+' button.read-more').length == 0){
             var btnid="btn"+id1

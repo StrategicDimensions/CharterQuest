@@ -1279,6 +1279,7 @@ strong {
     .material-card.mc-active .mc-content {
         position: relative;
         margin-right: 16px;
+        overflow:hidden;
     }
 }
 
@@ -2596,7 +2597,7 @@ padding: 28px 15px;
     display: table-cell;
 }
 .table-row-group{
-display:table-row-group;
+display:table-row-group;.material-card.mc-active .mc-content
 width:100%;
 }
 .table-header-group{display: table-header-group}
