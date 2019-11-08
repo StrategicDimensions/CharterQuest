@@ -2201,18 +2201,22 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
     @http.route('/web/signup', type='http', auth='public', website=True, sitemap=False)
     def web_auth_signup(self, *args, **kw):
         qcontext = self.get_auth_signup_qcontext()
+        print("\n\n\n\n\n\n===========context======",qcontext)
         if not qcontext.get('token') and not qcontext.get('signup_enabled'):
             raise werkzeug.exceptions.NotFound()
-
+            print("\n\n\n\n=======1111=========")
         if 'error' not in qcontext and request.httprequest.method == 'POST':
             try:
                 self.do_signup(qcontext)
+                print("\n\n\n\n=======2222=========",self.do_signup(qcontext))
                 # Send an account creation confirmation email
                 if qcontext.get('token'):
+                    print("\n\n\n\n=======33333=========",qcontext.get('token'))
                     user_sudo = request.env['res.users'].sudo().search([('login', '=', qcontext.get('login'))])
                     template = request.env.ref('auth_signup.mail_template_user_signup_account_created',
                                                raise_if_not_found=False)
                     if user_sudo and template:
+                        print("\n\n\n\n=======444444=========")
                         template.sudo().with_context(
                             lang=user_sudo.lang,
                             auth_login=werkzeug.url_encode({'auth_login': user_sudo.email}),

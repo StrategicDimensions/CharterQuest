@@ -479,35 +479,35 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 });
         });
 
-        $('#bankdeposit-button').on('click',function(e){
-            var bank_name =$("#inputBCode option:selected").attr('data');
-            if(bank_name == undefined){
-                alert("All Fields Are Mandatory.....!!!");
-                     e.preventDefault();
-            }
-        });
-
-        $('#eft-button').on('click',function(e){
-            var bank_name =$("#inputBCode option:selected").attr('data');
-            if(bank_name == undefined){
-                alert("All Fields Are Mandatory.....!!!");
-                 e.preventDefault();
-            }
-        });
-        $('#debitordermandate-button').on('click',function(e){
-            var bank_name =$("#inputBCode option:selected").attr('data');
-            if(bank_name == undefined){
-                alert("All Fields Are Mandatory.....!!!");
-                 e.preventDefault();
-            }
-        });
-        $('#credit-button').on('click',function(e){
-                var bank_name =$("#inputBCode option:selected").attr('data');
-            if(bank_name == undefined){
-                alert("All Fields Are Mandatory.....!!!");
-                 e.preventDefault();
-            }
-        });
+//        $('#bankdeposit-button').on('click',function(e){
+//            var bank_name =$("#inputBCode option:selected").attr('data');
+//            if(bank_name == undefined){
+//                alert("All Fields Are Mandatory.....!!!");
+//                     e.preventDefault();
+//            }
+//        });
+//
+//        $('#eft-button').on('click',function(e){
+//            var bank_name =$("#inputBCode option:selected").attr('data');
+//            if(bank_name == undefined){
+//                alert("All Fields Are Mandatory.....!!!");
+//                 e.preventDefault();
+//            }
+//        });
+//        $('#debitordermandate-button').on('click',function(e){
+//            var bank_name =$("#inputBCode option:selected").attr('data');
+//            if(bank_name == undefined){
+//                alert("All Fields Are Mandatory.....!!!");
+//                 e.preventDefault();
+//            }
+//        });
+//        $('#credit-button').on('click',function(e){
+//                var bank_name =$("#inputBCode option:selected").attr('data');
+//            if(bank_name == undefined){
+//                alert("All Fields Are Mandatory.....!!!");
+//                 e.preventDefault();
+//            }
+//        });
         $('select[id="inputPaypercentage"]').on('change', function() {
             var input_per = $("#inputPaypercentage").val();
             if (parseInt(input_per) == 100) {
@@ -521,6 +521,7 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 $('#inputInterest').prop("disabled", true);
                 $('#inputtotalandInterest').prop("disabled", true);
                 $('#inputpaymentpermonth').prop("disabled", true);
+                $('#inputPaymonths').prop("required",false);
                 $('#inputPaymonths').prop("disabled", true);
                 $('#debitrequiredcheckbox').prop("required", false);
                 $('#inputAccount').prop("required", false);
@@ -559,7 +560,7 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 $('#inputInterest').prop("disabled", false);
                 $('#inputtotalandInterest').prop("disabled", false);
                 $('#inputpaymentpermonth').prop("disabled", false);
-                $('#inputPaymonths').prop("disabled", false);
+                $('#inputPaymonths').prop("required", true);
                 $("select[id='inputPaymonths'] option").show();
                 $("#inputPaymonths option[value='0']").remove();
                 $('#inputPaydate').prop("required",true)
