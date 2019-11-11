@@ -529,21 +529,21 @@
                                 <span t-esc="lecturer.name"/>
                             </h2>
                             <h6>
-                                <span t-esc="lecturer.function"/>
-                                <br/>
-                                <ul style="list-style: none;padding: 0;">
-                                    <t t-foreach="request.env['cfo.course.code'].sudo().search([('lecturer_ids', '=', lecturer.id)])"
-                                       t-as="course">
-                                        <li>
-                                            <span t-esc="course.name"/>,
-                                            <span t-esc="course.short_description"/>
-                                        </li>
-                                    </t>
-                                </ul>
+                                    <span t-esc="lecturer.function"/>
+<!--                                <br/>-->
+<!--                                <ul style="list-style: none;padding: 0;">-->
+<!--                                    <t t-foreach="request.env['cfo.course.code'].sudo().search([('lecturer_ids', '=', lecturer.id)])"-->
+<!--                                       t-as="course">-->
+<!--                                        <li>-->
+<!--                                            <span t-esc="course.name"/>,-->
+<!--                                            <span t-esc="course.short_description"/>-->
+<!--                                        </li>-->
+<!--                                    </t>-->
+<!--                                </ul>-->
                             </h6>
                         </div>
                         <div>
-                            <span t-esc="lecturer.comment"/>
+                            <span t-esc="lecturer.comment"/>    
                         </div>
                     </div>
                 </div>
