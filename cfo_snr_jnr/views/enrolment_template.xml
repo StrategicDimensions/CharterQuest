@@ -2363,7 +2363,7 @@
                                 <td>No. of payment months desired?</td>
                                 <td>
                                     <select name="inputPaymonths" class="requiredValue parsley-validated"
-                                            id="inputPaymonths" required="true">
+                                            id="inputPaymonths">
                                         <t t-set="interest_detail"
                                            t-value="request.env['debitorder.interest'].sudo().search([])"/>
                                         <option></option>

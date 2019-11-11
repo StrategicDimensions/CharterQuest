@@ -17,7 +17,6 @@ class event_registration(models.Model):
     event_body = fields.Many2one(related='event_id.event_type_id', string="Professional Body", readonly=True)
     semester_id = fields.Many2one(related='event_id.semester_id', string='Semester', readonly=True)
 
-
 class event_event(models.Model):
     """Extends the event model with an extra price fields."""
     _inherit = 'event.event'

@@ -295,13 +295,13 @@
 			<xpath expr="//div[@class='row']" position="replace">
 				<div class="col-md-4 event_name"><strong>Name</strong></div>
 				<div class="col-md-5 event_email"><strong>Email</strong></div>
-				<div class="col-md-3 event_phone"><strong>Phone</strong> <span class="text-muted optional_mobile">(Optional)</span></div>
+				<div class="col-md-3 event_phone"><strong>Phone</strong> <span class="text-muted optional_mobile"></span></div>
 			</xpath>
 			<xpath expr="//div[@class='row mb4']" position="replace">
 				<t t-set="attendee_placeholder">Attendee #%s</t>
 				<div class="col-md-4 input_name"><input class='form-control' type='text' t-attf-name="#{counter}-name" required="This field is required" t-att-placeholder="attendee_placeholder %counter"/></div>
 				<div class="col-md-5 input_email"><input class='form-control' type='email' t-attf-name="#{counter}-email" required="This field is required"/></div>
-				<div class="col-md-3 input_phone"><input class='form-control' type='tel' t-attf-name="#{counter}-phone"/></div>
+				<div class="col-md-3 input_phone"><input class='form-control' type='tel' t-attf-name="#{counter}-phone" required="This field is required"/></div>
 				<input class='hidden' type='text' t-attf-name="#{counter}-ticket_id" t-attf-value="#{ticket['id']}"/>
 			</xpath>
 		</template>
