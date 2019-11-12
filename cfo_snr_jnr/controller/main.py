@@ -2147,7 +2147,8 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
         """ Shared helper that creates a res.partner out of a token """
         values = {key: qcontext.get(key) for key in ('login', 'name', 'password', 'cfo_signup')}
         member_values = {key: qcontext.get(key) for key in (
-            'login', 'name', 'password', 'lastname', 'cfo_competition', 'cfo_membertype', 'cfo_source', 'other',
+            'login', 'name', 'password', 'lastname', 'cfo_competition', 'cfo_membertype', 'cfo_source',
+            'other',
             'cfo_signup')}
 
         if not values:
@@ -2155,7 +2156,8 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
         if values.get('password') != qcontext.get('confirm_password'):
             raise UserError(_("Passwords are not the same, please try again"))
 
-        supported_langs = [lang['code'] for lang in request.env['res.lang'].sudo().search_read([], ['code'])]
+        supported_langs = [lang['code'] for lang in
+                           request.env['res.lang'].sudo().search_read([], ['code'])]
         if request.lang in supported_langs:
             values['lang'] = request.lang
         if member_values.get('lastname'):
@@ -2197,26 +2199,52 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
 
     #         if member_values:
     #             user._create_member(member_values)
+    def get_auth_signup_config(self):
+        """retrieve the module config (which features are enabled) for the login page"""
+
+        get_param = request.env['ir.config_parameter'].sudo().get_param
+        return {
+            'signup_enabled': get_param('auth_signup.allow_uninvited') == 'True',
+            'reset_password_enabled': get_param('auth_signup.reset_password') == 'True',
+        }
+    def get_auth_signup_qcontext(self):
+        """ Shared helper returning the rendering context for signup and reset password """
+        qcontext = request.params.copy()
+        qcontext.update(self.get_auth_signup_config())
+        if not qcontext.get('token') and request.session.get('auth_signup_token'):
+            qcontext['token'] = request.session.get('auth_signup_token')
+            print("\n\n\n\n\n\n\n============")
+            print("\n\n\n\n\===========qcontext['token']=======",qcontext['token'])
+        if qcontext.get('token'):
+            try:
+                # retrieve the user info (name, login or email) corresponding to a signup token
+                token_infos = request.env['res.partner'].sudo().signup_retrieve_info(qcontext.get('token'))
+                for k, v in token_infos.items():
+                    qcontext.setdefault(k, v)
+            except:
+                qcontext['error'] = _("Invalid signup token")
+                qcontext['invalid_token'] = True
+        print("\n\n\n\n\n\n============qcontext2=======",qcontext)
+        return qcontext
 
     @http.route('/web/signup', type='http', auth='public', website=True, sitemap=False)
     def web_auth_signup(self, *args, **kw):
         qcontext = self.get_auth_signup_qcontext()
-        print("\n\n\n\n\n\n===========context======",qcontext)
+        print("\n\n\n\n\n=================qcontext========",qcontext)
         if not qcontext.get('token') and not qcontext.get('signup_enabled'):
             raise werkzeug.exceptions.NotFound()
-            print("\n\n\n\n=======1111=========")
+
         if 'error' not in qcontext and request.httprequest.method == 'POST':
             try:
                 self.do_signup(qcontext)
-                print("\n\n\n\n=======2222=========",self.do_signup(qcontext))
                 # Send an account creation confirmation email
                 if qcontext.get('token'):
-                    print("\n\n\n\n=======33333=========",qcontext.get('token'))
-                    user_sudo = request.env['res.users'].sudo().search([('login', '=', qcontext.get('login'))])
+                    print("\n\n\n\n=======token=========", qcontext.get('token'))
+                    user_sudo = request.env['res.users'].sudo().search(
+                        [('login', '=', qcontext.get('login'))])
                     template = request.env.ref('auth_signup.mail_template_user_signup_account_created',
                                                raise_if_not_found=False)
                     if user_sudo and template:
-                        print("\n\n\n\n=======444444=========")
                         template.sudo().with_context(
                             lang=user_sudo.lang,
                             auth_login=werkzeug.url_encode({'auth_login': user_sudo.email}),
