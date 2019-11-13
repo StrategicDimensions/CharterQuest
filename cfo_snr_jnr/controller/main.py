@@ -79,8 +79,8 @@ class CfoHome(web.Home):
         request.session['user_type'] = post.get('user_type')
         if post.get('team_id'):
             value['team_id'] = int(post.get('team_id'))
-        if post.get('error_msg'):
-            value['error_msg'] = post.get('error_msg')
+        if post.get('error'):
+            value['error'] = post.get('error')
         print("\n\n\n========value====",value)
         return request.render('cfo_snr_jnr.cfo_login', value)
 
@@ -126,8 +126,8 @@ class CfoHome(web.Home):
     def signup(self, **post):
         value = {}
         print("\n\n\n==========post signup======",post)
-        if post.get('error_msg'):
-            value['error_msg'] = post.get('error_msg')
+        if post.get('error'):
+            value['error'] = post.get('error')
             
         return request.render('cfo_snr_jnr.cfo_signup_form',value)
 
@@ -687,7 +687,7 @@ class CfoHome(web.Home):
             row_username = cr.fetchone()
             if not row_username:
                 values['error'] = _("Email Address Does Not Exist, Please Register")
-                return request.redirect('/login?error_msg=%s'%values['error'])
+                return request.redirect('/login?error=%s'%values['error'])
             else:
                 old_uid = request.uid
                 uid = request.session.authenticate(request.session.db, request.params['login'],
@@ -704,11 +704,11 @@ class CfoHome(web.Home):
                     return http.redirect_with_hash(self._login_redirect(uid, redirect='/'))
                 request.uid = old_uid
                 values['error'] = _('Your Email Address/Password is Incorrect')
-                return request.redirect('/login?error_msg=%s'%values['error'])
+                return request.redirect('/login?error=%s'%values['error'])
         else:
             if 'error' in request.params and request.params.get('error') == 'access':
                 values['error'] = _('Only employee can access this database. Please contact the administrator.')
-                return request.redirect('/login?error_msg=%s'%values['error'])
+                return request.redirect('/login?error=%s'%values['error'])
 
         if 'login' not in values and request.session.get('auth_login'):
             values['login'] = request.session.get('auth_login')
@@ -2256,6 +2256,7 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
         """retrieve the module config (which features are enabled) for the login page"""
 
         get_param = request.env['ir.config_parameter'].sudo().get_param
+        print("\n\n\n\n\n===================get_param===========",get_param)
         return {
             'signup_enabled': get_param('auth_signup.allow_uninvited') == 'True',
             'reset_password_enabled': get_param('auth_signup.reset_password') == 'True',
@@ -2309,15 +2310,15 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
                 return super(CfoAuthSignup, self).web_login(*args, **kw)
             except UserError as e:
                 qcontext['error'] = e.name or e.value
-                return request.redirect('/signup?error_msg=%s'%qcontext['error'])
+                return request.redirect('/signup?error=%s'%qcontext['error'])
             except (SignupError, AssertionError) as e:
                 if request.env["res.users"].sudo().search([("login", "=", qcontext.get("login"))]):
                     qcontext["error"] = _("Another user is already registered using this email address.")
-                    return request.redirect('/signup?error_msg=%s'%qcontext['error'])
+                    return request.redirect('/signup?error=%s'%qcontext['error'])
                 else:
                     _logger.error("%s", e)
                     qcontext['error'] = _("Could not create a new account.")
-                    return request.redirect('/signup?error_msg=%s'%qcontext['error'])
+                    return request.redirect('/signup?error=%s'%qcontext['error'])
 
         response = request.render('auth_signup.signup', qcontext)
         response.headers['X-Frame-Options'] = 'DENY'
