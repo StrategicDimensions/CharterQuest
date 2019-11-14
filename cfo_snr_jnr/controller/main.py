@@ -1171,16 +1171,18 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email')
                                 ).send_mail(amb_id.id, force_send=True)
-
+                        print("\n\n\n\n============each_request.get('user_id')=======",each_request.get('user_id'))
                         if each_request.get('user_type') in ['Leader', 'Member']:
                             res = request.env['cfo.snr.aspirants'].sudo().search(
                                 [('user_id', '=', int(each_request.get('user_id')))])
+                            print("\n\n\n\n\n==============res-id========",res)
                             aspirant_team_member_id = request.env['snr.aspirant.team.member'].sudo().search(
                                 [('related_user_id', '=', res.id), ('member_status', '=', 'Accept')])
                             res.sudo().write({
                                 'is_request': True,
                                 'new_team_id': team_id.id
                             })
+                            print("\n\n\n\n\n==============res-id========", res.id)
                             template = request.env.ref('cfo_snr_jnr.email_template_request_for_join',
                                                        raise_if_not_found=False)
                             if template:
@@ -2215,8 +2217,10 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
         if member_values.get('lastname'):
             values.update({'name': member_values.get('name') + ' ' + member_values.get('lastname')})
 
-        self._signup_with_values(qcontext.get('token'), values, member_values)
+        user_val = self._signup_with_values(qcontext.get('token'), values, member_values)
+        print("\n\n\n\n\n=========user_vals=======",user_val)
         request.env.cr.commit()
+        return user_val;
 
     def _signup_with_values(self, token, values, values1=''):
         db, login, password = request.env['res.users'].sudo().signup(values, token)
@@ -2250,6 +2254,7 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
         if not uid:
             raise SignupError(_('Authentication Failed.'))
 
+        return uid;
     #         if member_values:
     #             user._create_member(member_values)
     def get_auth_signup_config(self):
@@ -2264,6 +2269,7 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
     def get_auth_signup_qcontext(self):
         """ Shared helper returning the rendering context for signup and reset password """
         qcontext = request.params.copy()
+        print("\n\n\n\n\n\n==============qcontext=============",qcontext)
         qcontext.update(self.get_auth_signup_config())
         print("\n\n\n\n\n================request.session.get('auth_signup_token')========",request.session.get('auth_signup_token'))
         if not qcontext.get('token') and request.session.get('auth_signup_token'):
@@ -2292,9 +2298,12 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
 
         if 'error' not in qcontext and request.httprequest.method == 'POST':
             try:
-                self.do_signup(qcontext)
+                id = self.do_signup(qcontext)
+                user = request.env['res.users'].sudo().browse([id])
                 # Send an account creation confirmation email
-                if qcontext.get('token'):
+                print("\n\n\n\n\n=================qcontext after do_signup========", qcontext,user.partner_id['cfo_user'])
+                # if qcontext.get('token'):
+                if user.partner_id['cfo_user'] == True:
                 # if http.request.session['cfo_login'] == True:
                     print("\n\n\n\n=======token=========", qcontext.get('token'))
                     user_sudo = request.env['res.users'].sudo().search(
