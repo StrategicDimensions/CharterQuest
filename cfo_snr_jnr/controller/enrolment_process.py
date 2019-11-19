@@ -1102,6 +1102,7 @@ class EnrolmentProcess(http.Controller):
                         sale_order_id = sale_obj.create({'partner_id': partner_id.id,
                                                          'campus': user_select['campus'] if user_select.get(
                                                              'campus') else '',
+                                                         'affiliation': '1' if user_select and user_select.get('self_or_company') and user_select.get('self_or_company') == 'self' else '2',
                                                          'prof_body': user_select[
                                                              'Select Prof Body'] if user_select.get(
                                                              'Select Prof Body') else '',
