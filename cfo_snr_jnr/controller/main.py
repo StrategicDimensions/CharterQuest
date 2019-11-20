@@ -809,6 +809,7 @@ class CfoHome(web.Home):
         if post.get('cfo_competition') and post.get('cfo_membertype'):
             partner = request.env.user.partner_id
             user = request.env.user
+            print("\n\n\n\n===========user======",user)
             member_values.update({'name': user.name, 'partner_id': partner.id, 'user_id': user.id, 'team_admin': True})
             if post.get('cfo_competition'):
                 member_values.update({'cfo_comp': int(post.pop('cfo_competition'))})
@@ -1146,6 +1147,7 @@ class CfoHome(web.Home):
                     '''
                     for each_request in post.get('member_request_list'):
                         if each_request.get('user_type') == 'Mentor':
+                            print("\n\n\n\n---------------each_request.get('user_id'==============",each_request.get('user_id'))
                             mentor_id = request.env['mentors.snr'].sudo().search(
                                 [('user_id', '=', int(each_request.get('user_id')))])
                             template_mentor = request.env.ref('cfo_snr_jnr.email_template_request_for_join_mentor',

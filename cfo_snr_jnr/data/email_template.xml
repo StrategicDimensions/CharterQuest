@@ -153,12 +153,12 @@
                                                                                    t-value="request.env['ir.config_parameter'].sudo().search([('key','=','web.base.url').value])"/>
                                                                                 <a
                                                                                         style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
-                                                                                        href="/login?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
+                                                                                        href="/signup?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
                                                                                     Accept
                                                                                 </a>
                                                                                 <a
                                                                                         style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
-                                                                                        href="/login?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
+                                                                                        href="/signup?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
                                                                                     Decline
                                                                                 </a>
                                                                             </div>
@@ -2038,7 +2038,7 @@
 														<div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
 														<p>Dear ${object.name},</p>
 														    <p>
-														        You have been invited to join CFO Team:
+														        You have been invited to join CFO Team:${(ctx.get('team_name')) or '' | safe}
 														    </p>
 														    <p>
 														        Please click the button below to accept and join the team:
@@ -2048,17 +2048,42 @@
                                                       </tr>
                                                    </tbody>
                                                 </table>
-                                                <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
-                                                   <tbody>
-                                                      <tr style="width: 100%;">
-                                                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
-                                                            <div class="btn" style="Margin-bottom: 0;Margin-top: 0;text-align: center;">
-                                                               <a href="${object.signup_url}" style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'">Accept invitation</a>
-                                                            </div>
-                                                         </td>
-                                                      </tr>
-                                                   </tbody>
-                                                </table>
+<!--                                                <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">-->
+<!--                                                   <tbody>-->
+<!--                                                      <tr style="width: 100%;">-->
+<!--                                                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">-->
+<!--                                                            <div class="btn" style="Margin-bottom: 0;Margin-top: 0;text-align: center;">-->
+<!--                                                               <a href="${object.signup_url}" style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'">Accept invitation</a>-->
+<!--                                                            </div>-->
+<!--                                                         </td>-->
+<!--                                                      </tr>-->
+<!--                                                   </tbody>-->
+<!--                                                </table>-->
+                                                <table class="contents"
+                                                                   style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="padded"
+                                                                            style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
+                                                                            <div class="btn"
+                                                                                 style="Margin-bottom: 0;Margin-top: 0;text-align: center;">
+                                                                                <t t-set="url_value"
+                                                                                   t-value="request.env['ir.config_parameter'].sudo().search([('key','=','web.base.url').value])"/>
+                                                                                <a
+                                                                                        style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
+                                                                                        href="${object.signup_url}">
+                                                                                    Accept
+                                                                                </a>
+                                                                                <a
+                                                                                        style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
+                                                                                        href="${object.signup_url}">
+                                                                                    Decline
+                                                                                </a>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                 <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
                                                    <tbody>
                                                        <tr style="width: 100%;">
