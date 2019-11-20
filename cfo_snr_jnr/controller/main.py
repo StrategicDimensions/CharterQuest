@@ -1,4 +1,4 @@
- # -*- encoding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #    Copyright (c) 2012 - Present Acespritech Solutions Pvt. Ltd. All Rights Reserved
 #    Author: <info@acespritech.com>
@@ -75,13 +75,13 @@ class CfoHome(web.Home):
     @http.route(['/login'], type='http', auth="public", website=True)
     def login(self, **post):
         value = {}
-        print("\n\n\n\n============post======",post)
+        print("\n\n\n\n============post======", post)
         request.session['user_type'] = post.get('user_type')
         if post.get('team_id'):
             value['team_id'] = int(post.get('team_id'))
         if post.get('error'):
             value['error'] = post.get('error')
-        print("\n\n\n========value====",value)
+        print("\n\n\n========value====", value)
         return request.render('cfo_snr_jnr.cfo_login', value)
 
     @http.route('/web/login', type='http', auth="none", sitemap=False)
@@ -125,11 +125,11 @@ class CfoHome(web.Home):
     @http.route(['/signup'], type='http', auth="public", website=True)
     def signup(self, **post):
         value = {}
-        print("\n\n\n==========post signup======",post)
+        print("\n\n\n==========post signup======", post)
         if post.get('error'):
             value['error'] = post.get('error')
-            
-        return request.render('cfo_snr_jnr.cfo_signup_form',value)
+
+        return request.render('cfo_snr_jnr.cfo_signup_form', value)
 
     @http.route(['/cfo_logout'], type='http', auth="public", website=True)
     def cfo_logout(self, **post):
@@ -687,7 +687,7 @@ class CfoHome(web.Home):
             row_username = cr.fetchone()
             if not row_username:
                 values['error'] = _("Email Address Does Not Exist, Please Register")
-                return request.redirect('/login?error=%s'%values['error'])
+                return request.redirect('/login?error=%s' % values['error'])
             else:
                 old_uid = request.uid
                 uid = request.session.authenticate(request.session.db, request.params['login'],
@@ -704,11 +704,11 @@ class CfoHome(web.Home):
                     return http.redirect_with_hash(self._login_redirect(uid, redirect='/'))
                 request.uid = old_uid
                 values['error'] = _('Your Email Address/Password is Incorrect')
-                return request.redirect('/login?error=%s'%values['error'])
+                return request.redirect('/login?error=%s' % values['error'])
         else:
             if 'error' in request.params and request.params.get('error') == 'access':
                 values['error'] = _('Only employee can access this database. Please contact the administrator.')
-                return request.redirect('/login?error=%s'%values['error'])
+                return request.redirect('/login?error=%s' % values['error'])
 
         if 'login' not in values and request.session.get('auth_login'):
             values['login'] = request.session.get('auth_login')
@@ -1171,11 +1171,11 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email')
                                 ).send_mail(amb_id.id, force_send=True)
-                        print("\n\n\n\n============each_request.get('user_id')=======",each_request.get('user_id'))
+                        print("\n\n\n\n============each_request.get('user_id')=======", each_request.get('user_id'))
                         if each_request.get('user_type') in ['Leader', 'Member']:
                             res = request.env['cfo.snr.aspirants'].sudo().search(
                                 [('user_id', '=', int(each_request.get('user_id')))])
-                            print("\n\n\n\n\n==============res-id========",res)
+                            print("\n\n\n\n\n==============res-id========", res)
                             aspirant_team_member_id = request.env['snr.aspirant.team.member'].sudo().search(
                                 [('related_user_id', '=', res.id), ('member_status', '=', 'Accept')])
                             res.sudo().write({
@@ -2194,7 +2194,6 @@ class CfoHome(web.Home):
             if is_delete:
                 return {'removed': True}
 
-
 class CfoAuthSignup(auth_signup.AuthSignupHome):
 
     def do_signup(self, qcontext):
@@ -2218,7 +2217,7 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
             values.update({'name': member_values.get('name') + ' ' + member_values.get('lastname')})
 
         user_val = self._signup_with_values(qcontext.get('token'), values, member_values)
-        print("\n\n\n\n\n=========user_vals=======",user_val)
+        print("\n\n\n\n\n=========user_vals=======", user_val)
         request.env.cr.commit()
         return user_val;
 
@@ -2228,7 +2227,7 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
         uid = request.session.authenticate(db, login, password)
         user = request.env['res.users'].sudo().browse(uid)
         user.sudo().write({'share': False})
-        print("\n\n\n\n====values.get('cfo_signup')=======",values.get('cfo_signup'))
+        print("\n\n\n\n====values.get('cfo_signup')=======", values.get('cfo_signup'))
         if values.get('cfo_signup'):
             user.partner_id.sudo().write({
                 'cfo_user': True
@@ -2261,21 +2260,22 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
         """retrieve the module config (which features are enabled) for the login page"""
 
         get_param = request.env['ir.config_parameter'].sudo().get_param
-        print("\n\n\n\n\n===================get_param===========",get_param)
+        print("\n\n\n\n\n===================get_param===========", get_param)
         return {
             'signup_enabled': get_param('auth_signup.allow_uninvited') == 'True',
             'reset_password_enabled': get_param('auth_signup.reset_password') == 'True',
         }
+
     def get_auth_signup_qcontext(self):
         """ Shared helper returning the rendering context for signup and reset password """
         qcontext = request.params.copy()
-        print("\n\n\n\n\n\n==============qcontext=============",qcontext)
+        print("\n\n\n\n\n\n==============qcontext=============", qcontext)
         qcontext.update(self.get_auth_signup_config())
         print("\n\n\n\n\n================request.session.get('auth_signup_token')========",request.session.get('auth_signup_token'))
         if not qcontext.get('token') and request.session.get('auth_signup_token'):
             print("\n\n\n\n\n\n\n============")
             qcontext['token'] = request.session.get('auth_signup_token')
-            print("\n\n\n\n\===========qcontext['token']=======",qcontext['token'])
+            print("\n\n\n\n\===========qcontext['token']=======", qcontext['token'])
         if qcontext.get('token'):
             try:
                 # retrieve the user info (name, login or email) corresponding to a signup token
@@ -2285,14 +2285,14 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
             except:
                 qcontext['error'] = _("Invalid signup token")
                 qcontext['invalid_token'] = True
-        print("\n\n\n\n\n\n============qcontext2=======",qcontext)
+        print("\n\n\n\n\n\n============qcontext2=======", qcontext)
         return qcontext
 
     @http.route('/web/signup', type='http', auth='public', website=True, sitemap=False)
     def web_auth_signup(self, *args, **kw):
         qcontext = self.get_auth_signup_qcontext()
-        print("\n\n\n==========kw=======",kw)
-        print("\n\n\n\n\n=================qcontext========",qcontext)
+        print("\n\n\n==========kw=======", kw)
+        print("\n\n\n\n\n=================qcontext========", qcontext)
         if not qcontext.get('token') and not qcontext.get('signup_enabled'):
             raise werkzeug.exceptions.NotFound()
 
@@ -2304,12 +2304,11 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
                 print("\n\n\n\n\n=================qcontext after do_signup========", qcontext,user.partner_id['cfo_user'])
                 # if qcontext.get('token'):
                 if user.partner_id['cfo_user'] == True:
-                # if http.request.session['cfo_login'] == True:
                     print("\n\n\n\n=======token=========", qcontext.get('token'))
                     user_sudo = request.env['res.users'].sudo().search(
                         [('login', '=', qcontext.get('login'))])
-                    template = request.env.ref('auth_signup.mail_template_user_signup_account_created',
-                                               raise_if_not_found=False)
+                    template = request.env.ref('auth_signup.mail_template_user_signup_account_created',raise_if_not_found=False)
+
                     if user_sudo and template:
                         template.sudo().with_context(
                             lang=user_sudo.lang,
@@ -2319,19 +2318,20 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
                 return super(CfoAuthSignup, self).web_login(*args, **kw)
             except UserError as e:
                 qcontext['error'] = e.name or e.value
-                return request.redirect('/signup?error=%s'%qcontext['error'])
+                return request.redirect('/signup?error=%s' % qcontext['error'])
             except (SignupError, AssertionError) as e:
                 if request.env["res.users"].sudo().search([("login", "=", qcontext.get("login"))]):
                     qcontext["error"] = _("Another user is already registered using this email address.")
-                    return request.redirect('/signup?error=%s'%qcontext['error'])
+                    return request.redirect('/signup?error=%s' % qcontext['error'])
                 else:
                     _logger.error("%s", e)
                     qcontext['error'] = _("Could not create a new account.")
-                    return request.redirect('/signup?error=%s'%qcontext['error'])
+                    return request.redirect('/signup?error=%s' % qcontext['error'])
 
         response = request.render('auth_signup.signup', qcontext)
         response.headers['X-Frame-Options'] = 'DENY'
         return response
+
 
 class WebsiteSaleController(WebsiteSale):
 
@@ -2351,5 +2351,4 @@ class WebsiteSaleController(WebsiteSale):
         res.qcontext['parent_category_ids'] = parent_category_ids
         res.qcontext['categories'] = categs
         return res
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -128,7 +128,7 @@
                                                                             </p>
                                                                             <p
                                                                                     style='font-style: normal;font-weight: 400;Margin-bottom: 24px;Margin-top: 24px;font-size: 15px;line-height: 24px;font-family: "Open Sans",sans-serif;color: #60666d;text-align: center;'>
-                                                                                You have been invited to join Team
+                                                                                You have been invited to join
                                                                                 ${(ctx.get('team_name')) or '' | safe}
                                                                             </p>
                                                                             <p
@@ -515,7 +515,6 @@
                                                                                     style='font-style: normal;font-weight: 400;Margin-bottom: 24px;Margin-top: 24px;font-size: 15px;line-height: 24px;font-family: "Open Sans",sans-serif;color: #60666d;text-align: center;'>
                                                                                 You have been added as Mentor/Team
                                                                                 Advisor for
-                                                                                Team
                                                                                 ${(ctx.get('team_name')) or '' | safe}
                                                                             </p>
                                                                             <p
@@ -902,7 +901,7 @@
                                                                                     style='font-style: normal;font-weight: 400;Margin-bottom: 24px;Margin-top: 24px;font-size: 15px;line-height: 24px;font-family: "Open Sans",sans-serif;color: #60666d;text-align: center;'>
                                                                                 You have been added as Brand
                                                                                 AmbassadorTeam
-                                                                                Advisor for Team ${(ctx.get('team_name')) or '' |
+                                                                                Advisor for ${(ctx.get('team_name')) or '' |
 																				safe}
                                                                             </p>
                                                                             <p
@@ -1954,7 +1953,8 @@
             <field name="name">Auth Signup: Odoo Connection</field>
             <field name="model_id" ref="base.model_res_users"/>
             <field name="email_from">
-                <![CDATA["${object.company_id.name|safe}" <${(object.company_id.email or user.email)|safe}>]]></field>
+<!--                <![CDATA["${object.company_id.name|safe}" <${(object.company_id.email or user.email)|safe}>]]-->
+               thecfo@charterquest.co.za></field>
             <field name="email_to">${object.email|safe}</field>
             <field name="subject"><![CDATA[The CFO: Invitation to Join]]></field>
             <field name="body_html"><![CDATA[
@@ -2292,7 +2292,7 @@
                                                         </div>
                                                         <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
                                                          <center><p>Dear ${object.user_id.name},</p><center>
-                                                            <p>We Thank you for participating in <b>"The CFO Senior Case Study Competetion."</b></p>
+                                                            <p>We Thank you for participating in <b>"The CFO Senior Case Study Competition."</b></p>
                                                             <br/>
                                                             <center><p>Please note your report for</p></center>
                                                             <p>${object.aspirant_id.ref_name} has been Successfully submitted.</p>
@@ -2417,7 +2417,7 @@
                                                         </div>
                                                         <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
                                                          <center><p>Dear ${object.user_id.name},</p><center>
-                                                            <p>We Thank you for participating in <b>"The CFO Senior Case Study Competetion."</b></p>
+                                                            <p>We Thank you for participating in <b>"The CFO Senior Case Study Competition."</b></p>
                                                             <br/>
                                                             <center><p>Please note your report for</p></center>
                                                             <p>${object.team_id.ref_name} has been Successfully submitted.</p>
@@ -2541,7 +2541,7 @@
                                                         </div>
                                                         <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
                                                          <center><p>Dear ${object.user_id.name},</p><center>
-                                                            <p>We Thank you for participating in <b>"The CFO Senior Case Study Competetion."</b></p>
+                                                            <p>We Thank you for participating in <b>"The CFO Senior Case Study Competition."</b></p>
                                                             <br/>
                                                             <center><p>Please note your report for</p></center>
                                                             <p>${object.team_id.ref_name} has been Successfully submitted.</p>
@@ -2665,7 +2665,7 @@
                                                         </div>
                                                         <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
                                                          <center><p>Dear ${object.user_id.name},</p><center>
-                                                            <p>We Thank you for participating in <b>"The CFO Senior Case Study Competetion."</b></p>
+                                                            <p>We Thank you for participating in <b>"The CFO Senior Case Study Competition."</b></p>
                                                             <br/>
                                                             <center><p>Please note your report for</p></center>
                                                             <p>${(ctx.get('team_name')) or '' | safe} has been Successfully submitted.</p>
@@ -2790,7 +2790,7 @@
                                                         </div>
                                                         <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
                                                          <center><p>Dear ${object.user_id.name},</p><center>
-                                                            <p>We Thank you for participating in <b>"The CFO Senior Case Study Competetion."</b></p>
+                                                            <p>We Thank you for participating in <b>"The CFO Senior Case Study Competition."</b></p>
                                                             <br/>
                                                             <center><p>Please note your report for</p></center>
                                                             <p>${(ctx.get('team_name')) or '' | safe} has been Successfully submitted.</p>
@@ -2915,7 +2915,7 @@
                                                         </div>
                                                         <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
                                                          <center><p>Dear ${object.user_id.name},</p><center>
-                                                            <p>You registered to participate in The CFO Case Study Competetion but have not complete your bio.</p>
+                                                            <p>You registered to participate in The CFO Case Study Competition but have not complete your bio.</p>
                                                             <br/>
                                                             <center><p>Please click below to go to the login page and complete your bio</p></center>
                                                             <br/>
@@ -3044,7 +3044,7 @@
                                                         </div>
                                                         <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
                                                          <center><p>Dear ${object.user_id.name},</p><center>
-                                                            <p>You registered to participate in The CFO Case Study Competetion but have not complete your bio.</p>
+                                                            <p>You registered to participate in The CFO Case Study Competition but have not complete your bio.</p>
                                                             <br/>
                                                             <center><p>Please click below to go to the login page and complete your bio</p></center>
                                                             <br/>
@@ -3172,7 +3172,7 @@
                                                         </div>
                                                         <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
                                                          <center><p>Dear ${object.user_id.name},</p><center>
-                                                            <p>You registered to participate in The CFO Case Study Competetion but have not complete your bio.</p>
+                                                            <p>You registered to participate in The CFO Case Study Competition but have not complete your bio.</p>
                                                             <br/>
                                                             <center><p>Please click below to go to the login page and complete your bio</p></center>
                                                             <br/>
@@ -3300,7 +3300,7 @@
                                                         </div>
                                                         <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
                                                          <center><p>Dear ${object.user_id.name},</p><center>
-                                                            <p>You registered to participate in The CFO Case Study Competetion but have not complete your bio.</p>
+                                                            <p>You registered to participate in The CFO Case Study Competition but have not complete your bio.</p>
                                                             <br/>
                                                             <center><p>Please click below to go to the login page and complete your bio</p></center>
                                                             <br/>
@@ -3430,7 +3430,7 @@
                                                         </div>
                                                         <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
                                                          <center><p>Dear ${object.user_id.name},</p><center>
-                                                            <p>You registered to participate in The CFO Case Study Competetion but have not complete your bio.</p>
+                                                            <p>You registered to participate in The CFO Case Study Competition but have not complete your bio.</p>
                                                             <br/>
                                                             <center><p>Please click below to go to the login page and complete your bio</p></center>
                                                             <br/>
@@ -3560,7 +3560,7 @@
                                                         </div>
                                                         <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
                                                          <center><p>Dear ${object.user_id.name},</p><center>
-                                                            <p>You registered to participate in The CFO Case Study Competetion but have not complete your bio.</p>
+                                                            <p>You registered to participate in The CFO Case Study Competition but have not complete your bio.</p>
                                                             <br/>
                                                             <center><p>Please click below to go to the login page and complete your bio</p></center>
                                                             <br/>
