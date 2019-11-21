@@ -653,7 +653,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             request_list.push({'email': email, 'user_type': user_type, 'user_id': user_id})
             self.parents('tr').find('.request-join').hide().attr('user_id', '');
             self.parents('tr').find('.create_member').hide();
-
+//
 //            $(".ac-row-data-list").each(function () {
 //                var email = $(this).find("input[name='email']").val();
 //                var user_type = $(this).find(".user_type").val();
@@ -661,8 +661,8 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 //                    list_of_member.push({'email': email, 'user_type': user_type});
 //                }
 //            });
-//            
-//            
+//
+//
 //            ajax.jsonRpc("/request_to_join", "call", {'user_id': user_id, 'team_id': team_id, 'user_type':user_type,})
 //                .then(function (result) {
 //                    if (result) {

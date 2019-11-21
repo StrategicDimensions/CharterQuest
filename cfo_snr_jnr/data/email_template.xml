@@ -4,12 +4,10 @@
         <!--Email template for request to join -->
         <record id="email_template_request_for_join" model="mail.template">
             <field name="name">CFO Request</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
-            <field name="subject">The CFO: Invitation to Join
-            </field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
+            <field name="subject">The CFO: Invitation to Join</field>
             <field name="model_id" ref="cfo_snr_jnr.model_cfo_snr_aspirants"/>
             <field name="auto_delete" eval="True"/>
             <field name="partner_to">${object.user_id.partner_id.id}</field>
@@ -153,12 +151,12 @@
                                                                                    t-value="request.env['ir.config_parameter'].sudo().search([('key','=','web.base.url').value])"/>
                                                                                 <a
                                                                                         style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
-                                                                                        href="/login?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
+                                                                                        href="/signup?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
                                                                                     Accept
                                                                                 </a>
                                                                                 <a
                                                                                         style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
-                                                                                        href="/login?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
+                                                                                        href="/signup?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
                                                                                     Decline
                                                                                 </a>
                                                                             </div>
@@ -388,12 +386,10 @@
 
         <record id="email_template_request_for_join_mentor" model="mail.template">
             <field name="name">CFO Request</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
-            <field name="subject">The CFO: Invitation to Join
-            </field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
+            <field name="subject">The CFO: Invitation to Join</field>
             <field name="model_id" ref="cfo_snr_jnr.model_mentors_snr"/>
             <field name="auto_delete" eval="True"/>
             <field name="partner_to">${object.user_id.partner_id.id}</field>
@@ -774,12 +770,10 @@
 
         <record id="email_template_request_for_join_amb" model="mail.template">
             <field name="name">CFO Request</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
-            <field name="subject">The CFO: Invitation to Join
-            </field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
+            <field name="subject">The CFO: Invitation to Join</field>
             <field name="model_id" ref="cfo_snr_jnr.model_brand_ambassador_snr"/>
             <field name="auto_delete" eval="True"/>
             <field name="partner_to">${object.user_id.partner_id.id}</field>
@@ -1163,12 +1157,10 @@
         <!-- Email template for Upload Report Reminder -->
         <record id="email_template_upload_report_reminder" model="mail.template">
             <field name="name">CFO Report Reminder</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
-            <field name="subject">Reminder For Upload Report
-            </field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
+            <field name="subject">Reminder For Upload Report</field>
             <field name="model_id" ref="cfo_snr_jnr.model_cfo_snr_aspirants"/>
             <field name="auto_delete" eval="True"/>
             <field name="partner_to">${object.user_id.partner_id.id}</field>
@@ -1425,12 +1417,10 @@
         <record id="email_template_upload_report_reminder_acadamic"
                 model="mail.template">
             <field name="name">CFO Report Reminder</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
-            <field name="subject">Reminder For Upload Report
-            </field>
+            <field name="subject">Reminder For Upload Report</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="model_id" ref="cfo_snr_jnr.model_academic_institution_snr"/>
             <field name="auto_delete" eval="True"/>
             <field name="partner_to">${object.user_id.partner_id.id}</field>
@@ -1687,12 +1677,10 @@
         <record id="email_template_upload_report_reminder_employer"
                 model="mail.template">
             <field name="name">CFO Report Reminder</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
-            <field name="subject">Reminder to Upload Report
-            </field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
+            <field name="subject">Reminder to Upload Report</field>
             <field name="model_id" ref="cfo_snr_jnr.model_employers_snr"/>
             <field name="auto_delete" eval="True"/>
             <field name="partner_to">${object.user_id.partner_id.id}</field>
@@ -1952,10 +1940,9 @@
         <record id="auth_signup.set_password_email" model="mail.template">
             <field name="name">Auth Signup: Odoo Connection</field>
             <field name="model_id" ref="base.model_res_users"/>
-            <field name="email_from">
-<!--                <![CDATA["${object.company_id.name|safe}" <${(object.company_id.email or user.email)|safe}>]]-->
-               thecfo@charterquest.co.za></field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${object.email|safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="subject"><![CDATA[The CFO: Invitation to Join]]></field>
             <field name="body_html"><![CDATA[
             <html>
@@ -2038,7 +2025,7 @@
 														<div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
 														<p>Dear ${object.name},</p>
 														    <p>
-														        You have been invited to join CFO Team:
+														        You have been invited to join CFO Team:${(ctx.get('team_name')) or '' | safe}
 														    </p>
 														    <p>
 														        Please click the button below to accept and join the team:
@@ -2048,17 +2035,42 @@
                                                       </tr>
                                                    </tbody>
                                                 </table>
-                                                <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
-                                                   <tbody>
-                                                      <tr style="width: 100%;">
-                                                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
-                                                            <div class="btn" style="Margin-bottom: 0;Margin-top: 0;text-align: center;">
-                                                               <a href="${object.signup_url}" style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'">Accept invitation</a>
-                                                            </div>
-                                                         </td>
-                                                      </tr>
-                                                   </tbody>
-                                                </table>
+<!--                                                <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">-->
+<!--                                                   <tbody>-->
+<!--                                                      <tr style="width: 100%;">-->
+<!--                                                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">-->
+<!--                                                            <div class="btn" style="Margin-bottom: 0;Margin-top: 0;text-align: center;">-->
+<!--                                                               <a href="${object.signup_url}" style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'">Accept invitation</a>-->
+<!--                                                            </div>-->
+<!--                                                         </td>-->
+<!--                                                      </tr>-->
+<!--                                                   </tbody>-->
+<!--                                                </table>-->
+                                                <table class="contents"
+                                                                   style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="padded"
+                                                                            style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
+                                                                            <div class="btn"
+                                                                                 style="Margin-bottom: 0;Margin-top: 0;text-align: center;">
+                                                                                <t t-set="url_value"
+                                                                                   t-value="request.env['ir.config_parameter'].sudo().search([('key','=','web.base.url').value])"/>
+                                                                                <a
+                                                                                        style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
+                                                                                        href="${object.signup_url}">
+                                                                                    Accept
+                                                                                </a>
+                                                                                <a
+                                                                                        style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
+                                                                                        href="${object.signup_url}">
+                                                                                    Decline
+                                                                                </a>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                 <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
                                                    <tbody>
                                                        <tr style="width: 100%;">
@@ -2202,10 +2214,9 @@
         </record>
         <record id="email_template_for_success_report" model="mail.template">
             <field name="name">Report Submit Successfully</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="subject">CFO Report Submission Success</field>
             <field name="model_id" ref="cfo_snr_jnr.model_cfo_snr_aspirants"/>
             <field name="auto_delete" eval="True"/>
@@ -2327,10 +2338,9 @@
 
         <record id="email_template_for_success_report_acadamic" model="mail.template">
             <field name="name">Report Submit Successfully</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="subject">CFO Report Submission Success</field>
             <field name="model_id" ref="cfo_snr_jnr.model_academic_institution_snr"/>
             <field name="auto_delete" eval="True"/>
@@ -2451,10 +2461,9 @@
         </record>
         <record id="email_template_for_success_report_employer" model="mail.template">
             <field name="name">Report Submit Successfully</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="subject">CFO Report Submission Success</field>
             <field name="model_id" ref="cfo_snr_jnr.model_employers_snr"/>
             <field name="auto_delete" eval="True"/>
@@ -2575,10 +2584,9 @@
         </record>
         <record id="email_template_for_success_report_mentor" model="mail.template">
             <field name="name">Report Submit Successfully</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="subject">CFO Report Submission Success</field>
             <field name="model_id" ref="cfo_snr_jnr.model_mentors_snr"/>
             <field name="auto_delete" eval="True"/>
@@ -2700,10 +2708,9 @@
         <record id="email_template_for_success_report_ambassador"
                 model="mail.template">
             <field name="name">Report Submit Successfully</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="subject">CFO Report Submission Success</field>
             <field name="model_id" ref="cfo_snr_jnr.model_brand_ambassador_snr"/>
             <field name="auto_delete" eval="True"/>
@@ -2825,10 +2832,9 @@
 
         <record id="email_template_for_reminder_update_bio" model="mail.template">
             <field name="name">The CFO Update Bio Reminder</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="subject">The CFO Update Bio Reminder</field>
             <field name="model_id" ref="cfo_snr_jnr.model_cfo_snr_aspirants"/>
             <field name="auto_delete" eval="True"/>
@@ -2954,10 +2960,9 @@
         <record id="email_template_for_reminder_update_bio_mentor"
                 model="mail.template">
             <field name="name">The CFO Update Bio Reminder</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="subject">The CFO Update Bio Reminder</field>
             <field name="model_id" ref="cfo_snr_jnr.model_mentors_snr"/>
             <field name="auto_delete" eval="True"/>
@@ -3082,10 +3087,9 @@
         <!-- Ambassador Reminder -->
         <record id="email_template_for_reminder_update_bio_amb" model="mail.template">
             <field name="name">The CFO Update Bio Reminder</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="subject">The CFO Update Bio Reminder</field>
             <field name="model_id" ref="cfo_snr_jnr.model_brand_ambassador_snr"/>
             <field name="auto_delete" eval="True"/>
@@ -3210,10 +3214,9 @@
 
         <record id="email_template_for_reminder_update_bio_jnr" model="mail.template">
             <field name="name">The CFO Update Bio Reminder</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="subject">The CFO Update Bio Reminder</field>
             <field name="model_id" ref="cfo_snr_jnr.model_cfo_jnr_aspirants"/>
             <field name="auto_delete" eval="True"/>
@@ -3340,10 +3343,9 @@
         <record id="email_template_for_reminder_update_bio_mentor_jnr"
                 model="mail.template">
             <field name="name">The CFO Update Bio Reminder</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="subject">The CFO Update Bio Reminder</field>
             <field name="model_id" ref="cfo_snr_jnr.model_mentors_jnr"/>
             <field name="auto_delete" eval="True"/>
@@ -3470,10 +3472,9 @@
         <record id="email_template_for_reminder_update_bio_amb_jnr"
                 model="mail.template">
             <field name="name">The CFO Update Bio Reminder</field>
-            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
-				(object.user_id.name, object.user_id.email) or '')|safe}
-            </field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="subject">The CFO Update Bio Reminder</field>
             <field name="model_id" ref="cfo_snr_jnr.model_brand_ambassador_jnr"/>
             <field name="auto_delete" eval="True"/>
