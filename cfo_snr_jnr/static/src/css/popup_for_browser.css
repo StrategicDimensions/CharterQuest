@@ -1,0 +1,12 @@
+.sticky {
+    position: fixed;
+    bottom: 0;
+    overflow: hidden;
+    font-family: Helvetica,Calibri,Arial,sans-serif;
+    display: flex;
+    flex-wrap: nowrap;
+    z-index: 9999;
+    color: rgb(255, 255, 255);
+    width: inherit;
+}
+

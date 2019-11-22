@@ -22,4 +22,5 @@ from . import main
 from . import main_cfo_jnr
 from . import enrolment_process
 from . import time_table
+from . import popup_for_browser
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

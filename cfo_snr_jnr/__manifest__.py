@@ -29,6 +29,7 @@
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
+        'data/popup_for_browser.xml',
         'data/snippets.xml',
         'data/attachment_data.xml',
         'views/timetable_template.xml',
