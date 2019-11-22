@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="message" name="Cookies notice">
+    <div t-if="request and
+        not request.session.get('accepted_cookies')"
+        id="website_cookie_notice"
+        class="container-fluid bg-warning cc-cookies">
+        <div class="container">
+            <div class="row sticky" style="margin-left:0px; background-color: rgba(0, 0, 0, 0.75);" aria-live="polite">
+                <div class="col-sm-10" style="font-size:18px;">For best experience to all features, This website is optimised to work best in
+                    <a href="https://www.google.com/intl/en/chrome/" referrerpolicy="origin">Google Chome</a><![CDATA[ &]]>
+                    <a href="https://www.mozilla.org/en-US/firefox/new/" referrerpolicy="origin">Firefox.</a>
+                    <a class="btn btn-primary" href="#">OK</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="cookiebanner" inherit_id="website.layout">
+    <xpath expr="//div[@id='copyright']" position="after">
+        <t t-call="cfo_snr_jnr.message"/>
+    </xpath>
+</template>
+
+</odoo>
