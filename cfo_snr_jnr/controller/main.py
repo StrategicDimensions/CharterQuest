@@ -848,6 +848,7 @@ class CfoHome(web.Home):
 
     @http.route('/check_team_name', type='json', auth="public", website=True)
     def check_team_name(self, **post):
+        print("\n\n\n\n=========team name=======",post)
         if post.get('team_name'):
             team_name = request.env['cfo.team.snr'].sudo().search([('name', '=', post.get('team_name'))])
             if team_name:
@@ -873,6 +874,7 @@ class CfoHome(web.Home):
 
     @http.route('/create_new_member', type='json', auth="public", website=True)
     def create_new_member(self, **post):
+        print("\n\n\n\n================post=======",post)
         res_user = request.env['res.users'].sudo().search([('login', '=', post.get('email'))])
         if not res_user:
             user = request.env['res.users'].sudo().create({
@@ -915,6 +917,7 @@ class CfoHome(web.Home):
                         'user_id': user.id,
                         'cfo_competition_year': str(post.get('year'))
                     })
+
                 if post.get('user_type') == 'Brand Ambassador':
                     request.env['brand.ambassador.snr'].sudo().create({
                         'partner_id': user.partner_id.id,
@@ -1129,6 +1132,7 @@ class CfoHome(web.Home):
 
     @http.route('/create_team', type='json', auth="public", website=True)
     def create_team(self, **post):
+        print("\n\n\n\n\n==============post========",post)
         if post.get('aspirant_id') and not post.get('aspirant_team'):
             aspirant_id = request.env['cfo.snr.aspirants'].sudo().search([('id', '=', int(post.get('aspirant_id')))],
                                                                          limit=1)

@@ -1586,7 +1586,7 @@
                                                            class="form-control"
                                                            t-att-value="snr_aspirants.zip" required="1"/>
                                                     <select name="country_id" id="country_id"
-                                                            class="form-control" placeholder="Country"
+                                                            class="form-control" placeholder="Country" required="true"
                                                     >
                                                         <t t-if="not snr_aspirants.country_id">
                                                             <option value="">Country</option>
@@ -1768,7 +1768,7 @@
                                                t-att-value="snr_aspirants.stu_zip"
                                                placeholder="Zip"/>
                                         <select name="stu_country_id" id="stu_country_id"
-                                                class="form-control" placeholder="Country"
+                                                class="form-control" placeholder="Country" required="true"
                                         >
                                             <option value="">Country</option>
                                             <t t-if="snr_aspirants">
@@ -1964,7 +1964,7 @@
                                                placeholder="Zip"
                                                t-att-value="snr_aspirants.emp_zip"/>
                                         <select name="emp_country_id" id="emp_country_id"
-                                                class="form-control"
+                                                class="form-control" required="true"
                                         >
                                             <option value="">Country</option>
                                             <t t-if="snr_aspirants">
@@ -3339,6 +3339,10 @@
                                    readonly="1"
                                    t-att-value="aspirant_team.ref_name" style="width: 390px;"/>
                         </t>
+                        <t t-if="not acadamic_team">
+                                    <input type="text" name="sys_name" readonly="1"
+                                           class="form-control sys_name_new"/>
+                        </t>
                     </div>
                     <div class="col-md-8">
                     </div>
@@ -4053,7 +4057,7 @@
                                                        class="form-control"
                                                        t-att-value="snr_academic_institution.zip"/>
                                                 <select name="country_id" id="country_id"
-                                                        class="form-control" placeholder="Country">
+                                                        class="form-control" placeholder="Country" required="true">
                                                     <option value="">Country</option>
                                                     <t t-if="snr_academic_institution">
                                                         <option t-att-value="snr_academic_institution.country_id.id if snr_academic_institution.country_id else &quot;&quot;">
@@ -4095,6 +4099,7 @@
                                                 <input type="text" name="school_name"
                                                        id="school_name"
                                                        class="form-control"
+                                                       required="true"
                                                        t-att-value="snr_academic_institution.school_name"/>
                                             </td>
                                         </tr>
@@ -4162,7 +4167,7 @@
                                                        class="form-control"
                                                        t-att-value="snr_academic_institution.stu_zip"/>
                                                 <select name="stu_country_id" id="stu_country_id"
-                                                        class="form-control" placeholder="Country">
+                                                        class="form-control" placeholder="Country" required="true">
                                                     <option value="">Country</option>
                                                     <t t-if="snr_academic_institution">
                                                         <option t-att-value="snr_academic_institution.stu_country_id.id if snr_academic_institution.stu_country_id else &quot;&quot;">
@@ -4529,6 +4534,7 @@
                                 <input type="hidden" name="country"
                                        t-att-value="snr_academic_institution.country_id.name"/>
                                 <input type="hidden" name="state" t-att-value="snr_academic_institution.state_id.name"/>
+                                <input type="hidden" name="school_name" t-att-value="snr_academic_institution.school_name"/>
                                 <t t-if="acadamic_team">
                                     <input type="text" name="name"
                                            id="name"
@@ -4554,11 +4560,11 @@
                                        for="sys_name">System-generated name of your Team
                                 </label>
                                 <t t-if="acadamic_team">
-                                    <input type="text" name="sys_name"
-                                           id="sys_name"
-                                           class="form-control sys_name_new"
-                                           readonly="1"
-                                           t-att-value="acadamic_team.ref_name"/>
+                                <input type="text" name="sys_name"
+                                       id="sys_name"
+                                       class="form-control sys_name_new"
+                                       readonly="1"
+                                       t-att-value="acadamic_team.ref_name"/>
                                 </t>
                                 <t t-if="not acadamic_team">
                                     <input type="text" name="sys_name" readonly="1"
@@ -5452,7 +5458,7 @@
                                                    class="form-control"
                                                    t-att-value="snr_employers.zip"/>
                                             <select name="country_id" id="country_id"
-                                                    class="form-control" placeholder="Country"
+                                                    class="form-control" placeholder="Country" required="true"
                                             >
                                                 <option value="">Country</option>
                                                 <t t-if="snr_employers">
@@ -5598,7 +5604,7 @@
                                                    class="form-control"
                                                    t-att-value="snr_employers.emp_zip"/>
                                             <select name="emp_country_id" id="emp_country_id"
-                                                    class="form-control" placeholder="Country"
+                                                    class="form-control" placeholder="Country" required="true"
                                             >
                                                 <option value="">Country</option>
                                                 <t t-if="snr_employers">
@@ -7253,7 +7259,7 @@
                                                        class="form-control"
                                                        t-att-value="snr_media_contestants.zip"/>
                                                 <select name="country_id" id="country_id"
-                                                        class="form-control" placeholder="Country"
+                                                        class="form-control" placeholder="Country" required="true"
                                                 >
                                                     <option value="">Country</option>
                                                     <t t-if="snr_employers">
