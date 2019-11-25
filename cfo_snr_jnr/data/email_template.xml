@@ -1249,7 +1249,7 @@
                                                             <p>This is friendly reminder that the <font color="red"><b>DEADLINE</b></font> to submit your CFO Report is</p>
                                                             <center><p><b>${object.aspirant_id.cfo_report_deadline_date}</b></p></center>
                                                             <br/>
-                                                            <p>Please Click link below when redy to submit:</p>
+                                                            <p>Please Click link below when ready to submit:</p>
                                                         </div>
                                                          </td>
                                                       </tr>
@@ -1271,7 +1271,7 @@
                                                        <tr style="width: 100%;">
                                                         <td>
                                                         <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
-                                                         <center><p><font color="red">ONLY</font>team leader are autorised to submit report on the team's behalf.</p></center>
+                                                         <center><p><font color="red">ONLY</font>Team leader is authorised to submit report on the team’s behalf.</p></center>
                                                         </div>
                                                          <td>
                                                       </tr>
@@ -1509,7 +1509,7 @@
                                                             <p>This is friendly reminder that the <font color="red"><b>DEADLINE</b></font> to submit your CFO Report is</p>
                                                             <center><p><b>${object.aspirant_id.cfo_report_deadline_date}</b></p></center>
                                                             <br/>
-                                                            <p>Please Click link below when redy to submit:</p>
+                                                            <p>Please Click link below when ready to submit:</p>
                                                         </div>
                                                          </td>
                                                       </tr>
@@ -1531,7 +1531,7 @@
                                                        <tr style="width: 100%;">
                                                         <td>
                                                         <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
-                                                         <center><p><font color="red">ONLY</font>team leader are autorised to submit report on the team's behalf.</p></center>
+                                                         <center><p><font color="red">ONLY</font>Team leader is authorised to submit report on the team’s behalf.</p></center>
                                                         </div>
                                                          <td>
                                                       </tr>
@@ -2017,7 +2017,7 @@
 														    <table cellspacing="0" cellpadding="0" style="width:600px;border-collapse:collapse;background:inherit;color:inherit">
 														        <tbody><tr>
 														            <td valign="center" width="200" style="padding:10px 10px 10px 5px;font-size: 12px">
-														                
+
 														            </td>
 														        </tr></tbody>
 														    </table>
@@ -2077,9 +2077,9 @@
                                                         <td>
                                                          <div class="btn" style="Margin-bottom: 0;Margin-top: 0;text-align: right;">
                                                             <div style="padding:0px;width:600px;margin:auto; margin-top: 10px; background: #fff repeat top /100%;color:#777777">
-                                                                
+
                                                                 <p style="font-size: 11px; margin-top: 10px;">
-                                                                    
+
                                                                 </p>
                                                             </div>
                                                          </div>
@@ -2207,8 +2207,8 @@
 <!--                        }); -->
 <!--                     </script> -->
                    </body>
-                </html>    
-            
+                </html>
+
             ]]></field>
             <field name="user_signature" eval="False"/>
         </record>
@@ -2310,7 +2310,7 @@
                                                             <br/>
                                                             <center><font color="red"><u>So, What next?</u></font></center>
                                                             <br/>
-                                                            <p>Annoucement of winners:June 1 Follow us on social media for all updated</p>
+                                                            <p>Annoucement of winners:June 13 Follow us on social media for all updated</p>
                                                             <div class="links emb-web-links" style="line-height: 26px;Margin-bottom: 26px;mso-line-height-rule: at-least;">
 			                                                   <a style="transition: opacity 0.2s ease-in;color: #ff0000;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-y/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i8.createsend1.com/static/eb/master/03-fresh/imgf/facebook-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-j/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i9.createsend1.com/static/eb/master/03-fresh/imgf/twitter-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-t/"><img style="border:
 			                                                      0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i3.createsend1.com/static/eb/master/03-fresh/imgf/website-sf.png" width="29" height="26"/></a>
@@ -2434,7 +2434,7 @@
                                                             <br/>
                                                             <center><font color="red"><u>So, What next?</u></font></center>
                                                             <br/>
-                                                            <p>Annoucement of winners:June 1 Follow us on social media for all updated</p>
+                                                            <p>Annoucement of winners:June 13 Follow us on social media for all updated</p>
                                                             <div class="links emb-web-links" style="line-height: 26px;Margin-bottom: 26px;mso-line-height-rule: at-least;">
                                                                <a style="transition: opacity 0.2s ease-in;color: #ff0000;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-y/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i8.createsend1.com/static/eb/master/03-fresh/imgf/facebook-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-j/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i9.createsend1.com/static/eb/master/03-fresh/imgf/twitter-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-t/"><img style="border:
                                                                   0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i3.createsend1.com/static/eb/master/03-fresh/imgf/website-sf.png" width="29" height="26"/></a>
@@ -2557,7 +2557,7 @@
                                                             <br/>
                                                             <center><font color="red"><u>So, What next?</u></font></center>
                                                             <br/>
-                                                            <p>Annoucement of winners:June 1 Follow us on social media for all updated</p>
+                                                            <p>Annoucement of winners:June 13 Follow us on social media for all updated</p>
                                                             <div class="links emb-web-links" style="line-height: 26px;Margin-bottom: 26px;mso-line-height-rule: at-least;">
                                                                <a style="transition: opacity 0.2s ease-in;color: #ff0000;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-y/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i8.createsend1.com/static/eb/master/03-fresh/imgf/facebook-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-j/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i9.createsend1.com/static/eb/master/03-fresh/imgf/twitter-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-t/"><img style="border:
                                                                   0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i3.createsend1.com/static/eb/master/03-fresh/imgf/website-sf.png" width="29" height="26"/></a>
@@ -2680,7 +2680,7 @@
                                                             <br/>
                                                             <center><font color="red"><u>So, What next?</u></font></center>
                                                             <br/>
-                                                            <p>Annoucement of winners:June 1 Follow us on social media for all updated</p>
+                                                            <p>Annoucement of winners:June 13 Follow us on social media for all updated</p>
                                                             <div class="links emb-web-links" style="line-height: 26px;Margin-bottom: 26px;mso-line-height-rule: at-least;">
                                                                <a style="transition: opacity 0.2s ease-in;color: #ff0000;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-y/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i8.createsend1.com/static/eb/master/03-fresh/imgf/facebook-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-j/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i9.createsend1.com/static/eb/master/03-fresh/imgf/twitter-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-t/"><img style="border:
                                                                   0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i3.createsend1.com/static/eb/master/03-fresh/imgf/website-sf.png" width="29" height="26"/></a>
@@ -2804,7 +2804,7 @@
                                                             <br/>
                                                             <center><font color="red"><u>So, What next?</u></font></center>
                                                             <br/>
-                                                            <p>Annoucement of winners:June 1 Follow us on social media for all updated</p>
+                                                            <p>Annoucement of winners:June 13 Follow us on social media for all updated</p>
                                                             <div class="links emb-web-links" style="line-height: 26px;Margin-bottom: 26px;mso-line-height-rule: at-least;">
                                                                <a style="transition: opacity 0.2s ease-in;color: #ff0000;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-y/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i8.createsend1.com/static/eb/master/03-fresh/imgf/facebook-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-j/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i9.createsend1.com/static/eb/master/03-fresh/imgf/twitter-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-t/"><img style="border:
                                                                   0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i3.createsend1.com/static/eb/master/03-fresh/imgf/website-sf.png" width="29" height="26"/></a>

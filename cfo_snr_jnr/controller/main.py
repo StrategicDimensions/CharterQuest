@@ -1132,6 +1132,8 @@ class CfoHome(web.Home):
         if post.get('aspirant_id') and not post.get('aspirant_team'):
             aspirant_id = request.env['cfo.snr.aspirants'].sudo().search([('id', '=', int(post.get('aspirant_id')))],
                                                                          limit=1)
+            print("\n\n\n\n\n\n=============aspirant_id=====", aspirant_id)
+            print("\n\n\n\n\n\n=============aspirant_id.aspirant_id=====", aspirant_id.aspirant_id)
             if not aspirant_id.aspirant_id:
                 team_id = request.env['cfo.team.snr'].sudo().create({
                     'name': post.get('name'),
@@ -1141,11 +1143,13 @@ class CfoHome(web.Home):
                     'aspirant_admin_id': aspirant_id.id,
                     'cfo_comp': 'CFO SNR'
                 })
+                print("\n\n\n\n\n\n=============post.get('member_request_list')=====", post.get('member_request_list'))
                 if post.get('member_request_list'):
                     '''
                     Send email for Join Our Team.
                     '''
                     for each_request in post.get('member_request_list'):
+                        print("\n\n\n\n\n\n=============each_request.get('user_type')=====",each_request.get('user_type'))
                         if each_request.get('user_type') == 'Mentor':
                             print("\n\n\n\n---------------each_request.get('user_id'==============",each_request.get('user_id'))
                             mentor_id = request.env['mentors.snr'].sudo().search(
@@ -1184,7 +1188,7 @@ class CfoHome(web.Home):
                                 'is_request': True,
                                 'new_team_id': team_id.id
                             })
-                            print("\n\n\n\n\n==============res-id========", res.id)
+                            print("\n\n\n\n\n==============res-id111111111111111111========", res.id)
                             template = request.env.ref('cfo_snr_jnr.email_template_request_for_join',
                                                        raise_if_not_found=False)
                             if template:
@@ -1322,10 +1326,12 @@ class CfoHome(web.Home):
                 'cfo_comp': 'CFO SNR'
             })
             if post.get('member_request_list'):
+                print("\n\n\n\n=====post.get('member_request_list')=====",post.get('member_request_list'))
                 '''
                 Send email for Join Our Team.
                 '''
                 for each_request in post.get('member_request_list'):
+                    print("\n\n\n\n\n\n=============each_request.get('user_type')==========",each_request.get('user_type'))
                     if each_request.get('user_type') == 'Mentor':
                         mentor_id = request.env['mentors.snr'].sudo().search(
                             [('user_id', '=', int(each_request.get('user_id')))])
@@ -1361,6 +1367,7 @@ class CfoHome(web.Home):
                             'is_request': True,
                             'new_team_id': team_id.id
                         })
+                        print("\n\n\n\n============222222222222222222222222222222")
                         template = request.env.ref('cfo_snr_jnr.email_template_request_for_join',
                                                    raise_if_not_found=False)
                         if template:
@@ -1608,6 +1615,7 @@ class CfoHome(web.Home):
                         'is_request': True,
                         'new_team_id': team_id.id
                     })
+                    print("\n\n\n\n============3333333333333############")
                     template = request.env.ref('cfo_snr_jnr.email_template_request_for_join',
                                                raise_if_not_found=False)
                     if template:
@@ -1743,6 +1751,7 @@ class CfoHome(web.Home):
                         'is_request': True,
                         'new_team_id': team_id.id
                     })
+                    print("\n\n\n\n============4444444444444444444444444444")
                     template = request.env.ref('cfo_snr_jnr.email_template_request_for_join',
                                                raise_if_not_found=False)
                     if template:
@@ -1877,6 +1886,7 @@ class CfoHome(web.Home):
                         'is_request': True,
                         'new_team_id': team_id.id
                     })
+                    print("\n\n\n\n============5555555555555555555555555555555555")
                     template = request.env.ref('cfo_snr_jnr.email_template_request_for_join',
                                                raise_if_not_found=False)
                     if template:
@@ -2009,6 +2019,7 @@ class CfoHome(web.Home):
                         'is_request': True,
                         'new_team_id': team_id.id
                     })
+                    print("\n\n\n\n============666666666666666666666666666")
                     template = request.env.ref('cfo_snr_jnr.email_template_request_for_join',
                                                raise_if_not_found=False)
                     if template:

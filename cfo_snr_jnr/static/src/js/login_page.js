@@ -580,7 +580,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                     $(document).find('#diffrent_team_name_modal').modal('show');
                 }
                 else {
-                    $(document).find('.sys_name_new').val("Team," + name + " from " + school_name + " and " + country)
+                    $(document).find('.sys_name_new').val("Team," + name + " from " + school_name)
                 }
             });
         });
