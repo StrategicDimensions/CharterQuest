@@ -692,6 +692,7 @@ class CfoHomeJnr(web.Home):
                             'is_request': True,
                             'new_team_id': team_id.id
                         })
+                    print("\n\n\n\n=======99999999999")
                     template = request.env.ref('cfo_snr_jnr.email_template_request_for_join',
                                                raise_if_not_found=False)
                     if template:
@@ -845,6 +846,7 @@ class CfoHomeJnr(web.Home):
                             'is_request': True,
                             'new_team_id': team_id.id
                         })
+                    print("\n\n\n\n\n=====8888888888888")
                     template = request.env.ref('cfo_snr_jnr.email_template_request_for_join',
                                                raise_if_not_found=False)
                     if template:
@@ -978,6 +980,7 @@ class CfoHomeJnr(web.Home):
                             'is_request': True,
                             'new_team_id': team_id.id
                         })
+                    print("\n\n\n\n===================77777777777")
                     template = request.env.ref('cfo_snr_jnr.email_template_request_for_join',
                                                raise_if_not_found=False)
                     if template:
