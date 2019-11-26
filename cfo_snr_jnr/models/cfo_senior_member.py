@@ -116,6 +116,7 @@ class AcademicInstitutionSenior(models.Model):
                                  help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_academic_bio = fields.Boolean('Updated Academic BIO')
     user_id = fields.Many2one('res.users', 'Related User')
+    aspirant_id = fields.Many2one('cfo.team.snr', 'Aspirant ID')
     ref_name = fields.Char(string = 'Reference')
     cfo_team_ids = fields.Many2many('cfo.team.snr','cfo_team_rel', string='Acadamic ID')
     cfo_competition_year = fields.Selection(

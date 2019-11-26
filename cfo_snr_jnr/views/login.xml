@@ -2442,6 +2442,8 @@
                                         t-if="snr_aspirants.team_admin or snr_aspirants.team_leader">
                                         <div style="display: flex;height: 62px;justify-content: center;align-items: center;">
                                             <input type="hidden" t-att-value="aspirant_team.id" name="team_id"/>
+                                            <input type="hidden" t-att-value="snr_aspirants.aspirant_id.cfo_report_deadline_date"
+                                   name="cfo_report_deadline_date_time"/>
                                             <button class="btn send_report_reminder report_remainder_set1 widthset_btn widthset_btn1"
                                                     t-att-id="aspirant_team.id" type="submit"
                                                     style="width:100%;white-space:inherit;background-color: forestgreen;font-size:11px;margin:0;">
@@ -4046,7 +4048,6 @@
                                                        t-as="state"
                                                        placeholder="State">
                                                         <option t-att-value="state.id">
-                                                            cfo_senior_academic_institution
                                                             <t t-esc="state.name"/>
                                                         </option>
                                                     </t>

@@ -580,7 +580,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                     $(document).find('#diffrent_team_name_modal').modal('show');
                 }
                 else {
-                    $(document).find('.sys_name_new').val("Team," + name + " from " + school_name)
+                    $(document).find('.sys_name_new').val("Team," + name + " from " + school_name + " , " + country +".")
                 }
             });
         });
@@ -679,19 +679,25 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             var email = $(this).parents('tr').find('.team_email').val();
             var name = $(this).parents('tr').find('.team_member_name').val();
             var team_id = $(this).attr('team-id')
+            var sys_name = $(document).find('input[name="sys_name"]').val();
             var user_type = $(this).parents('tr').find('.user_type').val();
             var year = $(this).parents('tr').find('.competition_year').val();
             var from_acadamic = $(this).parents('tr').find('.from_acadamic').val();
             var from_aspirant = $(this).parents('tr').find('.from_aspirant').val();
             var from_employer = $(this).parents('tr').find('.from_employer').val();
             var from_jnr_school = $(this).parents('tr').find('.from_jnr_school').val();
+            var aspirant_id = $(document).find('input[name="snr_aspirants"]').val();
+            var aspirant_team = $(document).find('input[name="aspirant_team"]').val();
             var self = $(this);
             ajax.jsonRpc("/create_new_member", "call", {
                 'email': email,
                 'name': name,
                 'user_type': user_type,
+                'aspirant_id': aspirant_id,
+                'aspirant_team': aspirant_team,
                 'year': year,
                 'team_id': team_id,
+                'team_name':sys_name,
                 'from_acadamic': from_acadamic,
                 'from_aspirant': from_aspirant,
                 'from_employer': from_employer,

@@ -925,7 +925,7 @@ class CfoHome(web.Home):
                         'user_id': user.id,
                         'cfo_competition_year': str(post.get('year'))
                     })
-                user.with_context(create_user=True, cfo_login=True).action_reset_password()
+                # user.with_context(create_user=True, cfo_login=True).action_reset_password()
             if post.get('from_acadamic'):
                 if post.get('user_type') in ['Leader']:
                     request.env['cfo.snr.aspirants'].sudo().create({
@@ -965,7 +965,7 @@ class CfoHome(web.Home):
                         'user_id': user.id,
                         'cfo_competition_year': str(post.get('year'))
                     })
-                user.with_context(create_user=True, cfo_login=True).action_reset_password()
+                # user.with_context(create_user=True, cfo_login=True).action_reset_password()
             if post.get('from_employer'):
                 if post.get('user_type') in ['Leader']:
                     request.env['cfo.snr.aspirants'].sudo().create({
@@ -1005,7 +1005,7 @@ class CfoHome(web.Home):
                         'user_id': user.id,
                         'cfo_competition_year': str(post.get('year'))
                     })
-                user.with_context(create_user=True, cfo_login=True).action_reset_password()
+                # user.with_context(create_user=True, cfo_login=True).action_reset_password()
 
             if post.get('from_jnr_school'):
                 if post.get('user_type') in ['Leader']:
@@ -1046,7 +1046,46 @@ class CfoHome(web.Home):
                         'user_id': user.id,
                         'cfo_competition_year': str(post.get('year'))
                     })
-                user.with_context(create_user=True, cfo_login=True).action_reset_password()
+                # user.with_context(create_user=True, cfo_login=True).action_reset_password()
+            if post.get('from_aspirant') or post.get('from_acadamic') or post.get('from_employer') or post.get('from_jnr_school'):
+                if post.get('user_type') in ['Leader','Member']:
+                    res = request.env['cfo.snr.aspirants'].sudo().search(
+                        [('user_id', '=', user.id)])
+                    aspirant_team_member_id = request.env['snr.aspirant.team.member'].sudo().search(
+                        [('related_user_id', '=', res.id), ('member_status', '=', 'Accept')])
+                    res.sudo().write({
+                        'is_request': True,
+                    })
+                    template_leader_member = request.env.ref('cfo_snr_jnr.email_template_request_for_join',
+                                                      raise_if_not_found=False)
+                    if template_leader_member:
+                        template_leader_member.sudo().with_context(
+                            user_type=post.get('user_type'),
+                            team_name=post.get('team_name'),
+                            email_to=post.get('email')
+                        ).send_mail(res.id, force_send=True)
+                if post.get('user_type') == 'Mentor':
+                    mentor_id = request.env['mentors.snr'].sudo().search(
+                        [('user_id', '=',user.id)])
+                    template_mentor = request.env.ref('cfo_snr_jnr.email_template_request_for_join_mentor',
+                                                      raise_if_not_found=False)
+                    if template_mentor:
+                        template_mentor.sudo().with_context(
+                            user_type=post.get('user_type'),
+                            team_name=post.get('team_name'),
+                            email_to=post.get('email')
+                        ).send_mail(mentor_id.id, force_send=True)
+                if post.get('user_type') == 'Brand Ambassador':
+                    amb_id = request.env['brand.ambassador.snr'].sudo().search(
+                        [('user_id', '=', user.id)])
+                    template_amb = request.env.ref('cfo_snr_jnr.email_template_request_for_join_amb',
+                                                      raise_if_not_found=False)
+                    if template_amb:
+                        template_amb.sudo().with_context(
+                            user_type=post.get('user_type'),
+                            team_name=post.get('team_name'),
+                            email_to=post.get('email')
+                        ).send_mail(amb_id.id, force_send=True)
         else:
             return {'email_exist': True}
 
@@ -1073,7 +1112,6 @@ class CfoHome(web.Home):
             team_id = request.env['cfo.team.snr'].sudo().search([('id', '=', post.get('team_id'))])
             template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder',
                                        raise_if_not_found=False)
-
             for member_id in team_id.aspirant_team_member_ids:
                 if template:
                     template.sudo().with_context(
@@ -1136,8 +1174,6 @@ class CfoHome(web.Home):
         if post.get('aspirant_id') and not post.get('aspirant_team'):
             aspirant_id = request.env['cfo.snr.aspirants'].sudo().search([('id', '=', int(post.get('aspirant_id')))],
                                                                          limit=1)
-            print("\n\n\n\n\n\n=============aspirant_id=====", aspirant_id)
-            print("\n\n\n\n\n\n=============aspirant_id.aspirant_id=====", aspirant_id.aspirant_id)
             if not aspirant_id.aspirant_id:
                 team_id = request.env['cfo.team.snr'].sudo().create({
                     'name': post.get('name'),
@@ -1147,15 +1183,12 @@ class CfoHome(web.Home):
                     'aspirant_admin_id': aspirant_id.id,
                     'cfo_comp': 'CFO SNR'
                 })
-                print("\n\n\n\n\n\n=============post.get('member_request_list')=====", post.get('member_request_list'))
                 if post.get('member_request_list'):
                     '''
                     Send email for Join Our Team.
                     '''
                     for each_request in post.get('member_request_list'):
-                        print("\n\n\n\n\n\n=============each_request.get('user_type')=====",each_request.get('user_type'))
                         if each_request.get('user_type') == 'Mentor':
-                            print("\n\n\n\n---------------each_request.get('user_id'==============",each_request.get('user_id'))
                             mentor_id = request.env['mentors.snr'].sudo().search(
                                 [('user_id', '=', int(each_request.get('user_id')))])
                             template_mentor = request.env.ref('cfo_snr_jnr.email_template_request_for_join_mentor',
@@ -1181,18 +1214,15 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email')
                                 ).send_mail(amb_id.id, force_send=True)
-                        print("\n\n\n\n============each_request.get('user_id')=======", each_request.get('user_id'))
                         if each_request.get('user_type') in ['Leader', 'Member']:
                             res = request.env['cfo.snr.aspirants'].sudo().search(
                                 [('user_id', '=', int(each_request.get('user_id')))])
-                            print("\n\n\n\n\n==============res-id========", res)
                             aspirant_team_member_id = request.env['snr.aspirant.team.member'].sudo().search(
                                 [('related_user_id', '=', res.id), ('member_status', '=', 'Accept')])
                             res.sudo().write({
                                 'is_request': True,
                                 'new_team_id': team_id.id
                             })
-                            print("\n\n\n\n\n==============res-id111111111111111111========", res.id)
                             template = request.env.ref('cfo_snr_jnr.email_template_request_for_join',
                                                        raise_if_not_found=False)
                             if template:
