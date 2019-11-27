@@ -1783,7 +1783,7 @@
                                                t-att-value="snr_aspirants.stu_zip"
                                                placeholder="Zip"/>
                                         <select name="stu_country_id" id="stu_country_id"
-                                                class="form-control" placeholder="Country"
+                                                class="form-control" placeholder="Country" required="true"
                                         >
                                             <option value="">Country</option>
                                             <t t-if="snr_aspirants">
@@ -1979,7 +1979,7 @@
                                                placeholder="Zip"
                                                t-att-value="snr_aspirants.emp_zip"/>
                                         <select name="emp_country_id" id="emp_country_id"
-                                                class="form-control"
+                                                class="form-control" required="true"
                                         >
                                             <option value="">Country</option>
                                             <t t-if="snr_aspirants">
