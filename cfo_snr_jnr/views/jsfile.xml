@@ -24,8 +24,8 @@
                         src="/cfo_snr_jnr/static/src/js/popup_for_browser.js"/>
                 <script type="text/javascript"
                         src="/cfo_snr_jnr/static/src/js/enrolment.js"/>
-<!--                <script type="text/javascript"-->
-<!--                        src="/cfo_snr_jnr/static/src/js/bootstrap-datepicker.js"/>-->
+                <script type="text/javascript"
+                        src="/cfo_snr_jnr/static/src/js/bootstrap-datepicker.js"/>
                 <link type="text/css" rel="stylesheet" href="/cfo_snr_jnr/static/src/css/spectrum.css"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/spectrum.js"/>
                 <script type="text/javascript" src="/cfo_snr_jnr/static/src/js/recaptcha.js"/>

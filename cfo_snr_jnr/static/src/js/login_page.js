@@ -228,6 +228,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         if ($('input[name="user_type"]:checked').val() == 'student') {
             $('#programme_name').attr('required', true);
             $('#school_name').attr('required', true);
+            $('#stu_country_id').attr('required', true);
             $('.employee_details').css('display', 'none');
             $('.school_details').css('display', 'block');
             $('.tertiry_studyfields').css('display', 'block');
@@ -235,6 +236,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         } else if ($('input[name="user_type"]:checked').val() == 'employee') {
             $('#programme_name').removeAttr('required', true);
             $('#legal_name_employer').attr('required', true);
+            $('#emp_country_id').attr('required', true);
             $('.school_details').css('display', 'none');
             $('.employee_details').css('display', 'block');
             $('.tertiry_studyfields').css('display', 'block');
@@ -249,6 +251,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             if ($(this).val() == 'student') {
                 $('#programme_name').attr('required', true);
                 $('#school_name').attr('required', true);
+                $('#stu_country_id').attr('required', true);
                 $('#legal_name_employer').attr('required', false);
                 $('.school_details').css('display', 'block');
                 $('.employee_details').css('display', 'none');
@@ -257,6 +260,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             } else {
                 $('#programme_name').removeAttr('required', true);
                 $('#school_name').attr('required', false);
+                $('#emp_country_id').attr('required', true);
                 $('.tertiry_studyfields').css('display', 'block');
                 $('.school_details').css('display', 'none');
                 $('.employee_details').css('display', 'block');
