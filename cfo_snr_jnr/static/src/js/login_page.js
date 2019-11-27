@@ -96,17 +96,24 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                 endDate: "0d"
             });
         });
+
         $(".datepicker5").on('change', function () {
             var dt = new Date();
             var select_date = $(this).datepicker('getDate');
-            dt.setFullYear(new Date().getFullYear() - 25);
-            var date_one = new Date(select_date)
-            var date_two = new Date(dt)
-            if (date_one < date_two) {
-                $(document).find('#check_birthdate_age').modal('show');
-                $('#date_of_birth').val('');
+            if(dt.getFullYear()- select_date.getFullYear()<25){
+               $(document).find('#check_birthdate_age').modal('show');
+               $('#date_of_birth').val('');
             }
-
+//            var dt = new Date();
+//            var select_date = $(this).datepicker('getDate');
+//            dt.setFullYear(new Date().getFullYear() - 25);
+//            var date_one = new Date(select_date)
+//            var date_two = new Date(dt)
+//            if (date_one < date_two) {
+//                $(document).find('#check_birthdate_age').modal('show');
+//                $('#date_of_birth').val('');
+//            }
+//
         });
         $(".check_date_validation").on('click', function (event) {
             var date_birth = $(document).find('#date_of_birth').val();
@@ -221,6 +228,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         if ($('input[name="user_type"]:checked').val() == 'student') {
             $('#programme_name').attr('required', true);
             $('#school_name').attr('required', true);
+            $('#stu_country_id').attr('required', true);
             $('.employee_details').css('display', 'none');
             $('.school_details').css('display', 'block');
             $('.tertiry_studyfields').css('display', 'block');
@@ -228,6 +236,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         } else if ($('input[name="user_type"]:checked').val() == 'employee') {
             $('#programme_name').removeAttr('required', true);
             $('#legal_name_employer').attr('required', true);
+            $('#emp_country_id').attr('required', true);
             $('.school_details').css('display', 'none');
             $('.employee_details').css('display', 'block');
             $('.tertiry_studyfields').css('display', 'block');
@@ -242,6 +251,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             if ($(this).val() == 'student') {
                 $('#programme_name').attr('required', true);
                 $('#school_name').attr('required', true);
+                $('#stu_country_id').attr('required', true);
                 $('#legal_name_employer').attr('required', false);
                 $('.school_details').css('display', 'block');
                 $('.employee_details').css('display', 'none');
@@ -250,6 +260,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             } else {
                 $('#programme_name').removeAttr('required', true);
                 $('#school_name').attr('required', false);
+                $('#emp_country_id').attr('required', true);
                 $('.tertiry_studyfields').css('display', 'block');
                 $('.school_details').css('display', 'none');
                 $('.employee_details').css('display', 'block');
@@ -580,7 +591,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                     $(document).find('#diffrent_team_name_modal').modal('show');
                 }
                 else {
-                    $(document).find('.sys_name_new').val("Team," + name + " from " + school_name)
+                    $(document).find('.sys_name_new').val("Team," + name + " from " + school_name + " , " + country +".")
                 }
             });
         });
@@ -679,19 +690,25 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             var email = $(this).parents('tr').find('.team_email').val();
             var name = $(this).parents('tr').find('.team_member_name').val();
             var team_id = $(this).attr('team-id')
+            var sys_name = $(document).find('input[name="sys_name"]').val();
             var user_type = $(this).parents('tr').find('.user_type').val();
             var year = $(this).parents('tr').find('.competition_year').val();
             var from_acadamic = $(this).parents('tr').find('.from_acadamic').val();
             var from_aspirant = $(this).parents('tr').find('.from_aspirant').val();
             var from_employer = $(this).parents('tr').find('.from_employer').val();
             var from_jnr_school = $(this).parents('tr').find('.from_jnr_school').val();
+            var aspirant_id = $(document).find('input[name="snr_aspirants"]').val();
+            var aspirant_team = $(document).find('input[name="aspirant_team"]').val();
             var self = $(this);
             ajax.jsonRpc("/create_new_member", "call", {
                 'email': email,
                 'name': name,
                 'user_type': user_type,
+                'aspirant_id': aspirant_id,
+                'aspirant_team': aspirant_team,
                 'year': year,
                 'team_id': team_id,
+                'team_name':sys_name,
                 'from_acadamic': from_acadamic,
                 'from_aspirant': from_aspirant,
                 'from_employer': from_employer,

@@ -81,7 +81,7 @@
                                                                             <img
                                                                                     class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top"
                                                                                     style="padding-left:5px;border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;margin-top:10px;"
-                                                                                    src="http://charterquest.co.za/web/static/src/img/cfo_cq_logo.jpg"
+                                                                                    src="/cfo_snr_jnr/static/description/charterquest_mail_logo.png"
                                                                                     alt="" width="300" height="100"/>
                                                                         </div>
                                                                     </td>
@@ -93,7 +93,7 @@
                                                                             <img
                                                                                     class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top"
                                                                                     style="border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;padding-right:5px;margin-top:10px;margin-left: 181px;"
-                                                                                    src="http://charterquest.co.za/web/static/src/img/cfo.jpg"
+                                                                                    src="/cfo_snr_jnr/static/description/cfo_mail_logo.png"
                                                                                     alt="" width="100" height="100"/>
                                                                         </div>
                                                                     </td>
@@ -151,12 +151,12 @@
                                                                                    t-value="request.env['ir.config_parameter'].sudo().search([('key','=','web.base.url').value])"/>
                                                                                 <a
                                                                                         style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
-                                                                                        href="/signup?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
+                                                                                        href="${object.user_id.signup_url}">
                                                                                     Accept
                                                                                 </a>
                                                                                 <a
                                                                                         style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
-                                                                                        href="/signup?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
+                                                                                        href="${object.user_id.signup_url}">
                                                                                     Decline
                                                                                 </a>
                                                                             </div>
@@ -464,7 +464,7 @@
                                                                             <img
                                                                                     class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top"
                                                                                     style="padding-left:5px;border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;margin-top:10px;"
-                                                                                    src="http://charterquest.co.za/web/static/src/img/cfo_cq_logo.jpg"
+                                                                                    src="/cfo_snr_jnr/static/description/charterquest_mail_logo.png"
                                                                                     alt="" width="300" height="100"/>
                                                                         </div>
                                                                     </td>
@@ -476,7 +476,7 @@
                                                                             <img
                                                                                     class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top"
                                                                                     style="border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;padding-right:5px;margin-top:10px;margin-left: 181px;"
-                                                                                    src="http://charterquest.co.za/web/static/src/img/cfo.jpg"
+                                                                                    src="/cfo_snr_jnr/static/description/cfo_mail_logo.png"
                                                                                     alt="" width="100" height="100"/>
                                                                         </div>
                                                                     </td>
@@ -534,12 +534,12 @@
                                                                                    t-value="request.env['ir.config_parameter'].sudo().search([('key','=','web.base.url').value])"/>
                                                                                 <a
                                                                                         style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
-                                                                                        href="/login?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
+                                                                                        href="${object.user_id.signup_url}">
                                                                                     Accept
                                                                                 </a>
                                                                                 <a
                                                                                         style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
-                                                                                        href="/login?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
+                                                                                        href="${object.user_id.signup_url}">
                                                                                     Decline
                                                                                 </a>
                                                                             </div>
@@ -848,7 +848,7 @@
                                                                             <img
                                                                                     class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top"
                                                                                     style="padding-left:5px;border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;margin-top:10px;"
-                                                                                    src="http://charterquest.co.za/web/static/src/img/cfo_cq_logo.jpg"
+                                                                                    src="/cfo_snr_jnr/static/description/charterquest_mail_logo.png"
                                                                                     alt="" width="300" height="100"/>
                                                                         </div>
                                                                     </td>
@@ -860,7 +860,7 @@
                                                                             <img
                                                                                     class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top"
                                                                                     style="border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;padding-right:5px;margin-top:10px;margin-left: 181px;"
-                                                                                    src="http://charterquest.co.za/web/static/src/img/cfo.jpg"
+                                                                                    src="/cfo_snr_jnr/static/description/cfo_mail_logo.png"
                                                                                     alt="" width="100" height="100"/>
                                                                         </div>
                                                                     </td>
@@ -894,7 +894,7 @@
                                                                             <p
                                                                                     style='font-style: normal;font-weight: 400;Margin-bottom: 24px;Margin-top: 24px;font-size: 15px;line-height: 24px;font-family: "Open Sans",sans-serif;color: #60666d;text-align: center;'>
                                                                                 You have been added as Brand
-                                                                                AmbassadorTeam
+                                                                                Ambassador/Team
                                                                                 Advisor for ${(ctx.get('team_name')) or '' |
 																				safe}
                                                                             </p>
@@ -919,12 +919,12 @@
                                                                                    t-value="request.env['ir.config_parameter'].sudo().search([('key','=','web.base.url').value])"/>
                                                                                 <a
                                                                                         style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
-                                                                                        href="/login?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
+                                                                                        href="${object.user_id.signup_url}">
                                                                                     Accept
                                                                                 </a>
                                                                                 <a
                                                                                         style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
-                                                                                        href="/login?user_type=${(ctx.get('user_type'))}&amp;team_id=${(ctx.get('team_id'))}">
+                                                                                        href="${object.user_id.signup_url}">
                                                                                     Decline
                                                                                 </a>
                                                                             </div>
@@ -1160,7 +1160,7 @@
             <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
             <field name="email_cc">thecfo@charterquest.co.za</field>
-            <field name="subject">Reminder For Upload Report</field>
+            <field name="subject">Reminder To Upload Report</field>
             <field name="model_id" ref="cfo_snr_jnr.model_cfo_snr_aspirants"/>
             <field name="auto_delete" eval="True"/>
             <field name="partner_to">${object.user_id.partner_id.id}</field>
@@ -1419,7 +1419,7 @@
             <field name="name">CFO Report Reminder</field>
             <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
-            <field name="subject">Reminder For Upload Report</field>
+            <field name="subject">Reminder To Upload Report</field>
             <field name="email_cc">thecfo@charterquest.co.za</field>
             <field name="model_id" ref="cfo_snr_jnr.model_academic_institution_snr"/>
             <field name="auto_delete" eval="True"/>
@@ -1680,7 +1680,7 @@
             <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
             <field name="email_cc">thecfo@charterquest.co.za</field>
-            <field name="subject">Reminder to Upload Report</field>
+            <field name="subject">Reminder To Upload Report</field>
             <field name="model_id" ref="cfo_snr_jnr.model_employers_snr"/>
             <field name="auto_delete" eval="True"/>
             <field name="partner_to">${object.user_id.partner_id.id}</field>
