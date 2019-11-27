@@ -179,7 +179,7 @@
                 <label for="login" class="control-label">Email</label>
             </label>
             <button type="submit" position="replace">
-                <a t-if="token and not invalid_token" href="/web/login" class="btn btn-link pull-right">Back to Login
+                <a t-if="token and not invalid_token" href="/login" class="btn btn-link pull-right">Back to Login
                 </a>
                 <button type="submit" class="btn btn-primary pull-left">Reset Password</button>
             </button>
@@ -926,8 +926,11 @@
                                            t-att-value="snr_mentors.other_names"/>
                                 </div>
                                 <p>
-                                    <input type="submit" value="&lt;&lt;Back" name="back_home"
-                                           class="btn btn-default btn-primary mb32 a-submit"/>
+<!--                                    <input type="submit" value="&lt;&lt;Back" name="back_home"-->
+<!--                                           class="btn btn-default btn-primary mb32 a-submit"/>-->
+                                    <button class="btn btn-default btn-primary mb32"
+                                            onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                    </button>
                                     <button class="btn btn-default btn-primary mb32 a-submit"
                                             type="submit">Next to Contact Information
                                     </button>
@@ -1037,8 +1040,11 @@
                                         </tr>
                                     </table>
                                     <p>
-                                        <input type="submit" value="&lt;&lt;Back" name="back_contact"
-                                               class="btn btn-default btn-primary mb32 a-submit"/>
+<!--                                        <input type="submit" value="&lt;&lt;Back" name="back_contact"-->
+<!--                                               class="btn btn-default btn-primary mb32 a-submit"/>-->
+                                        <button class="btn btn-default btn-primary mb32"
+                                            onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                        </button>
                                         <button class="btn btn-default btn-primary mb32 a-submit"
                                                 type="submit">NEXT
                                             to COMPETITION RULES &gt;&gt;
@@ -1084,8 +1090,11 @@
                                 <input type="checkbox" name="update_bio_check" required="1"/>
                                 Please accept competition rules
                                 <p>
-                                    <input type="submit" value="&lt;&lt;Back" name="back_competition"
-                                           class="btn btn-default btn-primary mb32 a-submit"/>
+<!--                                    <input type="submit" value="&lt;&lt;Back" name="back_competition"-->
+<!--                                           class="btn btn-default btn-primary mb32 a-submit"/>-->
+                                    <button class="btn btn-default btn-primary mb32"
+                                            onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                    </button>
                                     <button class="btn btn-default btn-primary mb32 a-submit"
                                             type="submit">Submit
                                     </button>
@@ -1470,8 +1479,11 @@
                                             </tbody>
                                         </table>
                                         <p>
-                                            <input type="submit" value="&lt;&lt;Back" name="back_home"
-                                                   class="btn btn-default btn-primary mb32 a-submit check_date_validation"/>
+<!--                                            <input type="submit" value="&lt;&lt;Back" name="back_home"-->
+<!--                                                   class="btn btn-default btn-primary mb32 a-submit check_date_validation"/>-->
+                                            <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                            </button>
                                             <button class="btn btn-default btn-primary mb32 a-submit check_date_validation"
                                                     type="submit">NEXT
                                                 to CONTACT INFORMATION &gt;&gt;
@@ -1607,8 +1619,11 @@
                                             </tr>
                                         </table>
                                         <p>
-                                            <input type="submit" value="&lt;&lt;Back" name="back_contact"
-                                                   class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
+<!--                                            <input type="submit" value="&lt;&lt;Back" name="back_contact"-->
+<!--                                                   class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                            <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                            </button>
                                             <button class="btn btn-default btn-primary mb32 a-submit save_contract"
                                                     type="submit">NEXT
                                                 to ELIGIBILITY STATUS &gt;&gt;
@@ -2060,8 +2075,11 @@
                                 </div>
                                 <p>
 
-                                    <input type="submit" value="&lt;&lt;Back" name="back_eligibility"
-                                           class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
+<!--                                    <input type="submit" value="&lt;&lt;Back" name="back_eligibility"-->
+<!--                                           class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                    <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                    </button>
                                     <button class="btn btn-default btn-primary mb32 a-submit"
                                             type="submit">NEXT
                                         to COMPETITION RULES &gt;&gt;
@@ -2107,8 +2125,11 @@
                                 Please accept competition rules
 
                                 <p>
-                                    <input type="submit" value="&lt;&lt;Back" name="back_rule"
-                                           class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
+<!--                                    <input type="submit" value="&lt;&lt;Back" name="back_rule"-->
+<!--                                           class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                    <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                    </button>
                                     <button class="btn btn-default btn-primary mb32 a-submit"
                                             type="submit">Submit
                                     </button>
@@ -3948,8 +3969,11 @@
                                            t-att-value="snr_academic_institution.other_names"/>
                                 </div>
                                 <p>
-                                    <input type="submit" value="&lt;&lt;Back" name="back_home"
-                                           class="btn btn-default btn-primary mb32 a-submit"/>
+<!--                                    <input type="submit" value="&lt;&lt;Back" name="back_home"-->
+<!--                                           class="btn btn-default btn-primary mb32 a-submit"/>-->
+                                    <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                    </button>
                                     <button class="btn btn-default btn-primary mb32 a-submit"
                                             type="submit">Next to Contact Information
                                     </button>
@@ -4076,8 +4100,11 @@
                                         </tr>
                                     </table>
                                     <p>
-                                        <input type="submit" value="&lt;&lt;Back" name="back_contact"
-                                               class="btn btn-default btn-primary mb32 a-submit"/>
+<!--                                        <input type="submit" value="&lt;&lt;Back" name="back_contact"-->
+<!--                                               class="btn btn-default btn-primary mb32 a-submit"/>-->
+                                        <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                        </button>
                                         <button class="btn btn-default btn-primary mb32 a-submit"
                                                 type="submit">NEXT
                                             to ELIGIBILITY STATUS &gt;&gt;
@@ -4186,8 +4213,11 @@
                                         </tr>
                                     </table>
                                     <p>
-                                        <input type="submit" value="&lt;&lt;Back" name="back_institution"
-                                               class="btn btn-default btn-primary mb32 a-submit"/>
+<!--                                        <input type="submit" value="&lt;&lt;Back" name="back_institution"-->
+<!--                                               class="btn btn-default btn-primary mb32 a-submit"/>-->
+                                        <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                        </button>
                                         <button class="btn btn-default btn-primary mb32 a-submit"
                                                 type="submit">NEXT
                                             to COMPETITION RULES &gt;&gt;
@@ -4233,8 +4263,11 @@
                                 <input type="checkbox" name="update_bio_check" required="1"/>
                                 Please accept competition rules
                                 <p>
-                                    <input type="submit" value="&lt;&lt;Back" name="back_competition"
-                                           class="btn btn-default btn-primary mb32 a-submit"/>
+<!--                                    <input type="submit" value="&lt;&lt;Back" name="back_competition"-->
+<!--                                           class="btn btn-default btn-primary mb32 a-submit"/>-->
+                                    <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                    </button>
                                     <button class="btn btn-default btn-primary mb32 a-submit"
                                             type="submit">Submit
                                     </button>
@@ -5348,8 +5381,11 @@
                                        t-att-value="snr_employers.other_names"/>
                             </div>
                             <p>
-                                <input type="submit" value="&lt;&lt;Back" name="back_home"
-                                       class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
+<!--                                <input type="submit" value="&lt;&lt;Back" name="back_home"-->
+<!--                                       class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                <button class="btn btn-default btn-primary mb32"
+                                        onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                </button>
                                 <button class="btn btn-default btn-primary mb32 a-submit"
                                         type="submit">Next to Contact Information
                                 </button>
@@ -5478,8 +5514,11 @@
                                     </tr>
                                 </table>
                                 <p>
-                                    <input type="submit" value="&lt;&lt;Back" name="back_contact"
-                                           class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
+<!--                                    <input type="submit" value="&lt;&lt;Back" name="back_contact"-->
+<!--                                           class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                    <button class="btn btn-default btn-primary mb32"
+                                            onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                    </button>
                                     <button class="btn btn-default btn-primary mb32 a-submit"
                                             type="submit">NEXT
                                         to EMPLOYER DETAILS
@@ -5624,8 +5663,11 @@
                                     </tr>
                                 </table>
                                 <p>
-                                    <input type="submit" value="&lt;&lt;Back" name="back_next_compitition"
-                                           class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
+<!--                                    <input type="submit" value="&lt;&lt;Back" name="back_next_compitition"-->
+<!--                                           class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                    <button class="btn btn-default btn-primary mb32"
+                                            onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                    </button>
                                     <button class="btn btn-default btn-primary mb32 a-submit"
                                             type="submit">NEXT
                                         to COMPETITION RULES &gt;&gt;
@@ -5672,8 +5714,11 @@
                             Please accept competition rules
 
                             <p>
-                                <input type="submit" value="&lt;&lt;Back" name="back_rule"
-                                       class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
+<!--                                <input type="submit" value="&lt;&lt;Back" name="back_rule"-->
+<!--                                       class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                <button class="btn btn-default btn-primary mb32"
+                                        onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                </button>
                                 <button class="btn btn-default btn-primary mb32 a-submit"
                                         type="submit">Submit
                                 </button>
@@ -6935,8 +6980,11 @@
                                            t-att-value="snr_brand_ambassador.other_names"/>
                                 </div>
                                 <p>
-                                    <input type="submit" value="&lt;&lt;Back" name="back_home"
-                                           class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
+<!--                                    <input type="submit" value="&lt;&lt;Back" name="back_home"-->
+<!--                                           class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                    <button class="btn btn-default btn-primary mb32"
+                                            onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                    </button>
                                     <button class="btn btn-default btn-primary mb32 a-submit"
                                             type="submit">Next to Contact Information
                                     </button>
@@ -6983,8 +7031,11 @@
                                         </tr>
                                     </table>
                                     <p>
-                                        <input type="submit" value="&lt;&lt;Back" name="back_contact"
-                                               class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
+<!--                                        <input type="submit" value="&lt;&lt;Back" name="back_contact"-->
+<!--                                               class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                        <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                        </button>
                                         <button class="btn btn-default btn-primary mb32 a-submit"
                                                 type="submit">NEXT
                                             to COMPETITION RULES &gt;&gt;
@@ -7030,8 +7081,11 @@
                                 <input type="checkbox" name="update_bio_check" required="1"/>
                                 Please accept competition rules
                                 <p>
-                                    <input type="submit" value="&lt;&lt;Back" name="back_competition"
-                                           class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
+<!--                                    <input type="submit" value="&lt;&lt;Back" name="back_competition"-->
+<!--                                           class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                    <button class="btn btn-default btn-primary mb32"
+                                            onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                    </button>
                                     <button class="btn btn-default btn-primary mb32 a-submit"
                                             type="submit">Submit
                                     </button>

@@ -96,17 +96,24 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                 endDate: "0d"
             });
         });
+
         $(".datepicker5").on('change', function () {
             var dt = new Date();
             var select_date = $(this).datepicker('getDate');
-            dt.setFullYear(new Date().getFullYear() - 25);
-            var date_one = new Date(select_date)
-            var date_two = new Date(dt)
-            if (date_one < date_two) {
-                $(document).find('#check_birthdate_age').modal('show');
-                $('#date_of_birth').val('');
+            if(dt.getFullYear()- select_date.getFullYear()<25){
+               $(document).find('#check_birthdate_age').modal('show');
+               $('#date_of_birth').val('');
             }
-
+//            var dt = new Date();
+//            var select_date = $(this).datepicker('getDate');
+//            dt.setFullYear(new Date().getFullYear() - 25);
+//            var date_one = new Date(select_date)
+//            var date_two = new Date(dt)
+//            if (date_one < date_two) {
+//                $(document).find('#check_birthdate_age').modal('show');
+//                $('#date_of_birth').val('');
+//            }
+//
         });
         $(".check_date_validation").on('click', function (event) {
             var date_birth = $(document).find('#date_of_birth').val();
