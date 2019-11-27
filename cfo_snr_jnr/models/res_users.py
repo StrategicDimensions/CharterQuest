@@ -67,7 +67,7 @@ class ResUsers(models.Model):
 
         template_values = {
             'email_to': self.env.context.get('email'),
-            'email_cc': True,
+            'email_cc': 'thecfo@charterquest.co.za',
             'auto_delete': True,
             'partner_to': False,
             'scheduled_date': False,
