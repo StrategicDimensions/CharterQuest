@@ -1250,6 +1250,8 @@ class CfoHome(web.Home):
             print("\n\n\n===========aspirant_id=====",aspirant_id,aspirant_id.aspirant_id)
             aspirant_ids = request.env['cfo.snr.aspirants'].sudo().browse()
             print("\n\n\n===========aspirant_ids=======",aspirant_ids)
+            print("\n\n\n\n\n\n=============aspirant_id=====", aspirant_id)
+            print("\n\n\n\n\n\n=============aspirant_id.aspirant_id=====", aspirant_id.aspirant_id)
             if not aspirant_id.aspirant_id:
                 print("\n\n\n\n=============calll========")
                 team_id = request.env['cfo.team.snr'].sudo().create({
@@ -1261,11 +1263,13 @@ class CfoHome(web.Home):
                     'cfo_comp': 'CFO SNR'
                 })
                 print("\n\n\n\n\n=======team_id===",team_id)
+                print("\n\n\n\n\n\n=============post.get('member_request_list')=====", post.get('member_request_list'))
                 if post.get('member_request_list'):
                     '''
                     Send email for Join Our Team.
                     '''
                     for each_request in post.get('member_request_list'):
+                        print("\n\n\n\n\n\n=============each_request.get('user_type')=====",each_request.get('user_type'))
                         if each_request.get('user_type') == 'Mentor':
                             print("\n\n\n\n\===============each_request.get('user_id')===",each_request.get('user_id'))
                             mentor_id = request.env['mentors.snr'].sudo().search(
