@@ -832,20 +832,43 @@ class CfoHome(web.Home):
 
     @http.route('/check_user_team', type='json', auth="public", website=True)
     def check_user_team(self, **post):
+        print("\n\n\n\n=============post from check user team========",post)
         if post.get('email') and not post.get('user_type'):
+            print("\n\n\n======call first=========")
             res = request.env['res.users'].sudo().search(
                 [('login', '=', post.get('email'))])
             if res:
-                return {'user_id': res.id}
+                cfo_snr = request.env['cfo.snr.aspirants'].sudo().search([('email_1', '=', post.get('email'))])
+                cfo_acd_snr = request.env['academic.institution.snr'].sudo().search([('email_1', '=', post.get('email'))])
+                cfo_emp_snr = request.env['employers.snr'].sudo().search([('email_1', '=', post.get('email'))])
+                cfo_mtr_snr = request.env['mentors.snr'].sudo().search([('email_1', '=', post.get('email'))])
+                cfo_vlte_snr = request.env['volunteers.snr'].sudo().search([('email_1', '=', post.get('email'))])
+                cfo_amb_snr = request.env['brand.ambassador.snr'].sudo().search([('email_1', '=', post.get('email'))])
+                cfo_smc_snr = request.env['social.media.contestants.snr'].sudo().search([('email_1', '=', post.get('email'))])
+
+                cfo_jnr = request.env['cfo.jnr.aspirants'].sudo().search([('email_1', '=', post.get('email'))])
+                cfo_acd_jnr = request.env['academic.institution.jnr'].sudo().search([('email_1', '=', post.get('email'))])
+                cfo_mtr_jnr = request.env['mentors.jnr'].sudo().search([('email_1', '=', post.get('email'))])
+                cfo_amb_jnr = request.env['brand.ambassador.jnr'].sudo().search([('email_1', '=', post.get('email'))])
+
+                if cfo_snr or cfo_acd_snr or cfo_emp_snr or cfo_mtr_snr or cfo_mtr_snr or cfo_vlte_snr or cfo_amb_snr or cfo_smc_snr:
+                    return {'user_id': res.id}
+                elif cfo_jnr or cfo_acd_jnr or cfo_mtr_jnr or cfo_amb_jnr:
+                    return {'user_id':res.id}
+                else:
+                    return {'new_user':True}
             else:
                 return {'create_user': True}
         if post.get('email') and post.get('user_type'):
+            print("\n\n\n======call second=========")
             res = request.env['res.users'].sudo().search(
                 [('login', '=', post.get('email'))])
             if not res:
                 return {
                     'new_user': True
                 }
+            else:
+                return {'user_id': res.id}
 
     @http.route('/check_team_name', type='json', auth="public", website=True)
     def check_team_name(self, **post):
@@ -855,6 +878,26 @@ class CfoHome(web.Home):
             if team_name:
                 return team_name;
 
+    @http.route('/request_to_join',type='json', auth="public", website=True)
+    def check_request_member(self, **post):
+        print("\n\n\n==========post request member=====",post)
+
+        if post.get('user_type') == 'Brand Ambassador' or post.get('user_type') == 'Mentor':
+            amb_id = request.env['brand.ambassador.snr'].sudo().search(
+                [('user_id', '=', int(post.get('user_id')))])
+            mentor_id = request.env['mentors.snr'].sudo().search(
+                [('user_id', '=', int(post.get('user_id')))])
+            if mentor_id or amb_id:
+                return {'request_to_join': True}
+            else:
+                return {'request_to_join': False}
+        if post.get('user_type') in ['Leader', 'Member']:
+            member_id = request.env['cfo.snr.aspirants'].sudo().search(
+                [('user_id', '=', int(post.get('user_id')))])
+            if member_id:
+                return {'request_to_join': True}
+            else:
+                return {'request_to_join': False}
     @http.route('/get_cfo_snr_member', type='json', auth="public", website=True)
     def get_cfo_snr_member(self, **post):
         # team_member = request.env['cfo.snr.member.add'].sudo().search([],limit=1, order="id")
@@ -877,17 +920,35 @@ class CfoHome(web.Home):
     def create_new_member(self, **post):
         print("\n\n\n\n================post=======",post)
         res_user = request.env['res.users'].sudo().search([('login', '=', post.get('email'))])
-        if not res_user:
-            user = request.env['res.users'].sudo().create({
-                'name': post.get('name'),
-                'login': post.get('email'),
-                'state': 'new',
-                'in_group_9': True,
-            })
-            request.session['cfo_login'] = True
-            request.session['is_from_new_member'] = True
-            user.partner_id.write({'email': post.get('email'), 'is_from_new_member': True, 'cfo_user': True})
 
+        cfo_snr = request.env['cfo.snr.aspirants'].sudo().search([('email_1', '=', post.get('email'))])
+        # cfo_acd_snr = request.env['academic.institution.snr'].sudo().search([('email_1', '=', post.get('email'))])
+        # cfo_emp_snr = request.env['employers.snr'].sudo().search([('email_1', '=', post.get('email'))])
+        cfo_mtr_snr = request.env['mentors.snr'].sudo().search([('email_1', '=', post.get('email'))])
+        # cfo_vlte_snr = request.env['volunteers.snr'].sudo().search([('email_1', '=', post.get('email'))])
+        cfo_amb_snr = request.env['brand.ambassador.snr'].sudo().search([('email_1', '=', post.get('email'))])
+        # cfo_smc_snr = request.env['social.media.contestants.snr'].sudo().search([('email_1', '=', post.get('email'))])
+
+        cfo_jnr = request.env['cfo.jnr.aspirants'].sudo().search([('email_1', '=', post.get('email'))])
+        # cfo_acd_jnr = request.env['academic.institution.jnr'].sudo().search([('email_1', '=', post.get('email'))])
+        cfo_mtr_jnr = request.env['mentors.jnr'].sudo().search([('email_1', '=', post.get('email'))])
+        cfo_amb_jnr = request.env['brand.ambassador.jnr'].sudo().search([('email_1', '=', post.get('email'))])
+
+        if not cfo_snr or not cfo_mtr_snr or not cfo_mtr_snr or cfo_amb_snr or not cfo_jnr or not cfo_mtr_jnr or not cfo_amb_jnr :
+            print("\n\n\n\n\n======callllllllllll 11111111111111===========")
+            if not res_user:
+                print("\n\n\n\n==============calllll 222222222222==========")
+                user = request.env['res.users'].sudo().create({
+                    'name': post.get('name'),
+                    'login': post.get('email'),
+                    'state': 'new',
+                    'in_group_9': True,
+                })
+                request.session['cfo_login'] = True
+                request.session['is_from_new_member'] = True
+                user.partner_id.write({'email': post.get('email'), 'is_from_new_member': True, 'cfo_user': True})
+            else:
+                user = request.env['res.users'].sudo().search([('login', '=', post.get('email'))])
             if post.get('from_aspirant'):
                 if post.get('user_type') in ['Leader']:
                     request.env['cfo.snr.aspirants'].sudo().create({
@@ -1120,6 +1181,7 @@ class CfoHome(web.Home):
             team_id = request.env['cfo.team.snr'].sudo().search([('id', '=', post.get('team_id'))])
             template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder',
                                        raise_if_not_found=False)
+            print("\n\n\n\n=========team_id.aspirant_team_member_ids=========",team_id.aspirant_team_member_ids)
             for member_id in team_id.aspirant_team_member_ids:
                 if template:
                     template.sudo().with_context(
@@ -1128,6 +1190,7 @@ class CfoHome(web.Home):
                         email_to=member_id.related_user_id.email_1,
                     ).send_mail(member_id.related_user_id.id, force_send=True)
 
+            print("\n\n\n\n=================team_id.academic_team_member_ids====",team_id.academic_team_member_ids)
             for member_id in team_id.academic_team_member_ids:
                 if template and member_id.related_user_aspirant_id:
                     template.sudo().with_context(
@@ -1145,6 +1208,7 @@ class CfoHome(web.Home):
                         email_to=member_id.related_user_id.email_1,
                     ).send_mail(member_id.related_user_id.id, force_send=True)
 
+            print("\n\n\n\n=================team_id.employer_team_member_ids====", team_id.employer_team_member_ids)
             for member_id in team_id.employer_team_member_ids:
                 if template and member_id.related_user_aspirant_id:
                     template.sudo().with_context(
@@ -1178,11 +1242,16 @@ class CfoHome(web.Home):
 
     @http.route('/create_team', type='json', auth="public", website=True)
     def create_team(self, **post):
-        res_user = request.env['res.users'].sudo().search([('login', '=', post.get('email'))])
+        print("\n\n\n=========post======",post)
+        res_user_ids = request.env['res.users'].sudo().search([('login','=',post.get('email'))])
         if post.get('aspirant_id') and not post.get('aspirant_team'):
             aspirant_id = request.env['cfo.snr.aspirants'].sudo().search([('id', '=', int(post.get('aspirant_id')))],
                                                                          limit=1)
+            print("\n\n\n===========aspirant_id=====",aspirant_id,aspirant_id.aspirant_id)
+            aspirant_ids = request.env['cfo.snr.aspirants'].sudo().browse()
+            print("\n\n\n===========aspirant_ids=======",aspirant_ids)
             if not aspirant_id.aspirant_id:
+                print("\n\n\n\n=============calll========")
                 team_id = request.env['cfo.team.snr'].sudo().create({
                     'name': post.get('name'),
                     'ref_name': post.get('sys_name'),
@@ -1191,27 +1260,33 @@ class CfoHome(web.Home):
                     'aspirant_admin_id': aspirant_id.id,
                     'cfo_comp': 'CFO SNR'
                 })
+                print("\n\n\n\n\n=======team_id===",team_id)
                 if post.get('member_request_list'):
                     '''
                     Send email for Join Our Team.
                     '''
                     for each_request in post.get('member_request_list'):
                         if each_request.get('user_type') == 'Mentor':
+                            print("\n\n\n\n\===============each_request.get('user_id')===",each_request.get('user_id'))
                             mentor_id = request.env['mentors.snr'].sudo().search(
-                                [('user_id', '=',int(each_request.get('user_id')))])
+                                [('user_id', '=', int(each_request.get('user_id')))])
+                            print("\n\n\n\n========mentor_id======",mentor_id)
                             template_mentor = request.env.ref('cfo_snr_jnr.email_template_request_for_join_mentor',
                                                               raise_if_not_found=False)
                             if template_mentor:
+                                print("\n\n\n=========template=============")
                                 template_mentor.sudo().with_context(
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email')
+                                    email_to=each_request.get('email'),
+                                    email_cc='thecfo@charterquest.co.za',
                                 ).send_mail(mentor_id.id, force_send=True)
 
                         if each_request.get('user_type') == 'Brand Ambassador':
                             amb_id = request.env['brand.ambassador.snr'].sudo().search(
                                 [('user_id', '=', int(each_request.get('user_id')))])
+
                             template_amb = request.env.ref('cfo_snr_jnr.email_template_request_for_join_amb',
                                                            raise_if_not_found=False)
 
@@ -1220,13 +1295,16 @@ class CfoHome(web.Home):
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email')
+                                    email_to=each_request.get('email'),
+                                    email_cc='thecfo@charterquest.co.za',
                                 ).send_mail(amb_id.id, force_send=True)
+
                         if each_request.get('user_type') in ['Leader', 'Member']:
                             res = request.env['cfo.snr.aspirants'].sudo().search(
                                 [('user_id', '=', int(each_request.get('user_id')))])
                             aspirant_team_member_id = request.env['snr.aspirant.team.member'].sudo().search(
                                 [('related_user_id', '=', res.id), ('member_status', '=', 'Accept')])
+
                             res.sudo().write({
                                 'is_request': True,
                                 'new_team_id': team_id.id
@@ -1238,8 +1316,10 @@ class CfoHome(web.Home):
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email')
+                                    email_to=each_request.get('email'),
+                                    email_cc='thecfo@charterquest.co.za',
                                 ).send_mail(res.id, force_send=True)
+
                             aspirant_team_member_id.write({'aspirant_member_requested': True})
                 team_id._compute_remaining_time_deadline()
                 for each in post.get('list_of_member'):
@@ -1374,31 +1454,46 @@ class CfoHome(web.Home):
                 '''
                 for each_request in post.get('member_request_list'):
                     print("\n\n\n\n\n\n=============each_request.get('user_type')==========",each_request.get('user_type'))
-                    if each_request.get('user_type') == 'Mentor':
+                    if each_request.get('user_type') == 'Mentor' or each_request.get('user_type') == 'Brand Ambassador':
                         mentor_id = request.env['mentors.snr'].sudo().search(
                             [('user_id', '=', int(each_request.get('user_id')))])
-                        template_mentor = request.env.ref('cfo_snr_jnr.email_template_request_for_join_mentor',
-                                                          raise_if_not_found=False)
-                        if template_mentor:
-                            template_mentor.sudo().with_context(
-                                user_type=each_request.get('user_type'),
-                                team_id=team_id.id,
-                                team_name=team_id.ref_name,
-                                email_to=each_request.get('email')
-                            ).send_mail(mentor_id.id, force_send=True)
-                    if each_request.get('user_type') == 'Brand Ambassador':
                         amb_id = request.env['brand.ambassador.snr'].sudo().search(
                             [('user_id', '=', int(each_request.get('user_id')))])
-                        template_amb = request.env.ref('cfo_snr_jnr.email_template_request_for_join_amb',
-                                                       raise_if_not_found=False)
+                        if mentor_id:
+                            template_mentor = request.env.ref('cfo_snr_jnr.email_template_request_for_join_mentor',
+                                                              raise_if_not_found=False)
+                            if template_mentor:
+                                template_mentor.sudo().with_context(
+                                    user_type=each_request.get('user_type'),
+                                    team_id=team_id.id,
+                                    team_name=team_id.ref_name,
+                                    email_to=each_request.get('email')
+                                ).send_mail(mentor_id.id, force_send=True)
+                        if amb_id:
+                            template_amb = request.env.ref('cfo_snr_jnr.email_template_request_for_join_amb',
+                                                           raise_if_not_found=False)
 
-                        if template_amb:
-                            template_amb.sudo().with_context(
-                                user_type=each_request.get('user_type'),
-                                team_id=team_id.id,
-                                team_name=team_id.ref_name,
-                                email_to=each_request.get('email')
-                            ).send_mail(amb_id.id, force_send=True)
+                            if template_amb:
+                                template_amb.sudo().with_context(
+                                    user_type=each_request.get('user_type'),
+                                    team_id=team_id.id,
+                                    team_name=team_id.ref_name,
+                                    email_to=each_request.get('email')
+                                ).send_mail(amb_id.id, force_send=True)
+
+                    # if each_request.get('user_type') == 'Brand Ambassador':
+                    #     amb_id = request.env['brand.ambassador.snr'].sudo().search(
+                    #         [('user_id', '=', int(each_request.get('user_id')))])
+                    #     template_amb = request.env.ref('cfo_snr_jnr.email_template_request_for_join_amb',
+                    #                                    raise_if_not_found=False)
+                    #
+                    #     if template_amb:
+                    #         template_amb.sudo().with_context(
+                    #             user_type=each_request.get('user_type'),
+                    #             team_id=team_id.id,
+                    #             team_name=team_id.ref_name,
+                    #             email_to=each_request.get('email')
+                    #         ).send_mail(amb_id.id, force_send=True)
 
                     if each_request.get('user_type') in ['Leader', 'Member']:
                         res = request.env['cfo.snr.aspirants'].sudo().search(
@@ -1409,7 +1504,7 @@ class CfoHome(web.Home):
                             'is_request': True,
                             'new_team_id': team_id.id
                         })
-                        print("\n\n\n\n============222222222222222222222222222222")
+
                         template = request.env.ref('cfo_snr_jnr.email_template_request_for_join',
                                                    raise_if_not_found=False)
                         if template:
@@ -1419,6 +1514,7 @@ class CfoHome(web.Home):
                                 team_name=team_id.ref_name,
                                 email_to=each_request.get('email')
                             ).send_mail(res.id, force_send=True)
+
                         aspirant_team_member_id.write({'aspirant_member_requested': True})
 
             for each in post.get('list_of_member'):
