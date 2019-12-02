@@ -581,17 +581,32 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 //        }else{
 //        	$('.leader-add').css('display','block');
 //        }
-
+        var country;
         $('input[name="name"]').on('change', function () {
             var name = $(this).val();
-            var country = $(this).parent().find('input[name="country"]').val();
+            var student_country = $(this).parent().find('input[name="stu_country"]').val();
+            console.log("\n\n\n==========student_country=====",student_country);
+            var employee_country = $(this).parent().find('input[name="emp_country"]').val();
+            console.log("\n\n\n==========employee_country=====",employee_country);
             var school_name = $(document).find('input[name="school_name"]').val();
+            if (student_country){
+                country = student_country;
+            }
+            if (employee_country){
+                country = employee_country;
+            }
+            console.log("\n\n\n==========country=====",country);
             ajax.jsonRpc("/check_team_name", 'call', {'team_name': name}).then(function (result) {
                 if (result) {
                     $(document).find('#diffrent_team_name_modal').modal('show');
                 }
                 else {
-                    $(document).find('.sys_name_new').val("Team," + name + " from " + school_name + " , " + country +".")
+                    if (!school_name){
+                        $(document).find('.sys_name_new').val("Team," + name + " from " + country +".")
+                    }
+                    else{
+                        $(document).find('.sys_name_new').val("Team," + name + " from " + school_name + " , " + country +".")
+                    }
                 }
             });
         });
@@ -603,6 +618,10 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             var acadamic = $(document).find("input[name='snr_academic_institution']").val();
             var jnr_highschool = $(document).find("input[name='jnr_high_school']").val();
             var admin_email = $(document).find('.admin_email').val();
+//            if ((admin_email == email) && (user_type == 'Mentor' || user_type == 'Brand Ambassador')){
+//                self.parents('tr').find('.request-join').show();
+//            }
+
             if ((acadamic && admin_email === email) && (user_type == 'Leader' || user_type == 'Member')) {
                 $(document).find('#acadamic_leader_member_diffrent').modal('show');
                 $(this).val('');
@@ -661,7 +680,11 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             var email = $(this).parents('tr').find('.team_email').val();
             var self = $(this);
             var user_type = $(this).parents('tr').find('.user_type').val();
-            request_list.push({'email': email, 'user_type': user_type, 'user_id': user_id})
+            var from_acadamic = $(this).parents('tr').find('.from_acadamic').val();
+            var from_aspirant = $(this).parents('tr').find('.from_aspirant').val();
+            var from_employer = $(this).parents('tr').find('.from_employer').val();
+            var from_jnr_school = $(this).parents('tr').find('.from_jnr_school').val();
+//            request_list.push({'email': email, 'user_type': user_type, 'user_id': user_id})
             self.parents('tr').find('.request-join').hide().attr('user_id', '');
             self.parents('tr').find('.create_member').hide();
 //
@@ -674,17 +697,27 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 //            });
 //
 //
-//            ajax.jsonRpc("/request_to_join", "call", {'user_id': user_id, 'team_id': team_id, 'user_type':user_type,})
-//                .then(function (result) {
-//                    if (result) {
-//                        self.parents('tr').find('.request-join').hide().attr('user_id', '');
-//                        self.parents('tr').find('.create_member').hide();
-//                    } else {
-//                        self.parents('tr').find('.request-join').show().attr('user_id', result['user_id']);
-//                        self.parents('tr').find('.confirm_member').show();
-//                        self.parents('tr').find('.create_member').hide();
-//                    }
-//                });
+            ajax.jsonRpc("/request_to_join", "call", {'email':email, 'user_id': user_id, 'team_id': team_id, 'user_type':user_type,})
+                .then(function (result) {
+                    if (result) {
+                        self.parents('tr').find('.request-join').hide().attr('user_id', '');
+                        self.parents('tr').find('.create_member').hide();
+                        request_list.push({'email': email, 'user_type': user_type, 'user_id': user_id})
+                    } else {
+                        $(document).ready(function () {
+                            if (user_type == 'Member'){
+                                $("#Label1").text('Mentor OR Brand Ambassador');
+                                self.parents('tr').remove();
+                            }
+                            else {
+                                $("#Label1").text('Leader OR Member');
+                                self.parents('tr').hide();
+                            }
+                            $('#diffrent_team_email_modal').modal('show');
+
+                        });
+                    }
+                });
         });
         $('.create_member').on('click', function () {
             var email = $(this).parents('tr').find('.team_email').val();
@@ -915,6 +948,8 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                     alert('You can not add more than 1 Brand Ambassador');
                 } else if (data['team_error']) {
                     alert('You can not create more than 1 team');
+                } else if (data['user_type_error']) {
+                    alert('Invalid user type. Please select valid user');
                 } else {
                     alert('One or More Emails you have added have not been created, Please Click "Create New User" Button on all added Emails or Click "Remove" Button');
                 }

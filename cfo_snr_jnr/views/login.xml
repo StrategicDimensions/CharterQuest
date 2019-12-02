@@ -440,8 +440,24 @@
             </t>
         </template>
         <template id="cfo_snr_mentor">
-            <div class="container">
+            <div class="row oe_structure">
                 <div class="col-md-12 oe_structure"/>
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <h4>Teams</h4>
+                        <strong>
+                            <t t-esc="date_of_report_submit"/>
+                        </strong>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Reports Submitted</h4>
+                        <strong>
+                            <div id="remaining_time_time"></div>
+                        </strong>
+                    </div>
+                    <div class="col-md-4"><h4>Report Submissions Pending</h4></div>
+                        <br/>
+                </div>
                 <div class="row oe_structure">
                     <div class="col-md-3 text-center mt32 mb32">
                         <span class="fa fa-check fa-2x bg-gamma"
@@ -1019,7 +1035,7 @@
                                                        class="form-control"
                                                        t-att-value="snr_mentors.zip" required="1"/>
                                                 <select name="country_id" id="country_id"
-                                                        class="form-control" placeholder="Country"
+                                                        class="form-control" placeholder="Country" required="true"
                                                 >
                                                     <t t-if="not snr_mentors.country_id">
                                                         <option value="">Country</option>
@@ -2558,6 +2574,8 @@
                                    for="name">Name
                             </label>
                             <input type="hidden" name="country" t-att-value="snr_aspirants.country_id.name"/>
+                            <input type="hidden" name="stu_country" t-att-value="snr_aspirants.stu_country_id.name"/>
+                            <input type="hidden" name="emp_country" t-att-value="snr_aspirants.emp_country_id.name"/>
                             <input type="hidden" name="state" t-att-value="snr_aspirants.state_id.name"/>
                             <t t-if="aspirant_team">
                                 <input type="text" name="name"
@@ -2627,6 +2645,24 @@
                             <h3>
                                 <u>Team Member</u>
                             </h3>
+                        </div>
+                        <div id="diffrent_team_email_modal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"></button>
+                                        <h4 class="modal-title">Warning!!!</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><b>This user from</b></p><label name="Label1" id="Label1" runat="server" Text=""></label>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-12 team-leader">
                             <!--11111 table leader-->
@@ -3345,6 +3381,8 @@
                         </label>
                         <input type="hidden" name="country" t-att-value="snr_aspirants.country_id.name"/>
                         <input type="hidden" name="state" t-att-value="snr_aspirants.state_id.name"/>
+                        <input type="hidden" name="stu_country" t-att-value="snr_aspirants.stu_country_id.name"/>
+                        <input type="hidden" name="emp_country" t-att-value="snr_aspirants.emp_country_id.name"/>
                         <t t-if="aspirant_team">
                             <input type="text" name="name"
                                    id="name"
@@ -4567,6 +4605,8 @@
                                 </label>
                                 <input type="hidden" name="country"
                                        t-att-value="snr_academic_institution.country_id.name"/>
+                                <input type="hidden" name="stu_country"
+                                       t-att-value="snr_academic_institution.stu_country_id.name"/>
                                 <input type="hidden" name="state" t-att-value="snr_academic_institution.state_id.name"/>
                                 <input type="hidden" name="school_name" t-att-value="snr_academic_institution.school_name"/>
                                 <t t-if="acadamic_team">
@@ -6014,6 +6054,8 @@
                                 </label>
                                 <input type="hidden" name="country"
                                        t-att-value="snr_employers.country_id.name"/>
+                                <input type="hidden" name="emp_country"
+                                       t-att-value="snr_employers.emp_country_id.name"/>
                                 <input type="hidden" name="state" t-att-value="snr_employers.state_id.name"/>
                                 <t t-if="employers_team">
                                     <input type="text" name="name"
@@ -6602,11 +6644,23 @@
             </div>
         </template>
         <template id="cfo_senior_brand_ambassador">
-            <div class="container">
+            <div class="row oe_structure">
                 <div class="col-md-12 oe_structure"/>
-                <div class="row">
-                    <div class="col-md-3 oe_structure">CFO Report Submission Deadline</div>
-                    <div class="col-md-3">Remaining Time</div>
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <h4>Teams</h4>
+                        <strong>
+                            <t t-esc="date_of_report_submit"/>
+                        </strong>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Reports Submitted</h4>
+                        <strong>
+                            <div id="remaining_time_time"></div>
+                        </strong>
+                    </div>
+                    <div class="col-md-4"><h4>Report Submissions Pending</h4></div>
+                        <br/>
                 </div>
                 <div class="row">
                     <div class="col-md-3 text-center mt32 mb32">
