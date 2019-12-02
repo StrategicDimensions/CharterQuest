@@ -229,6 +229,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             $('#programme_name').attr('required', true);
             $('#school_name').attr('required', true);
             $('#stu_country_id').attr('required', true);
+            $('#emp_country_id').attr('required', false);
             $('.employee_details').css('display', 'none');
             $('.school_details').css('display', 'block');
             $('.tertiry_studyfields').css('display', 'block');
@@ -237,6 +238,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             $('#programme_name').removeAttr('required', true);
             $('#legal_name_employer').attr('required', true);
             $('#emp_country_id').attr('required', true);
+            $('#stu_country_id').attr('required', false);
             $('.school_details').css('display', 'none');
             $('.employee_details').css('display', 'block');
             $('.tertiry_studyfields').css('display', 'block');
@@ -252,6 +254,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                 $('#programme_name').attr('required', true);
                 $('#school_name').attr('required', true);
                 $('#stu_country_id').attr('required', true);
+                $('#emp_country_id').attr('required', false);
                 $('#legal_name_employer').attr('required', false);
                 $('.school_details').css('display', 'block');
                 $('.employee_details').css('display', 'none');
@@ -261,6 +264,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                 $('#programme_name').removeAttr('required', true);
                 $('#school_name').attr('required', false);
                 $('#emp_country_id').attr('required', true);
+                $('#stu_country_id').attr('required', false);
                 $('.tertiry_studyfields').css('display', 'block');
                 $('.school_details').css('display', 'none');
                 $('.employee_details').css('display', 'block');
@@ -585,9 +589,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         $('input[name="name"]').on('change', function () {
             var name = $(this).val();
             var student_country = $(this).parent().find('input[name="stu_country"]').val();
-            console.log("\n\n\n==========student_country=====",student_country);
             var employee_country = $(this).parent().find('input[name="emp_country"]').val();
-            console.log("\n\n\n==========employee_country=====",employee_country);
             var school_name = $(document).find('input[name="school_name"]').val();
             if (student_country){
                 country = student_country;
@@ -595,7 +597,6 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             if (employee_country){
                 country = employee_country;
             }
-            console.log("\n\n\n==========country=====",country);
             ajax.jsonRpc("/check_team_name", 'call', {'team_name': name}).then(function (result) {
                 if (result) {
                     $(document).find('#diffrent_team_name_modal').modal('show');
@@ -621,15 +622,23 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 //            if ((admin_email == email) && (user_type == 'Mentor' || user_type == 'Brand Ambassador')){
 //                self.parents('tr').find('.request-join').show();
 //            }
-
+            if (!email){
+                self.parents('tr').find('.request-join').hide();
+                self.parents('tr').find('.create-user').hide();
+            }
             if ((acadamic && admin_email === email) && (user_type == 'Leader' || user_type == 'Member')) {
                 $(document).find('#acadamic_leader_member_diffrent').modal('show');
                 $(this).val('');
 
             }
             else if (admin_email == email) {
-                self.parents('tr').find('.admin_leader_true').show();
-                self.parents('tr').find('.admin_leader_false').hide();
+                if(user_type == 'Leader'){
+                    self.parents('tr').find('.admin_leader_true').show();
+                    self.parents('tr').find('.admin_leader_false').hide();
+                }
+                else {
+                    self.parents('tr').find('.request-join').show();
+                }
             }
             if ((jnr_highschool && admin_email === email) && (user_type == 'Leader' || user_type == 'Member')) {
                 $(document).find('#acadamic_leader_member_diffrent').modal('show');
@@ -637,13 +646,20 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 
             }
             else if (admin_email == email) {
-                self.parents('tr').find('.admin_leader_true').show();
-                self.parents('tr').find('.admin_leader_false').hide();
+                if(user_type == 'Leader'){
+                    self.parents('tr').find('.admin_leader_true').show();
+                    self.parents('tr').find('.admin_leader_false').hide();
+                }
+                else {
+                    self.parents('tr').find('.request-join').show();
+                }
             }
             else {
                 ajax.jsonRpc("/check_user_team", "call", {'email': email})
                     .then(function (result) {
                         if (result.user_id) {
+                            self.parents('tr').find('.create_member').hide();
+                            self.parents('tr').find('.team_member_name').hide();
                             self.parents('tr').find('.request-join').show().attr('user_id', result['user_id']);
                         }
                         else {
@@ -675,10 +691,12 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 
         var request_list = []
         $('.request-join').on('click', function () {
+            $('.team_email').attr('required', true);
             var user_id = $(this).attr('user_id');
             var team_id = $(this).attr('team-id');
             var email = $(this).parents('tr').find('.team_email').val();
             var self = $(this);
+            var admin_email = $(document).find('.admin_email').val();
             var user_type = $(this).parents('tr').find('.user_type').val();
             var from_acadamic = $(this).parents('tr').find('.from_acadamic').val();
             var from_aspirant = $(this).parents('tr').find('.from_aspirant').val();
@@ -695,31 +713,54 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 //                    list_of_member.push({'email': email, 'user_type': user_type});
 //                }
 //            });
-//
-//
-            ajax.jsonRpc("/request_to_join", "call", {'email':email, 'user_id': user_id, 'team_id': team_id, 'user_type':user_type,})
-                .then(function (result) {
-                    if (result) {
-                        self.parents('tr').find('.request-join').hide().attr('user_id', '');
-                        self.parents('tr').find('.create_member').hide();
-                        request_list.push({'email': email, 'user_type': user_type, 'user_id': user_id})
-                    } else {
-                        $(document).ready(function () {
-                            if (user_type == 'Member'){
-                                $("#Label1").text('Mentor OR Brand Ambassador');
-                                self.parents('tr').remove();
-                            }
-                            else {
-                                $("#Label1").text('Leader OR Member');
-                                self.parents('tr').hide();
-                            }
-                            $('#diffrent_team_email_modal').modal('show');
+            if (admin_email == email){
+                $(document).find('#admin_email_not_allow').modal('show');
+                if(user_type == 'Member' || user_type == 'Leader'){
+                   self.parents('tr').remove();
+                }
+                if (user_type == 'Mentor'){
+                    self.parents('tr').hide();
+                    $('button.mentor-add').css('display', 'block');
+                }
+                if (user_type == 'Brand Ambassador'){
+                    self.parents('tr').hide();
+                    $('button.amb-add').css('display', 'block');
+                }
+            }
+            else {
+                ajax.jsonRpc("/request_to_join", "call", {'email':email, 'user_id': user_id, 'team_id': team_id, 'user_type':user_type,})
+                    .then(function (result) {
+                        if (result.request_to_join) {
+                            self.parents('tr').find('.request-join').hide().attr('user_id', '');
+                            self.parents('tr').find('.create_member').hide();
+                            request_list.push({'email': email, 'user_type': user_type, 'user_id': user_id})
+                        } else {
+                            $(document).ready(function () {
+                                if (user_type == 'Member' || user_type == 'Leader'){
+                                    $("#Label1").text('Mentor OR Brand Ambassador');
+                                    self.parents('tr').remove();
+                                }
+                                else {
+                                    $("#Label1").text('Leader OR Member');
+                                    if (user_type == 'Mentor'){
+                                        self.parents('tr').hide();
+                                        $('button.mentor-add').css('display', 'block');
+                                    }
+                                    if (user_type == 'Brand Ambassador'){
+                                        self.parents('tr').hide();
+                                        $('button.amb-add').css('display', 'block');
+                                    }
+                                }
+                                $('#diffrent_team_email_modal').modal('show');
 
-                        });
-                    }
-                });
+                            });
+                        }
+                    });
+            }
         });
         $('.create_member').on('click', function () {
+            $('.team_email').attr('required', true);
+            $('.team_member_name').attr('required', true);
             var email = $(this).parents('tr').find('.team_email').val();
             var name = $(this).parents('tr').find('.team_member_name').val();
             var team_id = $(this).attr('team-id')

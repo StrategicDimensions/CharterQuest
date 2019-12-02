@@ -599,57 +599,64 @@
                                             <td class="team_heightset_teammember">
                                                 <t t-if="team.aspirant_team_member_ids">
                                                     <t t-foreach="team.aspirant_team_member_ids" t-as="member_id">
-                                                        <table style="width: 100%;margin: 2px 0;">
-                                                            <tbody>
-                                                                <tr class="team_member_set_21" style="width: 100%;">
-                                                                    <td class="teammember_21"
-                                                                        style="border: inset;border-color: indianred;float: left;">
-                                                                        <b>
-                                                                            <t t-esc="member_id.related_user_id.name"/>
-                                                                        </b>
-                                                                    </td>
-                                                                    <td class="teammember_22"
-                                                                        style="border: inset;border-color: indianred;float: left;">
-                                                                        <b>
-                                                                            <t t-esc="member_id.user_type"/>
-                                                                        </b>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                        <t t-if="member_id.related_user_id.name">
+                                                            <table style="width: 100%;margin: 2px 0;">
+                                                                <tbody>
+<!--                                                                    <t t-if="member_id.related_user_id.name">-->
+                                                                        <tr class="team_member_set_21" style="width: 100%;">
+                                                                            <td class="teammember_21"
+                                                                                style="border: inset;border-color: indianred;float: left;">
+                                                                                <b>
+                                                                                    <t t-esc="member_id.related_user_id.name"/>
+                                                                                </b>
+                                                                            </td>
+                                                                            <td class="teammember_22"
+                                                                                style="border: inset;border-color: indianred;float: left;">
+                                                                                <b>
+                                                                                    <t t-esc="member_id.user_type"/>
+                                                                                </b>
+                                                                            </td>
+                                                                        </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </t>
                                                     </t>
                                                     <table style="width: 100%;margin: 2px 0;">
-                                                        <tbody>
-                                                            <!-- mentor changes -->
-                                                            <tr class="team_member_set_23" style="width: 100%;">
-                                                                <td class="teammember_21"
-                                                                    style="border: inset;border-color: indianred;float: left;"
-                                                                    t-if="team.mentor_id">
-                                                                    <b>
-                                                                        <t t-esc="team.mentor_id.partner_id.name"/>
-                                                                    </b>
-                                                                </td>
-                                                                <td class="teammember_22"
-                                                                    style="border: inset;border-color: indianred;float: left;"
-                                                                    t-if="team.mentor_id">
-                                                                    <b>Mentor</b>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="team_member_set_4">
-                                                                <td class="teammember_21"
-                                                                    style="border: inset;border-color: indianred;float: left;"
-                                                                    t-if="team.brand_amb_id">
-                                                                    <b>
-                                                                        <t t-esc="team.brand_amb_id.partner_id.name"/>
-                                                                    </b>
-                                                                </td>
-                                                                <td class="teammember_22"
-                                                                    style="border: inset;border-color: indianred;float: left;"
-                                                                    t-if="team.brand_amb_id">
-                                                                    <b>Brand Ambassador</b>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
+                                                            <tbody>
+                                                                <t t-if="team.mentor_id.partner_id.name">
+                                                                    <!-- mentor changes -->
+                                                                    <tr class="team_member_set_23" style="width: 100%;">
+                                                                        <td class="teammember_21"
+                                                                            style="border: inset;border-color: indianred;float: left;"
+                                                                            t-if="team.mentor_id">
+                                                                            <b>
+                                                                                <t t-esc="team.mentor_id.partner_id.name"/>
+                                                                            </b>
+                                                                        </td>
+                                                                        <td class="teammember_22"
+                                                                            style="border: inset;border-color: indianred;float: left;"
+                                                                            t-if="team.mentor_id">
+                                                                            <b>Mentor</b>
+                                                                        </td>
+                                                                    </tr>
+                                                                </t>
+                                                                <t t-if="team.brand_amb_id.partner_id.name">
+                                                                    <tr class="team_member_set_4">
+                                                                        <td class="teammember_21"
+                                                                            style="border: inset;border-color: indianred;float: left;"
+                                                                            t-if="team.brand_amb_id">
+                                                                            <b>
+                                                                                <t t-esc="team.brand_amb_id.partner_id.name"/>
+                                                                            </b>
+                                                                        </td>
+                                                                        <td class="teammember_22"
+                                                                            style="border: inset;border-color: indianred;float: left;"
+                                                                            t-if="team.brand_amb_id">
+                                                                            <b>Brand Ambassador</b>
+                                                                        </td>
+                                                                    </tr>
+                                                                </t>
+                                                            </tbody>
                                                     </table>
                                                 </t>
                                                 <t t-if="team.academic_team_member_ids">
@@ -2664,6 +2671,24 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="admin_email_not_allow" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Admin cannot be part of a Brand Ambassador/Mentor/Leader/Member.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
                         <div class="col-md-12 team-leader">
                             <!--11111 table leader-->
                             <table id="table_quick_view_leader">
@@ -2902,12 +2927,12 @@
                                                    value="Leader"/>
                                         </td>
                                         <td>
-                                            <input type="text" name="email" class="form-control team_email" required="1"
+                                            <input type="text" name="email" class="form-control team_email" required="true"
                                                    placeholder="Enter Email Address"/>
                                         </td>
                                         <td>
                                             <input type="text" name="member_name" placeholder="Name"
-                                                   class="form-control team_member_name" style="display:none;"/>
+                                                   class="form-control team_member_name" style="display:none;" required="true"/>
                                         </td>
                                         <td>
                                             <input type="hidden" name="from_aspirant" class="from_aspirant"
@@ -3031,10 +3056,10 @@
                                         </td>
                                         <td>
                                             <input type="text" name="email" class="form-control team_email email_123"
-                                                   placeholder="Enter Email Address"/>
+                                                   placeholder="Enter Email Address" required="true"/>
                                         </td>
                                         <td>
-                                            <input type="text" name="member_name" placeholder="Name"
+                                            <input type="text" name="member_name" placeholder="Name" required="true"
                                                    class="form-control team_member_name" style="display:none;"/>
                                         </td>
                                         <td>
@@ -3154,10 +3179,10 @@
                                             </td>
                                             <td>
                                                 <input type="text" name="email" class="form-control team_email"
-                                                       placeholder="Enter Email Address"/>
+                                                       placeholder="Enter Email Address" required="true"/>
                                             </td>
                                             <td>
-                                                <input type="text" name="member_name" placeholder="Name"
+                                                <input type="text" name="member_name" placeholder="Name" required="true"
                                                        class="form-control team_member_name" style="display:none;"/>
                                             </td>
                                             <td>
@@ -3271,11 +3296,11 @@
                                                        value="Brand Ambassador"/>
                                             </td>
                                             <td>
-                                                <input type="text" name="email" class="form-control team_email"
+                                                <input type="text" name="email" class="form-control team_email" required="true"
                                                        placeholder="Enter Email Address"/>
                                             </td>
                                             <td>
-                                                <input type="text" name="member_name" placeholder="Enter Name"
+                                                <input type="text" name="member_name" placeholder="Enter Name" required="true"
                                                        class="form-control team_member_name" style="display:none;"/>
                                             </td>
                                             <td>
@@ -4581,6 +4606,24 @@
                                        t-if="acadamic_team"/>
                                 <h3>Team</h3>
                             </div>
+                            <div id="diffrent_team_email_modal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><b>This user from</b></p><label name="Label1" id="Label1" runat="server" Text=""></label>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div id="acadamic_leader_member_diffrent" class="modal fade" role="dialog">
                                 <div class="modal-dialog">
                                     <!-- Modal content-->
@@ -4591,6 +4634,24 @@
                                         </div>
                                         <div class="modal-body">
                                             <p>Academic Institute/School Representative cannot be part of a team.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="admin_email_not_allow" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Admin cannot be part of a Brand Ambassador/Mentor/Leader/Member.</p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close
@@ -4865,10 +4926,10 @@
                                             </td>
                                             <td>
                                                 <input type="text" name="email" class="form-control team_email"
-                                                       placeholder="Enter Email Address"/>
+                                                       placeholder="Enter Email Address" required="true"/>
                                             </td>
                                             <td>
-                                                <input type="text" name="member_name" placeholder="Name"
+                                                <input type="text" name="member_name" placeholder="Name" required="true"
                                                        class="form-control team_member_name" style="display:none;"/>
                                             </td>
                                             <td>
@@ -4993,10 +5054,10 @@
                                                 </td>
                                                 <td>
                                                     <input type="text" name="email" class="form-control team_email"
-                                                           placeholder="Enter Email Address"/>
+                                                           placeholder="Enter Email Address" required="true"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="member_name" placeholder="Name"
+                                                    <input type="text" name="member_name" placeholder="Name" required="true"
                                                            class="form-control team_member_name" style="display:none;"/>
                                                 </td>
                                                 <td>
@@ -5108,11 +5169,11 @@
                                                            value="Brand Ambassador"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="email" class="form-control team_email"
+                                                    <input type="text" name="email" class="form-control team_email" required="true"
                                                            placeholder="Enter Email Address"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="member_name" placeholder="Enter Name"
+                                                    <input type="text" name="member_name" placeholder="Enter Name" required="true"
                                                            class="form-control team_member_name" style="display:none;"/>
                                                 </td>
                                                 <td>
@@ -6185,10 +6246,10 @@
                                             </td>
                                             <td>
                                                 <input type="text" name="email" class="form-control team_email"
-                                                       required="1" placeholder="Enter Email Address"/>
+                                                       required="true" placeholder="Enter Email Address"/>
                                             </td>
                                             <td>
-                                                <input type="text" name="member_name" placeholder="Name"
+                                                <input type="text" name="member_name" placeholder="Name" required="true"
                                                        class="form-control team_member_name" style="display:none;"/>
                                             </td>
                                             <td>
@@ -6313,11 +6374,11 @@
                                                        value="Member"/>
                                             </td>
                                             <td>
-                                                <input type="text" name="email" class="form-control team_email"
+                                                <input type="text" name="email" class="form-control team_email" required="true"
                                                        placeholder="Enter Email Address"/>
                                             </td>
                                             <td>
-                                                <input type="text" name="member_name" placeholder="Name"
+                                                <input type="text" name="member_name" placeholder="Name" required="true"
                                                        class="form-control team_member_name" style="display:none;"/>
                                             </td>
                                             <td>
@@ -6444,11 +6505,11 @@
                                                            value="Mentor"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="email" class="form-control team_email"
+                                                    <input type="text" name="email" class="form-control team_email" required="true"
                                                            placeholder="Enter Email Address"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="member_name" placeholder="Name"
+                                                    <input type="text" name="member_name" placeholder="Name" required="true"
                                                            class="form-control team_member_name" style="display:none;"/>
                                                 </td>
                                                 <td>
@@ -6563,11 +6624,11 @@
                                                            value="Brand Ambassador"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="email" class="form-control team_email"
+                                                    <input type="text" name="email" class="form-control team_email" required="true"
                                                            placeholder="Enter Email Address"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="member_name" placeholder="Enter Name"
+                                                    <input type="text" name="member_name" placeholder="Enter Name" required="true"
                                                            class="form-control team_member_name" style="display:none;"/>
                                                 </td>
                                                 <td>
