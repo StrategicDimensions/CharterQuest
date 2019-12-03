@@ -2225,8 +2225,8 @@ class CfoHome(web.Home):
                         })
                 employer_id.write({'cfo_team_ids': [(4, team_id.id)]
                                    })
-            else:
-                return {'team_error': True}
+        # else:
+        #     return {'team_error': True}
         if post.get('employer_team'):
             employer_id = request.env['employers.snr'].sudo().search(
                 [('id', '=', int(post.get('snr_employers')))])
