@@ -4381,10 +4381,22 @@
 
                             <input type="hidden" name="cfo_team_edit" value="True"/>
                             <div class="col-md-12">
-                                <t t-if="snr_academic_institution and snr_academic_institution.team_admin and not acadamic_team">
+                                <t t-if="snr_academic_institution and snr_academic_institution.team_admin">
                                     <button class="btn btn-primary" type="submit">Create Team</button>
                                 </t>
                             </div>
+                        </form>
+                        <form action="/cfo_senior" method="post">
+<!--                            <input type="hidden" name="csrf_token"-->
+<!--                                   t-att-value="request.csrf_token()"/>-->
+<!--                            <input type="hidden" name="new_form" value="True"/>-->
+
+<!--                            <input type="hidden" name="cfo_team_edit" value="True"/>-->
+<!--                            <div class="col-md-12">-->
+<!--                                <t t-if="snr_academic_institution and snr_academic_institution.team_admin and not acadamic_team">-->
+<!--                                    <button class="btn btn-primary" type="submit">Create Team</button>-->
+<!--                                </t>-->
+<!--                            </div>-->
                             <div class="col-md-12" t-if="acadamic_team">
                                 <table class="table table-bordered" width="100%">
                                     <tr class="table_responsive_set1">
@@ -5889,27 +5901,27 @@
                 </div>
                 <div class="container" t-if="cfo_team">
                     <t t-if="not cfo_team_edit">
-<!--                        <form action="/cfo_senior" method="post">-->
-<!--                            <input type="hidden" name="csrf_token"-->
-<!--                                   t-att-value="request.csrf_token()"/>-->
-<!--                            <input type="hidden" name="new_form" value="True"/>-->
-<!--                            <input type="hidden" name="cfo_team_edit" value="True"/>-->
-<!--                            <div class="col-md-12">-->
-<!--                                <t t-if="snr_employers and snr_employers.team_admin">-->
-<!--                                    <button class="btn btn-primary" type="submit">Create Team</button>-->
-<!--                                </t>-->
-<!--                            </div>-->
-<!--                        </form>-->
                         <form action="/cfo_senior" method="post">
                             <input type="hidden" name="csrf_token"
                                    t-att-value="request.csrf_token()"/>
                             <input type="hidden" name="new_form" value="True"/>
                             <input type="hidden" name="cfo_team_edit" value="True"/>
                             <div class="col-md-12">
-                                <t t-if="snr_employers and snr_employers.team_admin and not employers_team">
+                                <t t-if="snr_employers and snr_employers.team_admin">
                                     <button class="btn btn-primary" type="submit">Create Team</button>
                                 </t>
                             </div>
+                        </form>
+                        <form action="/cfo_senior" method="post">
+<!--                            <input type="hidden" name="csrf_token"-->
+<!--                                   t-att-value="request.csrf_token()"/>-->
+<!--                            <input type="hidden" name="new_form" value="True"/>-->
+<!--                            <input type="hidden" name="cfo_team_edit" value="True"/>-->
+<!--                            <div class="col-md-12">-->
+<!--                                <t t-if="snr_employers and snr_employers.team_admin and not employers_team">-->
+<!--                                    <button class="btn btn-primary" type="submit">Create Team</button>-->
+<!--                                </t>-->
+<!--                            </div>-->
                             <div class="col-md-12" t-if="employers_team">
                                 <table class="table table-bordered" width="100%">
                                     <tr class="table_responsive_set1">

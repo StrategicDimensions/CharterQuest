@@ -874,6 +874,19 @@ class CfoHome(web.Home):
 
     @http.route('/request_to_join',type='json', auth="public", website=True)
     def check_request_member(self, **post):
+        team_member = False
+        all_team = request.env['cfo.team.snr'].search([])
+        print("\n\n\n\n\n===========acadamic_member_list========", post.get('acadamic_member_list'), all_team)
+        for team in all_team:
+            print("\n\n\n\n==========type=======",team.team_type)
+            if team.team_type == 'CFO Aspirant':
+                for member in team.aspirant_team_member_ids:
+                    if post.get('email') == member.email:
+                        team_member = True
+            if team.team_type == 'Employer':
+                for member in team.aspirant_team_member_ids:
+                    if post.get('email') == member.email:
+                        team_member = True
         if post.get('user_type') == 'Brand Ambassador' or post.get('user_type') == 'Mentor':
             amb_id = request.env['brand.ambassador.snr'].sudo().search(
                 [('user_id', '=', int(post.get('user_id')))])

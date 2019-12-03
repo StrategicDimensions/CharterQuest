@@ -739,7 +739,8 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                             self.parents('tr').find('.request-join').hide().attr('user_id', '');
                             self.parents('tr').find('.create_member').hide();
                             request_list.push({'email': email, 'user_type': user_type, 'user_id': user_id})
-                        } else {
+                        }
+                        else {
                             $(document).ready(function () {
                                 if (user_type == 'Member' || user_type == 'Leader'){
                                     $("#Label1").text('Mentor OR Brand Ambassador');
