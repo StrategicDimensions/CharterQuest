@@ -658,9 +658,9 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                 ajax.jsonRpc("/check_user_team", "call", {'email': email})
                     .then(function (result) {
                         if (result.user_id) {
+                            self.parents('tr').find('.request-join').show().attr('user_id', result['user_id']);
                             self.parents('tr').find('.create_member').hide();
                             self.parents('tr').find('.team_member_name').hide();
-                            self.parents('tr').find('.request-join').show().attr('user_id', result['user_id']);
                         }
                         else {
                             self.parents('tr').find('.request-join').hide();
@@ -715,8 +715,13 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 //            });
             if (admin_email == email){
                 $(document).find('#admin_email_not_allow').modal('show');
+                if(user_type == 'Leader'){
+                   self.parents('tr').remove();
+                   $('button.leader-add-acadamic').css('display', 'block');
+                }
                 if(user_type == 'Member' || user_type == 'Leader'){
                    self.parents('tr').remove();
+                   $('button.member-add').css('display', 'block');
                 }
                 if (user_type == 'Mentor'){
                     self.parents('tr').hide();
@@ -738,7 +743,14 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                             $(document).ready(function () {
                                 if (user_type == 'Member' || user_type == 'Leader'){
                                     $("#Label1").text('Mentor OR Brand Ambassador');
-                                    self.parents('tr').remove();
+                                    if(user_type == 'Member'){
+                                        self.parents('tr').remove();
+                                        $('button.member-add').css('display', 'block');
+                                    }
+                                    if(user_type == 'Leader'){
+                                        self.parents('tr').remove();
+                                        $('button.leader-add-acadamic').css('display', 'block');
+                                    }
                                 }
                                 else {
                                     $("#Label1").text('Leader OR Member');

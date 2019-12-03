@@ -441,23 +441,52 @@
         </template>
         <template id="cfo_snr_mentor">
             <div class="row oe_structure">
-                <div class="col-md-12 oe_structure"/>
-                <div class="col-md-12">
-                    <div class="col-md-4">
-                        <h4>Teams</h4>
-                        <strong>
-                            <t t-esc="date_of_report_submit"/>
-                        </strong>
-                    </div>
-                    <div class="col-md-4">
-                        <h4>Reports Submitted</h4>
-                        <strong>
-                            <div id="remaining_time_time"></div>
-                        </strong>
-                    </div>
-                    <div class="col-md-4"><h4>Report Submissions Pending</h4></div>
-                        <br/>
-                </div>
+<!--               <div class="row">-->
+<!--                    <div class="col-md-12 oe_structure"/>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <t t-set="team_count" t-value="0"/>-->
+<!--                        <t t-set="count_report_submit" t-value="0"/>-->
+<!--                        <t t-set="count_not_report_submit" t-value="0"/>-->
+<!--                        <t t-if="snr_employers.cfo_team_ids">-->
+<!--                            <t t-foreach="snr_employers.cfo_team_ids" t-as="team_ids">-->
+<!--                                <t t-if="team_ids.acknowledge_cfo_report">-->
+<!--                                    <t t-set="count_report_submit" t-value="int(count_report_submit)+1"/>-->
+<!--                                </t>-->
+<!--                                <t t-if="not team_ids.acknowledge_cfo_report">-->
+<!--                                    <t t-set="count_not_report_submit" t-value="int(count_not_report_submit)+1"/>-->
+<!--                                </t>-->
+<!--                            </t>-->
+<!--                        </t>-->
+<!--                        <div>Teams</div>-->
+<!--                        <div>-->
+<!--                            <b>-->
+<!--                                <t t-esc="len(snr_employers.cfo_team_ids)" t-if="snr_employers"></t>-->
+<!--                            </b>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <div>Reports Submitted</div>-->
+<!--                        <div>-->
+<!--                            <b>-->
+<!--                                <t t-esc="count_report_submit"/>-->
+<!--                            </b>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <div>Report Submissions Pending</div>-->
+<!--                        <div>-->
+<!--                            <b>-->
+<!--                                <t t-esc="count_not_report_submit"/>-->
+<!--                            </b>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <form action="/cfo_senior" method="GET">-->
+<!--                            <input type="hidden" name="cfo_team" value="True"/>-->
+<!--                            <button type="submit" class="btn btn-primary">View Teams &amp; Submissions</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="row oe_structure">
                     <div class="col-md-3 text-center mt32 mb32">
                         <span class="fa fa-check fa-2x bg-gamma"
@@ -4352,12 +4381,10 @@
 
                             <input type="hidden" name="cfo_team_edit" value="True"/>
                             <div class="col-md-12">
-                                <t t-if="snr_academic_institution and snr_academic_institution.team_admin">
+                                <t t-if="snr_academic_institution and snr_academic_institution.team_admin and not acadamic_team">
                                     <button class="btn btn-primary" type="submit">Create Team</button>
                                 </t>
                             </div>
-                        </form>
-                        <form action="/cfo_senior" method="post">
                             <div class="col-md-12" t-if="acadamic_team">
                                 <table class="table table-bordered" width="100%">
                                     <tr class="table_responsive_set1">
@@ -4634,6 +4661,24 @@
                                         </div>
                                         <div class="modal-body">
                                             <p>Academic Institute/School Representative cannot be part of a team.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="diffrent_team_email_modal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><b>This user from</b></p><label name="Label1" id="Label1" runat="server" Text=""></label>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close
@@ -5092,12 +5137,21 @@
                                                 </td>
                                                 <td>
                                                     <t t-if="acadamic_team">
+                                                        <button class="btn btn-danger request-join" style="display:none;"
+                                                            t-att-team-id="acadamic_team.id">
+                                                        Request to
+                                                        join your Team
+                                                        </button>
                                                         <button class="btn btn-danger create-user" style="display:none;"
                                                                 t-att-team-id="acadamic_team.id">
                                                             Create
                                                         </button>
                                                     </t>
                                                     <t t-if="not aspirant_team">
+                                                        <button class="btn btn-danger request-join" style="display:none;">
+                                                        request to
+                                                        join your team
+                                                        </button>
                                                         <button class="btn btn-danger create-user"
                                                                 style="display:none;">
                                                             Create
@@ -5206,17 +5260,21 @@
                                                 </td>
                                                 <td>
                                                     <t t-if="acadamic_team">
-                                                        <!--                                               <button class="btn btn-danger request-join" style="display:none;" -->
-                                                        <!--                                                       t-att-team-id="acadamic_team.id"> -->
-                                                        <!--                                                   Request to -->
-                                                        <!--                                                   join your Team -->
-                                                        <!--                                               </button> -->
+                                                       <button class="btn btn-danger request-join" style="display:none;"
+                                                               t-att-team-id="acadamic_team.id">
+                                                           Request to
+                                                           join your Team
+                                                       </button>
                                                         <button class="btn btn-danger create-user" style="display:none;"
                                                                 t-att-team-id="acadamic_team.id">
                                                             Create
                                                         </button>
                                                     </t>
                                                     <t t-if="not acadamic_team">
+                                                        <button class="btn btn-danger request-join" style="display:none;">
+                                                        Request to
+                                                        join your Team
+                                                        </button>
                                                         <button class="btn btn-danger create-user"
                                                                 style="display:none;">
                                                             Create
@@ -5831,18 +5889,27 @@
                 </div>
                 <div class="container" t-if="cfo_team">
                     <t t-if="not cfo_team_edit">
+<!--                        <form action="/cfo_senior" method="post">-->
+<!--                            <input type="hidden" name="csrf_token"-->
+<!--                                   t-att-value="request.csrf_token()"/>-->
+<!--                            <input type="hidden" name="new_form" value="True"/>-->
+<!--                            <input type="hidden" name="cfo_team_edit" value="True"/>-->
+<!--                            <div class="col-md-12">-->
+<!--                                <t t-if="snr_employers and snr_employers.team_admin">-->
+<!--                                    <button class="btn btn-primary" type="submit">Create Team</button>-->
+<!--                                </t>-->
+<!--                            </div>-->
+<!--                        </form>-->
                         <form action="/cfo_senior" method="post">
                             <input type="hidden" name="csrf_token"
                                    t-att-value="request.csrf_token()"/>
                             <input type="hidden" name="new_form" value="True"/>
                             <input type="hidden" name="cfo_team_edit" value="True"/>
                             <div class="col-md-12">
-                                <t t-if="snr_employers and snr_employers.team_admin">
+                                <t t-if="snr_employers and snr_employers.team_admin and not employers_team">
                                     <button class="btn btn-primary" type="submit">Create Team</button>
                                 </t>
                             </div>
-                        </form>
-                        <form action="/cfo_senior" method="post">
                             <div class="col-md-12" t-if="employers_team">
                                 <table class="table table-bordered" width="100%">
                                     <tr class="table_responsive_set1">
@@ -6186,6 +6253,42 @@
                                 <h3>
                                     <u>Team Member</u>
                                 </h3>
+                            </div>
+                            <div id="diffrent_team_email_modal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><b>This user from</b></p><label name="Label1" id="Label1" runat="server" Text=""></label>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="admin_email_not_allow" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"></button>
+                                                <h4 class="modal-title">Warning!!</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Admin cannot be part of a Brand Ambassador/Mentor/Leader/Member.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                             <div class="col-md-12 team-leader-acadamic">
                                 <table id="table_quick_view_leader_acadamic">
@@ -6537,20 +6640,28 @@
                                                     <i class="fa fa-check" style="color:green"></i>
                                                 </td>
                                                 <td>
-                                                    <t
-                                                            t-if="user_id.partner_id.id==snr_employers.partner_id.id and snr_employers.team_admin">
+                                                    <t t-if="user_id.partner_id.id==snr_employers.partner_id.id and snr_employers.team_admin">
                                                         <button class="btn btn-danger table-remove-acadamic">Remove
                                                         </button>
                                                     </t>
                                                 </td>
                                                 <td>
                                                     <t t-if="employers_team">
+                                                        <button class="btn btn-danger request-join" style="display:none;"
+                                                            t-att-team-id="employers_team.id">
+                                                        Request to
+                                                        join your Team
+                                                        </button>
                                                         <button class="btn btn-danger create-user" style="display:none;"
                                                                 t-att-team-id="employers_team.id">
                                                             Create
                                                         </button>
                                                     </t>
                                                     <t t-if="not employers_team">
+                                                        <button class="btn btn-danger request-join" style="display:none;">
+                                                        Request to
+                                                        join your Team
+                                                        </button>
                                                         <button class="btn btn-danger create-user"
                                                                 style="display:none;">
                                                             Create
@@ -6662,12 +6773,21 @@
                                                 </td>
                                                 <td>
                                                     <t t-if="employers_team">
+                                                        <button class="btn btn-danger request-join" style="display:none;"
+                                                            t-att-team-id="employers_team.id">
+                                                        Request to
+                                                        join your Team
+                                                        </button>
                                                         <button class="btn btn-danger create-user" style="display:none;"
                                                                 t-att-team-id="employers_team.id">
                                                             Create
                                                         </button>
                                                     </t>
                                                     <t t-if="not employers_team">
+                                                        <button class="btn btn-danger request-join" style="display:none;">
+                                                        Request to
+                                                        join your Team
+                                                        </button>
                                                         <button class="btn btn-danger create-user"
                                                                 style="display:none;">
                                                             Create
@@ -6691,14 +6811,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <t
-                                    t-if="user_id.partner_id.id==snr_employers.partner_id.id and snr_employers.team_admin">
-                                <div class="col-md-12" style="text-align:center">
-                                    <button type="submit" class="btn btn-primary create_employer_team">CREATE/UPDATE
-                                        TEAM
-                                    </button>
-                                </div>
-                            </t>
+                            <div class="col-md-8" style="text-align:center;float:right">
+                                <t t-if="user_id.partner_id.id==snr_employers.partner_id.id and snr_employers.team_admin">
+                                    <div class="col-md-12" style="text-align:center">
+                                        <button type="submit" class="btn btn-primary create_employer_team">CREATE/UPDATE
+                                            TEAM
+                                        </button>
+                                    </div>
+                                </t>
+                            </div>
+                            <div class="col-md-8">
+                                <button class="btn btn-default btn-primary mb32" onclick="history.back();return false"><i
+                                        class="fa fa-chevron-left"/>Back
+                                </button>
+                            </div>
                         </div>
                     </t>
                 </div>
@@ -6706,23 +6832,23 @@
         </template>
         <template id="cfo_senior_brand_ambassador">
             <div class="row oe_structure">
-                <div class="col-md-12 oe_structure"/>
-                <div class="col-md-12">
-                    <div class="col-md-4">
-                        <h4>Teams</h4>
-                        <strong>
-                            <t t-esc="date_of_report_submit"/>
-                        </strong>
-                    </div>
-                    <div class="col-md-4">
-                        <h4>Reports Submitted</h4>
-                        <strong>
-                            <div id="remaining_time_time"></div>
-                        </strong>
-                    </div>
-                    <div class="col-md-4"><h4>Report Submissions Pending</h4></div>
-                        <br/>
-                </div>
+<!--                <div class="col-md-12 oe_structure"/>-->
+<!--                <div class="col-md-12">-->
+<!--                    <div class="col-md-4">-->
+<!--                        <h4>Teams</h4>-->
+<!--                        <strong>-->
+<!--                            <t t-esc="date_of_report_submit"/>-->
+<!--                        </strong>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-4">-->
+<!--                        <h4>Reports Submitted</h4>-->
+<!--                        <strong>-->
+<!--                            <div id="remaining_time_time"></div>-->
+<!--                        </strong>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-4"><h4>Report Submissions Pending</h4></div>-->
+<!--                        <br/>-->
+<!--                </div>-->
                 <div class="row">
                     <div class="col-md-3 text-center mt32 mb32">
                         <span class="fa fa-check fa-2x bg-gamma"
