@@ -100,7 +100,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         $(".datepicker5").on('change', function () {
             var dt = new Date();
             var select_date = $(this).datepicker('getDate');
-            if(dt.getFullYear()- select_date.getFullYear()<25){
+            if(dt.getFullYear()- select_date.getFullYear()>25){
                $(document).find('#check_birthdate_age').modal('show');
                $('#date_of_birth').val('');
             }
@@ -612,24 +612,59 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             });
         });
 
+//        function validateEmail() {
+//         var emailID = document.myForm.EMail.value;
+//         atpos = emailID.indexOf("@");
+//         dotpos = emailID.lastIndexOf(".");
+//
+//         if (atpos < 1 || ( dotpos - atpos < 2 )) {
+//            alert("Please enter correct email ID")
+//            document.myForm.EMail.focus() ;
+//            return false;
+//         }
+//         return( true );
+//        }
+
         $('.team_email').on('change', function () {
             var email = $(this).val();
+            atpos = email.indexOf("@");
+            dotpos = email.lastIndexOf(".");
+//            if (atpos < 1 || ( dotpos - atpos < 2 )) {
+//            alert("Please enter correct email ID")
+//            email.focus() ;
+//            return false;
+//            }
+
             var self = $(this);
             var user_type = $(this).parents('tr').find('.user_type').val();
             var acadamic = $(document).find("input[name='snr_academic_institution']").val();
             var jnr_highschool = $(document).find("input[name='jnr_high_school']").val();
             var admin_email = $(document).find('.admin_email').val();
-//            if ((admin_email == email) && (user_type == 'Mentor' || user_type == 'Brand Ambassador')){
-//                self.parents('tr').find('.request-join').show();
-//            }
+
+            if (atpos < 1 || ( dotpos - atpos < 2 )) {
+                alert('Please provide a valid email address');
+                $(this).val('');
+                $(this).parents('tr').remove();
+                if (user_type == 'Leader'){
+                    $('button.leader-add-acadamic').css('display', 'block');
+                }else if (user_type == 'Member'){
+                    $('button.member-add').css('display', 'block');
+                }else if (user_type == 'Mentor'){
+                    $('button.mentor-add').css('display', 'block');
+                }else if (user_type == 'Brand Ambassador'){
+                    $('button.amb-add').css('display', 'block');
+                }
+            }
+
             if (!email){
                 self.parents('tr').find('.request-join').hide();
                 self.parents('tr').find('.create-user').hide();
+                self.parents('tr').find('.create_member').hide();
+                self.parents('tr').find('.team_member_name').hide();
             }
             if ((acadamic && admin_email === email) && (user_type == 'Leader' || user_type == 'Member')) {
                 $(document).find('#acadamic_leader_member_diffrent').modal('show');
                 $(this).val('');
-
             }
             else if (admin_email == email) {
                 if(user_type == 'Leader'){

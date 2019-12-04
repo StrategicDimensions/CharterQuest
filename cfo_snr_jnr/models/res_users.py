@@ -78,7 +78,7 @@ class ResUsers(models.Model):
             if not user.email:
                 raise UserError(_("Cannot send email: user %s has no email address.") % user.name)
             with self.env.cr.savepoint():
-                template.with_context(team_name=self.env.context.get('team_name'),lang=user.lang).send_mail(user.id, force_send=True, raise_exception=True)
+                template.with_context(team_name=self.env.context.get('team_name'),cfo_login=True,lang=user.lang).send_mail(user.id, force_send=True, raise_exception=True)
 
 
     @api.multi

@@ -193,6 +193,9 @@ class ResPartner(models.Model):
                 query['token'] = partner.sudo().signup_token
             elif partner.user_ids:
                 query['login'] = partner.user_ids[0].login
+                # res[partner.id] = werkzeug.urls.url_join(base_url,
+                #                                          "/%s?%s" % (route, werkzeug.urls.url_encode(query)))
+                # return res
             else:
                 continue  # no signup token, no user, thus no signup url!
 
@@ -213,8 +216,11 @@ class ResPartner(models.Model):
 
             if fragment:
                 query['redirect'] = base + werkzeug.urls.url_encode(fragment)
-
-            res[partner.id] = werkzeug.urls.url_join(base_url, "/web/%s?%s" % (route, werkzeug.urls.url_encode(query)))
+            if route == 'reset_password':
+                res[partner.id] = werkzeug.urls.url_join(base_url, "/web/%s?%s" % (route, werkzeug.urls.url_encode(query)))
+            if route == 'login':
+                res[partner.id] = werkzeug.urls.url_join(base_url,
+                                                         "/%s?%s" % (route, werkzeug.urls.url_encode(query)))
         return res
 
     @api.multi

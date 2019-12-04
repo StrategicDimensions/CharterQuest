@@ -291,6 +291,19 @@
 			</xpath>
 		</template>
 
+		<template id="portal_my_home" name="My Portal">
+        <t t-call="portal.portal_layout">
+            <t t-set="my_details" t-value="True"/>
+            <div class="o_portal_my_home">
+                <div class="oe_structure"></div>
+                <h3 class="page-header">Your Documents</h3>
+                <ul class="o_portal_docs list-group">
+                </ul>
+            </div>
+            <div class="col-md-12 oe_structure"/>
+        </t>
+    </template>
+
 		<template id="registration_attendee_details_inherit" inherit_id="website_event.registration_attendee_details">
 			<xpath expr="//div[@class='row']" position="replace">
 				<div class="col-md-4 event_name"><strong>Name</strong></div>
