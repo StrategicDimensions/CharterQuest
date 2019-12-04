@@ -76,7 +76,10 @@ class CfoHome(web.Home):
     @http.route(['/login'], type='http', auth="public", website=True)
     def login(self, **post):
         value = {}
+        print("\n\n\n\n====post=======",post)
         request.session['user_type'] = post.get('user_type')
+        if post.get('login'):
+            value['login'] = post.get('login')
         if post.get('team_id'):
             value['team_id'] = int(post.get('team_id'))
         if post.get('error'):
@@ -85,6 +88,9 @@ class CfoHome(web.Home):
 
     @http.route('/web/login', type='http', auth="none", sitemap=False)
     def web_login(self, redirect=None, **kw):
+        cfo_aspirant_id = request.env['cfo.snr.aspirants'].sudo().search(
+            [('email_1', '=', kw.get('login')), ('is_request', '=', True)])
+        print("\n\n\n\n\n============cfo_aspirant_id===",cfo_aspirant_id)
         ensure_db()
         request.params['login_success'] = False
         if request.httprequest.method == 'GET' and redirect and request.session.uid:
@@ -102,8 +108,15 @@ class CfoHome(web.Home):
         if request.httprequest.method == 'POST':
             old_uid = request.uid
             uid = request.session.authenticate(request.session.db, request.params['login'], request.params['password'])
-            if uid is not False:
+            if cfo_aspirant_id and kw.get('team'):
+                return http.request.redirect('/is_from_request_id?team_id=' + str(kw.get('team')))
+
+            if uid is not False and cfo_aspirant_id:
                 request.params['login_success'] = True
+                if kw.get('cfo_login'):
+                    print("\n\n\n===================call cfo login==========")
+                    request.session['cfo_login'] = True
+                    return http.request.redirect('/my/home')
                 return http.redirect_with_hash(self._login_redirect(uid, redirect=redirect))
             request.uid = old_uid
             values['error'] = _("Wrong login/password")
@@ -702,7 +715,7 @@ class CfoHome(web.Home):
                     return http.redirect_with_hash(self._login_redirect(uid, redirect='/'))
                 request.uid = old_uid
                 values['error'] = _('Your Email Address/Password is Incorrect')
-                return request.redirect('/login?error=%s' % values['error'])
+                # return request.redirect('/login?error=%s' % values['error'])
         else:
             if 'error' in request.params and request.params.get('error') == 'access':
                 values['error'] = _('Only employee can access this database. Please contact the administrator.')
@@ -989,7 +1002,7 @@ class CfoHome(web.Home):
                         'user_id': user.id,
                         'cfo_competition_year': str(post.get('year'))
                     })
-                user.with_context(create_user=True, cfo_login=True, user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).reset_password()
+                user.with_context(create_user=True,user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).reset_password()
             if post.get('from_acadamic'):
                 if post.get('user_type') in ['Leader']:
                     request.env['cfo.snr.aspirants'].sudo().create({
@@ -1029,7 +1042,7 @@ class CfoHome(web.Home):
                         'user_id': user.id,
                         'cfo_competition_year': str(post.get('year'))
                     })
-                user.with_context(create_user=True, cfo_login=True, user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).reset_password()
+                user.with_context(create_user=True,user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).reset_password()
             if post.get('from_employer'):
                 if post.get('user_type') in ['Leader']:
                     request.env['cfo.snr.aspirants'].sudo().create({
@@ -1069,7 +1082,7 @@ class CfoHome(web.Home):
                         'user_id': user.id,
                         'cfo_competition_year': str(post.get('year'))
                     })
-                user.with_context(create_user=True, cfo_login=True, user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).reset_password()
+                user.with_context(create_user=True, user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).reset_password()
 
             if post.get('from_jnr_school'):
                 if post.get('user_type') in ['Leader']:
@@ -1110,7 +1123,7 @@ class CfoHome(web.Home):
                         'user_id': user.id,
                         'cfo_competition_year': str(post.get('year'))
                     })
-                user.with_context(create_user=True, cfo_login=True, user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).reset_password()
+                user.with_context(create_user=True,user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).reset_password()
         #     if post.get('from_aspirant') or post.get('from_acadamic') or post.get('from_employer') or post.get('from_jnr_school'):
         #         create_mode = bool(self.env.context.get('create_user'))
         #

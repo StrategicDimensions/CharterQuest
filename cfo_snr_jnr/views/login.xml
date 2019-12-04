@@ -93,10 +93,19 @@
                     <t t-if="team_id">
                         <input type="hidden" name="team" t-att-value="team_id"/>
                     </t>
+                    <div class="form-group field-db" t-if="databases and len(databases) &gt; 1">
+                    <label for="db" class="control-label">Database</label>
+                    <div class="input-group">
+                        <input type="text" name="db" t-att-value="request.db" id="db" class="form-control" required="required" readonly="readonly"/>
+                        <span class="input-group-btn">
+                          <a href="/web/database/selector" class="btn btn-default">Select <i class="fa fa-database"></i></a>
+                        </span>
+                    </div>
+                </div>
                     <div class="form-group field-login">
                         <label for="login" class="control-label">Email</label>
                         <input type="email" name="login" t-att-value="login" id="login" class="form-control"
-                               placeholder="Email" required="required" autofocus="autofocus" autocapitalize="off"/>
+                               placeholder="Email" required="required" autofocus="autofocus" autocapitalize="off" t-att-readonly="'readonly' if login else None" />
                     </div>
                     <div class="form-group field-password">
                         <label for="password" class="control-label">Password</label>
@@ -2956,7 +2965,7 @@
                                                    value="Leader"/>
                                         </td>
                                         <td>
-                                            <input type="text" name="email" class="form-control team_email" required="true"
+                                            <input type="email" name="email" class="form-control team_email" required="true"
                                                    placeholder="Enter Email Address"/>
                                         </td>
                                         <td>
@@ -3044,7 +3053,7 @@
                                                                class="form-control user_type" value="Member"/>
                                                     </td>
                                                     <td>
-                                                        <input type="text" readonly="True" name="email"
+                                                        <input type="email" readonly="True" name="email"
                                                                class="form-control admin_email"
                                                                t-att-value="member_id.related_user_id.email_1"
                                                                style="width:100%;"/>
@@ -3084,7 +3093,7 @@
                                                    value="Member"/>
                                         </td>
                                         <td>
-                                            <input type="text" name="email" class="form-control team_email email_123"
+                                            <input type="email" name="email" class="form-control team_email email_123"
                                                    placeholder="Enter Email Address" required="true"/>
                                         </td>
                                         <td>
@@ -3207,8 +3216,8 @@
                                                        value="Mentor"/>
                                             </td>
                                             <td>
-                                                <input type="text" name="email" class="form-control team_email"
-                                                       placeholder="Enter Email Address" required="true"/>
+                                                <input type="email" name="email" class="form-control team_email"
+                                                       placeholder="Enter Email Address" required="true" />
                                             </td>
                                             <td>
                                                 <input type="text" name="member_name" placeholder="Name" required="true"
@@ -3325,7 +3334,7 @@
                                                        value="Brand Ambassador"/>
                                             </td>
                                             <td>
-                                                <input type="text" name="email" class="form-control team_email" required="true"
+                                                <input type="email" name="email" class="form-control team_email" required="true"
                                                        placeholder="Enter Email Address"/>
                                             </td>
                                             <td>
@@ -3545,7 +3554,7 @@
                                 <tr class="custom_tr ac-row-data-list hide">
                                     <td style="padding-right: 10px;">Email</td>
                                     <td>
-                                        <input type="text" name="email" class="form-control team_email"/>
+                                        <input type="email" name="email" class="form-control team_email"/>
                                     </td>
                                     <td>
                                         <select name="user_type" class="form-control user_type">
@@ -4855,7 +4864,7 @@
                                                        value="Leader"/>
                                             </td>
                                             <td>
-                                                <input type="text" name="email" class="form-control team_email"
+                                                <input type="email" name="email" class="form-control team_email"
                                                        required="1" placeholder="Enter Email Address"/>
                                             </td>
                                             <td>
@@ -4982,7 +4991,7 @@
                                                        value="Member"/>
                                             </td>
                                             <td>
-                                                <input type="text" name="email" class="form-control team_email"
+                                                <input type="email" name="email" class="form-control team_email"
                                                        placeholder="Enter Email Address" required="true"/>
                                             </td>
                                             <td>
@@ -5110,7 +5119,7 @@
                                                            value="Mentor"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="email" class="form-control team_email"
+                                                    <input type="email" name="email" class="form-control team_email"
                                                            placeholder="Enter Email Address" required="true"/>
                                                 </td>
                                                 <td>
@@ -5148,7 +5157,7 @@
                                                     </t>
                                                 </td>
                                                 <td>
-                                                    <t t-if="acadamic_team">
+                                                    <t t-if="acadamic_team ">
                                                         <button class="btn btn-danger request-join" style="display:none;"
                                                             t-att-team-id="acadamic_team.id">
                                                         Request to
@@ -5159,7 +5168,7 @@
                                                             Create
                                                         </button>
                                                     </t>
-                                                    <t t-if="not aspirant_team">
+                                                    <t t-if="not acadamic_team">
                                                         <button class="btn btn-danger request-join" style="display:none;">
                                                         request to
                                                         join your team
@@ -5235,7 +5244,7 @@
                                                            value="Brand Ambassador"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="email" class="form-control team_email" required="true"
+                                                    <input type="email" name="email" class="form-control team_email" required="true"
                                                            placeholder="Enter Email Address"/>
                                                 </td>
                                                 <td>
@@ -6360,7 +6369,7 @@
                                                        value="Leader"/>
                                             </td>
                                             <td>
-                                                <input type="text" name="email" class="form-control team_email"
+                                                <input type="email" name="email" class="form-control team_email"
                                                        required="true" placeholder="Enter Email Address"/>
                                             </td>
                                             <td>
@@ -6489,7 +6498,7 @@
                                                        value="Member"/>
                                             </td>
                                             <td>
-                                                <input type="text" name="email" class="form-control team_email" required="true"
+                                                <input type="email" name="email" class="form-control team_email" required="true"
                                                        placeholder="Enter Email Address"/>
                                             </td>
                                             <td>
@@ -6620,7 +6629,7 @@
                                                            value="Mentor"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="email" class="form-control team_email" required="true"
+                                                    <input type="email" name="email" class="form-control team_email" required="true"
                                                            placeholder="Enter Email Address"/>
                                                 </td>
                                                 <td>
@@ -6747,7 +6756,7 @@
                                                            value="Brand Ambassador"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="email" class="form-control team_email" required="true"
+                                                    <input type="email" name="email" class="form-control team_email" required="true"
                                                            placeholder="Enter Email Address"/>
                                                 </td>
                                                 <td>
