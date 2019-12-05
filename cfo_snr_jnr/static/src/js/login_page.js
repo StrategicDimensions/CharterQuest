@@ -774,8 +774,28 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                             self.parents('tr').find('.request-join').hide().attr('user_id', '');
                             self.parents('tr').find('.create_member').hide();
                             request_list.push({'email': email, 'user_type': user_type, 'user_id': user_id})
-                        }
-                        else {
+
+                        }else if (result.update_bio){
+                            console.log("\n\n\n\n\n\n==========result.update_bio=======",result.update_bio)
+                            if(user_type == 'Member'){
+                                    self.parents('tr').remove();
+                                    $('button.member-add').css('display', 'block');
+                                }
+                                if(user_type == 'Leader'){
+                                    self.parents('tr').remove();
+                                    $('button.leader-add-acadamic').css('display', 'block');
+                                }
+                                if (user_type == 'Mentor'){
+                                    self.parents('tr').hide();
+                                    $('button.mentor-add').css('display', 'block');
+                                }
+                                if (user_type == 'Brand Ambassador'){
+                                    self.parents('tr').hide();
+                                    $('button.amb-add').css('display', 'block');
+                                }
+                                $('#member_update_bio').modal('show');
+
+                        }else {
                             $(document).ready(function () {
                                 if (user_type == 'Member' || user_type == 'Leader'){
                                     $("#Label1").text('Mentor OR Brand Ambassador');

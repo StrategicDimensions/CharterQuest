@@ -193,6 +193,10 @@ class ResPartner(models.Model):
                 query['token'] = partner.sudo().signup_token
             elif partner.user_ids:
                 query['login'] = partner.user_ids[0].login
+                if partner.user_ids[0].state == 'new':
+                    route = 'reset_password'
+                if partner.user_ids[0].state == 'active':
+                    route = 'login'
                 # res[partner.id] = werkzeug.urls.url_join(base_url,
                 #                                          "/%s?%s" % (route, werkzeug.urls.url_encode(query)))
                 # return res

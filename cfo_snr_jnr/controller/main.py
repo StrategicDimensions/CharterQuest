@@ -45,6 +45,7 @@ class CfoHome(web.Home):
     @http.route('/web/reset_password', type='http', auth='public', website=True, sitemap=False)
     def web_auth_reset_password(self, *args, **kw):
         qcontext = self.get_auth_signup_qcontext()
+        print("\n\n\n\n==============kw============",kw,qcontext)
         if not qcontext.get('token') and not qcontext.get('reset_password_enabled'):
             raise werkzeug.exceptions.NotFound()
         qcontext['cfo_logn'] = kw.get('cfo_login')
@@ -54,7 +55,8 @@ class CfoHome(web.Home):
                     self.do_signup(qcontext)
                     if kw.get('cfo_login'):
                         request.session['cfo_login'] = True
-                    return super(CfoHome, self).web_login(*args, **kw)
+                        return http.request.redirect('/my/home')
+                    return self.web_login(*args, **kw)
                 else:
                     login = qcontext.get('login')
                     assert login, _("No login provided.")
@@ -69,7 +71,7 @@ class CfoHome(web.Home):
             except Exception as e:
                 qcontext['error'] = str(e)
 
-        response = request.render('auth_signup.reset_password', qcontext)
+        response = request.render('cfo_snr_jnr.reset_password', qcontext)
         response.headers['X-Frame-Options'] = 'DENY'
         return response
 
@@ -715,7 +717,7 @@ class CfoHome(web.Home):
                     return http.redirect_with_hash(self._login_redirect(uid, redirect='/'))
                 request.uid = old_uid
                 values['error'] = _('Your Email Address/Password is Incorrect')
-                # return request.redirect('/login?error=%s' % values['error'])
+                return request.redirect('/login?error=%s' % values['error'])
         else:
             if 'error' in request.params and request.params.get('error') == 'access':
                 values['error'] = _('Only employee can access this database. Please contact the administrator.')
@@ -888,34 +890,39 @@ class CfoHome(web.Home):
     @http.route('/request_to_join',type='json', auth="public", website=True)
     def check_request_member(self, **post):
         team_member = False
-        all_team = request.env['cfo.team.snr'].search([])
-        print("\n\n\n\n\n===========acadamic_member_list========", post.get('acadamic_member_list'), all_team)
-        for team in all_team:
-            print("\n\n\n\n==========type=======",team.team_type)
-            if team.team_type == 'CFO Aspirant':
-                for member in team.aspirant_team_member_ids:
-                    if post.get('email') == member.email:
-                        team_member = True
-            if team.team_type == 'Employer':
-                for member in team.aspirant_team_member_ids:
-                    if post.get('email') == member.email:
-                        team_member = True
-        if post.get('user_type') == 'Brand Ambassador' or post.get('user_type') == 'Mentor':
-            amb_id = request.env['brand.ambassador.snr'].sudo().search(
-                [('user_id', '=', int(post.get('user_id')))])
-            mentor_id = request.env['mentors.snr'].sudo().search(
-                [('user_id', '=', int(post.get('user_id')))])
-            if mentor_id or amb_id:
-                return {'request_to_join': True}
-            else:
-                return {'request_to_join': False}
-        if post.get('user_type') in ['Leader', 'Member']:
-            member_id = request.env['cfo.snr.aspirants'].sudo().search(
-                [('user_id', '=', int(post.get('user_id')))])
-            if member_id:
-                return {'request_to_join': True}
-            else:
-                return {'request_to_join': False}
+        # all_team = request.env['cfo.team.snr'].search([])
+        # print("\n\n\n\n\n===========acadamic_member_list========", post.get('acadamic_member_list'), all_team)
+        # for team in all_team:
+        #     print("\n\n\n\n==========type=======",team.team_type)
+        #     if team.team_type == 'CFO Aspirant':
+        #         for member in team.aspirant_team_member_ids:
+        #             if post.get('email') == member.email:
+        #                 team_member = True
+        #     if team.team_type == 'Employer':
+        #         for member in team.aspirant_team_member_ids:
+        #             if post.get('email') == member.email:
+        #                 team_member = True
+        res = request.env['res.users'].sudo().search([('login', '=', post.get('email'))])
+        if res.state == 'new':
+            print("\n\n\n\n=========res.state=====",res.state)
+            return {'update_bio':True}
+        else:
+            if post.get('user_type') == 'Brand Ambassador' or post.get('user_type') == 'Mentor':
+                amb_id = request.env['brand.ambassador.snr'].sudo().search(
+                    [('user_id', '=', int(post.get('user_id')))])
+                mentor_id = request.env['mentors.snr'].sudo().search(
+                    [('user_id', '=', int(post.get('user_id')))])
+                if mentor_id or amb_id:
+                    return {'request_to_join': True}
+                else:
+                    return {'request_to_join': False}
+            if post.get('user_type') in ['Leader', 'Member']:
+                member_id = request.env['cfo.snr.aspirants'].sudo().search(
+                    [('user_id', '=', int(post.get('user_id')))])
+                if member_id:
+                    return {'request_to_join': True}
+                else:
+                    return {'request_to_join': False}
     @http.route('/get_cfo_snr_member', type='json', auth="public", website=True)
     def get_cfo_snr_member(self, **post):
         # team_member = request.env['cfo.snr.member.add'].sudo().search([],limit=1, order="id")
@@ -1002,7 +1009,7 @@ class CfoHome(web.Home):
                         'user_id': user.id,
                         'cfo_competition_year': str(post.get('year'))
                     })
-                user.with_context(create_user=True,user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).reset_password()
+                user.with_context(create_user=True,user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).create_password()
             if post.get('from_acadamic'):
                 if post.get('user_type') in ['Leader']:
                     request.env['cfo.snr.aspirants'].sudo().create({
@@ -1042,7 +1049,7 @@ class CfoHome(web.Home):
                         'user_id': user.id,
                         'cfo_competition_year': str(post.get('year'))
                     })
-                user.with_context(create_user=True,user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).reset_password()
+                user.with_context(create_user=True,user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).create_password()
             if post.get('from_employer'):
                 if post.get('user_type') in ['Leader']:
                     request.env['cfo.snr.aspirants'].sudo().create({
@@ -1082,7 +1089,7 @@ class CfoHome(web.Home):
                         'user_id': user.id,
                         'cfo_competition_year': str(post.get('year'))
                     })
-                user.with_context(create_user=True, user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).reset_password()
+                user.with_context(create_user=True, user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).create_password()
 
             if post.get('from_jnr_school'):
                 if post.get('user_type') in ['Leader']:
@@ -1123,7 +1130,7 @@ class CfoHome(web.Home):
                         'user_id': user.id,
                         'cfo_competition_year': str(post.get('year'))
                     })
-                user.with_context(create_user=True,user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).reset_password()
+                user.with_context(create_user=True,user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).create_password()
         #     if post.get('from_aspirant') or post.get('from_acadamic') or post.get('from_employer') or post.get('from_jnr_school'):
         #         create_mode = bool(self.env.context.get('create_user'))
         #
@@ -1196,47 +1203,51 @@ class CfoHome(web.Home):
             team_id = request.env['cfo.team.snr'].sudo().search([('id', '=', post.get('team_id'))])
             template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder',
                                        raise_if_not_found=False)
-            for member_id in team_id.aspirant_team_member_ids:
-                if template:
-                    template.sudo().with_context(
-                        team_id=team_id.id,
-                        team_name=team_id.name,
-                        email_to=member_id.related_user_id.email_1,
-                    ).send_mail(member_id.related_user_id.id, force_send=True)
+            print("\n\n\n\n============teamid=========",team_id,team_id.team_type)
+            if team_id.team_type == 'CFO Aspirant':
+                print("\n\n\n\n==============team_id.aspirant_team_member_ids====",team_id.aspirant_team_member_ids)
+                for member_id in team_id.aspirant_team_member_ids:
+                    print("\n\n\n\n=========memeber========",member_id)
+                    if template:
+                        template.sudo().with_context(
+                            team_id=team_id.id,
+                            team_name=team_id.name,
+                            email_to=member_id.related_user_id.email_1,
+                        ).send_mail(member_id.related_user_id.id, force_send=True)
+            if team_id.team_type == 'Academic Institution':
+                for member_id in team_id.academic_team_member_ids:
+                    if template and member_id.related_user_aspirant_id:
+                        template.sudo().with_context(
+                            team_id=team_id.id,
+                            team_name=team_id.name,
+                            email_to=member_id.related_user_aspirant_id.email_1,
+                        ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
 
-            for member_id in team_id.academic_team_member_ids:
-                if template and member_id.related_user_aspirant_id:
-                    template.sudo().with_context(
-                        team_id=team_id.id,
-                        team_name=team_id.name,
-                        email_to=member_id.related_user_aspirant_id.email_1,
-                    ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
+                    template_acadamic = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_acadamic',
+                                                        raise_if_not_found=False)
+                    if template_acadamic and member_id.related_user_id:
+                        template_acadamic.sudo().with_context(
+                            team_id=team_id.id,
+                            team_name=team_id.name,
+                            email_to=member_id.related_user_id.email_1,
+                        ).send_mail(member_id.related_user_id.id, force_send=True)
+            if team_id.team_type == 'Employer':
+                for member_id in team_id.employer_team_member_ids:
+                    if template and member_id.related_user_aspirant_id:
+                        template.sudo().with_context(
+                            team_id=team_id.id,
+                            team_name=team_id.name,
+                            email_to=member_id.related_user_aspirant_id.email_1,
+                        ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
 
-                template_acadamic = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_acadamic',
-                                                    raise_if_not_found=False)
-                if template_acadamic and member_id.related_user_id:
-                    template_acadamic.sudo().with_context(
-                        team_id=team_id.id,
-                        team_name=team_id.name,
-                        email_to=member_id.related_user_id.email_1,
-                    ).send_mail(member_id.related_user_id.id, force_send=True)
-
-            for member_id in team_id.employer_team_member_ids:
-                if template and member_id.related_user_aspirant_id:
-                    template.sudo().with_context(
-                        team_id=team_id.id,
-                        team_name=team_id.name,
-                        email_to=member_id.related_user_aspirant_id.email_1,
-                    ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
-
-                template_employer = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_employer',
-                                                    raise_if_not_found=False)
-                if template_employer and member_id.related_user_id:
-                    template_employer.sudo().with_context(
-                        team_id=team_id.id,
-                        team_name=team_id.name,
-                        email_to=member_id.related_user_id.email_1,
-                    ).send_mail(member_id.related_user_id.id, force_send=True)
+                    template_employer = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_employer',
+                                                        raise_if_not_found=False)
+                    if template_employer and member_id.related_user_id:
+                        template_employer.sudo().with_context(
+                            team_id=team_id.id,
+                            team_name=team_id.name,
+                            email_to=member_id.related_user_id.email_1,
+                        ).send_mail(member_id.related_user_id.id, force_send=True)
         return True
 
     @http.route('/download_report', type='json', auth="public", website=True)

@@ -40,7 +40,7 @@ class ResUsers(models.Model):
             raise Exception(_('Reset Password: Email Does not exist, Please Register'))
         return users.action_reset_password()
 
-    def reset_password(self):
+    def create_password(self):
         create_mode = bool(self.env.context.get('create_user'))
 
         expiration = False if create_mode else now(days=+1)
