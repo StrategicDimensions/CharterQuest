@@ -25,16 +25,16 @@ odoo.define('cfo_snr_jnr.cookie_notice', function (require) {
     base.ready().done(function () {
     if( (navigator.userAgent.indexOf("Chrome") != -1) || (navigator.userAgent.indexOf("Firefox") != -1)){
          $(document).find('#website_cookie_notice').css("display","none");
-        $(".cc-cookies .btn-primary").click(function (e) {
+       }
+     $(".cc-cookies .btn-primary").click(function (e) {
             e.preventDefault();
             ajax.jsonRpc('/cfo_snr_jnr/ok', 'call')
                 .then(function (data) {
                     if (data.result === 'ok') {
-                        $(e.target).closest(".cc-cookies").hide("fast");
+                        $(e.target).closest(".cc-cookies").hide();
                     }
                 });
         });
-        }
     });
 
 }
