@@ -143,6 +143,7 @@ class EmployersSenior(models.Model):
                                  string='Name', ondelete='restrict',
                                  help='Partner-related data of the user', domain=[('cfo_user', '=', True)])
     updated_emp_bio = fields.Boolean('Updated Employer BIO')
+    aspirant_id = fields.Many2one('cfo.team.snr', 'Aspirant ID')
     user_id = fields.Many2one('res.users', 'Related User')
     cfo_competition_year = fields.Selection(
         [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')

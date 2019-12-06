@@ -776,7 +776,6 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                             request_list.push({'email': email, 'user_type': user_type, 'user_id': user_id})
 
                         }else if (result.update_bio){
-                            console.log("\n\n\n\n\n\n==========result.update_bio=======",result.update_bio)
                             if(user_type == 'Member'){
                                     self.parents('tr').remove();
                                     $('button.member-add').css('display', 'block');

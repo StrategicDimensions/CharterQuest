@@ -3865,9 +3865,9 @@
             </t>
         </template>
         <template id="cfo_senior_academic_institution">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 oe_structure"/>
+           <div class="row oe_structure">
+                <div class="col-md-12 oe_structure"/>
+                <div class="col-md-12">
                     <div class="col-md-3">
                         <t t-set="team_count" t-value="0"/>
                         <t t-set="count_report_submit" t-value="0"/>
@@ -3882,29 +3882,24 @@
                                 </t>
                             </t>
                         </t>
-                        <div>Teams</div>
-                        <div>
-                            <b>
-                                <t t-esc="len(snr_academic_institution.cfo_team_ids)"
-                                   t-if="snr_academic_institution"></t>
-                            </b>
+                        <div class="col-md-12">
+                            <h4>Teams</h4>
+                            <strong>
+                                <t t-esc="len(snr_academic_institution.cfo_team_ids)" t-if="snr_academic_institution"></t>
+                            </strong>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div>Reports Submitted</div>
-                        <div>
-                            <b>
-                                <t t-esc="count_report_submit"/>
-                            </b>
-                        </div>
+                            <h4>Reports Submitted</h4>
+                            <strong>
+                               <t t-esc="count_report_submit"/>
+                            </strong>
                     </div>
                     <div class="col-md-3">
-                        <div>Report Submissions Pending</div>
-                        <div>
-                            <b>
+                            <h4>Report Submissions Pending</h4>
+                            <strong>
                                 <t t-esc="count_not_report_submit"/>
-                            </b>
-                        </div>
+                            </strong>
                     </div>
                     <div class="col-md-3">
                         <form action="/cfo_senior" method="GET">
@@ -5347,9 +5342,9 @@
         </template>
 
         <template id="cfo_senior_employee">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 oe_structure"/>
+            <div class="row oe_structure">
+                <div class="col-md-12 oe_structure"/>
+                <div class="col-md-12">
                     <div class="col-md-3">
                         <t t-set="team_count" t-value="0"/>
                         <t t-set="count_report_submit" t-value="0"/>
@@ -5364,28 +5359,24 @@
                                 </t>
                             </t>
                         </t>
-                        <div>Teams</div>
-                        <div>
-                            <b>
+                        <div class="col-md-12">
+                            <h4>Teams</h4>
+                            <strong>
                                 <t t-esc="len(snr_employers.cfo_team_ids)" t-if="snr_employers"></t>
-                            </b>
+                            </strong>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div>Reports Submitted</div>
-                        <div>
-                            <b>
-                                <t t-esc="count_report_submit"/>
-                            </b>
-                        </div>
+                   <div class="col-md-3">
+                            <h4>Reports Submitted</h4>
+                            <strong>
+                               <t t-esc="count_report_submit"/>
+                            </strong>
                     </div>
                     <div class="col-md-3">
-                        <div>Report Submissions Pending</div>
-                        <div>
-                            <b>
+                            <h4>Report Submissions Pending</h4>
+                            <strong>
                                 <t t-esc="count_not_report_submit"/>
-                            </b>
-                        </div>
+                            </strong>
                     </div>
                     <div class="col-md-3">
                         <form action="/cfo_senior" method="GET">
@@ -6194,6 +6185,42 @@
                                        t-if="employers_team"/>
                                 <h3>Team</h3>
                             </div>
+                            <div id="diffrent_team_email_modal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><b>This user from</b></p><label name="Label1" id="Label1" runat="server" Text=""></label>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="diffrent_team_name_modal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Team name should be unique..</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div id="acadamic_leader_member_diffrent" class="modal fade" role="dialog">
                                 <div class="modal-dialog">
                                     <!-- Modal content-->
@@ -6212,6 +6239,42 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="admin_email_not_allow" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Admin cannot be part of a Brand Ambassador/Mentor/Leader/Member.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="member_update_bio" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>"Member's Profile not activated. Ask Member to update bio before being added to your team"</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-8">
                                 <label class="control-label"
                                        for="name">
@@ -6221,6 +6284,7 @@
                                 <input type="hidden" name="emp_country"
                                        t-att-value="snr_employers.emp_country_id.name"/>
                                 <input type="hidden" name="state" t-att-value="snr_employers.state_id.name"/>
+                                <input type="hidden" name="school_name" t-att-value="snr_employers.school_name"/>
                                 <t t-if="employers_team">
                                     <input type="text" name="name"
                                            id="name"
