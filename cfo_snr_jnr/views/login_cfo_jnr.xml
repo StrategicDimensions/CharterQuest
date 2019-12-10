@@ -1796,10 +1796,10 @@
 	    <!-- High School Template -->
 	    
 	    <template id="cfo_jnr_high_school">
-            <div class="container">
-                <div class="row">
-                	<div class="col-md-12 oe_structure"/>	
-                   <div class="col-md-3">
+            <div class="row oe_structure">
+                <div class="col-md-12 oe_structure"/>
+                <div class="col-md-12">
+                    <div class="col-md-3">
                        <t t-set="team_count" t-value="0"/>
                        <t t-set="count_report_submit" t-value="0"/>
                        <t t-set="count_not_report_submit" t-value="0"/>
@@ -1813,17 +1813,25 @@
                              </t> 
                          </t>
                      </t>
-                    <div>Teams</div>
-                    <div><b><t t-esc="len(jnr_high_school.cfo_team_ids)" t-if="jnr_high_school"></t></b></div>
+                    <div class="col-md-12">
+                        <h4>Teams</h4>
+                        <strong>
+                            <t t-esc="len(jnr_high_school.cfo_team_ids)" t-if="jnr_high_school"></t>
+                        </strong>
+                    </div>
                    </div>
                    <div class="col-md-3">
-                       <div>Reports Submitted</div>
-                       <div><b><t t-esc="count_report_submit"/></b></div>
-                   </div>
-                   <div class="col-md-3">
-                     <div>Report Submissions Pending</div>
-                     <div><b><t t-esc="count_not_report_submit"/></b></div>
-                   </div>
+                            <h4>Reports Submitted</h4>
+                            <strong>
+                               <t t-esc="count_report_submit"/>
+                            </strong>
+                    </div>
+                    <div class="col-md-3">
+                            <h4>Report Submissions Pending</h4>
+                            <strong>
+                                <t t-esc="count_not_report_submit"/>
+                            </strong>
+                    </div>
                    <div class="col-md-3">
                       <form action="/cfo_junior" method="GET">
                        <input type="hidden" name="cfo_team" value="True"/>
