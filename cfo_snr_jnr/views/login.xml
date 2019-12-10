@@ -118,6 +118,10 @@
                     </div>
                     <input type="hidden" name="redirect" t-att-value="redirect"/>
                     <input type="hidden" name="cfo_login" value="true"/>
+                    <input type="hidden" name="is_request" value="true"/>
+                    <t t-if="team_id">
+                       <input type="hidden" name="team" value="team_id"/>
+                    </t>
                     <div class="clearfix oe_login_buttons">
                         <a href="/signup" class="btn btn-link pull-right">
                             Register
@@ -137,7 +141,7 @@
                     <form action="/cfo_senior_request" method="post">
                         <input type="hidden" name="team_id" t-att-value="team_id"/>
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-
+                        <input type="hidden" name="cfo_login" t-att-value="true"/>
                         <div class="text-center hidden-print mt16 mb16" id="quotation_toolbar">
                             <button type="submit" class="btn btn-success" t-att-value="1" name="button">
                                 <i class="fa fa-check"></i>
