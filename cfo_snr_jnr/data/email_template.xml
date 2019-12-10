@@ -150,11 +150,13 @@
                                                                                 <t t-set="url_value"
                                                                                    t-value="request.env['ir.config_parameter'].sudo().search([('key','=','web.base.url').value])"/>
                                                                                 <a
+                                                                                        name="accept"
                                                                                         style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
                                                                                         href="${object.user_id.signup_url}">
                                                                                     Accept
                                                                                 </a>
                                                                                 <a
+                                                                                        name="decline"
                                                                                         style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;'
                                                                                         href="${object.user_id.signup_url}">
                                                                                     Decline

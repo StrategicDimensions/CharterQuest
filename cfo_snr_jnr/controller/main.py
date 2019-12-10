@@ -45,7 +45,6 @@ class CfoHome(web.Home):
     @http.route('/web/reset_password', type='http', auth='public', website=True, sitemap=False)
     def web_auth_reset_password(self, *args, **kw):
         qcontext = self.get_auth_signup_qcontext()
-        print("\n\n\n\n==============kw============",kw,qcontext)
         if not qcontext.get('token') and not qcontext.get('reset_password_enabled'):
             raise werkzeug.exceptions.NotFound()
         qcontext['cfo_logn'] = kw.get('cfo_login')
@@ -82,6 +81,8 @@ class CfoHome(web.Home):
         request.session['user_type'] = post.get('user_type')
         if post.get('login'):
             value['login'] = post.get('login')
+        if post.get('is_request'):
+            value['is_request'] = post.get('is_request')
         if post.get('team_id'):
             value['team_id'] = int(post.get('team_id'))
         if post.get('error'):
@@ -90,9 +91,9 @@ class CfoHome(web.Home):
 
     @http.route('/web/login', type='http', auth="none", sitemap=False)
     def web_login(self, redirect=None, **kw):
+        print("\n\n\n\n------callll")
         cfo_aspirant_id = request.env['cfo.snr.aspirants'].sudo().search(
             [('email_1', '=', kw.get('login')), ('is_request', '=', True)])
-        print("\n\n\n\n\n============cfo_aspirant_id===",cfo_aspirant_id)
         ensure_db()
         request.params['login_success'] = False
         if request.httprequest.method == 'GET' and redirect and request.session.uid:
@@ -116,7 +117,6 @@ class CfoHome(web.Home):
             if uid is not False and cfo_aspirant_id:
                 request.params['login_success'] = True
                 if kw.get('cfo_login'):
-                    print("\n\n\n===================call cfo login==========")
                     request.session['cfo_login'] = True
                     return http.request.redirect('/my/home')
                 return http.redirect_with_hash(self._login_redirect(uid, redirect=redirect))
@@ -132,6 +132,63 @@ class CfoHome(web.Home):
         if not odoo.tools.config['list_db']:
             values['disable_database_manager'] = True
 
+        response = request.render('web.login', values)
+        response.headers['X-Frame-Options'] = 'DENY'
+        return response
+
+    @http.route()
+    def web_login(self, redirect=None, **kw):
+        cfo_aspirant_id = request.env['cfo.snr.aspirants'].sudo().search(
+            [('email_1', '=', kw.get('login')), ('is_request', '=', True)])
+        web.ensure_db()
+        request.params['login_success'] = False
+        if request.httprequest.method == 'GET' and redirect and request.session.uid:
+            return http.redirect_with_hash(redirect)
+        if not request.uid:
+            request.uid = odoo.SUPERUSER_ID
+        values = request.params.copy()
+        try:
+            values['databases'] = http.db_list()
+        except odoo.exceptions.AccessDenied:
+            values['databases'] = None
+
+        if request.httprequest.method == 'POST':
+            cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
+            qry = "SELECT id from res_users where login= '" + request.params['login'] + "';"
+            cr.execute(qry)
+            row_username = cr.fetchone()
+            if not row_username:
+                values['error'] = _("Email Address Does Not Exist, Please Register")
+                return request.redirect('/login?error=%s' % values['error'])
+            else:
+                old_uid = request.uid
+                uid = request.session.authenticate(request.session.db, request.params['login'],
+                                                   request.params['password'])
+                if cfo_aspirant_id and kw.get('team'):
+                    return http.request.redirect('/is_from_request_id?team_id=%s&cfo_login=%s'%(str(kw.get('team')),kw.get('cfo_login')))
+
+                if uid is not False and not cfo_aspirant_id:
+                    request.params['login_success'] = True
+                    if kw.get('cfo_login'):
+                        request.session['cfo_login'] = True
+                        return http.request.redirect('/my/home')
+                    return http.redirect_with_hash(self._login_redirect(uid, redirect='/'))
+                request.uid = old_uid
+                values['error'] = _('Your Email Address/Password is Incorrect')
+                return request.redirect('/login?error=%s' % values['error'])
+        else:
+            if 'error' in request.params and request.params.get('error') == 'access':
+                values['error'] = _('Only employee can access this database. Please contact the administrator.')
+                return request.redirect('/login?error=%s' % values['error'])
+
+        if 'login' not in values and request.session.get('auth_login'):
+            values['login'] = request.session.get('auth_login')
+
+        if not odoo.tools.config['list_db']:
+            values['disable_database_manager'] = True
+        # if kw.get('cfo_login') == 'true':
+        #     return request.redirect('/login')
+        # else:
         response = request.render('web.login', values)
         response.headers['X-Frame-Options'] = 'DENY'
         return response
@@ -677,64 +734,6 @@ class CfoHome(web.Home):
                     })
         return request.render('cfo_snr_jnr.cfo_senior', values)
 
-    @http.route()
-    def web_login(self, redirect=None, **kw):
-        cfo_aspirant_id = request.env['cfo.snr.aspirants'].sudo().search(
-            [('email_1', '=', kw.get('login')), ('is_request', '=', True)])
-        web.ensure_db()
-        request.params['login_success'] = False
-        if request.httprequest.method == 'GET' and redirect and request.session.uid:
-            return http.redirect_with_hash(redirect)
-        if not request.uid:
-            request.uid = odoo.SUPERUSER_ID
-        values = request.params.copy()
-        try:
-            values['databases'] = http.db_list()
-        except odoo.exceptions.AccessDenied:
-            values['databases'] = None
-
-        if request.httprequest.method == 'POST':
-            cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
-            qry = "SELECT id from res_users where login= '" + request.params['login'] + "';"
-            cr.execute(qry)
-            row_username = cr.fetchone()
-            if not row_username:
-                values['error'] = _("Email Address Does Not Exist, Please Register")
-                return request.redirect('/login?error=%s' % values['error'])
-            else:
-                old_uid = request.uid
-                uid = request.session.authenticate(request.session.db, request.params['login'],
-                                                   request.params['password'])
-                #
-                if cfo_aspirant_id and kw.get('team'):
-                    return http.request.redirect('/is_from_request_id?team_id=' + str(kw.get('team')))
-
-                if uid is not False and not cfo_aspirant_id:
-                    request.params['login_success'] = True
-                    if kw.get('cfo_login'):
-                        request.session['cfo_login'] = True
-                        return http.request.redirect('/my/home')
-                    return http.redirect_with_hash(self._login_redirect(uid, redirect='/'))
-                request.uid = old_uid
-                values['error'] = _('Your Email Address/Password is Incorrect')
-                return request.redirect('/login?error=%s' % values['error'])
-        else:
-            if 'error' in request.params and request.params.get('error') == 'access':
-                values['error'] = _('Only employee can access this database. Please contact the administrator.')
-                return request.redirect('/login?error=%s' % values['error'])
-
-        if 'login' not in values and request.session.get('auth_login'):
-            values['login'] = request.session.get('auth_login')
-
-        if not odoo.tools.config['list_db']:
-            values['disable_database_manager'] = True
-        # if kw.get('cfo_login') == 'true':
-        #     return request.redirect('/login')
-        # else:
-        response = request.render('web.login', values)
-        response.headers['X-Frame-Options'] = 'DENY'
-        return response
-
     @http.route('/is_from_request_id', type="http", auth="public", website=True)
     def is_from_request_id(self, **post):
         return request.render('cfo_snr_jnr.is_from_request_id', post)
@@ -754,6 +753,8 @@ class CfoHome(web.Home):
                 [('related_user_id', '=', cfo_aspirant_id.id)])
             team_member_acadamic = request.env['snr.academic.team.member'].sudo().search(
                 [('related_user_aspirant_id', '=', cfo_aspirant_id.id)])
+            team_member_employers = request.env['snr.employer.team.member'].sudo().search(
+                [('related_user_id', '=', cfo_aspirant_id.id)])
             if team_member_obj:
                 if len(team_member_obj) == 1:
                     team_member_obj.write({'member_status': 'Accept'})
@@ -770,24 +771,52 @@ class CfoHome(web.Home):
                 if len(team_member_acadamic) == 1:
                     team_member_acadamic.write({'member_status': 'Accept'})
 
-                team_member_old__acadamic_obj = request.env['snr.academic.team.member'].sudo().search(
+                team_member_old_acadamic_obj = request.env['snr.academic.team.member'].sudo().search(
                     [('related_user_aspirant_id', '=', cfo_aspirant_id.id),
                      ('team_id', '!=', int(post.get('team_id')))])
-                if team_member_old__acadamic_obj:
-                    team_member_old__acadamic_obj.unlink();
+                if team_member_old_acadamic_obj:
+                    team_member_old_acadamic_obj.unlink();
 
                 team_member_acadamic_new = request.env['snr.academic.team.member'].sudo().search(
                     [('related_user_aspirant_id', '=', cfo_aspirant_id.id), ('team_id', '=', int(post.get('team_id')))])
                 if team_member_acadamic_new:
                     team_member_acadamic_new.write({'member_status': 'Accept', 'member_accept_data': True})
 
+            if team_member_employers:
+                if len(team_member_employers) == 1:
+                    team_member_employers.write({'member_status': 'Accept'})
+
+                team_member_old_employers_obj = request.env['snr.employer.team.member'].sudo().search(
+                    [('related_user_id', '=', cfo_aspirant_id.id),
+                     ('team_id', '!=', int(post.get('team_id')))])
+                if team_member_old_employers_obj:
+                    team_member_old_employers_obj.unlink();
+
+                team_member_employers_new = request.env['snr.employer.team.member'].sudo().search(
+                    [('related_user_id', '=', cfo_aspirant_id.id), ('team_id', '=', int(post.get('team_id')))])
+                if team_member_employers_new:
+                    team_member_employers_new.write({'member_status': 'Accept', 'member_accept_data': True})
             request.session['user_type'] = ""
             return request.redirect('/cfo_senior')
-        else:
+
+        if post.get('button') == '2':
+            if request.session.get('user_type') == 'Leader':
+                cfo_aspirant_id.write({'team_leader': False, 'team_admin': False, 'team_member': False})
+            if request.session.get('user_type') == 'Member':
+                cfo_aspirant_id.write({'team_leader': False, 'team_admin': False, 'team_member': False})
+            cfo_aspirant_id.write({'is_request': False, })
             team_member_new = request.env['snr.aspirant.team.member'].sudo().search(
                 [('related_user_id', '=', cfo_aspirant_id.id), ('team_id', '=', int(post.get('team_id')))])
             if team_member_new:
                 team_member_new.write({'member_status': 'Rejected'})
+            team_member_acadamic_new = request.env['snr.academic.team.member'].sudo().search(
+                [('related_user_aspirant_id', '=', cfo_aspirant_id.id), ('team_id', '=', int(post.get('team_id')))])
+            if team_member_acadamic_new:
+                team_member_acadamic_new.write({'member_status': 'Rejected'})
+            team_member_employers_new = request.env['snr.employer.team.member'].sudo().search(
+                [('related_user_id', '=', cfo_aspirant_id.id), ('team_id', '=', int(post.get('team_id')))])
+            if team_member_employers_new:
+                team_member_employers_new.write({'member_status': 'Rejected'})
             request.session['user_type'] = ""
             return request.redirect('/cfo_senior')
 
@@ -889,7 +918,7 @@ class CfoHome(web.Home):
 
     @http.route('/request_to_join',type='json', auth="public", website=True)
     def check_request_member(self, **post):
-        team_member = False
+        # team_member = False
         # all_team = request.env['cfo.team.snr'].search([])
         # print("\n\n\n\n\n===========acadamic_member_list========", post.get('acadamic_member_list'), all_team)
         # for team in all_team:
@@ -1302,7 +1331,7 @@ class CfoHome(web.Home):
                                         team_name=team_id.ref_name,
                                         email_to=each_request.get('email'),
                                         email_cc='thecfo@charterquest.co.za',
-                                    ).send_mail(mentor_id.id, force_send=True)
+                                    ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(mentor_id.id, force_send=True)
                             if amb_id:
                                 template_amb = request.env.ref('cfo_snr_jnr.email_template_request_for_join_amb',
                                                                raise_if_not_found=False)
@@ -1313,7 +1342,7 @@ class CfoHome(web.Home):
                                         team_name=team_id.ref_name,
                                         email_to=each_request.get('email'),
                                         email_cc='thecfo@charterquest.co.za',
-                                    ).send_mail(amb_id.id, force_send=True)
+                                    ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(amb_id.id, force_send=True)
 
                         # if each_request.get('user_type') == 'Brand Ambassador':
                         #     amb_id = request.env['brand.ambassador.snr'].sudo().search(
@@ -1350,7 +1379,7 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
-                                ).send_mail(res.id, force_send=True)
+                                ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(res.id, force_send=True)
 
                             aspirant_team_member_id.write({'aspirant_member_requested': True})
                 team_id._compute_remaining_time_deadline()
@@ -1499,7 +1528,7 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
-                                ).send_mail(mentor_id.id, force_send=True)
+                                ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(mentor_id.id, force_send=True)
                         if amb_id:
                             template_amb = request.env.ref('cfo_snr_jnr.email_template_request_for_join_amb',
                                                            raise_if_not_found=False)
@@ -1511,7 +1540,7 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
-                                ).send_mail(amb_id.id, force_send=True)
+                                ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(amb_id.id, force_send=True)
 
                     # if each_request.get('user_type') == 'Brand Ambassador':
                     #     amb_id = request.env['brand.ambassador.snr'].sudo().search(
@@ -1546,7 +1575,7 @@ class CfoHome(web.Home):
                                 team_name=team_id.ref_name,
                                 email_to=each_request.get('email'),
                                 email_cc='thecfo@charterquest.co.za',
-                            ).send_mail(res.id, force_send=True)
+                            ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(res.id, force_send=True)
 
                         aspirant_team_member_id.write({'aspirant_member_requested': True})
 
@@ -1794,7 +1823,7 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
-                                ).send_mail(mentor_id.id, force_send=True)
+                                ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(mentor_id.id, force_send=True)
                         if amb_id:
                             template_amb = request.env.ref('cfo_snr_jnr.email_template_request_for_join_amb',
                                                            raise_if_not_found=False)
@@ -1805,7 +1834,7 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
-                                ).send_mail(amb_id.id, force_send=True)
+                                ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(amb_id.id, force_send=True)
 
                     if each_request.get('user_type') in ['Leader', 'Member']:
                         res = request.env['cfo.snr.aspirants'].sudo().search(
@@ -1826,7 +1855,7 @@ class CfoHome(web.Home):
                                 team_name=team_id.ref_name,
                                 email_to=each_request.get('email'),
                                 email_cc='thecfo@charterquest.co.za',
-                            ).send_mail(res.id, force_send=True)
+                            ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(res.id, force_send=True)
                         team_member_id.write({'member_requested': True})
             team_id._compute_remaining_time_deadline()
             for each in post.get('list_of_member'):
@@ -1960,7 +1989,7 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email'),
                                     email_cc = 'thecfo@charterquest.co.za',
-                                ).send_mail(mentor_id.id, force_send=True)
+                                ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(mentor_id.id, force_send=True)
                         if amb_id:
                             template_amb = request.env.ref('cfo_snr_jnr.email_template_request_for_join_amb',
                                                            raise_if_not_found=False)
@@ -1972,7 +2001,7 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
-                                ).send_mail(amb_id.id, force_send=True)
+                                ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(amb_id.id, force_send=True)
                     if each_request.get('user_type') in ['Leader', 'Member']:
                         res = request.env['cfo.snr.aspirants'].sudo().search(
                             [('user_id', '=', int(each_request.get('user_id')))])
@@ -1991,7 +2020,7 @@ class CfoHome(web.Home):
                                 team_name=team_id.ref_name,
                                 email_to=each_request.get('email'),
                                 email_cc='thecfo@charterquest.co.za',
-                            ).send_mail(res.id, force_send=True)
+                            ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(res.id, force_send=True)
                         team_member_id.write({'member_requested': True})
 
             for each in post.get('list_of_member'):
@@ -2016,7 +2045,7 @@ class CfoHome(web.Home):
                                     'team_id': team_id.id,
                                     'related_user_aspirant_id': user_aspirant.id,
                                     'user_type': each['user_type'],
-                                    'member_status': 'Accept'
+                                    'member_status': 'Pending'
                                 })
                                 user_aspirant.sudo().write({
                                     'aspirant_id': team_id.id,
@@ -2041,7 +2070,7 @@ class CfoHome(web.Home):
                             'team_id': team_id.id,
                             'related_user_id': user.id,
                             'user_type': each['user_type'],
-                            'member_status': 'Accept'
+                            'member_status': 'Pending'
                         })
                         user.sudo().write({
                             'team_status': 'Accept',
@@ -2126,7 +2155,7 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
-                                ).send_mail(mentor_id.id, force_send=True)
+                                ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(mentor_id.id, force_send=True)
                         if amb_id:
                             template_amb = request.env.ref('cfo_snr_jnr.email_template_request_for_join_amb',
                                                            raise_if_not_found=False)
@@ -2137,7 +2166,7 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
-                                ).send_mail(amb_id.id, force_send=True)
+                                ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(amb_id.id, force_send=True)
                     if each_request.get('user_type') in ['Leader', 'Member']:
                         res = request.env['cfo.snr.aspirants'].sudo().search(
                             [('user_id', '=', int(each_request.get('user_id')))])
@@ -2156,7 +2185,7 @@ class CfoHome(web.Home):
                                 team_name=team_id.ref_name,
                                 email_to=each_request.get('email'),
                                 email_cc='thecfo@charterquest.co.za',
-                            ).send_mail(res.id, force_send=True)
+                            ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(res.id, force_send=True)
                         team_member_id.write({'member_requested': True})
             team_id._compute_remaining_time_deadline()
             for each in post.get('list_of_member'):
@@ -2247,6 +2276,7 @@ class CfoHome(web.Home):
                     if each['user_type'] == 'Brand Ambassador':
                         team_id.brand_amb_id = brand_ambassador.id
                         brand_ambassador.sudo().write({
+                            'team_status': 'Pending',
                             'new_team_id': team_id.id,
                             'team_ids': [(4, team_id.id)],
                         })
@@ -2289,7 +2319,7 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
-                                ).send_mail(mentor_id.id, force_send=True)
+                                ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(mentor_id.id, force_send=True)
                         if amb_id:
                             template_amb = request.env.ref('cfo_snr_jnr.email_template_request_for_join_amb',
                                                            raise_if_not_found=False)
@@ -2301,7 +2331,7 @@ class CfoHome(web.Home):
                                     team_name=team_id.ref_name,
                                     email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
-                                ).send_mail(amb_id.id, force_send=True)
+                                ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(amb_id.id, force_send=True)
 
                     if each_request.get('user_type') in ['Leader', 'Member']:
                         res = request.env['cfo.snr.aspirants'].sudo().search(
@@ -2321,7 +2351,7 @@ class CfoHome(web.Home):
                                 team_name=team_id.ref_name,
                                 email_to=each_request.get('email'),
                                 email_cc='thecfo@charterquest.co.za',
-                            ).send_mail(res.id, force_send=True)
+                            ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(res.id, force_send=True)
                         team_member_id.write({'member_requested': True})
 
             for each in post.get('list_of_member'):

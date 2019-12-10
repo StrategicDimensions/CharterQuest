@@ -98,7 +98,7 @@ class CFOSeniorAspirants(models.Model):
                                                                      ('related_user_id', '=', self.id)])
         if member:
             member.sudo().write({
-                'member_status': 'Accept'
+                'member_status': 'Rejected'
             })
 
 
@@ -129,6 +129,32 @@ class AcademicInstitutionSenior(models.Model):
             if user:
                 self.user_id = user.id
 
+    @api.multi
+    def accept_request(self):
+        self.aspirant_id = self.new_team_id.id
+        self.is_request = False
+
+    @api.multi
+    def accept_team(self):
+        self.aspirant_id = self.new_team_id
+        self.team_status = 'Accept'
+        member = self.env['snr.academic.team.member'].sudo().search([('team_id', '=', self.aspirant_id.id),
+                                                                     ('related_user_aspirant_id', '=', self.id)])
+        if member:
+            member.sudo().write({
+                'member_status': 'Accept'
+            })
+
+    @api.multi
+    def reject_team(self):
+        self.aspirant_id = False
+        self.team_status = 'Rejected'
+        member = self.env['snr.academic.team.member'].sudo().search([('team_id', '=', self.aspirant_id.id),
+                                                                     ('related_user_aspirant_id', '=', self.id)])
+        if member:
+            member.sudo().write({
+                'member_status': 'Rejected'
+            })
 
 class EmployersSenior(models.Model):
     _name = 'employers.snr'
@@ -156,6 +182,32 @@ class EmployersSenior(models.Model):
             if user:
                 self.user_id = user.id
 
+    @api.multi
+    def accept_request(self):
+        self.aspirant_id = self.new_team_id.id
+        self.is_request = False
+
+    @api.multi
+    def accept_team(self):
+        self.aspirant_id = self.new_team_id
+        self.team_status = 'Accept'
+        member = self.env['snr.employer.team.member'].sudo().search([('team_id', '=', self.aspirant_id.id),
+                                                                     ('related_user_aspirant_id', '=', self.id)])
+        if member:
+            member.sudo().write({
+                'member_status': 'Accept'
+            })
+
+    @api.multi
+    def reject_team(self):
+        self.aspirant_id = False
+        self.team_status = 'Rejected'
+        member = self.env['snr.employer.team.member'].sudo().search([('team_id', '=', self.aspirant_id.id),
+                                                                     ('related_user_id', '=', self.id)])
+        if member:
+            member.sudo().write({
+                'member_status': 'Rejected'
+            })
 
 class VolunteersSenior(models.Model):
     _name = 'volunteers.snr'

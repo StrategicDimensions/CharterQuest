@@ -169,8 +169,12 @@ class ResPartner(models.Model):
         result = self._get_signup_url_for_action()
         for partner in self:
             partner.signup_url = result.get(partner.id, False)
+            print("\n\n\n================context========",self._context)
             if self._context.get('cfo_login'):
                 partner.signup_url +='&cfo_login=True'
+                partner.signup_url +='&is_request=True'
+                partner.signup_url +='&team_id=%s'%(self._context.get('team_id'))
+                partner.signup_url+='&user_type=%s'%(self._context.get('user_type'))
 
     def _get_signup_url_for_action(self, action=None, view_type=None, menu_id=None, res_id=None, model=None):
         """ generate a signup url for the given partner ids and action, possibly overriding
@@ -181,7 +185,6 @@ class ResPartner(models.Model):
             # when required, make sure the partner has a valid signup token
             if self.env.context.get('signup_valid') and not partner.user_ids:
                 partner.sudo().signup_prepare()
-
             route = 'login'
             # the parameters to encode for the query
             query = dict(db=self.env.cr.dbname)
