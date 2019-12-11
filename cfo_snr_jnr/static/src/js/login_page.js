@@ -589,6 +589,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         $('input[name="name"]').on('change', function () {
             var name = $(this).val();
             var student_country = $(this).parent().find('input[name="stu_country"]').val();
+            var jnr_student_country = $(this).parent().find('input[name="country"]').val();
             var employee_country = $(this).parent().find('input[name="emp_country"]').val();
             var school_name = $(document).find('input[name="school_name"]').val();
             if (student_country){
@@ -597,6 +598,10 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             if (employee_country){
                 country = employee_country;
             }
+            if (jnr_student_country){
+                country = jnr_student_country;
+            }
+
             ajax.jsonRpc("/check_team_name", 'call', {'team_name': name}).then(function (result) {
                 if (result) {
                     $(document).find('#diffrent_team_name_modal').modal('show');
@@ -807,6 +812,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                     });
             }
         });
+
         $('.create_member').on('click', function () {
             $('.team_email').attr('required', true);
             $('.team_member_name').attr('required', true);

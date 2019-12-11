@@ -959,7 +959,7 @@ class CfoHome(web.Home):
         if team_member:
             return {'team_member': team_member}
         else:
-            return {'team_member': 2}
+            return {'team_member': 3}
 
     @http.route('/get_cfo_jnr_member', type='json', auth="public", website=True)
     def get_cfo_jnr_member(self, **post):
@@ -968,7 +968,7 @@ class CfoHome(web.Home):
         if team_member:
             return {'team_member': team_member}
         else:
-            return {'team_member': 2}
+            return {'team_member': 3}
 
     @http.route('/create_new_member', type='json', auth="public", website=True)
     def create_new_member(self, **post):
