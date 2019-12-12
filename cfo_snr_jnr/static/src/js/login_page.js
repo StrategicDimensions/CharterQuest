@@ -308,8 +308,8 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             var member_type = $(document).find('.user_type').val();
 
             $TABLE_MEMBER.append($clone).focus();
-            $(document).find('.memeber_clock_true').hide();
-            $(document).find('.memeber_clock_false').show();
+            $('button.member-add').css('display', 'none');
+            $('button.member-add').css('display', 'block');
             e.preventDefault();
             var count = $(this).attr('data-count')
             if(window.location.pathname == '/cfo_senior'){
@@ -317,10 +317,10 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                 function (result) {
                     if(result['team_member']){
                        if (count >= parseInt(result['team_member'])) {
-                            $(document).find('.member-add').hide();
+                            $('button.member-add').css('display', 'none');
                         }
                         else {
-                            $(document).find('.member-add').show();
+                            $('button.member-add').css('display', 'block');
                         }
                     }
                 });

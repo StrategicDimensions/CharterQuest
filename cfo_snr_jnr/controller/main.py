@@ -918,19 +918,6 @@ class CfoHome(web.Home):
 
     @http.route('/request_to_join',type='json', auth="public", website=True)
     def check_request_member(self, **post):
-        # team_member = False
-        # all_team = request.env['cfo.team.snr'].search([])
-        # print("\n\n\n\n\n===========acadamic_member_list========", post.get('acadamic_member_list'), all_team)
-        # for team in all_team:
-        #     print("\n\n\n\n==========type=======",team.team_type)
-        #     if team.team_type == 'CFO Aspirant':
-        #         for member in team.aspirant_team_member_ids:
-        #             if post.get('email') == member.email:
-        #                 team_member = True
-        #     if team.team_type == 'Employer':
-        #         for member in team.aspirant_team_member_ids:
-        #             if post.get('email') == member.email:
-        #                 team_member = True
         res = request.env['res.users'].sudo().search([('login', '=', post.get('email'))])
         if res.state == 'new':
             print("\n\n\n\n=========res.state=====",res.state)
@@ -1239,7 +1226,7 @@ class CfoHome(web.Home):
                             team_id=team_id.id,
                             team_name=team_id.name,
                             cfo_report_deadline_date=team_id.cfo_report_deadline_date,
-                            email_to=member_id.related_user_id.email_1,
+                            # email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
             if team_id.team_type == 'Academic Institution':
                 for member_id in team_id.academic_team_member_ids:
@@ -1258,7 +1245,7 @@ class CfoHome(web.Home):
                             team_id=team_id.id,
                             team_name=team_id.name,
                             cfo_report_deadline_date=team_id.cfo_report_deadline_date,
-                            email_to=member_id.related_user_id.email_1,
+                            # email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
             if team_id.team_type == 'Employer':
                 for member_id in team_id.employer_team_member_ids:
@@ -1329,7 +1316,7 @@ class CfoHome(web.Home):
                                         user_type=each_request.get('user_type'),
                                         team_id=team_id.id,
                                         team_name=team_id.ref_name,
-                                        email_to=each_request.get('email'),
+                                        # email_to=each_request.get('email'),
                                         email_cc='thecfo@charterquest.co.za',
                                     ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(mentor_id.id, force_send=True)
                             if amb_id:
@@ -1340,7 +1327,7 @@ class CfoHome(web.Home):
                                         user_type=each_request.get('user_type'),
                                         team_id=team_id.id,
                                         team_name=team_id.ref_name,
-                                        email_to=each_request.get('email'),
+                                        # email_to=each_request.get('email'),
                                         email_cc='thecfo@charterquest.co.za',
                                     ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(amb_id.id, force_send=True)
 
@@ -1377,7 +1364,7 @@ class CfoHome(web.Home):
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email'),
+                                    # email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
                                 ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(res.id, force_send=True)
 
@@ -1526,7 +1513,7 @@ class CfoHome(web.Home):
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email'),
+                                    # email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
                                 ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(mentor_id.id, force_send=True)
                         if amb_id:
@@ -1538,7 +1525,7 @@ class CfoHome(web.Home):
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email'),
+                                    # email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
                                 ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(amb_id.id, force_send=True)
 
@@ -1573,7 +1560,7 @@ class CfoHome(web.Home):
                                 user_type=each_request.get('user_type'),
                                 team_id=team_id.id,
                                 team_name=team_id.ref_name,
-                                email_to=each_request.get('email'),
+                                # email_to=each_request.get('email'),
                                 email_cc='thecfo@charterquest.co.za',
                             ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(res.id, force_send=True)
 
@@ -1706,20 +1693,20 @@ class CfoHome(web.Home):
         if team_id and team_id.mentor_id and template_mentor:
             template_mentor.sudo().with_context(
                 team_name=team_id.ref_name,
-                email_to=team_id.mentor_id.email_1
+                # email_to=team_id.mentor_id.email_1
             ).send_mail(team_id.mentor_id.id, force_send=True)
 
         if team_id and team_id.brand_amb_id and template_amb:
             template_amb.sudo().with_context(
                 team_name=team_id.ref_name,
-                email_to=team_id.brand_amb_id.email_1
+                # email_to=team_id.brand_amb_id.email_1
             ).send_mail(team_id.brand_amb_id.id, force_send=True)
 
         for aspirant_member in team_id.aspirant_team_member_ids:
             if template:
                 template.sudo().with_context(
                     team_name=team_id.name,
-                    email_to=aspirant_member.related_user_id.email_1
+                    # email_to=aspirant_member.related_user_id.email_1
                 ).send_mail(aspirant_member.related_user_id.id, force_send=True)
 
             team_id.acknowledge_cfo_report = True
@@ -1733,12 +1720,12 @@ class CfoHome(web.Home):
             if template_acadamic and academic_member.related_user_id:
                 template_acadamic.sudo().with_context(
                     team_name=team_id.name,
-                    email_to=academic_member.related_user_id.email_1
+                    # email_to=academic_member.related_user_id.email_1
                 ).send_mail(academic_member.related_user_id.id, force_send=True)
             if template and academic_member.related_user_aspirant_id:
                 template.sudo().with_context(
                     team_name=team_id.name,
-                    email_to=academic_member.related_user_aspirant_id.email_1
+                    # email_to=academic_member.related_user_aspirant_id.email_1
                 ).send_mail(academic_member.related_user_aspirant_id.id, force_send=True)
 
         for employer_member in team_id.employer_team_member_ids:
@@ -1749,12 +1736,12 @@ class CfoHome(web.Home):
             if template_employer and employer_member.related_user_id:
                 template_employer.sudo().with_context(
                     team_name=team_id.name,
-                    email_to=employer_member.related_user_id.email_1
+                    # email_to=employer_member.related_user_id.email_1
                 ).send_mail(employer_member.related_user_id.id, force_send=True)
             if template and employer_member.related_user_aspirant_id:
                 template.sudo().with_context(
                     team_name=team_id.name,
-                    email_to=employer_member.related_user_aspirant_id.email_1
+                    # email_to=employer_member.related_user_aspirant_id.email_1
                 ).send_mail(employer_member.related_user_aspirant_id.id, force_send=True)
 
             team_id.acknowledge_cfo_report = True
@@ -1821,7 +1808,7 @@ class CfoHome(web.Home):
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email'),
+                                    # email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
                                 ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(mentor_id.id, force_send=True)
                         if amb_id:
@@ -1832,7 +1819,7 @@ class CfoHome(web.Home):
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email'),
+                                    # email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
                                 ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(amb_id.id, force_send=True)
 
@@ -1853,7 +1840,7 @@ class CfoHome(web.Home):
                                 user_type=each_request.get('user_type'),
                                 team_id=team_id.id,
                                 team_name=team_id.ref_name,
-                                email_to=each_request.get('email'),
+                                # email_to=each_request.get('email'),
                                 email_cc='thecfo@charterquest.co.za',
                             ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(res.id, force_send=True)
                         team_member_id.write({'member_requested': True})
@@ -1987,7 +1974,7 @@ class CfoHome(web.Home):
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email'),
+                                    # email_to=each_request.get('email'),
                                     email_cc = 'thecfo@charterquest.co.za',
                                 ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(mentor_id.id, force_send=True)
                         if amb_id:
@@ -1999,7 +1986,7 @@ class CfoHome(web.Home):
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email'),
+                                    # email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
                                 ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(amb_id.id, force_send=True)
                     if each_request.get('user_type') in ['Leader', 'Member']:
@@ -2018,7 +2005,7 @@ class CfoHome(web.Home):
                                 user_type=each_request.get('user_type'),
                                 team_id=team_id.id,
                                 team_name=team_id.ref_name,
-                                email_to=each_request.get('email'),
+                                # email_to=each_request.get('email'),
                                 email_cc='thecfo@charterquest.co.za',
                             ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(res.id, force_send=True)
                         team_member_id.write({'member_requested': True})
@@ -2153,7 +2140,7 @@ class CfoHome(web.Home):
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email'),
+                                    # email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
                                 ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(mentor_id.id, force_send=True)
                         if amb_id:
@@ -2164,7 +2151,7 @@ class CfoHome(web.Home):
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email'),
+                                    # email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
                                 ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(amb_id.id, force_send=True)
                     if each_request.get('user_type') in ['Leader', 'Member']:
@@ -2183,7 +2170,7 @@ class CfoHome(web.Home):
                                 user_type=each_request.get('user_type'),
                                 team_id=team_id.id,
                                 team_name=team_id.ref_name,
-                                email_to=each_request.get('email'),
+                                # email_to=each_request.get('email'),
                                 email_cc='thecfo@charterquest.co.za',
                             ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(res.id, force_send=True)
                         team_member_id.write({'member_requested': True})
@@ -2317,7 +2304,7 @@ class CfoHome(web.Home):
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email'),
+                                    # email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
                                 ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(mentor_id.id, force_send=True)
                         if amb_id:
@@ -2329,7 +2316,7 @@ class CfoHome(web.Home):
                                     user_type=each_request.get('user_type'),
                                     team_id=team_id.id,
                                     team_name=team_id.ref_name,
-                                    email_to=each_request.get('email'),
+                                    # email_to=each_request.get('email'),
                                     email_cc='thecfo@charterquest.co.za',
                                 ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(amb_id.id, force_send=True)
 
@@ -2349,7 +2336,7 @@ class CfoHome(web.Home):
                                 user_type=each_request.get('user_type'),
                                 team_id=team_id.id,
                                 team_name=team_id.ref_name,
-                                email_to=each_request.get('email'),
+                                # email_to=each_request.get('email'),
                                 email_cc='thecfo@charterquest.co.za',
                             ).with_context(team=team_id.id,is_request=True,cfo_login=True).send_mail(res.id, force_send=True)
                         team_member_id.write({'member_requested': True})
