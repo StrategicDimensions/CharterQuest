@@ -53,12 +53,22 @@ class ResUsers(models.Model):
                 if self.env.context.get('user_type') in ['Leader', 'Member']:
                     res = self.env['cfo.snr.aspirants'].sudo().search([('user_id', '=', self.id)])
                     template = self.env.ref('cfo_snr_jnr.email_template_request_for_join', raise_if_not_found=False)
+                if self.env.context.get('user_type') in ['Leader', 'Member']:
+                    res = self.env['cfo.jnr.aspirants'].sudo().search([('user_id', '=', self.id)])
+                    template = self.env.ref('cfo_snr_jnr.email_template_request_for_join', raise_if_not_found=False)
                 if self.env.context.get('user_type') == 'Mentor':
                     res = self.env['mentors.snr'].sudo().search([('user_id', '=', self.id)])
                     template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_mentor',
                                             raise_if_not_found=False)
+                if self.env.context.get('user_type') == 'Mentor':
+                    res = self.env['mentors.jnr'].sudo().search([('user_id', '=', self.id)])
+                    template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_mentor',
+                                            raise_if_not_found=False)
                 if self.env.context.get('user_type') == 'Brand Ambassador':
                     res = self.env['brand.ambassador.snr'].sudo().search([('user_id', '=', self.id)])
+                    template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_amb', raise_if_not_found=False)
+                if self.env.context.get('user_type') == 'Brand Ambassador':
+                    res = self.env['brand.ambassador.jnr'].sudo().search([('user_id', '=', self.id)])
                     template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_amb', raise_if_not_found=False)
             except ValueError:
                 pass
@@ -75,6 +85,7 @@ class ResUsers(models.Model):
         template.write(template_values)
 
         for user in res:
+            print("\n\n\n\n\n\n============res=============",res)
             if not user.email:
                 raise UserError(_("Cannot send email: user %s has no email address.") % user.name)
             with self.env.cr.savepoint():

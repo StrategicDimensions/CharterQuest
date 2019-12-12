@@ -970,11 +970,11 @@ class CfoHome(web.Home):
         # cfo_smc_snr = request.env['social.media.contestants.snr'].sudo().search([('email_1', '=', post.get('email'))])
 
         cfo_jnr = request.env['cfo.jnr.aspirants'].sudo().search([('email_1', '=', post.get('email'))])
-        # cfo_acd_jnr = request.env['academic.institution.jnr'].sudo().search([('email_1', '=', post.get('email'))])
+        cfo_acd_jnr = request.env['academic.institution.jnr'].sudo().search([('email_1', '=', post.get('email'))])
         cfo_mtr_jnr = request.env['mentors.jnr'].sudo().search([('email_1', '=', post.get('email'))])
         cfo_amb_jnr = request.env['brand.ambassador.jnr'].sudo().search([('email_1', '=', post.get('email'))])
 
-        if not cfo_snr or not cfo_mtr_snr or not cfo_mtr_snr or cfo_amb_snr or not cfo_jnr or not cfo_mtr_jnr or not cfo_amb_jnr :
+        if not cfo_snr or not cfo_mtr_snr or not cfo_mtr_snr or cfo_amb_snr or not cfo_jnr or not cfo_mtr_jnr or not cfo_amb_jnr or not cfo_acd_jnr:
             if not res_user:
                 user = request.env['res.users'].sudo().create({
                     'name': post.get('name'),
@@ -1106,7 +1106,7 @@ class CfoHome(web.Home):
                         'cfo_competition_year': str(post.get('year'))
                     })
                 user.with_context(create_user=True, user_type=post.get('user_type'),email=post.get('email'),team_name=post.get('team_name')).create_password()
-
+            print("\n\n\n\n===========post.get('from_jnr_school')==========",post.get('from_jnr_school'))
             if post.get('from_jnr_school'):
                 if post.get('user_type') in ['Leader']:
                     request.env['cfo.jnr.aspirants'].sudo().create({
