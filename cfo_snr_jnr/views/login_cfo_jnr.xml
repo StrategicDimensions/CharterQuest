@@ -356,7 +356,7 @@
                                                         </label>
                                                         <select name="country_of_birth"
                                                                 id="country_of_birth"
-                                                                class="form-control">
+                                                                class="form-control" >
                                                             <t t-if="jnr_aspirants">
                                                                 <option t-att-value="jnr_aspirants.country_of_birth.id if jnr_aspirants.country_of_birth else &quot;&quot;">
                                                                     <t t-esc="jnr_aspirants.country_of_birth.name if jnr_aspirants.country_of_birth else &quot;&quot;"/>
@@ -513,7 +513,7 @@
                                                            class="form-control"
                                                            t-att-value="jnr_aspirants.zip" required="1"/>
                                                     <select name="country_id" id="country_id"
-                                                            class="form-control" placeholder="Country"
+                                                            class="form-control" placeholder="Country" required="true"
                                                     >
                                                         <t t-if="not jnr_aspirants.country_id">
                                                         <option value="">Country</option>
@@ -693,7 +693,7 @@
                                                t-att-value="jnr_aspirants.stu_zip"
                                                placeholder="Zip"/>
                                         <select name="stu_country_id" id="stu_country_id"
-                                                class="form-control" placeholder="Country"
+                                                class="form-control" placeholder="Country" required="true"
                                         >
                                             <option value="">Country</option>
                                             <t t-if="jnr_aspirants">
@@ -889,7 +889,7 @@
                                                placeholder="Zip"
                                                t-att-value="jnr_aspirants.emp_zip"/>
                                         <select name="emp_country_id" id="emp_country_id"
-                                                class="form-control"
+                                                class="form-control" required="true"
                                         >
                                             <option value="">Country</option>
                                             <t t-if="jnr_aspirants">
@@ -1237,6 +1237,8 @@
                                 </label>
                                 <input type="hidden" name="country"
                                        t-att-value="jnr_aspirants.country_id.name"/>
+                                <input type="hidden" name="stu_country"
+                                       t-att-value="jnr_aspirants.stu_country_id.name"/>
                                 <input type="hidden" name="state" t-att-value="jnr_aspirants.state_id.name"/>
                                 <t t-if="aspirant_team">
                                     <input type="text" name="name"
@@ -2104,7 +2106,7 @@
                                                        class="form-control"
                                                        t-att-value="jnr_high_school.zip"/>
                                                 <select name="country_id" id="country_id"
-                                                        class="form-control" placeholder="Country">
+                                                        class="form-control" placeholder="Country" required="true">
                                                     <option value="">Country</option>
                                                     <t t-if="jnr_high_school">
                                                         <option t-att-value="jnr_high_school.country_id.id if jnr_high_school.country_id else &quot;&quot;">
@@ -2212,7 +2214,7 @@
                                                        class="form-control"
                                                        t-att-value="jnr_high_school.stu_zip"/>
                                                 <select name="stu_country_id" id="stu_country_id"
-                                                        class="form-control" placeholder="Country">
+                                                        class="form-control" placeholder="Country" required="true">
                                                     <option value="">Country</option>
                                                     <t t-if="jnr_high_school">
                                                         <option t-att-value="jnr_high_school.stu_country_id.id if jnr_high_school.stu_country_id else &quot;&quot;">
@@ -2483,6 +2485,8 @@
                                 </label>
                                 <input type="hidden" name="country"
                                        t-att-value="jnr_high_school.country_id.name"/>
+                                <input type="hidden" name="stu_country"
+                                       t-att-value="jnr_high_school.stu_country_id.name"/>
                                 <input type="hidden" name="state" t-att-value="jnr_high_school.state_id.name"/>
                                 <t t-if="high_school_team">
                                     <input type="text" name="name"
@@ -3383,7 +3387,7 @@
                                                       class="form-control"
                                                       t-att-value="jnr_mentors.zip" required="1"/>
                                                <select name="country_id" id="country_id"
-                                                       class="form-control" placeholder="Country"
+                                                       class="form-control" placeholder="Country" required="true"
                                                >
                                                    <t t-if="not jnr_mentors.country_id">
                                                    <option value="">Country</option>
@@ -3788,6 +3792,8 @@
                             for="name">Name
                      </label>
                      <input type="hidden" name="country" t-att-value="jnr_aspirants.country_id.name"/>
+                     <input type="hidden" name="stu_country"
+                                       t-att-value="jnr_aspirants.stu_country_id.name"/>
                      <input type="hidden" name="state" t-att-value="jnr_aspirants.state_id.name"/>
                      <t t-if="aspirant_team">
                          <input type="text" name="name"
