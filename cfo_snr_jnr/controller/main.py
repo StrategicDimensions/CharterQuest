@@ -918,8 +918,7 @@ class CfoHome(web.Home):
 
     @http.route('/request_to_join',type='json', auth="public", website=True)
     def check_request_member(self, **post):
-
-      res = request.env['res.users'].sudo().search([('login', '=', post.get('email'))])
+        res = request.env['res.users'].sudo().search([('login', '=', post.get('email'))])
         if res.state == 'new':
             print("\n\n\n\n=========res.state=====",res.state)
             return {'update_bio':True}

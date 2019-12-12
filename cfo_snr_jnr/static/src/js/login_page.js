@@ -760,7 +760,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                         if (result.request_to_join) {
                             self.parents('tr').find('.request-join').hide().attr('user_id', '');
                             self.parents('tr').find('.create_member').hide();
-                            request_list.push({'email': email, 'user_type': user_type, 'user_id': user_id, 'related_user_aspirant_id':user_id.name})
+                            request_list.push({'email': email, 'user_type': user_type, 'user_id': user_id})
 
                         }else if (result.update_bio){
                             if(user_type == 'Member'){
