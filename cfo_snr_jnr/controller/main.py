@@ -928,14 +928,20 @@ class CfoHome(web.Home):
                     [('user_id', '=', int(post.get('user_id')))])
                 mentor_id = request.env['mentors.snr'].sudo().search(
                     [('user_id', '=', int(post.get('user_id')))])
-                if mentor_id or amb_id:
+                amb_jnr_id = request.env['brand.ambassador.jnr'].sudo().search(
+                    [('user_id', '=', int(post.get('user_id')))])
+                mentor_jnr_id = request.env['mentors.jnr'].sudo().search(
+                    [('user_id', '=', int(post.get('user_id')))])
+                if mentor_id or amb_id or amb_jnr_id or mentor_jnr_id:
                     return {'request_to_join': True}
                 else:
                     return {'request_to_join': False}
             if post.get('user_type') in ['Leader', 'Member']:
                 member_id = request.env['cfo.snr.aspirants'].sudo().search(
                     [('user_id', '=', int(post.get('user_id')))])
-                if member_id:
+                member_jnr_id = request.env['cfo.jnr.aspirants'].sudo().search(
+                    [('user_id', '=', int(post.get('user_id')))])
+                if member_id or member_jnr_id:
                     return {'request_to_join': True}
                 else:
                     return {'request_to_join': False}
