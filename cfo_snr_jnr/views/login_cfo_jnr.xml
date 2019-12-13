@@ -1231,6 +1231,78 @@
                                </div>
                              </div>
                           </div>
+                          <div id="diffrent_team_email_modal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><b>This user from</b></p><label name="Label1" id="Label1" runat="server" Text=""></label>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="diffrent_team_name_modal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Team name should be unique..</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="admin_email_not_allow" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Admin cannot be part of a Brand Ambassador/Mentor/Leader/Member.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="member_update_bio" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>"Member's Profile not activated. Ask Member to update bio before being added to your team"</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                          <div class="col-md-8">
                                 <label class="control-label"
                                        for="name">

@@ -919,6 +919,7 @@ class CfoHome(web.Home):
     @http.route('/request_to_join',type='json', auth="public", website=True)
     def check_request_member(self, **post):
         res = request.env['res.users'].sudo().search([('login', '=', post.get('email'))])
+        print("\n\n\n\n==============res======",res)
         if res.state == 'new':
             print("\n\n\n\n=========res.state=====",res.state)
             return {'update_bio':True}
@@ -945,6 +946,7 @@ class CfoHome(web.Home):
                     return {'request_to_join': True}
                 else:
                     return {'request_to_join': False}
+
     @http.route('/get_cfo_snr_member', type='json', auth="public", website=True)
     def get_cfo_snr_member(self, **post):
         # team_member = request.env['cfo.snr.member.add'].sudo().search([],limit=1, order="id")

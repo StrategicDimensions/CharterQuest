@@ -303,6 +303,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         $('.member-add').click(function (e) {
             var is_blank_email = $TABLE_MEMBER.find('.ac-row-data-list').val();
             var count = $('.member-add').attr('data-count')
+            console.log("\n\n\n====count====",count);
             $(this).attr('data-count', parseInt(count) + 1);
             var $clone = $TABLE_MEMBER.find('.custom_tr_member.hide').clone(true).removeClass('custom_tr_member').removeClass('hide');
             var member_type = $(document).find('.user_type').val();
@@ -312,10 +313,12 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             $('button.member-add').css('display', 'block');
             e.preventDefault();
             var count = $(this).attr('data-count')
+            console.log("\n\n\n====count====",count);
             if(window.location.pathname == '/cfo_senior'){
                 ajax.jsonRpc("/get_cfo_snr_member", 'call',{'url':window.location.pathname}).then(
                 function (result) {
                     if(result['team_member']){
+                       console.log("\n\n\n====parseInt(result['team_member'])====",parseInt(result['team_member']));
                        if (count >= parseInt(result['team_member'])) {
                             $('button.member-add').css('display', 'none');
                         }
@@ -680,6 +683,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                 ajax.jsonRpc("/check_user_team", "call", {'email': email})
                     .then(function (result) {
                         if (result.user_id) {
+                            console.log("\n\n\n=====result.user_id=======",result.user_id,result['user_id']);
                             self.parents('tr').find('.request-join').show().attr('user_id', result['user_id']);
                             self.parents('tr').find('.create_member').hide();
                             self.parents('tr').find('.team_member_name').hide();
@@ -717,6 +721,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             var user_id = $(this).attr('user_id');
             var team_id = $(this).attr('team-id');
             var email = $(this).parents('tr').find('.team_email').val();
+            console.log("\n\n\n\n===========email======",email);
             var self = $(this);
             var admin_email = $(document).find('.admin_email').val();
             var user_type = $(this).parents('tr').find('.user_type').val();
@@ -766,6 +771,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                             if(user_type == 'Member'){
                                     self.parents('tr').remove();
                                     $('button.member-add').css('display', 'block');
+                                    $('button.member-add-school').css('display', 'block');
                                 }
                                 if(user_type == 'Leader'){
                                     self.parents('tr').remove();
@@ -788,6 +794,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                                     if(user_type == 'Member'){
                                         self.parents('tr').remove();
                                         $('button.member-add').css('display', 'block');
+                                        $('button.member-add-school').css('display', 'block');
                                     }
                                     if(user_type == 'Leader'){
                                         self.parents('tr').remove();
