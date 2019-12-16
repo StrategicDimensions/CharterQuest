@@ -3194,8 +3194,9 @@
                                     <t t-if="user_id.partner_id.id==snr_aspirants.partner_id.id and snr_aspirants.team_admin">
                                         <t t-if="aspirant_team">
                                             <t t-set="count"
-                                               t-value="request.env['snr.aspirant.team.member'].sudo().search_count([('team_id','=',snr_aspirants.aspirant_id.id),('user_type','=','Member'),('related_user_id','!=',False)])"/>
+                                               t-value="request.env['snr.aspirant.team.member'].sudo().search_count([('team_id','=',aspirant_team.id),('user_type','=','Member'),('related_user_id','!=',False)])"/>
                                         </t>
+                                        <t t-esc="count"/>
                                         <button class="btn member-add" t-attf-data-count="#{count}"
                                                 style="border: groove;">Add Member
                                         </button>
