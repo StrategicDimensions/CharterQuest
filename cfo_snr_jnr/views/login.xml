@@ -385,7 +385,7 @@
             </t>
         </template>
         <!-- main9090909090 -->
-        <template id="cfo_senior" name="cfo_senior">
+        <template id="cfo_senior_team" name="cfo_senior_team">
             <t t-set="additional_title">CFO Senior</t>
             <t t-call="portal.portal_layout">
                 <div class="col-md-12 oe_structure"/>
@@ -431,7 +431,7 @@
                         </div>
                         <hr/>
                         <t t-if="senior">
-                            <t t-call="cfo_snr_jnr.cfo_senior_aspirant"/>
+                            <t t-call="cfo_snr_jnr.cfo_senior_aspirant_admin"/>
                         </t>
                         <t t-if="academic_institution">
                             <t t-call="cfo_snr_jnr.cfo_senior_academic_institution"/>
@@ -453,6 +453,7 @@
             </t>
         </template>
         <template id="cfo_snr_mentor">
+
             <div class="row oe_structure">
                 <div class="col-md-12 oe_structure"/>
                 <div class="col-md-12">
@@ -1170,7 +1171,7 @@
                 </div>
             </div>
         </template>
-        <template id="cfo_senior_aspirant">
+        <template id="cfo_senior_aspirant_admin">
             <div class="row oe_structure">
                 <div class="col-md-12 oe_structure"/>
                 <div class="col-md-12">
@@ -2216,6 +2217,7 @@
                         </div>
                         <!-- working 454645  -->
                         <div class="" t-if="aspirant_team">
+                            234567890-876543
                             <table id="myTable" class="table table-bordered table table-hover table-striped"
                                    width="100%">
                                 <tr class="table_responsive_set1">
@@ -3194,9 +3196,8 @@
                                     <t t-if="user_id.partner_id.id==snr_aspirants.partner_id.id and snr_aspirants.team_admin">
                                         <t t-if="aspirant_team">
                                             <t t-set="count"
-                                               t-value="request.env['snr.aspirant.team.member'].sudo().search_count([('team_id','=',aspirant_team.id),('user_type','=','Member'),('related_user_id','!=',False)])"/>
+                                               t-value="request.env['snr.aspirant.team.member'].sudo().search_count([('team_id','=',snr_aspirants.aspirant_id.id),('user_type','=','Member'),('related_user_id','!=',False)])"/>
                                         </t>
-                                        <t t-esc="count"/>
                                         <button class="btn member-add" t-attf-data-count="#{count}"
                                                 style="border: groove;">Add Member
                                         </button>
