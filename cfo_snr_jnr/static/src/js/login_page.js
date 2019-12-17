@@ -694,13 +694,13 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                 ajax.jsonRpc("/check_user_team", "call", {'email': email})
                     .then(function (result) {
                         if (result.user_id) {
-                            console.log("\n\n\n=====result.user_id=======",result.user_id,result['user_id']);
+                            console.log("\n\n\n=====result.user_id=======",result.user_id,result['user_id'],user_type);
                             if (user_type == 'Leader' || user_type == 'Member'){
                                 if(user_type == 'Leader'){
                                    self.parents('tr').remove();
                                    $('button.leader-add-acadamic').css('display', 'block');
                                 }
-                                if(user_type == 'Member' || user_type == 'Leader'){
+                                if(user_type == 'Member'){
                                    self.parents('tr').remove();
                                    $('button.member-add').css('display', 'block');
                                 }
@@ -724,21 +724,21 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             }
         });
 
-        $('.user_type').on('change', function () {
-            var user_type = $(this).val();
-            var email = $(this).parents('tr').find('.team_email').val();
-            var self = $(this);
-            ajax.jsonRpc("/check_user_team", "call", {'email': email, 'user_type': user_type})
-                .then(function (result) {
-                    if (result) {
-                        self.parents('tr').find('.create_member').show();
-                        self.parents('tr').find('.team_member_name').show();
-                    } else {
-                        self.parents('tr').find('.create_member').hide();
-                        self.parents('tr').find('.team_member_name').hide()
-                    }
-                });
-        });
+//        $('.user_type').on('change', function () {
+//            var user_type = $(this).val();
+//            var email = $(this).parents('tr').find('.team_email').val();
+//            var self = $(this);
+//            ajax.jsonRpc("/check_user_team", "call", {'email': email, 'user_type': user_type})
+//                .then(function (result) {
+//                    if (result) {
+//                        self.parents('tr').find('.create_member').show();
+//                        self.parents('tr').find('.team_member_name').show();
+//                    } else {
+//                        self.parents('tr').find('.create_member').hide();
+//                        self.parents('tr').find('.team_member_name').hide()
+//                    }
+//                });
+//        });
 
         var request_list = []
         $('.request-join').on('click', function () {

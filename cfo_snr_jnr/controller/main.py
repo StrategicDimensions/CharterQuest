@@ -891,10 +891,11 @@ class CfoHome(web.Home):
                 cfo_mtr_jnr = request.env['mentors.jnr'].sudo().search([('email_1', '=', post.get('email'))])
                 cfo_amb_jnr = request.env['brand.ambassador.jnr'].sudo().search([('email_1', '=', post.get('email'))])
 
-                if cfo_snr or cfo_acd_snr or cfo_emp_snr or cfo_mtr_snr or cfo_mtr_snr or cfo_vlte_snr or cfo_amb_snr or cfo_smc_snr:
+                if cfo_snr or cfo_acd_snr or cfo_emp_snr or cfo_mtr_snr or cfo_mtr_snr or cfo_vlte_snr or cfo_amb_snr or cfo_smc_snr or cfo_jnr or cfo_acd_jnr or cfo_mtr_jnr or cfo_amb_jnr:
+                    print("\n\n\n\n=========res.id=====",res.id)
                     return {'user_id': res.id}
-                elif cfo_jnr or cfo_acd_jnr or cfo_mtr_jnr or cfo_amb_jnr:
-                    return {'user_id': res.id}
+                # elif cfo_jnr or cfo_acd_jnr or cfo_mtr_jnr or cfo_amb_jnr:
+                #     return {'user_id': res.id}
                 else:
                     return {'new_user':True}
             else:

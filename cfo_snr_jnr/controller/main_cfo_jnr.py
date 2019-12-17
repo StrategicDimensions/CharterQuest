@@ -517,6 +517,7 @@ class CfoHomeJnr(web.Home):
                     values['update_bio'] = True
                     values['contact_info'] = True
                     values['competition_rule'] = False
+        print("\n\n\n\n\n=====values========",values)
         return request.render('cfo_snr_jnr.cfo_junior', values)
     
     
