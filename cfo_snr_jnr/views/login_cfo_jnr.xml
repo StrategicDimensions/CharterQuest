@@ -1303,6 +1303,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="admin_leader_member_diffrent" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>"User Already Exists in another team, must be removed from another team to join your team - contact CFO Team for assistance"</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                          <div class="col-md-8">
                                 <label class="control-label"
                                        for="name">
@@ -1458,21 +1476,21 @@
                                                     </td>
                                                     <td>
                                                         <t t-if="aspirant_team">
-                                                            <button class="btn btn-danger request-join" style="display:none;"
-                                                                    t-att-team-id="aspirant_team.id">
-                                                                Request to
-                                                                join your Team
-                                                            </button>
+<!--                                                            <button class="btn btn-danger request-join" style="display:none;"-->
+<!--                                                                    t-att-team-id="aspirant_team.id">-->
+<!--                                                                Request to-->
+<!--                                                                join your Team-->
+<!--                                                            </button>-->
                                                             <button class="btn btn-danger create-user" style="display:none;"
                                                                     t-att-team-id="aspirant_team.id">
                                                                 Create
                                                             </button>
                                                         </t>
                                                         <t t-if="not aspirant_team">
-                                                            <button class="btn btn-danger request-join" style="display:none;">
-                                                                Request to
-                                                                join your Team
-                                                            </button>
+<!--                                                            <button class="btn btn-danger request-join" style="display:none;">-->
+<!--                                                                Request to-->
+<!--                                                                join your Team-->
+<!--                                                            </button>-->
                                                             <button class="btn btn-danger create-user" style="display:none;">
                                                                 Create
                                                             </button>
@@ -1580,21 +1598,21 @@
                                             </td>
                                             <td>
                                                 <t t-if="aspirant_team">
-                                                    <button class="btn btn-danger request-join" style="display:none;"
-                                                        t-att-team-id="aspirant_team.id">
-                                                        Request to
-                                                        join your Team
-                                                    </button>
+<!--                                                    <button class="btn btn-danger request-join" style="display:none;"-->
+<!--                                                        t-att-team-id="aspirant_team.id">-->
+<!--                                                        Request to-->
+<!--                                                        join your Team-->
+<!--                                                    </button>-->
                                                     <button class="btn btn-danger create-user" style="display:none;"
                                                         t-att-team-id="aspirant_team.id">
                                                         Create
                                                     </button>
                                                 </t>
                                                 <t t-if="not aspirant_team">
-                                                    <button class="btn btn-danger request-join" style="display:none;">
-                                                        Request to
-                                                        join your Team
-                                                    </button>
+<!--                                                    <button class="btn btn-danger request-join" style="display:none;">-->
+<!--                                                        Request to-->
+<!--                                                        join your Team-->
+<!--                                                    </button>-->
                                                     <button class="btn btn-danger create-user" style="display:none;">
                                                         Create
                                                     </button>
@@ -1703,21 +1721,21 @@
                                                 </td>
                                                 <td>
                                                     <t t-if="aspirant_team">
-<!--                                                        <button class="btn btn-danger request-join" style="display:none;" -->
-<!--                                                            t-att-team-id="aspirant_team.id"> -->
-<!--                                                            Request to -->
-<!--                                                            join your Team -->
-<!--                                                        </button> -->
+                                                        <button class="btn btn-danger request-join" style="display:none;"
+                                                            t-att-team-id="aspirant_team.id">
+                                                            Request to
+                                                            join your Team
+                                                        </button>
                                                         <button class="btn btn-danger create-user" style="display:none;"
                                                             t-att-team-id="aspirant_team.id">
                                                             Create
                                                         </button>
                                                     </t>
                                                     <t t-if="not aspirant_team">
-<!--                                                        <button class="btn btn-danger request-join" style="display:none;"> -->
-<!--                                                            Request to -->
-<!--                                                            join your Team -->
-<!--                                                        </button> -->
+                                                        <button class="btn btn-danger request-join" style="display:none;">
+                                                            Request to
+                                                            join your Team
+                                                        </button>
                                                         <button class="btn btn-danger create-user" style="display:none;">
                                                             Create
                                                         </button>
@@ -1818,22 +1836,22 @@
                                                 </td>
                                                 <td>
                                                     <t t-if="aspirant_team">
-<!--                                                        <button class="btn btn-danger request-join" style="display:none;" -->
-<!--                                                            t-att-team-id="aspirant_team.id"> -->
-<!--                                                            Request to -->
-<!--                                                            join your Team -->
-<!--                                                        </button> -->
+                                                        <button class="btn btn-danger request-join" style="display:none;"
+                                                            t-att-team-id="aspirant_team.id">
+                                                            Request to
+                                                            join your Team
+                                                        </button>
                                                         <button class="btn btn-danger create-user" style="display:none;"
                                                             t-att-team-id="aspirant_team.id">
                                                             Create
                                                         </button>
                                                     </t>
                                                     <t t-if="not aspirant_team">
-<!--                                                        <button class="btn btn-danger request-join" style="display:none;"> -->
-<!--                                                            Request -->
-<!--                                                            to -->
-<!--                                                            join your Team -->
-<!--                                                        </button> -->
+                                                        <button class="btn btn-danger request-join" style="display:none;">
+                                                            Request
+                                                            to
+                                                            join your Team
+                                                        </button>
                                                         <button class="btn btn-danger create-user" style="display:none;">
                                                             Create
                                                         </button>
@@ -2604,25 +2622,43 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="member_update_bio" class="modal fade" role="dialog">
-                                <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"></button>
-                                            <h4 class="modal-title">Warning!!</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>"Member's Profile not activated. Ask Member to update bio before being added to your team"</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
-                                            </button>
-                                        </div>
+                         </div>
+                        <div id="member_update_bio" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"></button>
+                                        <h4 class="modal-title">Warning!!</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>"Member's Profile not activated. Ask Member to update bio before being added to your team"</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                        </button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div id="admin_leader_member_diffrent" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"></button>
+                                        <h4 class="modal-title">Warning!!</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>"User Already Exists in another team, must be removed from another team to join your team - contact CFO Team for assistance"</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                          <div class="col-md-8">
                                 <label class="control-label"
                                        for="name">
@@ -2779,21 +2815,21 @@
                                                     </td>
                                                     <td>
                                                         <t t-if="high_school_team">
-                                                            <button class="btn btn-danger request-join" style="display:none;"
-                                                                    t-att-team-id="high_school_team.id">
-                                                                Request to
-                                                                join your Team
-                                                            </button>
+<!--                                                            <button class="btn btn-danger request-join" style="display:none;"-->
+<!--                                                                    t-att-team-id="high_school_team.id">-->
+<!--                                                                Request to-->
+<!--                                                                join your Team-->
+<!--                                                            </button>-->
                                                             <button class="btn btn-danger create-user" style="display:none;"
                                                                     t-att-team-id="high_school_team.id">
                                                                 Create
                                                             </button>
                                                         </t>
                                                         <t t-if="not high_school_team">
-                                                            <button class="btn btn-danger request-join" style="display:none;">
-                                                                Request to
-                                                                join your Team
-                                                            </button>
+<!--                                                            <button class="btn btn-danger request-join" style="display:none;">-->
+<!--                                                                Request to-->
+<!--                                                                join your Team-->
+<!--                                                            </button>-->
                                                             <button class="btn btn-danger create-user" style="display:none;">
                                                                 Create
                                                             </button>
@@ -2893,21 +2929,21 @@
                                       </td>
                                       <td>
                                           <t t-if="high_school_team">
-                                              <button class="btn btn-danger request-join" style="display:none;"
-                                                      t-att-team-id="high_school_team.id">
-                                                  Request to
-                                                  join your Team
-                                              </button>
+<!--                                              <button class="btn btn-danger request-join" style="display:none;"-->
+<!--                                                      t-att-team-id="high_school_team.id">-->
+<!--                                                  Request to-->
+<!--                                                  join your Team-->
+<!--                                              </button>-->
                                               <button class="btn btn-danger create-user" style="display:none;"
                                                       t-att-team-id="high_school_team.id">
                                                   Create
                                               </button>
                                           </t>
                                           <t t-if="not high_school_team">
-                                              <button class="btn btn-danger request-join" style="display:none;">
-                                                  Request to
-                                                  join your Team
-                                              </button>
+<!--                                              <button class="btn btn-danger request-join" style="display:none;">-->
+<!--                                                  Request to-->
+<!--                                                  join your Team-->
+<!--                                              </button>-->
                                               <button class="btn btn-danger create-user" style="display:none;">
                                                   Create
                                               </button>
@@ -3006,12 +3042,21 @@
                                       </td>
                                       <td>
                                           <t t-if="high_school_team">
+                                              <button class="btn btn-danger request-join" style="display:none;"
+                                                            t-att-team-id="high_school_team.id">
+                                                        Request to
+                                                        join your Team
+                                              </button>
                                               <button class="btn btn-danger create-user" style="display:none;"
                                                       t-att-team-id="high_school_team.id">
                                                   Create
                                               </button>
                                           </t>
                                           <t t-if="not aspirant_team">
+                                              <button class="btn btn-danger request-join" style="display:none;">
+                                                        request to
+                                                        join your team
+                                              </button>
                                               <button class="btn btn-danger create-user" style="display:none;">
                                                   Create
                                               </button>
