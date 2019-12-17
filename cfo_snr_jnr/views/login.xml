@@ -2217,7 +2217,6 @@
                         </div>
                         <!-- working 454645  -->
                         <div class="" t-if="aspirant_team">
-                            234567890-876543
                             <table id="myTable" class="table table-bordered table table-hover table-striped"
                                    width="100%">
                                 <tr class="table_responsive_set1">
