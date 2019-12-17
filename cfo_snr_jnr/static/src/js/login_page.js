@@ -50,7 +50,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             $('.leader-add-acadamic').show();
         }
         var count = $(document).find('.member-add').attr('data-count');
-
+        console.log("\n\n\n\n=====count===",count);
         if (count >= 3) {
             $(document).find('.member-add').hide();
         }
