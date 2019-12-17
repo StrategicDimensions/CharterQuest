@@ -673,6 +673,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                            $('button.member-add').css('display', 'block');
                       }
                       $(document).find('#admin_leader_member_diffrent').modal('show');
+                      $(document).find('.member-add').attr('data-count', parseInt(count) + 1)
                 }
             }
             if ((jnr_highschool && admin_email === email) && (user_type == 'Leader' || user_type == 'Member')) {
@@ -704,6 +705,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                                    $('button.member-add').css('display', 'block');
                                 }
                                 $(document).find('#admin_leader_member_diffrent').modal('show');
+                                $(document).find('.member-add').attr('data-count', parseInt(count) + 1)
                             }
                             else {
                                 self.parents('tr').find('.request-join').show().attr('user_id', result['user_id']);
