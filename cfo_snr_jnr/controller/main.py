@@ -732,7 +732,6 @@ class CfoHome(web.Home):
                     snr_media_contestants.sudo().write({
                         'updated_social_media_bio': True
                     })
-        print ("\n\n\n----->values>>>>>>>",values)
         return request.render('cfo_snr_jnr.cfo_senior_team', values)
 
     @http.route('/is_from_request_id', type="http", auth="public", website=True)
