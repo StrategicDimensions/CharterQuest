@@ -3447,18 +3447,25 @@
                             </div>
                         </div>
                         `
-                        <div class="col-md-8" style="text-align:center;float:right">
-                            <t t-if="user_id.partner_id.id==snr_aspirants.partner_id.id and snr_aspirants.team_admin">
-                                <button type="submit" class="btn btn-primary create_team" style="border: groove;">
-                                    CREATE/UPDATE TEAM
-                                </button>
-                            </t>
-                        </div>
-                        <div class="col-md-8">
-                            <button class="btn btn-default btn-primary mb32" onclick="history.back();return false"><i
-                                    class="fa fa-chevron-left"/>Back
-                            </button>
-                        </div>
+<!--                        <div class="col-md-8" style="text-align:center;float:right">-->
+<!--                            <t t-if="user_id.partner_id.id==snr_aspirants.partner_id.id and snr_aspirants.team_admin">-->
+<!--                                <button type="submit" class="btn btn-primary create_team" style="border: groove;">-->
+<!--                                    CREATE/UPDATE TEAM-->
+<!--                                </button>-->
+<!--                            </t>-->
+<!--                        </div>-->
+                        <t t-if="user_id.partner_id.id==snr_aspirants.partner_id.id and snr_aspirants.team_admin">
+                                <div class="col-md-12" style="text-align:center">
+                                    <button type="submit" class="btn btn-primary create_team">CREATE/UPDATE
+                                        TEAM
+                                    </button>
+                                </div>
+                        </t>
+<!--                        <div class="col-md-8">-->
+<!--                            <button class="btn btn-default btn-primary mb32" onclick="history.back();return false"><i-->
+<!--                                    class="fa fa-chevron-left"/>Back-->
+<!--                            </button>-->
+<!--                        </div>-->
                     </div>
                 </t>
             </div>
@@ -6989,20 +6996,27 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8" style="text-align:center;float:right">
-                                <t t-if="user_id.partner_id.id==snr_employers.partner_id.id and snr_employers.team_admin">
-                                    <div class="col-md-12" style="text-align:center">
-                                        <button type="submit" class="btn btn-primary create_employer_team">CREATE/UPDATE
-                                            TEAM
-                                        </button>
-                                    </div>
-                                </t>
-                            </div>
-                            <div class="col-md-8">
-                                <button class="btn btn-default btn-primary mb32" onclick="history.back();return false"><i
-                                        class="fa fa-chevron-left"/>Back
-                                </button>
-                            </div>
+                            <t t-if="user_id.partner_id.id==snr_employers.partner_id.id and snr_employers.team_admin">
+                                <div class="col-md-12" style="text-align:center">
+                                    <button type="submit" class="btn btn-primary create_employer_team">CREATE/UPDATE
+                                        TEAM
+                                    </button>
+                                </div>
+                            </t>
+<!--                            <div class="col-md-8" style="text-align:center;float:right">-->
+<!--                                <t t-if="user_id.partner_id.id==snr_employers.partner_id.id and snr_employers.team_admin">-->
+<!--                                    <div class="col-md-12" style="text-align:center">-->
+<!--                                        <button type="submit" class="btn btn-primary create_employer_team">CREATE/UPDATE-->
+<!--                                            TEAM-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </t>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-8">-->
+<!--                                <button class="btn btn-default btn-primary mb32" onclick="history.back();return false"><i-->
+<!--                                        class="fa fa-chevron-left"/>Back-->
+<!--                                </button>-->
+<!--                            </div>-->
                         </div>
                     </t>
                 </div>
