@@ -949,6 +949,7 @@ class CfoHome(web.Home):
     def get_cfo_snr_member(self, **post):
         # team_member = request.env['cfo.snr.member.add'].sudo().search([],limit=1, order="id")
         team_member = request.env['ir.config_parameter'].sudo().get_param('cfo_snr_jnr.snr_total_member')
+        print("\n\n\n\n\n\n===============team member=========",team_member)
         if team_member:
             return {'team_member': team_member}
         else:
