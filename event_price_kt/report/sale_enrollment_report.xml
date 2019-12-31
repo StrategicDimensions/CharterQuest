@@ -163,7 +163,7 @@
                                         <p>Company</p>
                                     </td>
                                     <td colspan="2">
-                                        <span t-esc="o.partner_id.student_company or ''"></span>
+                                        <span t-esc="o.partner_id.student_company or '00000'"></span>
                                     </td>
                                     <td>
                                         <p style="terp_default_8">VAT No</p>
