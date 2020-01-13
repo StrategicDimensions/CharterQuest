@@ -793,6 +793,8 @@ class EnrolmentProcess(http.Controller):
                             [('user_type_id', '=', account_pay_type_id.id)], limit=1)
                     partner_id = request.env['res.partner'].sudo().search([('email', '=', post.get('inputEmail'))], limit=1,
                                                                           order="id desc")
+                    print("\n\n\n\n=======cmpny=========",post.get('inputCompany'));
+                    print("\n\n\n\n=======inputVat=======", post.get('inputVat'));
                     partner_id.write({'name': name,
                                           'student_company': post.get('inputCompany') if post.get('inputCompany') else '',
                                           'email': post.get('inputEmail') if post.get('inputEmail') else '',
@@ -1041,10 +1043,43 @@ class EnrolmentProcess(http.Controller):
                                                                                  })
             else:
                 if post.get('email'):
+                    name = False
+                    # res_partner_obj = request.env['res.partner'].sudo()
+                    if post.get('firstName'):
+                        name = post.get('firstName')
+                    else:
+                        name += ''
+                    if post.get('lastName'):
+                        name += ' ' + post.get('lastName')
+                    account_rec_type_id = request.env['account.account.type'].sudo().search(
+                        [('name', 'ilike', 'Receivable')])
+                    account_pay_type_id = request.env['account.account.type'].sudo().search(
+                        [('name', 'ilike', 'Payable')])
+                    if account_rec_type_id:
+                        account_id = request.env['account.account'].sudo().search(
+                            [('user_type_id', '=', account_rec_type_id.id)], limit=1)
+
+                    if account_pay_type_id:
+                        account_id = request.env['account.account'].sudo().search(
+                            [('user_type_id', '=', account_pay_type_id.id)], limit=1)
                     partner_detail = request.env['res.partner'].sudo().search([('email', '=', post.get('email'))],
                                                                               limit=1)
 
                     if partner_detail :
+                        partner_detail.write({'name': name,
+                                               'email': post['email'] if post.get(
+                                                   'email') else '',
+                                               'student_company': post.get(
+                                                   'inputcompany') if post.get(
+                                                   'inputcompany') else '',
+                                               'vat_no_comp': post.get(
+                                                   'inputvat') if post.get(
+                                                   'inputvat') else '',
+                                               'mobile': post[
+                                                   'phoneNumber'] if post.get(
+                                                   'phoneNumber') else '',
+                                               'property_account_receivable_id': account_rec_type_id.id,
+                                               'property_account_payable_id': account_pay_type_id.id})
                         sale_order_id = sale_obj.create({'partner_id': partner_detail.id,
                                                          'affiliation': '1' if user_select and user_select.get(
                                                              'self_or_company') and user_select.get(
@@ -1076,33 +1111,45 @@ class EnrolmentProcess(http.Controller):
                             if each_line.event_id:
                                 each_line.discount = float(discount_add) if discount_add else 0
                     else:
-                        account_rec_type_id = request.env['account.account.type'].sudo().search(
-                            [('name', 'ilike', 'Receivable')])
-                        account_pay_type_id = request.env['account.account.type'].sudo().search(
-                            [('name', 'ilike', 'Payable')])
-                        if account_rec_type_id:
-                            account_id = request.env['account.account'].sudo().search(
-                                [('user_type_id', '=', account_rec_type_id.id)], limit=1)
-
-                        if account_pay_type_id:
-                            account_id = request.env['account.account'].sudo().search(
-                                [('user_type_id', '=', account_pay_type_id.id)], limit=1)
-
-                            partner_id = request.env['res.partner'].sudo().create({'name': post['firstName'] + ' ' +
-                                                                                           post['lastName'] if post.get(
-                                'firstName') and post.get('lastName') else '',
-                                                                                   'email': post['email'] if post.get(
-                                                                                       'email') else '',
-                                                                                   'mobile': post[
-                                                                                       'phoneNumber'] if post.get(
-                                                                                       'phoneNumber') else '',
-                                                                                   'property_account_receivable_id': account_rec_type_id.id,
-                                                                                   'property_account_payable_id': account_pay_type_id.id})
+                        # name = False
+                        # # res_partner_obj = request.env['res.partner'].sudo()
+                        # if post.get('firstName'):
+                        #     name = post.get('firstName')
+                        # else:
+                        #     name += ''
+                        # if post.get('lastName'):
+                        #     name += ' ' + post.get('lastName')
+                        #
+                        # account_rec_type_id = request.env['account.account.type'].sudo().search(
+                        #     [('name', 'ilike', 'Receivable')])
+                        # account_pay_type_id = request.env['account.account.type'].sudo().search(
+                        #     [('name', 'ilike', 'Payable')])
+                        # if account_rec_type_id:
+                        #     account_id = request.env['account.account'].sudo().search(
+                        #         [('user_type_id', '=', account_rec_type_id.id)], limit=1)
+                        #
+                        # if account_pay_type_id:
+                        #     account_id = request.env['account.account'].sudo().search(
+                        #         [('user_type_id', '=', account_pay_type_id.id)], limit=1)
+                        print("\n\n\n\n\n\n\n===========cmpny and vat no========",post.get('inputcompany'),post.get('inputvat'))
+                        partner_id = request.env['res.partner'].sudo().create({'name': name,
+                                                                               'email': post['email'] if post.get(
+                                                                                   'email') else '',
+                                                                               'student_company': post.get(
+                                                                                   'inputcompany') if post.get(
+                                                                                   'inputcompany') else '',
+                                                                               'vat_no_comp': post.get(
+                                                                                   'inputvat') if post.get(
+                                                                                   'inputvat') else '',
+                                                                               'mobile': post[
+                                                                                   'phoneNumber'] if post.get(
+                                                                                   'phoneNumber') else '',
+                                                                               'property_account_receivable_id': account_rec_type_id.id,
+                                                                               'property_account_payable_id': account_pay_type_id.id})
 
                         sale_order_id = sale_obj.create({'partner_id': partner_id.id,
                                                          'campus': user_select['campus'] if user_select.get(
                                                              'campus') else '',
-                                                         'affiliation': '1' if user_select and user_select.get('self_or_company') and user_select.get('self_or_company') == 'self' else '2',
                                                          'prof_body': user_select[
                                                              'Select Prof Body'] if user_select.get(
                                                              'Select Prof Body') else '',

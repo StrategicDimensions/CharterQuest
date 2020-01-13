@@ -414,12 +414,14 @@ class debit_order_details(models.Model):
     @api.multi
     def write(self, vals):
         result = super(debit_order_details, self).write(vals)
+        print("\n\n\\n\n\n\n============vals=======",vals)
         if vals.get('state', False):
             if vals['state'] == 'failed':
                 for each in self:
                     each.failed_debit_order_notification()
         if vals.get('state') and vals.get('state') == 'done':
             for each in self:
+                print("\n\n\n\n============each=====",each)
                 each.register_payment_debit()
         return result
 

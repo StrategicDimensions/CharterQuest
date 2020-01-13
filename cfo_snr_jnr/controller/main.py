@@ -982,11 +982,13 @@ class CfoHome(web.Home):
 
         if not cfo_snr or not cfo_mtr_snr or not cfo_mtr_snr or cfo_amb_snr or not cfo_jnr or not cfo_mtr_jnr or not cfo_amb_jnr or not cfo_acd_jnr:
             if not res_user:
+                print("\n\n\n\n\====callllll========")
                 user = request.env['res.users'].sudo().create({
                     'name': post.get('name'),
                     'login': post.get('email'),
                     'state': 'new',
                     'in_group_9': True,
+                    'share': True,
                 })
                 request.session['cfo_login'] = True
                 request.session['is_from_new_member'] = True
@@ -2553,7 +2555,7 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
         request.env.cr.commit()  # as authenticate will use its own cursor we need to commit the current transaction
         uid = request.session.authenticate(db, login, password)
         user = request.env['res.users'].sudo().browse(uid)
-        user.sudo().write({'share': False})
+        user.sudo().write({'share': True})
         if values.get('cfo_signup'):
             user.partner_id.sudo().write({
                 'cfo_user': True
