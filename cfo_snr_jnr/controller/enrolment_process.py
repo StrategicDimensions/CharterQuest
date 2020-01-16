@@ -1148,6 +1148,9 @@ class EnrolmentProcess(http.Controller):
                                                                                'property_account_payable_id': account_pay_type_id.id})
 
                         sale_order_id = sale_obj.create({'partner_id': partner_id.id,
+                                                         'affiliation': '1' if user_select and user_select.get(
+                                                             'self_or_company') and user_select.get(
+                                                             'self_or_company') == 'self' else '2',
                                                          'campus': user_select['campus'] if user_select.get(
                                                              'campus') else '',
                                                          'prof_body': user_select[
@@ -1168,9 +1171,10 @@ class EnrolmentProcess(http.Controller):
                         if config_para:
                            
                             link = config_para.value + "/debitorder/" + decoded_quote_name
+                            link1 = config_para.value + "/registration_form/"+decoded_quote_name
                             # link = "http://enrolments.charterquest.co.za/debitordermandate/" + decoded_quote_name
                             sale_order_id.write(
-                                {'name': quote_name, 'debit_order_mandate_link': link, 'debit_link': link})
+                                {'name': quote_name, 'debit_order_mandate_link': link, 'link_portal': link1, 'debit_link': link})
                         else:
                             sale_order_id.write({'name': quote_name})
                         for each_line in sale_order_id.order_line:
