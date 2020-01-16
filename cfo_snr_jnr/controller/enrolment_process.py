@@ -1065,7 +1065,22 @@ class EnrolmentProcess(http.Controller):
                     partner_detail = request.env['res.partner'].sudo().search([('email', '=', post.get('email'))],
                                                                               limit=1)
 
-                    if partner_detail :
+                    if not partner_detail:
+                        partner_detail = request.env['res.partner'].sudo().create({'name': name,
+                                                                               'email': post['email'] if post.get(
+                                                                                   'email') else '',
+                                                                               'student_company': post.get(
+                                                                                   'inputcompany') if post.get(
+                                                                                   'inputcompany') else '',
+                                                                               'vat_no_comp': post.get(
+                                                                                   'inputvat') if post.get(
+                                                                                   'inputvat') else '',
+                                                                               'mobile': post[
+                                                                                   'phoneNumber'] if post.get(
+                                                                                   'phoneNumber') else '',
+                                                                               'property_account_receivable_id': account_rec_type_id.id,
+                                                                               'property_account_payable_id': account_pay_type_id.id})
+                    else:
                         partner_detail.write({'name': name,
                                                'email': post['email'] if post.get(
                                                    'email') else '',
@@ -1080,6 +1095,7 @@ class EnrolmentProcess(http.Controller):
                                                    'phoneNumber') else '',
                                                'property_account_receivable_id': account_rec_type_id.id,
                                                'property_account_payable_id': account_pay_type_id.id})
+                    if partner_detail:
                         sale_order_id = sale_obj.create({'partner_id': partner_detail.id,
                                                          'affiliation': '1' if user_select and user_select.get(
                                                              'self_or_company') and user_select.get(
@@ -1131,32 +1147,14 @@ class EnrolmentProcess(http.Controller):
                         # if account_pay_type_id:
                         #     account_id = request.env['account.account'].sudo().search(
                         #         [('user_type_id', '=', account_pay_type_id.id)], limit=1)
-                        print("\n\n\n\n\n\n\n===========cmpny and vat no========",post.get('inputcompany'),post.get('inputvat'))
-                        partner_id = request.env['res.partner'].sudo().create({'name': name,
-                                                                               'email': post['email'] if post.get(
-                                                                                   'email') else '',
-                                                                               'student_company': post.get(
-                                                                                   'inputcompany') if post.get(
-                                                                                   'inputcompany') else '',
-                                                                               'vat_no_comp': post.get(
-                                                                                   'inputvat') if post.get(
-                                                                                   'inputvat') else '',
-                                                                               'mobile': post[
-                                                                                   'phoneNumber'] if post.get(
-                                                                                   'phoneNumber') else '',
-                                                                               'property_account_receivable_id': account_rec_type_id.id,
-                                                                               'property_account_payable_id': account_pay_type_id.id})
 
                         sale_order_id = sale_obj.create({'partner_id': partner_id.id,
-                                                         'affiliation': '1' if user_select and user_select.get(
-                                                             'self_or_company') and user_select.get(
-                                                             'self_or_company') == 'self' else '2',
                                                          'campus': user_select['campus'] if user_select.get(
                                                              'campus') else '',
                                                          'prof_body': user_select[
                                                              'Select Prof Body'] if user_select.get(
                                                              'Select Prof Body') else '',
-                                                         'quote_type': 'enrolment',
+                                                         'quote_type': 'freequote',
                                                          'semester_id': user_select['Semester'] if user_select.get(
                                                              'Semester') else '',
                                                          'warehouse_id': warehouse_id.id,
@@ -1171,10 +1169,9 @@ class EnrolmentProcess(http.Controller):
                         if config_para:
                            
                             link = config_para.value + "/debitorder/" + decoded_quote_name
-                            link1 = config_para.value + "/registration_form/"+decoded_quote_name
                             # link = "http://enrolments.charterquest.co.za/debitordermandate/" + decoded_quote_name
                             sale_order_id.write(
-                                {'name': quote_name, 'debit_order_mandate_link': link, 'link_portal': link1, 'debit_link': link})
+                                {'name': quote_name, 'debit_order_mandate_link': link, 'debit_link': link})
                         else:
                             sale_order_id.write({'name': quote_name})
                         for each_line in sale_order_id.order_line:
