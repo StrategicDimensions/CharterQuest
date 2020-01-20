@@ -1073,14 +1073,9 @@ class EnrolmentProcess(http.Controller):
                         partner_detail = request.env['res.partner'].sudo().create({'name': name,
                                                                                    'email': post['email'] if post.get(
                                                                                        'email') else '',
-                                                                                   'student_company': post.get(
-                                                                                       'inputcompany') if post.get(
-                                                                                       'inputcompany') else '',
-                                                                                   'vat_no_comp': post.get(
-                                                                                       'inputvat') if post.get(
-                                                                                       'inputvat') else '',
-                                                                                   'mobile': post[
-                                                                                       'phoneNumber'] if post.get(
+                                                                                   'student_company': post.get('inputcompany') if post.get('inputcompany') else '',
+                                                                                   'vat_no_comp': post.get('inputvat') if post.get('inputvat') else '',
+                                                                                   'mobile': post['phoneNumber'] if post.get(
                                                                                        'phoneNumber') else '',
                                                                                    'property_account_receivable_id': account_rec_type_id.id,
                                                                                    'property_account_payable_id': account_pay_type_id.id})
@@ -1088,12 +1083,8 @@ class EnrolmentProcess(http.Controller):
                         partner_detail.write({'name': name,
                                               'email': post['email'] if post.get(
                                                   'email') else '',
-                                              'student_company': post.get(
-                                                  'inputcompany') if post.get(
-                                                  'inputcompany') else '',
-                                              'vat_no_comp': post.get(
-                                                  'inputvat') if post.get(
-                                                  'inputvat') else '',
+                                              'student_company': post.get('inputcompany') if post.get('inputcompany') else '',
+                                              'vat_no_comp': post.get('inputvat') if post.get('inputvat') else '',
                                               'mobile': post[
                                                   'phoneNumber'] if post.get(
                                                   'phoneNumber') else '',
@@ -2773,6 +2764,7 @@ class EnrolmentProcess(http.Controller):
                 }
                 msg_id = mail_obj.sudo().create(mail_values)
                 msg_id.send()
+                print("\n\n\n\n\n=============user select===========",user_select)
                 if user_select.get('self_or_company') == 'cmp_sponosored':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                           {'self_or_cmp': user_select['self_or_company'] if user_select.get(
