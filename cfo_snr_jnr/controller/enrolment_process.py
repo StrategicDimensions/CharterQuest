@@ -2378,7 +2378,7 @@ class EnrolmentProcess(http.Controller):
         invoice_obj = request.env['account.invoice'].sudo()
         debit_order_obj = request.env['debit.order.details'].sudo()
         mail_obj = request.env['mail.mail'].sudo()
-        user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else False
+        user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
         attchment_list = []
         invoice_line = []
         invoice_id = False
