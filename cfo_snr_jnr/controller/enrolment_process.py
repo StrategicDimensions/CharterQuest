@@ -1084,7 +1084,7 @@ class EnrolmentProcess(http.Controller):
                                               'email': post['email'] if post.get(
                                                   'email') else '',
                                               'student_company': post.get('inputCompany') if post.get('inputCompany') else '',
-                                              'vat_no_comp': post.get('inputVat') if post.get('inputVat') else '',
+                                              'vat_no_comp': '0000000000',
                                               'mobile': post[
                                                   'phoneNumber'] if post.get(
                                                   'phoneNumber') else '',
