@@ -224,7 +224,7 @@
                     <span>Professional Body</span>
                   </td>
                   <td style="border-top:2px solid black">
-                      <span t-esc="o.pc_exam_type and o.pc_exam_type.type_event_id and o.pc_exam_type.type_event_id.name or 'Not Provided'"/>
+                      <span t-esc="o.prof_body and o.prof_body.name or 'Not Provided'"/>
                   </td>
                   <td style="border-top:2px solid black">
                       <span>PC Exam Type</span>
