@@ -920,7 +920,7 @@ class EnrolmentProcess(http.Controller):
                                       'price_unit': product_id.lst_price}])
         if post:
             print("\n\n\n\n\n================post==========",post)
-            _logger.info("\n\n\n post==========",post)
+            _logger.info("\n\n\n post========== %s",post)
             if post.get('register_and_enrollment'):
                 account_rec_id = False
                 account_pay_id = False
