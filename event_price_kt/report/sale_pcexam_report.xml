@@ -154,7 +154,7 @@
                                 <p>Student no</p>
                             </td>
                             <td>
-                                <p> </p>
+                                <p><span t-esc="o.partner_id.student_number"/></p>
                             </td>
                         </tr>
                         <tr>
