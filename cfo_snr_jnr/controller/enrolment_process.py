@@ -17,6 +17,7 @@ from odoo.addons.cfo_snr_jnr.models.payment_transaction import PaymentTransactio
 import odoo.addons.website_sale.controllers.main as website_sale
 from odoo.addons.website_sale_delivery.controllers.main import WebsiteSaleDelivery
 
+_logger = logging.getLogger(__name__)
 
 # from CharterQuest.payment_payu_com.controllers.main import PayuController
 
@@ -918,6 +919,7 @@ class EnrolmentProcess(http.Controller):
                                       'price_unit': product_id.lst_price}])
         if post:
             print("\n\n\n\n\n================post==========",post)
+            _logger.info("\n\n\n post==========",post)
             if post.get('register_and_enrollment'):
                 account_rec_id = False
                 account_pay_id = False
@@ -1074,7 +1076,7 @@ class EnrolmentProcess(http.Controller):
                                                                                    'email': post['email'] if post.get(
                                                                                        'email') else '',
                                                                                    'student_company': post.get('inputCompany') if post.get('inputCompany') else '',
-                                                                                   'vat_no_comp': '123456',
+                                                                                   'vat_no_comp': post.get('inputVat') if post.get('inputVat') else '',
                                                                                    'mobile': post['phoneNumber'] if post.get(
                                                                                        'phoneNumber') else '',
                                                                                    'property_account_receivable_id': account_rec_type_id.id,
@@ -1084,7 +1086,7 @@ class EnrolmentProcess(http.Controller):
                                               'email': post['email'] if post.get(
                                                   'email') else '',
                                               'student_company': post.get('inputCompany') if post.get('inputCompany') else '',
-                                              'vat_no_comp': '0000000000',
+                                              'vat_no_comp': post.get('inputVat') if post.get('inputVat') else '',
                                               'mobile': post[
                                                   'phoneNumber'] if post.get(
                                                   'phoneNumber') else '',
