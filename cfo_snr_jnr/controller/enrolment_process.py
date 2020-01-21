@@ -1076,8 +1076,8 @@ class EnrolmentProcess(http.Controller):
                         partner_detail = request.env['res.partner'].sudo().create({'name': name,
                                                                                    'email': post['email'] if post.get(
                                                                                        'email') else '',
-                                                                                   'student_company': post.get('inputCompany') if post.get('inputCompany') else '',
-                                                                                   'vat_no_comp': post.get('inputVat') if post.get('inputVat') else '',
+                                                                                   'student_company': post.get('inputCompany') if post.get('inputCompany') else post.get('company'),
+                                                                                   'vat_no_comp': post.get('inputVat') if post.get('inputVat') else post.get('vatNumber'),
                                                                                    'mobile': post['phoneNumber'] if post.get(
                                                                                        'phoneNumber') else '',
                                                                                    'property_account_receivable_id': account_rec_type_id.id,
@@ -1086,8 +1086,8 @@ class EnrolmentProcess(http.Controller):
                         partner_detail.write({'name': name,
                                               'email': post['email'] if post.get(
                                                   'email') else '',
-                                              'student_company': post.get('inputCompany') if post.get('inputCompany') else '',
-                                              'vat_no_comp': post.get('inputVat') if post.get('inputVat') else '',
+                                              'student_company': post.get('inputCompany') if post.get('inputCompany') else post.get('company'),
+                                              'vat_no_comp': post.get('inputVat') if post.get('inputVat') else post.get('vatNumber'),
                                               'mobile': post[
                                                   'phoneNumber'] if post.get(
                                                   'phoneNumber') else '',
