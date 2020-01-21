@@ -7,6 +7,7 @@ import werkzeug
 from dateutil.relativedelta import relativedelta
 from pkg_resources import require
 from odoo import http
+import logging
 from odoo.http import request
 from datetime import date, datetime
 from odoo import http, SUPERUSER_ID, _
