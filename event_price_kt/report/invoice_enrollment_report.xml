@@ -166,7 +166,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr t-if="o.affiliation=='2'">
                                     <td>
                                         <p>Company</p>
                                     </td>
@@ -193,7 +193,7 @@
                                         <p>Student no</p>
                                     </td>
                                     <td>
-                                        <p></p>
+                                        <p><span t-esc="o.partner_id.student_number"/></p>
                                     </td>
                                 </tr>
                                 <tr>

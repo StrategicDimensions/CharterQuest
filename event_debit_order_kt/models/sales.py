@@ -14,7 +14,7 @@ class sale_order(models.Model):
 
     @api.multi
     def action_confirm(self):
-        super(sale_order, self).action_confirm()
+        # super(sale_order, self).action_confirm()
         if not self.pc_exam and self.affiliation == '1':
             if not self:
                 return []
@@ -138,8 +138,8 @@ class payment_confirmation(models.Model):
         decoded_quote_name = m.hexdigest()
         config_para = request.env['ir.config_parameter'].sudo().search(
             [('key', 'ilike', 'web.base.url')])
-        self.order_id.write(dic)
-        self.order_id._action_confirm()
+        # self.order_id.write(dic)
+        # self.order_id._action_confirm()
         if str(sale_obj.payment_amount) == str(sale_obj.amount_total):
             sale_adv_payment = {
                 'advance_payment_method': 'all',
@@ -170,6 +170,8 @@ class payment_confirmation(models.Model):
             link = config_para.value + "/payment/" + decoded_quote_name + '/' + decoded_quote_name
             if sale_obj.amount_total != sale_obj.payment_amount:
                 sale_obj.write({'debit_order_mandate_link': link,'debitorder_link':True})
+        self.order_id.write(dic)
+        self.order_id._action_confirm()
         if self.env['ir.config_parameter'].sudo().get_param('sale.auto_done_setting'):
             self.action_done()
 
@@ -225,3 +227,4 @@ class payment_confirmation(models.Model):
                         'body': template_id.body_html
                     })
         return True
+

@@ -70,7 +70,7 @@
                     </group>
                     <footer>
                         <button name="button_create_saleorder" string="Create Sale Order" class="oe_highlight" type="object"/> or
-                        <button string="Cancel" class="oe_link" special="cancel"/>
+                        <button string="Cancel" special="cancel" class="oe_link"/>
                     </footer>
                 </form>
             </field>

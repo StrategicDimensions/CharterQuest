@@ -84,6 +84,7 @@ class ResPartner(models.Model):
     emp_website = fields.Char('Website of Employer')
     username = fields.Char('Username')
     password = fields.Char('Password')
+    student_number = fields.Char('Student No', size=64)
     cfo_type = fields.Selection(
         [('CFO Aspirant', 'CFO Aspirant'), ('Academic Institution', 'Academic Institution'), ('Employer', 'Employer'),
          ('Volunteer', 'Volunteer'), ('Brand Ambassador', 'Brand Ambassador'),

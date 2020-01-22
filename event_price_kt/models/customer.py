@@ -16,6 +16,12 @@ class res_partner(models.Model):
     campus_code = fields.Char('Campus Code',size=64)
 
     @api.model
+    def create(self, vals):
+        # if vals.get('student_number', 'New') == 'New':
+        vals['student_number'] = self.env['ir.sequence'].next_by_code('res.partner') or '/'
+        return super(res_partner, self).create(vals)
+
+    @api.model
     def get_student_number(self):
         pass
         # partner_ids = self.search([])
