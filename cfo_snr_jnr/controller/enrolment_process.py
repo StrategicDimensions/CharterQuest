@@ -878,6 +878,7 @@ class EnrolmentProcess(http.Controller):
 
 
 
+
         sale_order_id = False
         display_btn = request.session['reg_enrol_btn'] if request.session.get('reg_enrol_btn') else False
         product_ids = request.session['product_id'] if request.session.get('product_id') else ''
@@ -919,8 +920,6 @@ class EnrolmentProcess(http.Controller):
                                       'product_uom': 1,
                                       'price_unit': product_id.lst_price}])
         if post:
-            print("\n\n\n\n\n================post==========",post)
-            _logger.info("\n\n\n post========== %s",post)
             if post.get('register_and_enrollment'):
                 account_rec_id = False
                 account_pay_id = False
@@ -1081,8 +1080,7 @@ class EnrolmentProcess(http.Controller):
                                                                                        'email') else '',
                                                                                    'student_company': post.get('inputCompany') if post.get('inputCompany') else post.get('company'),
                                                                                    'vat_no_comp': post.get('inputVat') if post.get('inputVat') else post.get('vatNumber'),
-                                                                                   'mobile': post['phoneNumber'] if post.get(
-                                                                                       'phoneNumber') else '',
+                                                                                   'mobile': post['phoneNumber'] if post.get('phoneNumber') else '',
                                                                                    'property_account_receivable_id': account_rec_type_id.id,
                                                                                    'property_account_payable_id': account_pay_type_id.id})
                     else:
