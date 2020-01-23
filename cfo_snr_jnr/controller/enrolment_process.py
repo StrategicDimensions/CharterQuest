@@ -795,8 +795,6 @@ class EnrolmentProcess(http.Controller):
                             [('user_type_id', '=', account_pay_type_id.id)], limit=1)
                     partner_id = request.env['res.partner'].sudo().search([('email', '=', post.get('inputEmail'))], limit=1,
                                                                           order="id desc")
-                    print("\n\n\n\n=======cmpny=========",post.get('inputCompany'));
-                    print("\n\n\n\n=======inputVat=======", post.get('inputVat'));
                     partner_id.write({'name': name,
                                           'student_company': post.get('inputCompany') if post.get('inputCompany') else '',
                                           'email': post.get('inputEmail') if post.get('inputEmail') else '',
@@ -1067,22 +1065,24 @@ class EnrolmentProcess(http.Controller):
                     if account_rec_type_id:
                         account_rec_id = request.env['account.account'].sudo().search(
                             [('user_type_id', '=', account_rec_type_id.id)], limit=1)
-
+                        print("\n\n\n\n\n\n\n===========account_rec_id==========",account_rec_id)
                     if account_pay_type_id:
                         account_pay_id = request.env['account.account'].sudo().search(
                             [('user_type_id', '=', account_pay_type_id.id)], limit=1)
+                        print("\n\n\n\n\n\n\n===========account_pay_id==========",account_pay_id)
                     partner_detail = request.env['res.partner'].sudo().search([('email', '=', post.get('email'))],
                                                                               limit=1)
-                    print("\n\n\n\n=========student number==========",partner_detail.student_number)
                     if not partner_detail:
                         partner_detail = request.env['res.partner'].sudo().create({'name': name,
                                                                                    'email': post['email'] if post.get(
                                                                                        'email') else '',
                                                                                    'student_company': post.get('inputCompany') if post.get('inputCompany') else post.get('company'),
                                                                                    'vat_no_comp': post.get('inputVat') if post.get('inputVat') else post.get('vatNumber'),
-                                                                                   'mobile': post['phoneNumber'] if post.get('phoneNumber') else '',
-                                                                                   'property_account_receivable_id': account_rec_type_id.id,
-                                                                                   'property_account_payable_id': account_pay_type_id.id})
+                                                                                   'mobile': post['phoneNumber'] if post.get(
+                                                                                       'phoneNumber') else '',
+                                                                                   'property_account_receivable_id': account_rec_id.id,
+                                                                                   'property_account_payable_id': account_pay_id.id})
+
                     else:
                         partner_detail.write({'name': name,
                                               'email': post['email'] if post.get(
@@ -1092,9 +1092,8 @@ class EnrolmentProcess(http.Controller):
                                               'mobile': post[
                                                   'phoneNumber'] if post.get(
                                                   'phoneNumber') else '',
-                                              'property_account_receivable_id': account_rec_type_id.id,
-                                              'property_account_payable_id': account_pay_type_id.id})
-
+                                              'property_account_receivable_id': account_rec_id.id,
+                                              'property_account_payable_id': account_pay_id.id})
                     if partner_detail:
                         sale_order_id = sale_obj.create({'partner_id': partner_detail.id,
                                                          'affiliation': '1' if user_select and user_select.get(
@@ -1879,6 +1878,7 @@ class EnrolmentProcess(http.Controller):
                      'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
                      'out_standing_balance_incl_vat': post.get('inputtotalandInterest') if post.get(
                          'inputtotalandInterest') else 0,
+                     'student_number': sale_order_id.partner_id.student_number,
                      'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
                      'outstanding_amount': post.get('inputOutstanding') if post.get('inputOutstanding') else 0,
                    })
@@ -2459,6 +2459,7 @@ class EnrolmentProcess(http.Controller):
                                  'months': post.get('months') if post.get('months') else 0,
                                  'out_standing_balance_incl_vat': post.get('dbo_amount') if post.get(
                                      'dbo_amount') else 0,
+                                 'student_number': sale_order_id.partner_id.student_number,
                                  'interest_amount': post.get('interest') if post.get('interest') else 0,
                                  'debit_order_mandate':True,
                                 'debit_order_mandat': debit_order_mandet,
@@ -2769,7 +2770,6 @@ class EnrolmentProcess(http.Controller):
                 }
                 msg_id = mail_obj.sudo().create(mail_values)
                 msg_id.send()
-                print("\n\n\n\n\n=============user select===========",user_select)
                 if user_select.get('self_or_company') == 'cmp_sponosored':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                           {'self_or_cmp': user_select['self_or_company'] if user_select.get(
@@ -2888,6 +2888,7 @@ class EnrolmentProcess(http.Controller):
                 {'diposit_selected': post.get('inputPaypercentage') if post.get('inputPaypercentage') else 0,
                  'due_amount': post.get('inputTotalDue') if post.get('inputTotalDue') else 0,
                  'months': post.get('inputPaymonths') if post.get('inputPaymonths') else 0,
+                 'student_number': sale_order_id.partner_id.student_number,
                  'out_standing_balance_incl_vat': post.get('inputtotalandInterest') if post.get(
                      'inputtotalandInterest') else 0,
                  'monthly_amount': post.get('inputpaymentpermonth') if post.get('inputpaymentpermonth') else 0,
