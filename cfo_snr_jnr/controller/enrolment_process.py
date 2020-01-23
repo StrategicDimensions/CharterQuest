@@ -876,6 +876,7 @@ class EnrolmentProcess(http.Controller):
 
 
 
+
         sale_order_id = False
         display_btn = request.session['reg_enrol_btn'] if request.session.get('reg_enrol_btn') else False
         product_ids = request.session['product_id'] if request.session.get('product_id') else ''
@@ -917,8 +918,6 @@ class EnrolmentProcess(http.Controller):
                                       'product_uom': 1,
                                       'price_unit': product_id.lst_price}])
         if post:
-            print("\n\n\n\n\n================post==========",post)
-            _logger.info("\n\n\n post========== %s",post)
             if post.get('register_and_enrollment'):
                 account_rec_id = False
                 account_pay_id = False
@@ -1083,6 +1082,7 @@ class EnrolmentProcess(http.Controller):
                                                                                        'phoneNumber') else '',
                                                                                    'property_account_receivable_id': account_rec_id.id,
                                                                                    'property_account_payable_id': account_pay_id.id})
+
                     else:
                         partner_detail.write({'name': name,
                                               'email': post['email'] if post.get(
