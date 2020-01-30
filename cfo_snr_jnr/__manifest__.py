@@ -32,6 +32,7 @@
         'data/popup_for_browser.xml',
         'data/snippets.xml',
         'data/attachment_data.xml',
+        'wizard/import_wizard.xml',
         'views/timetable_template.xml',
         'views/login.xml',
         'views/login_cfo_jnr.xml',

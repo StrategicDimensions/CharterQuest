@@ -170,7 +170,6 @@ class sale_order(models.Model):
             if references.get(invoices.get(group_key)):
                 if order not in references[invoices[group_key]]:
                     references[invoices[group_key]] |= order
-
         if not invoices:
             raise UserError(_('There is no invoiceable line.'))
 

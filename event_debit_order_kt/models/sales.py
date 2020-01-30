@@ -140,17 +140,37 @@ class payment_confirmation(models.Model):
             [('key', 'ilike', 'web.base.url')])
         # self.order_id.write(dic)
         # self.order_id._action_confirm()
-        if str(sale_obj.payment_amount) == str(sale_obj.amount_total):
+        if self.payment_amount == sale_obj.amount_total:
             sale_adv_payment = {
                 'advance_payment_method': 'all',
             }
             advanc_pay_id = self.env['sale.advance.payment.inv'].create(sale_adv_payment)
-            advanc_pay_id.create_invoices()
+            # advanc_pay_id.create_invoices()
+            for each_order_line in sale_obj.order_line:
+                invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
+                                            'name': each_order_line.name,
+                                            'quantity': 1.0,
+                                            'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
+                                            'invoice_line_tax_ids': [
+                                                (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
+                                            'price_unit': each_order_line.price_unit,
+                                            'discount': each_order_line.discount}])
+            invoice_id = invoice_obj.sudo().create({'partner_id': sale_obj.partner_id.id,
+                                                    'campus': sale_obj.campus.id,
+                                                    'prof_body': sale_obj.prof_body.id,
+                                                    'sale_order_id': sale_obj.id,
+                                                    'semester_id': sale_obj.semester_id.id,
+                                                    'invoice_line_ids': invoice_line,
+                                                    'residual': sale_obj.out_standing_balance_incl_vat,
+                                                    })
+            sale_obj._action_confirm()
             invoice_id = request.env['account.invoice'].sudo().search([('sale_order_id','=',sale_obj.name)])
             ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
                               'company_id': self.order_id.company_id.id}
             inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
             ctx.update({'journal_id': inv_default_vals.get('journal_id')})
+            invoice_id = sale_obj.with_context(ctx).sudo().action_invoice_create()
+            invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
             journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
             payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
             payment_id = request.env['account.payment'].sudo().create({
@@ -166,10 +186,23 @@ class payment_confirmation(models.Model):
             })
             invoice_id.action_invoice_open()
             payment_id.action_validate_invoice_payment()
+            # invoice_id.action_invoice_paid()
         if config_para:
             link = config_para.value + "/payment/" + decoded_quote_name + '/' + decoded_quote_name
-            if sale_obj.amount_total != sale_obj.payment_amount:
+            if sale_obj.amount_total != self.payment_amount:
                 sale_obj.write({'debit_order_mandate_link': link,'debitorder_link':True})
+                template_id = self.env['mail.template'].search([('name', '=', "Debit Order Mandate Email")])
+                if template_id:
+                    mail_message = template_id.send_mail(self.order_id.id, force_send=True)
+                    message = self.env['mail.message']
+                    if sale_obj.message_ids:
+                        message.create({
+                            'res_id': sale_obj.message_ids[0].res_id,
+                            'parent_id': sale_obj.message_ids[0].id,
+                            'subject': template_id.subject,
+                            'model': 'sale.order',
+                            'body': template_id.body_html
+                        })
         self.order_id.write(dic)
         self.order_id._action_confirm()
         if self.env['ir.config_parameter'].sudo().get_param('sale.auto_done_setting'):
@@ -213,18 +246,18 @@ class payment_confirmation(models.Model):
             template_id = self.env['mail.template'].sudo().search([('name','=',"Sending Tax Invoice to Student")])
             if template_id:
                 mail_message = template_id.send_mail(self.order_id.invoice_ids[0].id)
-        else:
-            template_id = self.env['mail.template'].search([('name', '=', "Debit Order Mandate Email")])
-            if template_id:
-                mail_message = template_id.send_mail(self.order_id.id,force_send=True)
-                message = self.env['mail.message']
-                if sale_obj.message_ids:
-                    message.create({
-                        'res_id': sale_obj.message_ids[0].res_id,
-                        'parent_id': sale_obj.message_ids[0].id,
-                        'subject': template_id.subject,
-                        'model': 'sale.order',
-                        'body': template_id.body_html
-                    })
+        # else:
+        #     template_id = self.env['mail.template'].search([('name', '=', "Debit Order Mandate Email")])
+        #     if template_id:
+        #         mail_message = template_id.send_mail(self.order_id.id,force_send=True)
+        #         message = self.env['mail.message']
+        #         if sale_obj.message_ids:
+        #             message.create({
+        #                 'res_id': sale_obj.message_ids[0].res_id,
+        #                 'parent_id': sale_obj.message_ids[0].id,
+        #                 'subject': template_id.subject,
+        #                 'model': 'sale.order',
+        #                 'body': template_id.body_html
+        #             })
         return True
 
