@@ -76,8 +76,8 @@
         <record id="student_number_sequence" model="ir.sequence">
             <field name="name">Student Number</field>
             <field name="code">res.partner</field>
-            <field name="prefix">STUDENT NO/</field>
-            <field name="padding">4</field>
+            <field name="prefix"></field>
+            <field name="padding">5</field>
             <field name="number_next">1</field>
             <field name="number_increment">1</field>
             <field name="student_number"/>
