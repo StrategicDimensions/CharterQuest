@@ -17,9 +17,8 @@
 #    <http://www.gnu.org/licenses/gpl.html>.
 #
 ##############################################################################
-from odoo import http
+from odoo import http,_
 from odoo.http import request
-
 
 
 class TimeTable(http.Controller):
