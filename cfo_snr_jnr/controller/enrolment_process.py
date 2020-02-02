@@ -991,6 +991,7 @@ class EnrolmentProcess(http.Controller):
                                       'property_account_payable_id': account_pay_id.id})
 
                 if partner_id:
+                    print("\n\n\n\n\n==============user_select.get('self_or_company')=====",user_select.get('self_or_company'))
                     sale_order_id = sale_obj.sudo().create({'partner_id': partner_id.id,
                                                      'affiliation': '1' if user_select.get(
                                                          'self_or_company') and user_select.get(
@@ -1691,7 +1692,7 @@ class EnrolmentProcess(http.Controller):
             # invoice_id.action_invoice_open()
         if sale_order_id.debit_order_mandat and post.get('dbo_date') :
             date_day = int(post.get('dbo_date'))
-            dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
+            dbo_date = date(year=datetime.now().year, month=datetime.now().month + 1, day=date_day)
 
             for each_debit_order in sale_order_id.debit_order_mandat:
                 for i in range(sale_order_id.months):
@@ -1959,7 +1960,7 @@ class EnrolmentProcess(http.Controller):
             if sale_order_id.debit_order_mandat:
                 date_day = int(post.get('inputPaydate')) if post.get('inputPaydate') else False
                 if date_day:
-                    dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
+                    dbo_date = date(year=datetime.now().year, month=datetime.now().month +1, day=date_day)
                     debit_order_mandat_id = sale_order_id.debit_order_mandat[-1]
                     deb_interest = debit_order_mandat_id.interest / debit_order_mandat_id.months
                     for i in range(sale_order_id.months):
@@ -2279,7 +2280,7 @@ class EnrolmentProcess(http.Controller):
         if sale_order_id.debit_order_mandat:
             date_day = sale_order_id.due_day
             if date_day:
-                dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
+                dbo_date = date(year=datetime.now().year, month=datetime.now().month +1, day=date_day)
                 debit_order_mandat_id = sale_order_id.debit_order_mandat[-1]
                 deb_interest = debit_order_mandat_id.interest / debit_order_mandat_id.months
                 for i in range(sale_order_id.months):
@@ -2543,7 +2544,7 @@ class EnrolmentProcess(http.Controller):
 
             if sale_order_id.debit_order_mandat:
                 date_day = int(post.get('dbo_date'))
-                dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
+                dbo_date = date(year=datetime.now().year, month=datetime.now().month + 1, day=date_day)
                 debit_order_mandat_id = sale_order_id.debit_order_mandat[-1]
                 for i in range(sale_order_id.months):
                     res = debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
@@ -3008,7 +3009,7 @@ class EnrolmentProcess(http.Controller):
 
             if sale_order_id.debit_order_mandat:
                 date_day = int(post.get('inputPaydate'))
-                dbo_date = date(year=datetime.now().year, month=datetime.now().month, day=date_day)
+                dbo_date = date(year=datetime.now().year, month=datetime.now().month + 1, day=date_day)
                 debit_order_mandat_id = sale_order_id.debit_order_mandat[-1]
                 debit_intrest = debit_order_mandat_id.interest/int(sale_order_id.months)
                 for i in range(sale_order_id.months):
