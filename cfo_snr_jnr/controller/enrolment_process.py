@@ -2623,7 +2623,8 @@ class EnrolmentProcess(http.Controller):
                 msg_id = mail_obj.create(mail_values)
                 msg_id.send()
                 print("\n\n\n\n\n=========== user_select.get('self_or_company')===========",user_select.get('self_or_company'))
-                if user_select and user_select.get('self_or_company') == 'cmp_sponosored':
+                # if user_select and user_select.get('self_or_company') == 'cmp_sponosored':
+                if user_select and sale_order_id.affiliation == '2':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                           {'self_or_cmp': user_select['self_or_company'] if user_select.get(
                                               'self_or_company') else ''})
@@ -2711,9 +2712,10 @@ class EnrolmentProcess(http.Controller):
 
                 msg_id = mail_obj.create(mail_values)
                 msg_id.send()
-                print("\n\n\n\n\n=========== user_select.get('self_or_company')===========",user_select.get('self_or_company'))
+                # print("\n\n\n\n\n=========== user_select.get('self_or_company')===========",user_select.get('self_or_company'))
 
-                if user_select.get('self_or_company') == 'cmp_sponosored' or sale_order_id.affiliation == '2':
+                # if user_select.get('self_or_company') == 'cmp_sponosored' or sale_order_id.affiliation == '2':
+                if sale_order_id.affiliation == '2':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                           {'self_or_cmp': user_select['self_or_company'] if user_select.get(
                                               'self_or_company') else ''})
@@ -2775,7 +2777,8 @@ class EnrolmentProcess(http.Controller):
                 msg_id.send()
                 _logger.info("Password reset email sent for user <%s> to <%s>", type(user_select), user_select)
                 # print("\n\n\n\n\n================== user_select.get('self_or_company')=============",type(user_select),user_select,user_select.get('self_or_company'))
-                if user_select.get('self_or_company') == 'cmp_sponosored' or sale_order_id.affiliation == '2':
+                # if user_select.get('self_or_company') == 'cmp_sponosored' or sale_order_id.affiliation == '2':
+                if sale_order_id.affiliation == '2':
                     print("\n\n\n\n\n=================in if condition ===============")
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                           {'self_or_cmp': user_select['self_or_company'] if user_select.get(

@@ -189,10 +189,10 @@ class payment_confirmation(models.Model):
             })
             invoice_id.action_invoice_open()
             # payment_id.post()
-            payment_id.action_validate_invoice_payment()
+            # payment_id.action_validate_invoice_payment()
 
             print("\n\n\n\n\n=================invoice type========",invoice_id.type)
-            # invoice_id.action_invoice_paid()
+            invoice_id.action_invoice_paid()
         if config_para:
             link = config_para.value + "/payment/" + decoded_quote_name + '/' + decoded_quote_name
             if sale_obj.amount_total != self.payment_amount:
