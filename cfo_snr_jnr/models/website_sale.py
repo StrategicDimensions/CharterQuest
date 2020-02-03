@@ -63,11 +63,21 @@ class AccountPayment(models.Model):
     _inherit = 'account.payment'
 
     def action_validate_invoice_payment(self):
+        print("\n\n\n\n\n\n\n========invoice type===========",self.invoice_ids[0].type)
         res =  super(AccountPayment, self).action_validate_invoice_payment()
+        print("\n\n\n\n\n========res============",res)
         email_obj = self.env['mail.template']
         mail_obj = self.env['mail.mail'].sudo()
+
         if res:
-            print("\n\n\n========self.payment_difference===",self.payment_difference)
+            print("\n\n\n========self.payment_difference===",self.payment_difference,self.invoice_ids[0].id)
+            print("\n\n\n\n=====self.invoice_ids[0].sale_order_id.amount_total===",self.invoice_ids[0].sale_order_id.amount_total)
+            print("\n\n\n\n\====self.invoice_ids[0].sale_order_id.payment_amount====",self.amount)
+            print("\n\n\n\n\n\n\n===========invoice_ids[0].sale_order_id.payment_amount",self.invoice_ids[0].sale_order_id.payment_amount)
+            if self.invoice_ids[0].amount_total == self.invoice_ids[0].sale_order_id.payment_amount:
+                self.payment_difference = -(self.invoice_ids[0].amount_total)
+                print("\n\n\n========self.payment_difference===", self.payment_difference)
+
             if self.payment_difference > 0:
                  partial_template_id = email_obj.sudo().search([('name', '=', "Partly invoice payment")])
                  if partial_template_id:

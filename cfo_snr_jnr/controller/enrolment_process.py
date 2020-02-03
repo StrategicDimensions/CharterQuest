@@ -2622,7 +2622,7 @@ class EnrolmentProcess(http.Controller):
                 }
                 msg_id = mail_obj.create(mail_values)
                 msg_id.send()
-
+                print("\n\n\n\n\n=========== user_select.get('self_or_company')===========",user_select.get('self_or_company'))
                 if user_select and user_select.get('self_or_company') == 'cmp_sponosored':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                           {'self_or_cmp': user_select['self_or_company'] if user_select.get(
@@ -2711,6 +2711,8 @@ class EnrolmentProcess(http.Controller):
 
                 msg_id = mail_obj.create(mail_values)
                 msg_id.send()
+                print("\n\n\n\n\n=========== user_select.get('self_or_company')===========",user_select.get('self_or_company'))
+
                 if user_select.get('self_or_company') == 'cmp_sponosored':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                           {'self_or_cmp': user_select['self_or_company'] if user_select.get(
@@ -2771,7 +2773,10 @@ class EnrolmentProcess(http.Controller):
                 }
                 msg_id = mail_obj.sudo().create(mail_values)
                 msg_id.send()
+                _logger.info("Password reset email sent for user <%s> to <%s>", type(user_select), user_select)
+                print("\n\n\n\n\n================== user_select.get('self_or_company')=============",type(user_select),user_select,user_select.get('self_or_company'))
                 if user_select.get('self_or_company') == 'cmp_sponosored':
+                    print("\n\n\n\n\n=================in if condition ===============")
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                           {'self_or_cmp': user_select['self_or_company'] if user_select.get(
                                               'self_or_company') else ''})
@@ -2902,7 +2907,7 @@ class EnrolmentProcess(http.Controller):
             invoice_obj = request.env['account.invoice'].sudo()
             debit_order_obj = request.env['debit.order.details'].sudo()
             mail_obj = request.env['mail.mail'].sudo()
-            # user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
+            user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
             attachment_list = []
             invoice_line = []
             if post.get('sale_order'):
