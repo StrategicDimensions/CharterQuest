@@ -2626,8 +2626,9 @@ class EnrolmentProcess(http.Controller):
                 # if user_select and user_select.get('self_or_company') == 'cmp_sponosored':
                 if user_select and sale_order_id.affiliation == '2':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
-                                          {'self_or_cmp': user_select['self_or_company'] if user_select.get(
-                                              'self_or_company') else ''})
+                                          # {'self_or_cmp': user_select['self_or_company'] if user_select.get(
+                                          #     'self_or_company') else ''}
+                                          {'self_or_cmp': 'company' if sale_order_id.affiliation == '2' else ''})
 
             if sale_order_id.affiliation == '2' and request.session.get('sale_order') and request.session.get(
                     'do_invoice') == 'yes':
@@ -2781,8 +2782,9 @@ class EnrolmentProcess(http.Controller):
                 if sale_order_id.affiliation == '2':
                     print("\n\n\n\n\n=================in if condition ===============")
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
-                                          {'self_or_cmp': user_select['self_or_company'] if user_select.get(
-                                              'self_or_company') else ''})
+                                          # {'self_or_cmp': user_select['self_or_company'] if user_select.get(
+                                          #     'self_or_company') else ''}
+                                          {'self_or_cmp':'company' if sale_order_id.affiliation == '2' else ''})
 
         return request.render('cfo_snr_jnr.enrolment_process_reg_and_enrol_thankyou')
 
