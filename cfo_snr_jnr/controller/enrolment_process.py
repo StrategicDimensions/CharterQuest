@@ -2622,11 +2622,13 @@ class EnrolmentProcess(http.Controller):
                 }
                 msg_id = mail_obj.create(mail_values)
                 msg_id.send()
-
-                if user_select and user_select.get('self_or_company') == 'cmp_sponosored':
+                print("\n\n\n\n\n=========== user_select.get('self_or_company')===========",user_select.get('self_or_company'))
+                # if user_select and user_select.get('self_or_company') == 'cmp_sponosored':
+                if user_select and sale_order_id.affiliation == '2':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
-                                          {'self_or_cmp': user_select['self_or_company'] if user_select.get(
-                                              'self_or_company') else ''})
+                                          # {'self_or_cmp': user_select['self_or_company'] if user_select.get(
+                                          #     'self_or_company') else ''}
+                                          {'self_or_cmp': 'company' if sale_order_id.affiliation == '2' else ''})
 
             if sale_order_id.affiliation == '2' and request.session.get('sale_order') and request.session.get(
                     'do_invoice') == 'yes':
@@ -2711,7 +2713,10 @@ class EnrolmentProcess(http.Controller):
 
                 msg_id = mail_obj.create(mail_values)
                 msg_id.send()
-                if user_select.get('self_or_company') == 'cmp_sponosored':
+                # print("\n\n\n\n\n=========== user_select.get('self_or_company')===========",user_select.get('self_or_company'))
+
+                # if user_select.get('self_or_company') == 'cmp_sponosored' or sale_order_id.affiliation == '2':
+                if sale_order_id.affiliation == '2':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
                                           {'self_or_cmp': user_select['self_or_company'] if user_select.get(
                                               'self_or_company') else ''})
@@ -2771,10 +2776,15 @@ class EnrolmentProcess(http.Controller):
                 }
                 msg_id = mail_obj.sudo().create(mail_values)
                 msg_id.send()
-                if user_select.get('self_or_company') == 'cmp_sponosored':
+                _logger.info("Password reset email sent for user <%s> to <%s>", type(user_select), user_select)
+                # print("\n\n\n\n\n================== user_select.get('self_or_company')=============",type(user_select),user_select,user_select.get('self_or_company'))
+                # if user_select.get('self_or_company') == 'cmp_sponosored' or sale_order_id.affiliation == '2':
+                if sale_order_id.affiliation == '2':
+                    print("\n\n\n\n\n=================in if condition ===============")
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou',
-                                          {'self_or_cmp': user_select['self_or_company'] if user_select.get(
-                                              'self_or_company') else ''})
+                                          # {'self_or_cmp': user_select['self_or_company'] if user_select.get(
+                                          #     'self_or_company') else ''}
+                                          {'self_or_cmp':'company' if sale_order_id.affiliation == '2' else ''})
 
         return request.render('cfo_snr_jnr.enrolment_process_reg_and_enrol_thankyou')
 
@@ -2902,7 +2912,7 @@ class EnrolmentProcess(http.Controller):
             invoice_obj = request.env['account.invoice'].sudo()
             debit_order_obj = request.env['debit.order.details'].sudo()
             mail_obj = request.env['mail.mail'].sudo()
-            # user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
+            user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
             attachment_list = []
             invoice_line = []
             if post.get('sale_order'):

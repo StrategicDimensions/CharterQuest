@@ -164,29 +164,34 @@ class payment_confirmation(models.Model):
                                                     'residual': sale_obj.out_standing_balance_incl_vat,
                                                     })
             sale_obj._action_confirm()
+            # currency = request.env['res.currency'].sudo().search([('name', '=', 'ZAR')], limit=1)
             invoice_id = request.env['account.invoice'].sudo().search([('sale_order_id','=',sale_obj.name)])
             ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
-                              'company_id': self.order_id.company_id.id}
+                              'company_id': self.order_id.company_id.id,'currency_id': sale_obj.pricelist_id.currency_id.id,}
             inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
             ctx.update({'journal_id': inv_default_vals.get('journal_id')})
             invoice_id = sale_obj.with_context(ctx).sudo().action_invoice_create()
             invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
             journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
             payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
+            # invoice_id.reconcile = True
+            print("\n\n\n\n==============sale_obj======",sale_obj,sale_obj.amount_total)
             payment_id = request.env['account.payment'].sudo().create({
+                'payment_difference':-sale_obj.amount_total,
                 'partner_id': self.order_id.partner_id.id,
-                'amount': self.order_id.amount_total,
+                'amount': sale_obj.amount_total,
                 'payment_type': 'inbound',
                 'partner_type': 'customer',
                 'invoice_ids': [(6, 0, invoice_id.ids)],
                 'payment_date': datetime.today(),
                 'journal_id': journal_id.id,
                 'payment_method_id': payment_methods[0].id,
-                'amount':self.order_id.payment_amount,
+                'amount':self.payment_amount,
             })
             invoice_id.action_invoice_open()
+            print("\n\n\n\n========payment_id==========",payment_id,payment_id.amount)
             payment_id.action_validate_invoice_payment()
-            # invoice_id.action_invoice_paid()
+
         if config_para:
             link = config_para.value + "/payment/" + decoded_quote_name + '/' + decoded_quote_name
             if sale_obj.amount_total != self.payment_amount:

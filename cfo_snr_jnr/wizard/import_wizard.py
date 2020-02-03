@@ -14,12 +14,13 @@ class YourWizard(models.TransientModel):
         csv_data = self.csv_file
 
         # TODO: guess encoding with chardet? Or https://github.com/aadsm/jschardet
-        encoding = options.get('encoding', 'utf-8')
-        if encoding != 'utf-8':
-            # csv module expect utf-8, see http://docs.python.org/2/library/csv.html
-            csv_data = csv_data.decode(encoding).encode('utf-8')
+        # encoding = options.get('encoding', 'utf-8')
+        # if encoding != 'utf-8':
+        #     # csv module expect utf-8, see http://docs.python.org/2/library/csv.html
+        #     csv_data = csv_data.decode(encoding).encode('utf-8')
 
         csv_iterator = pycompat.csv_reader(io.BytesIO(csv_data))
+        # csv_iterator = pycompat.csv_reader(csv_data)
         print("\n\n\n\n\n\n===============csv_iterator=========",csv_iterator)
         for line in csv_iterator:
             if not line:

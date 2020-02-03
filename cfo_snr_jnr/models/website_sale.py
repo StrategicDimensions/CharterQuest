@@ -66,8 +66,8 @@ class AccountPayment(models.Model):
         res =  super(AccountPayment, self).action_validate_invoice_payment()
         email_obj = self.env['mail.template']
         mail_obj = self.env['mail.mail'].sudo()
+
         if res:
-            print("\n\n\n========self.payment_difference===",self.payment_difference)
             if self.payment_difference > 0:
                  partial_template_id = email_obj.sudo().search([('name', '=', "Partly invoice payment")])
                  if partial_template_id:
