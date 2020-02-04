@@ -49,7 +49,7 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
         }
         
         $('select[name="do_invoice"]').on('change', function() {
-            if ($('select[name="do_invoice"]').val() == 'Yes') {
+            if ($('select[name="do_invoice"]').val() == 'Yes' || $('select[name="do_invoice"]').val() == 'No') {
                 $('#inputCompany').show();
                 $('#inputVat').show();
                 $('#stud_company').show();
