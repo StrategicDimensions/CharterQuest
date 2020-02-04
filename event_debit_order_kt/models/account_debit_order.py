@@ -199,7 +199,8 @@ class debit_order_details(models.Model):
                     'journal_id': journal_id.id,
                     'payment_method_id': payment_methods[0].id if payment_methods else False
                 })
-                payment_id.action_validate_invoice_payment()
+                # payment_id.action_validate_invoice_payment()
+                payment_id.post()
                 pdf_data = self.env.ref(
                     'event_price_kt.report_statement_enrollment').sudo().render_qweb_pdf(
                     self.invoice_id.id)

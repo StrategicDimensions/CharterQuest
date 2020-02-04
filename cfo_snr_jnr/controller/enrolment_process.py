@@ -672,6 +672,8 @@ class EnrolmentProcess(http.Controller):
                         if product_detail.event_type_rem.id not in event_type:
                             event_type.append(product_detail.event_type_rem.id)
                 if user_select:
+                    print("\n\n\n\n\n\n===============================user select===============",user_select)
+                    _logger.info("========user select========<%s> to <%s>", type(user_select), user_select)
                     event_count = []
                     if event_tickets:
                         for key, value in event_tickets.items():
@@ -682,9 +684,12 @@ class EnrolmentProcess(http.Controller):
                                     event_count.append(event_ticket_details.event_id)
                     discount_detail = request.env['event.discount'].sudo().search([('event_type_id', '=', int(
                         user_select['Select Prof Body']) if user_select.get('Select Prof Body') else '')])
+                    _logger.info("===========discount_detail============ <%s> to <%s>", discount_detail)
                     for each_discount in discount_detail:
                         if each_discount not in discount_detail_list:
                             discount_detail_list.append(each_discount)
+                        _logger.info("===========discount_detail_list============ <%s> to <%s>", discount_detail_list)
+                        print("\n\n\n\n\n\===============discount_detail_list================",discount_detail_list)
                     request.session['event_count'] = len(event_count) if event_count else 0
                     return request.render('cfo_snr_jnr.enrolment_process_discount_form_1',
                                           {'discount_detail': discount_detail_list,
