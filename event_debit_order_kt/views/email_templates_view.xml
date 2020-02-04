@@ -5,8 +5,9 @@
         <!--Email template for Sending Tax Invoice to Student -->
         <record id="email_template_edi_tax_invoice_student" model="mail.template">
             <field name="name">Sending Tax Invoice to Student</field>
-            <field name="email_from">patience.m@charterquest.co.za</field>
+            <field name="email_from">accounts@charterquest.co.za</field>
             <field name="email_to">${object.partner_id.email or ''}</field>
+            <field name="email_cc">patience.m@charterquest.co.za,accounts@charterquest.co.za</field>
             <field name="subject">Charterquest Tax Invoice</field>
             <field name="email_recipients">${object.partner_id.id}</field>
             <field name="model_id" ref="account.model_account_invoice"/>
@@ -42,6 +43,8 @@ We look forward to seeing you during our course and helping you, in achieving a 
 	Patience Mukondwa<br>
     Head Of Operations<br>
     The CharterQuest Institute<br>
+    <br><br>
+    
     CENTRAL CONTACT INFORMATION:<br>
     Tel: +27 (0)11 234 9223 [SA & Intl]<br>
     Tel: +27 (0)11 234 9238 [SA & Intl]<br>
@@ -57,7 +60,7 @@ We look forward to seeing you during our course and helping you, in achieving a 
             <field name="name">Debit Order Mandate Email</field>
             <field name="email_from">accounts@charterquest.co.za</field>
             <field name="email_to">${object.partner_id.email or ''}</field>
-            <field name="email_cc">patience.m@charterquest.co.za, accounts@charterquest.co.za</field>
+            <field name="email_cc">patience.m@charterquest.co.za,accounts@charterquest.co.za</field>
             <field name="subject">CharterQuest Enrolment: Debit Order Mandate</field>
             <field name="email_recipients">${object.partner_id.id}</field>
             <field name="model_id" ref="sale.model_sale_order"/>
@@ -138,9 +141,9 @@ Your enrolment will be confirmed upon receipt of the completed Debit Order Manda
         <!--Email template for CharterQuest Debit Order Scheduled -->
         <record id="email_template_edi_debit_order_scheduled" model="mail.template">
             <field name="name">Scheduled Debit Order</field>
-            <field name="email_from">patience.m@charterquest.co.za</field>
-            <field name="email_to">sappa.thirupathi@ktree.com</field>
-            <field name="email_cc">''</field>
+            <field name="email_from">accounts@charterquest.co.za</field>
+            <field name="email_to">${object.partner_id.email}</field>
+            <field name="email_cc">patience.m@charterquest.co.za, accounts@charterquest.co.za</field>
             <field name="subject">CharterQuest Debit Order Scheduled for ${object.dbo_date}</field>
             <field name="email_recipients">${object.partner_id.id}</field>
             <field name="model_id" ref="event_debit_order_kt.model_debit_order_details"/>
