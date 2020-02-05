@@ -285,9 +285,6 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_quotation_tree" />
             <field name="arch" type="xml" >
-<!--                <xpath expr="//tree" position="attributes">-->
-<!--                    <attribute name="decoration-info">"state == 'sale'"</attribute>-->
-<!--                </xpath>-->
                  <tree position="attributes">
 <!--                    <attribute name="decoration-info">debit_order_mandate == False</attribute>-->
                     <attribute name="decoration-info" attrs="{'required': [('debit_order_mandate', 'in', [False])]}">state=='sale'</attribute>

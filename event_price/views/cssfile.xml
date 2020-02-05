@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+     <template id="assets_backend_color_picker" name="Color Picker Assets" inherit_id="web.assets_backend">
+                <xpath expr="." position="inside">
+                    <link type="text/css" rel="stylesheet" href="/event_price/static/src/css/style.css"/>
+                </xpath>
+     </template>
+    </data>
+</openerp>
