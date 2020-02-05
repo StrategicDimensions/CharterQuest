@@ -660,6 +660,7 @@ class EnrolmentProcess(http.Controller):
         event_type = []
         discount_detail_list = []
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
+        print("\n\n\n\n\n\n\n============event tickets=======",event_tickets)
         if user_select:
             if user_select['self_or_company'] == 'cmp_sponosored':
                 request.session['discount_id'] = ''
@@ -679,6 +680,7 @@ class EnrolmentProcess(http.Controller):
                         for key, value in event_tickets.items():
                             event_ticket_details = request.env['event.event.ticket'].sudo().search(
                                 [('id', '=', int(value))])
+                            print("\n\n\n\n\n=========event_ticket_details====",event_ticket_details)
                             if event_ticket_details:
                                 if not event_ticket_details.event_id in event_count:
                                     event_count.append(event_ticket_details.event_id)
@@ -996,7 +998,6 @@ class EnrolmentProcess(http.Controller):
                                       'property_account_payable_id': account_pay_id.id})
 
                 if partner_id:
-                    print("\n\n\n\n\n==============user_select.get('self_or_company')=====",user_select.get('self_or_company'))
                     sale_order_id = sale_obj.sudo().create({'partner_id': partner_id.id,
                                                      'affiliation': '1' if user_select.get(
                                                          'self_or_company') and user_select.get(

@@ -72,7 +72,8 @@
             <field name="name">account.invoice.tree</field>
             <field name="model">account.invoice</field>
             <field name="arch" type="xml">
-                <tree colors="red:to_review==True;blue:state in ('paid');black:state in ('proforma','proforma2','open','draft');gray:state == 'cancel';" string="Invoice">
+<!--                <tree colors="red:to_review==True;blue:state in ('paid');black:state in ('proforma','proforma2','open','draft');gray:state == 'cancel';" string="Invoice">-->
+                <tree decoration-info="state=='paid'" decoration-muted="state == 'cancel'">
                     <field name="partner_id" groups="base.group_user"/>
                     <field name="student_number"/>
                     <field name="date_invoice"/>
