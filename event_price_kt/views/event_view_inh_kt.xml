@@ -118,8 +118,11 @@
                     <field name="month" invisible="1"/>
                     <field name="day" invisible="1"/>
                     <field name="event_course_code"/>
-
                 </field>
+
+<!--                <field name="auto_confirm" position="after">-->
+<!--                    <field name="event_discount_ids"/>-->
+<!--                </field>-->
 
                 <field name="seats_min" position="after">
                     <field name="seats_available"/>

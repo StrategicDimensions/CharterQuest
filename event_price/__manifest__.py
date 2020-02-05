@@ -7,6 +7,7 @@
     "description": "Adds a custom Pricing to OpenERP events",
     "data": [
         'security/ir.model.access.csv',
+        'views/cssfile.xml',
         'views/event_view_inh.xml',
         'wizard/sale_make_invoice_advance.xml',
             ],

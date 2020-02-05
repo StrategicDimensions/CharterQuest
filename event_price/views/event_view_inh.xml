@@ -280,6 +280,18 @@
             </field>
         </record>
 
+        <record id="sale_order_inh_tree" model="ir.ui.view">
+            <field name="name">sale.order.inhtree2</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree" />
+            <field name="arch" type="xml" >
+                 <tree position="attributes">
+<!--                    <attribute name="decoration-info">debit_order_mandate == False</attribute>-->
+                    <attribute name="decoration-info" attrs="{'required': [('debit_order_mandate', 'in', [False])]}">state=='sale'</attribute>
+                </tree>
+            </field>
+        </record>
+
         <record id="sale_order_event_inheritance_tree1" model="ir.ui.view">
             <field name="name">sale.order.inhtree1</field>
             <field name="model">sale.order</field>
