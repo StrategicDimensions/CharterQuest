@@ -43,7 +43,7 @@ class event_event(models.Model):
     class_attendance_ids = fields.One2many("event.class.attendance", 'event_id', "Class Attendance")
     subject = fields.Many2one("event.subject", "Subject")
     event_course_id = fields.Many2one('event.course', string="Course")
-    # event_discount_ids = fields.Many2many('event.discount', 'event_discount_rel','event_type_id','event_disount',"Select Event Discount")
+    event_not_combo_discount = fields.Boolean(string="Not COMBO Discount%")
 
     @api.model
     def create(self, vals):
