@@ -658,6 +658,7 @@ class EnrolmentProcess(http.Controller):
         request.session['reg_and_enrol'] = ''
         event_tickets = request.session['event_id'] if request.session.get('event_id') else ''
         event_type = []
+        discount=''
         combo_discount=0
         discount_detail_list = []
         user_select = request.session['user_selection_type'] if request.session.get('user_selection_type') else ''
@@ -674,39 +675,41 @@ class EnrolmentProcess(http.Controller):
                         if product_detail.event_type_rem.id not in event_type:
                             event_type.append(product_detail.event_type_rem.id)
                 if user_select:
-                    print("\n\n\n\n\n\n===============================user select===============",user_select)
-                    # _logger.info("========user select========<%s> to <%s>", type(user_select), user_select)
                     event_count = []
                     if event_tickets:
                         for key, value in event_tickets.items():
                             event_ticket_details = request.env['event.event.ticket'].sudo().search(
                                 [('id', '=', int(value))])
-                            print("\n\n\n\n\n=========event_ticket_details====",event_ticket_details)
                             if event_ticket_details:
                                 if not event_ticket_details.event_id in event_count:
                                     event_count.append(event_ticket_details.event_id)
-                            print("\n\n\n\n\n\n=============event_count=====",event_count)
 
                     discount_detail = request.env['event.discount'].sudo().search([('event_type_id', '=', int(
                         user_select['Select Prof Body']) if user_select.get('Select Prof Body') else '')])
-                    # _logger.info("===========discount_detail============ <%s> to <%s>", discount_detail)
                     for each_discount in discount_detail:
+                        print("\n\n\n\n\n============event_count=======",event_count)
                         for event in event_count:
+                            print("\n\n\n\n\nn=========event======",event,each_discount)
+                            if event.event_not_combo_discount == True:
+                                combo_discount = 1
+                                print("\n\n\n\n\n========combo_discount===", combo_discount)
                             if each_discount not in discount_detail_list:
                                 if each_discount.name in ['COMBO','COMBO 2', 'COMBO 3', 'COMBO 4']:
-                                    if event.event_not_combo_discount == False:
-                                        combo_discount+=1
-                                        print("\n\n\n\n\n========combo_discount===",combo_discount)
-                                        discount_detail_list.append(each_discount)
+                                    discount_detail_list.append(each_discount)
                                 else:
                                     discount_detail_list.append(each_discount)
-                        # _logger.info("===========discount_detail_list============ <%s> to <%s>", discount_detail_list)
-                        print("\n\n\n\n\n\===============discount_detail_list================",discount_detail_list)
+                    if (len(event_count) == 2 and combo_discount == 0) or (len(event_count) == 3 and combo_discount == 1):
+                        discount = 'combo_2'
+                    elif (len(event_count) == 3 and combo_discount == 0) or (len(event_count) == 4 and combo_discount == 1):
+                        discount = 'combo_3'
+                    elif (len(event_count) == 4 and combo_discount == 0) or (len(event_count) > 4 and combo_discount == 1):
+                        discount = 'combo_4'
                     request.session['event_count'] = len(event_count) if event_count else 0
                     return request.render('cfo_snr_jnr.enrolment_process_discount_form_1',
                                           {'discount_detail': discount_detail_list,
                                            'select_prof': user_select['Select Prof Body'],
                                            'page_name': 'discounts',
+                                           'discount':discount,
                                            'como_discount':combo_discount,
                                            'event_len': len(event_count) if event_count else 0})
                 return request.render('cfo_snr_jnr.enrolment_process_discount_form_1')
