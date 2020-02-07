@@ -1696,7 +1696,7 @@
                                                                t-att-discount-data-id="each_discount.id"
                                                                t-attf-class="o_website_form_input discount_value_set chk check_set"
                                                                type="checkbox"
-                                                               t-att-checked="'checked' if discount == 'combo_2' else None"
+                                                               t-att-checked="'checked' if event_len == 2 else None"
                                                                disabled="disabled"/>
                                                     </td>
                                                     <td>
@@ -1720,7 +1720,7 @@
                                                                t-att-discount-data-id="each_discount.id"
                                                                t-attf-class="o_website_form_input discount_value_set chk check_set"
                                                                type="checkbox"
-                                                               t-att-checked="'checked' if discount == 'combo_3' else None"
+                                                               t-att-checked="'checked' if event_len == 3 else None"
                                                                disabled="disabled"/>
                                                     </td>
                                                     <td>
@@ -1744,7 +1744,7 @@
                                                                t-att-discount-data-id="each_discount.id"
                                                                t-attf-class="o_website_form_input discount_value_set chk check_set"
                                                                type="checkbox"
-                                                               t-att-checked="'checked' if discount == 'combo_4' else None"
+                                                               t-att-checked="'checked' if event_len >= 4 else None"
                                                                disabled="disabled"/>
                                                     </td>
                                                     <td>

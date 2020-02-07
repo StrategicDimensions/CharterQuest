@@ -51,36 +51,22 @@ class ResUsers(models.Model):
         if create_mode:
             try:
                 if self.env.context.get('user_type') in ['Leader', 'Member']:
-                    res1 = self.env['cfo.snr.aspirants'].sudo().search([('user_id', '=', self.id)])
-                    res2 = self.env['cfo.jnr.aspirants'].sudo().search([('user_id', '=', self.id)])
-                    if res1:
-                        template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_snr', raise_if_not_found=False)
-                    if res2:
-                        template = self.env.ref('cfo_snr_jnr.email_template_request_for_join', raise_if_not_found=False)
+                    res = self.env['cfo.snr.aspirants'].sudo().search([('user_id', '=', self.id)])
+                    template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_snr', raise_if_not_found=False)
                 # if self.env.context.get('user_type') in ['Leader', 'Member']:
                 #     res = self.env['cfo.jnr.aspirants'].sudo().search([('user_id', '=', self.id)])
                 #     template = self.env.ref('cfo_snr_jnr.email_template_request_for_join', raise_if_not_found=False)
                 if self.env.context.get('user_type') == 'Mentor':
-                    res1 = self.env['mentors.snr'].sudo().search([('user_id', '=', self.id)])
-                    res2 = self.env['mentors.jnr'].sudo().search([('user_id', '=', self.id)])
-                    if res1:
-                        template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_mentor_snr',
+                    res = self.env['mentors.snr'].sudo().search([('user_id', '=', self.id)])
+                    template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_mentor_snr',
                                             raise_if_not_found=False)
-                    if res2:
-                        template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_mentor',
-                                                    raise_if_not_found=False)
                 # if self.env.context.get('user_type') == 'Mentor':
                 #     res = self.env['mentors.jnr'].sudo().search([('user_id', '=', self.id)])
                 #     template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_mentor',
                 #                             raise_if_not_found=False)
                 if self.env.context.get('user_type') == 'Brand Ambassador':
-                    res1 = self.env['brand.ambassador.snr'].sudo().search([('user_id', '=', self.id)])
-                    res2 = self.env['brand.ambassador.jnr'].sudo().search([('user_id', '=', self.id)])
-                    if res1:
-                        template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_amb_snr', raise_if_not_found=False)
-                    if res2:
-                        template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_amb',
-                                                raise_if_not_found=False)
+                    res = self.env['brand.ambassador.snr'].sudo().search([('user_id', '=', self.id)])
+                    template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_amb_snr', raise_if_not_found=False)
                 # if self.env.context.get('user_type') == 'Brand Ambassador':
                 #     res = self.env['brand.ambassador.jnr'].sudo().search([('user_id', '=', self.id)])
                 #     template = self.env.ref('cfo_snr_jnr.email_template_request_for_join_amb', raise_if_not_found=False)
@@ -97,18 +83,14 @@ class ResUsers(models.Model):
             'scheduled_date': False,
         }
         template.write(template_values)
-        if res1:
-            for user in res1:
-                if not user.email:
-                    raise UserError(_("Cannot send email: user %s has no email address.") % user.name)
-                with self.env.cr.savepoint():
-                    template.with_context(team_name=self.env.context.get('team_name'),cfo_login=True,lang=user.lang).send_mail(user.id, force_send=True, raise_exception=True)
-        if res2:
-            for user in res2:
-                if not user.email:
-                    raise UserError(_("Cannot send email: user %s has no email address.") % user.name)
-                with self.env.cr.savepoint():
-                    template.with_context(team_name=self.env.context.get('team_name'),cfo_login=True,lang=user.lang).send_mail(user.id, force_send=True, raise_exception=True)
+
+        for user in res:
+            if not user.email:
+                raise UserError(_("Cannot send email: user %s has no email address.") % user.name)
+            with self.env.cr.savepoint():
+                template.with_context(team_name=self.env.context.get('team_name'),cfo_login=True,lang=user.lang).send_mail(user.id, force_send=True, raise_exception=True)
+
+
     @api.multi
     def action_reset_password(self):
         """ create signup token for each user, and send their signup url by email """

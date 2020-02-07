@@ -2237,8 +2237,7 @@
                                                 <input type="text" name="school_name"
                                                        id="school_name"
                                                        class="form-control"
-                                                       t-att-value="jnr_high_school.school_name"
-                                                       required="true" />
+                                                       t-att-value="jnr_high_school.school_name" />
                                             </td>
                                         </tr>
                                         <tr>
