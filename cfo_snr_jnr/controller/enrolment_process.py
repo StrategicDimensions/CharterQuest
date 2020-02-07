@@ -632,6 +632,8 @@ class EnrolmentProcess(http.Controller):
                         fees_dict[each_product.event_qual_rem.order] = {
                             each_product.event_qual_rem: {each_product.event_feetype_rem: [each_product]}}
                     else:
+                        print("\n\n\n\n======fees_dict[each_product.event_qual_rem.order][each_product.event_qual_rem]=========",fees_dict[each_product.event_qual_rem.order][
+                            each_product.event_qual_rem])
                         if each_product.event_feetype_rem in fees_dict[each_product.event_qual_rem.order][
                             each_product.event_qual_rem]:
                             fees_dict[each_product.event_qual_rem.order][each_product.event_qual_rem][
@@ -639,6 +641,8 @@ class EnrolmentProcess(http.Controller):
                         else:
                             fees_dict[each_product.event_qual_rem.order][each_product.event_qual_rem][
                                 each_product.event_feetype_rem] = [each_product]
+                print("\n\n\n\n============fees_detail=======",fees_dict)
+                print("\n\n\n\n============fees_detail=======",dict(sorted(fees_dict.items())))
                 return request.render('cfo_snr_jnr.enrolment_process_form3',
                                       {'fees_detail': dict(sorted(fees_dict.items())),
                                        'page_name': 'fees',
