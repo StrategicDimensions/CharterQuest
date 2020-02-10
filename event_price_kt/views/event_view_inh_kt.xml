@@ -120,9 +120,9 @@
                     <field name="event_course_code"/>
                 </field>
 
-                <field name="auto_confirm" position="after">
-                    <field name="event_not_combo_discount"/>
-                </field>
+<!--                <field name="auto_confirm" position="after">-->
+<!--                    <field name="event_discount_ids"/>-->
+<!--                </field>-->
 
                 <field name="seats_min" position="after">
                     <field name="seats_available"/>
