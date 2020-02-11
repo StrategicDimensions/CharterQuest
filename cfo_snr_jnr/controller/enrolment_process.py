@@ -926,6 +926,7 @@ class EnrolmentProcess(http.Controller):
                     event_full_name = event_ticket.event_id.event_course_code + " - " + event_ticket.event_id.name + " - " + event_ticket.product_id.name
                 else:
                     event_full_name = event_ticket.event_id.name + " - " + event_ticket.product_id.name
+            print("\n\n\n\n\n\n\n\nn===========discount==========",event_ticket.event_id.event_not_combo_discount,event_ticket)
             order_line.append([0, 0, {'product_id': event_ticket.product_id.id,
                                       'event_id': event_ticket.event_id.id if event_ticket.product_id.event_ok else '',
                                       'event_type_id': event_ticket.product_id.event_type_id.id if event_ticket.product_id.event_type_id else '',
@@ -934,7 +935,7 @@ class EnrolmentProcess(http.Controller):
                                       'product_uom_qty': 1.0,
                                       'product_uom': 1.0,
                                       'price_unit': event_ticket.price,
-                                      'discount': float(discount_add) if discount_add else 0}])
+                                      'discount': float(discount_add) if discount_add and not event_ticket.event_id.event_not_combo_discount else 0}])
 
         for each_product in product_ids:
             product_id = request.env['product.product'].sudo().search([('id', '=', int(product_ids[each_product]))])
@@ -1043,8 +1044,10 @@ class EnrolmentProcess(http.Controller):
                     else:
                         sale_order_id.write({'name': quote_name})
                     for each_line in sale_order_id.order_line:
+                        print("\n\n\n\n\n\n\n\nn===========discount==========",
+                              each_line.event_id.event_not_combo_discount, each_line)
                         if each_line.event_id:
-                            each_line.discount = float(discount_add) if discount_add else 0
+                            each_line.discount = float(discount_add) if discount_add and not each_line.event_id.event_not_combo_discount else 0
 
                 if user_select:
                     if user_select['self_or_company'] == 'cmp_sponosored':
@@ -1151,8 +1154,10 @@ class EnrolmentProcess(http.Controller):
                         else:
                             sale_order_id.write({'name': quote_name})
                         for each_line in sale_order_id.order_line:
+                            print("\n\n\n\n\n\n\n\nn===========discount==========",
+                                  each_line.event_id.event_not_combo_discount, each_line)
                             if each_line.event_id:
-                                each_line.discount = float(discount_add) if discount_add else 0
+                                each_line.discount = float(discount_add) if discount_add and not each_line.event_id.event_not_combo_discount else 0
                     # else:
                     #     account_rec_type_id = request.env['account.account.type'].sudo().search(
                     #         [('name', 'ilike', 'Receivable')])

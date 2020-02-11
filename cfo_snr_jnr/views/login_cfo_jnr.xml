@@ -3151,12 +3151,21 @@
                                       </td>
                                       <td>
                                           <t t-if="high_school_team">
+                                              <button class="btn btn-danger request-join" style="display:none;"
+                                                            t-att-team-id="high_school_team.id">
+                                                        Request to
+                                                        join your Team
+                                              </button>
                                               <button class="btn btn-danger create-user" style="display:none;"
                                                       t-att-team-id="high_school_team.id">
                                                   Create
                                               </button>
                                           </t>
-                                          <t t-if="not high_school_team">
+                                          <t t-if="not aspirant_team">
+                                              <button class="btn btn-danger request-join" style="display:none;">
+                                                        request to
+                                                        join your team
+                                              </button>
                                               <button class="btn btn-danger create-user" style="display:none;">
                                                   Create
                                               </button>
