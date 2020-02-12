@@ -44,6 +44,7 @@ class CFOJuniorAspirants(models.Model):
     doc_lines = fields.One2many('ir.attachment', 'aspirant_doc_id', 'Documents')
     country_of_birth = fields.Many2one('res.country', 'Country of Birth')
     nationality = fields.Many2one('res.country', 'Current Citizenship/Nationality')
+    jnr_high_school_name = fields.Char('Name Of High-School')
     entry_as_student = fields.Boolean('I am entering as Student')
     entry_as_employee = fields.Boolean('I am entering as Employee')
     emp_start_date = fields.Date('Start Date')
@@ -320,6 +321,7 @@ class CFOJuniorMember(models.Model):
     secondary_email = fields.Char('Secondary Email')
     birth_date = fields.Date('Date of Birth')
     nationality = fields.Many2one('res.country', 'Current Citizenship/Nationality')
+    jnr_high_school_name = fields.Char('Name Of High-School')
     office_telephone = fields.Char('Office Telephone')
     entry_type = fields.Selection([('Student', 'Student'), ('Employee', 'Employee')], 'I am entering as')
     age = fields.Selection([('14', '14'),

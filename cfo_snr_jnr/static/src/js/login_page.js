@@ -727,6 +727,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                                 }
                                 $(document).find('#admin_leader_member_diffrent').modal('show');
                                 $(document).find('.member-add').attr('data-count', parseInt(count) + 1)
+                                $(document).find('.member-add-school').attr('dataa-count',parseInt(count) + 1)
                             }
                             else {
                                 self.parents('tr').find('.request-join').show().attr('user_id', result['user_id']);

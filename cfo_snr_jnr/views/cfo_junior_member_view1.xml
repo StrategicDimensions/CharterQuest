@@ -39,6 +39,7 @@
                         <field name="secondary_email" string="Secondary Email" widget="email"/>
                         <field name="birth_date" string="Date of Birth"/>
                         <field name="nationality" string="Current Citizenship/Nationality"/>
+                        <field name='jnr_high_school_name' string="Name Of HighSchool"/>
                         <field name="office_telephone" string="Office Telephone" widget="phone"/>
                         <field name="entry_type" string="I am entering as"/>
                         <field name="age" string="Age"/>

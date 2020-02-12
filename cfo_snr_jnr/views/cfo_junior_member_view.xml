@@ -14,6 +14,7 @@
                     <field name='date_of_birth' required="0" />
                     <field name='country_of_birth' required="0" />
                     <field name='nationality' required="0" />
+                    <field name='jnr_high_school_name'/>
                     <field name="cfo_competition_year" invisible="1"/>
                     <field name='user_id'/>
                 </group>

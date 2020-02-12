@@ -235,6 +235,7 @@ class CfoHomeJnr(web.Home):
                         'other_names': post.get('other_names'),
                         'date_of_birth': birth_date,
                         'nationality': post.get('nationality'),
+                        'jnr_high_school_name':post.get('jnr_high_school_name'),
                         'country_of_birth': post.get('country_of_birth')
                     })
                 if post.get('contact_info'):

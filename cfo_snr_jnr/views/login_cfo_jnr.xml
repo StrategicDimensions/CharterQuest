@@ -395,11 +395,26 @@
                                                         </select>
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td>​
+                                                        <label class="control-label"
+                                                               for="jnr_high_school_name">Name Of High-School
+                                                        </label>
+                                                        <input type="text" name="jnr_high_school_name"
+                                                               id="jnr_high_school_name"
+                                                               class="form-control"
+                                                               t-att-value="jnr_aspirants.jnr_high_school_name"
+                                                               required="1" />
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                          <p>
-                                           <input type="submit" value="&lt;&lt;Back" name="back_home" class="btn btn-default btn-primary mb32 a-submit check_date_validation"/>
-                                           <button class="btn btn-default btn-primary mb32 a-submit check_date_validation"
+<!--                                           <input type="submit" value="&lt;&lt;Back" name="back_home" class="btn btn-default btn-primary mb32 a-submit check_date_validation"/>-->
+                                             <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                             </button>
+                                             <button class="btn btn-default btn-primary mb32 a-submit check_date_validation"
                                                    type="submit">NEXT
                                                to CONTACT INFORMATION &gt;&gt;
                                            </button>
@@ -534,7 +549,10 @@
                                             </tr>
                                         </table>
                                         <p>
-                                            <input type="submit" value="&lt;&lt;Back" name="back_contact" class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
+<!--                                            <input type="submit" value="&lt;&lt;Back" name="back_contact" class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                            <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                            </button>
                                             <button class="btn btn-default btn-primary mb32 a-submit save_contract"
                                                     type="submit">NEXT
                                                 to ELIGIBILITY STATUS &gt;&gt;
@@ -565,12 +583,12 @@
                                                 <option value="17">17</option>
                                                 <option value="18">18</option>
                                                 <option value="19">19</option>
-                                                <option value="20">20</option>
-                                                <option value="21">21</option>
-                                                <option value="22">22</option>
-                                                <option value="23">23</option>
-                                                <option value="24">24</option>
-                                                <option value="25">25</option>
+<!--                                                <option value="20">20</option>-->
+<!--                                                <option value="21">21</option>-->
+<!--                                                <option value="22">22</option>-->
+<!--                                                <option value="23">23</option>-->
+<!--                                                <option value="24">24</option>-->
+<!--                                                <option value="25">25</option>-->
                                             </select>
                                         </td>
                                     </tr>
@@ -583,10 +601,10 @@
                                                    value="student" required="1"
                                                    t-att-checked="'checked' if jnr_aspirants.entry_as_student else None"/>
                                             <br/>
-                                            I am entering as Employee :
-                                            <input type="radio" name="user_type"
-                                                   value="employee" required="1"
-                                                   t-att-checked="'checked' if jnr_aspirants.entry_as_employee else None"/>
+<!--                                            I am entering as Employee :-->
+<!--                                            <input type="radio" name="user_type"-->
+<!--                                                   value="employee" required="1"-->
+<!--                                                   t-att-checked="'checked' if jnr_aspirants.entry_as_employee else None"/>-->
                                         </td>
                                     </tr>
                                 </table>
@@ -602,21 +620,21 @@
                                                class="form-control"
                                                t-att-value="jnr_aspirants.school_name"/>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="control-label"
-                                               for="mode_of_studies">Mode of Studies
-                                        </label>
-                                        <select name="mode_of_studies" id="mode_of_studies"
-                                                class="form-control">
-                                            <t t-if="jnr_aspirants">
-                                                <option t-att-value=" jnr_aspirants.mode_of_studies if jnr_aspirants.mode_of_studies else &quot;&quot;">
-                                                    <t t-esc="jnr_aspirants.mode_of_studies if jnr_aspirants.mode_of_studies else &quot;&quot;"/>
-                                                </option>
-                                            </t>
-                                            <option value="Part Time">Part Time</option>
-                                            <option value="Full Time">Full Time</option>
-                                        </select>
-                                    </div>
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="control-label"-->
+<!--                                               for="mode_of_studies">Mode of Studies-->
+<!--                                        </label>-->
+<!--                                        <select name="mode_of_studies" id="mode_of_studies"-->
+<!--                                                class="form-control">-->
+<!--                                            <t t-if="jnr_aspirants">-->
+<!--                                                <option t-att-value=" jnr_aspirants.mode_of_studies if jnr_aspirants.mode_of_studies else &quot;&quot;">-->
+<!--                                                    <t t-esc="jnr_aspirants.mode_of_studies if jnr_aspirants.mode_of_studies else &quot;&quot;"/>-->
+<!--                                                </option>-->
+<!--                                            </t>-->
+<!--                                            <option value="Part Time">Part Time</option>-->
+<!--                                            <option value="Full Time">Full Time</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
                                     <div class="col-md-6">
                                         <label class="control-label"
                                                for="website">Website
@@ -626,29 +644,29 @@
                                                class="form-control"
                                                t-att-value="jnr_aspirants.website"/>
                                     </div>
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="control-label"-->
+<!--                                               for="formal_work_exp">How many years of formal-->
+<!--                                            work experience-->
+<!--                                        </label>-->
+<!--                                        <select name="formal_work_exp" id="formal_work_exp"-->
+<!--                                                class="form-control">-->
+<!--                                            <t t-if="jnr_aspirants">-->
+<!--                                                <option t-att-value=" jnr_aspirants.formal_work_exp if jnr_aspirants.formal_work_exp else &quot;&quot;">-->
+<!--                                                    <t t-esc="jnr_aspirants.formal_work_exp if jnr_aspirants.formal_work_exp else &quot;&quot;"/>-->
+<!--                                                </option>-->
+<!--                                            </t>-->
+<!--                                            <option value="0">0</option>-->
+<!--                                            <option value="1">1</option>-->
+<!--                                            <option value="2">2</option>-->
+<!--                                            <option value="3">3</option>-->
+<!--                                            <option value="4">4</option>-->
+<!--                                            <option value="5">5 +</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
                                     <div class="col-md-6">
                                         <label class="control-label"
-                                               for="formal_work_exp">How many years of formal
-                                            work experience
-                                        </label>
-                                        <select name="formal_work_exp" id="formal_work_exp"
-                                                class="form-control">
-                                            <t t-if="jnr_aspirants">
-                                                <option t-att-value=" jnr_aspirants.formal_work_exp if jnr_aspirants.formal_work_exp else &quot;&quot;">
-                                                    <t t-esc="jnr_aspirants.formal_work_exp if jnr_aspirants.formal_work_exp else &quot;&quot;"/>
-                                                </option>
-                                            </t>
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5 +</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="control-label"
-                                               for="department">Department
+                                               for="department">Department/Grade
                                         </label>
                                         <input type="text" name="department"
                                                id="department"
@@ -712,16 +730,16 @@
                                             </t>
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="control-label"
-                                               for="programme_name">Programme Name
-                                        </label>
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="control-label"-->
+<!--                                               for="programme_name">Programme Name-->
+<!--                                        </label>-->
 
-                                            <input type="text" name="programme_name"
-                                                   id="programme_name"
-                                                   class="form-control"
-                                                   t-att-value="jnr_aspirants.programme_name"/>
-                                    </div>
+<!--                                            <input type="text" name="programme_name"-->
+<!--                                                   id="programme_name"-->
+<!--                                                   class="form-control"-->
+<!--                                                   t-att-value="jnr_aspirants.programme_name"/>-->
+<!--                                    </div>-->
                                     <div class="col-md-6">
                                         <label class="control-label"
                                                for="start_date">Start Date
@@ -742,248 +760,251 @@
                                                t-att-value="expected_completion_date" readonly="true"/>
                                     </div>
                                 </div>
-                                <div class="col-md-12 employee_details">
-                                    <h3>Current Employer</h3>
-                                    <div class="col-md-6">
-                                        <label class="control-label"
-                                               for="legal_name_employer">Legal/Registered name
-                                            of
-                                            Employer
-                                        </label>
-                                        <input type="text" name="legal_name_employer"
-                                               id="legal_name_employer"
-                                               class="form-control"
-                                               t-att-value="jnr_aspirants.legal_name_employer"/>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="control-label"
-                                               for="sector">Sector
-                                        </label>
-                                        <select name="sector" id="sector"
-                                                class="form-control">
-                                            <t t-if="jnr_aspirants">
-                                                <option t-att-value=" jnr_aspirants.sector if jnr_aspirants.sector else &quot;&quot;">
-                                                    <t t-esc="jnr_aspirants.sector if jnr_aspirants.sector else &quot;&quot;"/>
-                                                </option>
-                                            </t>
-                                            <option value="Private sector">Private Sector
-                                            </option>
-                                            <option value="Public sector">Public Sector</option>
-                                            <option value="NGO">NGO</option>
-                                            <option value="Other NFPO">Other NFPO</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="control-label"
-                                               for="if_company">If company: Listed or not?
-                                        </label>
-                                        <select name="if_company" id="if_company"
-                                                class="form-control">
-                                            <t t-if="jnr_aspirants">
-                                                <option t-att-value=" jnr_aspirants.if_company if jnr_aspirants.if_company else &quot;&quot;">
-                                                    <t t-esc="jnr_aspirants.if_company if jnr_aspirants.if_company else &quot;&quot;"/>
-                                                </option>
-                                            </t>
-                                            <option value="Listed">Listed</option>
-                                            <option value="Not Listed">Not Listed</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="control-label"
-                                               for="emp_department">Department/Unit
-                                        </label>
-                                        <input type="text" name="emp_department"
-                                               id="emp_department"
-                                               class="form-control"
-                                               t-att-value="jnr_aspirants.emp_department"/>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="control-label"
-                                               for="emp_start_date">Start Date
-                                        </label>
-                                        <input type="text" name="emp_start_date"
-                                               id="emp_start_date"
-                                               class="datepicker form-control"
-                                               t-att-value="jnr_aspirants.emp_start_date" readonly="true"/>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="control-label"
-                                               for="emp_website">Website of Employer
-                                        </label>
-                                        <input type="text" name="emp_website"
-                                               id="emp_website"
-                                               class="form-control"
-                                               t-att-value="jnr_aspirants.emp_website"/>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="control-label"
-                                               for="emp_experience">How many years of Formal
-                                            Work Experience?
-                                        </label>
-                                        <select name="emp_experience" id="emp_experience"
-                                                class="form-control">
-                                            <t t-if="jnr_aspirants">
-                                                <option t-att-value=" jnr_aspirants.emp_experience if jnr_aspirants.emp_experience else &quot;&quot;">
-                                                    <t t-esc="jnr_aspirants.emp_experience if jnr_aspirants.emp_experience else &quot;&quot;"/>
-                                                </option>
-                                            </t>
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                         <option value="5">5 +</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="control-label"
-                                               for="emp_status">Employment Status
-                                        </label>
-                                        <select name="mode_of_studies" id="mode_of_studies"
-                                                class="form-control">
-                                            <t t-if="jnr_aspirants">
-                                                <option t-att-value=" jnr_aspirants.emp_status if jnr_aspirants.emp_status else &quot;&quot;">
-                                                    <t t-esc="jnr_aspirants.emp_status if jnr_aspirants.emp_status else &quot;&quot;"/>
-                                                </option>
-                                            </t>
-                                            <option value="part-time">Part Time</option>
-                                            <option value="full-time">Full Time</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="control-label"
-                                               for="mobile">Address
-                                        </label>
-                                        <input type="text" name="emp_street"
-                                               id="emp_street"
-                                               class="form-control"
-                                               placeholder="Street"
-                                               t-att-value="jnr_aspirants.emp_street"/>
-                                        <input type="text" name="emp_street2"
-                                               id="emp_street2"
-                                               placeholder="Street 2"
-                                               class="form-control"
-                                               t-att-value="jnr_aspirants.emp_street2"/>
-                                        <input type="text" name="emp_city"
-                                               id="emp_city"
-                                               placeholder="City"
-                                               class="form-control"
-                                               t-att-value="jnr_aspirants.emp_city"/>
-                                        <select name="emp_state_id" id="emp_state_id"
-                                                class="form-control"
-                                        >
-                                            <option value="">State</option>
-                                            <t t-if="jnr_aspirants">
-                                                <option t-att-value=" jnr_aspirants.emp_state_id.id if jnr_aspirants.emp_state_id else &quot;&quot;">
-                                                    <t t-esc="jnr_aspirants.emp_state_id.name if jnr_aspirants.emp_state_id else &quot;&quot;"/>
-                                               </option>
-                                            </t>
-                                            <t t-foreach="state_list"
-                                               t-as="state"
-                                               placeholder="State">
-                                                <option t-att-value="state.id">
-                                                    <t t-esc="state.name"/>
-                                                </option>
-                                            </t>
-                                        </select>
-                                        <input type="text" name="emp_zip"
-                                               id="emp_zip"
-                                               class="form-control"
-                                               placeholder="Zip"
-                                               t-att-value="jnr_aspirants.emp_zip"/>
-                                        <select name="emp_country_id" id="emp_country_id"
-                                                class="form-control" required="true"
-                                        >
-                                            <option value="">Country</option>
-                                            <t t-if="jnr_aspirants">
-                                                <option t-att-value=" jnr_aspirants.emp_country_id.id if jnr_aspirants.emp_country_id else &quot;&quot;">
-                                                    <t t-esc="jnr_aspirants.emp_country_id.name if jnr_aspirants.emp_country_id else &quot;&quot;"/>
-                                                </option>
-                                            </t>
-                                            <t t-foreach="country_list"
-                                               t-as="country"
-                                               placeholder="country">
-                                                <option t-att-value="country.id">
-                                                    <t t-esc="country.name"/>
-                                                </option>
-                                            </t>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 tertiry_studyfields" style="display:none">
-                                        <div class="col-md-8">
-                                            <label class="control-label"
-                                                   for="tertiary_qualification">Prior Tertiary
-                                                Qualification
-                                            </label>
-                                            <select name="tertiary_qualification"
-                                                    id="tertiary_qualification"
-                                                    class="form-control" required="1">
+<!--                                <div class="col-md-12 employee_details">-->
+<!--                                    <h3>Current Employer</h3>-->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="control-label"-->
+<!--                                               for="legal_name_employer">Legal/Registered name-->
+<!--                                            of-->
+<!--                                            Employer-->
+<!--                                        </label>-->
+<!--                                        <input type="text" name="legal_name_employer"-->
+<!--                                               id="legal_name_employer"-->
+<!--                                               class="form-control"-->
+<!--                                               t-att-value="jnr_aspirants.legal_name_employer"/>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="control-label"-->
+<!--                                               for="sector">Sector-->
+<!--                                        </label>-->
+<!--                                        <select name="sector" id="sector"-->
+<!--                                                class="form-control">-->
+<!--                                            <t t-if="jnr_aspirants">-->
+<!--                                                <option t-att-value=" jnr_aspirants.sector if jnr_aspirants.sector else &quot;&quot;">-->
+<!--                                                    <t t-esc="jnr_aspirants.sector if jnr_aspirants.sector else &quot;&quot;"/>-->
+<!--                                                </option>-->
+<!--                                            </t>-->
+<!--                                            <option value="Private sector">Private Sector-->
+<!--                                            </option>-->
+<!--                                            <option value="Public sector">Public Sector</option>-->
+<!--                                            <option value="NGO">NGO</option>-->
+<!--                                            <option value="Other NFPO">Other NFPO</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="control-label"-->
+<!--                                               for="if_company">If company: Listed or not?-->
+<!--                                        </label>-->
+<!--                                        <select name="if_company" id="if_company"-->
+<!--                                                class="form-control">-->
+<!--                                            <t t-if="jnr_aspirants">-->
+<!--                                                <option t-att-value=" jnr_aspirants.if_company if jnr_aspirants.if_company else &quot;&quot;">-->
+<!--                                                    <t t-esc="jnr_aspirants.if_company if jnr_aspirants.if_company else &quot;&quot;"/>-->
+<!--                                                </option>-->
+<!--                                            </t>-->
+<!--                                            <option value="Listed">Listed</option>-->
+<!--                                            <option value="Not Listed">Not Listed</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="control-label"-->
+<!--                                               for="emp_department">Department/Unit-->
+<!--                                        </label>-->
+<!--                                        <input type="text" name="emp_department"-->
+<!--                                               id="emp_department"-->
+<!--                                               class="form-control"-->
+<!--                                               t-att-value="jnr_aspirants.emp_department"/>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="control-label"-->
+<!--                                               for="emp_start_date">Start Date-->
+<!--                                        </label>-->
+<!--                                        <input type="text" name="emp_start_date"-->
+<!--                                               id="emp_start_date"-->
+<!--                                               class="datepicker form-control"-->
+<!--                                               t-att-value="jnr_aspirants.emp_start_date" readonly="true"/>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="control-label"-->
+<!--                                               for="emp_website">Website of Employer-->
+<!--                                        </label>-->
+<!--                                        <input type="text" name="emp_website"-->
+<!--                                               id="emp_website"-->
+<!--                                               class="form-control"-->
+<!--                                               t-att-value="jnr_aspirants.emp_website"/>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="control-label"-->
+<!--                                               for="emp_experience">How many years of Formal-->
+<!--                                            Work Experience?-->
+<!--                                        </label>-->
+<!--                                        <select name="emp_experience" id="emp_experience"-->
+<!--                                                class="form-control">-->
+<!--                                            <t t-if="jnr_aspirants">-->
+<!--                                                <option t-att-value=" jnr_aspirants.emp_experience if jnr_aspirants.emp_experience else &quot;&quot;">-->
+<!--                                                    <t t-esc="jnr_aspirants.emp_experience if jnr_aspirants.emp_experience else &quot;&quot;"/>-->
+<!--                                                </option>-->
+<!--                                            </t>-->
+<!--                                            <option value="0">0</option>-->
+<!--                                            <option value="1">1</option>-->
+<!--                                            <option value="2">2</option>-->
+<!--                                            <option value="3">3</option>-->
+<!--                                            <option value="4">4</option>-->
+<!--                                         <option value="5">5 +</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="control-label"-->
+<!--                                               for="emp_status">Employment Status-->
+<!--                                        </label>-->
+<!--                                        <select name="mode_of_studies" id="mode_of_studies"-->
+<!--                                                class="form-control">-->
+<!--                                            <t t-if="jnr_aspirants">-->
+<!--                                                <option t-att-value=" jnr_aspirants.emp_status if jnr_aspirants.emp_status else &quot;&quot;">-->
+<!--                                                    <t t-esc="jnr_aspirants.emp_status if jnr_aspirants.emp_status else &quot;&quot;"/>-->
+<!--                                                </option>-->
+<!--                                            </t>-->
+<!--                                            <option value="part-time">Part Time</option>-->
+<!--                                            <option value="full-time">Full Time</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="control-label"-->
+<!--                                               for="mobile">Address-->
+<!--                                        </label>-->
+<!--                                        <input type="text" name="emp_street"-->
+<!--                                               id="emp_street"-->
+<!--                                               class="form-control"-->
+<!--                                               placeholder="Street"-->
+<!--                                               t-att-value="jnr_aspirants.emp_street"/>-->
+<!--                                        <input type="text" name="emp_street2"-->
+<!--                                               id="emp_street2"-->
+<!--                                               placeholder="Street 2"-->
+<!--                                               class="form-control"-->
+<!--                                               t-att-value="jnr_aspirants.emp_street2"/>-->
+<!--                                        <input type="text" name="emp_city"-->
+<!--                                               id="emp_city"-->
+<!--                                               placeholder="City"-->
+<!--                                               class="form-control"-->
+<!--                                               t-att-value="jnr_aspirants.emp_city"/>-->
+<!--                                        <select name="emp_state_id" id="emp_state_id"-->
+<!--                                                class="form-control"-->
+<!--                                        >-->
+<!--                                            <option value="">State</option>-->
+<!--                                            <t t-if="jnr_aspirants">-->
+<!--                                                <option t-att-value=" jnr_aspirants.emp_state_id.id if jnr_aspirants.emp_state_id else &quot;&quot;">-->
+<!--                                                    <t t-esc="jnr_aspirants.emp_state_id.name if jnr_aspirants.emp_state_id else &quot;&quot;"/>-->
+<!--                                               </option>-->
+<!--                                            </t>-->
+<!--                                            <t t-foreach="state_list"-->
+<!--                                               t-as="state"-->
+<!--                                               placeholder="State">-->
+<!--                                                <option t-att-value="state.id">-->
+<!--                                                    <t t-esc="state.name"/>-->
+<!--                                                </option>-->
+<!--                                            </t>-->
+<!--                                        </select>-->
+<!--                                        <input type="text" name="emp_zip"-->
+<!--                                               id="emp_zip"-->
+<!--                                               class="form-control"-->
+<!--                                               placeholder="Zip"-->
+<!--                                               t-att-value="jnr_aspirants.emp_zip"/>-->
+<!--                                        <select name="emp_country_id" id="emp_country_id"-->
+<!--                                                class="form-control" required="true"-->
+<!--                                        >-->
+<!--                                            <option value="">Country</option>-->
+<!--                                            <t t-if="jnr_aspirants">-->
+<!--                                                <option t-att-value=" jnr_aspirants.emp_country_id.id if jnr_aspirants.emp_country_id else &quot;&quot;">-->
+<!--                                                    <t t-esc="jnr_aspirants.emp_country_id.name if jnr_aspirants.emp_country_id else &quot;&quot;"/>-->
+<!--                                                </option>-->
+<!--                                            </t>-->
+<!--                                            <t t-foreach="country_list"-->
+<!--                                               t-as="country"-->
+<!--                                               placeholder="country">-->
+<!--                                                <option t-att-value="country.id">-->
+<!--                                                    <t t-esc="country.name"/>-->
+<!--                                                </option>-->
+<!--                                            </t>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                    <div class="col-md-12 tertiry_studyfields" style="display:none">-->
+<!--                                        <div class="col-md-8">-->
+<!--                                            <label class="control-label"-->
+<!--                                                   for="tertiary_qualification">Prior Tertiary-->
+<!--                                                Qualification-->
+<!--                                            </label>-->
+<!--                                            <select name="tertiary_qualification"-->
+<!--                                                    id="tertiary_qualification"-->
+<!--                                                    class="form-control" required="1">-->
 
-                                                <t t-if="not jnr_aspirants.tertiary_qualification">
-                                                    <option value=""></option>
-                                                    <option value="none">None</option>
-                                                    <option value="current studies">current studies</option>
-                                                    <option value="Bachelor degree">Bachelor degree</option>
-                                                    <option value="Professional Qualification">Professional Qualification</option>
-                                                </t>
+<!--                                                <t t-if="not jnr_aspirants.tertiary_qualification">-->
+<!--                                                    <option value=""></option>-->
+<!--                                                    <option value="none">None</option>-->
+<!--                                                    <option value="current studies">current studies</option>-->
+<!--                                                    <option value="Bachelor degree">Bachelor degree</option>-->
+<!--                                                    <option value="Professional Qualification">Professional Qualification</option>-->
+<!--                                                </t>-->
 
-                                                <t t-if="jnr_aspirants.tertiary_qualification=='none'">
-                                                    <option value="none" selected="1">None</option>
-                                                    <option value="current studies">current studies</option>
-                                                    <option value="Bachelor degree">Bachelor degree</option>
-                                                    <option value="Professional Qualification">Professional Qualification</option>
-                                                </t>
+<!--                                                <t t-if="jnr_aspirants.tertiary_qualification=='none'">-->
+<!--                                                    <option value="none" selected="1">None</option>-->
+<!--                                                    <option value="current studies">current studies</option>-->
+<!--                                                    <option value="Bachelor degree">Bachelor degree</option>-->
+<!--                                                    <option value="Professional Qualification">Professional Qualification</option>-->
+<!--                                                </t>-->
 
-                                                <t t-if="jnr_aspirants.tertiary_qualification=='current studies'">
-                                                    <option value="none">None</option>
-                                                    <option value="current studies" selected="1">current studies</option>
-                                                    <option value="Bachelor degree">Bachelor degree</option>
-                                                    <option value="Professional Qualification">Professional Qualification</option>
-                                                </t>
+<!--                                                <t t-if="jnr_aspirants.tertiary_qualification=='current studies'">-->
+<!--                                                    <option value="none">None</option>-->
+<!--                                                    <option value="current studies" selected="1">current studies</option>-->
+<!--                                                    <option value="Bachelor degree">Bachelor degree</option>-->
+<!--                                                    <option value="Professional Qualification">Professional Qualification</option>-->
+<!--                                                </t>-->
 
-                                                <t t-if="jnr_aspirants.tertiary_qualification=='Bachelor degree'">
-                                                    <option value="none">None</option>
-                                                    <option value="current studies" >current studies</option>
-                                                    <option value="Bachelor degree" selected="1">Bachelor degree</option>
-                                                    <option value="Professional Qualification">Professional Qualification</option>
-                                                </t>
+<!--                                                <t t-if="jnr_aspirants.tertiary_qualification=='Bachelor degree'">-->
+<!--                                                    <option value="none">None</option>-->
+<!--                                                    <option value="current studies" >current studies</option>-->
+<!--                                                    <option value="Bachelor degree" selected="1">Bachelor degree</option>-->
+<!--                                                    <option value="Professional Qualification">Professional Qualification</option>-->
+<!--                                                </t>-->
 
-                                                <t t-if="jnr_aspirants.tertiary_qualification=='Professional Qualification'">
-                                                    <option value="none">None</option>
-                                                    <option value="current studies" >current studies</option>
-                                                    <option value="Bachelor degree">Bachelor degree</option>
-                                                    <option value="Professional Qualification" selected="1">Professional Qualification</option>
-                                                </t>
+<!--                                                <t t-if="jnr_aspirants.tertiary_qualification=='Professional Qualification'">-->
+<!--                                                    <option value="none">None</option>-->
+<!--                                                    <option value="current studies" >current studies</option>-->
+<!--                                                    <option value="Bachelor degree">Bachelor degree</option>-->
+<!--                                                    <option value="Professional Qualification" selected="1">Professional Qualification</option>-->
+<!--                                                </t>-->
 
-                                            </select>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <label class="control-label"
-                                                   for="field_of_studies">Field of studies (e.g.
-                                                accounting, engineering, law, etc)
-                                            </label>
-                                            <input type="text" name="field_of_studies"
-                                                   id="field_of_studies"
-                                                   class="form-control"
-                                                   t-att-value="jnr_aspirants.field_of_studies" required="1"/>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <label class="control-label"
-                                                   for="pre_tertiary_qualification">Pre tertiary
-                                                qualification
-                                                (e.g. Matric/CGE Ordinary level/Advanced level etc)
-                                            </label>
-                                            <input type="text" name="pre_tertiary_qualification"
-                                                   id="pre_tertiary_qualification"
-                                                   class="form-control"
-                                                   t-att-value="jnr_aspirants.pre_tertiary_qualification" required="1"/>
-                                        </div>
-                                    </div>
+<!--                                            </select>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-8">-->
+<!--                                            <label class="control-label"-->
+<!--                                                   for="field_of_studies">Field of studies (e.g.-->
+<!--                                                accounting, engineering, law, etc)-->
+<!--                                            </label>-->
+<!--                                            <input type="text" name="field_of_studies"-->
+<!--                                                   id="field_of_studies"-->
+<!--                                                   class="form-control"-->
+<!--                                                   t-att-value="jnr_aspirants.field_of_studies" required="1"/>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-8">-->
+<!--                                            <label class="control-label"-->
+<!--                                                   for="pre_tertiary_qualification">Pre tertiary-->
+<!--                                                qualification-->
+<!--                                                (e.g. Matric/CGE Ordinary level/Advanced level etc)-->
+<!--                                            </label>-->
+<!--                                            <input type="text" name="pre_tertiary_qualification"-->
+<!--                                                   id="pre_tertiary_qualification"-->
+<!--                                                   class="form-control"-->
+<!--                                                   t-att-value="jnr_aspirants.pre_tertiary_qualification" required="1"/>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                     <p>
 
-                                    <input type="submit" value="&lt;&lt;Back" name="back_eligibility" class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
-                                    <button class="btn btn-default btn-primary mb32 a-submit"
+<!--                                    <input type="submit" value="&lt;&lt;Back" name="back_eligibility" class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                        <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                        </button>
+                                        <button class="btn btn-default btn-primary mb32 a-submit"
                                             type="submit">NEXT
                                         to COMPETITION RULES &gt;&gt;
                                     </button>
@@ -1017,7 +1038,10 @@
                                 <input type="checkbox" name="update_bio_check" required="1"/>
                                 Please accept competition rules
                                 <p>
-                                    <input type="submit" value="&lt;&lt;Back" name="back_rule" class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
+<!--                                    <input type="submit" value="&lt;&lt;Back" name="back_rule" class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                    <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                    </button>
                                     <button class="btn btn-default btn-primary mb32 a-submit" type="submit">Submit</button>
                                     <a href='cfo_junior' class="btn btn-default btn-primary mb32 a-submit fa fa-home">HOME</a>
                                 </p>
@@ -2217,8 +2241,11 @@
                                         </tr>
                                     </table>
                                     <p>
-                                        <input type="submit" value="&lt;&lt;Back" name="back_contact" class="btn btn-default btn-primary mb32 a-submit"/>        
-                                            <button class="btn btn-default btn-primary mb32 a-submit"
+<!--                                        <input type="submit" value="&lt;&lt;Back" name="back_contact" class="btn btn-default btn-primary mb32 a-submit"/>        -->
+                                        <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                        </button>
+                                        <button class="btn btn-default btn-primary mb32 a-submit"
                                                    type="submit">NEXT
                                             to ELIGIBILITY STATUS &gt;&gt;
                                         </button>
@@ -2326,7 +2353,10 @@
                                         </tr>
                                     </table>
                                     <p>
-                                        <input type="submit" value="&lt;&lt;Back" name="back_institution" class="btn btn-default btn-primary mb32 a-submit"/>
+<!--                                        <input type="submit" value="&lt;&lt;Back" name="back_institution" class="btn btn-default btn-primary mb32 a-submit"/>-->
+                                        <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                        </button>
                                         <button class="btn btn-default btn-primary mb32 a-submit"
                                                 type="submit">NEXT
                                             to COMPETITION RULES &gt;&gt;
@@ -3610,7 +3640,10 @@
                                         </tr>
                                     </table>
                                     <p>
-                                        <input type="submit" value="&lt;&lt;Back" name="back_contact" class="btn btn-default btn-primary mb32 a-submit"/>
+<!--                                        <input type="submit" value="&lt;&lt;Back" name="back_contact" class="btn btn-default btn-primary mb32 a-submit"/>-->
+                                        <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                        </button>
                                         <button class="btn btn-default btn-primary mb32 a-submit"
                                                 type="submit">NEXT
                                             to COMPETITION RULES &gt;&gt;
@@ -3928,7 +3961,10 @@
                                         </tr>
                                     </table>
                                     <p>
-                                        <input type="submit" value="&lt;&lt;Back" name="back_contact" class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>
+<!--                                        <input type="submit" value="&lt;&lt;Back" name="back_contact" class="btn btn-default btn-primary mb32 a-submit fa fa-chevron-left"/>-->
+                                        <button class="btn btn-default btn-primary mb32"
+                                                onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                        </button>
                                         <button class="btn btn-default btn-primary mb32 a-submit"
                                                 type="submit">NEXT
                                             to COMPETITION RULES &gt;&gt;
