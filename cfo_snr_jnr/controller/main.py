@@ -1223,20 +1223,36 @@ class CfoHome(web.Home):
     @http.route('/send_reminder_mail', type="json", auth="public", website=True)
     def send_reminder_mail(self, **post):
         if post.get('team_id'):
-            team_id = request.env['cfo.team.snr'].sudo().search([('id', '=', post.get('team_id'))])
-            template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder',
-                                       raise_if_not_found=False)
-            if team_id.team_type == 'CFO Aspirant':
-                for member_id in team_id.aspirant_team_member_ids:
+            team_snr_id = request.env['cfo.team.snr'].sudo().search([('id', '=', post.get('team_id'))])
+            team_jnr_id= request.env['cfo.team.jnr'].sudo().search([('id', '=', post.get('team_id'))])
+            # template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr',
+            #                            raise_if_not_found=False)
+            if team_snr_id.team_type == 'CFO Aspirant':
+                for member_id in team_snr_id.aspirant_team_member_ids:
+                    template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr',
+                                               raise_if_not_found=False)
                     if template and member_id.user_type == 'Admin':
                         template.sudo().with_context(
-                            team_id=team_id.id,
-                            team_name=team_id.name,
-                            cfo_report_deadline_date=team_id.cfo_report_deadline_date,
+                            team_id=team_snr_id.id,
+                            team_name=team_snr_id.name,
+                            cfo_report_deadline_date=team_snr_id.cfo_report_deadline_date,
                             # email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
-            if team_id.team_type == 'Academic Institution':
-                for member_id in team_id.academic_team_member_ids:
+                return True
+            if team_jnr_id.team_type == 'CFO Aspirant':
+                for member_id in team_jnr_id.aspirant_team_member_ids:
+                    template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_jnr',
+                                               raise_if_not_found=False)
+                    if template and member_id.user_type == 'Admin':
+                        template.sudo().with_context(
+                            team_id=team_jnr_id.id,
+                            team_name=team_jnr_id.name,
+                            cfo_report_deadline_date=team_jnr_id.cfo_report_deadline_date,
+                            # email_to=member_id.related_user_id.email_1,
+                        ).send_mail(member_id.related_user_id.id, force_send=True)
+                return True
+            if team_snr_id.team_type == 'Academic Institution':
+                for member_id in team_snr_id.academic_team_member_ids:
                     # if template and member_id.related_user_aspirant_id and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader')):
                     #     template.sudo().with_context(
                     #         team_id=team_id.id,
@@ -1245,17 +1261,30 @@ class CfoHome(web.Home):
                     #         email_to=member_id.related_user_aspirant_id.email_1,
                     #     ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
 
-                    template_acadamic = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_acadamic',
+                    template_acadamic = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr_acadamic',
                                                         raise_if_not_found=False)
                     if template_acadamic and member_id.related_user_id and member_id.user_type == 'Admin':
                         template_acadamic.sudo().with_context(
-                            team_id=team_id.id,
-                            team_name=team_id.name,
-                            cfo_report_deadline_date=team_id.cfo_report_deadline_date,
+                            team_id=team_snr_id.id,
+                            team_name=team_snr_id.name,
+                            cfo_report_deadline_date=team_snr_id.cfo_report_deadline_date,
                             # email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
-            if team_id.team_type == 'Employer':
-                for member_id in team_id.employer_team_member_ids:
+                return True
+            if team_jnr_id.team_type == 'Secondary/High School':
+                for member_id in team_jnr_id.highschool_team_member_ids:
+                    template_acadamic = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_jnr_acadamic',
+                                                        raise_if_not_found=False)
+                    if template_acadamic and member_id.related_user_id and member_id.user_type == 'Admin':
+                        template_acadamic.sudo().with_context(
+                            team_id=team_jnr_id.id,
+                            team_name=team_jnr_id.name,
+                            cfo_report_deadline_date=team_jnr_id.cfo_report_deadline_date,
+                            # email_to=member_id.related_user_id.email_1,
+                        ).send_mail(member_id.related_user_id.id, force_send=True)
+                return True
+            if team_snr_id.team_type == 'Employer':
+                for member_id in team_snr_id.employer_team_member_ids:
                     # if template and member_id.related_user_aspirant_id and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader')):
                     #     print("\n\n\n\n=======member_id===in member_id.related_user_aspirant_id ======", member_id.related_user_aspirant_id)
                     #     template.sudo().with_context(
@@ -1265,16 +1294,16 @@ class CfoHome(web.Home):
                     #         email_to=member_id.related_user_aspirant_id.email_1,
                     #     ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
 
-                    template_employer = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_employer',
+                    template_employer = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr_employer',
                                                         raise_if_not_found=False)
                     if template_employer and member_id.related_user_id and member_id.user_type == 'Admin':
                         template_employer.sudo().with_context(
-                            team_id=team_id.id,
-                            team_name=team_id.name,
-                            cfo_report_deadline_date=team_id.cfo_report_deadline_date,
+                            team_id=team_snr_id.id,
+                            team_name=team_snr_id.name,
+                            cfo_report_deadline_date=team_snr_id.cfo_report_deadline_date,
                             email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
-        return True
+                return True
 
     @http.route('/download_report', type='json', auth="public", website=True)
     def download_report(self, **post):

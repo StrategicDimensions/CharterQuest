@@ -145,7 +145,8 @@
 					<p class="text-muted" />
 				</div>
 				<div class="col-md-3 text-center mt32 mb32"
-					t-if="jnr_aspirants.team_admin or jnr_aspirants.team_leader">
+					t-if="jnr_aspirants.team_admin">
+<!--             or jnr_aspirants.team_leader">-->
 					<t t-if="jnr_aspirants.aspirant_id">
 						<span class="fa fa-check fa-2x bg-gamma" style="animation-play-state: paused; transition: none" />
 					</t>
@@ -156,7 +157,8 @@
 					<p class="text-muted" />
 				</div>
 				<div class="col-md-3 text-center mt32 mb32"
-					t-if="jnr_aspirants.team_admin or jnr_aspirants.team_leader">
+					t-if="jnr_aspirants.team_admin">
+<!--					or jnr_aspirants.team_leader">-->
 					<t t-if="jnr_aspirants and jnr_aspirants.aspirant_id.aspirants_ids">
 						<span class="fa fa-check fa-2x bg-gamma" style="animation-play-state: paused; transition: none" />
 					</t>
@@ -2440,14 +2442,16 @@
                                                 <t t-set="height" t-value="int(height_count) * 40"/>
                                                 <t t-set="height2" t-value="int(height_count) * 20"/>
                                                 </t>
-                                                <td class="table_setheight_part2" style="width: 17%;padding;" t-attf-style="display: flex;align-items: center;justify-content: center;" t-if="jnr_high_school.team_admin or jnr_high_school.team_leader">
+<!--                                                <td class="table_setheight_part2" style="width: 23%;padding;" t-attf-style="height: 78px;-->
+                                                <td style="width: 23%;padding;" t-attf-style="height: 78px;
+                                                align-items: center;justify-content: center;" t-if="jnr_high_school.team_admin or jnr_high_school.team_leader">
                                                     <input type="hidden" t-att-value="high_school_team.id"
                                                            name="high_school_team" t-att-id="high_school_team.id"/>
                                                       <input type="hidden" t-att-value="jnr_high_school.id"
                                                            name="jnr_high_school" t-att-id="jnr_high_school.id"/>
                                                      <input type="hidden" name="cfo_team_edit" value="True"/>
                                                     <button class="btn" type="submit" style="white-space: inherit;background-color:firebrick;
-    color: white;">Edit Team</button>
+                                                    color: white;">Edit Team</button>
                                                 </td>
                                                 <td style="height:32px;">
                                                     <t t-esc="high_school_team.name"/>
@@ -2529,9 +2533,9 @@
                                                 </div>
                                                 <td style="width: 17%;padding;" t-attf-style="height:#{height}px;" t-if="jnr_high_school.team_admin or jnr_high_school.team_leader">
                                                     <div style="display: flex;height: 62px;justify-content: center;align-items: center;">
-                                                    <button class="btn send_report_reminder  1" type="submit" style="width: 100%;background-color: forestgreen;
-    white-space: inherit;
-    font-size: 11px;"><span style="color:white;">Send Report submission Reminder&#9993;</span></button>
+                                                    <button class="btn send_report_reminder" t-att-id="high_school_team.id" type="submit" style="width: 100%;background-color: forestgreen;
+                                                        white-space: inherit;
+                                                        font-size: 11px;"><span style="color:white;">Send Report submission Reminder&#9993;</span></button>
                                                     </div>
                                                     <div id="download_report_id" class="modal fade" role="dialog">
                                                       <div class="modal-dialog">

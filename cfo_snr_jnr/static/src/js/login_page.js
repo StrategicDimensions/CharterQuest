@@ -676,6 +676,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                       if(user_type == 'Leader'){
                        self.parents('tr').remove();
                        $('button.leader-add-acadamic').css('display', 'block');
+                       $(document).find('#admin_leader_member_diffrent').modal('show');
                       }
                       if(user_type == 'Member' || user_type == 'Leader'){
                            self.parents('tr').remove();
@@ -685,10 +686,12 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                            else{
                                 $('button.member-add').css('display', 'block');
                            }
+                           $(document).find('#admin_leader_member_diffrent').modal('show');
+                           $(document).find('.member-add').attr('data-count', parseInt(count) + 1)
 //                           $('button.member-add').css('display', 'block');
                       }
-                      $(document).find('#admin_leader_member_diffrent').modal('show');
-                      $(document).find('.member-add').attr('data-count', parseInt(count) + 1)
+//                      $(document).find('#admin_leader_member_diffrent').modal('show');
+//                      $(document).find('.member-add').attr('data-count', parseInt(count) + 1)
                 }
             }
             if ((jnr_highschool && admin_email === email) && (user_type == 'Leader' || user_type == 'Member')) {
