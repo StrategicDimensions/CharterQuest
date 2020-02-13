@@ -1231,7 +1231,8 @@ class CfoHome(web.Home):
                 for member_id in team_snr_id.aspirant_team_member_ids:
                     template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr',
                                                raise_if_not_found=False)
-                    if template and member_id.user_type == 'Admin':
+                    # if template and member_id.user_type == 'Admin':
+                    if template and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader') or (member_id.user_type == 'Member')):
                         template.sudo().with_context(
                             team_id=team_snr_id.id,
                             team_name=team_snr_id.name,
@@ -1243,7 +1244,8 @@ class CfoHome(web.Home):
                 for member_id in team_jnr_id.aspirant_team_member_ids:
                     template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_jnr',
                                                raise_if_not_found=False)
-                    if template and member_id.user_type == 'Admin':
+                    # if template and member_id.user_type == 'Admin':
+                    if template and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader') or (member_id.user_type == 'Member')):
                         template.sudo().with_context(
                             team_id=team_jnr_id.id,
                             team_name=team_jnr_id.name,
@@ -1253,50 +1255,79 @@ class CfoHome(web.Home):
                 return True
             if team_snr_id.team_type == 'Academic Institution':
                 for member_id in team_snr_id.academic_team_member_ids:
+                    template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr',
+                                               raise_if_not_found=False)
                     # if template and member_id.related_user_aspirant_id and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader')):
-                    #     template.sudo().with_context(
-                    #         team_id=team_id.id,
-                    #         team_name=team_id.name,
-                    #         cfo_report_deadline_date=team_id.cfo_report_deadline_date,
-                    #         email_to=member_id.related_user_aspirant_id.email_1,
-                    #     ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
+                    if template and member_id.related_user_aspirant_id and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader') or (member_id.user_type == 'Member')):
+                        template.sudo().with_context(
+                            team_id=team_snr_id.id,
+                            team_name=team_snr_id.name,
+                            cfo_report_deadline_date=team_snr_id.cfo_report_deadline_date,
+                            email_to=member_id.related_user_aspirant_id.email_1,
+                        ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
 
                     template_acadamic = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr_acadamic',
                                                         raise_if_not_found=False)
-                    if template_acadamic and member_id.related_user_id and member_id.user_type == 'Admin':
+                    # if template_acadamic and member_id.related_user_id and member_id.user_type == 'Admin':
+                    if template_acadamic and member_id.related_user_id:
                         template_acadamic.sudo().with_context(
                             team_id=team_snr_id.id,
                             team_name=team_snr_id.name,
                             cfo_report_deadline_date=team_snr_id.cfo_report_deadline_date,
-                            # email_to=member_id.related_user_id.email_1,
+                            email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
                 return True
+
             if team_jnr_id.team_type == 'Secondary/High School':
+                # for member_id in team_jnr_id.highschool_team_member_ids:
+                #     template_highschool = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_jnr_acadamic',
+                #                                         raise_if_not_found=False)
+                #     # if template_highschool and member_id.related_user_id and member_id.user_type == 'Admin':
+                #     if template_highschool and (member_id.related_user_id or member_id.related_user_aspirant_id):
+                #         print ("\n\n\n\n\n=========member_id=======",member_id.related_user_id,member_id.related_user_aspirant_id)
+                #         template_highschool.sudo().with_context(
+                #             team_id=team_jnr_id.id,
+                #             team_name=team_jnr_id.name,
+                #             cfo_report_deadline_date=team_jnr_id.cfo_report_deadline_date,
+                #             email_to=member_id.related_user_id.email_1 or member_id.related_user_aspirant_id.email_1,
+                #         ).send_mail(member_id.related_user_id.id if member_id.related_user_id.id else member_id.related_user_aspirant_id.id, force_send=True)
+                # return True
                 for member_id in team_jnr_id.highschool_team_member_ids:
-                    template_acadamic = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_jnr_acadamic',
-                                                        raise_if_not_found=False)
-                    if template_acadamic and member_id.related_user_id and member_id.user_type == 'Admin':
-                        template_acadamic.sudo().with_context(
+                    template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_jnr',
+                                               raise_if_not_found=False)
+                    if template and member_id.related_user_aspirant_id and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader') or (member_id.user_type == 'Member')):
+                        template.sudo().with_context(
                             team_id=team_jnr_id.id,
                             team_name=team_jnr_id.name,
-                            cfo_report_deadline_date=team_jnr_id.cfo_report_deadline_date,
-                            # email_to=member_id.related_user_id.email_1,
+                            email_to=member_id.related_user_aspirant_id.email_1,
+                        ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
+
+                    template_highschool = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_jnr_acadamic',raise_if_not_found=False)
+                    if template_highschool and member_id.related_user_id:
+                        template_highschool.sudo().with_context(
+                            team_id=team_jnr_id.id,
+                            team_name=team_jnr_id.name,
+                            email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
                 return True
+
             if team_snr_id.team_type == 'Employer':
                 for member_id in team_snr_id.employer_team_member_ids:
-                    # if template and member_id.related_user_aspirant_id and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader')):
-                    #     print("\n\n\n\n=======member_id===in member_id.related_user_aspirant_id ======", member_id.related_user_aspirant_id)
-                    #     template.sudo().with_context(
-                    #         team_id=team_id.id,
-                    #         team_name=team_id.name,
-                    #         cfo_report_deadline_date=team_id.cfo_report_deadline_date,
-                    #         email_to=member_id.related_user_aspirant_id.email_1,
-                    #     ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
+                    template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr',
+                                               raise_if_not_found=False)
+                    if template and member_id.related_user_aspirant_id and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader') or (member_id.user_type == 'Member')):
+                        print("\n\n\n\n=======member_id===in member_id.related_user_aspirant_id ======", member_id.related_user_aspirant_id)
+                        template.sudo().with_context(
+                            team_id=team_snr_id.id,
+                            team_name=team_snr_id.name,
+                            cfo_report_deadline_date=team_snr_id.cfo_report_deadline_date,
+                            email_to=member_id.related_user_aspirant_id.email_1,
+                        ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
 
                     template_employer = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr_employer',
                                                         raise_if_not_found=False)
-                    if template_employer and member_id.related_user_id and member_id.user_type == 'Admin':
+                    # if template_employer and member_id.related_user_id and member_id.user_type == 'Admin':
+                    if template_employer and member_id.related_user_id:
                         template_employer.sudo().with_context(
                             team_id=team_snr_id.id,
                             team_name=team_snr_id.name,
