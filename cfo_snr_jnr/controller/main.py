@@ -912,9 +912,12 @@ class CfoHome(web.Home):
     @http.route('/check_team_name', type='json', auth="public", website=True)
     def check_team_name(self, **post):
         if post.get('team_name'):
-            team_name = request.env['cfo.team.snr'].sudo().search([('name', '=', post.get('team_name'))])
-            if team_name:
-                return team_name;
+            team_name_snr = request.env['cfo.team.snr'].sudo().search([('name', '=', post.get('team_name'))])
+            team_name_jnr = request.env['cfo.team.jnr'].sudo().search([('name', '=', post.get('team_name'))])
+            if team_name_snr:
+                return team_name_snr
+            if team_name_jnr:
+                return team_name_jnr
 
     @http.route('/request_to_join',type='json', auth="public", website=True)
     def check_request_member(self, **post):

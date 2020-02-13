@@ -43,6 +43,30 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             }, 1000);
         }
 
+        if (window.location.href.indexOf("/cfo_junior") != -1) {
+            var deadline_date = $(document).find('input[name="cfo_report_deadline_date_time"]').val();
+            var countDownDate = new Date(deadline_date).getTime();
+
+            var x = setInterval(function () {
+                var now = new Date().getTime();
+                var distance = countDownDate - now;
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                if (deadline_date) {
+                    html = ''
+                    html += days + "Days " + hours + ":" + minutes + ":" + seconds + "";
+                    $('#remaining_time_time').html(html);
+                    if (distance < 0) {
+                        clearInterval(x);
+                        document.getElementById("remaining_time_time").innerHTML = "EXPIRED";
+                    }
+                }
+            }, 1000);
+        }
+
         if ($('.user_type_leader_acadamic').val() == 'Leader') {
             $(this).attr('count', '1')
             $('.leader-add-acadamic').css('display', 'none');
@@ -595,7 +619,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         $('input[name="name"]').on('change', function () {
             var name = $(this).val();
             var student_country = $(this).parent().find('input[name="stu_country"]').val();
-            var jnr_student_country = $(this).parent().find('input[name="country"]').val();
+            var jnr_student_country = $(this).parent().find('input[name="stu_country_id"]').val();
             var employee_country = $(this).parent().find('input[name="emp_country"]').val();
             var school_name = $(document).find('input[name="school_name"]').val();
             if (student_country){

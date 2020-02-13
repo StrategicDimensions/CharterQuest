@@ -60,11 +60,13 @@
 					<div class="col-md-4">
 						<h4>CFO Report Submission Deadline</h4>
 						<strong>
+                            <t t-esc="date_of_report_submit"/>
 						</strong>
 					</div>
 					<div class="col-md-4">
 						<h4>Remaining Time</h4>
 						<strong>
+                            <div id="remaining_time_time"></div>
 						</strong>
 					</div>
 					<div class="col-md-4">
@@ -77,6 +79,8 @@
 						</t>
 						<br />
 						<div class="col-md-12">
+                           <input type="hidden" t-att-value="jnr_aspirants.aspirant_id.cfo_report_deadline_date"
+                                   name="cfo_report_deadline_date_time"/>
                            <t t-if="jnr_aspirants.aspirant_id and jnr_aspirants.team_leader  and jnr_aspirants.updated_cfo_bio">
 	                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 	                                  <input type="hidden" t-att-value="jnr_aspirants.id" name="aspirant_id"/>
@@ -173,21 +177,20 @@
 					<p class="text-muted" />
 				</div>
 			</div>
-			<div class="container" t-if="not update_bio and not cfo_team">
-				<table>
-					<tr>
-						<td>
-							<form action="/cfo_junior" method="GET">
+            <div class="container" t-if="not update_bio and not cfo_team">
+                     <table class="btnset_responsive">
+                         <tr>
+                           <td class="btn1_responsive">
+                            <form action="/cfo_junior" method="GET">
 								<input type="hidden" name="jnr_aspirants" t-att-value="jnr_aspirants.id" />
 								<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
 								<input type="hidden" name="update_bio" value="True" />
-								<button type="submit" class="btn btn-default btn-primary mb32 a-submit"
-									style="margin-left:350px;">UPDATE YOUR BIO
+								<button type="submit" class="btn btn-default btn-primary mb32 a-submit">UPDATE YOUR BIO
 								</button>
 							</form>
-						</td>
-						<td>
-							<form action="/cfo_junior" method="GET">
+                             </td>
+                             <td class="btn1_responsive">
+                             <form action="/cfo_junior" method="GET">
 								<input type="hidden" name="jnr_aspirants" t-att-value="jnr_aspirants.id" />
 								<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
 								<t t-if="jnr_aspirants and jnr_aspirants.updated_cfo_bio and jnr_aspirants.team_admin">
@@ -197,15 +200,7 @@
 										TEAM
 									</button>
 								</t>
-<!-- 								<t -->
-<!-- 									t-if="aspirant_obj and aspirant_obj.updated_cfo_bio and  team_obj and team_obj.team_type=='CFO Aspirant' and jnr_aspirants.team_admin and not jnr_aspirants.is_from_create_member"> -->
-<!-- 									<input type="hidden" name="cfo_team" value="True" /> -->
-<!-- 									<a href="/cfo/cfo_teams" class="btn btn-default btn-primary mb32 a-submit"> -->
-<!-- 										VIEW/UPDATE -->
-<!-- 										TEAM -->
-<!-- 									</a> -->
-<!-- 								</t> -->
-								<t t-if="jnr_aspirants.is_from_create_member or not jnr_aspirants.team_admin and jnr_aspirants.updated_cfo_bio">
+                                <t t-if="jnr_aspirants.is_from_create_member or not jnr_aspirants.team_admin and jnr_aspirants.updated_cfo_bio">
 									<t
 										t-if="jnr_aspirants.updated_cfo_bio and jnr_aspirants.aspirant_id">
 										<input type="hidden" name="is_in_team" value="True" />
@@ -218,19 +213,77 @@
 									</t>
 								</t>
 							</form>
-						</td>
-						<td>
-							<form action="/cfo_junior" method="GET">
+                             </td>
+                            <td class="btn1_responsive">
+                               <form action="/cfo_junior" method="GET">
 								<input type="hidden" name="jnr_aspirants" t-att-value="jnr_aspirants.id" />
 								<button type="button" class="btn btn-default btn-primary mb32 a-submit"
 									data-toggle="modal" data-target="#myModal" id="modal_button">
 									Register for other categories
 								</button>
 							</form>
-						</td>
-					</tr>
-				</table>
-			</div>
+                            </td>
+                        </tr>
+                       </table>
+                    </div>
+<!--			<div class="container" t-if="not update_bio and not cfo_team">-->
+<!--				<table>-->
+<!--					<tr>-->
+<!--						<td>-->
+<!--							<form action="/cfo_junior" method="GET">-->
+<!--								<input type="hidden" name="jnr_aspirants" t-att-value="jnr_aspirants.id" />-->
+<!--								<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />-->
+<!--								<input type="hidden" name="update_bio" value="True" />-->
+<!--								<button type="submit" class="btn btn-default btn-primary mb32 a-submit"-->
+<!--									style="margin-left:350px;">UPDATE YOUR BIO-->
+<!--								</button>-->
+<!--							</form>-->
+<!--						</td>-->
+<!--						<td>-->
+<!--							<form action="/cfo_junior" method="GET">-->
+<!--								<input type="hidden" name="jnr_aspirants" t-att-value="jnr_aspirants.id" />-->
+<!--								<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />-->
+<!--								<t t-if="jnr_aspirants and jnr_aspirants.updated_cfo_bio and jnr_aspirants.team_admin">-->
+<!--									<input type="hidden" name="cfo_team" value="True" />-->
+<!--									<button type="submit" class="btn btn-default btn-primary mb32 a-submit">-->
+<!--										CREATE/UPDATE-->
+<!--										TEAM-->
+<!--									</button>-->
+<!--								</t>-->
+<!--&lt;!&ndash; 								<t &ndash;&gt;-->
+<!--&lt;!&ndash; 									t-if="aspirant_obj and aspirant_obj.updated_cfo_bio and  team_obj and team_obj.team_type=='CFO Aspirant' and jnr_aspirants.team_admin and not jnr_aspirants.is_from_create_member"> &ndash;&gt;-->
+<!--&lt;!&ndash; 									<input type="hidden" name="cfo_team" value="True" /> &ndash;&gt;-->
+<!--&lt;!&ndash; 									<a href="/cfo/cfo_teams" class="btn btn-default btn-primary mb32 a-submit"> &ndash;&gt;-->
+<!--&lt;!&ndash; 										VIEW/UPDATE &ndash;&gt;-->
+<!--&lt;!&ndash; 										TEAM &ndash;&gt;-->
+<!--&lt;!&ndash; 									</a> &ndash;&gt;-->
+<!--&lt;!&ndash; 								</t> &ndash;&gt;-->
+<!--								<t t-if="jnr_aspirants.is_from_create_member or not jnr_aspirants.team_admin and jnr_aspirants.updated_cfo_bio">-->
+<!--									<t-->
+<!--										t-if="jnr_aspirants.updated_cfo_bio and jnr_aspirants.aspirant_id">-->
+<!--										<input type="hidden" name="is_in_team" value="True" />-->
+<!--										<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
+<!--										<input type="hidden" name="cfo_team" value="True" />-->
+<!--										<button type="submit"-->
+<!--											class="btn btn-default btn-primary mb32 a-submit">-->
+<!--											VIEW TEAM-->
+<!--										</button>-->
+<!--									</t>-->
+<!--								</t>-->
+<!--							</form>-->
+<!--						</td>-->
+<!--						<td>-->
+<!--							<form action="/cfo_junior" method="GET">-->
+<!--								<input type="hidden" name="jnr_aspirants" t-att-value="jnr_aspirants.id" />-->
+<!--								<button type="button" class="btn btn-default btn-primary mb32 a-submit"-->
+<!--									data-toggle="modal" data-target="#myModal" id="modal_button">-->
+<!--									Register for other categories-->
+<!--								</button>-->
+<!--							</form>-->
+<!--						</td>-->
+<!--					</tr>-->
+<!--				</table>-->
+<!--			</div>-->
 			<div class="container" t-if="update_bio">
                 <div class="container">
                     <section class="s_process_steps_2">
@@ -580,6 +633,7 @@
                                                         <t t-esc="jnr_aspirants.aspirant_age if jnr_aspirants.aspirant_age else &quot;&quot;"/>
                                                     </option>
                                                 </t>
+                                                <option value="15">14</option>
                                                 <option value="15">15</option>
                                                 <option value="16">16</option>
                                                 <option value="17">17</option>
@@ -673,7 +727,8 @@
                                         <input type="text" name="department"
                                                id="department"
                                                class="form-control"
-                                               t-att-value="jnr_aspirants.department"/>
+                                               t-att-value="jnr_aspirants.department"
+                                               required="true"/>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="control-label"
@@ -3230,9 +3285,51 @@
                     </div>
           </template>
           <template id="cfo_jnr_mentor">
-            <div class="container">
-                <div class="row">
-                	<div class="col-md-12 oe_structure"/>	
+            <div class="row oe_structure">
+                <div class="col-md-12 oe_structure"/>
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <t t-set="team_count" t-value="0"/>
+                        <t t-set="count_report_submit" t-value="0"/>
+                        <t t-set="count_not_report_submit" t-value="0"/>
+                        <t t-if="jnr_mentors.team_ids">
+                            <t t-foreach="jnr_mentors.team_ids" t-as="team_ids">
+                                <t t-if="team_ids.acknowledge_cfo_report">
+                                    <t t-set="count_report_submit" t-value="int(count_report_submit)+1"/>
+                                </t>
+                                <t t-if="not team_ids.acknowledge_cfo_report">
+                                    <t t-set="count_not_report_submit" t-value="int(count_not_report_submit)+1"/>
+                                </t>
+                            </t>
+                        </t>
+                        <div class="col-md-12">
+                            <h4>Teams</h4>
+                            <strong>
+                                <t t-esc="len(jnr_mentors.team_ids)" t-if="jnr_mentors"></t>
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                            <h4>Reports Submitted</h4>
+                            <strong>
+                               <t t-esc="count_report_submit"/>
+                            </strong>
+                    </div>
+                    <div class="col-md-3">
+                            <h4>Report Submissions Pending</h4>
+                            <strong>
+                                <t t-esc="count_not_report_submit"/>
+                            </strong>
+                    </div>
+                    <div class="col-md-3">
+                        <form action="/cfo_jenior" method="GET">
+                            <input type="hidden" name="cfo_team" value="True"/>
+                            <button type="submit" class="btn btn-primary">View Teams &amp; Submissions</button>
+                        </form>
+                    </div>
+                </div>
+                <br/>
+                <div class="row oe_structure">
                     <div class="col-md-3 text-center mt32 mb32">
                         <span class="fa fa-check fa-2x bg-gamma"
                               style="animation-play-state: paused; transition: none"/>
@@ -3251,7 +3348,7 @@
                         <h4>Update BIO</h4>
                         <p class="text-muted"/>
                     </div>
-                   <div class="col-md-3 text-center mt32 mb32">
+                    <div class="col-md-3 text-center mt32 mb32">
                         <t t-if="jnr_mentors.team_ids">
                             <span class="fa fa-check fa-2x bg-gamma"
                                   style="animation-play-state: paused; transition: none"/>
@@ -3274,8 +3371,8 @@
                                   style="animation-play-state: paused; transition: none"/>
                         </t>
                         <h4>Invite Team Members</h4>
-                    <p class="text-muted"/>
-                </div>
+                        <p class="text-muted"/>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="container" t-if="not update_bio">
@@ -3696,12 +3793,50 @@
             </div>
         </template>
         <template id="cfo_junior_brand_ambassador">
-            <div class="container">
-            	<div class="col-md-12 oe_structure"/>	
-                <div class="row">
-                    <div class="col-md-3">CFO Report Submission Deadline</div>
-                    <div class="col-md-3">Remaining Time</div>
+            <div class="row oe_structure">
+                <div class="col-md-12 oe_structure"/>
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <t t-set="team_count" t-value="0"/>
+                        <t t-set="count_report_submit" t-value="0"/>
+                        <t t-set="count_not_report_submit" t-value="0"/>
+                        <t t-if="jnr_brand_ambassador.team_ids">
+                            <t t-foreach="jnr_brand_ambassador.team_ids" t-as="team_ids">
+                                <t t-if="team_ids.acknowledge_cfo_report">
+                                    <t t-set="count_report_submit" t-value="int(count_report_submit)+1"/>
+                                </t>
+                                <t t-if="not team_ids.acknowledge_cfo_report">
+                                    <t t-set="count_not_report_submit" t-value="int(count_not_report_submit)+1"/>
+                                </t>
+                            </t>
+                        </t>
+                        <div class="col-md-12">
+                            <h4>Teams</h4>
+                            <strong>
+                                <t t-esc="len(jnr_brand_ambassador.team_ids)" t-if="jnr_brand_ambassador"></t>
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                            <h4>Reports Submitted</h4>
+                            <strong>
+                               <t t-esc="count_report_submit"/>
+                            </strong>
+                    </div>
+                    <div class="col-md-3">
+                            <h4>Report Submissions Pending</h4>
+                            <strong>
+                                <t t-esc="count_not_report_submit"/>
+                            </strong>
+                    </div>
+                    <div class="col-md-3">
+                        <form action="/cfo_junior" method="GET">
+                            <input type="hidden" name="cfo_team" value="True"/>
+                            <button type="submit" class="btn btn-primary">View Teams &amp; Submissions</button>
+                        </form>
+                    </div>
                 </div>
+                <br/>
                 <div class="row">
                     <div class="col-md-3 text-center mt32 mb32">
                         <span class="fa fa-check fa-2x bg-gamma"
