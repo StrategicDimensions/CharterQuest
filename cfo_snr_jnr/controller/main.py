@@ -1754,29 +1754,29 @@ class CfoHome(web.Home):
     @http.route('/cfo_snr_report_form_new', type='http', auth='public', website=True)
     def cfo_snr_report_form_new(self, **post):
         team_id = request.env['cfo.team.snr'].sudo().search([('id', '=', post.get('aspirant_team'))])
-        template = request.env.ref('cfo_snr_jnr.email_template_for_success_report', raise_if_not_found=False)
-        template_mentor = request.env.ref('cfo_snr_jnr.email_template_for_success_report_mentor',
+        template = request.env.ref('cfo_snr_jnr.email_template_for_success_report_snr', raise_if_not_found=False)
+        template_mentor = request.env.ref('cfo_snr_jnr.email_template_for_success_report_mentor_snr',
                                           raise_if_not_found=False)
-        template_amb = request.env.ref('cfo_snr_jnr.email_template_for_success_report_ambassador',
+        template_amb = request.env.ref('cfo_snr_jnr.email_template_for_success_report_ambassador_snr',
                                        raise_if_not_found=False)
 
         if team_id and team_id.mentor_id and template_mentor:
             template_mentor.sudo().with_context(
                 team_name=team_id.ref_name,
-                # email_to=team_id.mentor_id.email_1
+                email_to=team_id.mentor_id.email_1
             ).send_mail(team_id.mentor_id.id, force_send=True)
 
         if team_id and team_id.brand_amb_id and template_amb:
             template_amb.sudo().with_context(
                 team_name=team_id.ref_name,
-                # email_to=team_id.brand_amb_id.email_1
+                email_to=team_id.brand_amb_id.email_1
             ).send_mail(team_id.brand_amb_id.id, force_send=True)
 
         for aspirant_member in team_id.aspirant_team_member_ids:
             if template:
                 template.sudo().with_context(
                     team_name=team_id.name,
-                    # email_to=aspirant_member.related_user_id.email_1
+                    email_to=aspirant_member.related_user_id.email_1
                 ).send_mail(aspirant_member.related_user_id.id, force_send=True)
 
             team_id.acknowledge_cfo_report = True

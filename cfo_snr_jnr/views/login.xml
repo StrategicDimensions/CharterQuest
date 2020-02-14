@@ -3472,356 +3472,344 @@
         </template>
         <template id="cfo_snr_report">
             <t t-call="web.login_layout">
-                <form action="/cfo_snr_report_form_new" method="post" id="report_form" enctype="multipart/form-data">
-                    <div class="col-md-12 oe_structure"/>
-                    <div class="col-md-12 oe_structure">
-                        <button class="btn btn-default btn-primary mb32" onclick="history.back();return false"><i
-                                class="fa fa-chevron-left"/>Back
-                        </button>
-                        <a href='cfo_senior' class="btn btn-default btn-primary mb32 a-submit fa fa-home">HOME</a>
-                    </div>
-                    <input type="hidden" name="csrf_token"
-                           t-att-value="request.csrf_token()"/>
-                    <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
-                    <input type="hidden" t-att-value="aspirant_team.id" name="aspirant_team" t-if="aspirant_team"/>
-                    <h3 style="padding-left: 63px;">Team</h3>
-                    <div class="col-md-8" style="padding-left:63px;">
-                        <label class="control-label"
-                               for="name">Name
-                        </label>
-                        <input type="hidden" name="country" t-att-value="snr_aspirants.country_id.name"/>
-                        <input type="hidden" name="state" t-att-value="snr_aspirants.state_id.name"/>
-                        <input type="hidden" name="stu_country" t-att-value="snr_aspirants.stu_country_id.name"/>
-                        <input type="hidden" name="emp_country" t-att-value="snr_aspirants.emp_country_id.name"/>
-                        <t t-if="aspirant_team">
-                            <input type="text" name="name"
-                                   id="name"
-                                   class="form-control" required="1"
-                                   t-att-value="aspirant_team.name" style="width: 390px;"/>
-                        </t>
-                    </div>
-                    <div class="col-md-8">
-                    </div>
-                    <div class="col-md-8" style="padding-left: 63px;">
-                        <t t-if="aspirant_team">
-                            <input type="text" name="sys_name"
-                                   id="sys_name"
-                                   class="form-control sys_name_new"
-                                   readonly="1"
-                                   t-att-value="aspirant_team.ref_name" style="width: 390px;"/>
-                        </t>
-                        <t t-if="not acadamic_team">
-                                    <input type="text" name="sys_name" readonly="1"
-                                           class="form-control sys_name_new"/>
-                        </t>
-                    </div>
-                    <div class="col-md-8">
-                    </div>
-                    <div class="col-md-12">
-                        <table id="table_quick_view">
-                            <tbody class="add_row_table" style="border:unset;">
-                                <t t-if="aspirant_team and aspirant_team.aspirant_team_member_ids">
-                                    <t t-foreach="aspirant_team.aspirant_team_member_ids" t-as="member_id">
-                                        <tr class="ac-row-data-list">
-                                            <td style="padding-right: 10px;">Email</td>
-                                            <td>
-                                                <input type="text" t-att-id="member_id.id" t-att-name="member_id.id"
-                                                       class="form-control"
-                                                       t-att-value="member_id.email"
-                                                       t-att-readonly="'1' if member_id.user_type == 'Admin' else False"/>
-                                            </td>
-                                            <td>
-                                                <input type="text" t-att-name="member_id.user_type"
-                                                       t-att-value="member_id.user_type"
-                                                       class="form-control user_type"
-                                                       t-if="member_id.user_type == 'Admin'" readonly="1"/>
-                                                <select t-att-name="member_id.user_type" class="form-control user_type"
-                                                        t-if="member_id.user_type != 'Admin'">
-                                                    <option t-att-value="member_id.user_type" selected="selected">
-                                                        <t t-esc="member_id.user_type"/>
-                                                    </option>
-                                                </select>
-                                            </td>
-                                            <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
-                                        </tr>
-                                    </t>
-                                </t>
-                                <t t-if="aspirant_team and aspirant_team.academic_team_member_ids">
-                                    <t t-foreach="aspirant_team.academic_team_member_ids" t-as="member_id">
-                                        <tr class="ac-row-data-list">
-                                            <td style="padding-right: 10px;">Email</td>
-                                            <td>
-                                                <input type="text" t-att-id="member_id.id" t-att-name="member_id.id"
-                                                       class="form-control"
-                                                       t-att-value="member_id.email"
-                                                       t-att-readonly="'1' if member_id.user_type == 'Admin' else False"/>
-                                            </td>
-                                            <td>
-                                                <input type="text" t-att-name="member_id.user_type"
-                                                       t-att-value="member_id.user_type"
-                                                       class="form-control user_type"
-                                                       t-if="member_id.user_type == 'Admin'" readonly="1"/>
-                                                <select t-att-name="member_id.user_type" class="form-control user_type"
-                                                        t-if="member_id.user_type != 'Admin'">
-                                                    <option t-att-value="member_id.user_type" selected="selected">
-                                                        <t t-esc="member_id.user_type"/>
-                                                    </option>
-                                                </select>
-                                            </td>
-                                            <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
-                                        </tr>
-                                    </t>
-                                </t>
-                                <t t-if="aspirant_team and aspirant_team.employer_team_member_ids">
-                                    <t t-foreach="aspirant_team.employer_team_member_ids" t-as="member_id">
-                                        <tr class="ac-row-data-list">
-                                            <td style="padding-right: 10px;">Email</td>
-                                            <td>
-                                                <input type="text" t-att-id="member_id.id" t-att-name="member_id.id"
-                                                       class="form-control"
-                                                       t-att-value="member_id.email"
-                                                       t-att-readonly="'1' if member_id.user_type == 'Admin' else False"/>
-                                            </td>
-                                            <td>
-                                                <input type="text" t-att-name="member_id.user_type"
-                                                       t-att-value="member_id.user_type"
-                                                       class="form-control user_type"
-                                                       t-if="member_id.user_type == 'Admin'" readonly="1"/>
-                                                <select t-att-name="member_id.user_type" class="form-control user_type"
-                                                        t-if="member_id.user_type != 'Admin'">
-                                                    <option t-att-value="member_id.user_type" selected="selected">
-                                                        <t t-esc="member_id.user_type"/>
-                                                    </option>
-                                                </select>
-                                            </td>
-                                            <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
-                                        </tr>
-                                    </t>
-                                </t>
-                                <tr class="custom_tr ac-row-data-list hide">
-                                    <td style="padding-right: 10px;">Email</td>
-                                    <td>
-                                        <input type="email" name="email" class="form-control team_email"/>
-                                    </td>
-                                    <td>
-                                        <select name="user_type" class="form-control user_type">
-                                            <option value=""></option>
-                                            <option value="Leader">Leader</option>
-                                            <option value="Member">Member</option>
-                                            <option value="Mentor">Mentor</option>
-                                            <option value="Brand Ambassador">Brand Ambassador</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="hidden" name="competition_year" class="competition_year"
-                                               t-att-value="snr_aspirants.cfo_competition_year"/>
-                                        <input type="text" name="member_name" placeholder="Name"
-                                               class="form-control team_member_name" style="display:none;"/>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="remove_document_modal" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"></button>
-                                    <h4 class="modal-title">Warning!!!</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <input type="hidden" name="attachment_id" id="attachment_id" value=""/>
-                                    <p>Are you sure..?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger remove_attachment">Remove</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12" style="padding-left:61px;">
-                        <table style="width:50%;">
-                            <th style="width:310px;padding-top: 16px;">
-                                <h3 style="background-color: red;">Submit CFO Report</h3>
-                                Please upload a PDF and a DOC version of the report in the section provide on the right.
-                            </th>
-                            <tbody>
-                                <tr style=" border-style: solid;">
-                                    <t t-set="document_new_id" t-value="0"/>
-                                    <td style=" border-right: solid;">
-                                        CFO Report(PDF)
-                                    </td>
-                                    <td>
-                                        <t t-if="aspirant_team.document_ids">
-                                            <t t-foreach="aspirant_team.document_ids" t-as="document_id">
-                                                <t t-if="document_id.datas_fname.split('.')[1]=='pdf'">
-                                                    <t t-esc="document_id.datas_fname"/>
-                                                    <input type="hidden" name="pdf_db" accept="application/pdf"
-                                                           t-att-value="document_id.id"/>
-                                                    <t t-set="document_new_id" t-value="document_id.id"/>
-                                                </t>
-
-                                            </t>
-                                        </t>
-                                        <t t-if="not document_new_id">
-                                            <input type="file" name="pdf" class="file_uploaded" accept="application/pdf"
-                                                   required="1"/>
-                                        </t>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-danger remove_document" t-att-id="document_new_id">
-                                            Remove
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr style=" border-style: solid;">
-                                    <t t-set="document_new_doc" t-value="0"/>
-                                    <td style="border-right:solid;">
-                                        CFO Report(DOC)
-                                    </td>
-                                    <td>
-                                        <t t-if="aspirant_team.document_ids">
-                                            <t t-foreach="aspirant_team.document_ids" t-as="document_id">
-                                                <t t-if="document_id.datas_fname.split('.')[1] in ['doc','docx']">
-                                                    <t t-esc="document_id.datas_fname"/>
-                                                    <input type="hidden" name="doc_db" accept="application/doc"
-                                                           t-att-value="document_id.id"/>
-                                                    <t t-set="document_new_doc" t-value="document_id.id"/>
-                                                </t>
-                                            </t>
-                                        </t>
-                                        <t t-if="not document_new_doc">
-                                            <input type="file" name="doc" class="file_uploaded_doc"
-                                                   accept="application/doc" required="1"/>
-                                        </t>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-danger remove_document" t-att-id="document_new_doc">
-                                            Remove
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                        <table style="width:78%;">
-                            <th style="padding-left: 60px;">
-                                <h3>Brand Ambassador Mentor Confirmation</h3>
-                                Kindly confirm your Brand Ambassador and Mnetor.The existing for your team are listed
-                                below
-                                should either of them changed,enter the email address of the new one and click the
-                                invite button to invite them
-                                to your team.if details listed below are correct,kindly click the confirm button.
-                            </th>
-
-                        </table>
-                    </div>
-                    <!-- Modal confirm member-->
-                    <div id="upload_file_popup" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"></button>
-                                    <h4 class="modal-title">Warning!!</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Please Upload PDF and DOC Files First!!!!!</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Modal confirm Report-->
-                    <div id="submit_file_report" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"></button>
-                                    <h4 class="modal-title">Success!!</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Successfully Uploaded..........</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-15">
-                        <table style="width:100%;" id="report_table">
-                            <tbody>
-                                <t t-if="aspirant_team and aspirant_team.mentor_id">
-                                    <tr class="ac-row-data-list">
-                                        <td style="padding-left: 14px;">Email</td>
-                                        <td>
-                                            <input type="text" name="email" class="form-control"
-                                                   t-att-value="aspirant_team.mentor_id.email_1"/>
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="team_id" t-att-value='aspirant_team.id'/>
-                                            <input type="hidden" name="competition_year" class="competition_year"
-                                                   t-att-value="snr_aspirants.cfo_competition_year"/>
-                                            <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"
-                                                   t-att-id="snr_aspirants.id"/>
-                                            <select name="user_type" class="form-control user_type">
-                                                <option value="Mentor" selected="1">Mentor</option>
-                                            </select>
-                                        </td>
-                                        <td t-if="not aspirant_team.acknowledge_cfo_report">
-                                            <button id="confirm_member_mentor" value="Confirm"
-                                                    class="btn btn-success confirm_mentor">Confirm
-                                            </button>
-                                        </td>
+                <div class="container">
+                    <form action="/cfo_snr_report_form_new" method="post" id="report_form" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-4 mt16">
+                                <table>
+                                    <tr>
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
+                                        <input type="hidden" t-att-value="aspirant_team.id" name="aspirant_team" t-if="aspirant_team"/>
+                                        <h3>Team</h3>
                                     </tr>
-                                </t>
-                                <t t-if="aspirant_team and aspirant_team.brand_amb_id">
-                                    <tr class="ac-row-data-list">
-
+                                    <tr>
+                                        <label class="control-label"
+                                            for="name">Name
+                                        </label>
+                                        <input type="hidden" name="country" t-att-value="snr_aspirants.country_id.name"/>
+                                        <input type="hidden" name="state" t-att-value="snr_aspirants.state_id.name"/>
+                                        <input type="hidden" name="stu_country" t-att-value="snr_aspirants.stu_country_id.name"/>
+                                        <input type="hidden" name="emp_country" t-att-value="snr_aspirants.emp_country_id.name"/>
+                                        <t t-if="aspirant_team">
+                                            <input type="text" name="name"
+                                                   id="name"
+                                                   class="form-control" required="1"
+                                                   t-att-value="aspirant_team.name" style="width: 390px;"/>
+                                        </t>
+                                        <t t-if="aspirant_team">
+                                            <input type="text" name="sys_name"
+                                                   id="sys_name"
+                                                   class="form-control sys_name_new"
+                                                   readonly="1"
+                                                   t-att-value="aspirant_team.ref_name" style="width: 390px;"/>
+                                        </t>
+                                        <t t-if="acadamic_team">
+                                                    <input type="text" name="sys_name" readonly="1"
+                                                           class="form-control sys_name_new"/>
+                                        </t>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-4 mt16"></div>
+                            <div class="col-md-4 mt16"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt16">
+                            <table>
+                                <tbody>
+                                    <t t-if="aspirant_team and aspirant_team.aspirant_team_member_ids">
+                                        <t t-foreach="aspirant_team.aspirant_team_member_ids" t-as="member_id">
+                                            <tr>
+                                                <td>Email</td>
+                                                <td>
+                                                    <input type="text" t-att-id="member_id.id" t-att-name="member_id.id"
+                                                           class="form-control"
+                                                           t-att-value="member_id.email"
+                                                           t-att-readonly="'1' if member_id.user_type == 'Admin' else False"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" t-att-name="member_id.user_type"
+                                                           t-att-value="member_id.user_type"
+                                                           class="form-control user_type"
+                                                           t-if="member_id.user_type == 'Admin'" readonly="1"/>
+                                                    <select t-att-name="member_id.user_type" class="form-control user_type"
+                                                            t-if="member_id.user_type != 'Admin'">
+                                                        <option t-att-value="member_id.user_type" selected="selected">
+                                                            <t t-esc="member_id.user_type"/>
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                    <t t-if="aspirant_team and aspirant_team.academic_team_member_ids">-->
+                                        <t t-foreach="aspirant_team.academic_team_member_ids" t-as="member_id">
+                                            <tr>
+                                                <td>Email</td>
+                                                <td>
+                                                    <input type="text" t-att-id="member_id.id" t-att-name="member_id.id"
+                                                           class="form-control"
+                                                           t-att-value="member_id.email"
+                                                           t-att-readonly="'1' if member_id.user_type == 'Admin' else False"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" t-att-name="member_id.user_type"
+                                                           t-att-value="member_id.user_type"
+                                                           class="form-control user_type"
+                                                           t-if="member_id.user_type == 'Admin'" readonly="1"/>
+                                                    <select t-att-name="member_id.user_type" class="form-control user_type"
+                                                            t-if="member_id.user_type != 'Admin'">
+                                                        <option t-att-value="member_id.user_type" selected="selected">
+                                                            <t t-esc="member_id.user_type"/>
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                    <t t-if="aspirant_team and aspirant_team.employer_team_member_ids">
+                                        <t t-foreach="aspirant_team.employer_team_member_ids" t-as="member_id">
+                                            <tr>
+                                                <td>Email</td>
+                                                <td>
+                                                    <input type="text" t-att-id="member_id.id" t-att-name="member_id.id"
+                                                           class="form-control"
+                                                           t-att-value="member_id.email"
+                                                           t-att-readonly="'1' if member_id.user_type == 'Admin' else False"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" t-att-name="member_id.user_type"
+                                                           t-att-value="member_id.user_type"
+                                                           class="form-control user_type"
+                                                           t-if="member_id.user_type == 'Admin'" readonly="1"/>
+                                                    <select t-att-name="member_id.user_type" class="form-control user_type"
+                                                            t-if="member_id.user_type != 'Admin'">
+                                                        <option t-att-value="member_id.user_type" selected="selected">
+                                                            <t t-esc="member_id.user_type"/>
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                    <tr class="custom_tr ac-row-data-list hide">
                                         <td>Email</td>
                                         <td>
-                                            <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
-                                            <input type="text" name="email" class="form-control"
-                                                   t-att-value="aspirant_team.brand_amb_id.email_1"/>
+                                            <input type="email" name="email" class="form-control team_email"/>
                                         </td>
                                         <td>
-                                            <input type="hidden" name="team_id" t-att-value='aspirant_team.id'/>
-                                            <input type="hidden" name="competition_year" class="competition_year"
-                                                   t-att-value="snr_aspirants.cfo_competition_year"/>
-                                            <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"
-                                                   t-att-id="snr_aspirants.id"/>
                                             <select name="user_type" class="form-control user_type">
-                                                <option value="Brand Ambassador" selected="1">Brand Ambassador
-                                                </option>
+                                                <option value=""></option>
+                                                <option value="Leader">Leader</option>
+                                                <option value="Member">Member</option>
+                                                <option value="Mentor">Mentor</option>
+                                                <option value="Brand Ambassador">Brand Ambassador</option>
                                             </select>
                                         </td>
-                                        <td t-if="not aspirant_team.acknowledge_cfo_report">
-                                            <button type="submit" id="confirm_member_mentor1" value="Confirm"
-                                                    class="btn btn-success confirm_member">Confirm
-                                            </button>
+                                        <td>
+                                            <input type="hidden" name="competition_year" class="competition_year"
+                                                   t-att-value="snr_aspirants.cfo_competition_year"/>
+                                            <input type="text" name="member_name" placeholder="Name"
+                                                   class="form-control team_member_name" style="display:none;"/>
                                         </td>
                                     </tr>
-                                </t>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                        <table style="width:78%;">
-                            <th style="padding-left: 60px;">
-                                <h3 style="background-color: red;">Competition Rules</h3>
-                                <hr/>
-                            </th>
-                        </table>
-                    </div>
-                    <div>
-                        <div class="loader_report_final" style="display:none;
+                                </tbody>
+                            </table>
+                            </div>
+                            <div id="remove_document_modal" class="modal fade" role="dialog">-->
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="hidden" name="attachment_id" id="attachment_id" value=""/>
+                                            <p>Are you sure..?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger remove_attachment">Remove</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt16">
+                                <table>
+                                    <h3 style="background-color: red;">Submit CFO Report</h3>
+                                    <b>Please upload a PDF and a DOC version of the report in the section provide on the right.</b>
+                                    <div class="col-md-10 mt16">
+                                    <tbody >
+                                        <tr style=" border-style: solid;">
+                                            <t t-set="document_new_id" t-value="0"/>
+                                            <td style=" border-right: solid;">
+                                                CFO Report(PDF)
+                                            </td>
+                                            <td>
+                                                <t t-if="aspirant_team.document_ids">
+                                                    <t t-foreach="aspirant_team.document_ids" t-as="document_id">
+                                                        <t t-if="document_id.datas_fname.split('.')[1]=='pdf'">
+                                                            <t t-esc="document_id.datas_fname"/>
+                                                            <input type="hidden" name="pdf_db" accept="application/pdf"
+                                                                   t-att-value="document_id.id"/>
+                                                            <t t-set="document_new_id" t-value="document_id.id"/>
+                                                        </t>
+
+                                                    </t>
+                                                </t>
+                                                <t t-if="not document_new_id">
+                                                    <input type="file" name="pdf" class="file_uploaded" accept="application/pdf"
+                                                           required="1"/>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger remove_document" t-att-id="document_new_id">Remove</button>
+                                            </td>
+                                        </tr>
+                                        <tr style=" border-style: solid;">
+                                            <t t-set="document_new_doc" t-value="0"/>
+                                            <td style="border-right:solid;">
+                                                CFO Report(DOC)
+                                            </td>
+                                            <td>
+                                                <t t-if="aspirant_team.document_ids">
+                                                    <t t-foreach="aspirant_team.document_ids" t-as="document_id">
+                                                        <t t-if="document_id.datas_fname.split('.')[1] in ['doc','docx']">
+                                                            <t t-esc="document_id.datas_fname"/>
+                                                            <input type="hidden" name="doc_db" accept="application/doc"
+                                                                   t-att-value="document_id.id"/>
+                                                            <t t-set="document_new_doc" t-value="document_id.id"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                <t t-if="not document_new_doc">
+                                                    <input type="file" name="doc" class="file_uploaded_doc"
+                                                           accept="application/doc" required="1"/>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger remove_document" t-att-id="document_new_doc">Remove</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    </div>
+                                </table>
+                            </div>
+                            <div class="col-md-12 mt16">
+                             <table>
+                                 <t t-if="aspirant_team and aspirant_team.mentor_id or aspirant_team.brand_amb_id">
+                                     <h3>Brand Ambassador  Mentor Confirmation</h3>
+                                     <b>Kindly confirm your Brand Ambassador and Mnetor.The existing for your team are listed below
+                                      should either of them changed,enter the email address of the new one and click the invite button to invite them
+                                         to your team.if details listed below are correct,kindly click the confirm button.</b>
+                                 </t>
+                             </table>
+                            </div>
+                            <!-- Modal confirm member-->
+                            <div id="upload_file_popup" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Warning!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Please Upload PDF and DOC Files First!!!!!</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal confirm Report-->
+                            <div id="submit_file_report" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <h4 class="modal-title">Success!!</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Successfully Uploaded..........</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-10 mt16">
+                                <table id="report_table">
+                                    <tbody>
+                                        <t t-if="aspirant_team and aspirant_team.mentor_id">
+                                            <tr class="ac-row-data-list">
+                                                <td>Email</td>
+                                                <td>
+                                                    <input type="text" name="email" class="form-control"
+                                                           t-att-value="aspirant_team.mentor_id.email_1"/>
+                                                </td>
+                                                <td>
+                                                    <input type="hidden" name="team_id" t-att-value='aspirant_team.id'/>
+                                                    <input type="hidden" name="competition_year" class="competition_year"
+                                                           t-att-value="snr_aspirants.cfo_competition_year"/>
+                                                    <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"
+                                                           t-att-id="snr_aspirants.id"/>
+                                                    <select name="user_type" class="form-control user_type">
+                                                        <option value="Mentor" selected="1">Mentor</option>
+                                                    </select>
+                                                </td>
+                                                <td t-if="not aspirant_team.acknowledge_cfo_report">
+                                                    <button id="confirm_member_mentor" value="Confirm"
+                                                            class="btn btn-success confirm_mentor">Confirm
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="aspirant_team and aspirant_team.brand_amb_id">
+                                            <tr class="ac-row-data-list">
+
+                                                <td>Email</td>
+                                                <td>
+                                                    <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>
+                                                    <input type="text" name="email" class="form-control"
+                                                           t-att-value="aspirant_team.brand_amb_id.email_1"/>
+                                                </td>
+                                                <td>
+                                                    <input type="hidden" name="team_id" t-att-value='aspirant_team.id'/>
+                                                    <input type="hidden" name="competition_year" class="competition_year"
+                                                           t-att-value="snr_aspirants.cfo_competition_year"/>
+                                                    <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"
+                                                           t-att-id="snr_aspirants.id"/>
+                                                    <select name="user_type" class="form-control user_type">
+                                                        <option value="Brand Ambassador" selected="1">Brand Ambassador
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td t-if="not aspirant_team.acknowledge_cfo_report">
+                                                    <button type="submit" id="confirm_member_mentor1" value="Confirm"
+                                                            class="btn btn-success confirm_member">Confirm
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12 mt16">
+                                 <table>
+                                    <h3 style="background-color: red;">Competition Rules</h3>
+                                 </table>
+                            </div>
+                            <div class="col-md-12 mt16">
+                                <div class="loader_report_final" style="display:none;
                                                                 position: fixed;
                                                                 width: 100%;
                                                                 height: 100vh;
@@ -3831,71 +3819,485 @@
                                                                 text-align: center;
                                                                 cursor: not-allowed;
                                                             ">
-                            <img src="https://easypay.axisbank.co.in/nimages/loading.gif"
-                                 style="position: relative;margin-top:10%;"/>
+                                     <img src="https://easypay.axisbank.co.in/nimages/loading.gif" style="position: relative;margin-top:10%;"/>
+                                </div>
+                                <table>
+                                       <h5>
+                                       <p>All Aspirant,Partner and associates of <b>THE CFO</b> Case Study Competition and its related contests(THE CFO Junior),
+                                       <span>(The CFO Brand Ambassadors Award and)</span><span>The CFO Social Media Award</span>
+                                       are inter-alia bound by the spirit and rules coverd in the following section of the Competition Rule
+                                       </p>
+                                       </h5>
+                                       <tbody>
+                                        <li style="padding-left: 69px;">Section 1: About the Competitions</li>
+                                        <li style="padding-left: 69px;">Section 2: Participant,team eligibility and registration</li>
+                                        <li style="padding-left: 69px;">Section 3: Competition format  stages</li>
+                                        <li style="padding-left: 69px;">Section 4: Penlties and non Compliance</li>
+                                        <li style="padding-left: 69px;">Section 5: Intellectual Property</li>
+                                        <li style="padding-left: 69px;">Section 6: Consent and release</li>
+                                        <li style="padding-left: 69px;">Section 7: Disclaimers</li>
+                                        <li style="padding-left: 69px;">Section 8: Official prize, prize transfer or substitution</li>
+                                        <li style="padding-left: 69px;">Section 9: Applicable laws and jursiducation</li>
+                                        <li style="padding-left: 69px;">Section 10:Adjudication and outcomes</li><br/><br/>
+
+                                        <p>
+                                         In as much as compliance to THE CFO (and CFO junior) case Study Competition/s Rules Was Competition/s Rules was completed during the registration process
+                                         and update of your bio.in the spirit of the competition and for this submission process of your report.you agree to be bound by
+                                         the detailed rules downloadable in pdf version at:
+                                        </p>
+<!--                                        <span style="padding-left: 35px;">-->
+<!--                                        <u><a href="copetition_rule">Compeition Rule</a></u><br/><br/>-->
+<!--                                        </span>-->
+                                        <tr>
+                                            <input type="checkbox" id="acknowledge_id"  value="acknowledge" required="1">I aknowledge that the report is entirly the work of my team and
+                                        that it does not incorporate the intellectual property of any other party.<br/></input>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button class="btn btn-default btn-primary mb32" onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
+                                                        </button>
+                                            </td>
+                                            <td>
+                                                <a href='cfo_junior' class="btn btn-default btn-primary mb32 a-submit fa fa-home">HOME</a>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-default btn-primary mb32" id="confirm_report" value="Confirm">SUBMIT CFO REPORT</button>
+                                            </td>
+                                        </tr>
+                                       </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <table style="width:78%;">
-                            <h5>
-                                <p>All Aspirant,Partner and associates of <b>THE CFO</b> Case Study Competition and its
-                                    related contests(THE CFO Junior),
-                                    <span>(The CFO Brand Ambassadors Award and)</span>
-                                    <span>The CFO Social Media Award</span>
-                                    are inter-alia bound by the spirit and rules coverd in the following section of the
-                                    Competition Rule
-                                </p>
-                            </h5>
-                            <tbody>
-                                <li style="padding-left: 69px;">Section 1: About the Competitions</li>
-                                <li style="padding-left: 69px;">Section 2: Participant,team eligibility and
-                                    registration
-                                </li>
-                                <li style="padding-left: 69px;">Section 3: Competition format stages</li>
-                                <li style="padding-left: 69px;">Section 4: Penlties and non Compliance</li>
-                                <li style="padding-left: 69px;">Section 5: Intellectual Property</li>
-                                <li style="padding-left: 69px;">Section 6: Consent and release</li>
-                                <li style="padding-left: 69px;">Section 7: Disclaimers</li>
-                                <li style="padding-left: 69px;">Section 8: Official prize, prize transfer or
-                                    substitution
-                                </li>
-                                <li style="padding-left: 69px;">Section 9: Applicable laws and jursiducation</li>
-                                <li style="padding-left: 69px;">Section 10:Adjudication and outcomes</li>
-                                <br/>
-                                <br/>
-                                <p>
-                                    In as much as compliance to THE CFO (and CFO junior) case Study Competition/s Rules
-                                    Was Competition/s Rules was completed during the registration process
-                                    and update of your bio.in the spirit of the competition and for this submission
-                                    process of your report.you agree to be bound by
-                                    the detailed rules downloadable in pdf version at:
-                                </p>
-                                <span style="padding-left: 35px;">
-                                    <u>
-                                        <a href="copetition_rule">Compeition Rule</a>
-                                    </u>
-                                    <br/>
-                                    <br/>
-                                </span>
-                                <span style="padding-left: 35px;" class="acknowledge">
-                                    <input type="checkbox" id="acknowledge_id" value="acknowledge" required="1">I
-                                        aknowledge that the report is entirly the work of my team and
-                                        that it does not incorporate the intellectual property of any other party.
-                                        <br/>
-                                    </input>
-                                </span>
-                                <br/>
-                                <br/>
-                                <span style="padding-left: 35px;" class="confirm_report">
-                                    <button type="submit" id="confirm_report" value="Confirm"
-                                            style="border-color: red;">
-                                        <font style="color: red;">SUBMIT CFO REPORT</font>
-                                    </button>
-                                </span>
-                            </tbody>
-                        </table>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </t>
         </template>
+<!--        <template id="cfo_snr_report">-->
+<!--            <t t-call="web.login_layout">-->
+<!--                <form action="/cfo_snr_report_form_new" method="post" id="report_form" enctype="multipart/form-data">-->
+<!--                    <div class="col-md-12 oe_structure"/>-->
+<!--                    <div class="col-md-12 oe_structure">-->
+<!--                        <button class="btn btn-default btn-primary mb32" onclick="history.back();return false"><i-->
+<!--                                class="fa fa-chevron-left"/>Back-->
+<!--                        </button>-->
+<!--                        <a href='cfo_senior' class="btn btn-default btn-primary mb32 a-submit fa fa-home">HOME</a>-->
+<!--                    </div>-->
+<!--                    <input type="hidden" name="csrf_token"-->
+<!--                           t-att-value="request.csrf_token()"/>-->
+<!--                    <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>-->
+<!--                    <input type="hidden" t-att-value="aspirant_team.id" name="aspirant_team" t-if="aspirant_team"/>-->
+<!--                    <h3 style="padding-left: 63px;">Team</h3>-->
+<!--                    <div class="col-md-8" style="padding-left:63px;">-->
+<!--                        <label class="control-label"-->
+<!--                               for="name">Name-->
+<!--                        </label>-->
+<!--                        <input type="hidden" name="country" t-att-value="snr_aspirants.country_id.name"/>-->
+<!--                        <input type="hidden" name="state" t-att-value="snr_aspirants.state_id.name"/>-->
+<!--                        <input type="hidden" name="stu_country" t-att-value="snr_aspirants.stu_country_id.name"/>-->
+<!--                        <input type="hidden" name="emp_country" t-att-value="snr_aspirants.emp_country_id.name"/>-->
+<!--                        <t t-if="aspirant_team">-->
+<!--                            <input type="text" name="name"-->
+<!--                                   id="name"-->
+<!--                                   class="form-control" required="1"-->
+<!--                                   t-att-value="aspirant_team.name" style="width: 390px;"/>-->
+<!--                        </t>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-8">-->
+<!--                    </div>-->
+<!--                    <div class="col-md-8" style="padding-left: 63px;">-->
+<!--                        <t t-if="aspirant_team">-->
+<!--                            <input type="text" name="sys_name"-->
+<!--                                   id="sys_name"-->
+<!--                                   class="form-control sys_name_new"-->
+<!--                                   readonly="1"-->
+<!--                                   t-att-value="aspirant_team.ref_name" style="width: 390px;"/>-->
+<!--                        </t>-->
+<!--                        <t t-if="not acadamic_team">-->
+<!--                                    <input type="text" name="sys_name" readonly="1"-->
+<!--                                           class="form-control sys_name_new"/>-->
+<!--                        </t>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-8">-->
+<!--                    </div>-->
+<!--                    <div class="col-md-12">-->
+<!--                        <table id="table_quick_view">-->
+<!--                            <tbody class="add_row_table" style="border:unset;">-->
+<!--                                <t t-if="aspirant_team and aspirant_team.aspirant_team_member_ids">-->
+<!--                                    <t t-foreach="aspirant_team.aspirant_team_member_ids" t-as="member_id">-->
+<!--                                        <tr class="ac-row-data-list">-->
+<!--                                            <td style="padding-right: 10px;">Email</td>-->
+<!--                                            <td>-->
+<!--                                                <input type="text" t-att-id="member_id.id" t-att-name="member_id.id"-->
+<!--                                                       class="form-control"-->
+<!--                                                       t-att-value="member_id.email"-->
+<!--                                                       t-att-readonly="'1' if member_id.user_type == 'Admin' else False"/>-->
+<!--                                            </td>-->
+<!--                                            <td>-->
+<!--                                                <input type="text" t-att-name="member_id.user_type"-->
+<!--                                                       t-att-value="member_id.user_type"-->
+<!--                                                       class="form-control user_type"-->
+<!--                                                       t-if="member_id.user_type == 'Admin'" readonly="1"/>-->
+<!--                                                <select t-att-name="member_id.user_type" class="form-control user_type"-->
+<!--                                                        t-if="member_id.user_type != 'Admin'">-->
+<!--                                                    <option t-att-value="member_id.user_type" selected="selected">-->
+<!--                                                        <t t-esc="member_id.user_type"/>-->
+<!--                                                    </option>-->
+<!--                                                </select>-->
+<!--                                            </td>-->
+<!--                                            <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>-->
+<!--                                        </tr>-->
+<!--                                    </t>-->
+<!--                                </t>-->
+<!--                                <t t-if="aspirant_team and aspirant_team.academic_team_member_ids">-->
+<!--                                    <t t-foreach="aspirant_team.academic_team_member_ids" t-as="member_id">-->
+<!--                                        <tr class="ac-row-data-list">-->
+<!--                                            <td style="padding-right: 10px;">Email</td>-->
+<!--                                            <td>-->
+<!--                                                <input type="text" t-att-id="member_id.id" t-att-name="member_id.id"-->
+<!--                                                       class="form-control"-->
+<!--                                                       t-att-value="member_id.email"-->
+<!--                                                       t-att-readonly="'1' if member_id.user_type == 'Admin' else False"/>-->
+<!--                                            </td>-->
+<!--                                            <td>-->
+<!--                                                <input type="text" t-att-name="member_id.user_type"-->
+<!--                                                       t-att-value="member_id.user_type"-->
+<!--                                                       class="form-control user_type"-->
+<!--                                                       t-if="member_id.user_type == 'Admin'" readonly="1"/>-->
+<!--                                                <select t-att-name="member_id.user_type" class="form-control user_type"-->
+<!--                                                        t-if="member_id.user_type != 'Admin'">-->
+<!--                                                    <option t-att-value="member_id.user_type" selected="selected">-->
+<!--                                                        <t t-esc="member_id.user_type"/>-->
+<!--                                                    </option>-->
+<!--                                                </select>-->
+<!--                                            </td>-->
+<!--                                            <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>-->
+<!--                                        </tr>-->
+<!--                                    </t>-->
+<!--                                </t>-->
+<!--                                <t t-if="aspirant_team and aspirant_team.employer_team_member_ids">-->
+<!--                                    <t t-foreach="aspirant_team.employer_team_member_ids" t-as="member_id">-->
+<!--                                        <tr class="ac-row-data-list">-->
+<!--                                            <td style="padding-right: 10px;">Email</td>-->
+<!--                                            <td>-->
+<!--                                                <input type="text" t-att-id="member_id.id" t-att-name="member_id.id"-->
+<!--                                                       class="form-control"-->
+<!--                                                       t-att-value="member_id.email"-->
+<!--                                                       t-att-readonly="'1' if member_id.user_type == 'Admin' else False"/>-->
+<!--                                            </td>-->
+<!--                                            <td>-->
+<!--                                                <input type="text" t-att-name="member_id.user_type"-->
+<!--                                                       t-att-value="member_id.user_type"-->
+<!--                                                       class="form-control user_type"-->
+<!--                                                       t-if="member_id.user_type == 'Admin'" readonly="1"/>-->
+<!--                                                <select t-att-name="member_id.user_type" class="form-control user_type"-->
+<!--                                                        t-if="member_id.user_type != 'Admin'">-->
+<!--                                                    <option t-att-value="member_id.user_type" selected="selected">-->
+<!--                                                        <t t-esc="member_id.user_type"/>-->
+<!--                                                    </option>-->
+<!--                                                </select>-->
+<!--                                            </td>-->
+<!--                                            <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>-->
+<!--                                        </tr>-->
+<!--                                    </t>-->
+<!--                                </t>-->
+<!--                                <tr class="custom_tr ac-row-data-list hide">-->
+<!--                                    <td style="padding-right: 10px;">Email</td>-->
+<!--                                    <td>-->
+<!--                                        <input type="email" name="email" class="form-control team_email"/>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <select name="user_type" class="form-control user_type">-->
+<!--                                            <option value=""></option>-->
+<!--                                            <option value="Leader">Leader</option>-->
+<!--                                            <option value="Member">Member</option>-->
+<!--                                            <option value="Mentor">Mentor</option>-->
+<!--                                            <option value="Brand Ambassador">Brand Ambassador</option>-->
+<!--                                        </select>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <input type="hidden" name="competition_year" class="competition_year"-->
+<!--                                               t-att-value="snr_aspirants.cfo_competition_year"/>-->
+<!--                                        <input type="text" name="member_name" placeholder="Name"-->
+<!--                                               class="form-control team_member_name" style="display:none;"/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                    <div id="remove_document_modal" class="modal fade" role="dialog">-->
+<!--                        <div class="modal-dialog">-->
+<!--                            &lt;!&ndash; Modal content&ndash;&gt;-->
+<!--                            <div class="modal-content">-->
+<!--                                <div class="modal-header">-->
+<!--                                    <button type="button" class="close" data-dismiss="modal"></button>-->
+<!--                                    <h4 class="modal-title">Warning!!!</h4>-->
+<!--                                </div>-->
+<!--                                <div class="modal-body">-->
+<!--                                    <input type="hidden" name="attachment_id" id="attachment_id" value=""/>-->
+<!--                                    <p>Are you sure..?</p>-->
+<!--                                </div>-->
+<!--                                <div class="modal-footer">-->
+<!--                                    <button type="button" class="btn btn-danger remove_attachment">Remove</button>-->
+<!--                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-12" style="padding-left:61px;">-->
+<!--                        <table style="width:50%;">-->
+<!--                            <th style="width:310px;padding-top: 16px;">-->
+<!--                                <h3 style="background-color: red;">Submit CFO Report</h3>-->
+<!--                                Please upload a PDF and a DOC version of the report in the section provide on the right.-->
+<!--                            </th>-->
+<!--                            <tbody>-->
+<!--                                <tr style=" border-style: solid;">-->
+<!--                                    <t t-set="document_new_id" t-value="0"/>-->
+<!--                                    <td style=" border-right: solid;">-->
+<!--                                        CFO Report(PDF)-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <t t-if="aspirant_team.document_ids">-->
+<!--                                            <t t-foreach="aspirant_team.document_ids" t-as="document_id">-->
+<!--                                                <t t-if="document_id.datas_fname.split('.')[1]=='pdf'">-->
+<!--                                                    <t t-esc="document_id.datas_fname"/>-->
+<!--                                                    <input type="hidden" name="pdf_db" accept="application/pdf"-->
+<!--                                                           t-att-value="document_id.id"/>-->
+<!--                                                    <t t-set="document_new_id" t-value="document_id.id"/>-->
+<!--                                                </t>-->
+
+<!--                                            </t>-->
+<!--                                        </t>-->
+<!--                                        <t t-if="not document_new_id">-->
+<!--                                            <input type="file" name="pdf" class="file_uploaded" accept="application/pdf"-->
+<!--                                                   required="1"/>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <button class="btn btn-danger remove_document" t-att-id="document_new_id">-->
+<!--                                            Remove-->
+<!--                                        </button>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr style=" border-style: solid;">-->
+<!--                                    <t t-set="document_new_doc" t-value="0"/>-->
+<!--                                    <td style="border-right:solid;">-->
+<!--                                        CFO Report(DOC)-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <t t-if="aspirant_team.document_ids">-->
+<!--                                            <t t-foreach="aspirant_team.document_ids" t-as="document_id">-->
+<!--                                                <t t-if="document_id.datas_fname.split('.')[1] in ['doc','docx']">-->
+<!--                                                    <t t-esc="document_id.datas_fname"/>-->
+<!--                                                    <input type="hidden" name="doc_db" accept="application/doc"-->
+<!--                                                           t-att-value="document_id.id"/>-->
+<!--                                                    <t t-set="document_new_doc" t-value="document_id.id"/>-->
+<!--                                                </t>-->
+<!--                                            </t>-->
+<!--                                        </t>-->
+<!--                                        <t t-if="not document_new_doc">-->
+<!--                                            <input type="file" name="doc" class="file_uploaded_doc"-->
+<!--                                                   accept="application/doc" required="1"/>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <button class="btn btn-danger remove_document" t-att-id="document_new_doc">-->
+<!--                                            Remove-->
+<!--                                        </button>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <table style="width:78%;">-->
+<!--                            <th style="padding-left: 60px;">-->
+<!--                                <h3>Brand Ambassador Mentor Confirmation</h3>-->
+<!--                                Kindly confirm your Brand Ambassador and Mnetor.The existing for your team are listed-->
+<!--                                below-->
+<!--                                should either of them changed,enter the email address of the new one and click the-->
+<!--                                invite button to invite them-->
+<!--                                to your team.if details listed below are correct,kindly click the confirm button.-->
+<!--                            </th>-->
+
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Modal confirm member&ndash;&gt;-->
+<!--                    <div id="upload_file_popup" class="modal fade" role="dialog">-->
+<!--                        <div class="modal-dialog">-->
+<!--                            &lt;!&ndash; Modal content&ndash;&gt;-->
+<!--                            <div class="modal-content">-->
+<!--                                <div class="modal-header">-->
+<!--                                    <button type="button" class="close" data-dismiss="modal"></button>-->
+<!--                                    <h4 class="modal-title">Warning!!</h4>-->
+<!--                                </div>-->
+<!--                                <div class="modal-body">-->
+<!--                                    <p>Please Upload PDF and DOC Files First!!!!!</p>-->
+<!--                                </div>-->
+<!--                                <div class="modal-footer">-->
+<!--                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Modal confirm Report&ndash;&gt;-->
+<!--                    <div id="submit_file_report" class="modal fade" role="dialog">-->
+<!--                        <div class="modal-dialog">-->
+<!--                            &lt;!&ndash; Modal content&ndash;&gt;-->
+<!--                            <div class="modal-content">-->
+<!--                                <div class="modal-header">-->
+<!--                                    <button type="button" class="close" data-dismiss="modal"></button>-->
+<!--                                    <h4 class="modal-title">Success!!</h4>-->
+<!--                                </div>-->
+<!--                                <div class="modal-body">-->
+<!--                                    <p>Successfully Uploaded..........</p>-->
+<!--                                </div>-->
+<!--                                <div class="modal-footer">-->
+<!--                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-15">-->
+<!--                        <table style="width:100%;" id="report_table">-->
+<!--                            <tbody>-->
+<!--                                <t t-if="aspirant_team and aspirant_team.mentor_id">-->
+<!--                                    <tr class="ac-row-data-list">-->
+<!--                                        <td style="padding-left: 14px;">Email</td>-->
+<!--                                        <td>-->
+<!--                                            <input type="text" name="email" class="form-control"-->
+<!--                                                   t-att-value="aspirant_team.mentor_id.email_1"/>-->
+<!--                                        </td>-->
+<!--                                        <td>-->
+<!--                                            <input type="hidden" name="team_id" t-att-value='aspirant_team.id'/>-->
+<!--                                            <input type="hidden" name="competition_year" class="competition_year"-->
+<!--                                                   t-att-value="snr_aspirants.cfo_competition_year"/>-->
+<!--                                            <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"-->
+<!--                                                   t-att-id="snr_aspirants.id"/>-->
+<!--                                            <select name="user_type" class="form-control user_type">-->
+<!--                                                <option value="Mentor" selected="1">Mentor</option>-->
+<!--                                            </select>-->
+<!--                                        </td>-->
+<!--                                        <td t-if="not aspirant_team.acknowledge_cfo_report">-->
+<!--                                            <button id="confirm_member_mentor" value="Confirm"-->
+<!--                                                    class="btn btn-success confirm_mentor">Confirm-->
+<!--                                            </button>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </t>-->
+<!--                                <t t-if="aspirant_team and aspirant_team.brand_amb_id">-->
+<!--                                    <tr class="ac-row-data-list">-->
+
+<!--                                        <td>Email</td>-->
+<!--                                        <td>-->
+<!--                                            <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"/>-->
+<!--                                            <input type="text" name="email" class="form-control"-->
+<!--                                                   t-att-value="aspirant_team.brand_amb_id.email_1"/>-->
+<!--                                        </td>-->
+<!--                                        <td>-->
+<!--                                            <input type="hidden" name="team_id" t-att-value='aspirant_team.id'/>-->
+<!--                                            <input type="hidden" name="competition_year" class="competition_year"-->
+<!--                                                   t-att-value="snr_aspirants.cfo_competition_year"/>-->
+<!--                                            <input type="hidden" name="snr_aspirants" t-att-value="snr_aspirants.id"-->
+<!--                                                   t-att-id="snr_aspirants.id"/>-->
+<!--                                            <select name="user_type" class="form-control user_type">-->
+<!--                                                <option value="Brand Ambassador" selected="1">Brand Ambassador-->
+<!--                                                </option>-->
+<!--                                            </select>-->
+<!--                                        </td>-->
+<!--                                        <td t-if="not aspirant_team.acknowledge_cfo_report">-->
+<!--                                            <button type="submit" id="confirm_member_mentor1" value="Confirm"-->
+<!--                                                    class="btn btn-success confirm_member">Confirm-->
+<!--                                            </button>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </t>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <table style="width:78%;">-->
+<!--                            <th style="padding-left: 60px;">-->
+<!--                                <h3 style="background-color: red;">Competition Rules</h3>-->
+<!--                                <hr/>-->
+<!--                            </th>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="loader_report_final" style="display:none;-->
+<!--                                                                position: fixed;-->
+<!--                                                                width: 100%;-->
+<!--                                                                height: 100vh;-->
+<!--                                                                top: 0;-->
+<!--                                                                left: 0;-->
+<!--                                                                background: rgba(0,0,0,0.1);-->
+<!--                                                                text-align: center;-->
+<!--                                                                cursor: not-allowed;-->
+<!--                                                            ">-->
+<!--                            <img src="https://easypay.axisbank.co.in/nimages/loading.gif"-->
+<!--                                 style="position: relative;margin-top:10%;"/>-->
+<!--                        </div>-->
+<!--                        <table style="width:78%;">-->
+<!--                            <h5>-->
+<!--                                <p>All Aspirant,Partner and associates of <b>THE CFO</b> Case Study Competition and its-->
+<!--                                    related contests(THE CFO Junior),-->
+<!--                                    <span>(The CFO Brand Ambassadors Award and)</span>-->
+<!--                                    <span>The CFO Social Media Award</span>-->
+<!--                                    are inter-alia bound by the spirit and rules coverd in the following section of the-->
+<!--                                    Competition Rule-->
+<!--                                </p>-->
+<!--                            </h5>-->
+<!--                            <tbody>-->
+<!--                                <li style="padding-left: 69px;">Section 1: About the Competitions</li>-->
+<!--                                <li style="padding-left: 69px;">Section 2: Participant,team eligibility and-->
+<!--                                    registration-->
+<!--                                </li>-->
+<!--                                <li style="padding-left: 69px;">Section 3: Competition format stages</li>-->
+<!--                                <li style="padding-left: 69px;">Section 4: Penlties and non Compliance</li>-->
+<!--                                <li style="padding-left: 69px;">Section 5: Intellectual Property</li>-->
+<!--                                <li style="padding-left: 69px;">Section 6: Consent and release</li>-->
+<!--                                <li style="padding-left: 69px;">Section 7: Disclaimers</li>-->
+<!--                                <li style="padding-left: 69px;">Section 8: Official prize, prize transfer or-->
+<!--                                    substitution-->
+<!--                                </li>-->
+<!--                                <li style="padding-left: 69px;">Section 9: Applicable laws and jursiducation</li>-->
+<!--                                <li style="padding-left: 69px;">Section 10:Adjudication and outcomes</li>-->
+<!--                                <br/>-->
+<!--                                <br/>-->
+<!--                                <p>-->
+<!--                                    In as much as compliance to THE CFO (and CFO junior) case Study Competition/s Rules-->
+<!--                                    Was Competition/s Rules was completed during the registration process-->
+<!--                                    and update of your bio.in the spirit of the competition and for this submission-->
+<!--                                    process of your report.you agree to be bound by-->
+<!--                                    the detailed rules downloadable in pdf version at:-->
+<!--                                </p>-->
+<!--                                <span style="padding-left: 35px;">-->
+<!--                                    <u>-->
+<!--                                        <a href="copetition_rule">Compeition Rule</a>-->
+<!--                                    </u>-->
+<!--                                    <br/>-->
+<!--                                    <br/>-->
+<!--                                </span>-->
+<!--                                <span style="padding-left: 35px;" class="acknowledge">-->
+<!--                                    <input type="checkbox" id="acknowledge_id" value="acknowledge" required="1">I-->
+<!--                                        aknowledge that the report is entirly the work of my team and-->
+<!--                                        that it does not incorporate the intellectual property of any other party.-->
+<!--                                        <br/>-->
+<!--                                    </input>-->
+<!--                                </span>-->
+<!--                                <br/>-->
+<!--                                <br/>-->
+<!--                                <span style="padding-left: 35px;" class="confirm_report">-->
+<!--                                    <button type="submit" id="confirm_report" value="Confirm"-->
+<!--                                            style="border-color: red;">-->
+<!--                                        <font style="color: red;">SUBMIT CFO REPORT</font>-->
+<!--                                    </button>-->
+<!--                                </span>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </t>-->
+<!--        </template>-->
         <template id="cfo_senior_academic_institution">
            <div class="row oe_structure">
                 <div class="col-md-12 oe_structure"/>

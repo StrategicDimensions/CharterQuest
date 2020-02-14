@@ -4130,7 +4130,7 @@
             ]]></field>
             <field name="user_signature" eval="False"/>
         </record>
-        <record id="email_template_for_success_report" model="mail.template">
+        <record id="email_template_for_success_report_snr" model="mail.template">
             <field name="name">Report Submit Successfully</field>
             <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
@@ -4250,6 +4250,130 @@
                         </table>
                    </body>
                 </html>    
+        ]]>
+            </field>
+        </record>
+
+        <record id="email_template_for_success_report_jnr" model="mail.template">
+            <field name="name">Report Submit Successfully</field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
+            <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
+            <field name="subject">CFO Report Submission Success</field>
+            <field name="model_id" ref="cfo_snr_jnr.model_cfo_jnr_aspirants"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="partner_to">${object.user_id.partner_id.id}</field>
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="body_html">
+                <![CDATA[
+            <html>
+                 <body style="margin: 0;padding: 0;min-width: 100%;background-color: #f5f7fa;">
+                     <!--<![endif]-->
+                     <center class="wrapper" style="display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;background-color: #f5f7fa;">
+                        <table class="header centered" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 630px;">
+                           <tbody>
+                              <tr>
+                                 <td style="padding: 0;vertical-align: top;">
+                                    <table class="preheader" style="border-collapse: collapse;border-spacing: 0;" align="right">
+                                       <tbody>
+                                          <tr>
+                                             <td class="emb-logo-padding-box" style="padding: 0;vertical-align: top;padding-bottom: 24px;padding-top: 24px;text-align: right;width: 280px;letter-spacing: 0.01em;line-height: 17px;font-weight: 400;font-size: 11px;">
+                                                <div class="spacer" style="font-size: 1px;line-height: 2px;width: 100%;"></div>
+                                                <div class="webversion" style='font-family: "Open Sans",sans-serif;color: #b9b9b9;'>No Images? <a style="text-decoration: none;letter-spacing: 0.03em;font-weight: 700;transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-e-jtkkdkk-l-i/">Click here</a></div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <table class="border" style="border-collapse: collapse;border-spacing: 0;font-size: 1px;line-height: 1px;background-color: #dddee1;Margin-left: auto;Margin-right: auto;" width="602">
+                           <tbody>
+                              <tr>
+                                 <td style="padding: 0;vertical-align: top;">&#8203;</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <table class="centered" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;">
+                           <tbody>
+                              <tr>
+                                 <td class="border" style="padding: 0;vertical-align: top;font-size: 1px;line-height: 1px;background-color: #dddee1;width: 1px;">&#8203;</td>
+                                 <td style="padding: 0;vertical-align: top;">
+                                    <table class="one-col" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 630px;background-color: #ffffff;table-layout: fixed;">
+                                       <tbody>
+                                          <tr>
+                                             <td class="column" style="padding: 0;vertical-align: top;text-align: left;">
+                                                <table class='contents'>
+                                                   <tr>
+                                                      <td>
+                                                         <div class="image" style='font-size: 12px;mso-line-height-rule: at-least;font-style: normal;font-weight: 400;Margin-bottom: 0;Margin-top: 0;font-family: "Open Sans",sans-serif;color: #60666d;' align="left">
+                                                            <img class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top" style="padding-left:5px;border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;margin-top:10px;" src="http://charterquest.co.za/web/static/src/img/cfo_cq_logo.jpg" alt="" width="300" height="100" />
+                                                         </div>
+                                                      </td>
+                                                      <td></td>
+                                                      <td>
+                                                         <div class="image" style='font-size: 12px;mso-line-height-rule: at-least;font-style: normal;font-weight: 400;Margin-bottom: 0;Margin-top: 0;font-family: "Open Sans",sans-serif;color: #60666d;' align="right">
+                                                            <img class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top" style="border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;padding-right:5px;margin-top:10px;margin-left: 181px;" src="http://charterquest.co.za/web/static/src/img/cfo.jpg" alt="" width="100" height="100" />
+                                                         </div>
+                                                      </td>
+                                                   </tr>
+                                                </table>
+                                                <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
+                                                   <tbody>
+                                                      <tr>
+                                                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
+                                                            <div class="divider" style="Margin-bottom: 24px;Margin-top: 0;">
+                                                               <div class="border" style="font-size: 1px;line-height: 1px;background-color: #dddee1;"></div>
+                                                            </div>
+                                                         </td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                                <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
+                                                   <tbody>
+                                                      <tr>
+                                                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
+                                                            <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+                                                            <table cellspacing="0" cellpadding="0" style="width:600px;border-collapse:collapse;background:inherit;color:inherit">
+                                                                <tbody><tr>
+                                                                    <td valign="center" width="200" style="padding:10px 10px 10px 5px;font-size: 12px">
+
+                                                                    </td>
+                                                                </tr></tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+                                                         <center><p>Dear ${object.user_id.name},</p><center>
+                                                            <p>We Thank you for participating in <b>"The CFO Junior Case Study Competition."</b></p>
+                                                            <br/>
+                                                            <center><p>Please note your report for</p></center>
+                                                            <p>${object.aspirant_id.ref_name} has been Successfully submitted.</p>
+                                                            <br/>
+                                                            <center><font color="red"><u>So, What next?</u></font></center>
+                                                            <br/>
+                                                            <p>Annoucement of winners:June 13 Follow us on social media for all updated</p>
+                                                            <div class="links emb-web-links" style="line-height: 26px;Margin-bottom: 26px;mso-line-height-rule: at-least;">
+			                                                   <a style="transition: opacity 0.2s ease-in;color: #ff0000;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-y/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i8.createsend1.com/static/eb/master/03-fresh/imgf/facebook-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-j/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i9.createsend1.com/static/eb/master/03-fresh/imgf/twitter-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-t/"><img style="border:
+			                                                      0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i3.createsend1.com/static/eb/master/03-fresh/imgf/website-sf.png" width="29" height="26"/></a>
+			                                                </div>
+                                                        </div>
+                                                         </td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                                <div class="column-bottom" style="font-size: 32px;line-height: 32px;transition-timing-function: cubic-bezier(0, 0, 0.2, 1);transition-duration: 150ms;transition-property: all;"></div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </td>
+                                 <td class="border" style="padding: 0;vertical-align: top;font-size: 1px;line-height: 1px;background-color: #dddee1;width: 1px;">&#8203;</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                   </body>
+                </html>
         ]]>
             </field>
         </record>
@@ -4377,6 +4501,131 @@
         ]]>
             </field>
         </record>
+
+        <record id="email_template_for_success_report_jnr_highschool" model="mail.template">
+            <field name="name">Report Submit Successfully</field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
+            <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
+            <field name="subject">CFO Report Submission Success</field>
+            <field name="model_id" ref="cfo_snr_jnr.model_academic_institution_jnr"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="partner_to">${object.user_id.partner_id.id}</field>
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="body_html">
+                <![CDATA[
+            <html>
+                 <body style="margin: 0;padding: 0;min-width: 100%;background-color: #f5f7fa;">
+                     <!--<![endif]-->
+                     <center class="wrapper" style="display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;background-color: #f5f7fa;">
+                        <table class="header centered" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 630px;">
+                           <tbody>
+                              <tr>
+                                 <td style="padding: 0;vertical-align: top;">
+                                    <table class="preheader" style="border-collapse: collapse;border-spacing: 0;" align="right">
+                                       <tbody>
+                                          <tr>
+                                             <td class="emb-logo-padding-box" style="padding: 0;vertical-align: top;padding-bottom: 24px;padding-top: 24px;text-align: right;width: 280px;letter-spacing: 0.01em;line-height: 17px;font-weight: 400;font-size: 11px;">
+                                                <div class="spacer" style="font-size: 1px;line-height: 2px;width: 100%;"></div>
+                                                <div class="webversion" style='font-family: "Open Sans",sans-serif;color: #b9b9b9;'>No Images? <a style="text-decoration: none;letter-spacing: 0.03em;font-weight: 700;transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-e-jtkkdkk-l-i/">Click here</a></div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <table class="border" style="border-collapse: collapse;border-spacing: 0;font-size: 1px;line-height: 1px;background-color: #dddee1;Margin-left: auto;Margin-right: auto;" width="602">
+                           <tbody>
+                              <tr>
+                                 <td style="padding: 0;vertical-align: top;">&#8203;</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <table class="centered" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;">
+                           <tbody>
+                              <tr>
+                                 <td class="border" style="padding: 0;vertical-align: top;font-size: 1px;line-height: 1px;background-color: #dddee1;width: 1px;">&#8203;</td>
+                                 <td style="padding: 0;vertical-align: top;">
+                                    <table class="one-col" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 630px;background-color: #ffffff;table-layout: fixed;">
+                                       <tbody>
+                                          <tr>
+                                             <td class="column" style="padding: 0;vertical-align: top;text-align: left;">
+                                                <table class='contents'>
+                                                   <tr>
+                                                      <td>
+                                                         <div class="image" style='font-size: 12px;mso-line-height-rule: at-least;font-style: normal;font-weight: 400;Margin-bottom: 0;Margin-top: 0;font-family: "Open Sans",sans-serif;color: #60666d;' align="left">
+                                                            <img class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top" style="padding-left:5px;border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;margin-top:10px;" src="http://charterquest.co.za/web/static/src/img/cfo_cq_logo.jpg" alt="" width="300" height="100" />
+                                                         </div>
+                                                      </td>
+                                                      <td></td>
+                                                      <td>
+                                                         <div class="image" style='font-size: 12px;mso-line-height-rule: at-least;font-style: normal;font-weight: 400;Margin-bottom: 0;Margin-top: 0;font-family: "Open Sans",sans-serif;color: #60666d;' align="right">
+                                                            <img class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top" style="border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;padding-right:5px;margin-top:10px;margin-left: 181px;" src="http://charterquest.co.za/web/static/src/img/cfo.jpg" alt="" width="100" height="100" />
+                                                         </div>
+                                                      </td>
+                                                   </tr>
+                                                </table>
+                                                <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
+                                                   <tbody>
+                                                      <tr>
+                                                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
+                                                            <div class="divider" style="Margin-bottom: 24px;Margin-top: 0;">
+                                                               <div class="border" style="font-size: 1px;line-height: 1px;background-color: #dddee1;"></div>
+                                                            </div>
+                                                         </td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                                <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
+                                                   <tbody>
+                                                      <tr>
+                                                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
+                                                            <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+                                                            <table cellspacing="0" cellpadding="0" style="width:600px;border-collapse:collapse;background:inherit;color:inherit">
+                                                                <tbody><tr>
+                                                                    <td valign="center" width="200" style="padding:10px 10px 10px 5px;font-size: 12px">
+
+                                                                    </td>
+                                                                </tr></tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+                                                         <center><p>Dear ${object.user_id.name},</p><center>
+                                                            <p>We Thank you for participating in <b>"The CFO Junior Case Study Competition."</b></p>
+                                                            <br/>
+                                                            <center><p>Please note your report for</p></center>
+                                                            <p>${object.team_id.ref_name} has been Successfully submitted.</p>
+                                                            <br/>
+                                                            <center><font color="red"><u>So, What next?</u></font></center>
+                                                            <br/>
+                                                            <p>Annoucement of winners:June 13 Follow us on social media for all updated</p>
+                                                            <div class="links emb-web-links" style="line-height: 26px;Margin-bottom: 26px;mso-line-height-rule: at-least;">
+                                                               <a style="transition: opacity 0.2s ease-in;color: #ff0000;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-y/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i8.createsend1.com/static/eb/master/03-fresh/imgf/facebook-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-j/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i9.createsend1.com/static/eb/master/03-fresh/imgf/twitter-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-t/"><img style="border:
+                                                                  0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i3.createsend1.com/static/eb/master/03-fresh/imgf/website-sf.png" width="29" height="26"/></a>
+                                                            </div>
+                                                        </div>
+                                                         </td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                                <div class="column-bottom" style="font-size: 32px;line-height: 32px;transition-timing-function: cubic-bezier(0, 0, 0.2, 1);transition-duration: 150ms;transition-property: all;"></div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </td>
+                                 <td class="border" style="padding: 0;vertical-align: top;font-size: 1px;line-height: 1px;background-color: #dddee1;width: 1px;">&#8203;</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                   </body>
+                </html>
+        ]]>
+            </field>
+        </record>
+
         <record id="email_template_for_success_report_employer" model="mail.template">
             <field name="name">Report Submit Successfully</field>
             <field name="email_from">thecfo@charterquest.co.za</field>
@@ -4500,7 +4749,7 @@
         ]]>
             </field>
         </record>
-        <record id="email_template_for_success_report_mentor" model="mail.template">
+        <record id="email_template_for_success_report_mentor_snr" model="mail.template">
             <field name="name">Report Submit Successfully</field>
             <field name="email_from">thecfo@charterquest.co.za</field>
             <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
@@ -4623,7 +4872,132 @@
         ]]>
             </field>
         </record>
-        <record id="email_template_for_success_report_ambassador"
+
+        <record id="email_template_for_success_report_mentor_jnr" model="mail.template">
+            <field name="name">Report Submit Successfully</field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
+            <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
+            <field name="subject">CFO Report Submission Success</field>
+            <field name="model_id" ref="cfo_snr_jnr.model_mentors_jnr"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="partner_to">${object.user_id.partner_id.id}</field>
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="body_html">
+                <![CDATA[
+            <html>
+                 <body style="margin: 0;padding: 0;min-width: 100%;background-color: #f5f7fa;">
+                     <!--<![endif]-->
+                     <center class="wrapper" style="display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;background-color: #f5f7fa;">
+                        <table class="header centered" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 630px;">
+                           <tbody>
+                              <tr>
+                                 <td style="padding: 0;vertical-align: top;">
+                                    <table class="preheader" style="border-collapse: collapse;border-spacing: 0;" align="right">
+                                       <tbody>
+                                          <tr>
+                                             <td class="emb-logo-padding-box" style="padding: 0;vertical-align: top;padding-bottom: 24px;padding-top: 24px;text-align: right;width: 280px;letter-spacing: 0.01em;line-height: 17px;font-weight: 400;font-size: 11px;">
+                                                <div class="spacer" style="font-size: 1px;line-height: 2px;width: 100%;"></div>
+                                                <div class="webversion" style='font-family: "Open Sans",sans-serif;color: #b9b9b9;'>No Images? <a style="text-decoration: none;letter-spacing: 0.03em;font-weight: 700;transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-e-jtkkdkk-l-i/">Click here</a></div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <table class="border" style="border-collapse: collapse;border-spacing: 0;font-size: 1px;line-height: 1px;background-color: #dddee1;Margin-left: auto;Margin-right: auto;" width="602">
+                           <tbody>
+                              <tr>
+                                 <td style="padding: 0;vertical-align: top;">&#8203;</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <table class="centered" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;">
+                           <tbody>
+                              <tr>
+                                 <td class="border" style="padding: 0;vertical-align: top;font-size: 1px;line-height: 1px;background-color: #dddee1;width: 1px;">&#8203;</td>
+                                 <td style="padding: 0;vertical-align: top;">
+                                    <table class="one-col" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 630px;background-color: #ffffff;table-layout: fixed;">
+                                       <tbody>
+                                          <tr>
+                                             <td class="column" style="padding: 0;vertical-align: top;text-align: left;">
+                                                <table class='contents'>
+                                                   <tr>
+                                                      <td>
+                                                         <div class="image" style='font-size: 12px;mso-line-height-rule: at-least;font-style: normal;font-weight: 400;Margin-bottom: 0;Margin-top: 0;font-family: "Open Sans",sans-serif;color: #60666d;' align="left">
+                                                            <img class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top" style="padding-left:5px;border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;margin-top:10px;" src="http://charterquest.co.za/web/static/src/img/cfo_cq_logo.jpg" alt="" width="300" height="100" />
+                                                         </div>
+                                                      </td>
+                                                      <td></td>
+                                                      <td>
+                                                         <div class="image" style='font-size: 12px;mso-line-height-rule: at-least;font-style: normal;font-weight: 400;Margin-bottom: 0;Margin-top: 0;font-family: "Open Sans",sans-serif;color: #60666d;' align="right">
+                                                            <img class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top" style="border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;padding-right:5px;margin-top:10px;margin-left: 181px;" src="http://charterquest.co.za/web/static/src/img/cfo.jpg" alt="" width="100" height="100" />
+                                                         </div>
+                                                      </td>
+                                                   </tr>
+                                                </table>
+                                                <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
+                                                   <tbody>
+                                                      <tr>
+                                                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
+                                                            <div class="divider" style="Margin-bottom: 24px;Margin-top: 0;">
+                                                               <div class="border" style="font-size: 1px;line-height: 1px;background-color: #dddee1;"></div>
+                                                            </div>
+                                                         </td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                                <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
+                                                   <tbody>
+                                                      <tr>
+                                                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
+                                                            <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+                                                            <table cellspacing="0" cellpadding="0" style="width:600px;border-collapse:collapse;background:inherit;color:inherit">
+                                                                <tbody><tr>
+                                                                    <td valign="center" width="200" style="padding:10px 10px 10px 5px;font-size: 12px">
+
+                                                                    </td>
+                                                                </tr></tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+                                                         <center><p>Dear ${object.user_id.name},</p><center>
+                                                            <p>We Thank you for participating in <b>"The CFO Junior Case Study Competition."</b></p>
+                                                            <br/>
+                                                            <center><p>Please note your report for</p></center>
+                                                            <p>${(ctx.get('team_name')) or '' | safe} has been Successfully submitted.</p>
+                                                            <br/>
+                                                            <center><font color="red"><u>So, What next?</u></font></center>
+                                                            <br/>
+                                                            <p>Annoucement of winners:June 13 Follow us on social media for all updated</p>
+                                                            <div class="links emb-web-links" style="line-height: 26px;Margin-bottom: 26px;mso-line-height-rule: at-least;">
+                                                               <a style="transition: opacity 0.2s ease-in;color: #ff0000;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-y/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i8.createsend1.com/static/eb/master/03-fresh/imgf/facebook-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-j/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i9.createsend1.com/static/eb/master/03-fresh/imgf/twitter-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-t/"><img style="border:
+                                                                  0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i3.createsend1.com/static/eb/master/03-fresh/imgf/website-sf.png" width="29" height="26"/></a>
+                                                            </div>
+                                                        </div>
+                                                         </td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                                <div class="column-bottom" style="font-size: 32px;line-height: 32px;transition-timing-function: cubic-bezier(0, 0, 0.2, 1);transition-duration: 150ms;transition-property: all;"></div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </td>
+                                 <td class="border" style="padding: 0;vertical-align: top;font-size: 1px;line-height: 1px;background-color: #dddee1;width: 1px;">&#8203;</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                   </body>
+                </html>
+        ]]>
+            </field>
+        </record>
+
+        <record id="email_template_for_success_report_ambassador_snr"
                 model="mail.template">
             <field name="name">Report Submit Successfully</field>
             <field name="email_from">thecfo@charterquest.co.za</field>
@@ -4744,6 +5118,131 @@
                         </table>
                    </body>
                 </html>    
+        ]]>
+            </field>
+        </record>
+
+        <record id="email_template_for_success_report_ambassador_jnr"
+                model="mail.template">
+            <field name="name">Report Submit Successfully</field>
+            <field name="email_from">thecfo@charterquest.co.za</field>
+            <field name="email_to">${(ctx.get('email_to')) or '' | safe}</field>
+            <field name="email_cc">thecfo@charterquest.co.za</field>
+            <field name="subject">CFO Report Submission Success</field>
+            <field name="model_id" ref="cfo_snr_jnr.model_brand_ambassador_jnr"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="partner_to">${object.user_id.partner_id.id}</field>
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="body_html">
+                <![CDATA[
+            <html>
+                 <body style="margin: 0;padding: 0;min-width: 100%;background-color: #f5f7fa;">
+                     <!--<![endif]-->
+                     <center class="wrapper" style="display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;background-color: #f5f7fa;">
+                        <table class="header centered" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 630px;">
+                           <tbody>
+                              <tr>
+                                 <td style="padding: 0;vertical-align: top;">
+                                    <table class="preheader" style="border-collapse: collapse;border-spacing: 0;" align="right">
+                                       <tbody>
+                                          <tr>
+                                             <td class="emb-logo-padding-box" style="padding: 0;vertical-align: top;padding-bottom: 24px;padding-top: 24px;text-align: right;width: 280px;letter-spacing: 0.01em;line-height: 17px;font-weight: 400;font-size: 11px;">
+                                                <div class="spacer" style="font-size: 1px;line-height: 2px;width: 100%;"></div>
+                                                <div class="webversion" style='font-family: "Open Sans",sans-serif;color: #b9b9b9;'>No Images? <a style="text-decoration: none;letter-spacing: 0.03em;font-weight: 700;transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-e-jtkkdkk-l-i/">Click here</a></div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <table class="border" style="border-collapse: collapse;border-spacing: 0;font-size: 1px;line-height: 1px;background-color: #dddee1;Margin-left: auto;Margin-right: auto;" width="602">
+                           <tbody>
+                              <tr>
+                                 <td style="padding: 0;vertical-align: top;">&#8203;</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <table class="centered" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;">
+                           <tbody>
+                              <tr>
+                                 <td class="border" style="padding: 0;vertical-align: top;font-size: 1px;line-height: 1px;background-color: #dddee1;width: 1px;">&#8203;</td>
+                                 <td style="padding: 0;vertical-align: top;">
+                                    <table class="one-col" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 630px;background-color: #ffffff;table-layout: fixed;">
+                                       <tbody>
+                                          <tr>
+                                             <td class="column" style="padding: 0;vertical-align: top;text-align: left;">
+                                                <table class='contents'>
+                                                   <tr>
+                                                      <td>
+                                                         <div class="image" style='font-size: 12px;mso-line-height-rule: at-least;font-style: normal;font-weight: 400;Margin-bottom: 0;Margin-top: 0;font-family: "Open Sans",sans-serif;color: #60666d;' align="left">
+                                                            <img class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top" style="padding-left:5px;border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;margin-top:10px;" src="http://charterquest.co.za/web/static/src/img/cfo_cq_logo.jpg" alt="" width="300" height="100" />
+                                                         </div>
+                                                      </td>
+                                                      <td></td>
+                                                      <td>
+                                                         <div class="image" style='font-size: 12px;mso-line-height-rule: at-least;font-style: normal;font-weight: 400;Margin-bottom: 0;Margin-top: 0;font-family: "Open Sans",sans-serif;color: #60666d;' align="right">
+                                                            <img class="gnd-corner-image gnd-corner-image-center gnd-corner-image-top" style="border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 800px;padding-right:5px;margin-top:10px;margin-left: 181px;" src="http://charterquest.co.za/web/static/src/img/cfo.jpg" alt="" width="100" height="100" />
+                                                         </div>
+                                                      </td>
+                                                   </tr>
+                                                </table>
+                                                <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
+                                                   <tbody>
+                                                      <tr>
+                                                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
+                                                            <div class="divider" style="Margin-bottom: 24px;Margin-top: 0;">
+                                                               <div class="border" style="font-size: 1px;line-height: 1px;background-color: #dddee1;"></div>
+                                                            </div>
+                                                         </td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                                <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
+                                                   <tbody>
+                                                      <tr>
+                                                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
+                                                            <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+                                                            <table cellspacing="0" cellpadding="0" style="width:600px;border-collapse:collapse;background:inherit;color:inherit">
+                                                                <tbody><tr>
+                                                                    <td valign="center" width="200" style="padding:10px 10px 10px 5px;font-size: 12px">
+
+                                                                    </td>
+                                                                </tr></tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+                                                         <center><p>Dear ${object.user_id.name},</p><center>
+                                                            <p>We Thank you for participating in <b>"The CFO Junior Case Study Competition."</b></p>
+                                                            <br/>
+                                                            <center><p>Please note your report for</p></center>
+                                                            <p>${(ctx.get('team_name')) or '' | safe} has been Successfully submitted.</p>
+                                                            <br/>
+                                                            <center><font color="red"><u>So, What next?</u></font></center>
+                                                            <br/>
+                                                            <p>Annoucement of winners:June 13 Follow us on social media for all updated</p>
+                                                            <div class="links emb-web-links" style="line-height: 26px;Margin-bottom: 26px;mso-line-height-rule: at-least;">
+                                                               <a style="transition: opacity 0.2s ease-in;color: #ff0000;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-y/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i8.createsend1.com/static/eb/master/03-fresh/imgf/facebook-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-j/"><img style="border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i9.createsend1.com/static/eb/master/03-fresh/imgf/twitter-sf.png" width="29" height="26"/></a><a style="transition: opacity 0.2s ease-in;color: #b9b9b9;" href="http://subscriptions.touchbasepro.com/t/d-l-jtkkdkk-l-t/"><img style="border:
+                                                                  0;-ms-interpolation-mode: bicubic;vertical-align: middle;" src="https://i3.createsend1.com/static/eb/master/03-fresh/imgf/website-sf.png" width="29" height="26"/></a>
+                                                            </div>
+                                                        </div>
+                                                         </td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                                <div class="column-bottom" style="font-size: 32px;line-height: 32px;transition-timing-function: cubic-bezier(0, 0, 0.2, 1);transition-duration: 150ms;transition-property: all;"></div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </td>
+                                 <td class="border" style="padding: 0;vertical-align: top;font-size: 1px;line-height: 1px;background-color: #dddee1;width: 1px;">&#8203;</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                   </body>
+                </html>
         ]]>
             </field>
         </record>

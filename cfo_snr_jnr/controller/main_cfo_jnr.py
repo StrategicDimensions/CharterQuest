@@ -1352,6 +1352,52 @@ class CfoHomeJnr(web.Home):
     @http.route('/cfo_jnr_report_form', type='http', auth='public', website=True)
     def cfo_snr_report_form(self, **post):
         team_id = request.env['cfo.team.jnr'].sudo().search([('id', '=', post.get('aspirant_team'))])
+        template = request.env.ref('cfo_snr_jnr.email_template_for_success_report_jnr', raise_if_not_found=False)
+        template_mentor = request.env.ref('cfo_snr_jnr.email_template_for_success_report_mentor_jnr',
+                                          raise_if_not_found=False)
+        template_amb = request.env.ref('cfo_snr_jnr.email_template_for_success_report_ambassador_jnr',
+                                       raise_if_not_found=False)
+
+        if team_id and team_id.mentor_id and template_mentor:
+            template_mentor.sudo().with_context(
+                team_name=team_id.ref_name,
+                email_to=team_id.mentor_id.email_1
+            ).send_mail(team_id.mentor_id.id, force_send=True)
+
+        if team_id and team_id.brand_amb_id and template_amb:
+            template_amb.sudo().with_context(
+                team_name=team_id.ref_name,
+                email_to=team_id.brand_amb_id.email_1
+            ).send_mail(team_id.brand_amb_id.id, force_send=True)
+
+        for aspirant_member in team_id.aspirant_team_member_ids:
+            if template:
+                template.sudo().with_context(
+                    team_name=team_id.name,
+                    email_to=aspirant_member.related_user_id.email_1
+                ).send_mail(aspirant_member.related_user_id.id, force_send=True)
+
+            team_id.acknowledge_cfo_report = True
+            team_id.cfo_report_submission_date = datetime.datetime.now()
+
+        for highschool_member in team_id.highschool_team_member_ids:
+            template = request.env.ref('cfo_snr_jnr.email_template_for_success_report', raise_if_not_found=False)
+            template_highschool = request.env.ref('cfo_snr_jnr.email_template_for_success_report_jnr_highschool',
+                                                raise_if_not_found=False)
+
+            if template_highschool and highschool_member.related_user_id:
+                template_highschool.sudo().with_context(
+                    team_name=team_id.name,
+                    email_to=highschool_member.related_user_id.email_1
+                ).send_mail(highschool_member.related_user_id.id, force_send=True)
+
+            if template and highschool_member.related_user_aspirant_id:
+                template.sudo().with_context(
+                    team_name=team_id.name,
+                    email_to=highschool_member.related_user_aspirant_id.email_1
+                ).send_mail(highschool_member.related_user_aspirant_id.id, force_send=True)
+
+
         team_id.acknowledge_cfo_report = True
         team_id.cfo_report_submission_date = datetime.datetime.now()
         if (post.get('pdf') or post.get('doc')):
