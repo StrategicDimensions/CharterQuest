@@ -1266,7 +1266,7 @@ class CfoHome(web.Home):
                             team_id=team_snr_id.id,
                             team_name=team_snr_id.name,
                             cfo_report_deadline_date=team_snr_id.cfo_report_deadline_date,
-                            email_to=member_id.related_user_aspirant_id.email_1,
+                            # email_to=member_id.related_user_aspirant_id.email_1,
                         ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
 
                     template_acadamic = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr_acadamic',
@@ -1277,7 +1277,7 @@ class CfoHome(web.Home):
                             team_id=team_snr_id.id,
                             team_name=team_snr_id.name,
                             cfo_report_deadline_date=team_snr_id.cfo_report_deadline_date,
-                            email_to=member_id.related_user_id.email_1,
+                            # email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
                 return True
 
@@ -1302,7 +1302,7 @@ class CfoHome(web.Home):
                         template.sudo().with_context(
                             team_id=team_jnr_id.id,
                             team_name=team_jnr_id.name,
-                            email_to=member_id.related_user_aspirant_id.email_1,
+                            # email_to=member_id.related_user_aspirant_id.email_1,
                         ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
 
                     template_highschool = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_jnr_acadamic',raise_if_not_found=False)
@@ -1310,7 +1310,7 @@ class CfoHome(web.Home):
                         template_highschool.sudo().with_context(
                             team_id=team_jnr_id.id,
                             team_name=team_jnr_id.name,
-                            email_to=member_id.related_user_id.email_1,
+                            # email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
                 return True
 
@@ -1324,7 +1324,7 @@ class CfoHome(web.Home):
                             team_id=team_snr_id.id,
                             team_name=team_snr_id.name,
                             cfo_report_deadline_date=team_snr_id.cfo_report_deadline_date,
-                            email_to=member_id.related_user_aspirant_id.email_1,
+                            # email_to=member_id.related_user_aspirant_id.email_1,
                         ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
 
                     template_employer = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr_employer',
@@ -1335,7 +1335,7 @@ class CfoHome(web.Home):
                             team_id=team_snr_id.id,
                             team_name=team_snr_id.name,
                             cfo_report_deadline_date=team_snr_id.cfo_report_deadline_date,
-                            email_to=member_id.related_user_id.email_1,
+                            # email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
                 return True
 
@@ -1763,20 +1763,20 @@ class CfoHome(web.Home):
         if team_id and team_id.mentor_id and template_mentor:
             template_mentor.sudo().with_context(
                 team_name=team_id.ref_name,
-                email_to=team_id.mentor_id.email_1
+                # email_to=team_id.mentor_id.email_1
             ).send_mail(team_id.mentor_id.id, force_send=True)
 
         if team_id and team_id.brand_amb_id and template_amb:
             template_amb.sudo().with_context(
                 team_name=team_id.ref_name,
-                email_to=team_id.brand_amb_id.email_1
+                # email_to=team_id.brand_amb_id.email_1
             ).send_mail(team_id.brand_amb_id.id, force_send=True)
 
         for aspirant_member in team_id.aspirant_team_member_ids:
             if template:
                 template.sudo().with_context(
                     team_name=team_id.name,
-                    email_to=aspirant_member.related_user_id.email_1
+                    # email_to=aspirant_member.related_user_id.email_1
                 ).send_mail(aspirant_member.related_user_id.id, force_send=True)
 
             team_id.acknowledge_cfo_report = True
