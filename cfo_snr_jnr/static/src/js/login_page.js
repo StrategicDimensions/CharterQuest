@@ -169,7 +169,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                         $(document).find('.loader_report').css("display", "none");
                     }
                     else {
-                        window.location.replace("/cfo_snr_report_new?aspirant_id=" + aspirant_id + "&team_id=" + team_id);
+                        window.location.replace("/cfo_snr_report?aspirant_id=" + aspirant_id + "&team_id=" + team_id);
                         $(document).find('.loader_report').css("display", "none");
                     }
                 });
@@ -196,7 +196,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                         $(document).find('.loader_report_jnr_school').css("display", "none");
                     }
                     else {
-                        window.location.replace("/cfo_jnr_report_new?aspirant_id=" + aspirant_id + "&team_id=" + team_id);
+                        window.location.replace("/cfo_jnr_report?aspirant_id=" + aspirant_id + "&team_id=" + team_id);
                         $(document).find('.loader_report_jnr_school').css("display", "none");
                     }
                 });
