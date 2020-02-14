@@ -3544,7 +3544,7 @@
                                             </tr>
                                         </t>
                                     </t>
-                                    <t t-if="aspirant_team and aspirant_team.academic_team_member_ids">-->
+                                    <t t-if="aspirant_team and aspirant_team.academic_team_member_ids">
                                         <t t-foreach="aspirant_team.academic_team_member_ids" t-as="member_id">
                                             <tr>
                                                 <td>Email</td>
