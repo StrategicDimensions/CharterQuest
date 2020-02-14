@@ -1347,9 +1347,9 @@ class CfoHomeJnr(web.Home):
          if post.get('aspirant_id') and post.get('team_id'):
              aspirant_id = request.env['cfo.jnr.aspirants'].sudo().search([('id', '=', post.get('aspirant_id'))])
              team_id = request.env['cfo.team.jnr'].sudo().search([('id', '=', post.get('team_id'))])    
-             return  request.render('cfo_snr_jnr.cfo_jnr_report', {'jnr_aspirants':aspirant_id, 'aspirant_team':team_id})
+             return  request.render('cfo_snr_jnr.cfo_jnr_report_new', {'jnr_aspirants':aspirant_id, 'aspirant_team':team_id})
          
-    @http.route('/cfo_jnr_report_form', type='http', auth='public', website=True)
+    @http.route('/cfo_jnr_report_form_new', type='http', auth='public', website=True)
     def cfo_snr_report_form(self, **post):
         team_id = request.env['cfo.team.jnr'].sudo().search([('id', '=', post.get('aspirant_team'))])
         template = request.env.ref('cfo_snr_jnr.email_template_for_success_report_jnr', raise_if_not_found=False)

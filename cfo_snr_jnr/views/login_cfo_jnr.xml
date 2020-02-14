@@ -4150,10 +4150,10 @@
                 </div>
             </div>
         </template>
-        <template id="cfo_jnr_report">
+        <template id="cfo_jnr_report_new">
             <t t-call="web.login_layout">
                 <div class="container">
-                    <form action="/cfo_jnr_report_form" method="post" id="report_form" enctype="multipart/form-data">
+                    <form action="/cfo_jnr_report_form_new" method="post" id="report_form" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-4 mt16">
                                 <table>
