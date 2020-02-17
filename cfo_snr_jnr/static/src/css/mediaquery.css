@@ -1287,28 +1287,32 @@ margin-left: 243px !important;
 .blog_class{
     height:205px !important;
 }
+.user_type{
+    width: 80px !important;
+}
 .admin_email{
-    width: 250px !important;
+    width: 200px !important;
     margin-left: 10px !important;
 }
 .team_email{
-    width: 200px !important;
+    width: 100px !important;
     margin-left: 10px !important;
 }
 .team_member_name{
-    width: 200px !important;
+    width: 85px !important;
     margin-left: 10px !important;
 }
 .create_member{
-    width: 180px !important;
-    margin-left: -220px !important;
+    width: 150px !important;
+    margin-left: -290px !important;
     margin-top: 100px !important;
     padding: 6px 0px !important;
 }
 .table-remove-school{
-    width: 180px !important;
+    width: 130px !important;
     margin-top: 100px !important;
     padding: 6px 0px !important;
+    margin-left: -140px !important;
 }
 }
 
