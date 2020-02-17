@@ -1,5 +1,5 @@
 <odoo>
     <record id="group_debit_order" model="res.groups">
-        <field name="name"/>
+        <field name="name">Debit Order</field>
     </record>
 </odoo>

@@ -1287,6 +1287,29 @@ margin-left: 243px !important;
 .blog_class{
     height:205px !important;
 }
+.admin_email{
+    width: 250px !important;
+    margin-left: 10px !important;
+}
+.team_email{
+    width: 200px !important;
+    margin-left: 10px !important;
+}
+.team_member_name{
+    width: 200px !important;
+    margin-left: 10px !important;
+}
+.create_member{
+    width: 180px !important;
+    margin-left: -220px !important;
+    margin-top: 100px !important;
+    padding: 6px 0px !important;
+}
+.table-remove-school{
+    width: 180px !important;
+    margin-top: 100px !important;
+    padding: 6px 0px !important;
+}
 }
 
 /* form report end */
