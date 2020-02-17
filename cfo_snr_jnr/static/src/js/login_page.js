@@ -1,6 +1,20 @@
 odoo.define('cfo_snr_jnr.login_page', function (require) {
     document.write("<script src='https://www.google.com/recaptcha/api.js'></script>");
     var ajax = require('web.ajax');
+
+//    var media = "screen and (max-width: 460px)",
+//    placeholderShort = "Email",
+//    placeholderLong = "Enter Email Address";
+//    $(window).resize(function(){
+//        if(window.matchMedia(media).matches) {
+//        consol.log("\n\n\n\nn\=====placeholder===",placeholderLong);
+//          $('.team_email').attr('placeholder', placeholderLong);
+//        }
+//        else {
+//          $('.team_email').attr('placeholder', placeholderShort);
+//        }
+//    });
+
     $(document).ready(function () {
 	(function () {
 		var options = {
