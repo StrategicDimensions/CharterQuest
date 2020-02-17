@@ -30,3 +30,7 @@ access_cfo_jnr_member_add,access_cfo_jnr_member_add,model_cfo_jnr_member_add,,1,
 access_cfo_snr_member_add,access_cfo_snr_member_add,model_cfo_snr_member_add,,1,1,1,1
 
 access_user_stock_transfer,access_user_stock_transfer,model_stock_picking,cfo_snr_jnr.stock_transfer,1,0,0,0
+access_cfo_time_table,access_cfo_time_table,model_cfo_time_table,cfo_snr_jnr.cfo_time_table,1,1,1,1
+access_cfo_course_code,access_cfo_course_code,model_cfo_course_code,cfo_snr_jnr.cfo_time_table,1,1,1,1
+access_cfo_course_option,access_cfo_course_option,model_cfo_course_option,cfo_snr_jnr.cfo_time_table,1,1,1,1
+access_cfo_semester_information,access_cfo_semester_information,model_cfo_semester_information,cfo_snr_jnr.cfo_time_table,1,1,1,1
