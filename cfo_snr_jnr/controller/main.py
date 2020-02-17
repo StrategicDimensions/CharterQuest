@@ -211,7 +211,7 @@ class CfoHome(web.Home):
     def get_member_types(self, val):
         if val:
             list = [conf.cfo_member_type for conf in
-                    request.env['cfo.configuration'].search([('cfo_competitions', '=', int(val))])]
+                    request.env['cfo.configuration'].search([('cfo_competitions', '=', int(val))],order="id desc")]
             return list
 
     @http.route(['/CFO/senior/signup'], type='http', auth="public", website=True)

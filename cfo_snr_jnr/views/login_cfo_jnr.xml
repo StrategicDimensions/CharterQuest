@@ -1528,7 +1528,7 @@
                                                                   value="Leader"/>
                                                         </td>
                                                         <td>
-                                                           <input type="text" name="email" class="form-control team_email" required="1" placeholder="Enter Email Address"/>
+                                                           <input type="text" name="email" class="form-control team_email" required="1" placeholder="Email Address"/>
                                                         </td>
                                                         <td>
                                                            <input type="text" name="member_name" placeholder="Name"
@@ -1646,7 +1646,7 @@
                                             </td>
                                             <td>
                                                 <input type="text" name="email" class="form-control team_email"
-                                                    placeholder="Enter Email Address" />
+                                                    placeholder="Email Address" />
                                             </td>
                                             <td>
                                                 <input type="text" name="member_name" placeholder="Name"
@@ -1769,7 +1769,7 @@
                                                 </td>
                                                 <td>
                                                     <input type="text" name="email" class="form-control team_email"
-                                                        placeholder="Enter Email Address" />
+                                                        placeholder="Email Address" />
                                                 </td>
                                                 <td>
                                                     <input type="text" name="member_name" placeholder="Name"
@@ -1886,7 +1886,7 @@
                                                 </td>
                                                 <td>
                                                     <input type="text" name="email" class="form-control team_email"
-                                                        placeholder="Enter Email Address" />
+                                                        placeholder="Email Address" />
                                                 </td>
                                                 <td>
                                                     <input type="text" name="member_name" placeholder="Enter Name"
@@ -2875,7 +2875,7 @@
                                                                   value="Leader"/>
                                                         </td>
                                                         <td>
-                                                           <input type="text" name="email" class="form-control team_email" required="1" placeholder="Enter Email Address"/>
+                                                           <input type="text" name="email" class="form-control team_email" required="1" placeholder="Email Address"/>
                                                         </td>
                                                         <td>
                                                            <input type="text" name="member_name" placeholder="Name"
@@ -2989,7 +2989,7 @@
                                                 value="Member"/>
                                       </td>
                                       <td>
-                                          <input type="text" name="email" class="form-control team_email" placeholder="Enter Email Address"/>
+                                          <input type="text" name="email" class="form-control team_email" placeholder="Email Address"/>
                                       </td>
                                       <td>
                                          <input type="text" name="member_name" placeholder="Name"
@@ -3102,7 +3102,7 @@
                                                 value="Mentor"/>
                                       </td>
                                       <td>
-                                          <input type="text" name="email" class="form-control team_email" placeholder="Enter Email Address"/>
+                                          <input type="text" name="email" class="form-control team_email" placeholder="Email Address"/>
                                       </td>
                                       <td>
                                          <input type="text" name="member_name" placeholder="Name"
@@ -3210,7 +3210,7 @@
                                                 value="Brand Ambassador"/>
                                       </td>
                                       <td>
-                                          <input type="text" name="email" class="form-control team_email" placeholder="Enter Email Address"/>                                      </td>
+                                          <input type="text" name="email" class="form-control team_email" placeholder="Email Address"/>                                      </td>
                                       <td>
                                          <input type="text" name="member_name" placeholder="Enter Name"
                                                  class="form-control team_member_name" style="display:none;"/>

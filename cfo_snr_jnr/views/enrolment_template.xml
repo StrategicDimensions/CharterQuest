@@ -1795,10 +1795,10 @@
                                                 <tr id="emailadd" style="background-color: azure; display:none;"
                                                     t-attf-class="studentnumberprocess emailAddr"
                                                     t-attf-data-id="discount_#{each_discount.id}">
-                                                    <td>Enter Email Address *</td>
+                                                    <td>Email Address *</td>
                                                     <td>
                                                         <input type="text" name="EmailAddress" id="EmailAddress"
-                                                               placeholder="Enter Email Address"/>
+                                                               placeholder="Email Address"/>
                                                         <input t-attf-data-id="discount_#{each_discount.id}"
                                                                id="btn_email"
                                                                type="button" name="button" class="btn" value="Search"/>

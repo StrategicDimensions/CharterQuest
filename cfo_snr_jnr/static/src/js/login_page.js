@@ -4,7 +4,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
 
 //    var media = "screen and (max-width: 460px)",
 //    placeholderShort = "Email",
-//    placeholderLong = "Enter Email Address";
+//    placeholderLong = "Email Address";
 //    $(window).resize(function(){
 //        if(window.matchMedia(media).matches) {
 //        consol.log("\n\n\n\nn\=====placeholder===",placeholderLong);
