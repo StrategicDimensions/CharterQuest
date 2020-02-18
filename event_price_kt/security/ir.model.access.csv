@@ -26,3 +26,4 @@ access_attendance_sheet_report,access_attendance_sheet_report,model_attendance_s
 access_pc_exam_type,access_pc_exam_type,model_pc_exam_type,,1,1,1,1
 access_cancel_reason,access_cancel_reason,model_cancel_reason,,1,1,1,1
 access_event_class_attendance,access_event_class_attendance,model_event_class_attendance,,1,1,1,1
+access_product_product,product.product,model_product_product,base.in_group_9,1,1,1,1
