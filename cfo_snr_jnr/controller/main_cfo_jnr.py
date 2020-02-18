@@ -1385,14 +1385,14 @@ class CfoHomeJnr(web.Home):
             template_highschool = request.env.ref('cfo_snr_jnr.email_template_for_success_report_jnr_highschool',
                                                 raise_if_not_found=False)
 
-            if template and highschool_member.related_user_id:
-                template.sudo().with_context(
+            if template_highschool and highschool_member.related_user_id:
+                template_highschool.sudo().with_context(
                     team_name=team_id.name,
                     # email_to=highschool_member.related_user_id.email_1
                 ).send_mail(highschool_member.related_user_id.id, force_send=True)
 
-            if template_highschool and highschool_member.related_user_aspirant_id:
-                template_highschool.sudo().with_context(
+            if template and highschool_member.related_user_aspirant_id:
+                template.sudo().with_context(
                     team_name=team_id.name,
                     # email_to=highschool_member.related_user_aspirant_id.email_1
                 ).send_mail(highschool_member.related_user_aspirant_id.id, force_send=True)
