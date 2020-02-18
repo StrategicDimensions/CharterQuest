@@ -2010,10 +2010,11 @@
                     </div>
                    <div class="col-md-3">
                       <form action="/cfo_junior" method="GET">
-                       <input type="hidden" name="cfo_team" value="True"/>
-                          <button type="submit" class="btn btn-primary">View Teams &amp; Submissions</button>
+                       <t t-if="jnr_high_school and jnr_high_school.updated_academic_bio and jnr_high_school.cfo_team_ids">
+                           <input type="hidden" name="cfo_team" value="True"/>
+                              <button type="submit" class="btn btn-primary">View Teams &amp; Submissions</button>
+                       </t>
                    </form>
-                     
                    </div>
                 </div>
                 <div class="row">
@@ -3323,8 +3324,10 @@
                     </div>
                     <div class="col-md-3">
                         <form action="/cfo_jenior" method="GET">
-                            <input type="hidden" name="cfo_team" value="True"/>
-                            <button type="submit" class="btn btn-primary">View Teams &amp; Submissions</button>
+                            <t t-if="jnr_mentors and jnr_mentors.updated_mentors_bio">
+                                <input type="hidden" name="cfo_team" value="True"/>
+                                <button type="submit" class="btn btn-primary">View Teams &amp; Submissions</button>
+                            </t>
                         </form>
                     </div>
                 </div>
@@ -3831,8 +3834,10 @@
                     </div>
                     <div class="col-md-3">
                         <form action="/cfo_junior" method="GET">
-                            <input type="hidden" name="cfo_team" value="True"/>
-                            <button type="submit" class="btn btn-primary">View Teams &amp; Submissions</button>
+                            <t t-if="jnr_brand_ambassador and jnr_brand_ambassador.updated_brand_amb_bio">
+                                <input type="hidden" name="cfo_team" value="True"/>
+                                <button type="submit" class="btn btn-primary">View Teams &amp; Submissions</button>
+                            </t>
                         </form>
                     </div>
                 </div>
