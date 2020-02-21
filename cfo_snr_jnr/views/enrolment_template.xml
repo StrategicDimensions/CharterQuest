@@ -1190,7 +1190,7 @@
 
                                     <tr>
                                         <td>
-                                            <button id="free_quote_email" style="height:50px;width:300px;"
+                                            <button id="pc_exam_booking" style="height:50px;width:300px;"
                                                     class="my-btn btn-large btn-danger enr_btn_3" type="button">​ ​
                                                 <b style="color:white;font-weight: 900;">BOOK PC EXAM</b>
                                             </button>

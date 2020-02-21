@@ -1,0 +1,1314 @@
+<odoo>
+    <template id="header_pc_template" name="PC Exam Header">
+        <section class="cfo_snr_jnr_menu my_class" data-menu-title="new" data-menu-url="new"
+                 data-menu-icon="fa-angle-right">
+            <div class="container" style="margin: 0px;padding: 0px;">
+                <div class="row" style="margin-left:0px;">
+                    <a class="onlymobilebtn">
+                        <img src="/cfo_snr_jnr/static/src/img/blocks/drop_menu3.png" alt="menu-bar" width="45"
+                             height="45"/>
+                    </a>
+                    <div class="label_link_list row">
+                        <!--<div class="col-md-3">-->
+                        <!--<a href="#" t-attf-class="honsNav0 add_menu_side book #{'active' if page_name == 'book' else ''}" data-current-menu="book" id="custom">Book</a>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-3">-->
+                        <!--<a href="#" t-attf-class="honsNav0 add_menu_side campus #{'active' if page_name == 'campus' else ''}" data-current-menu="campus" id="custom">Campus</a>-->
+                        <!--</div>-->
+                        <div class="col-md-3">
+                            <a href="#"
+                               t-attf-class="honsNav0 add_menu_side campus #{'active' if page_name == 'campuse' else ''}"
+                               data-current-menu="campuse" id="custom">Campus
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#"
+                               t-attf-class="honsNav0 add_menu_side examtype #{'active' if page_name == 'examtype' else ''}"
+                               data-current-menu="examtype" id="custom">PC Exam Type
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#"
+                               t-attf-class="honsNav0 add_menu_side examsearch #{'active' if page_name == 'examsearch' else ''}"
+                               data-current-menu="examsearch" id="custom">Exam Dates &amp; Modules
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#"
+                               t-attf-class="honsNav0 add_menu_side studentstatus #{'active' if page_name == 'studentstatus' else ''}"
+                               data-current-menu="studentstatus" id="custom">Student Status
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#"
+                               t-attf-class="honsNav0 add_menu_side pricing #{'active' if page_name == 'pricing' else ''}"
+                               data-current-menu="pricing" id="custom">Pricing
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#"
+                               t-attf-class="honsNav0 add_menu_side registration #{'active' if page_name == 'registration' else ''}"
+                               data-current-menu="registration" id="custom">Registration
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#"
+                               t-attf-class="honsNav0 add_menu_side confirmation #{'active' if page_name == 'confirmation' else ''}"
+                               data-current-menu="confirmation" id="custom">Confirmation
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                                <a href="#"
+                                   t-attf-class="honsNav0 add_menu_side completion #{'active' if page_name == 'completion' else ''}"
+                                   data-current-menu="completion" id="custom">Completion
+                                </a>
+                            </div>
+                        <div style="margin-top:290px;" class="placeholders_enrolment_cfo">
+<!--                            <t t-if="page_name == 'course'">-->
+<!--                                <t t-set="course_placeholder_ids"-->
+<!--                                   t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'course_page')])"/>-->
+<!--                                <t t-if="course_placeholder_ids">-->
+<!--                                    <t t-foreach="course_placeholder_ids" t-as="course_placeholder">-->
+<!--                                        <t t-if="course_placeholder.is_placeholder and course_placeholder.placeholder">-->
+<!--                                            <div class="well well-sm" t-raw="course_placeholder.placeholder"-->
+<!--                                                 t-attf-style="background-color: #{course_placeholder.background_color};"/>-->
+<!--                                        </t>-->
+<!--                                        <t t-elif="not course_placeholder.is_placeholder and course_placeholder.image">-->
+<!--                                            <img t-att-src="'data:image/png;base64,'+to_text(course_placeholder.image)"-->
+<!--                                                 t-attf-style="height: #{course_placeholder.height}px; width: #{course_placeholder.width}px;"/>-->
+<!--                                        </t>-->
+<!--                                    </t>-->
+<!--                                </t>-->
+<!--                            </t>-->
+<!--                            <t t-if="page_name == 'fees'">-->
+<!--                                <t t-set="fees_placeholder_ids"-->
+<!--                                   t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'fees_page')])"/>-->
+<!--                                <t t-if="fees_placeholder_ids">-->
+<!--                                    <t t-foreach="fees_placeholder_ids" t-as="fees_placeholder">-->
+<!--                                        <t t-if="fees_placeholder.is_placeholder and fees_placeholder.placeholder">-->
+<!--                                            <div class="well well-sm" t-raw="fees_placeholder.placeholder"-->
+<!--                                                 t-attf-style="background-color: #{fees_placeholder.background_color};"/>-->
+<!--                                        </t>-->
+<!--                                        <t t-elif="not fees_placeholder.is_placeholder and fees_placeholder.image">-->
+<!--                                            <img t-att-src="'data:image/png;base64,'+to_text(fees_placeholder.image)"-->
+<!--                                                 t-attf-style="height: #{fees_placeholder.height}px; width: #{fees_placeholder.width}px;"/>-->
+<!--                                        </t>-->
+<!--                                    </t>-->
+<!--                                </t>-->
+<!--                            </t>-->
+<!--                            <t t-if="page_name == 'discounts'">-->
+<!--                                <t t-set="discount_placeholder_ids"-->
+<!--                                   t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'discount_page')])"/>-->
+<!--                                <t t-if="discount_placeholder_ids">-->
+<!--                                    <t t-foreach="discount_placeholder_ids" t-as="discount_placeholder">-->
+<!--                                        <t t-if="discount_placeholder.is_placeholder and discount_placeholder.placeholder">-->
+<!--                                            <div class="well well-sm" t-raw="discount_placeholder.placeholder"-->
+<!--                                                 t-attf-style="background-color: #{discount_placeholder.background_color};"/>-->
+<!--                                        </t>-->
+<!--                                        <t t-elif="not discount_placeholder.is_placeholder and discount_placeholder.image">-->
+<!--                                            <img t-att-src="'data:image/png;base64,'+to_text(discount_placeholder.image)"-->
+<!--                                                 t-attf-style="height: #{discount_placeholder.height}px; width: #{discount_placeholder.width}px;"/>-->
+<!--                                        </t>-->
+<!--                                    </t>-->
+<!--                                </t>-->
+<!--                            </t>-->
+<!--                            <t t-if="page_name == 'price'">-->
+<!--                                <t t-set="price_placeholder_ids"-->
+<!--                                   t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'price_page')])"/>-->
+<!--                                <t t-if="price_placeholder_ids">-->
+<!--                                    <t t-foreach="price_placeholder_ids" t-as="price_placeholder">-->
+<!--                                        <t t-if="price_placeholder.is_placeholder and price_placeholder.placeholder">-->
+<!--                                            <div class="well well-sm" t-raw="price_placeholder.placeholder"-->
+<!--                                                 t-attf-style="background-color: #{price_placeholder.background_color};"/>-->
+<!--                                        </t>-->
+<!--                                        <t t-elif="not price_placeholder.is_placeholder and price_placeholder.image">-->
+<!--                                            <img t-att-src="'data:image/png;base64,'+to_text(price_placeholder.image)"-->
+<!--                                                 t-attf-style="height: #{price_placeholder.height}px; width: #{price_placeholder.width}px;"/>-->
+<!--                                        </t>-->
+<!--                                    </t>-->
+<!--                                </t>-->
+<!--                            </t>-->
+<!--                            <t t-if="page_name == 'registration'">-->
+<!--                                <t t-set="registration_placeholder_ids"-->
+<!--                                   t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'registration_page')])"/>-->
+<!--                                <t t-if="registration_placeholder_ids">-->
+<!--                                    <t t-foreach="registration_placeholder_ids" t-as="registration_placeholder">-->
+<!--                                        <t t-if="registration_placeholder.is_placeholder and registration_placeholder.placeholder">-->
+<!--                                            <div class="well well-sm" t-raw="registration_placeholder.placeholder"-->
+<!--                                                 t-attf-style="background-color: #{registration_placeholder.background_color};"/>-->
+<!--                                        </t>-->
+<!--                                        <t t-elif="not registration_placeholder.is_placeholder and registration_placeholder.image">-->
+<!--                                            <img t-att-src="'data:image/png;base64,'+to_text(registration_placeholder.image)"-->
+<!--                                                 t-attf-style="height: #{registration_placeholder.height}px; width: #{registration_placeholder.width}px;"/>-->
+<!--                                        </t>-->
+<!--                                    </t>-->
+<!--                                </t>-->
+<!--                            </t>-->
+<!--                            <t t-if="page_name == 'payment'">-->
+<!--                                <t t-set="payment_placeholder_ids"-->
+<!--                                   t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'payment_page')])"/>-->
+<!--                                <t t-if="payment_placeholder_ids">-->
+<!--                                    <t t-foreach="payment_placeholder_ids" t-as="payment_placeholder">-->
+<!--                                        <t t-if="payment_placeholder.is_placeholder and payment_placeholder.placeholder">-->
+<!--                                            <div class="well well-sm" t-raw="payment_placeholder.placeholder"-->
+<!--                                                 t-attf-style="background-color: #{payment_placeholder.background_color};"/>-->
+<!--                                        </t>-->
+<!--                                        <t t-elif="not payment_placeholder.is_placeholder and payment_placeholder.image">-->
+<!--                                            <img t-att-src="'data:image/png;base64,'+to_text(payment_placeholder.image)"-->
+<!--                                                 t-attf-style="height: #{payment_placeholder.height}px; width: #{payment_placeholder.width}px;"/>-->
+<!--                                        </t>-->
+<!--                                    </t>-->
+<!--                                </t>-->
+<!--                            </t>-->
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="row site-identifier ci-red-bg" style="width: 84.5% !important;margin-top:10px;">
+
+                        <h3 class="o_default_snippet_text">PC Exams Portal</h3>
+                    </div>
+
+                    <div class="row menu-with-icon">
+                        <!--<a href="#" class="step-link">-->
+                        <!--<div t-attf-class="col-md-1 menu-icon book book_id #{'active' if page_name == 'book' else ''}" data-current-menu="book">-->
+                        <!--<ul class="breadcrumb-list-new">-->
+                        <!--<li class="step-done">-->
+                        <!--<div class="stop-rounding add-connector_after">-->
+                        <!--<span class="step-number">-->
+                        <!--<i class="fa fa-address-book" aria-hidden="true"> </i>-->
+                        <!--</span>-->
+                        <!--</div>-->
+                        <!--<p>Book</p>-->
+                        <!--</li>-->
+                        <!--</ul>-->
+                        <!--</div>-->
+                        <!--</a>-->
+
+                        <!--<a href="#" class="step-link">-->
+                        <!--<div id="campus_id_add" t-attf-class="col-md-1 menu-icon campus campus_id #{'active' if page_name == 'campus' else ''}" data-current-menu="campus">-->
+                        <!--<ul class="breadcrumb-list-new">-->
+                        <!--<li class="step-done">-->
+                        <!--<div class="stop-rounding add-connector add-connector_after">-->
+                        <!--<span class="step-number">-->
+                        <!--<i class="fa fa-address-book-o" aria-hidden="true"> </i>-->
+                        <!--</span>-->
+                        <!--</div>-->
+                        <!--<p>Campus</p>-->
+                        <!--</li>-->
+                        <!--</ul>-->
+                        <!--</div>-->
+                        <!--</a>-->
+
+                        <a href="#" class="step-link">
+                            <div t-attf-class="col-md-1 menu-icon campus #{'active' if page_name == 'campus' else ''}"
+                                 data-current-menu="campus">
+                                <ul class="breadcrumb-list-new">
+                                    <li class="step-done">
+                                        <div class="stop-rounding add-connector_after">
+                                            <span class="step-number">
+                                                <i class="fa fa-angle-right course_id" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                        <p>Campus</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+
+                        <a href="#" class="step-link">
+                            <div t-attf-class="col-md-1 menu-icon examtype #{'active' if page_name == 'examtype' else ''}"
+                                 data-current-menu="examtype">
+                                <ul class="breadcrumb-list-new">
+                                    <li class="step-done">
+                                        <div class="stop-rounding add-connector add-connector_after"
+                                             data-original-title="" title="">
+                                            <span class="step-number">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                        <p>PC Exam Type</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+
+                        <t t-if="self_or_cmp != 'cmp_sponosored'">
+                            <a href="#" class="step-link">
+                                <div t-attf-class="col-md-1 menu-icon examsearch #{'active' if page_name == 'examsearch' else ''}"
+                                     data-current-menu="examsearch">
+                                    <ul class="breadcrumb-list-new">
+                                        <li class="step-done">
+                                            <div class="stop-rounding add-connector add-connector_after"
+                                                 data-original-title="" title="">
+                                                <span class="step-number">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                            <p>Exam Dates &amp; Modules</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </t>
+
+                        <a href="#" class="step-link">
+                            <div t-attf-class="col-md-1 menu-icon studentstatus #{'active' if page_name == 'studentstatus' else ''}"
+                                 data-current-menu="studentstatus">
+                                <ul class="breadcrumb-list-new">
+                                    <li class="step-done">
+                                        <div class="stop-rounding add-connector add-connector_after"
+                                             data-original-title="" title="">
+                                            <span class="step-number">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                        <p>Student Status</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+
+                        <a href="#" class="step-link">
+                            <div t-attf-class="col-md-1 menu-icon pricing #{'active' if page_name == 'pricing' else ''}"
+                                 data-current-menu="pricing">
+                                <ul class="breadcrumb-list-new">
+                                    <li class="step-done">
+                                            <div class="stop-rounding add-connector" data-original-title="" title="">
+                                                <span class="step-number">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        <p>Pricing</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+
+                        <a href="#" class="step-link">
+                            <div t-attf-class="col-md-1 menu-icon registration #{'active' if page_name == 'registration' else ''}"
+                                 data-current-menu="registration">
+                                <ul class="breadcrumb-list-new">
+                                    <li class="step-done">
+                                            <div class="stop-rounding add-connector" data-original-title="" title="">
+                                                <span class="step-number">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        <p>Registration</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+                        <a href="#" class="step-link">
+                            <div t-attf-class="col-md-1 menu-icon confirmation #{'active' if page_name == 'confirmation' else ''}"
+                                 data-current-menu="confirmation">
+                                <ul class="breadcrumb-list-new">
+                                    <li class="step-done">
+                                        <div class="stop-rounding add-connector" data-original-title="" title="">
+                                            <span class="step-number">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                        <p>Confirmation</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+                        <a href="#" class="step-link">
+                            <div t-attf-class="col-md-1 menu-icon completion #{'active' if page_name == 'completion' else ''}"
+                                 data-current-menu="completion">
+                                <ul class="breadcrumb-list-new">
+                                    <li class="step-done">
+                                        <div class="stop-rounding add-connector" data-original-title="" title="">
+                                            <span class="step-number">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                        <p>Completion</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="row menu-content" style="width: 80%;float: left;margin:0px;">
+                        <t t-raw="0"/>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="pc_exam_process_form" name="PC Exam Process">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_pc_template">
+            <div class="oe_structure"/>
+            <div class="container" style="margin:0px;padding:0px;">
+                <div style="margin-top:5px;">
+                    <div class="well" style="color: #000000;background-color: #ffe6e6;border-color: #ff8080;">
+                        <h3>Campus</h3>
+                        <t t-set="campus_ids"
+                           t-value="request.env['res.partner'].sudo().search([('is_campus','=', True)])"/>
+                        <t t-if="campus_ids">
+                            <t t-foreach="campus_ids" t-as="campus">
+                                <ul>
+                                    <li style="line-height: 20px;">
+                                        <b>
+                                            <span t-esc="campus.name"/>
+                                            (
+                                            <span t-esc="campus.street"/>,
+                                            <span t-esc="campus.street2"/>,
+                                            <span t-esc="campus.city"/>,
+                                            <span t-esc="campus.state_id.name"/>
+                                        )
+                                        </b>
+<!--                                        (-->
+<!--                                        <span t-esc="campus.street"/>&amp;nbsp;<span t-esc="campus.street2"/>&amp;nbsp;-->
+<!--                                        <span t-esc="campus.city"/>&amp;nbsp;-->
+<!--                                        <span t-esc="campus.state_id.name"/>-->
+<!--                                        )-->
+                                    </li>
+                                </ul>
+                            </t>
+                        </t>
+                    </div>
+                    <t t-set="after_campus_ids"
+                       t-value="request.env['enrolment.placeholders'].sudo().search([('page','=', 'after_campus')])"/>
+                    <t t-if="after_campus_ids">
+                        <t t-foreach="after_campus_ids" t-as="after_campus">
+                            <t t-if="after_campus.is_placeholder and after_campus.placeholder">
+                                <div class="well" t-raw="after_campus.placeholder"
+                                     t-attf-style="background-color: #{after_campus.background_color};"/>
+                            </t>
+                            <t t-elif="not after_campus.is_placeholder and after_campus.image">
+                                <img t-att-src="'data:image/png;base64,'+to_text(after_campus.image)"
+                                     style="height: 50px;width: 100px;"/>
+                            </t>
+                        </t>
+                    </t>
+                </div>
+                 <div style="margin-top:10px;">
+                        <p style="color:red;">
+                            <b>
+                                Please select the campus where you would like to take the PC Exam. The campus selection below only displays the campuses that are offering PC Exams currently.
+                            </b>
+                        </p>
+                    </div>
+                <div class="row" id="step-2">
+
+                    <form action="/reg" method="post"
+                          class="s_website_form form-horizontal container-fluid mt32"
+                          enctype="multipart/form-data" data-success_page="">
+
+                        <div class="form-group form-field o_website_form_custom" id="reg_campus">
+                            <div class="col-md-3 col-sm-4 text-right-not-xs">
+                                <label for="campus lbl_4" style="margin-left: 16px;" class="control-label">Select Campus
+                                </label>
+                            </div>
+                            <div class="col-md-7 col-sm-8" id="select_css_1">
+                                <t t-set="campus_ids"
+                                    t-value="request.env['res.partner'].sudo().search([('is_campus','=', True)])"/>
+                                <select id="select_pc_exam_campus" class="form-control o_website_form_input"
+                                        name="Select Campus"
+                                        required="true">
+                                    <option></option>
+                                    <t t-foreach="campus_ids" t-as="campus">
+                                        <option t-att-value="campus.id">
+                                            <t t-esc="campus.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                                <button class="btn btn-primary pull-right" type="submit">Next</button>
+                                <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                            </div>
+                        </div>
+                        <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                        <input class="form-field" name="page_name" value="examtype" type="hidden"/>
+                    </form>
+                </div>
+            </div>
+            <div class="oe_structure"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="pc_exam_type_process_form" name="PC Exam Process">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_pc_template">
+            <div class="oe_structure"/>
+            <div class="container" style="margin:0px;padding:0px;">
+                <div style="margin-top:5px;">
+                    <div class="well" style="color: #000000;background-color: #ffe6e6;border-color: #ff8080;">
+                        <h3>PC Exam Type</h3>
+                        <t t-set="examtype_ids"
+                           t-value="request.env['pc.exam.type'].sudo().search([])"/>
+                        <t t-if="examtype_ids">
+                            <t t-foreach="examtype_ids" t-as="examtype">
+                                <ul>
+                                    <li style="line-height: 20px;">
+                                        <b>
+                                            <span t-esc="examtype.name"/>
+                                        </b>
+                                        -
+                                    </li>
+                                </ul>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+                <div style="margin-top:10px;">
+                        <p style="color:red;">
+                            <b>
+                                Please select the PC Exam type that you would like to take. The Exam type selection below only displays the PC Exam types that are currently available.
+                            </b>
+                        </p>
+                    </div>
+                <div class="row" id="step-2">
+
+                    <form action="/pcexamsearch" method="post"
+                          class="s_website_form form-horizontal container-fluid mt32"
+                          enctype="multipart/form-data" data-success_page="">
+
+                        <div class="form-group form-field o_website_form_custom" id="reg_campus">
+                            <div class="col-md-3 col-sm-4 text-right-not-xs">
+                                <label for="campus lbl_4" style="margin-left: 16px;" class="control-label">Select PC Exam Type
+                                </label>
+                            </div>
+                            <div class="col-md-7 col-sm-8" id="select_css_1">
+                                <t t-set="examtype_ids"
+                                    t-value="request.env['pc.exam.type'].sudo().search([])"/>
+                                <select id="select_pc_exam_type" class="form-control o_website_form_input"
+                                        name="Select Exam Type"
+                                        required="true">
+                                    <option></option>
+                                    <t t-foreach="examtype_ids" t-as="examtype">
+                                        <option t-att-value="examtype.id">
+                                            <t t-esc="examtype.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                                <button class="btn btn-primary pull-right" type="submit">Next</button>
+                                <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                            </div>
+                        </div>
+                        <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                        <input class="form-field" name="page_name" value="examsearch" type="hidden"/>
+                    </form>
+                </div>
+            </div>
+            <div class="oe_structure"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="pc_exam_search_process_form" name="PC Exam Search Process">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_pc_template">
+            <div class="oe_structure"/>
+            <div class="container" style="margin:0px;padding:0px;">
+                <div style="margin-top:5px;">
+                    <div class="well" style="color: #000000;background-color: #ffe6e6;border-color: #ff8080;">
+                        <form class="s_website_form form-horizontal container-fluid">
+                        <div class="form-group form-field o_website_form_custom">
+                            <div class="col-md-3 col-sm-4 text-right-not-xs">
+                                <label class="control-label lbl_1" style="margin-left: 16px;">Level
+                                </label>
+                            </div>
+                            <div class="col-md-7 col-sm-8" id="select_css_1">
+                                <t t-set="level_ids"
+                                    t-value="request.env['event.qual'].sudo().search([])"/>
+                                    <select id="select_pc_exam_level" class="form-control o_website_form_input"
+                                            name="select_pc_exam_level"
+                                            required="true">
+                                        <option></option>
+                                        <t t-foreach="level_ids" t-as="level">
+                                            <option t-att-value="level.id">
+                                                <t t-esc="level.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-field o_website_form_custom">
+                            <div class="col-md-3 col-sm-4 text-right-not-xs">
+                                <label class="control-label lbl_2" style="margin-left: 16px;">Subject
+                                </label>
+                            </div>
+                            <div class="col-md-7 col-sm-8" id="select_css_1">
+                                <t t-set="subject_ids"
+                                    t-value="request.env['event.subject'].sudo().search([])"/>
+                                    <select id="select_pc_exam_subject" class="form-control o_website_form_input"
+                                            name="select_pc_exam_subject"
+                                            required="true">
+                                        <option></option>
+                                        <t t-foreach="subject_ids" t-as="subject">
+                                            <option t-att-value="subject.id">
+                                                <t t-esc="subject.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-field o_website_form_custom">
+                            <div class="col-md-3 col-sm-4 text-right-not-xs">
+                                <label class="control-label lbl_3" style="margin-left: 16px;">Date
+                                </label>
+                            </div>
+                            <div class="col-md-7 col-sm-8" id="select_css_1">
+                                <input type="text" id="datepicker" name="inputDate"
+                                                               class="form-control1"
+                                                               style="width: 177px;"
+                                                               placeholder="MM-DD-YY" required="True" readonly=""/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                                <button id="back_button" class="btn btn-primary" type="button">Back</button>
+                                <button class="btn btn-primary exam_date_validation exam_search" id="exam_search" type="submit">Next</button>
+                            </div>
+                        </div>
+                        <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                        <input class="form-field" name="page_name" value="searchresult" type="hidden"/>
+                    </form>
+                    </div>
+                </div>
+                <div class="row available_exam" style="display: none;width: 100% !important;margin-top:1px;margin-bottom:1px !important;">
+                    <h4 style="background-color: red; color:white">AVAILABLE EXAMS</h4>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr style="background-color: #C0C0C0;">
+                                <td>Subject Name</td>
+                                <td>Slot</td>
+                                <td>Date</td>
+                                <td>Seat Avail</td>
+                                <td>Price</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row selected_exam" style="display: none;width: 100% !important;margin-top:1px;margin-bottom:1px !important;">
+                    <h4 style="background-color: red; color:white">SELECTED EXAMS</h4>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr style="background-color: #C0C0C0;">
+                                <td>Subject Name</td>
+                                <td>Slot</td>
+                                <td>Date</td>
+                                <td>Seat Avail</td>
+                                <td>Price</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <input type="text" class="total-style pull-right" id="total_price" name="total_price" readonly=""/>
+                    <label class="control-label lbl_1 pull-right" style="margin-left: 16px;color:black !important;">Total:
+                    </label>
+                </div>
+                <div class="row term_condition" style="display: none;margin-top:5px !important;">
+                    <label class="control-label lbl_1" style="color:red !important;">OUR TERMS AND CONDITIONS:
+                    </label>
+                    <t t-set="term_and_condition_id"
+                                t-value="request.env['terms.conditions'].sudo().search([('type','=','PC Exams')])"/>
+                    <t t-if="term_and_condition_id">
+                        <div style="margin-top:5px !important;color:black !important;">
+                            <span id="term_condition" t-raw="term_and_condition_id.terms_condition"/>
+                        </div>
+                    </t>
+                    <div style="margin-top:5px !important;color:black !important;">
+                        <form action="/examsearch" method="GET">
+                        <label class="control-label lbl_1" style="color:red !important;">
+                            <input type="checkbox" id="requiredcheckbox" required="true" />I accept the Terms and Conditions
+                        </label>
+                        <button class="btn btn-primary" type="submit">Continue</button>
+                        <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                        <input class="form-field" name="page_name" value="studentstatus" type="hidden"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="oe_structure"/>
+            </t>
+        </t>
+    </template>
+
+     <template id="exam_process_form" name="Exam Process">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_pc_template">
+            <div class="oe_structure"/>
+            <div class="container" style="margin:0px;padding:0px;">
+                <div style="margin-top:5px;">
+                    <div class="well" style="color: #000000;background-color: #ffe6e6;border-color: #ff8080;">
+                        <h3>Are you a prior or current CharterQuest (CQ) student?</h3>
+                        <ul style="text-align: justify;">
+                            <li>Select <strong>‘’Yes’’</strong> if you have studied with CQ before or have booked/paid now/recently to study with CQ (NB. subject to dial-back email authentication)</li>
+                            <li>Select <strong>‘’No’’</strong> if you have never studied with CQ before and/or have NOT booked now/recently to study with CQ.</li>
+                            <li><strong>Please note</strong>: Once selected <strong>‘’Yes’’</strong> Our PC Exam team will communicate with you and confirm via email your Student status.</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="row" id="step-2">
+
+                    <form action="/pricing" method="post"
+                          class="s_website_form form-horizontal container-fluid mt32"
+                          enctype="multipart/form-data" data-success_page="">
+
+                        <div class="form-group form-field o_website_form_custom" id="reg_campus">
+                            <div class="col-md-3 col-sm-4 text-right-not-xs">
+                                <label for="campus lbl_4" style="margin-left: 16px;" class="control-label">Selection
+                                </label>
+                            </div>
+                            <div class="col-md-7 col-sm-8" id="select_css_1">
+                                <select class="form-control o_website_form_input"
+                                        name="selection" required="false">
+                                    <option value="Yes">YES</option>
+                                    <option value="No">NO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                                <button class="btn btn-primary pull-right" type="submit">Next</button>
+                                <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
+                            </div>
+                        </div>
+                        <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                        <input class="form-field" name="page_name" value="pricing" type="hidden"/>
+                    </form>
+                </div>
+            </div>
+            <div class="oe_structure"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="exam_pricing_form" name="PC Exam Price">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_pc_template">
+            <div class="oe_structure"/>
+            <h2 style="color:black;">Pricing</h2>
+                    <div class="table_price">
+                        <table class="table table-bordered" style="color:black;background-color:azure;">
+                            <t t-set="total_course_price" t-value="0"/>
+                            <thead>
+                                <tr style="background-color:red;">
+                                    <th>#</th>
+                                    <th>Module</th>
+                                    <th>Exam Date</th>
+                                    <th colspan="4">Pricing</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th style="width:10%;">Price</th>
+                                    <th style="width:10%;">Voucher Discount</th>
+                                    <th style="width:10%;">Total</th>
+                                    <th style="width:10%;"></th>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-danger" type="submit">Apply Voucher</button>
+                                    </td>
+                                </tr>
+<!--                                <t t-foreach="event_id" t-as="each_event">-->
+<!--                                    <t t-set="event_ticket_id"-->
+<!--                                       t-value="request.env['event.event.ticket'].sudo().search([('id', '=',int(each_event_value))])"/>-->
+<!--                                    <tr>-->
+<!--                                        <td>#</td>-->
+<!--                                        <td>-->
+<!--                                            <span t-esc="'%s - %s' % (event_ticket_id.product_id.name, event_ticket_id.event_id.name)"/>-->
+<!--                                        </td>-->
+<!--                                        <td>-->
+<!--                                            <span t-esc="event_ticket_id.price"-->
+<!--                                                  t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>-->
+<!--                                            <span/>-->
+<!--                                        </td>-->
+<!--                                        <td>-->
+<!--                                            <span t-esc="event_ticket_id.price"-->
+<!--                                                  t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>-->
+<!--                                        </td>-->
+<!--                                        <td></td>-->
+<!--                                        <t t-set="total_course_price"-->
+<!--                                           t-value="total_course_price + event_ticket_id.price"/>-->
+<!--                                    </tr>-->
+<!--                                </t>-->
+
+                                <tr>
+                                    <th>TOTAL</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>
+                                        <span class="" t-esc="total_course_price"
+                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                    </th>
+                                    <th>
+                                        <span t-esc="total_course_price"
+                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                    </th>
+                                    <th>
+                                        <span t-esc="total_course_price"
+                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                    </th>
+                                    <th></th>
+                                </tr>
+<!--                                <tr>-->
+<!--                                    <th>Discount</th>-->
+<!--                                    <td>-->
+<!--                                        <span t-esc="discount if discount else 0"/>-->
+<!--                                        % All Inclusive Discount (Subject to terms and conditions)-->
+<!--                                    </td>-->
+<!--                                    <td></td>-->
+<!--                                    <td></td>-->
+<!--                                    <t t-if="discount">-->
+<!--                                        <t t-set="discount_set_value" t-value="(total_course_price * discount)/100"/>-->
+<!--                                        <td>-->
+<!--                                            <b>-->
+<!--                                                <span t-esc="discount_set_value"-->
+<!--                                                      t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"-->
+<!--                                                      style="background-color: red; padding: 2px 4px; border-radius: 3px;"/>-->
+<!--                                            </b>-->
+<!--                                        </td>-->
+<!--                                    </t>-->
+<!--                                    <t t-if="not discount">-->
+<!--                                        <td>-->
+<!--                                            <b>-->
+<!--                                                <span t-esc="0.0"-->
+<!--                                                      t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"-->
+<!--                                                      style="background-color: red; padding: 2px 4px; border-radius: 3px;"/>-->
+<!--                                            </b>-->
+<!--                                        </td>-->
+<!--                                    </t>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <th>Grand Total</th>-->
+<!--                                    <td></td>-->
+<!--                                    <td></td>-->
+<!--                                    <td></td>-->
+<!--                                    <t t-if="discount">-->
+<!--                                        <t t-set="grand_total" t-value="total_course_price - discount_set_value"/>-->
+<!--                                    </t>-->
+<!--                                    <td>-->
+<!--                                        <b>-->
+<!--                                            <span id="grand_tot_val"-->
+<!--                                                  t-esc="grand_total if discount else total_course_price"-->
+<!--                                                  t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>-->
+<!--                                        </b>-->
+<!--                                    </td>-->
+<!--                                    <input type="hidden" value="grand_total if discount else total_course_price"-->
+<!--                                           name="grand_total_value"/>-->
+<!--                                </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <p style="color:red;">
+                            <b>
+                                If you already paid for your exams with your enrolment you should have received a voucher to book your exams. In the event that you paid your fees and does not have a voucher please click “Pay Vie EFT” and follow instructions in the email to be sent to you.
+                            </b>
+                        </p>
+                    </div>
+                    <center>
+                        <table>
+                            <tbody>
+                                <tr>
+
+                                    <td>
+                                        <form action="/exam_registration" method="post">
+                                        <input type="hidden" name="payment_type" value="creditcard"/>
+                                        <button id="btn_pay_via_credit_card" style="margin-top: 30px;"
+                                                class="btn btn-primary prc_tmp_1" name="button" type="submit"
+                                                value="Pay Via Credit Card">
+                                            <center class="prc_1">Pay Via Credit Card</center>
+                                        </button>
+                                            <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                                            <input class="form-field" name="page_name" value="registration" type="hidden"/>
+                                        </form>
+                                    </td>
+
+                                    <t t-if="btn_display">
+                                        <td></td>
+                                    </t>
+                                    <td>
+                                        <!--<h2 style="color:black;">OR</h2>-->
+                                    </td>
+                                    <td>
+                                        <form action="/exam_registration" method="POST">
+                                            <input type="hidden" name="payment_type" value="eft"/>
+                                        <button id="btn_pay_via_eft" style="margin-top: 30px;"
+                                                class="btn btn-primary prc_tmp_2"
+                                                name="button" type="submit" value="Pay Via EFT/Deposit">
+                                            <center class="prc_2">Pay Via EFT/Deposit</center>
+                                        </button>
+                                            <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                                            <input class="form-field" name="page_name" value="registration" type="hidden"/>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </center>
+            <div class="oe_structure"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="exam_registration_form" name="Exam Registration Process">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_pc_template">
+                <div class="oe_structure"/>
+                <div class="container" style="margin:0px;padding:0px;">
+                <div style="margin-top:5px;">
+                    <div class="well" style="color: #000000;background-color: #ffe6e6;border-color: #ff8080;">
+                        <h3>Personal Details</h3>
+                        <ul style="text-align: justify;margin-top: 1px;">
+                            <li>Please note that all * required information must be submitted to complete your PC Exam booking.</li>
+                            <li>Your information is confidential and protected under our <a target="blank_" href="https://charterquest.odoo.com/privacy-policy">Privacy Policy</a>.</li>
+                        </ul>
+                    </div>
+                </div>
+                </div>
+                <form action="/registerexam" class="form-horizontal-enroll" name="registrationform" method="post">
+                    <fieldset>
+                        <!--                        <div class="pmt_css_1">-->
+                        <center>
+                            <table class="table" style="color:black;">
+                                <input id="uuid" type="hidden" t-att-value="uuid" name='uuid'/>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputTitle">* Title</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <select name="inputTitle" class="requiredValue form-control1"
+                                                            id="inputTitle" required=""
+                                                            style="border-radius: 0px !important;width: 177px;">
+                                                        <t t-set="title"
+                                                           t-value="request.env['res.partner.title'].sudo().search([])"/>
+                                                        <t t-foreach="title" t-as="each_title">
+                                                            <option t-att-value="each_title.id">
+                                                                <span t-esc="each_title.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" id="exam_company" for="Company">Company
+                                                </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <input type="text" class="form-control1" name="Company"
+                                                           id="Company" placeholder="Company"/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="FirstName">* First Name</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                        <input type="text" name="FirstName" id="FirstName"
+                                                               placeholder="First Name"
+                                                               class="requiredValue form-control1 "
+                                                               style="width: 177px;"
+                                                               required="true"/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" id="vat_number" for="Vatno">VAT Number
+                                                </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <input type="text" class="form-control1" name="Vatno"
+                                                           id="Vatno"
+                                                           style="width: 177px;"
+                                                           placeholder="vat"/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="LastName">* Last Name</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                        <input type="text" name="LastName" id="LastName"
+                                                               placeholder="Last Name"
+                                                               style="width: 177px;"
+                                                               class="requiredValue form-control1"
+                                                               required=""/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="Street">* Address Street</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                        <input type="text" name="Street" id="Street"
+                                                               placeholder="Street" class="requiredValue form-control1" style="width: 177px;"
+                                                               required=""/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="DOB">* Date of Birth</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                        <input type="text" id="datepicker" name="DOB"
+                                                               class="form-control1"
+                                                               style="width: 177px;"
+                                                               placeholder="MM-DD-YY" required="" readonly=""/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="Street2">* Address Street</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                        <input type="text" name="Street2" id="Street2"
+                                                               placeholder=""
+                                                               style="width: 177px;"
+                                                               class="form-control1" required=""/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="ID_PassportNo.">* ID/Passport No.
+                                                </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                        <input type="text" name="ID_PassportNo."
+                                                               id="ID_PassportNo."
+                                                               placeholder="ID/Passport No."
+                                                               style="width: 177px;"
+                                                               class="requiredValue form-control1"
+                                                               required=""/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="City">* Address City</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                        <input type="text" name="City" id="City"
+                                                               placeholder="City" style="width: 177px;"
+                                                               class="requiredValue form-control1" required=""/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="ContactNumber">* Cell/Mobile
+                                                </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                        <input type="text" name="ContactNumber"
+                                                               id="ContactNumber"
+                                                               style="width: 177px;"
+                                                               placeholder="Contact Number"
+                                                               class="requiredValue form-control1"
+                                                               required=""/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputexamCountry">* Country</label>
+                                                <div class="css_reg_inp selectdiv" style="margin-left: 180px;">
+                                                    <t t-set="country"
+                                                       t-value="request.env['res.country'].sudo().search([('active', '=', true)])"/>
+                                                    <select name="exam_country_id" id="inputexamCountry"
+                                                            class="requiredValue form-control1" required="true"
+                                                            style="border-radius: 0px !important;width: 177px;">
+                                                        <t t-foreach="country" t-as="each_country">
+                                                            <option t-att-value="each_country.id"
+                                                                    t-att-selected="'selected' if each_country.name == 'South Africa' else False">
+                                                                <span t-esc="each_country.name"/>
+                                                            </option>
+                                                        </t>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="Email">* Email</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                        <input type="text" name="Email" id="Email"
+                                                               placeholder="Email" style="width: 177px;"
+                                                               class="requiredValue form-control1" required=""/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group country_class css_reg_div" >
+                                                <label class="control-label css_reg_lbl" for="inputexamState">* Province</label>
+                                                <div class="css_reg_inp selectdiv" style="margin-left: 180px;">
+                                                    <t t-set="states"
+                                                       t-value="request.env['res.country.state'].sudo().search([])"/>
+                                                    <select name="inputexamState" id="inputexamState"
+                                                            class="requiredValue form-control1 css_reg_inp"
+                                                            style="border-radius: 0px !important;width: 177px;" required="true">
+                                                        <t t-foreach="states" t-as="each_state">
+                                                            <option t-att-value="each_state.id"
+                                                                    t-att-data-country_id="each_state.country_id.id">
+                                                                <span t-esc="each_state.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputexamFax">Fax</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+
+                                                    <input type="text" name="inputexamFax" id="inputexamFax" placeholder="Fax"
+                                                           class="form-control1 css_reg_inp" pattern="[0-9]+" style="width: 177px;"
+                                                           title="Please enter digits only"/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputexamZip">* Zipcode</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                        <input type="text" id="inputexamZip" name="inputexamZip"
+                                                               placeholder="Zipcode" style="width: 177px;"
+                                                               class="requiredValue form-control1" required=""/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div1">
+                                                <label class="control-label css_reg_lbl" for="inputexamId">* Professional Body Student
+                                                    ID
+                                                    No.
+                                                </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                        <input type="text" name="inputexamId"
+                                                               class="requiredValue form-control1 div1_css" style="width: 177px;"
+                                                               id="inputexamId" placeholder="" required=""/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="beforepcexam">* Ever Written PC Exam Before?</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <select name="inputbeforepcexam" id="inputbeforepcexam"
+                                                            class="requiredValue form-control1" required="true"
+                                                            style="border-radius: 0px !important;width: 177px;">
+                                                        <option></option>
+                                                        <option value="1">Yes</option>
+                                                        <option value="2">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div1">
+                                                <label class="control-label css_reg_lbl" for="inputexampassword">* Professional Body Login Password</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                        <input type="text" name="inputexampassword"
+                                                               class="requiredValue form-control1 div1_css" style="width: 177px;"
+                                                               id="inputexampassword" placeholder="" required=""/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputexamPassword">* Create your own
+                                                    Password
+                                                </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <input type="password" name="inputexamPassword" id="inputexamPassword"
+                                                           placeholder="Password" class="requiredValue form-control1" style="width: 177px;"
+                                                           required=""/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                    <label class="checkbox css_reg_lbl css_lbl">
+                                                        <input type="checkbox" id="requiredcheckbox" required="" />
+                                                        I accept the
+                                                        <a target="blank_"
+                                                           href="http://www.charterquest.co.za/page/terms-and-conditions">
+                                                            Terms and Conditions
+                                                        </a>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </center>
+                        <!--                        </div>-->
+                        <div class="control-group">
+                            <div id="alert-area">
+                            </div>
+                            <div id="exceptLabel" style="display:None;color:red;">
+                                <strong>Warning!</strong>
+                                Please make sure all Fields are filled in
+                            </div>
+                            <div class="col-sm-12 button-div1">
+                                <center>
+                                    <button id="back_button" class="btn btn-primary" type="button">Back</button>
+                                    <button class="btn btn-primary" type="submit">Next</button>
+                                </center>
+                                <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                                <input class="form-field" name="page_name" value="confirmation" type="hidden"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <div class="oe_structure"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="exam_registration" name="Exam Registration">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_pc_template">
+            <div class="oe_structure"/>
+            <div class="container" style="margin:0px;padding:0px;">
+                <div style="margin-top:5px;">
+                    <div class="well" style="color: #000000;background-color: #ffe6e6;border-color: #ff8080;padding: 5px;">
+                        <h4>Please Confirm the details you selected for the PC Exam Registration.</h4>
+                    </div>
+                </div>
+                <div class="row" id="step-2">
+                        <center>
+                            <table class="table" style="color:black;">
+                                <input id="uuid" type="hidden" t-att-value="uuid" name='uuid'/>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="inputTitle">Exam Type</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="FirstName">Campus</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="LastName">PC Exam Type</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="DOB">Exam Dates &amp; Modules</label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" for="ID_PassportNo.">Amount
+                                                </label>
+                                                <div class="css_reg_inp" style="margin-left: 180px;">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </center>
+                        <div class="form-group">
+                            <form action="/exam/redirect_payu" method="POST">
+                                        <button id="confirm-button" style="margin-left:10px;"
+                                               class="btn btn-primary"
+                                                name="button" type="submit">
+                                            <center class="prc_2">Confirm</center>
+                                        </button>
+                                            <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                                            <input class="form-field" name="page_name" value="completion" type="hidden"/>
+                            </form>
+                        </div>
+                </div>
+            </div>
+            <div class="oe_structure"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="exam_unsuccessful" name="Unsuccessful">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_pc_template">
+                <div class="oe_structure"/>
+
+                <div class="col-sm-12" style="color:black;">
+                    <center>
+                        <h2 style="color:red;">OOPS!</h2>
+                        <h3>Payment Unsuccessful!</h3>
+                    </center>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

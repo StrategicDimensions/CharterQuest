@@ -706,7 +706,7 @@ class EnrolmentProcess(http.Controller):
                         discount = 'combo_2'
                     elif (len(event_count) == 3 and combo_discount == 0) or (len(event_count) == 4 and combo_discount == 1):
                         discount = 'combo_3'
-                    elif (len(event_count) == 4 and combo_discount == 0) or (len(event_count) > 4 and combo_discount == 1):
+                    elif (len(event_count) >= 4 and combo_discount == 0) or (len(event_count) > 4 and combo_discount == 1):
                         discount = 'combo_4'
                     request.session['event_count'] = len(event_count) if event_count else 0
                     return request.render('cfo_snr_jnr.enrolment_process_discount_form_1',

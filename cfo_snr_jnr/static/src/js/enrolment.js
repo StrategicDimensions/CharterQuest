@@ -304,9 +304,9 @@ odoo.define('cfo_snr_jnr.enrolment', function(require) {
                 });
         });
 
-        $('button[id="free_quote_email"]').on('click', function(ev) {
-           window.location.href = 'http://pcexams.charterquest.co.za/'
-        });
+//        $('button[id="free_quote_email"]').on('click', function(ev) {
+//           window.location.href = 'http://pcexams.charterquest.co.za/'
+//        });
 
         $('button[id="btn_get_free_email"]').on('click', function(ev) {
             var grand_tot = $('#grand_tot_val').find('.oe_currency_value').text()

@@ -1302,6 +1302,7 @@ class CfoHome(web.Home):
                         template.sudo().with_context(
                             team_id=team_jnr_id.id,
                             team_name=team_jnr_id.name,
+                            cfo_report_deadline_date=team_jnr_id.cfo_report_deadline_date,
                             # email_to=member_id.related_user_aspirant_id.email_1,
                         ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
 
@@ -1310,6 +1311,7 @@ class CfoHome(web.Home):
                         template_highschool.sudo().with_context(
                             team_id=team_jnr_id.id,
                             team_name=team_jnr_id.name,
+                            cfo_report_deadline_date=team_jnr_id.cfo_report_deadline_date,
                             # email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
                 return True

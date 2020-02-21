@@ -51,7 +51,8 @@
         'views/website_blog_templates.xml',
         'views/website_sale.xml',
         'views/blog_post_view.xml',
-        'views/time_table.xml'
+        'views/time_table.xml',
+        'views/pc_exam_view.xml'
     ],
     'demo': [
     ],
