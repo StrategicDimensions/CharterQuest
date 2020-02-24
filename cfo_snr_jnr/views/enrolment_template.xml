@@ -2736,7 +2736,7 @@
                             </t>
                             <t t-if="sale_order_id">
                                 <input class="form-field" name="sale_order_id" t-att-value="sale_order_id.id"
-                                       type="hidden"/>
+                                       />
                             </t>
                             <button id="back_button" class="btn btn-primary pull-left css_btn_6" type="button">Back</button>
                             <button type="submit" id="getfreequote-button" style="margin-left: 150px;"

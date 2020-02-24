@@ -6,18 +6,15 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
 //        $('button[id="pc_exam_booking"]').on('click', function(ev) {
 //            window.location.href = '/registerPB'
 //        });
+
         var dateToday = new Date();
-        var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+        console.log("\n\n\n\n============date=======",dateToday)
         $("#datepicker").datepicker({
-                startDate: today
-//                dateFormat: 'mm/dd/yy',
-//                changeMonth: true,
-//                changeYear: true,
-//                yearRange: '-100y:c+nn',
-////                maxDate: '-1d'
-////                numberOfMonths: 3,
-////                showButtonPanel: true,
-//                minDate: 0
+                dateFormat: 'mm/dd/yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '-100y:c+nn',
+                minDate: 0
         });
 
 //        $('#datepicker').datepicker({
@@ -49,10 +46,11 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
             console.log("\n\n\n\n==============call============");
             $('#select_pc_exam_level').attr('required', true);
             $('#select_pc_exam_subject').attr('required', true);
+            $("#datepicker").attr('required',true)
             var level_value = $(document).find('#select_pc_exam_level').val();
             var subject_value = $(document).find('#select_pc_exam_subject').val();
             var date_exam = $(document).find('#datepicker').val();
-            if (level_value && subject_value){
+            if (level_value && subject_value && date_exam){
                 $('.available_exam').css("display", "block");
                 $('.selected_exam').css("display", "block");
                 $('.term_condition').css("display", "block");

@@ -509,6 +509,7 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/enrolment_book_prof'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def enrolment_book_prof(self, **post):
+        print("\n\n\n\n\n========post=========",post)
         today_date = datetime.today()
         str_today_date = datetime.strftime(today_date, '%Y-%m-%d 00:00:00')
         # str_today_end_date = datetime.strftime(today_date, '%Y-%m-%d 23:59:59')

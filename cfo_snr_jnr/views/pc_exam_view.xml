@@ -389,8 +389,8 @@
                         </t>
                     </t>
                 </div>
-                 <div style="margin-top:10px;">
-                        <p style="color:red;">
+                 <div class="row site-identifier ci-red-bg" style="width: 100% !important;margin-bottom: 35px !important;">
+                        <p>
                             <b>
                                 Please select the campus where you would like to take the PC Exam. The campus selection below only displays the campuses that are offering PC Exams currently.
                             </b>
@@ -463,8 +463,8 @@
                         </t>
                     </div>
                 </div>
-                <div style="margin-top:10px;">
-                        <p style="color:red;">
+                <div class="row site-identifier ci-red-bg" style="width: 100% !important;margin-bottom: 35px !important;">
+                        <p>
                             <b>
                                 Please select the PC Exam type that you would like to take. The Exam type selection below only displays the PC Exam types that are currently available.
                             </b>
@@ -503,6 +503,7 @@
                                 <button id="back_button" class="btn btn-primary pull-right" type="button">Back</button>
                             </div>
                         </div>
+                        <input id="campus" name="campus" type="hidden" t-att-value="campus"/>
                         <input class="form-field" name="email_to" value="tttt" type="hidden"/>
                         <input class="form-field" name="page_name" value="examsearch" type="hidden"/>
                     </form>
@@ -580,6 +581,8 @@
                                 <button class="btn btn-primary exam_date_validation exam_search" id="exam_search" type="submit">Next</button>
                             </div>
                         </div>
+                        <input id="campus" name="campus" type="hidden" t-att-value="campus"/>
+                        <input id="select_exam_type" name="select_exam_type" type="hidden" t-att-value="select_exam_type"/>
                         <input class="form-field" name="email_to" value="tttt" type="hidden"/>
                         <input class="form-field" name="page_name" value="searchresult" type="hidden"/>
                     </form>
@@ -587,7 +590,7 @@
                 </div>
                 <div class="row available_exam" style="display: none;width: 100% !important;margin-top:1px;margin-bottom:1px !important;">
                     <h4 style="background-color: red; color:white">AVAILABLE EXAMS</h4>
-                    <table class="table table-bordered">
+                    <table id="examTable" class="table table-bordered">
                         <tbody>
                             <tr style="background-color: #C0C0C0;">
                                 <td>Subject Name</td>
@@ -601,7 +604,7 @@
                 </div>
                 <div class="row selected_exam" style="display: none;width: 100% !important;margin-top:1px;margin-bottom:1px !important;">
                     <h4 style="background-color: red; color:white">SELECTED EXAMS</h4>
-                    <table class="table table-bordered">
+                    <table id="examTable" class="table table-bordered">
                         <tbody>
                             <tr style="background-color: #C0C0C0;">
                                 <td>Subject Name</td>

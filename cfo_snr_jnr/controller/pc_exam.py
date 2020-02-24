@@ -17,12 +17,20 @@ class PCExambooking(http.Controller):
 
     @http.route(['/reg'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def pc_exam_type_reg(self, **post):
-        return request.render('cfo_snr_jnr.pc_exam_type_process_form', {'page_name': post.get('page_name')})
+        print('\n\n\n\n\n=======post======',post)
+        value={}
+        value['campus']=post.get('Select Campus')
+        value['page_name']=post.get("page_name")
+        return request.render('cfo_snr_jnr.pc_exam_type_process_form', value)
 
     @http.route(['/pcexamsearch'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def pc_exam_search_reg(self, **post):
         print("\n\n\n\n\n\===========exam post======",post)
-        return request.render('cfo_snr_jnr.pc_exam_search_process_form', {'page_name': post.get('page_name')})
+        value={}
+        value['campus'] = post.get('campus')
+        value['page_name'] = post.get("page_name")
+        value['select_exam_type'] = post.get('Select Exam Type')
+        return request.render('cfo_snr_jnr.pc_exam_search_process_form', value)
 
     @http.route(['/examsearch'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def exam_search_reg(self, **post):
