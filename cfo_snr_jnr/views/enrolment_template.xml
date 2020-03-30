@@ -1891,6 +1891,8 @@
                     <div class="table_price">
                         <table class="table table-bordered" style="color:black;background-color:azure;">
                             <t t-set="total_course_price" t-value="0"/>
+                            <t t-set="total_combo_course_price" t-value="0"/>
+                            <t t-set="total_price" t-value="0"/>
                             <thead>
                                 <tr style="background-color:red;">
                                     <th>#</th>
@@ -1924,8 +1926,16 @@
                                                   t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
                                         </td>
                                         <td></td>
-                                        <t t-set="total_course_price"
+                                        <t t-if="event_ticket_id.event_id.event_not_combo_discount == False">
+                                            <t t-set="total_course_price"
                                            t-value="total_course_price + event_ticket_id.price"/>
+                                        </t>
+                                        <t t-if="event_ticket_id.event_id.event_not_combo_discount == True">
+                                            <t t-set="total_combo_course_price"
+                                           t-value="total_combo_course_price + event_ticket_id.price"/>
+                                        </t>
+                                        <t t-set="total_price"
+                                           t-value="total_combo_course_price + total_course_price"/>
                                     </tr>
                                 </t>
 
@@ -1933,11 +1943,11 @@
                                     <th>TOTAL</th>
                                     <th></th>
                                     <th>
-                                        <span class="" t-esc="total_course_price"
+                                        <span class="" t-esc="total_price"
                                               t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
                                     </th>
                                     <th>
-                                        <span t-esc="total_course_price"
+                                        <span t-esc="total_price"
                                               t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
                                     </th>
                                     <th></th>
@@ -1976,7 +1986,7 @@
                                     <td></td>
                                     <td></td>
                                     <t t-if="discount">
-                                        <t t-set="grand_total" t-value="total_course_price - discount_set_value"/>
+                                        <t t-set="grand_total" t-value="total_price - discount_set_value"/>
                                     </t>
                                     <td>
                                         <b>
@@ -2735,8 +2745,7 @@
                                 <input class="form-field" name="sale_order" t-att-value="sale_order" type="hidden"/>
                             </t>
                             <t t-if="sale_order_id">
-                                <input class="form-field" name="sale_order_id" t-att-value="sale_order_id.id"
-                                       />
+                                <input class="form-field" name="sale_order_id" t-att-value="sale_order_id.id" type="hidden"/>
                             </t>
                             <button id="back_button" class="btn btn-primary pull-left css_btn_6" type="button">Back</button>
                             <button type="submit" id="getfreequote-button" style="margin-left: 150px;"

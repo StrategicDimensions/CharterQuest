@@ -22,6 +22,10 @@ from odoo import models, fields, api, _
 import odoo.addons.decimal_precision as dp
 import base64
 from odoo.http import request
+from dateutil.relativedelta import relativedelta
+import random
+from datetime import datetime, timedelta, date
+
 
 
 
@@ -58,7 +62,6 @@ class AccountInvoice(models.Model):
 
     sale_order_reference_link = fields.Char(string="Sale Order Reference Link")
 
-
 class AccountPayment(models.Model):
     _inherit = 'account.payment'
 
@@ -68,7 +71,7 @@ class AccountPayment(models.Model):
         mail_obj = self.env['mail.mail'].sudo()
 
         if res:
-            if self.payment_difference > 0:
+            if self.payment_difference > 0 and self.invoice_ids[0].affiliation == '1':
                  partial_template_id = email_obj.sudo().search([('name', '=', "Partly invoice payment")])
                  if partial_template_id:
                      email_data = partial_template_id.generate_email(self.invoice_ids[0].id)
@@ -86,7 +89,64 @@ class AccountPayment(models.Model):
                         }
                      msg_id = mail_obj.create(mail_values)
                      msg_id.send()
-            if self.payment_difference < 0 and self.invoice_ids[0].quote_type != 'CharterBooks':
+                 if self.invoice_ids[0].payment_ids and not self.invoice_ids[0].pcexam_voucher_ids:
+                     voucher_lis = []
+                     mail_mail_obj = self.env['mail.mail']
+                     mail_vals = {}
+                     for invoice_line in self.invoice_ids[0].invoice_line_ids:
+                         if invoice_line.product_id and invoice_line.product_id.event_feetype_rem and invoice_line.product_id.event_feetype_rem.name == 'Exam Fees' and invoice_line.product_id.pcexam_voucher == True:
+                             mail_server_obj = self.env['ir.mail_server']
+                             mail_message_obj = self.env['mail.message']
+                             mail_mail_obj = self.env['mail.mail']
+                             from_add = 'accounts@charterquest.co.za'
+                             To = self.partner_id.email
+                             document_ids = []
+                             for i in range(0, invoice_line.product_id.no_vouchers):
+                                 pcexam_voucher = {
+                                     'voucher_no': 'CHQ' + str(random.randint(10000, 99999)),
+                                     'student_id': self.invoice_ids[0].partner_id and self.invoice_ids[0].partner_id.id,
+                                     'invoice_id': self.invoice_ids[0].id,
+                                     'create_date': self.invoice_ids[0].date_invoice,
+                                     'expiry_date': datetime.now() + relativedelta(days=120),
+                                     'voucher_value': invoice_line.product_id.voucher_value,
+                                     'prof_body': self.invoice_ids[0].prof_body and self.invoice_ids[0].prof_body.id,
+                                     'qualification_id': invoice_line.product_id.event_qual_rem and invoice_line.product_id.event_qual_rem.id,
+                                     'campus_id': self.invoice_ids[0].campus and self.invoice_ids[0].campus.id,
+                                     'status': 'Issued',
+                                 }
+                                 voucher_lis.append(pcexam_voucher)
+                             if self.invoice_ids[0].payment_ids and self.invoice_ids[0].is_recent:
+                                 for i in voucher_lis:
+                                     voucher_id = self.env['pcexams.voucher'].create(i)
+
+                         if self.invoice_ids[0].pcexam_voucher_ids and self.invoice_ids[0].state == 'open' and self.invoice_ids[0].voucher_send == False:
+                             voucher_lst = []
+
+                             print("\n\n\n\n\n\n\n===========mail====self.invoice_ids[0].state===========", self.invoice_ids[0].state)
+
+                             for voucher in self.invoice_ids[0].pcexam_voucher_ids:
+                                 voucher_vals = {}
+                                 voucher_vals['voucher_no'] = voucher.voucher_no
+                                 voucher_vals['expiry_date'] = voucher.expiry_date
+                                 voucher_vals['voucher_value'] = "R" + str(voucher.voucher_value)
+                                 voucher_vals['profes_body'] = voucher.prof_body.name
+                                 voucher_vals['qual'] = voucher.qualification_id.name
+                                 voucher_vals['status'] = voucher.status
+                                 voucher_vals['invoice'] = str(self.invoice_ids[0].number)
+                                 voucher_lst.append(voucher_vals)
+
+                             template_id = self.env.ref('cfo_snr_jnr.email_template_pcexam_voucher',
+                                                        raise_if_not_found=False)
+                             if template_id:
+                                 template_id.sudo().with_context(
+                                     # email_to=each_request.get('email'),
+                                     voucher_list=voucher_lst,
+                                     email_cc='thecfo@charterquest.co.za',
+                                 ).send_mail(self.invoice_ids[0].id, force_send=True)
+
+                             self.invoice_ids[0].sudo().write({'voucher_send':True})
+
+            if self.payment_difference < 0 and self.invoice_ids[0].quote_type != 'CharterBooks' and self.invoice_ids[0].quote_type != 'PC Exam':
                  full_template_id = email_obj.sudo().search([('name', '=', "Full invoice payment")])
                  if full_template_id:
                      attachment_list=[]
@@ -156,8 +216,6 @@ class AccountPayment(models.Model):
                 }
                 msg_id = mail_obj.create(mail_values)
                 msg_id.send()
-                
-                
                 
         return res
 

@@ -235,7 +235,7 @@ class PayuController(http.Controller):
             client = Client(urlToQuery, plugins=[plugin])
         except Exception as e:
             return "/shop/unsuccessful"
-        # ------------------------------------- CREATING CUSTOM HEADER--------------------------------------
+            # ------------------------------------- CREATING CUSTOM HEADER--------------------------------------
         wsse = ('wsse', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd')
 
         mustAttributeSecurity = Attribute('SOAP-ENV:mustUnderstand', '1')
@@ -275,10 +275,12 @@ class PayuController(http.Controller):
         # ------------------------------------- DOING SOAP CALL HERE--------------------------------------
         try:
             setTransaction = client.service.setTransaction(**transaction)
+            print("\n\n\n\n\n=========setTrasaction========",setTransaction)
         except Exception as e:
             print_exc()
         s = plugin.last_received_raw
         dic = xmltodict.parse(str(s[2:-1]))
+        print("\n\n\n\n\n\n===========dict=======",dic)
         response = dic['soap:Envelope']['soap:Body']['ns2:setTransactionResponse']['return']
 
         if response['successful'] == 'true':
@@ -295,6 +297,7 @@ class PayuController(http.Controller):
             status = '%s - %s', (failuer, resultCode)
             return request.render('website.http_error', {'status_code': status, 'status_message': error_message})
         return url
+
 
     def payuMeaGetTransactionApiCall(self, args):
         if (args['store']['environment'] == 'prod'):
@@ -341,18 +344,22 @@ class PayuController(http.Controller):
         # ------------------------------------- DOING SOAP CALL HERE--------------------------------------
         try:
             setTransaction = client.service.getTransaction(**transaction)
+            print("\n\n\n\n\n\n==================s==========setTransaction=====",setTransaction)
         except Exception as e:
             print_exc()
         s = plugin.last_received_raw
         transactionState = ''
         successful_status = False
+        print("\n\n\n\n\n\n==================s==========transactionState=====",s,transactionState)
         if s:
             dic = xmltodict.parse(str(s[2:-1]))
+            print("\n\n\n\n\n\n==================s==========dic=====",dic)
             dic['soap:Envelope']['soap:Body']['ns2:getTransactionResponse']['return']['displayMessage']
             payUReference = dic['soap:Envelope']['soap:Body']['ns2:getTransactionResponse']['return']['payUReference']
             successful_status = dic['soap:Envelope']['soap:Body']['ns2:getTransactionResponse']['return']['successful']
             transactionState = dic['soap:Envelope']['soap:Body']['ns2:getTransactionResponse']['return'][
                 'transactionState']
+            print("\n\n\n\n\n\n==================s======transactionState====transactionState=====",transactionState,successful_status)
         if transactionState == 'SUCCESSFUL' and successful_status:
             return dic['soap:Envelope']['soap:Body']['ns2:getTransactionResponse']['return']
         elif transactionState == 'AWAITING_PAYMENT':

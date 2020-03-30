@@ -175,7 +175,6 @@ class payment_confirmation(models.Model):
             journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
             payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
             # invoice_id.reconcile = True
-            print("\n\n\n\n==============sale_obj======",sale_obj,sale_obj.amount_total)
             payment_id = request.env['account.payment'].sudo().create({
                 'payment_difference':-sale_obj.amount_total,
                 'partner_id': self.order_id.partner_id.id,
@@ -189,7 +188,6 @@ class payment_confirmation(models.Model):
                 'amount':self.payment_amount,
             })
             invoice_id.action_invoice_open()
-            print("\n\n\n\n========payment_id==========",payment_id,payment_id.amount)
             payment_id.action_validate_invoice_payment()
 
         if config_para:
@@ -213,41 +211,41 @@ class payment_confirmation(models.Model):
         if self.env['ir.config_parameter'].sudo().get_param('sale.auto_done_setting'):
             self.action_done()
 
-            #     invoice_obj = self.env['sale.order'].read(self._context.get('active_id'),['invoice_ids'])
-            # 
-            #     self.pool.get('account.invoice').signal_workflow(cr, uid, invoice_obj['invoice_ids'], 'invoice_open')
-            #
-            #     account_invoice = self.pool.get('account.invoice').browse(cr,uid,invoice_obj['invoice_ids'][0])
-            #     move_line_id = self.pool.get('account.move.line').search(cr, uid, [('name','=ilike','/'),('move_id','=',account_invoice.move_id.id)])
-            #     if account_invoice.state != 'paid':
-            #         journal_ids = self.pool.get('account.journal').search(cr,uid,[('type','=','bank'),('name','=','Bank')])
-            #         journal = self.pool.get('account.journal').browse(cr,uid,journal_ids[0])
-            #         account_voucher = {
-            #              'partner_id': sale_obj.partner_id.id,
-            #              'company_id': sale_obj.company_id.id,
-            #              'type': 'receipt',
-            #              'journal_id': journal_ids[0],
-            #              'reference': sale_obj.name,
-            #              'name': sale_obj.campus.name,
-            #              'account_id': journal.default_credit_account_id.id,
-            #              'payment_method': sale_obj.payment_method,
-            #              'amount': sale_obj.payment_amount,
-            #           }
-            #         account_voucher_id = self.env['account.voucher'].create(account_voucher)
-            #         account_voucher_line = {
-            #             'partner_id': sale_obj.partner_id.id,
-            #             'company_id': sale_obj.company_id.id,
-            #             'type': 'cr',
-            #             'voucher_id': account_voucher_id,
-            #             'amount': sale_obj.payment_amount,
-            #             'name': sale_obj.campus.name,
-            #             'account_id': account_invoice.account_id and account_invoice.account_id.id,
-            #             'move_line_id': move_line_id and move_line_id[0]
-            #           }
-            #         self.env['account.voucher.line'].create(account_voucher_line)
-            #         self.env.get('account.voucher').button_proforma_voucher([account_voucher_id],{'active_model':'account.invoice','invoice_id':invoice_obj['invoice_ids'][0]})
-            #         account_voucher = self.env['account.voucher'].browse(account_voucher_id)
-            # self.pool.get('account.invoice').pay_and_reconcile(cr,uid,invoice_obj['invoice_ids'][0],sale_obj.payment_amount,journal.default_credit_account_id.id,account_voucher.period_id.id,account_voucher.journal_id.id,False,False,'/')
+            invoice_obj = self.env['sale.order'].read(self._context.get('active_id'),['invoice_ids'])
+
+            self.pool.get('account.invoice').signal_workflow(cr, uid, invoice_obj['invoice_ids'], 'invoice_open')
+
+            account_invoice = self.pool.get('account.invoice').browse(cr,uid,invoice_obj['invoice_ids'][0])
+            move_line_id = self.pool.get('account.move.line').search(cr, uid, [('name','=ilike','/'),('move_id','=',account_invoice.move_id.id)])
+            if account_invoice.state != 'paid':
+                journal_ids = self.pool.get('account.journal').search(cr,uid,[('type','=','bank'),('name','=','Bank')])
+                journal = self.pool.get('account.journal').browse(cr,uid,journal_ids[0])
+                account_voucher = {
+                     'partner_id': sale_obj.partner_id.id,
+                     'company_id': sale_obj.company_id.id,
+                     'type': 'receipt',
+                     'journal_id': journal_ids[0],
+                     'reference': sale_obj.name,
+                     'name': sale_obj.campus.name,
+                     'account_id': journal.default_credit_account_id.id,
+                     'payment_method': sale_obj.payment_method,
+                     'amount': sale_obj.payment_amount,
+                  }
+                account_voucher_id = self.env['account.voucher'].create(account_voucher)
+                account_voucher_line = {
+                    'partner_id': sale_obj.partner_id.id,
+                    'company_id': sale_obj.company_id.id,
+                    'type': 'cr',
+                    'voucher_id': account_voucher_id,
+                    'amount': sale_obj.payment_amount,
+                    'name': sale_obj.campus.name,
+                    'account_id': account_invoice.account_id and account_invoice.account_id.id,
+                    'move_line_id': move_line_id and move_line_id[0]
+                  }
+                self.env['account.voucher.line'].create(account_voucher_line)
+                self.env.get('account.voucher').button_proforma_voucher([account_voucher_id],{'active_model':'account.invoice','invoice_id':invoice_obj['invoice_ids'][0]})
+                account_voucher = self.env['account.voucher'].browse(account_voucher_id)
+            self.pool.get('account.invoice').pay_and_reconcile(cr,uid,invoice_obj['invoice_ids'][0],sale_obj.payment_amount,journal.default_credit_account_id.id,account_voucher.period_id.id,account_voucher.journal_id.id,False,False,'/')
             template_id = self.env['mail.template'].sudo().search([('name','=',"Sending Tax Invoice to Student")])
             if template_id:
                 mail_message = template_id.send_mail(self.order_id.invoice_ids[0].id)

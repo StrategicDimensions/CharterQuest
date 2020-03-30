@@ -825,9 +825,10 @@ margin-left: -22px !important;
 font-size: 12px !important;
 }
 .enr_btn_2{
-width: 152px !important;
-    margin-left: 2px !important;
-    font-size: 12px !important;
+width: 134px !important;
+margin-left: 2px !important;
+font-size: 12px !important;
+height: 52px !important;
 }
 .enr_btn_3{
 height: 51px !important;
@@ -837,9 +838,10 @@ font-size: 12px !important;
 }
 .enr_btn_4{
 font-size: 12px !important;
-width: 153px !important;
-margin-left: 4px !important;
-height: 49px !important;
+width: 146px !important;
+height: 52px !important;
+margin-top: 25px !important;
+margin-left: -10px !important;
 }
 
 .or_css{
@@ -1319,6 +1321,21 @@ margin-left: 243px !important;
 }
 .col-md-3{
     position: inherit;
+}
+.col-md-10{
+    position: inherit;
+}
+.remove_document{
+    margin-top: 1px !important;
+    margin-bottom: 1px !important;
+    padding: 1px 9px !important;
+}
+.table_exam{
+    border-collapse: collapse;
+    overflow-x: auto;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
 }
 }
 

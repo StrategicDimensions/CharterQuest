@@ -785,6 +785,7 @@ class EnrolmentProcess(http.Controller):
 
     @http.route(['/payment','/payment/<uuid>','/payment/<uuid>/<uuid2>'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def payment(self,**post):
+        print("\n\n\n\n\n\n=======uuuuiiiiiidddddddddd========",post.get('uuid'))
         if post.get('uuid'):
             sale_order_id = request.env['sale.order'].sudo().search([('debit_link', '=', post.get('uuid'))])
             if sale_order_id and sale_order_id.debit_order_mandate:
@@ -2039,7 +2040,7 @@ class EnrolmentProcess(http.Controller):
             transactionDetails['customer']['firstName'] = first_name if first_name else ''
             transactionDetails['customer']['lastName'] = last_name if last_name else ''
             transactionDetails['customer']['mobile'] = sale_order_id.partner_id.mobile
-
+        print("\n\n\n\nn\==================transactiondetails========", transactionDetails)
         if payment_acquire:
             payu_tx_values.update({
                 'x_login': payment_acquire.payu_api_username,
@@ -2061,9 +2062,11 @@ class EnrolmentProcess(http.Controller):
             'reference': request.env['payment.transaction'].get_next_reference(sale_order_id.name),
             'sale_order_id': sale_order_id.id,
         }
-
+        print("\n\n\n\nn\==================url  tx_values========", tx_values)
         tx = request.env['payment.transaction'].sudo().create(tx_values)
+        print("\n\n\n\nn\==================url  transactiondetails========", transactionDetails)
         url = PayuController.payuMeaSetTransactionApiCall('', transactionDetails)
+        print("\n\n\n\n\n\n============url==========",url)
         return werkzeug.utils.redirect(url)
 
     @http.route('/event/payment/payu_com/cancel', type='http', auth="none", methods=['POST', 'GET'])

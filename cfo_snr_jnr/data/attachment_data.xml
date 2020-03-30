@@ -21,5 +21,12 @@
             <field name="datas" type="base64" file="cfo_snr_jnr/data/banking_details.pdf"/>
         </record>
 
+        <record id="pc_exam_data_pdf" model="ir.attachment">
+            <field name="name">PC_EXAM-AGREEMENT</field>
+            <field name="datas_fname">PC_EXAM-AGREEMENT</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="cfo_snr_jnr/data/PC_Exams_Agreement.pdf"/>
+        </record>
+
     </data>
 </odoo>
