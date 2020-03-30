@@ -890,9 +890,10 @@ class PCExambooking(http.Controller):
                    'company_id': sale_order_id.company_id.id}
             inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
             ctx.update({'journal_id': inv_default_vals.get('journal_id')})
-            _logger.info("Password reset email sent for user <%s>", ctx)
+            _logger.info("invoice id============ <%s>", ctx)
             invoice_id = sale_order_id.with_context(ctx).sudo().action_invoice_create()
-            _logger.info("Password reset email sent for user <%s>", invoice_id)
+            _logger.info("invoice id============ <%s>", invoice_id)
+            print("\n\n\n\n=========invoice line=========",invoice_id)
             invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
             journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
             payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
