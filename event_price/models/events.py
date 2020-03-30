@@ -172,7 +172,6 @@ class sale_order(models.Model):
                     references[invoices[group_key]] |= order
         if not invoices:
             raise UserError(_('There is no invoiceable line.'))
-
         for invoice in invoices.values():
             if not invoice.invoice_line_ids:
                 raise UserError(_('There is no invoiceable line.'))
@@ -238,6 +237,15 @@ class sale_order_line(models.Model):
                 # if event.study:
                 #     name += " - " +event.study.name
                 self.name = name
+
+    @api.multi
+    def _prepare_invoice_line(self, qty):
+        self.ensure_one()
+        res = super(sale_order_line, self)._prepare_invoice_line(qty)
+        if self.event_id:
+            res['name'] = '%s' % (self.event_id.name)
+        return res
+
 
 class product(models.Model):
 

@@ -125,7 +125,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr t-if="o.affiliation=='2'">
+                        <tr>
                             <td>
                                 <p>Company</p>
                             </td>
@@ -275,7 +275,7 @@
                         <td style="padding: 2px;line-height: 1;width:30%;">
                             <span t-esc="l.name"/>
                         </td>
-                        <td style="padding: 2px;line-height: 1;width:15%;">
+                        <td style="padding: 2px;padding-left: 20px;line-height: 1;width:15%;">
                             <span t-esc="l.event_id and l.event_id.date_begin or '' "/>
                         </td>
                         <td style="padding: 2px;line-height: 1;width:10%;">

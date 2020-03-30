@@ -25,6 +25,7 @@ class event_subject(models.Model):
     _name = "event.subject"
 
     name = fields.Char('Name')
+    has_pdf = fields.Boolean('Includes Study Notes PDF?')
 
 
 class event_event(models.Model):

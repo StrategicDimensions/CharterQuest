@@ -349,6 +349,7 @@
                 <div style="margin-top:5px;">
                     <div class="well" style="color: #000000;background-color: #ffe6e6;border-color: #ff8080;">
                         <h3>Campus</h3>
+
                         <t t-set="campus_ids"
                            t-value="request.env['res.partner'].sudo().search([('is_campus','=', True)])"/>
                         <t t-if="campus_ids">
@@ -402,6 +403,8 @@
                           class="s_website_form form-horizontal container-fluid mt32"
                           enctype="multipart/form-data" data-success_page="">
 
+                        <input id="uuid" type="hidden" t-att-value="uuid" name='uuid'/>
+                        <input id="sale_order_id" type="hidden" t-att-value="sale_order_id" name='sale_order_id'/>
                         <div class="form-group form-field o_website_form_custom" id="reg_campus">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
                                 <label for="campus lbl_4" style="margin-left: 16px;" class="control-label">Select Campus
@@ -456,7 +459,6 @@
                                         <b>
                                             <span t-esc="examtype.name"/>
                                         </b>
-                                        -
                                     </li>
                                 </ul>
                             </t>
@@ -475,7 +477,8 @@
                     <form action="/pcexamsearch" method="post"
                           class="s_website_form form-horizontal container-fluid mt32"
                           enctype="multipart/form-data" data-success_page="">
-
+                        <input id="uuid" type="hidden" t-att-value="uuid" name='uuid'/>
+                        <input id="sale_order_id" type="hidden" t-att-value="sale_order_id" name='sale_order_id'/>
                         <div class="form-group form-field o_website_form_custom" id="reg_campus">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
                                 <label for="campus lbl_4" style="margin-left: 16px;" class="control-label">Select PC Exam Type
@@ -487,12 +490,22 @@
                                 <select id="select_pc_exam_type" class="form-control o_website_form_input"
                                         name="Select Exam Type"
                                         required="true">
-                                    <option></option>
-                                    <t t-foreach="examtype_ids" t-as="examtype">
+                                    <t t-if="not sale_order_id">
+                                        <option></option>
+                                       <t t-foreach="examtype_ids" t-as="examtype">
                                         <option t-att-value="examtype.id">
                                             <t t-esc="examtype.name"/>
                                         </option>
+                                        </t>
                                     </t>
+                                    <t t-if="sale_order_id">
+                                        <t t-set="sale_order_id"
+                                            t-value="request.env['sale.order'].sudo().browse(sale_order_id)"/>
+                                        <option t-att-value="sale_order_id.pc_exam_type.id">
+                                            <t t-esc="sale_order_id.pc_exam_type.name"/>
+                                        </option>
+                                    </t>
+
                                 </select>
                             </div>
                         </div>
@@ -508,7 +521,7 @@
                         <input class="form-field" name="page_name" value="examsearch" type="hidden"/>
                     </form>
                 </div>
-            </div>
+            </div>page_name
             <div class="oe_structure"/>
             </t>
         </t>
@@ -519,21 +532,43 @@
             <t t-call="cfo_snr_jnr.header_pc_template">
             <div class="oe_structure"/>
             <div class="container" style="margin:0px;padding:0px;">
-                <div style="margin-top:5px;">
+                <input id="sale_order_id" type="hidden" t-att-value="sale_order_id" name='sale_order_id'/>
+                <t t-if="sale_order_id">
+                    <t t-set="sale_order_id"
+                        t-value="request.env['sale.order'].sudo().browse(sale_order_id)"/>
+                </t>
+<!--                <form action="/examsearch" method="POST" class="s_website_form form-horizontal container-fluid">-->
+                <div style="margin-top:5px;" class="s_website_form form-horizontal container-fluid">
                     <div class="well" style="color: #000000;background-color: #ffe6e6;border-color: #ff8080;">
-                        <form class="s_website_form form-horizontal container-fluid">
+<!--                        <form class="s_website_form form-horizontal container-fluid">-->
+
                         <div class="form-group form-field o_website_form_custom">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
                                 <label class="control-label lbl_1" style="margin-left: 16px;">Level
                                 </label>
                             </div>
-                            <div class="col-md-7 col-sm-8" id="select_css_1">
+                            <t t-if="sale_order_id">
+                               <div class="col-md-7 col-sm-8" id="select_css_1">
+                                    <select id="select_pc_exam_level" class="form-control o_website_form_input"
+                                            name="select_pc_exam_level"
+                                            required="true">
+                                        <t t-foreach="sale_order_id.order_line[0]" t-as="event">
+                                            <option t-att-value="event.event_id.qualification.id">
+                                                <t t-esc="event.event_id.qualification.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </t>
+                            <t t-if="not sale_order_id">
+                                <div class="col-md-7 col-sm-8" id="select_css_1">
                                 <t t-set="level_ids"
                                     t-value="request.env['event.qual'].sudo().search([])"/>
                                     <select id="select_pc_exam_level" class="form-control o_website_form_input"
                                             name="select_pc_exam_level"
                                             required="true">
-                                        <option></option>
+
+                                       <option></option>
                                         <t t-foreach="level_ids" t-as="level">
                                             <option t-att-value="level.id">
                                                 <t t-esc="level.name"/>
@@ -541,6 +576,7 @@
                                         </t>
                                     </select>
                             </div>
+                            </t>
                         </div>
                         <div class="form-group form-field o_website_form_custom">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
@@ -553,12 +589,22 @@
                                     <select id="select_pc_exam_subject" class="form-control o_website_form_input"
                                             name="select_pc_exam_subject"
                                             required="true">
-                                        <option></option>
-                                        <t t-foreach="subject_ids" t-as="subject">
-                                            <option t-att-value="subject.id">
-                                                <t t-esc="subject.name"/>
-                                            </option>
+                                        <t t-if="not sale_order_id">
+                                           <option></option>
+                                            <t t-foreach="subject_ids" t-as="subject">
+                                                <option t-att-value="subject.id">
+                                                    <t t-esc="subject.name"/>
+                                                </option>
+                                            </t>
                                         </t>
+                                        <t t-if="sale_order_id">
+                                            <t t-foreach="sale_order_id.order_line[0]" t-as="event">
+                                                <option t-att-value="event.event_id.subject.id">
+                                                        <t t-esc="event.event_id.subject.name"/>
+                                                </option>
+                                            </t>
+                                        </t>
+
                                     </select>
                             </div>
                         </div>
@@ -578,44 +624,54 @@
                         <div class="form-group">
                             <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
                                 <button id="back_button" class="btn btn-primary" type="button">Back</button>
-                                <button class="btn btn-primary exam_date_validation exam_search" id="exam_search" type="submit">Next</button>
+                                <button class="btn btn-primary exam_date_validation exam_search" id="exam_search" type="button">Next</button>
                             </div>
                         </div>
                         <input id="campus" name="campus" type="hidden" t-att-value="campus"/>
                         <input id="select_exam_type" name="select_exam_type" type="hidden" t-att-value="select_exam_type"/>
                         <input class="form-field" name="email_to" value="tttt" type="hidden"/>
                         <input class="form-field" name="page_name" value="searchresult" type="hidden"/>
-                    </form>
+<!--                    </form>-->
                     </div>
                 </div>
                 <div class="row available_exam" style="display: none;width: 100% !important;margin-top:1px;margin-bottom:1px !important;">
                     <h4 style="background-color: red; color:white">AVAILABLE EXAMS</h4>
-                    <table id="examTable" class="table table-bordered">
-                        <tbody>
+                    <table id="examTable" class="table table-bordered table_exam">
+                        <thead>
                             <tr style="background-color: #C0C0C0;">
                                 <td>Subject Name</td>
                                 <td>Slot</td>
                                 <td>Date</td>
                                 <td>Seat Avail</td>
                                 <td>Price</td>
+                                <td></td>
+                                <td style="display:none !important;"></td>
                             </tr>
+                        </thead>
+                        <tbody id="examtablebody">
+
                         </tbody>
                     </table>
                 </div>
                 <div class="row selected_exam" style="display: none;width: 100% !important;margin-top:1px;margin-bottom:1px !important;">
                     <h4 style="background-color: red; color:white">SELECTED EXAMS</h4>
-                    <table id="examTable" class="table table-bordered">
-                        <tbody>
+                    <table id="examselectTable" class="table table-bordered table_exam">
+                        <thead>
                             <tr style="background-color: #C0C0C0;">
                                 <td>Subject Name</td>
                                 <td>Slot</td>
                                 <td>Date</td>
                                 <td>Seat Avail</td>
                                 <td>Price</td>
+                                <td></td>
+                                <td style="display:none !important;"></td>
                             </tr>
+                        </thead>
+                        <tbody id="select_exam_body">
+
                         </tbody>
                     </table>
-                    <input type="text" class="total-style pull-right" id="total_price" name="total_price" readonly=""/>
+                    <input type="number" class="total-style pull-right" id="total_price" style="color:black !important;" name="total_price" readonly="true"/>
                     <label class="control-label lbl_1 pull-right" style="margin-left: 16px;color:black !important;">Total:
                     </label>
                 </div>
@@ -630,16 +686,36 @@
                         </div>
                     </t>
                     <div style="margin-top:5px !important;color:black !important;">
-                        <form action="/examsearch" method="GET">
+<!--                        <form action="/examsearch" method="GET">-->
                         <label class="control-label lbl_1" style="color:red !important;">
                             <input type="checkbox" id="requiredcheckbox" required="true" />I accept the Terms and Conditions
                         </label>
-                        <button class="btn btn-primary" type="submit">Continue</button>
-                        <input class="form-field" name="email_to" value="tttt" type="hidden"/>
-                        <input class="form-field" name="page_name" value="studentstatus" type="hidden"/>
-                        </form>
+                        <t t-if="not sale_order_id">
+                            <form action="/examsearch" method="POST" class="s_website_form form-horizontal container-fluid">
+                                <button class="btn btn-primary" type="submit">Continue</button>
+                                <input id="campus" name="campus" type="hidden" t-att-value="campus"/>
+                                <input id="select_exam_type" name="select_exam_type" type="hidden" t-att-value="select_exam_type"/>
+                                <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                                <input id="event_ids" class="form-field" name="event[]" type="hidden"/>
+                                <input class="form-field" name="page_name" value="studentstatus" type="hidden"/>
+                            </form>
+                        </t>
+                        <t t-if="sale_order_id">
+                            <form action="/registerexam" method="POST" class="s_website_form form-horizontal container-fluid">
+                                <button class="btn btn-primary" type="submit">Continue</button>
+                                <input id="campus" name="campus" type="hidden" t-att-value="campus"/>
+                                <input id="select_exam_type" name="select_exam_type" type="hidden" t-att-value="select_exam_type"/>
+                                <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                                <input id="event_ids" class="form-field" name="event[]" type="hidden"/>
+                                <input class="form-field" name="page_name" value="studentstatus" type="hidden"/>
+                                <input id="sale_order_id" type="hidden" t-att-value="sale_order_id.id" name='sale_order_id'/>
+                            </form>
+                        </t>
+
+
                     </div>
                 </div>
+<!--                </form>-->
             </div>
             <div class="oe_structure"/>
             </t>
@@ -661,6 +737,7 @@
 
                         </ul>
                     </div>
+
                 </div>
                 <div class="row" id="step-2">
 
@@ -675,7 +752,8 @@
                             </div>
                             <div class="col-md-7 col-sm-8" id="select_css_1">
                                 <select class="form-control o_website_form_input"
-                                        name="selection" required="false">
+                                        name="selection" required="true">
+                                    <option></option>
                                     <option value="Yes">YES</option>
                                     <option value="No">NO</option>
                                 </select>
@@ -690,6 +768,13 @@
                         </div>
                         <input class="form-field" name="email_to" value="tttt" type="hidden"/>
                         <input class="form-field" name="page_name" value="pricing" type="hidden"/>
+                        <input id="event_select_ids" class="form-field" name="event[]" type="hidden" t-att-value="event_ids"/>
+                        <input id="select_pc_exam_level" class="form-field" name="select_pc_exam_level" type="hidden" t-att-value="select_pc_exam_level"/>
+                        <input id="select_pc_exam_subject" class="form-field" name="select_pc_exam_subject" type="hidden" t-att-value="select_pc_exam_subject"/>
+                        <input id="inputDate" class="form-field" name="inputDate" type="hidden" t-att-value="inputDate"/>
+                        <input id="campus" class="form-field" name="campus" type="hidden" t-att-value="campus"/>
+                        <input id="select_exam_type" class="form-field" name="select_exam_type" type="hidden" t-att-value="select_exam_type"/>
+                        <input id="total_price" class="form-field" name="total_price" type="hidden" t-att-value="total_price"/>
                     </form>
                 </div>
             </div>
@@ -702,9 +787,14 @@
         <t t-call="website.layout">
             <t t-call="cfo_snr_jnr.header_pc_template">
             <div class="oe_structure"/>
+            <form action="/exam_registration" method="post">
             <h2 style="color:black;">Pricing</h2>
+                <input id="exam_id_list" class="form-field" name="exam_id_list" type="hidden" t-att-value="exam_id_list"/>
+                <input id="campus" class="form-field" name="campus" type="hidden" t-att-value="campus"/>
+                <input id="total_price" class="form-field" name="total_price" type="hidden" t-att-value="total_price"/>
+
                     <div class="table_price">
-                        <table class="table table-bordered" style="color:black;background-color:azure;">
+                        <table id="exam_price_table" class="table table-bordered" style="color:black;background-color:azure;">
                             <t t-set="total_course_price" t-value="0"/>
                             <thead>
                                 <tr style="background-color:red;">
@@ -724,156 +814,169 @@
                                     <th style="width:10%;">Total</th>
                                     <th style="width:10%;"></th>
                                 </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <button class="btn btn-primary btn-danger" type="submit">Apply Voucher</button>
-                                    </td>
-                                </tr>
-<!--                                <t t-foreach="event_id" t-as="each_event">-->
-<!--                                    <t t-set="event_ticket_id"-->
-<!--                                       t-value="request.env['event.event.ticket'].sudo().search([('id', '=',int(each_event_value))])"/>-->
-<!--                                    <tr>-->
-<!--                                        <td>#</td>-->
-<!--                                        <td>-->
-<!--                                            <span t-esc="'%s - %s' % (event_ticket_id.product_id.name, event_ticket_id.event_id.name)"/>-->
-<!--                                        </td>-->
-<!--                                        <td>-->
-<!--                                            <span t-esc="event_ticket_id.price"-->
-<!--                                                  t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>-->
-<!--                                            <span/>-->
-<!--                                        </td>-->
-<!--                                        <td>-->
-<!--                                            <span t-esc="event_ticket_id.price"-->
-<!--                                                  t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>-->
-<!--                                        </td>-->
-<!--                                        <td></td>-->
-<!--                                        <t t-set="total_course_price"-->
-<!--                                           t-value="total_course_price + event_ticket_id.price"/>-->
-<!--                                    </tr>-->
-<!--                                </t>-->
+                                <t t-if="exam_id_list">
+                                    <t t-foreach="exam_id_list" t-as="event">
+                                        <t t-set="event_id"
+                                        t-value="request.env['event.event'].sudo().browse(int(event))"/>
+                                        <tr class="exam_price_row">
+                                        <td>#</td>
+                                        <td><t t-esc="event_id.name"/></td>
+                                        <td><t t-esc="event_id.date_begin"/></td>
+                                        <td><span t-esc="event_id.company_id.currency_id.symbol"/><input t-attf-id="event_price_#{event_id.id}" name="event_price_#{event_id.id}" style="width: 80px !important; height: 30px; background: azure; border: azure;" class="event_price" type="number" disabled="true" t-att-value="event_id.price"/></td>
+<!--                                        <td>R<t t-esc="event_id.price"/></td>-->
+                                        <td><span t-esc="event_id.company_id.currency_id.symbol"/><input t-attf-id="voucher_#{event_id.id}" name="voucher_#{event_id.id}" style="width: 80px !important; height: 30px; background: azure; border: azure;" class="voucher_price" type="number" disabled="true" value="0.0"/></td>
+                                        <t t-set="total_exam_price"
+                                           t-value="event_price_#{event_id.id} - voucher_#{event_id.id}"/>
+                                        <td><span t-esc="event_id.company_id.currency_id.symbol"/><input t-attf-id="total_exam_price_#{event_id.id}" name="total_exam_price_#{event_id.id}" style="width: 80px !important; height: 30px; background: azure; border: azure;" class="total_exam_price" type="number" disabled="true" t-att-value="event_id.price"/></td>
+                                        <td>
+                                            <button class="btn btn-primary btn-danger btn_voucher" id="btn_voucher" style="margin-bottom: 10px !important; margin-top: 10px !important;" type="button">Apply Voucher</button>
+                                        </td>
+
+                                        <td style='display:none;'><input type='hidden' class='event_id' t-attf-id="event_#{event_id.id}" t-att-value="event_id.id"></input></td>
+                                        </tr>
+                                    </t>
+                                </t>
 
                                 <tr>
                                     <th>TOTAL</th>
                                     <th></th>
                                     <th></th>
                                     <th>
-                                        <span class="" t-esc="total_course_price"
-                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                        <b><span t-esc="website.currency_id.symbol"/><input t-attf-id="total_exam_price" style="width: 80px !important; height: 30px; background: azure; border: azure;" class="total_exam_price" type="number" disabled="true" t-att-value="total_price"/></b>
+<!--                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>-->
                                     </th>
                                     <th>
-                                        <span t-esc="total_course_price"
-                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                        <b><span t-esc="website.currency_id.symbol"/><input t-attf-id="total_voucher_price" style="width: 80px !important; height: 30px; background: azure; border: azure;" class="total_exam_price" type="number" disabled="true" value="0.0"/></b>
+<!--                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>-->
                                     </th>
                                     <th>
-                                        <span t-esc="total_course_price"
-                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                        <b><span t-esc="website.currency_id.symbol"/><input id="final_total_price" style="width: 80px !important; height: 30px; background: azure; border: azure;" class="total_exam_price" type="number" disabled="true" t-att-value="total_price"/></b>
+<!--                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>-->
                                     </th>
                                     <th></th>
                                 </tr>
-<!--                                <tr>-->
-<!--                                    <th>Discount</th>-->
-<!--                                    <td>-->
-<!--                                        <span t-esc="discount if discount else 0"/>-->
-<!--                                        % All Inclusive Discount (Subject to terms and conditions)-->
-<!--                                    </td>-->
-<!--                                    <td></td>-->
-<!--                                    <td></td>-->
-<!--                                    <t t-if="discount">-->
-<!--                                        <t t-set="discount_set_value" t-value="(total_course_price * discount)/100"/>-->
-<!--                                        <td>-->
-<!--                                            <b>-->
-<!--                                                <span t-esc="discount_set_value"-->
-<!--                                                      t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"-->
-<!--                                                      style="background-color: red; padding: 2px 4px; border-radius: 3px;"/>-->
-<!--                                            </b>-->
-<!--                                        </td>-->
-<!--                                    </t>-->
-<!--                                    <t t-if="not discount">-->
-<!--                                        <td>-->
-<!--                                            <b>-->
-<!--                                                <span t-esc="0.0"-->
-<!--                                                      t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"-->
-<!--                                                      style="background-color: red; padding: 2px 4px; border-radius: 3px;"/>-->
-<!--                                            </b>-->
-<!--                                        </td>-->
-<!--                                    </t>-->
-<!--                                </tr>-->
-<!--                                <tr>-->
-<!--                                    <th>Grand Total</th>-->
-<!--                                    <td></td>-->
-<!--                                    <td></td>-->
-<!--                                    <td></td>-->
-<!--                                    <t t-if="discount">-->
-<!--                                        <t t-set="grand_total" t-value="total_course_price - discount_set_value"/>-->
-<!--                                    </t>-->
-<!--                                    <td>-->
-<!--                                        <b>-->
-<!--                                            <span id="grand_tot_val"-->
-<!--                                                  t-esc="grand_total if discount else total_course_price"-->
-<!--                                                  t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>-->
-<!--                                        </b>-->
-<!--                                    </td>-->
-<!--                                    <input type="hidden" value="grand_total if discount else total_course_price"-->
-<!--                                           name="grand_total_value"/>-->
-<!--                                </tr>-->
                             </tbody>
                         </table>
                     </div>
-                    <div style="margin-top:10px;">
-                        <p style="color:red;">
+                    <div class="row site-identifier ci-red-bg" style="width: 100% !important;margin-bottom: 35px !important;margin-top: 10px !important;">
+                        <p>
                             <b>
                                 If you already paid for your exams with your enrolment you should have received a voucher to book your exams. In the event that you paid your fees and does not have a voucher please click “Pay Vie EFT” and follow instructions in the email to be sent to you.
                             </b>
                         </p>
                     </div>
                     <center>
-                        <table>
+                        <table id="pay_btn_table">
                             <tbody>
                                 <tr>
+                                    <input id="price_total" type="hidden" name="price_total" t-att-value="total_price"/>
+                                    <input id="voucher_id" type="hidden" name="voucher_id"/>
+                                        <td>
+    <!--                                        <form action="/exam_registration" method="post">-->
+                                                <button id="btn_pay_via_credit_card" style="margin-top: 30px;"
+                                                        class="btn btn-primary prc_tmp_1 pay_via_credit_card" name="button_credit" type="submit"
+                                                        value="Pay Via Credit Card">
+                                                    <center class="prc_1">Pay Via Credit Card</center>
+                                                </button>
+    <!--                                            <input class="form-field" name="email_to" value="tttt" type="hidden"/>-->
+    <!--                                            <input class="form-field" name="page_name" value="registration" type="hidden"/>-->
+    <!--                                        </form>-->
+                                        </td>
 
-                                    <td>
-                                        <form action="/exam_registration" method="post">
-                                        <input type="hidden" name="payment_type" value="creditcard"/>
-                                        <button id="btn_pay_via_credit_card" style="margin-top: 30px;"
-                                                class="btn btn-primary prc_tmp_1" name="button" type="submit"
-                                                value="Pay Via Credit Card">
-                                            <center class="prc_1">Pay Via Credit Card</center>
-                                        </button>
-                                            <input class="form-field" name="email_to" value="tttt" type="hidden"/>
-                                            <input class="form-field" name="page_name" value="registration" type="hidden"/>
-                                        </form>
-                                    </td>
+                                        <td>
+    <!--                                        <form action="/exam_registration" method="POST">-->
+    <!--                                            <input type="hidden" name="payment_type" value="eft"/>-->
+                                            <button id="btn_pay_via_eft" style="margin-top: 30px;"
+                                                    class="btn btn-primary prc_tmp_2 pay_via_eft"
+                                                    name="button_eft" type="submit" value="Pay Via EFT/Deposit">
+                                                <center class="prc_2">Pay Via EFT/Deposit</center>
+                                            </button>
+                                        </td>
+<!--                                        <td>-->
+<!--                                            <button id="btn_confirm_booking" style="margin-top: 30px;display:none;"-->
+<!--                                                    class="btn btn-primary prc_tmp_2 confirm_booking"-->
+<!--                                                    name="button_confirm" type="submit" value="confirm_booking">-->
+<!--                                                <center class="prc_2">Confirm Booking</center>-->
+<!--                                            </button>-->
+<!--                                        </td>-->
 
-                                    <t t-if="btn_display">
-                                        <td></td>
-                                    </t>
-                                    <td>
-                                        <!--<h2 style="color:black;">OR</h2>-->
-                                    </td>
-                                    <td>
-                                        <form action="/exam_registration" method="POST">
-                                            <input type="hidden" name="payment_type" value="eft"/>
-                                        <button id="btn_pay_via_eft" style="margin-top: 30px;"
-                                                class="btn btn-primary prc_tmp_2"
-                                                name="button" type="submit" value="Pay Via EFT/Deposit">
-                                            <center class="prc_2">Pay Via EFT/Deposit</center>
-                                        </button>
-                                            <input class="form-field" name="email_to" value="tttt" type="hidden"/>
-                                            <input class="form-field" name="page_name" value="registration" type="hidden"/>
-                                        </form>
-                                    </td>
                                 </tr>
+                                <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                                <input class="form-field" name="page_name" value="registration" type="hidden"/>
                             </tbody>
                         </table>
+                        <button id="btn_confirm_booking" style="margin-top: 30px;display:none;"
+                                class="btn btn-primary prc_tmp_2 confirm_booking"
+                                name="button_confirm" type="submit" value="confirm_booking">
+                            <center class="prc_2">Confirm Booking</center>
+                        </button>
                     </center>
             <div class="oe_structure"/>
+            </form>
             </t>
+            <div id="pc_exam_voucher" class="modal fade voucherModal" role="dialog">
+               <div class="modal-dialog">
+                   <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="ui-widget-header ui-corner-all ui-helper-clearfix" style="height: 40px;">
+                            <span class="ui-dialog-title">Apply Voucher</span>
+                            <button type="button" style="margin-left: 422px !important; background-image: url('/cfo_snr_jnr/static/src/img/close.png'); background-size: 100%;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" value="Cancel" data-dismiss="modal" role="button" title="Close">
+                            </button>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <form id="voucher_form">
+                                <fieldset>
+                                <br>
+                                    <div style="box-shadow: 1px 2px 3px;">
+                                    <p class="bg-primary">Please Enter your Voucher Number and Press the Validate Button to apply your voucher</p>
+                                    <center>
+                                    <span><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR7-snoJ7h6xISkj4vMaZ4_bbVWLTTykUXL7VtNKWUNHI9bb98E"/></span>
+                                    </center>
+                                    </div>
+                                </br>
+                                <center>
+                                <table style="margin-top:40px;"><tbody>
+                                <tr>
+                                    <td>
+                                        <label for="voucher_value" style="font-family: serif;font-weight: bold;color:goldenrod;">Voucher Number:</label>
+                                    </td>
+<!--                                                        <td>;</td>-->
+                                    <td>
+                                        <input class="form-field" type="text" name="voucher_code" id="voucher_code" required="true"/>
+                                    </td>
+                                </tr>
+                                </tbody></table>
+                                </center>
+                                <br></br>
+                                <div style="box-shadow: 1px 2px 3px;">
+                                    <p id="errormessage" style="font-family: serif;font-weight: bold;color:red;background-color: black;"></p>
+                                </div>
+                                <br></br>
+                                <center>
+<!--                                 <input type="button" class="btn  btn-success" id="submit-request" value="Validate"/>-->
+                                 <button class="btn btn-success voucher_search" id="voucher_search" type="button">Validate</button>
+                                 <input type="button" id="voucher_cancel" class="btn  btn-danger" value="Cancel" data-dismiss="modal"/>
+                                </center>
+                                </fieldset>
+                                <br>
+                                <input type="hidden" name="event_id" id="event_id"/></br>
+<!--                                <div style="box-shadow: 1px 2px 3px;">-->
+<!--                                    <p id="errormessage" style="font-family: serif;font-weight: bold;color:red;background-color: black;"></p>-->
+<!--                                </div>-->
+                             </form>
+                        </div>
+<!--                        <div class="modal-footer">-->
+
+
+<!--&lt;!&ndash;                                    <button type="button" class="btn btn-default" data-dismiss="modal">&ndash;&gt;-->
+<!--&lt;!&ndash;                                        Close&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </button>&ndash;&gt;-->
+<!--                        </div>-->
+                    </div>
+               </div>
+            </div>
         </t>
     </template>
 
@@ -901,6 +1004,27 @@
                                 <tbody>
                                     <tr>
                                         <td>
+                                            <t t-if="pay_via_eft">
+                                                <div class="control-group div_css_4" style="width: 470px;float: left;">
+                                                    <label class="control-label lbl_css_4" style="margin-left: 22px;width: 70%;"
+                                                           for="invoicegenerated">* Do you require an invoice to be
+                                                        generated ?
+                                                    </label>
+                                                    <div class="controls"
+                                                         style="margin-left: 0 !important;float: left; ">
+                                                        <select class="requiredValue form-control1 select_css_4" name="do_invoice"
+                                                                required="false"
+                                                                style="margin-left: 6px;width: 100px;border-radius: 0px !important;">
+                                                            <option value="No">No</option>
+                                                            <option value="Yes">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
                                             <div class="control-group css_reg_div">
                                                 <label class="control-label css_reg_lbl" for="inputTitle">* Title</label>
                                                 <div class="css_reg_inp" style="margin-left: 180px;">
@@ -924,7 +1048,7 @@
                                                 </label>
                                                 <div class="css_reg_inp" style="margin-left: 180px;">
                                                     <input type="text" class="form-control1" name="Company"
-                                                           id="Company" placeholder="Company"/>
+                                                           id="Company" style="width: 177px;" placeholder="Company"/>
                                                 </div>
                                             </div>
                                         </td>
@@ -1070,9 +1194,9 @@
                                             <div class="control-group css_reg_div">
                                                 <label class="control-label css_reg_lbl" for="Email">* Email</label>
                                                 <div class="css_reg_inp" style="margin-left: 180px;">
-                                                        <input type="text" name="Email" id="Email"
+                                                        <input type="email" name="Email" id="email"
                                                                placeholder="Email" style="width: 177px;"
-                                                               class="requiredValue form-control1" required=""/>
+                                                               class="requiredValue form-control1" required="true"/>
                                                 </div>
                                             </div>
                                         </td>
@@ -1084,7 +1208,7 @@
                                                        t-value="request.env['res.country.state'].sudo().search([])"/>
                                                     <select name="inputexamState" id="inputexamState"
                                                             class="requiredValue form-control1 css_reg_inp"
-                                                            style="border-radius: 0px !important;width: 177px;" required="true">
+                                                            style="border-radius: 0px !important;width: 177px;">
                                                         <t t-foreach="states" t-as="each_state">
                                                             <option t-att-value="each_state.id"
                                                                     t-att-data-country_id="each_state.country_id.id">
@@ -1121,7 +1245,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="control-group css_reg_div1">
+                                            <div class="control-group css_reg_div">
                                                 <label class="control-label css_reg_lbl" for="inputexamId">* Professional Body Student
                                                     ID
                                                     No.
@@ -1206,6 +1330,22 @@
                                 </center>
                                 <input class="form-field" name="email_to" value="tttt" type="hidden"/>
                                 <input class="form-field" name="page_name" value="confirmation" type="hidden"/>
+                                <input id="campus" class="form-field" name="campus" type="hidden" t-att-value="campus"/>
+                                <input id="event_id_list" class="form-field" name="event_id_list" type="hidden" t-att-value="event_id_list"/>
+                                <t t-if="voucher_list">
+                                    <input id="voucher_list" class="form-field" name="voucher_list" type="hidden" t-att-value="voucher_list"/>
+                                </t>
+                                <input id="event_id_list" class="form-field" name="event_id_list" type="hidden" t-att-value="event_id_list"/>
+                                <input id="total_price" class="form-field" name="total_price" type="hidden" t-att-value="total_price"/>
+                                <t t-if="pay_via_credit_card">
+                                    <input id="pay_via_credit_card" class="form-field" name="pay_via_credit_card" type="hidden" t-att-value="pay_via_credit_card"/>
+                                </t>
+                                <t t-if="pay_via_eft">
+                                    <input id="pay_via_eft" class="form-field" name="pay_via_eft" type="hidden" t-att-value="pay_via_eft"/>
+                                </t>
+                                <t t-if="confirm_booking">
+                                    <input id="confirm_booking" class="form-field" name="confirm_booking" type="hidden" t-att-value="confirm_booking"/>
+                                </t>
                             </div>
                         </div>
                     </fieldset>
@@ -1221,6 +1361,7 @@
             <t t-call="cfo_snr_jnr.header_pc_template">
             <div class="oe_structure"/>
             <div class="container" style="margin:0px;padding:0px;">
+<!--                <form action="/exam/redirect_payu" method="POST">-->
                 <div style="margin-top:5px;">
                     <div class="well" style="color: #000000;background-color: #ffe6e6;border-color: #ff8080;padding: 5px;">
                         <h4>Please Confirm the details you selected for the PC Exam Registration.</h4>
@@ -1230,70 +1371,203 @@
                         <center>
                             <table class="table" style="color:black;">
                                 <input id="uuid" type="hidden" t-att-value="uuid" name='uuid'/>
+                                <input id="campus" class="form-field" name="campus" type="hidden" t-att-value="campus"/>
+                                <input id="event_ids" class="form-field" name="event_ids" type="hidden" t-att-value="event_ids"/>
+                                <input id="total_price" class="form-field" name="total_price" type="hidden" t-att-value="total_price"/>
+                                <input id="pc_exam_type" class="form-field" name="pc_exam_type" type="hidden" t-att-value="pc_exam_type"/>
+                                <input id="exam_type" class="form-field" name="exam_type" type="hidden" t-att-value="exam_type"/>
+                                <input id="do_invoice" class="form-field" name="do_invoice" type="hidden" t-att-value="do_invoice"/>
+                                <input id="saleorder_id" class="form-field" name="saleorder_id" type="hidden" t-att-value="saleorder_id"/>
+                                <t t-if="saleorder_id">
+                                    <t t-set="sale_order_id"
+                                        t-value="request.env['sale.order'].sudo().browse(saleorder_id)"/>
+                                </t>
+                                <t t-if="pay_via_credit_card">
+                                 <input id="pay_via_credit_card" class="form-field" name="pay_via_credit_card" type="hidden" t-att-value="pay_via_credit_card"/>
+                                </t>
+                                <t t-if="sale_order">
+                                <input id="sale_order" class="form-field" name="sale_order" t-att-value="sale_order"
+                                       type="hidden"/>
+                                </t>
+                                <t t-if="sale_order_id">
+                                    <input id="sale_order" class="form-field" name="sale_order"
+                                           t-att-value="sale_order_id.id" type="hidden"/>
+                                </t>
                                 <tbody>
                                     <tr>
                                         <td>
                                             <div class="control-group css_reg_div">
-                                                <label class="control-label css_reg_lbl" for="inputTitle">Exam Type</label>
-                                                <div class="css_reg_inp" style="margin-left: 180px;">
-                                                </div>
+                                                <label class="control-label css_reg_lbl" style="color:red;font-size: 20px;" for="inputTitle">Exam Type</label>
+<!--                                                <div style="margin-left: 180px;">-->
+<!--                                                    <b><span t-esc="exam_type"/></b>-->
+<!--                                                </div>-->
                                             </div>
+                                        </td>
+                                        <td><div class="reg_div"><b><span t-esc="exam_type"/></b></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" style="color:red;font-size: 20px;" for="FirstName">Campus</label>
+<!--                                                <div style="margin-left: 180px;">-->
+<!--                                                    <b><span t-esc="campus"/></b>-->
+<!--                                                </div>-->
+                                            </div>
+                                        </td>
+                                        <td><div class="reg_div"><b><span t-esc="campus"/></b></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" style="color:red;font-size: 20px;" for="LastName">PC Exam Type</label>
+<!--                                                <div  style="margin-left: 180px;">-->
+<!--                                                    <b><span t-esc="pc_exam_type"/></b>-->
+<!--                                                </div>-->
+                                            </div>
+                                        </td>
+                                        <td><div class="reg_div"><b><span t-esc="pc_exam_type"/></b></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="control-group css_reg_div">
+                                                <label class="control-label css_reg_lbl" style="color:red;font-size: 20px;" for="DOB">Exam Dates &amp; Modules</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <t t-if="event_ids">
+                                                <t t-foreach="event_ids" t-as="each_event">
+                                                    <t t-set="event_id"
+                                                        t-value="request.env['event.event'].sudo().browse(int(each_event))"/>
+                                                    <t t-set="date_start" t-value="event_id.date_begin.split(' ')"/>
+                                                    <t t-set="date_end" t-value="event_id.date_end.split(' ')"/>
+                                                    <t t-set="time_str" t-value="date_start[1].split(':')"/>
+                                                    <t t-set="time_send" t-value="date_end[1].split(':')"/>
+                                                    <t t-set="time_start" t-value="time_str[0]+':'+time_str[1]"/>
+                                                    <t t-set="time_end" t-value="time_send[0]+':'+time_send[1]"/>
+                                                    <div class="reg_div">
+                                                        <b><span t-esc="event_id.name"/>
+                                                            <span t-esc="date_start[0]"/>
+                                                            <span t-esc="time_start"/> -<span t-esc="time_end"/></b>
+                                                    </div>
+                                                </t>
+                                            </t>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <div class="control-group css_reg_div">
-                                                <label class="control-label css_reg_lbl" for="FirstName">Campus</label>
-                                                <div class="css_reg_inp" style="margin-left: 180px;">
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="control-group css_reg_div">
-                                                <label class="control-label css_reg_lbl" for="LastName">PC Exam Type</label>
-                                                <div class="css_reg_inp" style="margin-left: 180px;">
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="control-group css_reg_div">
-                                                <label class="control-label css_reg_lbl" for="DOB">Exam Dates &amp; Modules</label>
-                                                <div class="css_reg_inp" style="margin-left: 180px;">
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="control-group css_reg_div">
-                                                <label class="control-label css_reg_lbl" for="ID_PassportNo.">Amount
+                                                <label class="control-label css_reg_lbl" style="font-size: 20px;color:red;" for="ID_PassportNo.">Amount
                                                 </label>
-                                                <div class="css_reg_inp" style="margin-left: 180px;">
-                                                </div>
+<!--                                                <div style="margin-left: 180px;">-->
+<!--                                                    <b><span t-esc="total_price"/></b>-->
+<!--                                                </div>-->
                                             </div>
                                         </td>
+                                        <td><div class="reg_div"><b><span t-esc="total_price" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></b></div></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </center>
                         <div class="form-group">
-                            <form action="/exam/redirect_payu" method="POST">
-                                        <button id="confirm-button" style="margin-left:10px;"
-                                               class="btn btn-primary"
-                                                name="button" type="submit">
-                                            <center class="prc_2">Confirm</center>
-                                        </button>
-                                            <input class="form-field" name="email_to" value="tttt" type="hidden"/>
-                                            <input class="form-field" name="page_name" value="completion" type="hidden"/>
-                            </form>
+                            <t t-if="not saleorder_id">
+
+                                <form action="/exam/redirect_payu" method="POST">
+                                    <input id="sale_order" class="form-field" name="sale_order" t-att-value="sale_order"
+                                       type="hidden"/>
+                                    <input id="sale_order" class="form-field" name="sale_order"
+                                           t-att-value="sale_order_id.id" type="hidden"/>
+                                            <button id="confirm-button" style="margin-left:10px;"
+                                                   class="btn btn-primary"
+                                                    name="button" type="submit">
+                                                <center class="prc_2">Confirm</center>
+                                            </button>
+    <!--                            <t t-if="pay_via_credit_card">-->
+    <!--                                <button type="submit" style="margin-left:10px;" formaction="/exam/redirect_payu"-->
+    <!--                                        id="credit-confirm-button" class="btn btn-primary">Confirm-->
+    <!--                                </button>-->
+    <!--                            </t>-->
+                                <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                                <input class="form-field" name="page_name" value="completion" type="hidden"/>
+                                </form>
+                            </t>
+                            <t t-if="saleorder_id">
+                                <form action="/page/reschedule_thank_you" method="POST">
+                                    <input id="saleorder_id" class="form-field" name="saleorder_id" type="hidden" t-att-value="saleorder_id"/>
+                                            <button id="confirm-button" style="margin-left:10px;"
+                                                   class="btn btn-primary"
+                                                    name="button" type="submit">
+                                                <center class="prc_2">Confirm</center>
+                                            </button>
+    <!--                            <t t-if="pay_via_credit_card">-->
+    <!--                                <button type="submit" style="margin-left:10px;" formaction="/exam/redirect_payu"-->
+    <!--                                        id="credit-confirm-button" class="btn btn-primary">Confirm-->
+    <!--                                </button>-->
+    <!--                            </t>-->
+                                <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+                                <input class="form-field" name="page_name" value="completion" type="hidden"/>
+                                </form>
+                            </t>
                         </div>
                 </div>
+<!--                </form>-->
             </div>
             <div class="oe_structure"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="exam_page_eft_thankyou" name="EFT successful">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_pc_template">
+                <div class="oe_structure"/>
+
+                <div class="col-sm-12" style="color:black;">
+                    <center>
+                        <h2 style="color:red;">Thank You!!</h2>
+                    </center>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="exam_reschedule_fail" name="Reschedule Exam Fail">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_pc_template">
+                <div class="oe_structure"/>
+
+                <div class="col-sm-12" style="color:black;">
+                    <center>
+                        <h3 style="color:red;">Sorry! you can not reschedule your PC Exam because the Date of your currently booked PC Exam hae either passed or is less than 2 days away</h3>
+                    </center>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="reschedule_booking_thankyou" name="Reschedule Successful">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_pc_template">
+                <div class="oe_structure"/>
+
+                <div class="col-sm-12" style="color:black;">
+                    <center>
+                        <h2 style="color:red;">Thank You!!</h2>
+                    </center>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="confirm_booking_thankyou" name="Confirm Booking">
+        <t t-call="website.layout">
+            <t t-call="cfo_snr_jnr.header_pc_template">
+                <div class="oe_structure"/>
+
+                <div class="col-sm-12" style="color:black;">
+                    <center>
+                        <h2 style="color:red;">Thank You!!</h2>
+                    </center>
+                </div>
             </t>
         </t>
     </template>
@@ -1304,14 +1578,40 @@
                 <div class="oe_structure"/>
 
                 <div class="col-sm-12" style="color:black;">
+                    <!--<h3>Payment Unsuccessful!</h3>-->
+                    <!--<h4>Please repeat the process and choose EFT as your payment method and we will send you a proforma invoice with our banking details for you to make the payment for your order. Once your payment is received your order will be processed immediately;</h4>-->
+                    <!--<h4>Thank you</h4>-->
                     <center>
                         <h2 style="color:red;">OOPS!</h2>
                         <h3>Payment Unsuccessful!</h3>
+                        <h5>Your request has been send to our PC Exam and you have been booked provisionally.
+                        </h5>
+                        <h5>We have sent you a Proforma Invoice with our Banking details;</h5>
+                        <h5>please make sure to make payment to secure your place for your PC Exam and send to proof of payment to <strong style="color:red;">pcexams@charterquest.co.zo</strong></h5>
                     </center>
                 </div>
             </t>
         </t>
     </template>
 
-
+    <template id="exam_process_page_thankyou" name="Thank-You">
+            <t t-call="website.layout">
+                <t t-call="cfo_snr_jnr.header_pc_template">
+                    <div class="oe_structure"/>
+                    <div class="col-sm-12" style="color:black;">
+                        <center>
+                            <h3>Payment Successful!!</h3>
+                            <br></br>
+                            <h5>An email has been sent to you as confirmation of your PC Exam booking.</h5>
+                            <br></br>
+                            <div class="col-sm-12" style="color:red;">
+                            <h3>Thank You!</h3>
+                        </div>
+                        </center>
+                    </div>
+                </t>
+            </t>
+        <input class="form-field" name="email_to" value="tttt" type="hidden"/>
+        <input class="form-field" name="page_name" value="completion" type="hidden"/>
+    </template>
 </odoo>

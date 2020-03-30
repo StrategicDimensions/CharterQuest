@@ -28,6 +28,7 @@ class SaleOrder(models.Model):
                     continue
                 if group_key not in invoices:
                     inv_data = order._prepare_invoice()
+                    print("\n\n\n\n\n\================111111111111111============",inv_data)
                     invoice = inv_obj.create(inv_data)
                     references[invoice] = order
                     invoices[group_key] = invoice

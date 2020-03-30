@@ -174,7 +174,7 @@
                                     <p>Student no</p>
                                 </td>
                                 <td>
-                                    <p></p>
+                                    <p><span t-esc="doc.partner_id.student_number"/></p>
                                 </td>
                             </tr>
                             <tr>
@@ -372,8 +372,14 @@
                     <br/>
                     <br/>
                     <p style="background-color:darkgray; border: 2px solid black;">OUR TERMS AND CONDITIONS:</p>
-                    <t t-set="pc_exam"
+                    <t t-set="charterbooks"
                        t-value="request.env['terms.conditions'].search([('type','=','CharterBooks')],order='id desc' ,limit=1)"/>
+                    <t t-set="pc_exam"
+                       t-value="request.env['terms.conditions'].search([('type','=','PC Exams')],order='id desc' ,limit=1)"/>
+                    <t t-if="charterbooks">
+                        <span t-raw="charterbooks.terms_condition">
+                        </span>
+                    </t>
                     <t t-if="pc_exam">
                         <span t-raw="pc_exam.terms_condition">
                         </span>

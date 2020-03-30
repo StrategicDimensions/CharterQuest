@@ -43,6 +43,7 @@
         'views/cfo_team_view.xml',
         'views/menus.xml',
         'views/res_partner.xml',
+        'data/pc_exam_email_template.xml',
         'data/email_template.xml',
         'data/ir_cron.xml',
         'views/enrolment_template.xml',

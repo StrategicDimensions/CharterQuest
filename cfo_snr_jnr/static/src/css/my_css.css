@@ -564,6 +564,17 @@ strong {
     margin-top: 30px;
 }
 
+.reg_div{
+    font-size: 20px;
+    width: 100%;
+    margin-right: 320px;
+    color: blue;
+}
+.ui-button{
+    padding: .9em 1em !important;
+    margin-top: 4px !important;
+}
+
 @media (max-width: 320px) {
     .table-product-info {
         display: none !important;

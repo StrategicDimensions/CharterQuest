@@ -46,7 +46,6 @@ def main():
                                          , 'search_read',
                                          [[['name', '=', line[2]]]], {'fields': ['id']})
                country_id = country[0].get('id')
-               print("\n\n\n\n==========country_id======",country_id)
                state = sock.execute_kw(str(db), 1, str(password)
                                        , 'res.country.state'
                                        , 'create',

@@ -21,8 +21,8 @@
                 <page string="Debit Order Entries">
                     <field name="debit_order_entry"/>
                 </page>
-                <page string="PC Exams Vocuhers">
-                    <separator string="PC Exams Vouchers"/>
+                <page string="PC Exam Vouchers">
+                    <separator string="PC Exam Vouchers"/>
                     <field name="pcexam_voucher_ids" />
                     <separator string="Redeemed Vouchers"/>
                     <field name="redeemed_voucher_ids" />
