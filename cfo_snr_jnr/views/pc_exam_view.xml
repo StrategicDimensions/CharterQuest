@@ -487,26 +487,23 @@
                           enctype="multipart/form-data" data-success_page="">
                         <input id="uuid" type="hidden" t-att-value="uuid" name='uuid'/>
                         <input id="sale_order_id" type="hidden" t-att-value="sale_order_id" name='sale_order_id'/>
-                        <input id="exam_type_ids" type="hidden" t-att-value="exam_type_ids" name='exam_type_ids'/>
                         <div class="form-group form-field o_website_form_custom" id="reg_campus">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
                                 <label for="campus lbl_4" style="margin-left: 16px;" class="control-label">Select PC Exam Type
                                 </label>
                             </div>
                             <div class="col-md-7 col-sm-8" id="select_css_1">
-<!--                                <t t-set="examtype_ids"-->
-<!--                                    t-value="request.env['pc.exam.type'].sudo().search([])"/>-->
+                                <t t-set="examtype_ids"
+                                    t-value="request.env['pc.exam.type'].sudo().search([])"/>
                                 <select id="select_pc_exam_type" class="form-control o_website_form_input"
                                         name="Select Exam Type"
                                         required="true">
                                     <t t-if="not sale_order_id">
                                         <option></option>
-                                        <t t-foreach="exam_type_ids" t-as="examtype">
-                                            <t t-set="examtype_id"
-                                            t-value="request.env['pc.exam.type'].sudo().browse(examtype)"/>
-                                            <option t-att-value="examtype_id.id">
-                                                <t t-esc="examtype_id.name"/>
-                                            </option>
+                                       <t t-foreach="examtype_ids" t-as="examtype">
+                                        <option t-att-value="examtype.id">
+                                            <t t-esc="examtype.name"/>
+                                        </option>
                                         </t>
                                     </t>
                                     <t t-if="sale_order_id">
@@ -544,8 +541,6 @@
             <div class="oe_structure"/>
             <div class="container" style="margin:0px;padding:0px;">
                 <input id="sale_order_id" type="hidden" t-att-value="sale_order_id" name='sale_order_id'/>
-                <input id="exam_level_ids" type="hidden" t-att-value="exam_level_ids" name='exam_level_ids'/>
-                <input id="exam_subject_ids" type="hidden" t-att-value="exam_subject_ids" name='exam_subject_ids'/>
                 <t t-if="sale_order_id">
                     <t t-set="sale_order_id"
                         t-value="request.env['sale.order'].sudo().browse(sale_order_id)"/>
@@ -575,18 +570,16 @@
                             </t>
                             <t t-if="not sale_order_id">
                                 <div class="col-md-7 col-sm-8" id="select_css_1">
-<!--                                <t t-set="level_ids"-->
-<!--                                    t-value="request.env['event.qual'].sudo().search([])"/>-->
+                                <t t-set="level_ids"
+                                    t-value="request.env['event.qual'].sudo().search([])"/>
                                     <select id="select_pc_exam_level" class="form-control o_website_form_input"
                                             name="select_pc_exam_level"
                                             required="true">
 
                                        <option></option>
-                                        <t t-foreach="exam_level_ids" t-as="examlevel">
-                                            <t t-set="examlevel_id"
-                                            t-value="request.env['event.qual'].sudo().browse(examlevel)"/>
-                                            <option t-att-value="examlevel_id.id">
-                                                <t t-esc="examlevel_id.name"/>
+                                        <t t-foreach="level_ids" t-as="level">
+                                            <option t-att-value="level.id">
+                                                <t t-esc="level.name"/>
                                             </option>
                                         </t>
                                     </select>
@@ -599,23 +592,16 @@
                                 </label>
                             </div>
                             <div class="col-md-7 col-sm-8" id="select_css_1">
-<!--                                <t t-set="subject_ids"-->
-<!--                                    t-value="request.env['event.subject'].sudo().search([])"/>-->
+                                <t t-set="subject_ids"
+                                    t-value="request.env['event.subject'].sudo().search([])"/>
                                     <select id="select_pc_exam_subject" class="form-control o_website_form_input"
                                             name="select_pc_exam_subject"
                                             required="true">
                                         <t t-if="not sale_order_id">
                                            <option></option>
-<!--                                            <t t-foreach="subject_ids" t-as="subject">-->
-<!--                                                <option t-att-value="subject.id">-->
-<!--                                                    <t t-esc="subject.name"/>-->
-<!--                                                </option>-->
-<!--                                            </t>-->
-                                            <t t-foreach="exam_subject_ids" t-as="examsubject">
-                                                <t t-set="examsubject_id"
-                                                t-value="request.env['event.subject'].sudo().browse(examsubject)"/>
-                                                <option t-att-value="examsubject_id.id">
-                                                    <t t-esc="examsubject_id.name"/>
+                                            <t t-foreach="subject_ids" t-as="subject">
+                                                <option t-att-value="subject.id">
+                                                    <t t-esc="subject.name"/>
                                                 </option>
                                             </t>
                                         </t>
