@@ -50,32 +50,61 @@ class PCExambooking(http.Controller):
 
     @http.route(['/reg'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def pc_exam_type_reg(self, **post):
+        examtype_ids = []
+        exam_type_ids = []
         print('\n\n\n\n\n=======post======',post,type((post.get('Select Campus'))))
-        # campus_id = request.env['res.partner'].browse(int(post.get('Select Campus')))
-        # print("\n\n\n\n========campus_id====", campus_id)
-        # event_id = request.env['event.event'].search([(campus_id.id,'in','address_ids.ids')])
-        # print("\n\n\n\n========event_id====",event_id)
+
+        event_ids = request.env['event.event'].sudo().search([])
+        print("\n\n\n\n========event_id====",event_ids)
+        for event in event_ids:
+            if int(post.get('Select Campus')) in event.address_ids.ids:
+                if event.type_pc_exam:
+                    examtype_ids.append(event.type_pc_exam)
+        print("\n\n\n\n==exam_type======",examtype_ids)
+        for exam_type in examtype_ids:
+            if exam_type.id not in exam_type_ids:
+                exam_type_ids.append(exam_type.id)
+        print("\n\n\n\n==exam_type_ids======", exam_type_ids)
         value={}
         value['sale_order_id'] = int(post.get('sale_order_id')) if post.get('sale_order_id') else False
         value['uuid'] = post.get('uuid')
         value['campus'] = int(post.get('Select Campus'))
         value['page_name'] = post.get("page_name")
+        value['exam_type_ids'] = exam_type_ids
         return request.render('cfo_snr_jnr.pc_exam_type_process_form', value)
 
     @http.route(['/pcexamsearch'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def pc_exam_search_reg(self, **post):
         print("\n\n\n\n\n\===========exam post======",post)
+        examlevel_ids = []
+        exam_level_ids = []
+        examsubject_ids = []
+        exam_subject_ids = []
+        exam_type_id = request.env['pc.exam.type'].sudo().browse(int(post.get('Select Exam Type')))
+        event_ids = request.env['event.event'].sudo().search([])
+        print("\n\n\n\n========event_id====", event_ids)
+        for event in event_ids:
+            if int(post.get('campus')) in event.address_ids.ids and exam_type_id.name == event.type_pc_exam.name:
+                if event.qualification:
+                    examlevel_ids.append(event.qualification)
+                    if event.subject:
+                        examsubject_ids.append((event.subject))
+        for exam_level in examlevel_ids:
+            if exam_level.id not in exam_level_ids:
+                exam_level_ids.append(exam_level.id)
+        print("\n\n\n\n==exam_level_ids======", exam_level_ids)
+        for exam_subject in examsubject_ids:
+            if exam_subject.id not in exam_subject_ids:
+                exam_subject_ids.append(exam_subject.id)
+        print("\n\n\n\n==exam_subject_ids======", exam_subject_ids)
         value={}
-        # if post.get('sale_order_id'):
-        #     sale_order_id = request.env['sale.order'].sudo().browse(int(post.get('sale_order_id')))
-        #     for event in sale_order_id.order_line:
-        #         value['qualification'] = event.event_id.qualification.name
-        #         value['subject'] = event.event_id.subject.name
+
         value['campus'] = int(post.get('campus'))
         value['sale_order_id'] = int(post.get('sale_order_id')) if post.get('sale_order_id') else False
         value['page_name'] = post.get("page_name")
         value['select_exam_type'] = post.get('Select Exam Type')
-
+        value['exam_level_ids'] = exam_level_ids
+        value['exam_subject_ids'] = exam_subject_ids
         print("\n\n\n\n\n=====value dict====",value)
         return request.render('cfo_snr_jnr.pc_exam_search_process_form', value)
 
@@ -86,18 +115,22 @@ class PCExambooking(http.Controller):
         print("\n\n\n\n\n\===========exam data post======", post)
         exam_date = post.get('date')
         # str_exam_date = date_converter.date_to_datetime(exam_date)
+        last_date = str(exam_date) + ' 23:59:59'
         str_exam_date = datetime.strptime(exam_date, '%m/%d/%Y')
+        end_exam_date = datetime.strptime(last_date, '%m/%d/%Y %H:%M:%S')
+
         str_exam_date = str_exam_date.strftime("%m/%d/%Y %H:%M:%S")
+        end_exam_date = end_exam_date.strftime("%m/%d/%Y %H:%M:%S")
         print("\n\n\n\n==========str_exam_date========",str_exam_date,type(str_exam_date))
-        exam_ids = request.env['event.event'].sudo().search([('type_pc_exam.id','=',post.get('exam_type')),('date_begin','>=',str_exam_date),('subject','=',int(post.get('subject'))),('qualification.id','=',int(post.get("level"))),('address_ids','in',int(post.get('campus')))])
+        exam_ids = request.env['event.event'].sudo().search([('type_pc_exam.id','=',post.get('exam_type')),('date_begin','>=',str_exam_date),('date_end','<=',end_exam_date),('subject','=',int(post.get('subject'))),('qualification.id','=',int(post.get("level"))),('address_ids','in',int(post.get('campus')))])
         print("\n\n\n==========exam_id====",exam_ids)
 
         if exam_ids:
             for exam in exam_ids:
                 if exam.seats_available > 0:
                     exam_dict = {}
-                    print("\n\n\n\n=====time=====",datetime.strptime(exam.date_begin,'%Y-%m-%d %H:%M:%S').time())
-                    print("\n\n\n\n=====time end=====", datetime.strptime(exam.date_end, '%Y-%m-%d %H:%M:%S').time())
+                    # print("\n\n\n\n=====time=====",datetime.strptime(exam.date_begin,'%Y-%m-%d %H:%M:%S').time())
+                    # print("\n\n\n\n=====time end=====", datetime.strptime(exam.date_end, '%Y-%m-%d %H:%M:%S').time())
                     exam_dict['subject_name']=exam.name
                     exam_dict['start_time']=exam.date_begin
                     exam_dict['end_time']=exam.date_end
@@ -105,7 +138,7 @@ class PCExambooking(http.Controller):
                     exam_dict['seats_available']=exam.seats_available
                     exam_dict['exam_id']=exam.id
                     exam_list.append(exam_dict)
-                    print("\n\n\n\n===========list========",exam_list)
+                    # print("\n\n\n\n===========list========",exam_list)
             return exam_list
 
     # @http.route('/set_available_seats', type='json', auth='public', website=True)
