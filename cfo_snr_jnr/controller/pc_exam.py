@@ -25,24 +25,7 @@ class PCExambooking(http.Controller):
     def pc_exam_form_render(self,uuid=False, **post):
         sale_order_id = False
         reschedule_time=0.0
-        campus_ids_lst = []
-        campus_lst = []
         print("\n\n\n\n\n============uuid============", uuid)
-        event_ids = request.env['event.event'].sudo().search([])
-        campus_ids = request.env['res.partner'].sudo().search([('is_campus','=', True)])
-
-        for campus in campus_ids:
-            for exam_campus in event_ids:
-                if campus in exam_campus.address_ids:
-                    if exam_campus.pc_exam == True:
-                        campus_ids_lst.append(campus.id)
-        print("\n\n\n\n=====campus_ids_lst lst====", campus_ids_lst)
-
-        for campus_exam in campus_ids_lst:
-            if campus_exam not in campus_lst:
-                campus_lst.append(campus_exam)
-
-        print("\n\n\n\n=====campus lst====",campus_lst)
         if uuid:
             sale_order_id = request.env['sale.order'].sudo().search([('debit_link', '=', uuid)])
 
@@ -62,8 +45,7 @@ class PCExambooking(http.Controller):
         else:
             return request.render('cfo_snr_jnr.pc_exam_process_form', {'page_name': 'campus',
                                                                        'uuid': uuid,
-                                                                       'sale_order_id': sale_order_id.id if sale_order_id else False,
-                                                                       'campus_ids_lst':campus_lst if campus_lst else False
+                                                                       'sale_order_id': sale_order_id.id if sale_order_id else False
                                                                        })
 
     @http.route(['/reg'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
