@@ -96,8 +96,8 @@ class PCExambooking(http.Controller):
             for exam in exam_ids:
                 if exam.seats_available > 0:
                     exam_dict = {}
-                    print("\n\n\n\n=====time=====",datetime.strptime(exam.date_begin,'%Y-%m-%d %H:%M:%S').time())
-                    print("\n\n\n\n=====time end=====", datetime.strptime(exam.date_end, '%Y-%m-%d %H:%M:%S').time())
+                    # print("\n\n\n\n=====time=====",datetime.strptime(exam.date_begin,'%Y-%m-%d %H:%M:%S').time())
+                    # print("\n\n\n\n=====time end=====", datetime.strptime(exam.date_end, '%Y-%m-%d %H:%M:%S').time())
                     exam_dict['subject_name']=exam.name
                     exam_dict['start_time']=exam.date_begin
                     exam_dict['end_time']=exam.date_end
@@ -146,6 +146,7 @@ class PCExambooking(http.Controller):
         print("\n\n\n\n\n===========voucher_id voucher=======", voucher_id,voucher_id.qualification_id.name)
 
         if voucher_id and event_id.qualification.name == voucher_id.qualification_id.name and voucher_id.status == 'Issued':
+            print("\n\n\n\n\n===========voucher_value=======", voucher_id.voucher_value)
             voucher_price = voucher_id.voucher_value
             voucher_id.write({'status':'Redeemed'})
             return {'voucher_price':voucher_price,
