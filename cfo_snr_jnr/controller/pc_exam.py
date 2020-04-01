@@ -913,6 +913,8 @@ class PCExambooking(http.Controller):
             sale_order = post.get('sale_order')
         if request.session.get('sale_order'):
             sale_order = request.session['sale_order']
+        if request.session.get('sale_last_order_id'):
+            sale_order = request.session.get('sale_last_order_id')
 
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
 
