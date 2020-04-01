@@ -901,14 +901,14 @@ class PCExambooking(http.Controller):
 
     @http.route(['/exam/pay/thank_you'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def pay_thank_you(self, **post):
-        print("\n\n\n\n\n==================exam thank you==============")
-        _logger.info("===================exam thank you-------------------- <%s>", post)
+        print("\n\n\n\n\n==================exam thank you==============",post)
+        _logger.info("===================exam thank you-------------------- <%s>", request.session.get('sale_order'))
         invoice_obj = request.env['account.invoice'].sudo()
         mail_obj = request.env['mail.mail'].sudo()
         attachment_list = []
         invoice_line = []
         online_registration = []
-        
+
         if post.get('sale_order'):
             sale_order = post.get('sale_order')
         if request.session.get('sale_order'):
