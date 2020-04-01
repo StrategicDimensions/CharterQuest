@@ -663,6 +663,7 @@ class PCExambooking(http.Controller):
     @http.route(['/exam/redirect_payu'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def exam_redirect(self, **post):
         print("\n\n\n\n\n==============credit card post======",post)
+        _logger.info("===================credit card post-------------------- <%s>", post)
         base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
         return_url = urljoin(base_url, '/exam/payment/payu_com/dpn/')
         cancel_url = urljoin(base_url, '/exam/payment/payu_com/cancel/')
@@ -768,11 +769,11 @@ class PCExambooking(http.Controller):
             'reference': request.env['payment.transaction'].get_next_reference(sale_order_id.name),
             'sale_order_id': sale_order_id.id,
         }
-        print("\n\n\n\nn\==================url  tx_values========", tx_values)
         tx = request.env['payment.transaction'].sudo().create(tx_values)
         print("\n\n\n\nn\==================url  transactiondetails========", transactionDetails)
         url = PayuController.payuMeaSetTransactionApiCall('', transactionDetails)
         print("\n\n\n\n\n\n============url==========", url)
+        _logger.info("===================payu url-------------------- <%s>",url)
         return werkzeug.utils.redirect(url)
 
     @http.route('/exam/payment/payu_com/dpn', type='http', auth="public", methods=['POST', 'GET'], website=True)
