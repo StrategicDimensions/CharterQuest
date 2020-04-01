@@ -911,177 +911,176 @@ class PCExambooking(http.Controller):
             sale_order = post.get('sale_order')
         if request.session.get('sale_order'):
             sale_order = request.session['sale_order']
-        if sale_order:
-            sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
+
+        sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
 
         # sale_order_id.write({'state': 'sale'})
-        if sale_order_id:
-            for each_order_line in sale_order_id.order_line:
-                invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
-                                            'name': each_order_line.name,
-                                            'quantity': 1.0,
-                                            'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
-                                            'invoice_line_tax_ids': [
-                                                (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
-                                            'price_unit': each_order_line.price_unit,
-                                            'discount': each_order_line.discount}])
-            invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
-                                                    'campus': sale_order_id.campus.id,
-                                                    'prof_body': sale_order_id.prof_body.id,
-                                                    'sale_order_id': sale_order_id.id,
-                                                    'semester_id': sale_order_id.semester_id.id,
-                                                    'invoice_line_ids': invoice_line,
-                                                    'residual': sale_order_id.out_standing_balance_incl_vat,
-                                                    })
+        for each_order_line in sale_order_id.order_line:
+            invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
+                                        'name': each_order_line.name,
+                                        'quantity': 1.0,
+                                        'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
+                                        'invoice_line_tax_ids': [
+                                            (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
+                                        'price_unit': each_order_line.price_unit,
+                                        'discount': each_order_line.discount}])
+        invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
+                                                'campus': sale_order_id.campus.id,
+                                                'prof_body': sale_order_id.prof_body.id,
+                                                'sale_order_id': sale_order_id.id,
+                                                'semester_id': sale_order_id.semester_id.id,
+                                                'invoice_line_ids': invoice_line,
+                                                'residual': sale_order_id.out_standing_balance_incl_vat,
+                                                })
 
-            # if request.session.get('do_invoice') == 'yes':
-            sale_order_id._action_confirm()
-            sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
-            ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
-                   'company_id': sale_order_id.company_id.id}
-            inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
-            ctx.update({'journal_id': inv_default_vals.get('journal_id')})
-            _logger.info("invoice id============ <%s>", ctx)
-            invoice_id = sale_order_id.with_context(ctx).sudo().action_invoice_create()
-            _logger.info("invoice id============ <%s>", invoice_id)
-            print("\n\n\n\n=========invoice line=========",invoice_id)
-            invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
-            journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
-            payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
-            payment_id = request.env['account.payment'].sudo().create({
-                'partner_id': sale_order_id.partner_id.id,
-                'amount': sale_order_id.amount_total,
-                'payment_type': 'inbound',
-                'partner_type': 'customer',
-                'invoice_ids': [(6, 0, invoice_id.ids)],
-                'payment_date': datetime.today(),
-                'journal_id': journal_id.id,
-                'payment_method_id': payment_methods[0].id
-            })
+        # if request.session.get('do_invoice') == 'yes':
+        sale_order_id._action_confirm()
+        sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
+        ctx = {'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale',
+               'company_id': sale_order_id.company_id.id}
+        inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
+        ctx.update({'journal_id': inv_default_vals.get('journal_id')})
+        _logger.info("invoice id============ <%s>", ctx)
+        invoice_id = sale_order_id.with_context(ctx).sudo().action_invoice_create()
+        _logger.info("invoice id============ <%s>", invoice_id)
+        print("\n\n\n\n=========invoice line=========",invoice_id)
+        invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
+        journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
+        payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
+        payment_id = request.env['account.payment'].sudo().create({
+            'partner_id': sale_order_id.partner_id.id,
+            'amount': sale_order_id.amount_total,
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'invoice_ids': [(6, 0, invoice_id.ids)],
+            'payment_date': datetime.today(),
+            'journal_id': journal_id.id,
+            'payment_method_id': payment_methods[0].id
+        })
 
-            invoice_id.action_invoice_open()
-            print("\n\n\n\nn\====state=======",invoice_id.state)
-            payment_id.action_validate_invoice_payment()
-        # if request.session.get('do_invoice') == 'no':
-        #     invoice_id.action_invoice_cancel()
-        #     sale_order_id.write({'state': 'draft'})
+        invoice_id.action_invoice_open()
+        print("\n\n\n\nn\====state=======",invoice_id.state)
+        payment_id.action_validate_invoice_payment()
+    # if request.session.get('do_invoice') == 'no':
+    #     invoice_id.action_invoice_cancel()
+    #     sale_order_id.write({'state': 'draft'})
+    #
+    # invoice_id.action_invoice_open()
+    # payment_id.action_validate_invoice_payment()
+    # template_id = request.env['mail.template'].sudo().search([('name', '=', "CharterQuest PC Exams Confirmation")])
+    # quote_name = "SO{0}WEB".format(str(sale_order_id.id).zfill(3))
+    # m = hashlib.md5(quote_name.encode())
+    # decoded_quote_name = m.hexdigest()
+    # config_para = request.env['ir.config_parameter'].sudo().search(
+    #     [('key', 'ilike', 'web.base.url')])
+    # if config_para:
+    #     link = config_para.value + "/reschedulePB/" + decoded_quote_name
+    #     sale_order_id.write({'debit_link': decoded_quote_name})
+    #     print("\n\n\n\n=====link============",link)
+
+    # template_id = request.env.ref('cfo_snr_jnr.email_template_payvia_credit_card',
+    #                                   raise_if_not_found=False)
+    # print("\n\n\n\n\n\n\==========event_ids==========",request.session.get('event_ids'))
+    #
+    # event_list=[]
+    # # event_list = request.session.get('event_ids')
+    # for event in request.session.get('event_ids'):
+    #     exam_dict = {}
+    #     event_id = request.env['event.event'].sudo().browse(int(event))
+    #     online_registration.append([0, 0, {'event_id': event_id.name,
+    #                                        'partner_id': invoice_id.partner_id.id,
+    #                                        'email': invoice_id.partner_id.email
+    #                                        }])
+    #     event_id.write({'online_registration_ids': online_registration})
+    #     exam = request.env['event.event'].sudo().browse(int(event))
+    #     exam_dict['subject_name'] = exam.name
+    #     exam_dict['start_time'] = exam.date_begin
+    #     exam_dict['end_time'] = exam.date_end
+    #     exam_dict['campus'] = sale_order_id.campus.name
+    #     event_list.append(exam_dict)
+    #
+    # print("\n\n\n\n\n\n===================exam ============list======",event_list)
+    #
+    # if template_id:
+    #     template_id.sudo().with_context(
+    #         # email_to=each_request.get('email'),
+    #         event_list=event_list,
+    #         email_cc='thecfo@charterquest.co.za',
+    #         reschedule_link = link,
+    #         prof_body = invoice_id.prof_body.name,
+    #     ).send_mail(sale_order_id.id,force_send=True)
+
+        # if request.session.get('sale_order') and request.session.get('do_invoice') == 'yes':
+
+    # template_invoice_id = request.env.ref('cfo_snr_jnr.email_template_pcexam_confirm',
+    #                                           raise_if_not_found=False)
+    # if template_invoice_id:
+    #     if request.session.get('sale_order'):
+    #         pdf_data_order = request.env.ref(
+    #             'event_price_kt.report_invoice_pcexam').sudo().render_qweb_pdf(invoice_id.id)
+    #         if pdf_data_order:
+    #             pdfvals = {'name': 'Invoice Report',
+    #                        'db_datas': base64.b64encode(pdf_data_order[0]),
+    #                        'datas': base64.b64encode(pdf_data_order[0]),
+    #                        'datas_fname': 'Invoice Report.pdf',
+    #                        'res_model': 'account.invoice',
+    #                        'type': 'binary'}
+    #             pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
+    #             attachment_list.append(pdf_create)
+
+        # if request.session.get('sale_order') and request.session.get('do_invoice') == 'no':
+        #     # com_spo_free_quote = request.env.ref('cfo_snr_jnr.company_sponsored_free_quote_email_template')
+        #     pdf_data_enroll = request.env.ref(
+        #         'event_price_kt.report_sale_enrollment').sudo().render_qweb_pdf(
+        #         sale_order_id.id)
+        #     enroll_file_name = "Pro-Forma " + sale_order_id.name
+        #     if pdf_data_enroll:
+        #         pdfvals = {'name': enroll_file_name,
+        #                    'db_datas': base64.b64encode(pdf_data_enroll[0]),
+        #                    'datas': base64.b64encode(pdf_data_enroll[0]),
+        #                    'datas_fname': enroll_file_name + '.pdf',
+        #                    'res_model': 'sale.order',
+        #                    'type': 'binary'}
+        #         pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
+        #         attachment_list.append(pdf_create)
+
+        # agreement_id = request.env.ref('cfo_snr_jnr.pc_exam_data_pdf')
+        # if agreement_id:
+        #     attachment_list.append(agreement_id)
+        # body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
+        # body_html += "<br>"
+        # body_html += "Dear " + sale_order_id.partner_id.name + ","
+        # body_html += "<br><br>"
+        # body_html += "Thank you for contacting CharterQuest and sending through your PC Exam Application."
+        # body_html += "<br><br>"
+        # body_html += "Please find attached your Tax invoice as well as the PC Exams Terms & Conditions."
+        # body_html += "<br><br>"
+        # body_html += "We look forward to seeing you on the day of your PC Exam. Please lookout for another email confirming your PC Exam Booking. CIMA Exams will be confirmed with PearsonVUE within 5-7 working days at most times sooner."
+        # body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
+        # body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY] <br> Fax: 086 218 8713 [SA ONLY] <br> Email:enquiries@charterquest.co.za <br/><div>"
         #
-        # invoice_id.action_invoice_open()
-        # payment_id.action_validate_invoice_payment()
-        # template_id = request.env['mail.template'].sudo().search([('name', '=', "CharterQuest PC Exams Confirmation")])
-        # quote_name = "SO{0}WEB".format(str(sale_order_id.id).zfill(3))
-        # m = hashlib.md5(quote_name.encode())
-        # decoded_quote_name = m.hexdigest()
-        # config_para = request.env['ir.config_parameter'].sudo().search(
-        #     [('key', 'ilike', 'web.base.url')])
-        # if config_para:
-        #     link = config_para.value + "/reschedulePB/" + decoded_quote_name
-        #     sale_order_id.write({'debit_link': decoded_quote_name})
-        #     print("\n\n\n\n=====link============",link)
-
-        # template_id = request.env.ref('cfo_snr_jnr.email_template_payvia_credit_card',
-        #                                   raise_if_not_found=False)
-        # print("\n\n\n\n\n\n\==========event_ids==========",request.session.get('event_ids'))
-        #
-        # event_list=[]
-        # # event_list = request.session.get('event_ids')
-        # for event in request.session.get('event_ids'):
-        #     exam_dict = {}
-        #     event_id = request.env['event.event'].sudo().browse(int(event))
-        #     online_registration.append([0, 0, {'event_id': event_id.name,
-        #                                        'partner_id': invoice_id.partner_id.id,
-        #                                        'email': invoice_id.partner_id.email
-        #                                        }])
-        #     event_id.write({'online_registration_ids': online_registration})
-        #     exam = request.env['event.event'].sudo().browse(int(event))
-        #     exam_dict['subject_name'] = exam.name
-        #     exam_dict['start_time'] = exam.date_begin
-        #     exam_dict['end_time'] = exam.date_end
-        #     exam_dict['campus'] = sale_order_id.campus.name
-        #     event_list.append(exam_dict)
-        #
-        # print("\n\n\n\n\n\n===================exam ============list======",event_list)
-        #
-        # if template_id:
-        #     template_id.sudo().with_context(
-        #         # email_to=each_request.get('email'),
-        #         event_list=event_list,
-        #         email_cc='thecfo@charterquest.co.za',
-        #         reschedule_link = link,
-        #         prof_body = invoice_id.prof_body.name,
-        #     ).send_mail(sale_order_id.id,force_send=True)
-
-            # if request.session.get('sale_order') and request.session.get('do_invoice') == 'yes':
-
-        # template_invoice_id = request.env.ref('cfo_snr_jnr.email_template_pcexam_confirm',
-        #                                           raise_if_not_found=False)
-        # if template_invoice_id:
-        #     if request.session.get('sale_order'):
-        #         pdf_data_order = request.env.ref(
-        #             'event_price_kt.report_invoice_pcexam').sudo().render_qweb_pdf(invoice_id.id)
-        #         if pdf_data_order:
-        #             pdfvals = {'name': 'Invoice Report',
-        #                        'db_datas': base64.b64encode(pdf_data_order[0]),
-        #                        'datas': base64.b64encode(pdf_data_order[0]),
-        #                        'datas_fname': 'Invoice Report.pdf',
-        #                        'res_model': 'account.invoice',
-        #                        'type': 'binary'}
-        #             pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
-        #             attachment_list.append(pdf_create)
-
-            # if request.session.get('sale_order') and request.session.get('do_invoice') == 'no':
-            #     # com_spo_free_quote = request.env.ref('cfo_snr_jnr.company_sponsored_free_quote_email_template')
-            #     pdf_data_enroll = request.env.ref(
-            #         'event_price_kt.report_sale_enrollment').sudo().render_qweb_pdf(
-            #         sale_order_id.id)
-            #     enroll_file_name = "Pro-Forma " + sale_order_id.name
-            #     if pdf_data_enroll:
-            #         pdfvals = {'name': enroll_file_name,
-            #                    'db_datas': base64.b64encode(pdf_data_enroll[0]),
-            #                    'datas': base64.b64encode(pdf_data_enroll[0]),
-            #                    'datas_fname': enroll_file_name + '.pdf',
-            #                    'res_model': 'sale.order',
-            #                    'type': 'binary'}
-            #         pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
-            #         attachment_list.append(pdf_create)
-
-            # agreement_id = request.env.ref('cfo_snr_jnr.pc_exam_data_pdf')
-            # if agreement_id:
-            #     attachment_list.append(agreement_id)
-            # body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
-            # body_html += "<br>"
-            # body_html += "Dear " + sale_order_id.partner_id.name + ","
-            # body_html += "<br><br>"
-            # body_html += "Thank you for contacting CharterQuest and sending through your PC Exam Application."
-            # body_html += "<br><br>"
-            # body_html += "Please find attached your Tax invoice as well as the PC Exams Terms & Conditions."
-            # body_html += "<br><br>"
-            # body_html += "We look forward to seeing you on the day of your PC Exam. Please lookout for another email confirming your PC Exam Booking. CIMA Exams will be confirmed with PearsonVUE within 5-7 working days at most times sooner."
-            # body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
-            # body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY] <br> Fax: 086 218 8713 [SA ONLY] <br> Email:enquiries@charterquest.co.za <br/><div>"
-            #
-            # mail_values = {
-            #     'email_from': template_id.email_from,
-            #     'reply_to': template_id.reply_to,
-            #     'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
-            #     'subject': "Charterquest PC Exam Booking " + sale_order_id.name + "PC",
-            #     'body_html': body_html,
-            #     'notification': True,
-            #     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])],
-            #     'auto_delete': False,
-            # }
-            # msg_id = mail_obj.create(mail_values)
-            # msg_id.send()
-            # template_invoice_id.write(
-            #     {'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])]})
-            # template_invoice_id.sudo().with_context(
-            #     # email_to=each_request.get('email'),
-            #     # event_list=event_list,
-            #     email_cc='thecfo@charterquest.co.za',
-            #     # prof_body=invoice_id.prof_body.name,
-            # ).send_mail(invoice_id.id, force_send=True)
-            print("\n\n\n\n\n=======ca;lllllllllllll================")
-            return request.render('cfo_snr_jnr.exam_process_page_thankyou', {'page_name': post.get('page_name')})
+        # mail_values = {
+        #     'email_from': template_id.email_from,
+        #     'reply_to': template_id.reply_to,
+        #     'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+        #     'subject': "Charterquest PC Exam Booking " + sale_order_id.name + "PC",
+        #     'body_html': body_html,
+        #     'notification': True,
+        #     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])],
+        #     'auto_delete': False,
+        # }
+        # msg_id = mail_obj.create(mail_values)
+        # msg_id.send()
+        # template_invoice_id.write(
+        #     {'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])]})
+        # template_invoice_id.sudo().with_context(
+        #     # email_to=each_request.get('email'),
+        #     # event_list=event_list,
+        #     email_cc='thecfo@charterquest.co.za',
+        #     # prof_body=invoice_id.prof_body.name,
+        # ).send_mail(invoice_id.id, force_send=True)
+        print("\n\n\n\n\n=======ca;lllllllllllll================")
+        return request.render('cfo_snr_jnr.exam_process_page_thankyou', {'page_name': post.get('page_name')})
 
     @http.route(['/confirm/thankyou'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def confirm_thank_you(self, **post):
