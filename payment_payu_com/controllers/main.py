@@ -276,11 +276,13 @@ class PayuController(http.Controller):
         try:
             setTransaction = client.service.setTransaction(**transaction)
             print("\n\n\n\n\n=========setTrasaction========",setTransaction)
+            _logger.info("===================setTrasactionl-------------------- <%s>", setTransaction)
         except Exception as e:
             print_exc()
         s = plugin.last_received_raw
         dic = xmltodict.parse(str(s[2:-1]))
         print("\n\n\n\n\n\n===========dict=======",dic)
+        _logger.info("===================dict-------------------- <%s>", dict)
         response = dic['soap:Envelope']['soap:Body']['ns2:setTransactionResponse']['return']
 
         if response['successful'] == 'true':
@@ -345,6 +347,7 @@ class PayuController(http.Controller):
         try:
             setTransaction = client.service.getTransaction(**transaction)
             print("\n\n\n\n\n\n==================s==========setTransaction=====",setTransaction)
+            _logger.info("===================s==========setTransaction-------------------- <%s>", setTransaction)
         except Exception as e:
             print_exc()
         s = plugin.last_received_raw
@@ -360,6 +363,7 @@ class PayuController(http.Controller):
             transactionState = dic['soap:Envelope']['soap:Body']['ns2:getTransactionResponse']['return'][
                 'transactionState']
             print("\n\n\n\n\n\n==================s======transactionState====transactionState=====",transactionState,successful_status)
+            _logger.info("===================s==========setTransaction--------transactionState======------------ <%s>", transactionState,successful_status)
         if transactionState == 'SUCCESSFUL' and successful_status:
             return dic['soap:Envelope']['soap:Body']['ns2:getTransactionResponse']['return']
         elif transactionState == 'AWAITING_PAYMENT':
