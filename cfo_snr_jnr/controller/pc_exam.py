@@ -185,6 +185,26 @@ class PCExambooking(http.Controller):
     #         print("\n\n\n=====select_list====", select_exam_list)
     #     return select_exam_list
 
+    @http.route('/pc_exam_date_search', type='json', auth='public', website=True)
+    def pc_exam_date_search_data(self, **post):
+        exam_date_list = []
+
+        print("\n\n\n\n\n\===========exam data post======", post)
+        exam_ids = request.env['event.event'].sudo().search(
+            [('type_pc_exam.id', '=', post.get('exam_type')), ('subject', '=', int(post.get('subject'))),
+             ('qualification.id', '=', int(post.get("level"))), ('address_ids', 'in', int(post.get('campus')))])
+        print("\n\n\n==========exam_id====", exam_ids)
+
+        if exam_ids:
+            for exam in exam_ids:
+                if exam.seats_available > 0:
+                    exam_date = exam.date_begin.split(" ")
+                    datetimeobject = datetime.strptime(exam_date[0], '%Y-%m-%d')
+                    newformat = datetimeobject.strftime('X%d-X%m-%Y').replace('X0','X').replace('X','')
+                    exam_date_list.append(newformat)
+                    print("\n\n\n\n===========list========",exam_date_list)
+            return exam_date_list
+
     @http.route('/check_voucher', type='json', auth='public', website=True)
     def check_voucher(self, **post):
         voucher_price = 0.0

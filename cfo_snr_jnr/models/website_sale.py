@@ -107,7 +107,7 @@ class AccountPayment(models.Model):
                                      'student_id': self.invoice_ids[0].partner_id and self.invoice_ids[0].partner_id.id,
                                      'invoice_id': self.invoice_ids[0].id,
                                      'create_date': self.invoice_ids[0].date_invoice,
-                                     'expiry_date': datetime.now() + relativedelta(days=120),
+                                     'expiry_date': datetime.now() + relativedelta(days=182),
                                      'voucher_value': invoice_line.product_id.voucher_value,
                                      'prof_body': self.invoice_ids[0].prof_body and self.invoice_ids[0].prof_body.id,
                                      'qualification_id': invoice_line.product_id.event_qual_rem and invoice_line.product_id.event_qual_rem.id,

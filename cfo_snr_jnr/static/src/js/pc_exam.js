@@ -9,15 +9,61 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
         var select_exam_price = 0.0;
         var voucher_list = [];
         var event_ids = [];
+        var availableDates = [];
 
         var exam_date = new Date();
         exam_date.setDate(exam_date.getDate()+7);
-//        var reschedule_date = new Date();
-//        reschedule_date.setDate(reschedule_date.getDate()+9);
-//
+
+        $('input[name="inputDate"]').on('click', function (e) {
+            var level_value = $(document).find('#select_pc_exam_level').val();
+            var subject_value = $(document).find('#select_pc_exam_subject').val();
+            var campus_value = $(document).find('#campus').val();
+            var exam_type_value = $(document).find('#select_exam_type').val();
+            console.log("\n\n\n\n\n=========daate==============",level_value,subject_value,campus_value,exam_type_value)
+            ajax.jsonRpc("/pc_exam_date_search", 'call', {
+                'level': level_value,
+                'subject':subject_value,
+                'campus':campus_value,
+                'exam_type':exam_type_value,
+            }).then(
+                function(result) {
+                    console.log("\n\n\n\n\n=========daate result==============",result)
+                    if (result) {
+                        var availableDates = result;
+                        console.log("\n\n\n\n\n=========availableDates==============",availableDates)
+                         $('input[name="inputDate"]').datepicker({
+                            beforeShowDay: function(date) {
+                                  dmy = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
+                                  console.log("\n\n\n\n\n\n========== availableDates availableDates===========",availableDates)
+                                  if ($.inArray(dmy, availableDates) != -1) {
+                                    return [true, "","Available"];
+                                  } else {
+                                    return [false,"","unAvailable"];
+                                  }
+                                },
+                        });
+
+                    }
+                });
+
+
+        });
+
         $('input[name="inputDate"]').datepicker({
             startDate: exam_date,
-            daysOfWeekDisabled: [0,6]
+            daysOfWeekDisabled: [0,6],
+        });
+
+        $('input[name="inputDate"]').datepicker({
+            beforeShowDay: function(date) {
+                  dmy = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
+                  console.log("\n\n\n\n\n\n========== availableDates availableDates===========",availableDates)
+                  if ($.inArray(dmy, availableDates) != -1) {
+                    return [true, "","Available"];
+                  } else {
+                    return [false,"","unAvailable"];
+                  }
+                }
         });
 
         var dob_date = new Date();

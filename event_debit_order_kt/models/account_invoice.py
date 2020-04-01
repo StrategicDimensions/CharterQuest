@@ -157,7 +157,7 @@ class account_invoice(models.Model):
                                            'student_id':self.partner_id and self.partner_id.id,
                                            'invoice_id':self.id,
                                            'create_date':self.date_invoice,
-                                           'expiry_date':datetime.now()+relativedelta(days=120),
+                                           'expiry_date':datetime.now()+relativedelta(days=182),
                                            'voucher_value':invoice_line.product_id.voucher_value,
                                            'prof_body':self.prof_body and self.prof_body.id,
                                            'qualification_id':invoice_line.product_id.event_qual_rem and invoice_line.product_id.event_qual_rem.id,
