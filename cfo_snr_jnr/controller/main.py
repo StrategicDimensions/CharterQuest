@@ -224,14 +224,15 @@ class CfoHome(web.Home):
 
     @http.route(['/cfo_senior'], type='http', auth="public", website=True)
     def cfo_senior(self, **post):
+        print("\n\n\n\n\n============snr post==========",post)
         partner = request.env.user.partner_id
         login = request.env.user.login
         today = datetime.datetime.today()
         args = [('email_1', '=', login)]
-        if today.month in [4, 5, 6, 7, 8, 9, 10, 11, 12]:
-            args.append(('cfo_competition_year', '=', str(today.year + 1)))
-        else:
-            args.append(('cfo_competition_year', '=', str(today.year)))
+        # if today.month in [4, 5, 6, 7, 8, 9, 10, 11, 12]:
+        #     args.append(('cfo_competition_year', '=', str(today.year + 1)))
+        # else:
+        #     args.append(('cfo_competition_year', '=', str(today.year)))
         snr_aspirants = request.env['cfo.snr.aspirants'].sudo().search(args)
         snr_academic_institution = request.env['academic.institution.snr'].sudo().search(args)
         snr_employers = request.env['employers.snr'].sudo().search(args)
