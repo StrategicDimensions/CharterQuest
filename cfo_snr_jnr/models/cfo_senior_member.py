@@ -58,7 +58,7 @@ class CFOSeniorAspirants(models.Model):
     member_accept = fields.Boolean('Accept')
     user_id = fields.Many2one('res.users', 'Related User')
     cfo_competition_year = fields.Selection(
-        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023')], 'Year')
     is_request = fields.Boolean('Request to join')
     new_team_id = fields.Many2one('cfo.team.snr')
     team_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept')],
@@ -120,7 +120,7 @@ class AcademicInstitutionSenior(models.Model):
     ref_name = fields.Char(string = 'Reference')
     cfo_team_ids = fields.Many2many('cfo.team.snr','cfo_team_rel', string='Acadamic ID')
     cfo_competition_year = fields.Selection(
-        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023')], 'Year')
 
     @api.onchange('partner_id')
     def onchange_partner(self):
@@ -172,7 +172,7 @@ class EmployersSenior(models.Model):
     aspirant_id = fields.Many2one('cfo.team.snr', 'Aspirant ID')
     user_id = fields.Many2one('res.users', 'Related User')
     cfo_competition_year = fields.Selection(
-        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023')], 'Year')
     cfo_team_ids = fields.Many2many('cfo.team.snr','cfo_team_emp_rel', string='Acadamic ID')
 
     @api.onchange('partner_id')
@@ -294,7 +294,7 @@ class VolunteersSenior(models.Model):
     lounge_monitor = fields.Boolean("Lounge Monitor")
     operational_other_committee = fields.Boolean("Other Committee")
     cfo_competition_year = fields.Selection(
-        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023')], 'Year')
     user_id = fields.Many2one('res.users', 'Related User')
 
     @api.onchange('partner_id')
@@ -321,7 +321,7 @@ class BrandAmbassadorSenior(models.Model):
     brand_accept = fields.Boolean('Accept Brand Invite')
     team_ids = fields.One2many('cfo.team.snr', 'brand_amb_id', string='Brand Ambassador for Teams')
     cfo_competition_year = fields.Selection(
-        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023')], 'Year')
     user_id = fields.Many2one('res.users', 'Related User')
     new_team_id = fields.Many2one('cfo.team.snr')
     team_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept'),('removed','Removed')],
@@ -360,7 +360,7 @@ class SocialMediaContestantsSenior(models.Model):
     social_media_unique_url = fields.Char('Social media unique URL')
     user_id = fields.Many2one('res.users', 'Related User')
     cfo_competition_year = fields.Selection(
-        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023')], 'Year')
 
     @api.onchange('partner_id')
     def onchange_partner(self):
@@ -410,7 +410,7 @@ class MentorsSenior(models.Model):
                                        ('Operations phase (Deadline :20 June, 2016 )',
                                         'Operations phase (Deadline :20 June, 2016 )')], "I will like get involved in")
     cfo_competition_year = fields.Selection(
-        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023')], 'Year')
     new_team_id = fields.Many2one('cfo.team.snr')
     team_status = fields.Selection([('Pending', 'Pending'), ('Rejected', 'Rejected'), ('Accept', 'Accept'),('removed','Removed')],
                                    string="Status")
@@ -494,7 +494,7 @@ class CFOSeniorMember(models.Model):
                                         ('Secondary/High School', 'Secondary/High School')],
                                        'Type')
     cfo_competition_year = fields.Selection(
-        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023')], 'Year')
     cfo_registrants_source = fields.Selection([('Social Media', 'Social Media'),
                                                ('Direct web address', 'Direct web address'),
                                                ('Google/other search engine', 'Google/other search engine'),

@@ -842,6 +842,7 @@ class CfoHome(web.Home):
             else:
                 member_values.update({'cfo_competition_year': str(datetime.date.today().year)})
         if member_values:
+            print("\n\n\n\n============member_value====",member_values)
             user._create_member(member_values)
         return request.redirect('/cfo_senior')
 

@@ -6,7 +6,7 @@ import logging
 import werkzeug
 from dateutil.relativedelta import relativedelta
 from odoo.http import request
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import json, base64
 from odoo import http, SUPERUSER_ID, _
 from odoo.addons.payment_payu_com.controllers.main import PayuController
@@ -159,6 +159,28 @@ class PCExambooking(http.Controller):
                     # print("\n\n\n\n===========list========",exam_list)
             return exam_list
 
+    @http.route('/pc_exam_subject_search', type='json', auth='public', website=True)
+    def pc_exam_subject_search(self, **post):
+        exam_subject_list = []
+        subject_list = []
+
+        print("\n\n\n\n\n\===========exam pc_exam_subject_search post======", post)
+
+        exam_type_id = request.env['pc.exam.type'].sudo().browse(int(post.get('exam_type')))
+        exam_level_id = request.env['event.qual'].sudo().browse(int(post.get('level')))
+        event_ids = request.env['event.event'].sudo().search([])
+
+        for event in event_ids:
+            if int(post.get('campus')) in event.address_ids.ids and exam_type_id.name == event.type_pc_exam.name and exam_level_id.name == event.qualification.name:
+                if event.subject:
+                    exam_subject_list.append(event.subject)
+        print("\n\n\n\n\n===========exam_subject_list========",exam_subject_list)
+        for subject in exam_subject_list:
+            if subject.id not in subject_list:
+                subject_list.append(subject.id)
+        print("\n\n\n\n\n===========exam_subject_list=====subject_list===", subject_list)
+
+        return subject_list
     # @http.route('/set_available_seats', type='json', auth='public', website=True)
     # def set_available_seats(self, select_exam_list=select_exam_list, **post):
     #
@@ -194,7 +216,9 @@ class PCExambooking(http.Controller):
             [('type_pc_exam.id', '=', post.get('exam_type')), ('subject', '=', int(post.get('subject'))),
              ('qualification.id', '=', int(post.get("level"))), ('address_ids', 'in', int(post.get('campus')))])
         print("\n\n\n==========exam_id====", exam_ids)
-
+        today_datetime = datetime.now() + timedelta(7)
+        tody_date_format = today_datetime.strftime('X%d-X%m-%Y').replace('X0','X').replace('X','')
+        print("\n\n\n\n\n\n===========today date======",tody_date_format)
         if exam_ids:
             for exam in exam_ids:
                 if exam.seats_available > 0:
@@ -202,7 +226,7 @@ class PCExambooking(http.Controller):
                     datetimeobject = datetime.strptime(exam_date[0], '%Y-%m-%d')
                     newformat = datetimeobject.strftime('X%d-X%m-%Y').replace('X0','X').replace('X','')
                     exam_date_list.append(newformat)
-                    print("\n\n\n\n===========list========",exam_date_list)
+            print("\n\n\n\n===========list========",exam_date_list)
             return exam_date_list
 
     @http.route('/check_voucher', type='json', auth='public', website=True)
