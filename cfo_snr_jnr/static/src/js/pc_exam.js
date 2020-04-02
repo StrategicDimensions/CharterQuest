@@ -1,7 +1,22 @@
 odoo.define('cfo_snr_jnr.pc_exam', function(require){
     var ajax = require('web.ajax');
 
+
+
     $(document).ready(function() {
+
+        var availableDates =["9-4-2020","14-4-2020","15-4-2020"];
+        function available(date) {
+          var dmy = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
+          console.log("\n\n\n\n\n=========daate==============",$.inArray(dmy, availableDates))
+          if ($.inArray(dmy, availableDates) != -1) {
+            return [true, "","Available"];
+          } else {
+            return [false,"","unAvailable"];
+          }
+        }
+
+        $('#date').datepicker({ beforeShowDay: available });
 
         $('button[id="pc_exam_booking"]').on('click', function(ev) {
             window.location.href = '/registerPB'
@@ -9,12 +24,41 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
         var select_exam_price = 0.0;
         var voucher_list = [];
         var event_ids = [];
-        var availableDates = [];
+//        var availableDates = [];
 
         var exam_date = new Date();
         exam_date.setDate(exam_date.getDate()+7);
 
-        $('input[name="inputDate"]').on('click', function (e) {
+
+
+
+         $('input[name="inputDate"]').datepicker({
+            startDate: exam_date,
+//            endDate: exam_date,
+            daysOfWeekDisabled: [0,6],
+//            beforeShowDay: available
+        });
+
+//        $('#select_pc_exam_level').change(function(){
+//            var level_value = $(document).find('#select_pc_exam_level').val();
+//            var campus_value = $(document).find('#campus').val();
+//            var exam_type_value = $(document).find('#select_exam_type').val();
+//            console.log("\n\n\n\n\n=========daate==============",level_value,campus_value,exam_type_value)
+//            ajax.jsonRpc("/pc_exam_subject_search", 'call', {
+//                'level': level_value,
+//                'campus':campus_value,
+//                'exam_type':exam_type_value,
+//            }).then(
+//                function(result) {
+//                    console.log("\n\n\n\n\n=========daate subject result==============",result)
+//                    if (result) {
+//                         $(document).find('#exam_subject_ids').val(result);
+//                    }
+//                });
+//
+//        });
+
+        $('#select_pc_exam_subject').change(function(){
             var level_value = $(document).find('#select_pc_exam_level').val();
             var subject_value = $(document).find('#select_pc_exam_subject').val();
             var campus_value = $(document).find('#campus').val();
@@ -29,19 +73,9 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
                 function(result) {
                     console.log("\n\n\n\n\n=========daate result==============",result)
                     if (result) {
-                        var availableDates = result;
-                        console.log("\n\n\n\n\n=========availableDates==============",availableDates)
-                         $('input[name="inputDate"]').datepicker({
-                            beforeShowDay: function(date) {
-                                  dmy = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
-                                  console.log("\n\n\n\n\n\n========== availableDates availableDates===========",availableDates)
-                                  if ($.inArray(dmy, availableDates) != -1) {
-                                    return [true, "","Available"];
-                                  } else {
-                                    return [false,"","unAvailable"];
-                                  }
-                                },
-                        });
+                         var availableDates =["9-5-2011","14-5-2011","15-5-2011"];
+                         console.log("\n\n\n\n\n=========availableDates==============",availableDates)
+
 
                     }
                 });
@@ -49,22 +83,11 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
 
         });
 
-        $('input[name="inputDate"]').datepicker({
-            startDate: exam_date,
-            daysOfWeekDisabled: [0,6],
-        });
+//        $('#date').datepicker({
+//             beforeShowDay: available
+//        });
 
-        $('input[name="inputDate"]').datepicker({
-            beforeShowDay: function(date) {
-                  dmy = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
-                  console.log("\n\n\n\n\n\n========== availableDates availableDates===========",availableDates)
-                  if ($.inArray(dmy, availableDates) != -1) {
-                    return [true, "","Available"];
-                  } else {
-                    return [false,"","unAvailable"];
-                  }
-                }
-        });
+
 
         var dob_date = new Date();
         dob_date.setDate(dob_date.getDate());
@@ -260,7 +283,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
 
                 });
             }
-
+            $('.exam_search').attr("disabled", true);
         });
 
         $(document).on("click", "#examTable tbody > tr > td > .selectbtn", function() {

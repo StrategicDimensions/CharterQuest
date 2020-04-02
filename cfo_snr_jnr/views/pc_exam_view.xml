@@ -595,7 +595,7 @@
                         </div>
                         <div class="form-group form-field o_website_form_custom">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
-                                <label class="control-label lbl_2" style="margin-left: 16px;">Subject
+                                <label class="control-label lbl_2" for="select_pc_exam_subject" style="margin-left: 16px;">Subject
                                 </label>
                             </div>
                             <div class="col-md-7 col-sm-8" id="select_css_1">
@@ -630,7 +630,7 @@
                                     </select>
                             </div>
                         </div>
-                        <div class="form-group form-field o_website_form_custom">
+                        <div class="form-group form-field exam_date_cls o_website_form_custom">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
                                 <label class="control-label lbl_3" style="margin-left: 16px;">Date
                                 </label>
@@ -640,6 +640,8 @@
                                                                class="form-control1"
                                                                style="width: 177px;"
                                                                placeholder="MM-DD-YY" required="True" readonly=""/>
+<!--                                    <input type="text" name="date" id="date" readonly="readonly" size="12" />-->
+
                             </div>
                         </div>
 

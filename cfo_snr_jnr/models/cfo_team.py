@@ -51,7 +51,7 @@ class CFOTeam(models.Model):
     name = fields.Char('Name')
     cfo_comp = fields.Selection([('CFO SNR', 'CFO SNR'), ('CFO JNR', 'CFO JNR')], 'Competition')
     cfo_competition_year = fields.Selection(
-        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023')], 'Year')
 
 
 class CFOTeamSNR(models.Model):
@@ -88,7 +88,7 @@ class CFOTeamSNR(models.Model):
     employer_team_member_ids = fields.One2many('snr.employer.team.member', 'team_id', string="Team Member")
     cfo_comp = fields.Selection([('CFO SNR', 'CFO SNR'), ('CFO JNR', 'CFO JNR')], 'Competition')
     cfo_competition_year = fields.Selection(
-        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023')], 'Year')
     deadline_date_copy = fields.Datetime()
 
     @api.model
@@ -238,7 +238,7 @@ class CFOTeamJNR(models.Model):
     crossed_deadline = fields.Boolean("Crossed Deadline")
     cfo_comp = fields.Selection([('CFO SNR', 'CFO SNR'), ('CFO JNR', 'CFO JNR')], 'Competition')
     cfo_competition_year = fields.Selection(
-        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020')], 'Year')
+        [('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023')], 'Year')
     aspirant_team_member_ids = fields.One2many('jnr.aspirant.team.member', 'team_id', string="Team Member")
     highschool_team_member_ids = fields.One2many('jnr.highschool.team.member', 'team_id', string="Team Member")
 
