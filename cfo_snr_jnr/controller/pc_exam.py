@@ -105,16 +105,16 @@ class PCExambooking(http.Controller):
             if int(post.get('campus')) in event.address_ids.ids and exam_type_id.name == event.type_pc_exam.name:
                 if event.qualification:
                     examlevel_ids.append(event.qualification)
-                    if event.subject:
-                        examsubject_ids.append((event.subject))
+                    # if event.subject:
+                    #     examsubject_ids.append((event.subject))
         for exam_level in examlevel_ids:
             if exam_level.id not in exam_level_ids:
                 exam_level_ids.append(exam_level.id)
         print("\n\n\n\n==exam_level_ids======", exam_level_ids)
-        for exam_subject in examsubject_ids:
-            if exam_subject.id not in exam_subject_ids:
-                exam_subject_ids.append(exam_subject.id)
-        print("\n\n\n\n==exam_subject_ids======", exam_subject_ids)
+        # for exam_subject in examsubject_ids:
+        #     if exam_subject.id not in exam_subject_ids:
+        #         exam_subject_ids.append(exam_subject.id)
+        # print("\n\n\n\n==exam_subject_ids======", exam_subject_ids)
         value={}
 
         value['campus'] = int(post.get('campus'))
@@ -122,7 +122,7 @@ class PCExambooking(http.Controller):
         value['page_name'] = post.get("page_name")
         value['select_exam_type'] = post.get('Select Exam Type')
         value['exam_level_ids'] = exam_level_ids
-        value['exam_subject_ids'] = exam_subject_ids
+        # value['exam_subject_ids'] = exam_subject_ids
         print("\n\n\n\n\n=====value dict====",value)
         return request.render('cfo_snr_jnr.pc_exam_search_process_form', value)
 
@@ -140,7 +140,7 @@ class PCExambooking(http.Controller):
         str_exam_date = str_exam_date.strftime("%m/%d/%Y %H:%M:%S")
         end_exam_date = end_exam_date.strftime("%m/%d/%Y %H:%M:%S")
         print("\n\n\n\n==========str_exam_date========",str_exam_date,type(str_exam_date))
-        exam_ids = request.env['event.event'].sudo().search([('type_pc_exam.id','=',post.get('exam_type')),('date_begin','>=',str_exam_date),('date_end','<=',end_exam_date),('subject','=',int(post.get('subject'))),('qualification.id','=',int(post.get("level"))),('address_ids','in',int(post.get('campus')))])
+        exam_ids = request.env['event.event'].sudo().search([('type_pc_exam.id','=',post.get('exam_type')),('date_begin','>=',str_exam_date),('date_end','<=',end_exam_date),('subject','=',(post.get('subject'))),('qualification.id','=',int(post.get("level"))),('address_ids','in',int(post.get('campus')))])
         print("\n\n\n==========exam_id====",exam_ids)
 
         if exam_ids:
@@ -165,22 +165,22 @@ class PCExambooking(http.Controller):
         subject_list = []
 
         print("\n\n\n\n\n\===========exam pc_exam_subject_search post======", post)
-
         exam_type_id = request.env['pc.exam.type'].sudo().browse(int(post.get('exam_type')))
-        exam_level_id = request.env['event.qual'].sudo().browse(int(post.get('level')))
-        event_ids = request.env['event.event'].sudo().search([])
+        if post.get('level'):
+            exam_level_id = request.env['event.qual'].sudo().browse(int(post.get('level')))
+            event_ids = request.env['event.event'].sudo().search([])
 
-        for event in event_ids:
-            if int(post.get('campus')) in event.address_ids.ids and exam_type_id.name == event.type_pc_exam.name and exam_level_id.name == event.qualification.name:
-                if event.subject:
-                    exam_subject_list.append(event.subject)
-        print("\n\n\n\n\n===========exam_subject_list========",exam_subject_list)
-        for subject in exam_subject_list:
-            if subject.id not in subject_list:
-                subject_list.append(subject.id)
-        print("\n\n\n\n\n===========exam_subject_list=====subject_list===", subject_list)
+            for event in event_ids:
+                if int(post.get('campus')) in event.address_ids.ids and exam_type_id.name == event.type_pc_exam.name and exam_level_id.name == event.qualification.name:
+                    if event.subject:
+                        exam_subject_list.append(event.subject)
+            print("\n\n\n\n\n===========exam_subject_list========",exam_subject_list)
+            for subject in exam_subject_list:
+                if subject.name not in subject_list:
+                    subject_list.append(subject.name)
+            print("\n\n\n\n\n===========exam_subject_list=====subject_list===", subject_list)
 
-        return subject_list
+            return subject_list
     # @http.route('/set_available_seats', type='json', auth='public', website=True)
     # def set_available_seats(self, select_exam_list=select_exam_list, **post):
     #
@@ -213,11 +213,12 @@ class PCExambooking(http.Controller):
 
         print("\n\n\n\n\n\===========exam data post======", post)
         exam_ids = request.env['event.event'].sudo().search(
-            [('type_pc_exam.id', '=', post.get('exam_type')), ('subject', '=', int(post.get('subject'))),
+            [('type_pc_exam.id', '=', post.get('exam_type')), ('subject', '=', (post.get('subject'))),
              ('qualification.id', '=', int(post.get("level"))), ('address_ids', 'in', int(post.get('campus')))])
         print("\n\n\n==========exam_id====", exam_ids)
         today_datetime = datetime.now() + timedelta(7)
         tody_date_format = today_datetime.strftime('X%d-X%m-%Y').replace('X0','X').replace('X','')
+
         print("\n\n\n\n\n\n===========today date======",tody_date_format)
         if exam_ids:
             for exam in exam_ids:
@@ -225,7 +226,12 @@ class PCExambooking(http.Controller):
                     exam_date = exam.date_begin.split(" ")
                     datetimeobject = datetime.strptime(exam_date[0], '%Y-%m-%d')
                     newformat = datetimeobject.strftime('X%d-X%m-%Y').replace('X0','X').replace('X','')
-                    exam_date_list.append(newformat)
+                    print("\n\n\n\n\n===========dates types===",type(tody_date_format),type(newformat))
+
+                    date1 = datetime.strptime(tody_date_format, "%d-%m-%Y")
+                    date2 = datetime.strptime(newformat, "%d-%m-%Y")
+                    if date1 <= date2:
+                        exam_date_list.append(newformat)
             print("\n\n\n\n===========list========",exam_date_list)
             return exam_date_list
 
