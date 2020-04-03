@@ -5,18 +5,48 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
 
     $(document).ready(function() {
 
-        var availableDates =["9-4-2020","14-4-2020","15-4-2020"];
+        var availableDates = [];
+        $('#select_pc_exam_subject').change(function(){
+            var level_value = $(document).find('#select_pc_exam_level').val();
+            var subject_value = $(document).find('#select_pc_exam_subject').val();
+            var campus_value = $(document).find('#campus').val();
+            var exam_type_value = $(document).find('#select_exam_type').val();
+            console.log("\n\n\n\n\n=========valu subjet,campus=============",level_value,subject_value,campus_value,exam_type_value)
+            ajax.jsonRpc("/pc_exam_date_search", 'call', {
+                'level': level_value,
+                'subject':subject_value,
+                'campus':campus_value,
+                'exam_type':exam_type_value,
+            }).then(
+                function(result) {
+                    console.log("\n\n\n\n\n=========daate result==============",result)
+                    if (result) {
+                         var availableDates = [];
+                         for(var i=0;i<result.length;i++)
+                         {
+                             availableDates.push(result[i]);
+                         }
+                         console.log("\n\n\n\n\n=========availableDates result==============",availableDates)
+                         $('#exam_datepicker').val("");
+                    }
+                });
+        });
+
+        var exam_date = new Date();
+        exam_date.setDate(exam_date.getDate()+7);
+
+//        var availableDates = ["9-5-2020","14-5-2020","15-5-2020"];
+//
         function available(date) {
-          var dmy = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
-          console.log("\n\n\n\n\n=========daate==============",$.inArray(dmy, availableDates))
+          dmy = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
           if ($.inArray(dmy, availableDates) != -1) {
             return [true, "","Available"];
           } else {
             return [false,"","unAvailable"];
           }
         }
-
-        $('#date').datepicker({ beforeShowDay: available });
+//
+//        $('#date').datepicker({ beforeShowDay: available});
 
         $('button[id="pc_exam_booking"]').on('click', function(ev) {
             window.location.href = '/registerPB'
@@ -24,39 +54,45 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
         var select_exam_price = 0.0;
         var voucher_list = [];
         var event_ids = [];
-//        var availableDates = [];
 
-        var exam_date = new Date();
-        exam_date.setDate(exam_date.getDate()+7);
-
-
-
-
-         $('input[name="inputDate"]').datepicker({
+       $('#exam_datepicker').datepicker({
             startDate: exam_date,
 //            endDate: exam_date,
             daysOfWeekDisabled: [0,6],
-//            beforeShowDay: available
+            beforeShowDay: available
         });
 
-//        $('#select_pc_exam_level').change(function(){
-//            var level_value = $(document).find('#select_pc_exam_level').val();
-//            var campus_value = $(document).find('#campus').val();
-//            var exam_type_value = $(document).find('#select_exam_type').val();
-//            console.log("\n\n\n\n\n=========daate==============",level_value,campus_value,exam_type_value)
-//            ajax.jsonRpc("/pc_exam_subject_search", 'call', {
-//                'level': level_value,
-//                'campus':campus_value,
-//                'exam_type':exam_type_value,
-//            }).then(
-//                function(result) {
-//                    console.log("\n\n\n\n\n=========daate subject result==============",result)
-//                    if (result) {
-//                         $(document).find('#exam_subject_ids').val(result);
-//                    }
-//                });
-//
-//        });
+        $('#select_pc_exam_level').change(function(){
+
+            var level_value = $(document).find('#select_pc_exam_level').val();
+            var campus_value = $(document).find('#campus').val();
+            var exam_type_value = $(document).find('#select_exam_type').val();
+            ajax.jsonRpc("/pc_exam_subject_search", 'call', {
+                'level': level_value,
+                'campus':campus_value,
+                'exam_type':exam_type_value,
+            }).then(
+                function(result) {
+                    if (result) {
+                         var select = document.getElementById("select_pc_exam_subject");
+                         var subject = [];
+                         select.options.length = 0;
+                         for(var i=0;i<=result.length;i++)
+                         {
+                            subject.push(result[i]);
+                            select.options[select.options.length] = new Option(subject[i-1], result[i-1]);
+                         }
+                    }
+                });
+
+        });
+
+
+        var dob_date = new Date();
+        dob_date.setDate(dob_date.getDate());
+        $('input[name="DOB"]').datepicker({
+        endDate: dob_date
+        });
 
         $('#select_pc_exam_subject').change(function(){
             var level_value = $(document).find('#select_pc_exam_level').val();
@@ -96,7 +132,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
         });
 
         $(".exam_date_validation").on('click', function (event) {
-            var date_exam = $(document).find('#datepicker').val();
+            var date_exam = $(document).find('#exam_datepicker').val();
             if (!date_exam) {
                 event.preventDefault()
                 alert('Date OF Exam Must Be Required');
@@ -233,12 +269,15 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
             console.log("\n\n\n\n==============call============");
             $('#select_pc_exam_level').attr('required', true);
             $('#select_pc_exam_subject').attr('required', true);
-            $("#datepicker").attr('required',true)
+            $("#exam_datepicker").attr('required',true)
             var level_value = $(document).find('#select_pc_exam_level').val();
             var subject_value = $(document).find('#select_pc_exam_subject').val();
+            if (subject_value == '') {
+                $('#select_pc_exam_subject').attr('required', true);
+            }
             var campus_value = $(document).find('#campus').val();
             var exam_type_value = $(document).find('#select_exam_type').val();
-            var date_exam = $(document).find('#datepicker').val();
+            var date_exam = $(document).find('#exam_datepicker').val();
             var sale_order_id = $(document).find('#sale_order_id').val();
 
             if ((!level_value) || (!subject_value)){
@@ -283,6 +322,10 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
 
                 });
             }
+            if (level_value && subject_value && date_exam)
+            {
+                $('.exam_search').attr("disabled", true);
+            }
             $('.exam_search').attr("disabled", true);
         });
 
@@ -318,6 +361,37 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
 //                    });
         });
 
+        $(document).on("click", "#examTable tbody > tr > td > .selectbtn", function() {
+            console.log("\n\n\n\n======this=====",$(this).parents('tr').clone(true))
+            var row = $(this).parents('tr').clone(true);
+
+            console.log("\n\n\n\n======row=====",row.find('button.select_button')['context']);
+            $('#select_exam_body').append(row);
+
+            var avl_seats = $(this).closest('.exam_row').find('td.aval_seats').val();
+            var price = $(this).closest('.exam_row').find('input.exam_price').val();
+            var date = $(this).closest('.exam_row').find('input.exam_date').val();
+            var time = $(this).closest('.exam_row').find('input.exam_time').val();
+            var srow = $("#examselectTable tbody > tr > td > .selectbtn");
+            var select_exam_id = $(this).closest('.exam_row').find('input.exam_id').val();
+            srow.html('Remove');
+            console.log("\n\n\n\n======srow=====",price,srow,srow.val(),exam_id,avl_seats,date,time);
+            select_exam_price = select_exam_price + parseFloat(price);
+            console.log("\n\n\n\n======select_exam_price =====",select_exam_price,select_exam_id)
+            $('#total_price').val(select_exam_price);
+
+            event_ids.push(select_exam_id);
+            $('#event_ids').val(event_ids);
+
+//            ajax.jsonRpc("/set_available_seats", 'call', {
+//                    'select_exam_id': select_exam_id,
+//                    'type':'Select',
+//                }).then(
+//                    function(result) {
+//                        console.log("\n\n\n\n=====list====",result,typeof(result))
+//                        $('#event_ids').val(result);
+//                    });
+        });
         $(document).on("click", "#examselectTable tbody > tr > td > .selectbtn", function() {
             var row = $(this).parents('tr').clone(true);
             var re_price = $(this).closest('.exam_row').find('input.exam_price').val();

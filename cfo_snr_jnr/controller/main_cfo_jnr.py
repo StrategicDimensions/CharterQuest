@@ -164,10 +164,10 @@ class CfoHomeJnr(web.Home):
         login = request.env.user.login
         today = datetime.datetime.today()
         args = [('email_1', '=', login)]
-        if today.month in [4, 5, 6, 7, 8, 9, 10, 11, 12]:
-            args.append(('cfo_competition_year', '=', str(today.year + 1)))
-        else:
-            args.append(('cfo_competition_year', '=', str(today.year)))
+        # if today.month in [4, 5, 6, 7, 8, 9, 10, 11, 12]:
+        #     args.append(('cfo_competition_year', '=', str(today.year + 1)))
+        # else:
+        #     args.append(('cfo_competition_year', '=', str(today.year)))
         jnr_aspirants = request.env['cfo.jnr.aspirants'].sudo().search(args)
         jnr_high_school = request.env['academic.institution.jnr'].sudo().search(args)
         jnr_brand_ambassador = request.env['brand.ambassador.jnr'].sudo().search(args)
