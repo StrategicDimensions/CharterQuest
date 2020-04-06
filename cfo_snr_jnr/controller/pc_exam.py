@@ -949,12 +949,48 @@ class PCExambooking(http.Controller):
            session dependant anymore
         """
         cr, uid, context = request.cr, request.uid, request.context
-
+        attchment_list = []
+        mail_obj = request.env['mail.mail'].sudo()
         sale_order_id = request.session.get('sale_order_id')
+        print("\n\n\n\n=======sale_order_id=======", sale_order_id)
         if sale_order_id:
             order = request.env['sale.order'].sudo().browse(sale_order_id)
+            print("\n\n\n\n=======order=======",order)
         else:
             return request.redirect('/enrolment_book')
+
+
+        template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
+        if template_id:
+            agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
+            if agreement_id:
+                attchment_list.append(agreement_id)
+            banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
+            if banking_detail_id:
+                attchment_list.append(banking_detail_id)
+
+            # mail_values = {
+            #     'email_from': template_id.email_from,
+            #     'reply_to': template_id.reply_to,
+            #     'email_to': order.partner_id.email if order.partner_id.email else '',
+            #     'email_cc': 'enquiries@charterquest.co.za,accounts@charterquest.co.za,cqops@charterquest.co.za',
+            #     'subject': "PC Exams" + order.name,
+            #     'notification': True,
+            #     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
+            #     'auto_delete': False,
+            # }
+            # msg_id = mail_obj.create(mail_values)
+            # msg_id.send()
+
+            template_id.write(
+                    {'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])]})
+            template_id.sudo().with_context(
+                # email_to=each_request.get('email'),
+                # event_list=event_list,
+                email_cc='thecfo@charterquest.co.za',
+                # prof_body=invoice_id.prof_body.name,
+            ).send_mail(order.id, force_send=True)
+
         request.website.sale_reset()
         return request.render("cfo_snr_jnr.exam_unsuccessful")
 
