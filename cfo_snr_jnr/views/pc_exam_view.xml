@@ -608,7 +608,6 @@
                                             name="select_pc_exam_subject"
                                             placeholder="Select the Subject"
                                             required="true">
-
                                         <t t-if="not sale_order_id">
                                            <option></option>
 <!--                                            <t t-foreach="subject_ids" t-as="subject">-->

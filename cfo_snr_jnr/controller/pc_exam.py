@@ -233,7 +233,6 @@ class PCExambooking(http.Controller):
         print("\n\n\n==========exam_id====", exam_ids)
         today_datetime = datetime.now() + timedelta(7)
         tody_date_format = today_datetime.strftime('X%d-X%m-%Y').replace('X0','X').replace('X','')
-
         print("\n\n\n\n\n\n===========today date======",tody_date_format)
         if exam_ids:
             for exam in exam_ids:
