@@ -59,7 +59,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
 
        $('#exam_datepicker').datepicker({
             startDate: exam_date,
-            daysOfWeekDisabled: [0,6],
+//            daysOfWeekDisabled: [0,6],
             beforeShowDay: available
         });
 
@@ -293,6 +293,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
                     }
                     else{
                         alert('Please Select other Date')
+                        $('.exam_search').attr("disabled", false);
                     }
 
                 });
@@ -302,7 +303,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
                 $('.exam_search').attr("disabled", true);
             }
 
-        });
+        })
 
         $(document).on("click", "#examTable tbody > tr > td > .selectbtn", function() {
             console.log("\n\n\n\n======this=====",$(this).parents('tr').clone(true))

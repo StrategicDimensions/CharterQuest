@@ -394,13 +394,9 @@
                                     <td colspan="3">
                                         <span></span>
                                     </td>
-                                    <td style="background-color:darkgray;" t-if="o.affiliation == '1'">
+                                    <td style="background-color:darkgray;">
                                         <span style="float:right;" t-esc="o.amount_total - o.residual"/>
                                         <span style="float:right;" t-esc="o.currency_id.symbol"/>
-                                    </td>
-                                    <td style="background-color:darkgray;" t-if="o.affiliation == '2'">
-                                        <span style="float:right;">R 0.00</span>
-
                                     </td>
                                 </tr>
                                 <tr style="background-color:black;">
