@@ -163,9 +163,13 @@ class PCExambooking(http.Controller):
     def pc_exam_subject_search(self, **post):
         exam_subject_list = []
         subject_list = []
+        exam_date_lst = []
 
         print("\n\n\n\n\n\===========exam pc_exam_subject_search post======", post)
         exam_type_id = request.env['pc.exam.type'].sudo().browse(int(post.get('exam_type')))
+
+        today_datetime = datetime.now() + timedelta(7)
+        tody_date_format = today_datetime.strftime('X%d-X%m-%Y').replace('X0', 'X').replace('X', '')
         if post.get('level'):
             exam_level_id = request.env['event.qual'].sudo().browse(int(post.get('level')))
             event_ids = request.env['event.event'].sudo().search([])
@@ -174,13 +178,24 @@ class PCExambooking(http.Controller):
                 if int(post.get('campus')) in event.address_ids.ids and exam_type_id.name == event.type_pc_exam.name and exam_level_id.name == event.qualification.name:
                     if event.subject:
                         exam_subject_list.append(event.subject)
+                    exam_date = event.date_begin.split(" ")
+                    datetimeobject = datetime.strptime(exam_date[0], '%Y-%m-%d')
+                    newformat = datetimeobject.strftime('X%d-X%m-%Y').replace('X0', 'X').replace('X', '')
+                    print("\n\n\n\n\n===========dates types===", type(tody_date_format), type(newformat))
+
+                    date1 = datetime.strptime(tody_date_format, "%d-%m-%Y")
+                    date2 = datetime.strptime(newformat, "%d-%m-%Y")
+                    if date1 <= date2:
+                        exam_date_lst.append(newformat)
             print("\n\n\n\n\n===========exam_subject_list========",exam_subject_list)
             for subject in exam_subject_list:
                 if subject.name not in subject_list:
                     subject_list.append(subject.name)
-            print("\n\n\n\n\n===========exam_subject_list=====subject_list===", subject_list)
 
-            return subject_list
+            print("\n\n\n\n\n===========exam_subject_list=====subject_list===", subject_list)
+            print("\n\n\n\n\n===========exam_date_lst=====exam_date_lst===", exam_date_lst)
+
+            return {'subjects':subject_list,'dates':exam_date_lst}
     # @http.route('/set_available_seats', type='json', auth='public', website=True)
     # def set_available_seats(self, select_exam_list=select_exam_list, **post):
     #

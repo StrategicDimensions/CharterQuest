@@ -545,7 +545,6 @@
             <div class="container" style="margin:0px;padding:0px;">
                 <input id="sale_order_id" type="hidden" t-att-value="sale_order_id" name='sale_order_id'/>
                 <input id="exam_level_ids" type="hidden" t-att-value="exam_level_ids" name='exam_level_ids'/>
-<!--                <input type="text" name="date" id="date" readonly="readonly" size="12" />-->
                 <t t-if="sale_order_id">
                     <t t-set="sale_order_id"
                         t-value="request.env['sale.order'].sudo().browse(sale_order_id)"/>
@@ -595,6 +594,7 @@
                                     </select>
                             </div>
                             </t>
+<!--                            <div id="load"><img src="/static/description/loader.png"/></div>-->
                         </div>
                         <div class="form-group form-field o_website_form_custom">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
@@ -633,6 +633,7 @@
 
                                     </select>
                             </div>
+<!--                            <div id="load1"><img src="/static/description/loader.png"/></div>-->
                         </div>
                         <div class="form-group form-field exam_date_cls o_website_form_custom">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">

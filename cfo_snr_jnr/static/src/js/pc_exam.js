@@ -11,6 +11,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
             var subject_value = $(document).find('#select_pc_exam_subject').val();
             var campus_value = $(document).find('#campus').val();
             var exam_type_value = $(document).find('#select_exam_type').val();
+//            document.getElementById("load1").style.display = "block";
             console.log("\n\n\n\n\n=========valu subjet,campus=============",level_value,subject_value,campus_value,exam_type_value)
             ajax.jsonRpc("/pc_exam_date_search", 'call', {
                 'level': level_value,
@@ -21,7 +22,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
                 function(result) {
                     console.log("\n\n\n\n\n=========daate result==============",result)
                     if (result) {
-                         var availableDates = [];
+                         availableDates = [];
                          for(var i=0;i<result.length;i++)
                          {
                              availableDates.push(result[i]);
@@ -30,23 +31,24 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
                          $('#exam_datepicker').val("");
                     }
                 });
+//           document.getElementById("load1").style.display = "none";
         });
 
         var exam_date = new Date();
         exam_date.setDate(exam_date.getDate()+7);
 
+
+
 //        var availableDates = ["9-5-2020","14-5-2020","15-5-2020"];
-//
+
         function available(date) {
           dmy = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
           if ($.inArray(dmy, availableDates) != -1) {
-            return [true, "","Available"];
+            return true;
           } else {
-            return [false,"","unAvailable"];
+            return false;
           }
         }
-//
-//        $('#date').datepicker({ beforeShowDay: available});
 
         $('button[id="pc_exam_booking"]').on('click', function(ev) {
             window.location.href = '/registerPB'
@@ -57,7 +59,6 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
 
        $('#exam_datepicker').datepicker({
             startDate: exam_date,
-//            endDate: exam_date,
             daysOfWeekDisabled: [0,6],
             beforeShowDay: available
         });
@@ -67,24 +68,35 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
             var level_value = $(document).find('#select_pc_exam_level').val();
             var campus_value = $(document).find('#campus').val();
             var exam_type_value = $(document).find('#select_exam_type').val();
+//            document.getElementById("load").style.display = "block";
             ajax.jsonRpc("/pc_exam_subject_search", 'call', {
                 'level': level_value,
                 'campus':campus_value,
                 'exam_type':exam_type_value,
             }).then(
                 function(result) {
-                    if (result) {
+                    if (result['subjects']) {
                          var select = document.getElementById("select_pc_exam_subject");
                          var subject = [];
                          select.options.length = 0;
-                         for(var i=0;i<=result.length;i++)
+                         for(var i=0;i<=result['subjects'].length;i++)
                          {
-                            subject.push(result[i]);
-                            select.options[select.options.length] = new Option(subject[i-1], result[i-1]);
+                            subject.push(result['subjects'][i]);
+                            select.options[select.options.length] = new Option(subject[i-1], result['subjects'][i-1]);
                          }
                     }
+                    if (result['dates'])
+                    {
+                        availableDates = [];
+                        for(var i=0;i<result['dates'].length;i++)
+                         {
+                             availableDates.push(result['dates'][i]);
+                         }
+                         $('#exam_datepicker').val("");
+                         console.log("\n\n\n\n\n=========availableDates result['dates']==============",availableDates)
+                    }
                 });
-
+//            document.getElementById("load").style.display = "none";
         });
 
 
