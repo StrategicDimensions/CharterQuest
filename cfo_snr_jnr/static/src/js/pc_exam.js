@@ -106,43 +106,6 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
         endDate: dob_date
         });
 
-        $('#select_pc_exam_subject').change(function(){
-            var level_value = $(document).find('#select_pc_exam_level').val();
-            var subject_value = $(document).find('#select_pc_exam_subject').val();
-            var campus_value = $(document).find('#campus').val();
-            var exam_type_value = $(document).find('#select_exam_type').val();
-            console.log("\n\n\n\n\n=========daate==============",level_value,subject_value,campus_value,exam_type_value)
-            ajax.jsonRpc("/pc_exam_date_search", 'call', {
-                'level': level_value,
-                'subject':subject_value,
-                'campus':campus_value,
-                'exam_type':exam_type_value,
-            }).then(
-                function(result) {
-                    console.log("\n\n\n\n\n=========daate result==============",result)
-                    if (result) {
-                         var availableDates =["9-5-2011","14-5-2011","15-5-2011"];
-                         console.log("\n\n\n\n\n=========availableDates==============",availableDates)
-
-
-                    }
-                });
-
-
-        });
-
-//        $('#date').datepicker({
-//             beforeShowDay: available
-//        });
-
-
-
-        var dob_date = new Date();
-        dob_date.setDate(dob_date.getDate());
-        $('input[name="DOB"]').datepicker({
-        endDate: dob_date
-        });
-
         $(".exam_date_validation").on('click', function (event) {
             var date_exam = $(document).find('#exam_datepicker').val();
             if (!date_exam) {
@@ -338,7 +301,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
             {
                 $('.exam_search').attr("disabled", true);
             }
-            $('.exam_search').attr("disabled", true);
+
         });
 
         $(document).on("click", "#examTable tbody > tr > td > .selectbtn", function() {
@@ -373,37 +336,6 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
 //                    });
         });
 
-        $(document).on("click", "#examTable tbody > tr > td > .selectbtn", function() {
-            console.log("\n\n\n\n======this=====",$(this).parents('tr').clone(true))
-            var row = $(this).parents('tr').clone(true);
-
-            console.log("\n\n\n\n======row=====",row.find('button.select_button')['context']);
-            $('#select_exam_body').append(row);
-
-            var avl_seats = $(this).closest('.exam_row').find('td.aval_seats').val();
-            var price = $(this).closest('.exam_row').find('input.exam_price').val();
-            var date = $(this).closest('.exam_row').find('input.exam_date').val();
-            var time = $(this).closest('.exam_row').find('input.exam_time').val();
-            var srow = $("#examselectTable tbody > tr > td > .selectbtn");
-            var select_exam_id = $(this).closest('.exam_row').find('input.exam_id').val();
-            srow.html('Remove');
-            console.log("\n\n\n\n======srow=====",price,srow,srow.val(),exam_id,avl_seats,date,time);
-            select_exam_price = select_exam_price + parseFloat(price);
-            console.log("\n\n\n\n======select_exam_price =====",select_exam_price,select_exam_id)
-            $('#total_price').val(select_exam_price);
-
-            event_ids.push(select_exam_id);
-            $('#event_ids').val(event_ids);
-
-//            ajax.jsonRpc("/set_available_seats", 'call', {
-//                    'select_exam_id': select_exam_id,
-//                    'type':'Select',
-//                }).then(
-//                    function(result) {
-//                        console.log("\n\n\n\n=====list====",result,typeof(result))
-//                        $('#event_ids').val(result);
-//                    });
-        });
         $(document).on("click", "#examselectTable tbody > tr > td > .selectbtn", function() {
             var row = $(this).parents('tr').clone(true);
             var re_price = $(this).closest('.exam_row').find('input.exam_price').val();
