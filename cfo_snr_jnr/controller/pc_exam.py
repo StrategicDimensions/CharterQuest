@@ -384,7 +384,7 @@ class PCExambooking(http.Controller):
                     'seats_available': available_seats,
                 })
 
-                sale_order_dict['prof_body'] = event_id.event_type_id.id
+                sale_order_dict['prof_body'] = event_id.event_type_id.id if event_id.event_type_id else ''
                 sale_order_dict['semester_id'] = event_id.semester_id.id
                 sale_order_dict['pc_exam_type'] = event_id.type_pc_exam.id
 
@@ -464,7 +464,7 @@ class PCExambooking(http.Controller):
                 })
 
                 # sale_order_dict['Validity_date'] = event_id.date_end
-                sale_order_dict['prof_body'] = event_id.event_type_id.id
+                sale_order_dict['prof_body'] = event_id.event_type_id.id if event_id.event_type_id else ''
                 sale_order_dict['semester_id'] = event_id.semester_id.id
                 # sale_order_dict['date_order'] = event_id.date_begin
                 sale_order_dict['pc_exam_type']=event_id.type_pc_exam.id
@@ -962,7 +962,20 @@ class PCExambooking(http.Controller):
 
         template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
         if template_id:
-            agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
+            pdf_data_enroll = request.env.ref('event_price_kt.report_pc_exam').sudo().render_qweb_pdf(
+                order.id)
+            enroll_file_name = "Pro-Forma " + order.name
+            if pdf_data_enroll:
+                pdfvals = {'name': enroll_file_name,
+                           'db_datas': base64.b64encode(pdf_data_enroll[0]),
+                           'datas': base64.b64encode(pdf_data_enroll[0]),
+                           'datas_fname': enroll_file_name + ".pdf",
+                           'res_model': 'sale.order',
+                           'type': 'binary'}
+                pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
+                attchment_list.append(pdf_create)
+
+            agreement_id = request.env.ref('cfo_snr_jnr.pc_exam_data_pdf')
             if agreement_id:
                 attchment_list.append(agreement_id)
             banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
@@ -1145,7 +1158,7 @@ class PCExambooking(http.Controller):
         #                    'datas': base64.b64encode(pdf_data_enroll[0]),
         #                    'datas_fname': enroll_file_name + '.pdf',
         #                    'res_model': 'sale.order',
-        #                    'type': 'binary'}
+        #               invoice_id     'type': 'binary'}
         #         pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
         #         attachment_list.append(pdf_create)
 
@@ -1226,9 +1239,7 @@ class PCExambooking(http.Controller):
                'company_id': sale_order_id.company_id.id}
         inv_default_vals = request.env['account.invoice'].with_context(ctx).sudo().default_get(['journal_id'])
         ctx.update({'journal_id': inv_default_vals.get('journal_id')})
-        print("\n\n\n\n\n\n==========ctx=====",ctx)
         invoice_id = sale_order_id.with_context(ctx).sudo().action_invoice_create()
-        print("\n\n\n\n============invoice id line====",invoice_id,invoice_id.invoice_line_ids)
         invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
         journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
         payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
@@ -1283,7 +1294,7 @@ class PCExambooking(http.Controller):
                 event_list=event_list,
                 email_cc='thecfo@charterquest.co.za',
                 reschedule_link=link,
-                prof_body=invoice_id.prof_body.name,
+                prof_body=sale_order_id.prof_body.name,
             ).send_mail(sale_order_id.id, force_send=True)
 
         template_invoice_id = request.env.ref('cfo_snr_jnr.email_template_pcexam_confirm',

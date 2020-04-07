@@ -2097,6 +2097,18 @@ class EnrolmentProcess(http.Controller):
 
         template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
         if template_id:
+            pdf_data_enroll = request.env.ref('event_price_kt.report_pc_exam').sudo().render_qweb_pdf(
+                order.id)
+            enroll_file_name = "Pro-Forma " + order.name
+            if pdf_data_enroll:
+                pdfvals = {'name': enroll_file_name,
+                           'db_datas': base64.b64encode(pdf_data_enroll[0]),
+                           'datas': base64.b64encode(pdf_data_enroll[0]),
+                           'datas_fname': enroll_file_name + ".pdf",
+                           'res_model': 'sale.order',
+                           'type': 'binary'}
+                pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
+                attchment_list.append(pdf_create)
             agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
             if agreement_id:
                 attchment_list.append(agreement_id)
@@ -2104,19 +2116,27 @@ class EnrolmentProcess(http.Controller):
             if banking_detail_id:
                 attchment_list.append(banking_detail_id)
 
-            mail_values = {
-                'email_from': template_id.email_from,
-                'reply_to': template_id.reply_to,
-                'email_to': order.partner_id.email if order.partner_id.email else '',
-                'email_cc': 'enquiries@charterquest.co.za,accounts@charterquest.co.za,cqops@charterquest.co.za',
-                'subject': "Charterquest FreeQuote/Enrolment  " + order.name,
-                'notification': True,
-                'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
-                'auto_delete': False,
-            }
-            msg_id = mail_obj.create(mail_values)
-            msg_id.send()
+            # mail_values = {
+            #     'email_from': template_id.email_from,
+            #     'reply_to': template_id.reply_to,
+            #     'email_to': order.partner_id.email if order.partner_id.email else '',
+            #     'email_cc': 'enquiries@charterquest.co.za,accounts@charterquest.co.za,cqops@charterquest.co.za',
+            #     'subject': "Charterquest FreeQuote/Enrolment  " + order.name,
+            #     'notification': True,
+            #     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])],
+            #     'auto_delete': False,
+            # }
+            # msg_id = mail_obj.create(mail_values)
+            # msg_id.send()
 
+            template_id.write(
+                {'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])]})
+            template_id.sudo().with_context(
+                # email_to=each_request.get('email'),
+                # event_list=event_list,
+                email_cc='enquiries@charterquest.co.za,accounts@charterquest.co.za,cqops@charterquest.co.za',
+                # prof_body=invoice_id.prof_body.name,
+            ).send_mail(order.id, force_send=True)
         return request.render("cfo_snr_jnr.event_unsuccessful", {'order': order})
 
     @http.route('/event/payment/payu_com/dpn', type='http', auth="public", methods=['POST', 'GET'], website=True)
@@ -2332,8 +2352,7 @@ class EnrolmentProcess(http.Controller):
             'move_lines': line_list
         })
         customer_picking.sale_id = sale_order_id.id
-        invoice_id.action_invoice_open()
-        payment_id.action_validate_invoice_payment()
+
         if sale_order_id.debit_order_mandat:
             date_day = sale_order_id.due_day
             if date_day:
@@ -2356,6 +2375,10 @@ class EnrolmentProcess(http.Controller):
                                                   'invoice_id': invoice_id.id if invoice_id else False
                                                   })
                     dbo_date = dbo_date + relativedelta(months=+1)
+
+        invoice_id.action_invoice_open()
+        payment_id.action_validate_invoice_payment()
+
         template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
         if template_id:
             # template_id.send_mail(sale_order_id.id, force_send=True)
@@ -2922,6 +2945,7 @@ class EnrolmentProcess(http.Controller):
             account_type = request.env['account.account.type'].sudo().search([('id', '=', int(post['inputAtype']))])
         if post.get('sale_order'):
             sale_order_id = request.env['sale.order'].sudo().browse(int(post.get('sale_order')))
+            print("\n\n\n\n\n============sale_order_id============",sale_order_id)
             debit_order_mandet = []
             debit_order_mandet.append([0, 0, {'partner_id': sale_order_id.partner_id.id,
                                               'dbo_amount': post.get('inputtotalandInterest') if post.get(
@@ -3006,7 +3030,6 @@ class EnrolmentProcess(http.Controller):
                 'amount':sale_order_id.payment_amount,
             })
 
-
             # if sale_order_id and sale_order_id.quote_type == 'enrolment':
 
                 # for each_order_line in sale_order_id.order_line:
@@ -3070,7 +3093,7 @@ class EnrolmentProcess(http.Controller):
                 'move_lines': line_list
             })
             customer_picking.sale_id = sale_order_id.id
-            invoice_id.action_invoice_open()
+            # invoice_id.action_invoice_open()
             # if sale_order_id and sale_order_id.quote_type == 'freequote':
             payment_id.action_validate_invoice_payment()
 

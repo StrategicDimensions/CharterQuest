@@ -31,7 +31,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
                          $('#exam_datepicker').val("");
                     }
                 });
-//           document.getElementById("load1").style.display = "none";
+           $('.exam_search').attr("disabled", false);
         });
 
         var exam_date = new Date();
@@ -96,9 +96,13 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
                          console.log("\n\n\n\n\n=========availableDates result['dates']==============",availableDates)
                     }
                 });
-//            document.getElementById("load").style.display = "none";
+            $('.exam_search').attr("disabled", false);
         });
 
+        $('#exam_datepicker').click(function ()
+        {
+            $('.exam_search').attr("disabled", false);
+        });
 
         var dob_date = new Date();
         dob_date.setDate(dob_date.getDate());
@@ -239,9 +243,15 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
 //            document.getElementById("errormessage").innerHTML = " ";
         });
 
+//        $("#examtablebody").on("click", ".exam_search", function() {
+//            console.log("\n\n\n\n\n=====tr value=========",$(this).closest("tr"))
+////          $(this).closest("tr").remove();
+//        });
+
         $('.exam_search').on('click', function (e) {
             e.preventDefault();
             console.log("\n\n\n\n==============call============");
+
             $('#select_pc_exam_level').attr('required', true);
             $('#select_pc_exam_subject').attr('required', true);
             $("#exam_datepicker").attr('required',true)
@@ -269,6 +279,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
                 'sale_order_id':sale_order_id,
             }).then(
                 function(result) {
+                    $("#examtablebody").html('');
                     if (level_value && subject_value && date_exam && result){
                         $('.available_exam').css("display", "block");
                         $('.selected_exam').css("display", "block");
@@ -302,7 +313,6 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
             {
                 $('.exam_search').attr("disabled", true);
             }
-
         })
 
         $(document).on("click", "#examTable tbody > tr > td > .selectbtn", function() {

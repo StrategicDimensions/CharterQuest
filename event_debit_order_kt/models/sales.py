@@ -208,6 +208,7 @@ class payment_confirmation(models.Model):
                         })
         self.order_id.write(dic)
         self.order_id._action_confirm()
+
         if self.env['ir.config_parameter'].sudo().get_param('sale.auto_done_setting'):
             self.action_done()
 

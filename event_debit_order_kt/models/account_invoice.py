@@ -204,7 +204,7 @@ class account_invoice(models.Model):
                              'bank_name': debitorder.bank_name and debitorder.bank_name.id,
                              'bank_acc_no': debitorder.bank_acc_no,
                              'bank_code': debitorder.bank_code,
-                             'bank_acc_type': debitorder.bank_acc_type,
+                             'bank_acc_type': debitorder.bank_type_id.name,
                              'state':'pending',
                              'sale_id': self.sale_order_id.id,
                              'invoice_id': self.id
