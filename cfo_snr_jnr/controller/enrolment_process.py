@@ -2095,7 +2095,8 @@ class EnrolmentProcess(http.Controller):
             return request.redirect('/enrolment_book')
         request.website.sale_reset()
 
-        template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
+        template_id = request.env.ref('cfo_snr_jnr.unsuccessful_sponsored_regist_enrol_email_template',
+                                                      raise_if_not_found=False)
         if template_id:
             pdf_data_enroll = request.env.ref('event_price_kt.report_pc_exam').sudo().render_qweb_pdf(
                 order.id)

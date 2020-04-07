@@ -6122,7 +6122,44 @@
         ]]>
             </field>
         </record>
-        
+
+        <record id="unsuccessful_sponsored_regist_enrol_email_template" model="mail.template">
+            <field name="name">Unsuccessful Sponsored/ Register and Enrol</field>
+            <field name="email_from">patience.m@charterquest.co.za</field>
+            <field name="email_to">${object.partner_id.email}</field>
+            <field name="subject">Charterquest FreeQuote/Enrolment ${object.name}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name='email_cc'>enquiries@charterquest.co.za,accounts@charterquest.co.za,cqops@charterquest.co.za</field>
+            <field name="partner_to">${object.user_id.partner_id.id}</field>
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="body_html">
+                <![CDATA[
+            <html>
+                 <body style="margin: 0;padding: 0;min-width: 100%;background-color: #f5f7fa;">
+                    <div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>
+                     <br/>
+                     Dear ${object.partner_id.name}
+                     <br/><br/>
+                     Thank you for your Enrolment Application.
+                     <br/><br/>
+                     Please find attached Invoice as well as copy of the Student Agreement you just accepted during enrolment.
+                     <br/><br/>
+                     Your sponsor/company can pay using the Invoice no. as reference and return proof of payment to: accounts@charterquest.co.za
+                     <br/><br/>
+                     to process your enrolment. You can email accounts should you wish to make special payment arrangements.
+                     <br/><br/>
+                     We look forward to seeing  you during our course and helping you, in achieving a 1st Time Pass!
+                    <br/><br/><br/> Thanking You <br><br> Patience Mukondwa<br/> Head Of Operations<br> The CharterQuest Institute<br> CENTRAL CONTACT INFORMATION:<br/>
+                    Tel: +27 (0)11 234 9223 [SA & Intl]<br/> Tel: +27 (0)11 234 9238 [SA & Intl]<br> Tel: 0861 131 137 [SA ONLY]<br> Fax: 086 218 8713 [SA ONLY]<br/>
+                    Email:enquiries@charterquest.co.za<br/><br/>
+                    </div>
+                   </body>
+                </html>
+        ]]>
+            </field>
+        </record>
+
         
         <!--self Sponsored 🡺Get Free Quote Emailed🡺 No to Invoice -->
 

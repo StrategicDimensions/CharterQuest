@@ -227,9 +227,14 @@ class PCExambooking(http.Controller):
         exam_date_list = []
 
         print("\n\n\n\n\n\===========exam data post======", post)
-        exam_ids = request.env['event.event'].sudo().search(
-            [('type_pc_exam.id', '=', post.get('exam_type')), ('subject', '=', (post.get('subject'))),
-             ('qualification.id', '=', int(post.get("level"))), ('address_ids', 'in', int(post.get('campus')))])
+        if not post.get('sale_order'):
+            exam_ids = request.env['event.event'].sudo().search(
+                [('type_pc_exam.id', '=', post.get('exam_type')), ('subject', '=', (post.get('subject'))),
+                 ('qualification.id', '=', int(post.get("level"))), ('address_ids', 'in', int(post.get('campus')))])
+        if post.get('sale_order'):
+            sale_order_id = request.env['sale.order'].sudo().browse(int(post.get('sale_order')))
+            exam_ids = request.env['event.event'].sudo().search([('name','=',sale_order_id.order_line.event_id.name),('subject','=',post.get('subject'))])
+
         print("\n\n\n==========exam_id====", exam_ids)
         today_datetime = datetime.now() + timedelta(7)
         tody_date_format = today_datetime.strftime('X%d-X%m-%Y').replace('X0','X').replace('X','')
@@ -241,7 +246,6 @@ class PCExambooking(http.Controller):
                     exam_date = exam.date_begin.split(" ")
                     datetimeobject = datetime.strptime(exam_date[0], '%Y-%m-%d')
                     newformat = datetimeobject.strftime('X%d-X%m-%Y').replace('X0','X').replace('X','')
-                    print("\n\n\n\n\n===========dates types===",type(tody_date_format),type(newformat))
 
                     date1 = datetime.strptime(tody_date_format, "%d-%m-%Y")
                     date2 = datetime.strptime(newformat, "%d-%m-%Y")
@@ -353,7 +357,9 @@ class PCExambooking(http.Controller):
 
         # print("\n\n\n\n===========event =========ids=======", event_select_list)
         campus_id = request.env['res.partner'].sudo().search([('id', '=', int(post.get('campus')))])
+        print("\n\n\n\n===========event =========campus_id=======", campus_id)
         warehouse_id = request.env['stock.warehouse'].sudo().search([('name', '=', campus_id.name)])
+        print("\n\n\n\n===========event =========warehouse_id=======", warehouse_id)
         if post.get('sale_order_id'):
 
             exam_list=[]
@@ -384,7 +390,7 @@ class PCExambooking(http.Controller):
                     'seats_available': available_seats,
                 })
 
-                sale_order_dict['prof_body'] = event_id.event_type_id.id if event_id.event_type_id else ''
+                sale_order_dict['prof_body'] = event_id.event_type_id.id if event_id.event_type_id else event_id.type_pc_exam.type_event_id.id
                 sale_order_dict['semester_id'] = event_id.semester_id.id
                 sale_order_dict['pc_exam_type'] = event_id.type_pc_exam.id
 
@@ -959,8 +965,8 @@ class PCExambooking(http.Controller):
         else:
             return request.redirect('/enrolment_book')
 
-
-        template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
+        template_id = request.env.ref('cfo_snr_jnr.unsuccessful_sponsored_regist_enrol_email_template',
+                                      raise_if_not_found=False)
         if template_id:
             pdf_data_enroll = request.env.ref('event_price_kt.report_pc_exam').sudo().render_qweb_pdf(
                 order.id)
@@ -975,7 +981,7 @@ class PCExambooking(http.Controller):
                 pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                 attchment_list.append(pdf_create)
 
-            agreement_id = request.env.ref('cfo_snr_jnr.pc_exam_data_pdf')
+            agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
             if agreement_id:
                 attchment_list.append(agreement_id)
             banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')

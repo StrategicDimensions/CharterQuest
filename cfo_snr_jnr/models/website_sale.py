@@ -148,7 +148,7 @@ class AccountPayment(models.Model):
 
                      self.invoice_ids[0].sudo().write({'voucher_send':True})
 
-            if self.payment_difference < 0 and self.invoice_ids[0].quote_type != 'CharterBooks' and self.invoice_ids[0].quote_type != 'PC Exam':
+            if self.payment_difference > 0 and self.invoice_ids[0].quote_type != 'CharterBooks' and self.invoice_ids[0].quote_type != 'PC Exam':
                  full_template_id = email_obj.sudo().search([('name', '=', "Full invoice payment")])
                  if full_template_id:
                      attachment_list=[]
