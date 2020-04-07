@@ -58,6 +58,7 @@ class pcexams_wizard(models.Model):
                         'date_begin':start_date,
                         'date_end':end_date,
                         'price':record.price,
+                        'event_type_id':record.type_pc_exam.type_event_id.id,
                         # 'semester':record.semester,
                         'qualification':record.qualification.id or False,
                         'seats_max':record.seats_max,
