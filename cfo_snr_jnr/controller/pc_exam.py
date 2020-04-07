@@ -464,7 +464,7 @@ class PCExambooking(http.Controller):
                 })
 
                 # sale_order_dict['Validity_date'] = event_id.date_end
-                sale_order_dict['prof_body'] = event_id.event_type_id.id if event_id.event_type_id else ''
+                sale_order_dict['prof_body'] = event_id.event_type_id.id if event_id.event_type_id else event_id.type_pc_exam.type_event_id.id
                 sale_order_dict['semester_id'] = event_id.semester_id.id
                 # sale_order_dict['date_order'] = event_id.date_begin
                 sale_order_dict['pc_exam_type']=event_id.type_pc_exam.id
