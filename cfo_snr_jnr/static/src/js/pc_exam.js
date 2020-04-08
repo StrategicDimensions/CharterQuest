@@ -91,7 +91,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
         var voucher_list = [];
         var event_ids = [];
 
-       $('#exam_datepicker').datepicker({
+        $('#exam_datepicker').datepicker({
             startDate: exam_date,
 //            daysOfWeekDisabled: [0,6],
             beforeShowDay: available
@@ -208,12 +208,13 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
                             var voucher_id = $(document).find("#voucher_"+event).val(parseFloat((result['voucher_price']).toFixed(2)));
                             console.log("\n\n\n\n=====voucher_id====",voucher_id,result['voucher_price'])
                             var event_price = parseFloat($(document).find("#event_price_"+event).val());
+                            console.log("\n\n\n\n\n=======event_price===========",event_price)
                             var total_price = event_price - parseFloat((result['voucher_price']).toFixed(2));
 
                             var total_exam_price = $(document).find('#total_exam_price').val();
                             var total_voucher_price = parseFloat($(document).find("#total_voucher_price").val());
                             var total = $(document).find("#final_total_price").val();
-                            console.log("\n\n\n\n\n========total_exam_price===========",total_exam_price,typeof(total_voucher_price))
+                            console.log("\n\n\n\n\n========total_exam_price===========",total_exam_price,typeof(total_voucher_price),total_price)
 
                             var total_voucher_price = parseFloat((total_voucher_price).toFixed(2)) + parseFloat((result['voucher_price']).toFixed(2));
                             console.log("\n\n\n\n\n========total_voucher_price===========",total_voucher_price)
@@ -376,7 +377,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
 
             event_ids.push(select_exam_id);
             $('#event_ids').val(event_ids);
-
+            console.log("\n\n\n\n\n\n=============event_ids==========event======",event_ids)
 //            ajax.jsonRpc("/set_available_seats", 'call', {
 //                    'select_exam_id': select_exam_id,
 //                    'type':'Select',

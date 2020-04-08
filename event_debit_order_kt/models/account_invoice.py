@@ -82,16 +82,18 @@ class account_invoice(models.Model):
 
                 for exam in sale_order_id.order_line:
                     exam_dict = {}
-                    online_registration.append([0, 0, {'event_id': exam.event_id.name,
-                                                       'partner_id': self.partner_id.id,
-                                                       'email': self.partner_id.email
-                                                       }])
-                    exam.event_id.write({'online_registration_ids': online_registration})
-                    exam_dict['subject_name'] = exam.event_id.name
-                    exam_dict['start_time'] = exam.event_id.date_begin
-                    exam_dict['end_time'] = exam.event_id.date_end
-                    exam_dict['campus'] = sale_order_id.campus.name
-                    event_list.append(exam_dict)
+                    event = self.env['event.event'].search([('name','=',exam.event_id.name)])
+                    if event:
+                        online_registration.append([0, 0, {'event_id': exam.event_id.name,
+                                                           'partner_id': self.partner_id.id,
+                                                           'email': self.partner_id.email
+                                                           }])
+                        exam.event_id.write({'online_registration_ids': online_registration})
+                        exam_dict['subject_name'] = exam.event_id.name
+                        exam_dict['start_time'] = exam.event_id.date_begin
+                        exam_dict['end_time'] = exam.event_id.date_end
+                        exam_dict['campus'] = sale_order_id.campus.name
+                        event_list.append(exam_dict)
             template_id = self.env.ref('cfo_snr_jnr.email_template_payvia_credit_card',
                                           raise_if_not_found=False)
             if template_id:

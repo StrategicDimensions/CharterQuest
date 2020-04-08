@@ -48,7 +48,9 @@ class PCExambooking(http.Controller):
             print("\n\n\n\n\n============uuid============",uuid,sale_order_id)
         if sale_order_id:
             today = datetime.now()
-            sale_order_id_date=datetime.strptime(sale_order_id.order_line.event_id.date_begin, '%Y-%m-%d %H:%M:%S')
+            for order_line in sale_order_id.order_line:
+                if order_line.event_id.date_begin:
+                    sale_order_id_date=datetime.strptime(order_line.event_id.date_begin, '%Y-%m-%d %H:%M:%S')
             time_diff = sale_order_id_date - today
             reschedule_time = time_diff.total_seconds()
             # if reschedule_time < 0:
@@ -243,7 +245,8 @@ class PCExambooking(http.Controller):
         if exam_ids:
             for exam in exam_ids:
                 if exam.seats_available > 0:
-                    exam_date = exam.date_end.split(" ")
+                    exam_date = exam.date_end\
+                        .split(" ")
                     datetimeobject = datetime.strptime(exam_date[0], '%Y-%m-%d')
                     newformat = datetimeobject.strftime('X%d-X%m-%Y').replace('X0','X').replace('X','')
 
@@ -281,6 +284,10 @@ class PCExambooking(http.Controller):
     @http.route(['/examsearch'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
     def exam_search_reg(self, **post):
         exam_list = []
+        level_lst=[]
+        subject_lst=[]
+        date_lst = []
+        price = 0.0
         value={}
         print("\n\n\n\n\n\===========exam search post======", post,type(post.get('event[]')))
         exam_select_list = post.get('event[]').split(',')
@@ -288,20 +295,27 @@ class PCExambooking(http.Controller):
         for i in range(0 , len(exam_select_list)):
             event_id = request.env['event.event'].sudo().browse([int(exam_select_list[i])])
             if event_id:
+                level_lst.append(event_id.qualification.id)
+                subject_lst.append(event_id.subject.id)
+                price = price + event_id.price
+                date = event_id.date_end.split(" ")
+                date_lst.append(date[0])
                 # available_seats = event_id.seats_available - 1
                 # event_id.write({
                 #     'seats_available': available_seats,
                 # })
                 exam_list.append(int(exam_select_list[i]))
         print("\n\n\n\n\=========exam list=======",exam_list)
+        print("\n\n\n\n\=========level_lst list=======", level_lst)
+        print("\n\n\n\n\=========subject_lst list=======", subject_lst)
         value['event_ids']=exam_list
         value['page_name']=post.get('page_name')
-        value['select_pc_exam_level']=post.get('select_pc_exam_level')
-        value['select_pc_exam_subject']=post.get('select_pc_exam_subject')
-        value['inputDate']=post.get('inputDate')
+        value['select_pc_exam_level']=post.get('select_pc_exam_level') if post.get('select_pc_exam_level') else level_lst
+        value['select_pc_exam_subject']=post.get('select_pc_exam_subject') if post.get('select_pc_exam_subject') else subject_lst
+        value['inputDate']=post.get('inputDate') if post.get('inputDate') else date_lst
         value['campus']=post.get('campus')
         value['select_exam_type']=post.get('select_exam_type')
-        value['total_price']= post.get('total_price')
+        value['total_price']= post.get('total_price') if post.get('total_price') else price
 
         return request.render('cfo_snr_jnr.exam_process_form', value)
 
