@@ -144,7 +144,7 @@ class PCExambooking(http.Controller):
 
         if exam_ids:
             for exam in exam_ids:
-                if exam.seats_available > 0:
+                if exam.seats_available > 0 or exam.seat_availability == 'unlimited':
                     exam_dict = {}
                     print("\n\n\n\n=====time=====",datetime.strptime(exam.date_begin,'%Y-%m-%d %H:%M:%S').time())
                     print("\n\n\n\n=====time end=====", datetime.strptime(exam.date_end, '%Y-%m-%d %H:%M:%S').time())
@@ -177,10 +177,11 @@ class PCExambooking(http.Controller):
                 if int(post.get('campus')) in event.address_ids.ids and exam_type_id.name == event.type_pc_exam.name and exam_level_id.name == event.qualification.name:
                     if event.subject:
                         exam_subject_list.append(event.subject)
-                    exam_date = event.date_begin.split(" ")
+                    exam_date = event.date_end.split(" ")
+                    print("\n\n\n\n\n===========exam_date types===", exam_date,exam_date[0])
                     datetimeobject = datetime.strptime(exam_date[0], '%Y-%m-%d')
                     newformat = datetimeobject.strftime('X%d-X%m-%Y').replace('X0', 'X').replace('X', '')
-                    print("\n\n\n\n\n===========dates types===", type(tody_date_format), type(newformat))
+                    print("\n\n\n\n\n===========dates types===", type(tody_date_format), type(newformat),newformat)
 
                     date1 = datetime.strptime(tody_date_format, "%d-%m-%Y")
                     date2 = datetime.strptime(newformat, "%d-%m-%Y")
@@ -242,7 +243,7 @@ class PCExambooking(http.Controller):
         if exam_ids:
             for exam in exam_ids:
                 if exam.seats_available > 0:
-                    exam_date = exam.date_begin.split(" ")
+                    exam_date = exam.date_end.split(" ")
                     datetimeobject = datetime.strptime(exam_date[0], '%Y-%m-%d')
                     newformat = datetimeobject.strftime('X%d-X%m-%Y').replace('X0','X').replace('X','')
 
