@@ -2041,6 +2041,8 @@ class EnrolmentProcess(http.Controller):
             transactionDetails['customer']['lastName'] = last_name if last_name else ''
             transactionDetails['customer']['mobile'] = sale_order_id.partner_id.mobile
         print("\n\n\n\nn\==================transactiondetails========", transactionDetails)
+        print("\n\n\n\nn\==================sale orderid sale order========", sale_order_id)
+        request.session['sale_order_id'] = sale_order_id.id
         if payment_acquire:
             payu_tx_values.update({
                 'x_login': payment_acquire.payu_api_username,
@@ -2088,9 +2090,13 @@ class EnrolmentProcess(http.Controller):
         cr, uid, context = request.cr, request.uid, request.context
         attchment_list = []
         mail_obj = request.env['mail.mail'].sudo()
-        sale_order_id = request.session.get('sale_last_order_id')
+
+        sale_order_id = request.session.get('sale_order_id')
+
+        print("\n\n\n\n\n=========sale order id===========",sale_order_id)
         if sale_order_id:
             order = request.env['sale.order'].sudo().browse(sale_order_id)
+            print("\n\n\n\n\n=========sale order order===========", order)
         else:
             return request.redirect('/enrolment_book')
         request.website.sale_reset()
@@ -2098,14 +2104,14 @@ class EnrolmentProcess(http.Controller):
         template_id = request.env.ref('cfo_snr_jnr.unsuccessful_sponsored_regist_enrol_email_template',
                                                       raise_if_not_found=False)
         if template_id:
-            pdf_data_enroll = request.env.ref('event_price_kt.report_pc_exam').sudo().render_qweb_pdf(
+            pdf_data_enroll = request.env.ref('event_price_kt.report_sale_enrollment').sudo().render_qweb_pdf(
                 order.id)
             enroll_file_name = "Pro-Forma " + order.name
             if pdf_data_enroll:
                 pdfvals = {'name': enroll_file_name,
                            'db_datas': base64.b64encode(pdf_data_enroll[0]),
                            'datas': base64.b64encode(pdf_data_enroll[0]),
-                           'datas_fname': enroll_file_name + ".pdf",
+                           'datas_fname': enroll_file_name + '.pdf',
                            'res_model': 'sale.order',
                            'type': 'binary'}
                 pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
@@ -2220,6 +2226,7 @@ class EnrolmentProcess(http.Controller):
                     acc_payment = request.env['account.payment'].sudo().create(account_payment)
                     acc_payment.sudo().post()
                 sale_order_id = request.session.get('sale_last_order_id')
+                print("\n\n\n\n\n\n=======================sale order sale order======",sale_order_id)
                 sale_order_data = request.env['sale.order'].sudo().browse(sale_order_id)
                 # if sale_order_data.project_project_id:
                 #     request.session['last_project_id'] = sale_order_data.project_project_id.id

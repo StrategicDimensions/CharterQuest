@@ -36,7 +36,6 @@ class PCExambooking(http.Controller):
                 if campus in exam_campus.address_ids:
                     if exam_campus.pc_exam == True:
                         campus_ids_lst.append(campus.id)
-        print("\n\n\n\n=====campus_ids_lst lst====", campus_ids_lst)
 
         for campus_exam in campus_ids_lst:
             if campus_exam not in campus_lst:
@@ -49,14 +48,14 @@ class PCExambooking(http.Controller):
             print("\n\n\n\n\n============uuid============",uuid,sale_order_id)
         if sale_order_id:
             today = datetime.now()
-            sale_order_id_date=datetime.strptime(sale_order_id.date_order, '%Y-%m-%d %H:%M:%S')
-            time_diff = today - sale_order_id_date
+            sale_order_id_date=datetime.strptime(sale_order_id.order_line.event_id.date_begin, '%Y-%m-%d %H:%M:%S')
+            time_diff = sale_order_id_date - today
             reschedule_time = time_diff.total_seconds()
             # if reschedule_time < 0:
             #     reschedule_time= - reschedule_time
             print("\n\n\n\n====time_diff==",reschedule_time)
 
-        if reschedule_time > 172800:
+        if reschedule_time < 172800 and reschedule_time != 0.0:
             return request.render('cfo_snr_jnr.exam_reschedule_fail')
 
         else:
@@ -818,6 +817,7 @@ class PCExambooking(http.Controller):
             transactionDetails['customer']['mobile'] = sale_order_id.partner_id.mobile
 
             print("\n\n\n\nn\==============transactiondetails========",transactionDetails)
+            request.session['sale_order_id'] = sale_order_id.id
         if payment_acquire:
             payu_tx_values.update({
                 'x_login': payment_acquire.payu_api_username,
