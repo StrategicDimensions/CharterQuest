@@ -81,7 +81,7 @@
                                 <td style="width:78.0pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt" valign="top" width="104">
 <!--                                    <button href="/registerPB?" style="margin-top: 10px;margin-bottom: 10px;margin-left: 1px;background-color: red;" class="btn btn-primary btn-danger" id="btn_reschedule">Reschedule PC Exam</button>-->
                                      <div class="btn" style="margin-top: 10px;margin-bottom: 10px;margin-left: 15px;background-color: red;">
-                                        <a style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 1px 3px 1px 3px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;' href="${(ctx.get('reschedule_link'))}">Reschedule PC Exam</a>
+                                        <a style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 1px 3px 1px 3px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;' href=${event['link']}>Reschedule PC Exam</a>
                                      </div>
                                 </td>
                             </tr>
@@ -227,7 +227,7 @@
                                 <td style="width:78.0pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt" valign="top" width="104">
 <!--                                    <button href="/registerPB?" style="margin-top: 10px;margin-bottom: 10px;margin-left: 1px;background-color: red;" class="btn btn-primary btn-danger" id="btn_reschedule">Reschedule PC Exam</button>-->
                                      <div class="btn" style="margin-top: 10px;margin-bottom: 10px;margin-left: 15px;background-color: red;">
-                                        <a style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 1px 3px 1px 3px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;' href="${(ctx.get('reschedule_link'))}">Reschedule PC Exam</a>
+                                        <a style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 1px 3px 1px 3px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #ff0000;' href=${event['link']}>Reschedule PC Exam</a>
                                      </div>
                                 </td>
                             </tr>

@@ -7,9 +7,9 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
 
         var availableDates = [];
 
-        var sale_order = $(document).find('#sale_order_id').val()
-
-        if (sale_order){
+        var sale_order = $(document).find('#sale_order_id').val();
+        var event = $(document).find('#event_id').val();
+        if (sale_order && event){
             var level = $(document).find('#select_pc_exam_level').val();
             var campus = $(document).find('#campus').val();
             var exam_type = $(document).find('#select_exam_type').val();
@@ -24,6 +24,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
                 'campus':campus,
                 'exam_type':exam_type,
                 'sale_order':sale_order,
+                'event_id':event,
             }).then(
                 function(result) {
                     console.log("\n\n\n\n\n=========daate result==============",result)

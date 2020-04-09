@@ -24,9 +24,11 @@ class PCExambooking(http.Controller):
                 csrf=False)
     def pc_exam_form_render(self,uuid=False, **post):
         sale_order_id = False
+        event_id = False
         reschedule_time=0.0
         campus_ids_lst = []
         campus_lst = []
+        uuid_lst = []
         print("\n\n\n\n\n============uuid============", uuid)
         event_ids = request.env['event.event'].sudo().search([])
         campus_ids = request.env['res.partner'].sudo().search([('is_campus','=', True)])
@@ -43,15 +45,20 @@ class PCExambooking(http.Controller):
 
         print("\n\n\n\n=====campus lst====",campus_lst)
         if uuid:
-            sale_order_id = request.env['sale.order'].sudo().search([('debit_link', '=', uuid)])
-
-            print("\n\n\n\n\n============uuid============",uuid,sale_order_id)
+            uuid_lst = uuid.split('&')
+            print("\n\n\n\n\n\n=====uuid_lst=====",uuid_lst)
+            sale_order_id = request.env['sale.order'].sudo().search([('debit_link','=',uuid_lst[0])])
+            event_id = request.env['event.event'].sudo().search([('id','=',uuid_lst[1])])
+            print("\n\n\n\n\n==========event_id line=========", event_id)
+            
         if sale_order_id:
             today = datetime.now()
-            for order_line in sale_order_id.order_line:
-                if order_line.event_id.date_begin:
-                    sale_order_id_date=datetime.strptime(order_line.event_id.date_begin, '%Y-%m-%d %H:%M:%S')
-            time_diff = sale_order_id_date - today
+            print("\n\n\n\n\n====today date===",today)
+            # for order_line in sale_order_id.order_line:
+            #     if order_line.event_id.date_begin:
+            event_date=datetime.strptime(event_id.date_begin, '%Y-%m-%d %H:%M:%S')
+            print("\n\n\n\n\n====event_date date===",event_date)
+            time_diff = event_date - today
             reschedule_time = time_diff.total_seconds()
             # if reschedule_time < 0:
             #     reschedule_time= - reschedule_time
@@ -64,7 +71,8 @@ class PCExambooking(http.Controller):
             return request.render('cfo_snr_jnr.pc_exam_process_form', {'page_name': 'campus',
                                                                        'uuid': uuid,
                                                                        'sale_order_id': sale_order_id.id if sale_order_id else False,
-                                                                       'campus_ids_lst':campus_lst if campus_lst else False
+                                                                       'campus_ids_lst':campus_lst if campus_lst else False,
+                                                                       'event_id':event_id.id if event_id else False
                                                                        })
 
     @http.route(['/reg'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
@@ -86,6 +94,7 @@ class PCExambooking(http.Controller):
         print("\n\n\n\n==exam_type_ids======", exam_type_ids)
         value={}
         value['sale_order_id'] = int(post.get('sale_order_id')) if post.get('sale_order_id') else False
+        value['event_id'] = int(post.get('event_id')) if post.get('event_id') else False
         value['uuid'] = post.get('uuid')
         value['campus'] = int(post.get('Select Campus'))
         value['page_name'] = post.get("page_name")
@@ -120,6 +129,7 @@ class PCExambooking(http.Controller):
 
         value['campus'] = int(post.get('campus'))
         value['sale_order_id'] = int(post.get('sale_order_id')) if post.get('sale_order_id') else False
+        value['event_id'] = int(post.get('event_id')) if post.get('event_id') else False
         value['page_name'] = post.get("page_name")
         value['select_exam_type'] = post.get('Select Exam Type')
         value['exam_level_ids'] = exam_level_ids
@@ -233,9 +243,9 @@ class PCExambooking(http.Controller):
             exam_ids = request.env['event.event'].sudo().search(
                 [('type_pc_exam.id', '=', post.get('exam_type')), ('subject', '=', (post.get('subject'))),
                  ('qualification.id', '=', int(post.get("level"))), ('address_ids', 'in', int(post.get('campus')))])
-        if post.get('sale_order'):
-            sale_order_id = request.env['sale.order'].sudo().browse(int(post.get('sale_order')))
-            exam_ids = request.env['event.event'].sudo().search([('name','=',sale_order_id.order_line.event_id.name),('subject','=',post.get('subject'))])
+        if post.get('sale_order') and post.get('event_id'):
+            event_id = request.env['event.event'].sudo().browse(int(post.get('event_id')))
+            exam_ids = request.env['event.event'].sudo().search([('name','=',event_id.name),('type_pc_exam.id', '=', post.get('exam_type')),('address_ids', 'in', int(post.get('campus'))),('subject','=',post.get('subject')),('qualification.id', '=', int(post.get("level")))])
 
         print("\n\n\n==========exam_id====", exam_ids)
         today_datetime = datetime.now() + timedelta(7)
@@ -387,35 +397,37 @@ class PCExambooking(http.Controller):
 
             product_id = request.env['product.product'].sudo().search([('name', '=', 'PC Exams')])
             for event in exam_list:
-                event_id = request.env['event.event'].sudo().browse(int(event))
+                event_record_id = request.env['event.event'].sudo().browse(int(event))
                 for event in sale_order_id.order_line:
                     sale_order_id.write({'order_line':[(1,event.id,{'product_id': product_id.id,
-                                                                                  'event_id': event_id.id if event_id else '',
-                                                                                  'event_type_id': event_id.event_type_id.id if event_id else '',
+                                                                                  'event_id': event_record_id.id if event_record_id else '',
+                                                                                  'event_type_id': event_record_id.event_type_id.id if event_record_id else '',
                                                                                   # 'event_ticket_id': event_ticket.id if event_ticket.event_id else '',
-                                                                                  'name': event_id.name,
+                                                                                  'name': event_record_id.name,
                                                                                   'product_uom_qty': 1.0,
                                                                                   'product_uom': 1.0,
-                                                                                  'price_unit': event_id.price,
+                                                                                  'price_unit': event_record_id.price,
                                                                                   'discount': 0})]})
 
-                available_seats = event_id.seats_available - 1
-                event_id.write({
+                available_seats = event_record_id.seats_available - 1
+                event_record_id.write({
                     'seats_available': available_seats,
                 })
 
-                sale_order_dict['prof_body'] = event_id.event_type_id.id if event_id.event_type_id else event_id.type_pc_exam.type_event_id.id
-                sale_order_dict['semester_id'] = event_id.semester_id.id
-                sale_order_dict['pc_exam_type'] = event_id.type_pc_exam.id
+                sale_order_dict['prof_body'] = event_record_id.event_type_id.id if event_record_id.event_type_id else event_record_id.type_pc_exam.type_event_id.id
+                sale_order_dict['semester_id'] = event_record_id.semester_id.id
+                sale_order_dict['pc_exam_type'] = event_record_id.type_pc_exam.id
 
             sale_order_id.write({'campus':campus_id.id if campus_id else ''})
             sale_order_id.write(sale_order_dict)
+            print("\n\n\n\n\n================post event_id====",post.get('event_id'),sale_order_id)
             return request.render('cfo_snr_jnr.exam_registration', {'page_name': post.get('page_name'),
                                                                     'total_price': 0.0,
                                                                     'campus': campus_id.name,
                                                                     'event_ids':exam_select,
                                                                     'pc_exam_type': sale_order_id.pc_exam_type.name,
                                                                     'exam_type':'PC Exams',
+                                                                    'event_reschedule_id': post.get('event_id') if post.get('event_id') else False,
                                                                     'saleorder_id': sale_order_id.id,
                                                                  })
         if post and not post.get('sale_order_id'):
@@ -1228,6 +1240,7 @@ class PCExambooking(http.Controller):
         attachment_list = []
         invoice_line = []
         online_registration = []
+        event_list = []
         if post.get('sale_order'):
             sale_order = post.get('sale_order')
         if request.session.get('sale_order'):
@@ -1282,39 +1295,39 @@ class PCExambooking(http.Controller):
                                       raise_if_not_found=False)
         print("\n\n\n\n\n\n\==========event_ids==========", request.session.get('event_ids'))
 
-        quote_name = "SO{0}WEB".format(str(sale_order_id.id).zfill(3))
-        m = hashlib.md5(quote_name.encode())
-        decoded_quote_name = m.hexdigest()
-        config_para = request.env['ir.config_parameter'].sudo().search(
-            [('key', 'ilike', 'web.base.url')])
-        if config_para:
-            link = config_para.value + "/reschedulePB/" + decoded_quote_name
-            sale_order_id.write({'debit_link': decoded_quote_name})
-            print("\n\n\n\n=====link============", link)
+        if sale_order_id:
+            for exam in sale_order_id.order_line:
+                exam_dict = {}
+                event = request.env['event.event'].sudo().search([('name', '=', exam.event_id.name), ('type_pc_exam', '=', sale_order_id.pc_exam_type.id)])
+                if event:
+                    online_registration.append([0, 0, {'event_id': exam.event_id.name,
+                                                       'partner_id': sale_order_id.partner_id.id,
+                                                       'email': sale_order_id.partner_id.email
+                                                       }])
+                    quote_name = "SO{0}WEB".format(str(sale_order_id.id).zfill(3))
 
-        event_list = []
-        # event_list = request.session.get('event_ids')
-        for event in request.session.get('event_ids'):
-            exam_dict = {}
-            event_id = request.env['event.event'].sudo().browse(int(event))
-            online_registration.append([0, 0, {'event_id': event_id.name,
-                                               'partner_id': invoice_id.partner_id.id,
-                                               'email': invoice_id.partner_id.email
-                                               }])
-            event_id.write({'online_registration_ids': online_registration})
-            exam = request.env['event.event'].sudo().browse(int(event))
-            exam_dict['subject_name'] = exam.name
-            exam_dict['start_time'] = exam.date_begin
-            exam_dict['end_time'] = exam.date_end
-            exam_dict['campus'] = sale_order_id.campus.name
-            event_list.append(exam_dict)
-        print("\n\n\n\n\n\n===================exam ============list======", event_list)
+                    m = hashlib.md5(quote_name.encode())
+                    decoded_quote_name = m.hexdigest()
+                    config_para = request.env['ir.config_parameter'].sudo().search(
+                        [('key', 'ilike', 'web.base.url')])
+                    if config_para:
+                        link = config_para.value + "/reschedulePB/" + decoded_quote_name
+                        sale_order_id.write({'debit_link': decoded_quote_name})
+
+                    exam.event_id.write({'online_registration_ids': online_registration})
+                    exam_dict['subject_name'] = exam.event_id.name
+                    exam_dict['start_time'] = exam.event_id.date_begin
+                    exam_dict['end_time'] = exam.event_id.date_end
+                    exam_dict['campus'] = sale_order_id.campus.name
+                    link += '&%s' % (exam.event_id.id)
+                    exam_dict['link'] = link
+                    event_list.append(exam_dict)
+                    print("\n\n\n\n\n\n========event_list======", event_list)
 
         if template_id:
             template_id.sudo().with_context(
                 event_list=event_list,
                 email_cc='thecfo@charterquest.co.za',
-                reschedule_link=link,
                 prof_body=sale_order_id.prof_body.name,
             ).send_mail(sale_order_id.id, force_send=True)
 
@@ -1376,38 +1389,45 @@ class PCExambooking(http.Controller):
         mail_obj = request.env['mail.mail'].sudo()
         attachment_list = []
         online_registration = []
+        event_lst = []
         print("\n\n\n\n\n=========post reschedule====",post)
         if post.get('saleorder_id'):
             sale_order = post.get('saleorder_id')
-
+        if post.get('event_reschedule_id'):
+            event_id = request.env['event.event'].sudo().browse(int(post.get('event_reschedule_id')))
+            print("\n\n\n\n\n=========post event_id====", event_id)
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
+        print("\n\n\n\n\n\n==============sale order name=====",sale_order_id.name)
         invoice_id = request.env['account.invoice'].sudo().search([('sale_order_id','=',sale_order_id.name),('state','=','paid')])
-        template_id = request.env.ref('cfo_snr_jnr.email_template_reschedule_exam',
-                                      raise_if_not_found=False)
-
-        quote_name = "SO{0}WEB".format(str(sale_order_id.id).zfill(3))
-        m = hashlib.md5(quote_name.encode())
-        decoded_quote_name = m.hexdigest()
-        config_para = request.env['ir.config_parameter'].sudo().search(
-            [('key', 'ilike', 'web.base.url')])
-        if config_para:
-            link = config_para.value + "/reschedulePB/" + decoded_quote_name
-            sale_order_id.write({'debit_link': decoded_quote_name})
-            print("\n\n\n\n=====link============", link)
-
+        template_id = request.env.ref('cfo_snr_jnr.email_template_reschedule_exam',raise_if_not_found=False)
+        print("\n\n\n\n\n\n==============invoice id==========",invoice_id)
         event_list = []
         # event_list = request.session.get('event_ids')
-        for event in sale_order_id.order_line:
+        for order_line in sale_order_id.order_line:
             exam_dict = {}
-            # event_id = request.env['event.event'].sudo().search([('name','=',event.event_id.name)])
-            # print("\n\n\n\n\n=======event_id=====",event_id)
-            #
-            # for exam in event_id:
-            exam_dict['subject_name'] = event.event_id.name
-            exam_dict['start_time'] = event.event_id.date_begin
-            exam_dict['end_time'] = event.event_id.date_end
-            exam_dict['campus'] = sale_order_id.campus.name
-            event_list.append(exam_dict)
+
+            if event_id:
+                online_registration.append([0, 0, {'event_id': event_id.name,
+                                                   'partner_id': sale_order_id.partner_id.id,
+                                                   'email': sale_order_id.partner_id.email
+                                                   }])
+                quote_name = "SO{0}WEB".format(str(sale_order_id.id).zfill(3))
+
+                m = hashlib.md5(quote_name.encode())
+                decoded_quote_name = m.hexdigest()
+                config_para = request.env['ir.config_parameter'].sudo().search(
+                    [('key', 'ilike', 'web.base.url')])
+                if config_para:
+                    link = config_para.value + "/reschedulePB/" + decoded_quote_name
+                    sale_order_id.write({'debit_link': decoded_quote_name})
+
+                exam_dict['subject_name'] = order_line.event_id.name
+                exam_dict['start_time'] = order_line.event_id.date_begin
+                exam_dict['end_time'] = order_line.event_id.date_end
+                exam_dict['campus'] = sale_order_id.campus.name
+                link += '&%s' % (order_line.event_id.id)
+                exam_dict['link'] = link
+                event_list.append(exam_dict)
 
             print("\n\n\n\n\n=======event_list=====", event_list)
 
@@ -1420,7 +1440,6 @@ class PCExambooking(http.Controller):
             template_id.sudo().with_context(
                 event_list=event_list,
                 email_cc='thecfo@charterquest.co.za',
-                reschedule_link=link,
                 prof_body=sale_order_id.prof_body.name,
             ).send_mail(sale_order_id.id, force_send=True)
 
@@ -1444,7 +1463,6 @@ class PCExambooking(http.Controller):
             template_invoice_id.sudo().with_context(
                 event_list=event_list,
                 email_cc='thecfo@charterquest.co.za',
-                reschedule_link=link,
                 prof_body=invoice_id.prof_body.name,
             ).send_mail(invoice_id.id, force_send=True)
 
