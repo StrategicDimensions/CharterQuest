@@ -65,7 +65,9 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
                          $('#exam_datepicker').val("");
                     }
                 });
+
            $('.exam_search').attr("disabled", false);
+
         });
 
         var exam_date = new Date();
@@ -130,6 +132,7 @@ odoo.define('cfo_snr_jnr.pc_exam', function(require){
                          console.log("\n\n\n\n\n=========availableDates result['dates']==============",availableDates)
                     }
                 });
+
             $('.exam_search').attr("disabled", false);
         });
 
