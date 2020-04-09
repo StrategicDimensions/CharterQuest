@@ -189,6 +189,7 @@ class PCExambooking(http.Controller):
                 if int(post.get('campus')) in event.address_ids.ids and exam_type_id.name == event.type_pc_exam.name and exam_level_id.name == event.qualification.name:
                     if event.subject:
                         exam_subject_list.append(event.subject)
+
                     exam_date = event.date_end.split(" ")
                     print("\n\n\n\n\n===========exam_date types===", exam_date,exam_date[0])
                     datetimeobject = datetime.strptime(exam_date[0], '%Y-%m-%d')
