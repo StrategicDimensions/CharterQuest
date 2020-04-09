@@ -208,9 +208,9 @@ class payment_confirmation(models.Model):
                         })
         self.order_id.write(dic)
         self.order_id._action_confirm()
+
         if self.env['ir.config_parameter'].sudo().get_param('sale.auto_done_setting'):
             self.action_done()
-
             invoice_obj = self.env['sale.order'].read(self._context.get('active_id'),['invoice_ids'])
 
             self.pool.get('account.invoice').signal_workflow(cr, uid, invoice_obj['invoice_ids'], 'invoice_open')
