@@ -45,6 +45,7 @@ class event_event(models.Model):
     subject = fields.Many2one("event.subject", "Subject")
     event_course_id = fields.Many2one('event.course', string="Course")
     event_not_combo_discount = fields.Boolean(string="Not COMBO Discount%")
+    reschedule_link = fields.Char(string="url")
 
     @api.model
     def create(self, vals):

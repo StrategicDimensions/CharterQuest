@@ -405,6 +405,7 @@
 
                         <input id="uuid" type="hidden" t-att-value="uuid" name='uuid'/>
                         <input id="sale_order_id" type="hidden" t-att-value="sale_order_id" name='sale_order_id'/>
+                        <input id="event_id" type="hidden" t-att-value="event_id" name='event_id'/>
                         <input id="campus_ids_lst" type="hidden" t-att-value="campus_ids_lst" name='campus_ids_lst'/>
                         <div class="form-group form-field o_website_form_custom" id="reg_campus">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
@@ -487,6 +488,7 @@
                           enctype="multipart/form-data" data-success_page="">
                         <input id="uuid" type="hidden" t-att-value="uuid" name='uuid'/>
                         <input id="sale_order_id" type="hidden" t-att-value="sale_order_id" name='sale_order_id'/>
+                        <input id="event_id" type="hidden" t-att-value="event_id" name='event_id'/>
                         <input id="exam_type_ids" type="hidden" t-att-value="exam_type_ids" name='exam_type_ids'/>
                         <div class="form-group form-field o_website_form_custom" id="reg_campus">
                             <div class="col-md-3 col-sm-4 text-right-not-xs">
@@ -545,9 +547,14 @@
             <div class="container" style="margin:0px;padding:0px;">
                 <input id="sale_order_id" type="hidden" t-att-value="sale_order_id" name='sale_order_id'/>
                 <input id="exam_level_ids" type="hidden" t-att-value="exam_level_ids" name='exam_level_ids'/>
+                <input id="event_id" type="hidden" t-att-value="event_id" name='event_id'/>
                 <t t-if="sale_order_id">
                     <t t-set="sale_order_id"
                         t-value="request.env['sale.order'].sudo().browse(sale_order_id)"/>
+                </t>
+                <t t-if="event_id">
+                    <t t-set="event_id"
+                        t-value="request.env['event.event'].sudo().browse(event_id)"/>
                 </t>
 <!--                <form action="/examsearch" method="POST" class="s_website_form form-horizontal container-fluid">-->
                 <div style="margin-top:5px;" class="s_website_form form-horizontal container-fluid">
@@ -559,17 +566,17 @@
                                 <label class="control-label lbl_1" style="margin-left: 16px;">Level
                                 </label>
                             </div>
-                            <t t-if="sale_order_id">
+                            <t t-if="sale_order_id and event_id">
                                <div class="col-md-7 col-sm-8" id="select_css_1">
                                     <select id="select_pc_exam_level" class="form-control o_website_form_input"
                                             name="select_pc_exam_level"
                                             placeholder="Select the Level"
                                             required="true">
-                                        <t t-foreach="sale_order_id.order_line[0]" t-as="event">
-                                            <option t-att-value="event.event_id.qualification.id">
-                                                <t t-esc="event.event_id.qualification.name"/>
+<!--                                        <t t-foreach="sale_order_id.order_line[0]" t-as="event">-->
+                                            <option t-att-value="event_id.qualification.id">
+                                                <t t-esc="event_id.qualification.name"/>
                                             </option>
-                                        </t>
+<!--                                        </t>-->
                                     </select>
                                 </div>
                             </t>
@@ -624,12 +631,12 @@
                                                 </option>
                                             </t>
                                         </t>
-                                        <t t-if="sale_order_id">
-                                            <t t-foreach="sale_order_id.order_line[0]" t-as="event">
-                                                <option t-att-value="event.event_id.subject.id">
-                                                        <t t-esc="event.event_id.subject.name"/>
+                                        <t t-if="sale_order_id and event_id">
+<!--                                            <t t-foreach="sale_order_id.order_line[0]" t-as="event">-->
+                                                <option t-att-value="event_id.subject.id">
+                                                        <t t-esc="event_id.subject.name"/>
                                                 </option>
-                                            </t>
+<!--                                            </t>-->
                                         </t>
 
                                     </select>
@@ -739,6 +746,7 @@
                                 <input id="event_ids" class="form-field" name="event[]" type="hidden"/>
                                 <input class="form-field" name="page_name" value="studentstatus" type="hidden"/>
                                 <input id="sale_order_id" type="hidden" t-att-value="sale_order_id.id" name='sale_order_id'/>
+                                <input id="event_id" type="hidden" t-att-value="event_id.id" name='event_id'/>
                             </form>
                         </t>
 
@@ -1559,6 +1567,7 @@
                                 <input id="exam_type" class="form-field" name="exam_type" type="hidden" t-att-value="exam_type"/>
                                 <input id="do_invoice" class="form-field" name="do_invoice" type="hidden" t-att-value="do_invoice"/>
                                 <input id="saleorder_id" class="form-field" name="saleorder_id" type="hidden" t-att-value="saleorder_id"/>
+                                <input id="event_reschedule_id" class="form-field" name="event_reschedule_id" type="hidden" t-att-value="event_reschedule_id"/>
                                 <t t-if="pay_via_credit_card">
                                  <input id="pay_via_credit_card" class="form-field" name="pay_via_credit_card" type="hidden" t-att-value="pay_via_credit_card"/>
                                 </t>

@@ -70,30 +70,36 @@ class account_invoice(models.Model):
             event_list = []
             sale_order_id = self.env['sale.order'].sudo().search([('name','=',self.sale_order_id.name)])
             if sale_order_id:
-                quote_name = "SO{0}WEB".format(str(sale_order_id.id).zfill(3))
-                m = hashlib.md5(quote_name.encode())
-                decoded_quote_name = m.hexdigest()
-                config_para = self.env['ir.config_parameter'].sudo().search(
-                    [('key', 'ilike', 'web.base.url')])
-                if config_para:
-                    link = config_para.value + "/reschedulePB/" + decoded_quote_name
-                    sale_order_id.write({'debit_link': decoded_quote_name})
-                    print("\n\n\n\n=====link============", link)
+
+
 
                 for exam in sale_order_id.order_line:
                     exam_dict = {}
-                    event = self.env['event.event'].search([('name','=',exam.event_id.name)])
+                    event = self.env['event.event'].search([('name','=',exam.event_id.name),('type_pc_exam','=',sale_order_id.pc_exam_type.id)])
                     if event:
                         online_registration.append([0, 0, {'event_id': exam.event_id.name,
                                                            'partner_id': self.partner_id.id,
                                                            'email': self.partner_id.email
                                                            }])
+                        quote_name = "SO{0}WEB".format(str(sale_order_id.id).zfill(3))
+
+                        m = hashlib.md5(quote_name.encode())
+                        decoded_quote_name = m.hexdigest()
+                        config_para = self.env['ir.config_parameter'].sudo().search(
+                            [('key', 'ilike', 'web.base.url')])
+                        if config_para:
+                            link = config_para.value + "/reschedulePB/" + decoded_quote_name
+                            sale_order_id.write({'debit_link': decoded_quote_name})
+                        print("\n\n\n\n\n\n========link======",link,exam.event_id)
                         exam.event_id.write({'online_registration_ids': online_registration})
                         exam_dict['subject_name'] = exam.event_id.name
                         exam_dict['start_time'] = exam.event_id.date_begin
                         exam_dict['end_time'] = exam.event_id.date_end
                         exam_dict['campus'] = sale_order_id.campus.name
+                        link += '&%s' % (exam.event_id.id)
+                        exam_dict['link'] = link
                         event_list.append(exam_dict)
+                        print("\n\n\n\n\n\n========event_list======", event_list)
             template_id = self.env.ref('cfo_snr_jnr.email_template_payvia_credit_card',
                                           raise_if_not_found=False)
             if template_id:
@@ -101,7 +107,7 @@ class account_invoice(models.Model):
                     # email_to=each_request.get('email'),
                     event_list=event_list,
                     email_cc='thecfo@charterquest.co.za',
-                    reschedule_link=link,
+                    # reschedule_link=link,
                     prof_body=self.prof_body.name,
                 ).send_mail(sale_order_id.id, force_send=True)
 

@@ -185,7 +185,7 @@ class Website(models.Model):
                 for line in sale_order.order_line:
                     if line.exists():
                         sale_order._cart_update(product_id=line.product_id.id, line_id=line.id, add_qty=0)
-            if 'CB' not in sale_order.name:
+            if 'CB' not in sale_order.name and sale_order.quote_type != 'freequote' and sale_order.quote_type != 'enrolment' and sale_order.quote_type != 'PC Exam':
                 name = sale_order.name + 'CB'
                 sale_order.name = name
         else:
