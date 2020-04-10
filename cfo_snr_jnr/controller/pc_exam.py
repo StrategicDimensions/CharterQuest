@@ -28,7 +28,8 @@ class PCExambooking(http.Controller):
         reschedule_time=0.0
         campus_ids_lst = []
         campus_lst = []
-        uuid_lst = []
+        reschedule_campus_ids_lst = []
+        reschedule_campus_lst = []
         print("\n\n\n\n\n============uuid============", uuid)
         event_ids = request.env['event.event'].sudo().search([])
         campus_ids = request.env['res.partner'].sudo().search([('is_campus','=', True)])
@@ -50,8 +51,9 @@ class PCExambooking(http.Controller):
             sale_order_id = request.env['sale.order'].sudo().search([('debit_link','=',uuid_lst[0])])
             event_id = request.env['event.event'].sudo().search([('id','=',uuid_lst[1])])
             print("\n\n\n\n\n==========event_id line=========", event_id)
-            
-        if sale_order_id:
+            event_reschedule_ids = request.env['event.event'].sudo().search([('name','=',event_id.name),('type_pc_exam','=',event_id.type_pc_exam.name),('subject','=',event_id.subject.name),('qualification','=',event_id.qualification.name)])
+        if sale_order_id and event_id:
+
             today = datetime.now()
             print("\n\n\n\n\n====today date===",today)
             # for order_line in sale_order_id.order_line:
@@ -63,6 +65,16 @@ class PCExambooking(http.Controller):
             # if reschedule_time < 0:
             #     reschedule_time= - reschedule_time
             print("\n\n\n\n====time_diff==",reschedule_time)
+            if event_reschedule_ids:
+                for campus in campus_ids:
+                    for exam_campus in event_reschedule_ids:
+                        if campus in exam_campus.address_ids:
+                            if exam_campus.pc_exam == True:
+                                reschedule_campus_ids_lst.append(campus.id)
+
+                for campus_exam in reschedule_campus_ids_lst:
+                    if campus_exam not in reschedule_campus_lst:
+                        reschedule_campus_lst.append(campus_exam)
 
         if reschedule_time < 172800 and reschedule_time != 0.0:
             return request.render('cfo_snr_jnr.exam_reschedule_fail')
@@ -72,7 +84,8 @@ class PCExambooking(http.Controller):
                                                                        'uuid': uuid,
                                                                        'sale_order_id': sale_order_id.id if sale_order_id else False,
                                                                        'campus_ids_lst':campus_lst if campus_lst else False,
-                                                                       'event_id':event_id.id if event_id else False
+                                                                       'event_id':event_id.id if event_id else False,
+                                                                       'reschedule_campus_lst':reschedule_campus_lst if reschedule_campus_lst else False
                                                                        })
 
     @http.route(['/reg'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
