@@ -633,10 +633,7 @@ class EnrolmentProcess(http.Controller):
                         fees_dict[each_product.event_qual_rem.order] = {
                             each_product.event_qual_rem: {each_product.event_feetype_rem: [each_product]}}
                     else:
-                        print("\n\n\n\n======fees_dict[each_product.event_qual_rem.order][each_product.event_qual_rem]=========",fees_dict[each_product.event_qual_rem.order][
-                            each_product.event_qual_rem])
-                        if each_product.event_feetype_rem in fees_dict[each_product.event_qual_rem.order][
-                            each_product.event_qual_rem]:
+                        if each_product.event_feetype_rem in fees_dict[each_product.event_qual_rem.order][each_product.event_qual_rem]:
                             fees_dict[each_product.event_qual_rem.order][each_product.event_qual_rem][
                                 each_product.event_feetype_rem].append(each_product)
                         else:
@@ -1988,7 +1985,7 @@ class EnrolmentProcess(http.Controller):
             # invoice_id.action_invoice_open()
             # payment_id.action_validate_invoice_payment()
 
-            if sale_order_id.debit_order_mandat:
+            if sale_order_id.debit_order_mandat and invoice_id.state != 'draft':
                 date_day = int(post.get('inputPaydate')) if post.get('inputPaydate') else False
                 if date_day:
                     dbo_date = date(year=datetime.now().year, month=datetime.now().month +1, day=date_day)
@@ -2094,14 +2091,12 @@ class EnrolmentProcess(http.Controller):
         sale_order_id = request.session.get('sale_order_id')
 
         print("\n\n\n\n\n=========sale order id===========",sale_order_id)
-
         if sale_order_id:
             order = request.env['sale.order'].sudo().browse(sale_order_id)
             print("\n\n\n\n\n=========sale order order===========", order)
         else:
             return request.redirect('/enrolment_book')
         request.website.sale_reset()
-
 
         template_id = request.env.ref('cfo_snr_jnr.unsuccessful_sponsored_regist_enrol_email_template',
                                                       raise_if_not_found=False)
@@ -2118,14 +2113,12 @@ class EnrolmentProcess(http.Controller):
                            'type': 'binary'}
                 pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                 attchment_list.append(pdf_create)
-
             agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
             if agreement_id:
                 attchment_list.append(agreement_id)
             banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
             if banking_detail_id:
                 attchment_list.append(banking_detail_id)
-
 
             # mail_values = {
             #     'email_from': template_id.email_from,
@@ -2148,7 +2141,6 @@ class EnrolmentProcess(http.Controller):
                 email_cc='enquiries@charterquest.co.za,accounts@charterquest.co.za,cqops@charterquest.co.za',
                 # prof_body=invoice_id.prof_body.name,
             ).send_mail(order.id, force_send=True)
-
         return request.render("cfo_snr_jnr.event_unsuccessful", {'order': order})
 
     @http.route('/event/payment/payu_com/dpn', type='http', auth="public", methods=['POST', 'GET'], website=True)
