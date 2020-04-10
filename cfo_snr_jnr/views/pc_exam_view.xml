@@ -428,7 +428,7 @@
 <!--                                    <t t-foreach="campus_ids_lst" t-as="campus">-->
 <!--                                            <t t-set="campus_id"-->
 <!--                                            t-value="request.env['res.partner'].sudo().browse(campus)"/>-->
-<!--                                            <option t-att-value="campus_id.id">-->
+<!--                              /registerexam              <option t-att-value="campus_id.id">-->
 <!--                                                <t t-esc="campus_id.name"/>-->
 <!--                                            </option>-->
 <!--                                    </t>-->
@@ -573,7 +573,7 @@
                         t-value="request.env['sale.order'].sudo().browse(sale_order_id)"/>
                 </t>
                 <t t-if="event_id">
-                    <t t-set="event_id"
+                    <t t-set="event_reschedule_id"
                         t-value="request.env['event.event'].sudo().browse(event_id)"/>
                 </t>
 <!--                <form action="/examsearch" method="POST" class="s_website_form form-horizontal container-fluid">-->
@@ -593,8 +593,8 @@
                                             placeholder="Select the Level"
                                             required="true">
 <!--                                        <t t-foreach="sale_order_id.order_line[0]" t-as="event">-->
-                                            <option t-att-value="event_id.qualification.id">
-                                                <t t-esc="event_id.qualification.name"/>
+                                            <option t-att-value="event_reschedule_id.qualification.id">
+                                                <t t-esc="event_reschedule_id.qualification.name"/>
                                             </option>
 <!--                                        </t>-->
                                     </select>
@@ -653,8 +653,8 @@
                                         </t>
                                         <t t-if="sale_order_id and event_id">
 <!--                                            <t t-foreach="sale_order_id.order_line[0]" t-as="event">-->
-                                                <option t-att-value="event_id.subject.id">
-                                                        <t t-esc="event_id.subject.name"/>
+                                                <option t-att-value="event_reschedule_id.subject.id">
+                                                        <t t-esc="event_reschedule_id.subject.name"/>
                                                 </option>
 <!--                                            </t>-->
                                         </t>
@@ -766,7 +766,7 @@
                                 <input id="event_ids" class="form-field" name="event[]" type="hidden"/>
                                 <input class="form-field" name="page_name" value="studentstatus" type="hidden"/>
                                 <input id="sale_order_id" type="hidden" t-att-value="sale_order_id.id" name='sale_order_id'/>
-                                <input id="event_id" type="hidden" t-att-value="event_id.id" name='event_id'/>
+                                <input id="event_id" type="hidden" t-att-value="event_id" name='event_id'/>
                             </form>
                         </t>
 

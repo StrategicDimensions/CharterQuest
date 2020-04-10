@@ -407,32 +407,32 @@ class PCExambooking(http.Controller):
                 event_id = request.env['event.event'].sudo().browse([int(exam_select[i])])
                 if event_id:
                     exam_list.append(int(exam_select[i]))
-
             product_id = request.env['product.product'].sudo().search([('name', '=', 'PC Exams')])
             for event in exam_list:
-                event_record_id = request.env['event.event'].sudo().browse(int(event))
-                for event in sale_order_id.order_line:
-                    sale_order_id.write({'order_line':[(1,event.id,{'product_id': product_id.id,
-                                                                                  'event_id': event_record_id.id if event_record_id else '',
-                                                                                  'event_type_id': event_record_id.event_type_id.id if event_record_id else '',
-                                                                                  # 'event_ticket_id': event_ticket.id if event_ticket.event_id else '',
-                                                                                  'name': event_record_id.name,
-                                                                                  'product_uom_qty': 1.0,
-                                                                                  'product_uom': 1.0,
-                                                                                  'price_unit': event_record_id.price,
-                                                                                  'discount': 0})]})
+                event_reschedule_id = request.env['event.event'].sudo().browse(int(event))
+                for order_line in sale_order_id.order_line:
+                    if int(post.get('event_id')) == order_line.event_id.id:
+                        sale_order_id.write({'order_line':[(1,order_line.id,{'product_id': product_id.id,
+                                                                                      'event_id': event_reschedule_id.id if event_reschedule_id else '',
+                                                                                      'event_type_id': event_reschedule_id.event_type_id.id if event_reschedule_id else '',
+                                                                                      # 'event_ticket_id': event_ticket.id if event_ticket.event_id else '',
+                                                                                      'name': event_reschedule_id.name,
+                                                                                      'product_uom_qty': 1.0,
+                                                                                      'product_uom': 1.0,
+                                                                                      'price_unit': event_reschedule_id.price,
+                                                                                      'discount': 0})]})
 
-                available_seats = event_record_id.seats_available - 1
-                event_record_id.write({
-                    'seats_available': available_seats,
-                })
+                        available_seats = event_reschedule_id.seats_available - 1
+                        event_reschedule_id.write({
+                            'seats_available': available_seats,
+                        })
 
-                sale_order_dict['prof_body'] = event_record_id.event_type_id.id if event_record_id.event_type_id else event_record_id.type_pc_exam.type_event_id.id
-                sale_order_dict['semester_id'] = event_record_id.semester_id.id
-                sale_order_dict['pc_exam_type'] = event_record_id.type_pc_exam.id
+                # sale_order_dict['prof_body'] = event_record_id.event_type_id.id if event_record_id.event_type_id else event_record_id.type_pc_exam.type_event_id.id
+                # sale_order_dict['semester_id'] = event_record_id.semester_id.id
+                # sale_order_dict['pc_exam_type'] = event_record_id.type_pc_exam.id
 
-            sale_order_id.write({'campus':campus_id.id if campus_id else ''})
-            sale_order_id.write(sale_order_dict)
+            # sale_order_id.write({'campus':campus_id.id if campus_id else ''})
+            # sale_order_id.write(sale_order_dict)
             print("\n\n\n\n\n================post event_id====",post.get('event_id'),sale_order_id)
             return request.render('cfo_snr_jnr.exam_registration', {'page_name': post.get('page_name'),
                                                                     'total_price': 0.0,
