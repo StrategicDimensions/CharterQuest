@@ -28,8 +28,10 @@ class PCExambooking(http.Controller):
         reschedule_time=0.0
         campus_ids_lst = []
         campus_lst = []
+
         reschedule_campus_ids_lst = []
         reschedule_campus_lst = []
+
         print("\n\n\n\n\n============uuid============", uuid)
         event_ids = request.env['event.event'].sudo().search([])
         campus_ids = request.env['res.partner'].sudo().search([('is_campus','=', True)])
@@ -51,6 +53,7 @@ class PCExambooking(http.Controller):
             sale_order_id = request.env['sale.order'].sudo().search([('debit_link','=',uuid_lst[0])])
             event_id = request.env['event.event'].sudo().search([('id','=',uuid_lst[1])])
             print("\n\n\n\n\n==========event_id line=========", event_id)
+
             event_reschedule_ids = request.env['event.event'].sudo().search([('name','=',event_id.name),('type_pc_exam','=',event_id.type_pc_exam.name),('subject','=',event_id.subject.name),('qualification','=',event_id.qualification.name)])
         if sale_order_id and event_id:
 
@@ -84,6 +87,7 @@ class PCExambooking(http.Controller):
                                                                        'uuid': uuid,
                                                                        'sale_order_id': sale_order_id.id if sale_order_id else False,
                                                                        'campus_ids_lst':campus_lst if campus_lst else False,
+
                                                                        'event_id':event_id.id if event_id else False,
                                                                        'reschedule_campus_lst':reschedule_campus_lst if reschedule_campus_lst else False
                                                                        })
@@ -409,6 +413,7 @@ class PCExambooking(http.Controller):
                     exam_list.append(int(exam_select[i]))
             product_id = request.env['product.product'].sudo().search([('name', '=', 'PC Exams')])
             for event in exam_list:
+
                 event_reschedule_id = request.env['event.event'].sudo().browse(int(event))
                 for order_line in sale_order_id.order_line:
                     if int(post.get('event_id')) == order_line.event_id.id:
@@ -433,6 +438,7 @@ class PCExambooking(http.Controller):
 
             # sale_order_id.write({'campus':campus_id.id if campus_id else ''})
             # sale_order_id.write(sale_order_dict)
+
             print("\n\n\n\n\n================post event_id====",post.get('event_id'),sale_order_id)
             return request.render('cfo_snr_jnr.exam_registration', {'page_name': post.get('page_name'),
                                                                     'total_price': 0.0,
