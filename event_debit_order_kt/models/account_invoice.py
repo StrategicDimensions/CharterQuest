@@ -147,7 +147,7 @@ class account_invoice(models.Model):
              #if template_id:
              #	mail_message = self.pool.get('email.template').send_mail(cr,uid,template_id[0],ids[0])
         if self.payment_ids and not self.pcexam_voucher_ids:
-            voucher_lis = []
+
             mail_mail_obj = self.env['mail.mail']
             mail_vals = {}
             for invoice_line in self.invoice_line_ids:
@@ -158,7 +158,8 @@ class account_invoice(models.Model):
                     from_add = 'accounts@charterquest.co.za'
                     To = self.partner_id.email
                     document_ids = []
-                    print("\n\n\n\n\n\n=======voucher no====",invoice_line.product_id.no_vouchers)
+                    voucher_lis = []
+                    print("\n\n\n\n\n\n=======voucher no====",invoice_line.product_id.no_vouchers,invoice_line.product_id.name)
                     for i in range(0, invoice_line.product_id.no_vouchers):
                         pcexam_voucher = {
                                            'voucher_no':'CHQ'+str(random.randint(10000,99999)),
@@ -173,6 +174,7 @@ class account_invoice(models.Model):
                                            'status':'Issued',
                                         }
                         voucher_lis.append(pcexam_voucher)
+                        print("\n\n\n\n\n\n=============voucher_lis===========",voucher_lis)
                     if self.payment_ids and self.is_recent:
                         # voucher_lis.append(pcexam_voucher)
                         for i in voucher_lis:

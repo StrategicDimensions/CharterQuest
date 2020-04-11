@@ -28,7 +28,10 @@ class PCExambooking(http.Controller):
         reschedule_time=0.0
         campus_ids_lst = []
         campus_lst = []
-        uuid_lst = []
+
+        reschedule_campus_ids_lst = []
+        reschedule_campus_lst = []
+
         print("\n\n\n\n\n============uuid============", uuid)
         event_ids = request.env['event.event'].sudo().search([])
         campus_ids = request.env['res.partner'].sudo().search([('is_campus','=', True)])
@@ -50,8 +53,10 @@ class PCExambooking(http.Controller):
             sale_order_id = request.env['sale.order'].sudo().search([('debit_link','=',uuid_lst[0])])
             event_id = request.env['event.event'].sudo().search([('id','=',uuid_lst[1])])
             print("\n\n\n\n\n==========event_id line=========", event_id)
-            
-        if sale_order_id:
+
+            event_reschedule_ids = request.env['event.event'].sudo().search([('name','=',event_id.name),('type_pc_exam','=',event_id.type_pc_exam.name),('subject','=',event_id.subject.name),('qualification','=',event_id.qualification.name)])
+        if sale_order_id and event_id:
+
             today = datetime.now()
             print("\n\n\n\n\n====today date===",today)
             # for order_line in sale_order_id.order_line:
@@ -63,6 +68,16 @@ class PCExambooking(http.Controller):
             # if reschedule_time < 0:
             #     reschedule_time= - reschedule_time
             print("\n\n\n\n====time_diff==",reschedule_time)
+            if event_reschedule_ids:
+                for campus in campus_ids:
+                    for exam_campus in event_reschedule_ids:
+                        if campus in exam_campus.address_ids:
+                            if exam_campus.pc_exam == True:
+                                reschedule_campus_ids_lst.append(campus.id)
+
+                for campus_exam in reschedule_campus_ids_lst:
+                    if campus_exam not in reschedule_campus_lst:
+                        reschedule_campus_lst.append(campus_exam)
 
         if reschedule_time < 172800 and reschedule_time != 0.0:
             return request.render('cfo_snr_jnr.exam_reschedule_fail')
@@ -72,7 +87,9 @@ class PCExambooking(http.Controller):
                                                                        'uuid': uuid,
                                                                        'sale_order_id': sale_order_id.id if sale_order_id else False,
                                                                        'campus_ids_lst':campus_lst if campus_lst else False,
-                                                                       'event_id':event_id.id if event_id else False
+
+                                                                       'event_id':event_id.id if event_id else False,
+                                                                       'reschedule_campus_lst':reschedule_campus_lst if reschedule_campus_lst else False
                                                                        })
 
     @http.route(['/reg'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
@@ -189,7 +206,6 @@ class PCExambooking(http.Controller):
                 if int(post.get('campus')) in event.address_ids.ids and exam_type_id.name == event.type_pc_exam.name and exam_level_id.name == event.qualification.name:
                     if event.subject:
                         exam_subject_list.append(event.subject)
-
                     exam_date = event.date_end.split(" ")
                     print("\n\n\n\n\n===========exam_date types===", exam_date,exam_date[0])
                     datetimeobject = datetime.strptime(exam_date[0], '%Y-%m-%d')
@@ -395,32 +411,34 @@ class PCExambooking(http.Controller):
                 event_id = request.env['event.event'].sudo().browse([int(exam_select[i])])
                 if event_id:
                     exam_list.append(int(exam_select[i]))
-
             product_id = request.env['product.product'].sudo().search([('name', '=', 'PC Exams')])
             for event in exam_list:
-                event_record_id = request.env['event.event'].sudo().browse(int(event))
-                for event in sale_order_id.order_line:
-                    sale_order_id.write({'order_line':[(1,event.id,{'product_id': product_id.id,
-                                                                                  'event_id': event_record_id.id if event_record_id else '',
-                                                                                  'event_type_id': event_record_id.event_type_id.id if event_record_id else '',
-                                                                                  # 'event_ticket_id': event_ticket.id if event_ticket.event_id else '',
-                                                                                  'name': event_record_id.name,
-                                                                                  'product_uom_qty': 1.0,
-                                                                                  'product_uom': 1.0,
-                                                                                  'price_unit': event_record_id.price,
-                                                                                  'discount': 0})]})
 
-                available_seats = event_record_id.seats_available - 1
-                event_record_id.write({
-                    'seats_available': available_seats,
-                })
+                event_reschedule_id = request.env['event.event'].sudo().browse(int(event))
+                for order_line in sale_order_id.order_line:
+                    if int(post.get('event_id')) == order_line.event_id.id:
+                        sale_order_id.write({'order_line':[(1,order_line.id,{'product_id': product_id.id,
+                                                                                      'event_id': event_reschedule_id.id if event_reschedule_id else '',
+                                                                                      'event_type_id': event_reschedule_id.event_type_id.id if event_reschedule_id else '',
+                                                                                      # 'event_ticket_id': event_ticket.id if event_ticket.event_id else '',
+                                                                                      'name': event_reschedule_id.name,
+                                                                                      'product_uom_qty': 1.0,
+                                                                                      'product_uom': 1.0,
+                                                                                      'price_unit': event_reschedule_id.price,
+                                                                                      'discount': 0})]})
 
-                sale_order_dict['prof_body'] = event_record_id.event_type_id.id if event_record_id.event_type_id else event_record_id.type_pc_exam.type_event_id.id
-                sale_order_dict['semester_id'] = event_record_id.semester_id.id
-                sale_order_dict['pc_exam_type'] = event_record_id.type_pc_exam.id
+                        available_seats = event_reschedule_id.seats_available - 1
+                        event_reschedule_id.write({
+                            'seats_available': available_seats,
+                        })
 
-            sale_order_id.write({'campus':campus_id.id if campus_id else ''})
-            sale_order_id.write(sale_order_dict)
+                # sale_order_dict['prof_body'] = event_record_id.event_type_id.id if event_record_id.event_type_id else event_record_id.type_pc_exam.type_event_id.id
+                # sale_order_dict['semester_id'] = event_record_id.semester_id.id
+                # sale_order_dict['pc_exam_type'] = event_record_id.type_pc_exam.id
+
+            # sale_order_id.write({'campus':campus_id.id if campus_id else ''})
+            # sale_order_id.write(sale_order_dict)
+
             print("\n\n\n\n\n================post event_id====",post.get('event_id'),sale_order_id)
             return request.render('cfo_snr_jnr.exam_registration', {'page_name': post.get('page_name'),
                                                                     'total_price': 0.0,

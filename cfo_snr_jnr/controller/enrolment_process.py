@@ -633,10 +633,7 @@ class EnrolmentProcess(http.Controller):
                         fees_dict[each_product.event_qual_rem.order] = {
                             each_product.event_qual_rem: {each_product.event_feetype_rem: [each_product]}}
                     else:
-                        print("\n\n\n\n======fees_dict[each_product.event_qual_rem.order][each_product.event_qual_rem]=========",fees_dict[each_product.event_qual_rem.order][
-                            each_product.event_qual_rem])
-                        if each_product.event_feetype_rem in fees_dict[each_product.event_qual_rem.order][
-                            each_product.event_qual_rem]:
+                        if each_product.event_feetype_rem in fees_dict[each_product.event_qual_rem.order][each_product.event_qual_rem]:
                             fees_dict[each_product.event_qual_rem.order][each_product.event_qual_rem][
                                 each_product.event_feetype_rem].append(each_product)
                         else:
@@ -1988,7 +1985,7 @@ class EnrolmentProcess(http.Controller):
             # invoice_id.action_invoice_open()
             # payment_id.action_validate_invoice_payment()
 
-            if sale_order_id.debit_order_mandat:
+            if sale_order_id.debit_order_mandat and invoice_id.state != 'draft':
                 date_day = int(post.get('inputPaydate')) if post.get('inputPaydate') else False
                 if date_day:
                     dbo_date = date(year=datetime.now().year, month=datetime.now().month +1, day=date_day)
@@ -2094,14 +2091,12 @@ class EnrolmentProcess(http.Controller):
         sale_order_id = request.session.get('sale_order_id')
 
         print("\n\n\n\n\n=========sale order id===========",sale_order_id)
-
         if sale_order_id:
             order = request.env['sale.order'].sudo().browse(sale_order_id)
             print("\n\n\n\n\n=========sale order order===========", order)
         else:
             return request.redirect('/enrolment_book')
         request.website.sale_reset()
-
 
         template_id = request.env.ref('cfo_snr_jnr.unsuccessful_sponsored_regist_enrol_email_template',
                                                       raise_if_not_found=False)
@@ -2118,14 +2113,12 @@ class EnrolmentProcess(http.Controller):
                            'type': 'binary'}
                 pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
                 attchment_list.append(pdf_create)
-
             agreement_id = request.env.ref('cfo_snr_jnr.term_and_condition_pdf_enrolment')
             if agreement_id:
                 attchment_list.append(agreement_id)
             banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
             if banking_detail_id:
                 attchment_list.append(banking_detail_id)
-
 
             # mail_values = {
             #     'email_from': template_id.email_from,
@@ -2148,7 +2141,6 @@ class EnrolmentProcess(http.Controller):
                 email_cc='enquiries@charterquest.co.za,accounts@charterquest.co.za,cqops@charterquest.co.za',
                 # prof_body=invoice_id.prof_body.name,
             ).send_mail(order.id, force_send=True)
-
         return request.render("cfo_snr_jnr.event_unsuccessful", {'order': order})
 
     @http.route('/event/payment/payu_com/dpn', type='http', auth="public", methods=['POST', 'GET'], website=True)
@@ -2392,7 +2384,7 @@ class EnrolmentProcess(http.Controller):
         invoice_id.action_invoice_open()
         payment_id.action_validate_invoice_payment()
 
-        template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
+        template_id = request.env.ref('cfo_snr_jnr.email_template_paid_via_credit_card',raise_if_not_found=False)
         if template_id:
             # template_id.send_mail(sale_order_id.id, force_send=True)
             if sale_order_id.affiliation == '1':
@@ -2427,34 +2419,44 @@ class EnrolmentProcess(http.Controller):
                 banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
                 if banking_detail_id:
                     attachment_list.append(banking_detail_id)
-                body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
-                body_html += "<br>"
-                body_html += "Dear " + sale_order_id.partner_id.name + ","
-                body_html += "<br><br>"
-                body_html += "Thank	you	for	your enrolment and payment received!"
-                body_html += "<br><br>"
-                body_html += "For your records,	please find	attached invoice/Full Statement, copy of the Student Agreement as well as the Debit	Order Mandate you just accepted	Online during enrolment."
-                body_html += "<br><br>"
-                body_html += "The Student Agreement inter alia covers:"
-                body_html += "<br><br>"
-                body_html += "1. Exam fee remmittances. <br> 2. How to access your learning materials. <br> 3. Cancellations, change of bookings and postponements."
-                body_html += "<br> 4. Refunds and students complaints. <br> 5. 1st Time Pass Guarantee scheme and other incidental matters."
-                body_html += "<br><br> We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
-                body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
-                body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
-                
-                mail_values = {
-                    'email_from': template_id.email_from,
-                    'reply_to': template_id.reply_to,
-                    'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
-                    'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
-                    'body_html': body_html,
-                    'notification': True,
-                    'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])],
-                    'auto_delete': False,
-                }
-                msg_id = mail_obj.create(mail_values)
-                msg_id.send()
+                # body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
+                # body_html += "<br>"
+                # body_html += "Dear " + sale_order_id.partner_id.name + ","
+                # body_html += "<br><br>"
+                # body_html += "Thank	you	for	your enrolment and payment received!"
+                # body_html += "<br><br>"
+                # body_html += "For your records,	please find	attached invoice/Full Statement, copy of the Student Agreement as well as the Debit	Order Mandate you just accepted	Online during enrolment."
+                # body_html += "<br><br>"
+                # body_html += "The Student Agreement inter alia covers:"
+                # body_html += "<br><br>"
+                # body_html += "1. Exam fee remmittances. <br> 2. How to access your learning materials. <br> 3. Cancellations, change of bookings and postponements."
+                # body_html += "<br> 4. Refunds and students complaints. <br> 5. 1st Time Pass Guarantee scheme and other incidental matters."
+                # body_html += "<br><br> We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
+                # body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
+                # body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
+                #
+                # mail_values = {
+                #     'email_from': template_id.email_from,
+                #     'reply_to': template_id.reply_to,
+                #     'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                #     'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
+                #     'body_html': body_html,
+                #     'notification': True,
+                #     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])],
+                #     'auto_delete': False,
+                # }
+                # msg_id = mail_obj.create(mail_values)
+                # msg_id.send()
+                template_id.sudo().write(
+                    {'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])]})
+                template_id.sudo().with_context(
+                    email_from=template_id.email_from,
+                    email_to=sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                ).send_mail(sale_order_id.id, force_send=True)
+                if user_select.get('self_or_company') == 'cmp_sponosored':
+                    return request.render('cfo_snr_jnr.enrolment_process_page_thankyou_creditcard',
+                                          {'self_or_cmp': user_select['self_or_company'] if user_select.get(
+                                              'self_or_company') else ''})
                 if user_select.get('self_or_company') == 'cmp_sponosored':
                     return request.render('cfo_snr_jnr.enrolment_process_page_thankyou_creditcard',
                                           {'self_or_cmp': user_select['self_or_company'] if user_select.get(
@@ -3132,7 +3134,7 @@ class EnrolmentProcess(http.Controller):
                                                   })
                     dbo_date = dbo_date + relativedelta(months=+1)
 
-            template_id = request.env['mail.template'].sudo().search([('name', '=', 'Fees Pay Later Email')])
+            template_id = request.env.ref('cfo_snr_jnr.email_template_paid_via_credit_card',raise_if_not_found=False)
             if template_id:
                 # template_id.send_mail(sale_order_id.id, force_send=True)
                 if sale_order_id.affiliation == '1':
@@ -3167,33 +3169,39 @@ class EnrolmentProcess(http.Controller):
                     banking_detail_id = request.env.ref('cfo_snr_jnr.banking_data_pdf')
                     if banking_detail_id:
                         attachment_list.append(banking_detail_id)
-                    body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
-                    body_html += "<br>"
-                    body_html += "Dear " + sale_order_id.partner_id.name + ","
-                    body_html += "<br><br>"
-                    body_html += "<br><br>"
-                    body_html += "Thank	you	for	your enrolment and payment received!"
-                    body_html += "<br><br>"
-                    body_html += "For your records,	please find	attached invoice/Full Statement, copy of the Student Agreement as well as the Debit	Order Mandate you just accepted	Online during enrolment."
-                    body_html += "<br><br>"
-                    body_html += "The Student Agreement inter alia covers:"
-                    body_html += "<br><br>"
-                    body_html += "1. Exam fee remmittances. <br> 2. How to access your learning materials. <br> 3. Cancellations, change of bookings and postponements."
-                    body_html += "<br> 4. Refunds and students complaints. <br> 5. 1st Time Pass Guarantee scheme and other incidental matters."
-                    body_html += "<br><br> We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
-                    body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
-                    body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
-
-                    mail_values = {
-                        'email_from': template_id.email_from,
-                        'reply_to': template_id.reply_to,
-                        'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
-                        'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
-                        'body_html': body_html,
-                        'notification': True,
-                        'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])],
-                        'auto_delete': False,
-                    }
-                    msg_id = mail_obj.create(mail_values)
-                    msg_id.send()
+                    # body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
+                    # body_html += "<br>"
+                    # body_html += "Dear " + sale_order_id.partner_id.name + ","
+                    # body_html += "<br><br>"
+                    # body_html += "<br><br>"
+                    # body_html += "Thank	you	for	your enrolment and payment received!"
+                    # body_html += "<br><br>"
+                    # body_html += "For your records,	please find	attached invoice/Full Statement, copy of the Student Agreement as well as the Debit	Order Mandate you just accepted	Online during enrolment."
+                    # body_html += "<br><br>"
+                    # body_html += "The Student Agreement inter alia covers:"
+                    # body_html += "<br><br>"
+                    # body_html += "1. Exam fee remmittances. <br> 2. How to access your learning materials. <br> 3. Cancellations, change of bookings and postponements."
+                    # body_html += "<br> 4. Refunds and students complaints. <br> 5. 1st Time Pass Guarantee scheme and other incidental matters."
+                    # body_html += "<br><br> We look forward to seeing you during our course and helping you, in achieving a 1st Time Pass!"
+                    # body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
+                    # body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
+                    #
+                    # mail_values = {
+                    #     'email_from': template_id.email_from,
+                    #     'reply_to': template_id.reply_to,
+                    #     'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                    #     'subject': "Charterquest FreeQuote/Enrolment  " + sale_order_id.name,
+                    #     'body_html': body_html,
+                    #     'notification': True,
+                    #     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])],
+                    #     'auto_delete': False,
+                    # }
+                    # msg_id = mail_obj.create(mail_values)
+                    # msg_id.send()
+                    template_id.sudo().write(
+                        {'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])]})
+                    template_id.sudo().with_context(
+                        email_from=template_id.email_from,
+                        email_to=sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                    ).send_mail(sale_order_id.id, force_send=True)
             return request.render('cfo_snr_jnr.enrolment_process_page_thankyou')
