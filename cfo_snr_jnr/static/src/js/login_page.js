@@ -227,13 +227,13 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                     }
                 })
         })
-        $(document).ready(function() {
-            $('#team_png').bind('change', function() {
-            var a=(this.files[0].size); alert(a);
-            if(a > 52428800 { alert('Image must not be bigger than 100MB');
-            };
-            });
-        });
+//        $(document).ready(function() {
+//            $('#team_png').bind('change', function() {
+//            var a=(this.files[0].size); alert(a);
+//            if(a > 52428800 { alert('Image must not be bigger than 100MB');
+//            };
+//            });
+//        });
 
         $('.oe_signup_form').on('submit', function (e) {
             var response = grecaptcha.getResponse();
