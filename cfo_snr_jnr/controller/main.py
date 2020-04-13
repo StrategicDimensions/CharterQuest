@@ -1757,6 +1757,7 @@ class CfoHome(web.Home):
 
     @http.route('/cfo_snr_report_form', type='http', auth='public', website=True)
     def cfo_snr_report_form_new(self, **post):
+        print("\n\n\n\n\n\===============cfo snr reports====",post)
         team_id = request.env['cfo.team.snr'].sudo().search([('id', '=', post.get('aspirant_team'))])
         template = request.env.ref('cfo_snr_jnr.email_template_for_success_report_snr', raise_if_not_found=False)
         template_mentor = request.env.ref('cfo_snr_jnr.email_template_for_success_report_mentor_snr',
@@ -1844,6 +1845,40 @@ class CfoHome(web.Home):
                     'datas': base64.b64encode(file.read()),
                     'member_status': 'Pending',
                 })
+        if (post.get('team_pdf') or post.get('tean_doc')):
+            if post.get('team_pdf'):
+                filename = post.get('team_pdf').filename
+                file = post.get('team_pdf')
+                attach_id = request.env['ir.attachment'].sudo().create({
+                    'snr_team_id': team_id.id,
+                    'name': filename,
+                    'type': 'binary',
+                    'datas_fname': filename,
+                    'datas': base64.b64encode(file.read()),
+                    'member_status': 'Pending',
+                })
+            if post.get('tean_doc'):
+                filename = post.get('tean_doc').filename
+                file = post.get('tean_doc')
+                attach_id = request.env['ir.attachment'].sudo().create({
+                    'snr_team_id': team_id.id,
+                    'name': filename,
+                    'type': 'binary',
+                    'datas_fname': filename,
+                    'datas': base64.b64encode(file.read()),
+                    'member_status': 'Pending',
+                })
+        if post.get('team_png'):
+            filename = post.get('team_png').filename
+            file = post.get('team_png')
+            attach_id = request.env['ir.attachment'].sudo().create({
+                'snr_team_id': team_id.id,
+                'name': filename,
+                'type': 'binary',
+                'datas_fname': filename,
+                'datas': base64.b64encode(file.read()),
+                'member_status': 'Pending',
+            })
             return request.render('cfo_snr_jnr.report_submit_success')
         if (post.get('pdf_db') or post.get('doc_db')):
             return request.render('cfo_snr_jnr.report_submit_success')

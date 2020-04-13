@@ -1422,6 +1422,40 @@ class CfoHomeJnr(web.Home):
                                         'datas': base64.b64encode(file.read()),
                                         'member_status': 'Pending',
                                     })
+        if (post.get('team_pdf') or post.get('tean_doc')):
+            if post.get('team_pdf'):
+                filename = post.get('team_pdf').filename
+                file = post.get('team_pdf')
+                attach_id = request.env['ir.attachment'].sudo().create({
+                    'jnr_team_id': team_id.id,
+                                        'name' : filename,
+                                        'type': 'binary',
+                                        'datas_fname':filename,
+                                        'datas': base64.b64encode(file.read()),
+                                        'member_status': 'Pending',
+                })
+            if post.get('tean_doc'):
+                filename = post.get('tean_doc').filename
+                file = post.get('tean_doc')
+                attach_id = request.env['ir.attachment'].sudo().create({
+                    'jnr_team_id': team_id.id,
+                                        'name' : filename,
+                                        'type': 'binary',
+                                        'datas_fname':filename,
+                                        'datas': base64.b64encode(file.read()),
+                                        'member_status': 'Pending',
+                })
+        if post.get('team_png'):
+            filename = post.get('team_png').filename
+            file = post.get('team_png')
+            attach_id = request.env['ir.attachment'].sudo().create({
+                'jnr_team_id': team_id.id,
+                'name': filename,
+                'type': 'binary',
+                'datas_fname': filename,
+                'datas': base64.b64encode(file.read()),
+                'member_status': 'Pending',
+            })
             return  request.render('cfo_snr_jnr.report_submit_success')
         if (post.get('pdf_db') or post.get('doc_db')):
             return  request.render('cfo_snr_jnr.report_submit_success')

@@ -4290,7 +4290,7 @@
                             <div class="col-md-12 mt16">
                                 <table>
                                     <h3 style="background-color: red;">Submit CFO Report</h3>
-                                    <b>Please upload a PDF and a DOC version of the report in the section provide on the right.</b>
+                                    <b>Please upload a PDF and a DOC version of the report in the section provided below (1st check that it meets the specs defined in the case study document itself)</b>
                                     <div class="col-md-10 mt16">
                                     <tbody >
                                         <tr style=" border-style: solid;">
@@ -4300,17 +4300,19 @@
                                             </td>
                                             <td>
                                                 <t t-if="aspirant_team.document_ids">
-                                                   <t t-foreach="aspirant_team.document_ids" t-as="document_id">
-                                                      <t t-if="document_id.datas_fname.split('.')[1]=='pdf'">
+                                                    <t t-foreach="aspirant_team.document_ids" t-as="document_id">
+                                                        <t t-if="document_id.datas_fname.split('.')[1]=='pdf'">
                                                             <t t-esc="document_id.datas_fname"/>
-                                                            <input type="hidden" name="pdf_db" accept="application/pdf" t-att-value="document_id.id"/>
+                                                            <input type="hidden" name="pdf_db" accept="application/pdf"
+                                                                   t-att-value="document_id.id"/>
                                                             <t t-set="document_new_id" t-value="document_id.id"/>
-                                                       </t>
+                                                        </t>
 
                                                     </t>
                                                 </t>
                                                 <t t-if="not document_new_id">
-                                                   <input type="file" name="pdf" class="file_uploaded" accept="application/pdf" required="1"/>
+                                                    <input type="file" name="pdf" class="file_uploaded" accept="application/pdf"
+                                                           required="1"/>
                                                 </t>
                                             </td>
                                             <td>
@@ -4324,16 +4326,18 @@
                                             </td>
                                             <td>
                                                 <t t-if="aspirant_team.document_ids">
-                                                   <t t-foreach="aspirant_team.document_ids" t-as="document_id">
-                                                      <t t-if="document_id.datas_fname.split('.')[1] in ['doc','docx']">
+                                                    <t t-foreach="aspirant_team.document_ids" t-as="document_id">
+                                                        <t t-if="document_id.datas_fname.split('.')[1] in ['doc','docx']">
                                                             <t t-esc="document_id.datas_fname"/>
-                                                            <input type="hidden" name="doc_db"  accept="application/doc" t-att-value="document_id.id"/>
+                                                            <input type="hidden" name="doc_db" accept="application/doc"
+                                                                   t-att-value="document_id.id"/>
                                                             <t t-set="document_new_doc" t-value="document_id.id"/>
-                                                       </t>
+                                                        </t>
                                                     </t>
                                                 </t>
                                                 <t t-if="not document_new_doc">
-                                                   <input type="file" name="doc" class="file_uploaded_doc" accept="application/doc" required="1"/>
+                                                    <input type="file" name="doc" class="file_uploaded_doc"
+                                                           accept="application/doc" required="1"/>
                                                 </t>
                                             </td>
                                             <td>
@@ -4345,14 +4349,12 @@
                                 </table>
                             </div>
                             <div class="col-md-12 mt16">
-                                <t t-if="aspirant_team and aspirant_team.mentor_id or aspirant_team.brand_amb_id ">
-                                     <table>
-                                         <h3>Brand Ambassador  Mentor Confirmation</h3>
-                                         <b>Kindly confirm your Brand Ambassador and Mnetor.The existing for your team are listed below
-                                          should either of them changed,enter the email address of the new one and click the invite button to invite them
-                                             to your team.if details listed below are correct,kindly click the confirm button.</b>
-                                     </table>
-                                </t>
+                             <table>
+                                 <t t-if="aspirant_team and aspirant_team.mentor_id or aspirant_team.brand_amb_id">
+                                     <h3>Brand Ambassador  Mentor Confirmation</h3>
+                                     <b>Kindly confirm your Brand Ambassador and Mentor.The existing persons for your team are listed below should either of them have changed, enter the email address of the new one and click the invite button to invite them to your team. If details the listed below are correct, kindly click the confirm button.</b>
+                                 </t>
+                             </table>
                             </div>
 <!--                            Modal confirm member-->
                             <div id="upload_file_popup" class="modal fade" role="dialog">
@@ -4437,6 +4439,132 @@
                                              </tr>
                                          </t>
                                     </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12 mt16">
+                                 <table>
+                                    <h3 style="background-color: red;">Submit Team Profile</h3>
+                                 </table>
+                            </div>
+                            <div class="col-md-12 mt16">
+                                 <table>
+                                    <h3>Specifications for Team Profiles:</h3>
+                                 </table>
+                            </div>
+                            <div class="col-md-12 mt16">
+                                 <table>
+                                    <b>No more than 200 words, and no more than 2 paragraphs: 1st paragraph
+introduces the team, why you entered as a team and what you seek to achieve
+-the name of the competition must be mentioned. 2nd paragraph introduces each
+member, by first name, his or her role in the team, and stating which
+programme you are studying or which grade/class/form you are, in the case of CFO Junior.</b>
+                                     <b>You need to label the full names of each member on the profile from left to right with their age as shown 
+below ideally, starting with the team leader from the left to the right.</b>
+                                     <h5><b>Videos of these will be required later, depending on if you get considered!</b></h5>
+                                     <h5><b>Please upload and submit now</b></h5>
+                                     <div class="col-md-10 mt16">
+                                    <tbody >
+                                        <tr style=" border-style: solid;">
+                                            <t t-set="document_new_id" t-value="0"/>
+                                            <td style=" border-right: solid;">
+                                                Team Profile(PDF)
+                                            </td>
+                                            <td>
+                                                <t t-if="aspirant_team.document_ids">
+                                                    <t t-foreach="aspirant_team.document_ids" t-as="document_id">
+                                                        <t t-if="document_id.datas_fname.split('.')[1]=='pdf'">
+                                                            <t t-esc="document_id.datas_fname"/>
+                                                            <input type="hidden" name="team_pdf_db" accept="application/pdf"
+                                                                   t-att-value="document_id.id"/>
+                                                            <t t-set="document_new_id" t-value="document_id.id"/>
+                                                        </t>
+
+                                                    </t>
+                                                </t>
+                                                <t t-if="not document_new_id">
+                                                    <input type="file" name="team_pdf" class="file_uploaded" accept="application/pdf"
+                                                           required="1"/>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger remove_document" t-att-id="document_new_id">Remove</button>
+                                            </td>
+                                        </tr>
+                                        <tr style=" border-style: solid;">
+                                            <t t-set="document_new_doc" t-value="0"/>
+                                            <td style="border-right:solid;">
+                                                Team Profile(DOC)
+                                            </td>
+                                            <td>
+                                                <t t-if="aspirant_team.document_ids">
+                                                    <t t-foreach="aspirant_team.document_ids" t-as="document_id">
+                                                        <t t-if="document_id.datas_fname.split('.')[1] in ['doc','docx']">
+                                                            <t t-esc="document_id.datas_fname"/>
+                                                            <input type="hidden" name="team_doc_db" accept="application/doc"
+                                                                   t-att-value="document_id.id"/>
+                                                            <t t-set="document_new_doc" t-value="document_id.id"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                <t t-if="not document_new_doc">
+                                                    <input type="file" name="team_doc" class="file_uploaded_doc"
+                                                           accept="application/doc" required="1"/>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger remove_document" t-att-id="document_new_doc">Remove</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    </div>
+                                 </table>
+                            </div>
+                            <div class="col-md-12 mt16">
+                                 <table>
+                                    <h3 style="background-color: red;">Submit Digital Team Pictures</h3>
+                                 </table>
+                            </div>
+                             <div class="col-md-12 mt16">
+                                <table>
+                                    <h4><b>Specifications for Team Digital Pictures:</b></h4>
+                                    <b>For CFO university students, it is mandatory that you are all dressed uniformly, ideally, in dark business attire (<u style="color: blue;">see sample here</u>).</b>
+                                    <b>For CFO Junior edition for high schools, we prefer you are dressed up in your formal school uniform/attire - not your regular school attire but what you use at formal events like, graduation ceremonies (see examples on this <u style="color: blue;">link</u>).</b>
+                                    <b>We have attached the links above to extracts from the 2019 brochure so you can download the section for the teams to see how the digital pictures will be potentially used (it also suggests standing positions and dress code as described above, but please follow the quality specifications provided below and do your own styles).</b>
+                                    <b>The main picture must be no less than 300 Dpi resolution, on a plain white background and 3240 x 2160 in size. We need this to be of sufficiently high quality as the images will be used in magazine, for TV broadcast and on social media. <u style="color: blue;">Click here</u> for a sample of 300 dpi picture which is attached for you to see the shine/lighting and quality we need. It also shows an incorrect version: a 150 dpi and 72 dpi to help you see how badly the quality pixilates or suffers if we do not get the required 300 dpi.</b>
+                                    <h4><b>WE NEED 2 VERSIONS:</b></h4>
+                                    <b>Version 1: should meet the above specification;<br></br>
+                                        Version 2: should be an exact duplicate of version 1 (it does not need to meet the above specs in terms of weight - this version should be fully labelled as you find on the samples linked above, team name in full, names of members top to bottom, age).
+                                    </b>
+                                    <h5><b>We recommend that each version must be in PNG OR JPEG format and must not  be bigger than 100MB per image.</b> Uploading can take longer if picture sizes are too high. Upload allows multiple pictures.</h5>
+                                    <div class="col-md-10 mt16">
+                                    <tbody >
+                                        <tr style=" border-style: solid;">
+                                            <t t-set="document_new_id" t-value="0"/>
+                                            <td style=" border-right: solid;">
+                                                Team Digital Pictures
+                                            </td>
+                                            <td>
+                                                <t t-if="aspirant_team.document_ids">
+                                                    <t t-foreach="aspirant_team.document_ids" t-as="document_id">
+                                                        <t t-if="document_id.datas_fname.split('.')[1] in ['png','jpeg']">
+                                                            <t t-esc="document_id.datas_fname"/>
+                                                            <input type="hidden" name="png_jpeg_db" accept="application/png"
+                                                                   t-att-value="document_id.id"/>
+                                                            <t t-set="document_new_id" t-value="document_id.id"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                <t t-if="not document_new_id">
+                                                    <input type="file" id="team_png" name="team_png" class="file_uploaded" accept="image/x-png,image/jpeg"
+                                                           required="1"/>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger remove_document" t-att-id="document_new_id">Remove</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    </div>
                                 </table>
                             </div>
                             <div class="col-md-12 mt16">
