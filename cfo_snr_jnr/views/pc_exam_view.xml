@@ -573,6 +573,7 @@
                         t-value="request.env['sale.order'].sudo().browse(sale_order_id)"/>
                 </t>
                 <t t-if="event_id">
+
                     <t t-set="event_reschedule_id"
                         t-value="request.env['event.event'].sudo().browse(event_id)"/>
                 </t>
@@ -593,6 +594,7 @@
                                             placeholder="Select the Level"
                                             required="true">
 <!--                                        <t t-foreach="sale_order_id.order_line[0]" t-as="event">-->
+
                                             <option t-att-value="event_reschedule_id.qualification.id">
                                                 <t t-esc="event_reschedule_id.qualification.name"/>
                                             </option>
@@ -653,6 +655,7 @@
                                         </t>
                                         <t t-if="sale_order_id and event_id">
 <!--                                            <t t-foreach="sale_order_id.order_line[0]" t-as="event">-->
+
                                                 <option t-att-value="event_reschedule_id.subject.id">
                                                         <t t-esc="event_reschedule_id.subject.name"/>
                                                 </option>
@@ -767,6 +770,7 @@
                                 <input class="form-field" name="page_name" value="studentstatus" type="hidden"/>
                                 <input id="sale_order_id" type="hidden" t-att-value="sale_order_id.id" name='sale_order_id'/>
                                 <input id="event_id" type="hidden" t-att-value="event_id" name='event_id'/>
+
                             </form>
                         </t>
 
