@@ -1351,6 +1351,7 @@ class CfoHomeJnr(web.Home):
          
     @http.route('/cfo_jnr_report_form_new', type='http', auth='public', website=True)
     def cfo_snr_report_form(self, **post):
+        print("\n\n\n\n\n========cfo jnr report====",post)
         team_id = request.env['cfo.team.jnr'].sudo().search([('id', '=', post.get('aspirant_team'))])
         template = request.env.ref('cfo_snr_jnr.email_template_for_success_report_jnr', raise_if_not_found=False)
         template_mentor = request.env.ref('cfo_snr_jnr.email_template_for_success_report_mentor_jnr',
@@ -1405,8 +1406,9 @@ class CfoHomeJnr(web.Home):
                 file = post.get('pdf')
                 attach_id = request.env['ir.attachment'].sudo().create({
                                         'jnr_team_id': team_id.id,
-                                        'name' : filename,
+                                        'name' :filename,
                                         'type': 'binary',
+                                        'res_id':1,
                                         'datas_fname':filename,
                                         'datas': base64.b64encode(file.read()),
                                         'member_status': 'Pending',
@@ -1416,8 +1418,9 @@ class CfoHomeJnr(web.Home):
                 file = post.get('doc')
                 attach_id = request.env['ir.attachment'].sudo().create({
                                         'jnr_team_id': team_id.id,
-                                        'name' : filename,
+                                        'name' :filename,
                                         'type': 'binary',
+                                        'res_id': 2,
                                         'datas_fname':filename,
                                         'datas': base64.b64encode(file.read()),
                                         'member_status': 'Pending',
@@ -1428,19 +1431,21 @@ class CfoHomeJnr(web.Home):
                 file = post.get('team_pdf')
                 attach_id = request.env['ir.attachment'].sudo().create({
                     'jnr_team_id': team_id.id,
-                                        'name' : filename,
+                                        'name' :filename,
                                         'type': 'binary',
+                                        'res_id': 3,
                                         'datas_fname':filename,
                                         'datas': base64.b64encode(file.read()),
                                         'member_status': 'Pending',
                 })
-            if post.get('tean_doc'):
-                filename = post.get('tean_doc').filename
-                file = post.get('tean_doc')
+            if post.get('team_doc'):
+                filename = post.get('team_doc').filename
+                file = post.get('team_doc')
                 attach_id = request.env['ir.attachment'].sudo().create({
                     'jnr_team_id': team_id.id,
-                                        'name' : filename,
+                                        'name' :filename,
                                         'type': 'binary',
+                                        'res_id': 4,
                                         'datas_fname':filename,
                                         'datas': base64.b64encode(file.read()),
                                         'member_status': 'Pending',

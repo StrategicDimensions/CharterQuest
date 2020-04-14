@@ -1351,10 +1351,11 @@ class CfoHome(web.Home):
 
     @http.route("/remove_attachment_from_team", type="json", auth="public", website=True)
     def remove_attachment_from_team(self, **post):
-        attachment_id = request.env['ir.attachment'].sudo().search([('id', '=', post.get('attachment_id'))])
-        if attachment_id:
-            attachment_id.unlink();
-            return True
+        if post.get('attachment_id'):
+            attachment_id = request.env['ir.attachment'].sudo().search([('id', '=', post.get('attachment_id'))])
+            if attachment_id:
+                attachment_id.unlink();
+                return True
 
     @http.route('/create_team', type='json', auth="public", website=True)
     def create_team(self, **post):
@@ -1830,6 +1831,7 @@ class CfoHome(web.Home):
                     'snr_team_id': team_id.id,
                     'name': filename,
                     'type': 'binary',
+                    'res_id':1,
                     'datas_fname': filename,
                     'datas': base64.b64encode(file.read()),
                     'member_status': 'Pending',
@@ -1841,6 +1843,7 @@ class CfoHome(web.Home):
                     'snr_team_id': team_id.id,
                     'name': filename,
                     'type': 'binary',
+                    'res_id': 2,
                     'datas_fname': filename,
                     'datas': base64.b64encode(file.read()),
                     'member_status': 'Pending',
@@ -1853,17 +1856,19 @@ class CfoHome(web.Home):
                     'snr_team_id': team_id.id,
                     'name': filename,
                     'type': 'binary',
+                    'res_id': 3,
                     'datas_fname': filename,
                     'datas': base64.b64encode(file.read()),
                     'member_status': 'Pending',
                 })
-            if post.get('tean_doc'):
-                filename = post.get('tean_doc').filename
-                file = post.get('tean_doc')
+            if post.get('team_doc'):
+                filename = post.get('team_doc').filename
+                file = post.get('team_doc')
                 attach_id = request.env['ir.attachment'].sudo().create({
                     'snr_team_id': team_id.id,
                     'name': filename,
                     'type': 'binary',
+                    'res_id': 4,
                     'datas_fname': filename,
                     'datas': base64.b64encode(file.read()),
                     'member_status': 'Pending',

@@ -135,6 +135,30 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             });
         });
 
+        var selDiv = "";
+
+        document.addEventListener("DOMContentLoaded", init, false);
+
+        function init() {
+            document.querySelector('#team_png').addEventListener('change', handleFileSelect, false);
+            selDiv = document.querySelector("#selectedFiles");
+        }
+
+        function handleFileSelect(e) {
+
+            if(!e.target.files) return;
+
+            selDiv.innerHTML = "";
+
+            var files = e.target.files;
+            for(var i=0; i<files.length; i++) {
+                var f = files[i];
+
+                selDiv.innerHTML += f.name + "<br/>";
+
+            }
+
+        }
         $(".datepicker5").on('change', function () {
             var dt = new Date();
             var select_date = $(this).datepicker('getDate');
@@ -227,13 +251,16 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                     }
                 })
         })
-//        $(document).ready(function() {
-//            $('#team_png').bind('change', function() {
-//            var a=(this.files[0].size); alert(a);
-//            if(a > 52428800 { alert('Image must not be bigger than 100MB');
-//            };
-//            });
-//        });
+
+        $('#team_png').on('change', function() {
+            var a=(this.files[0].size);
+            console.log("\n\n\n\n=========file size====",a)
+            alert(a);
+            if(a > 52428800)
+            {
+                alert('Image must not be bigger than 100MB');
+            }
+        });
 
         $('.oe_signup_form').on('submit', function (e) {
             var response = grecaptcha.getResponse();
@@ -453,6 +480,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         });
         $('.remove_document').click(function (e) {
             var document_id = $(this).attr('id');
+            console.log("\n\n\n\n\n======document_id===",document_id)
             $(".modal-body #attachment_id").val(document_id);
             $(document).find('#remove_document_modal').modal('show');
             e.preventDefault();
