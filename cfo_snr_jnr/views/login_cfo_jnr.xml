@@ -4301,7 +4301,7 @@
                                             <td>
                                                 <t t-if="aspirant_team.document_ids">
                                                     <t t-foreach="aspirant_team.document_ids" t-as="document_id">
-                                                        <t t-if="document_id.datas_fname.split('.')[1]=='pdf'">
+                                                        <t t-if="document_id.datas_fname.split('.')[1]=='pdf' and document_id.res_id == 1">
                                                             <t t-esc="document_id.datas_fname"/>
                                                             <input type="hidden" name="pdf_db" accept="application/pdf"
                                                                    t-att-value="document_id.id"/>
@@ -4327,9 +4327,9 @@
                                             <td>
                                                 <t t-if="aspirant_team.document_ids">
                                                     <t t-foreach="aspirant_team.document_ids" t-as="document_id">
-                                                        <t t-if="document_id.datas_fname.split('.')[1] in ['doc','docx']">
+                                                        <t t-if="document_id.datas_fname.split('.')[1] in ['doc','docx'] and document_id.res_id == 2">
                                                             <t t-esc="document_id.datas_fname"/>
-                                                            <input type="hidden" name="doc_db" accept="application/doc"
+                                                            <input type="hidden" name="doc_db" accept=".doc,.docx"
                                                                    t-att-value="document_id.id"/>
                                                             <t t-set="document_new_doc" t-value="document_id.id"/>
                                                         </t>
@@ -4337,7 +4337,7 @@
                                                 </t>
                                                 <t t-if="not document_new_doc">
                                                     <input type="file" name="doc" class="file_uploaded_doc"
-                                                           accept="application/doc" required="1"/>
+                                                           accept=".doc,.docx" required="1"/>
                                                 </t>
                                             </td>
                                             <td>
@@ -4472,7 +4472,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                             <td>
                                                 <t t-if="aspirant_team.document_ids">
                                                     <t t-foreach="aspirant_team.document_ids" t-as="document_id">
-                                                        <t t-if="document_id.datas_fname.split('.')[1]=='pdf'">
+                                                        <t t-if="document_id.datas_fname.split('.')[1]=='pdf' and document_id.res_id == 3">
                                                             <t t-esc="document_id.datas_fname"/>
                                                             <input type="hidden" name="team_pdf_db" accept="application/pdf"
                                                                    t-att-value="document_id.id"/>
@@ -4498,9 +4498,9 @@ below ideally, starting with the team leader from the left to the right.</b>
                                             <td>
                                                 <t t-if="aspirant_team.document_ids">
                                                     <t t-foreach="aspirant_team.document_ids" t-as="document_id">
-                                                        <t t-if="document_id.datas_fname.split('.')[1] in ['doc','docx']">
+                                                        <t t-if="document_id.datas_fname.split('.')[1] in ['doc','docx'] and document_id.res_id == 4">
                                                             <t t-esc="document_id.datas_fname"/>
-                                                            <input type="hidden" name="team_doc_db" accept="application/doc"
+                                                            <input type="hidden" name="team_doc_db" accept=".doc,.docx"
                                                                    t-att-value="document_id.id"/>
                                                             <t t-set="document_new_doc" t-value="document_id.id"/>
                                                         </t>
@@ -4508,7 +4508,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                                 </t>
                                                 <t t-if="not document_new_doc">
                                                     <input type="file" name="team_doc" class="file_uploaded_doc"
-                                                           accept="application/doc" required="1"/>
+                                                           accept=".doc,.docx" required="1"/>
                                                 </t>
                                             </td>
                                             <td>
@@ -4527,10 +4527,10 @@ below ideally, starting with the team leader from the left to the right.</b>
                              <div class="col-md-12 mt16">
                                 <table>
                                     <h4><b>Specifications for Team Digital Pictures:</b></h4>
-                                    <b>For CFO university students, it is mandatory that you are all dressed uniformly, ideally, in dark business attire (<u style="color: blue;">see sample here</u>).</b>
-                                    <b>For CFO Junior edition for high schools, we prefer you are dressed up in your formal school uniform/attire - not your regular school attire but what you use at formal events like, graduation ceremonies (see examples on this <u style="color: blue;">link</u>).</b>
+                                    <b>For CFO university students, it is mandatory that you are all dressed uniformly, ideally, in dark business attire (<u><a href="http://charterquest.odoo.co.za/web/static/src/files/docs/The-CFO/2020/The_CFO_Snr_Profiles.pdf" style="color :blue;">see sample here</a></u>).</b>
+                                    <b>For CFO Junior edition for high schools, we prefer you are dressed up in your formal school uniform/attire - not your regular school attire but what you use at formal events like, graduation ceremonies (see examples on this <u><a href="http://charterquest.odoo.co.za/web/static/src/files/docs/The-CFO/2020/The_CFO_Jnr_Profiles.pdf" style="color :blue;">link</a></u>).</b>
                                     <b>We have attached the links above to extracts from the 2019 brochure so you can download the section for the teams to see how the digital pictures will be potentially used (it also suggests standing positions and dress code as described above, but please follow the quality specifications provided below and do your own styles).</b>
-                                    <b>The main picture must be no less than 300 Dpi resolution, on a plain white background and 3240 x 2160 in size. We need this to be of sufficiently high quality as the images will be used in magazine, for TV broadcast and on social media. <u style="color: blue;">Click here</u> for a sample of 300 dpi picture which is attached for you to see the shine/lighting and quality we need. It also shows an incorrect version: a 150 dpi and 72 dpi to help you see how badly the quality pixilates or suffers if we do not get the required 300 dpi.</b>
+                                    <b>The main picture must be no less than 300 Dpi resolution, on a plain white background and 3240 x 2160 in size. We need this to be of sufficiently high quality as the images will be used in magazine, for TV broadcast and on social media. <u><a href="http://charterquest.odoo.co.za/web/static/src/files/docs/The-CFO/2020/DPI_resolution_requirements_sample.pdf" style="color :blue;">Click here</a></u> for a sample of 300 dpi picture which is attached for you to see the shine/lighting and quality we need. It also shows an incorrect version: a 150 dpi and 72 dpi to help you see how badly the quality pixilates or suffers if we do not get the required 300 dpi.</b>
                                     <h4><b>WE NEED 2 VERSIONS:</b></h4>
                                     <b>Version 1: should meet the above specification;<br></br>
                                         Version 2: should be an exact duplicate of version 1 (it does not need to meet the above specs in terms of weight - this version should be fully labelled as you find on the samples linked above, team name in full, names of members top to bottom, age).
@@ -4548,14 +4548,14 @@ below ideally, starting with the team leader from the left to the right.</b>
                                                     <t t-foreach="aspirant_team.document_ids" t-as="document_id">
                                                         <t t-if="document_id.datas_fname.split('.')[1] in ['png','jpeg']">
                                                             <t t-esc="document_id.datas_fname"/>
-                                                            <input type="hidden" name="png_jpeg_db" accept="application/png"
+                                                            <input type="hidden" name="png_jpeg_db" multiple="multiple" accept="image/x-png,image/jpeg"
                                                                    t-att-value="document_id.id"/>
                                                             <t t-set="document_new_id" t-value="document_id.id"/>
                                                         </t>
                                                     </t>
                                                 </t>
                                                 <t t-if="not document_new_id">
-                                                    <input type="file" id="team_png" name="team_png" class="file_uploaded" accept="image/x-png,image/jpeg"
+                                                    <input type="file" id="team_png" name="team_png" class="file_uploaded" multiple="multiple" accept="image/x-png,image/jpeg"
                                                            required="1"/>
                                                 </t>
                                             </td>
@@ -4587,43 +4587,40 @@ below ideally, starting with the team leader from the left to the right.</b>
                                 </div>
                                 <table>
                                        <h5>
-                                       <p>All Aspirant,Partner and associates of <b>THE CFO</b> Case Study Competition and its related contests(THE CFO Junior),
+                                       All Aspirant,Partner and associates of <b>THE CFO</b> Case Study Competition and its related contests(THE CFO Junior),
                                        <span>(The CFO Brand Ambassadors Award and)</span><span>The CFO Social Media Award</span>
                                        are inter-alia bound by the spirit and rules coverd in the following section of the Competition Rule
-                                       </p>
                                        </h5>
-                                       <tbody>
-                                        <li style="padding-left: 69px;">Section 1: About the Competitions</li>
-                                        <li style="padding-left: 69px;">Section 2: Participant,team eligibility and registration</li>
-                                        <li style="padding-left: 69px;">Section 3: Competition format  stages</li>
-                                        <li style="padding-left: 69px;">Section 4: Penlties and non Compliance</li>
-                                        <li style="padding-left: 69px;">Section 5: Intellectual Property</li>
-                                        <li style="padding-left: 69px;">Section 6: Consent and release</li>
-                                        <li style="padding-left: 69px;">Section 7: Disclaimers</li>
-                                        <li style="padding-left: 69px;">Section 8: Official prize, prize transfer or substitution</li>
-                                        <li style="padding-left: 69px;">Section 9: Applicable laws and jursiducation</li>
-                                        <li style="padding-left: 69px;">Section 10:Adjudication and outcomes</li><br/><br/>
 
-                                        <p>
-                                         In as much as compliance to THE CFO (and CFO junior) case Study Competition/s Rules Was Competition/s Rules was completed during the registration process
-                                         and update of your bio.in the spirit of the competition and for this submission process of your report.you agree to be bound by
-                                         the detailed rules downloadable in pdf version at:
-                                        </p>
-<!--                                        <span style="padding-left: 35px;">-->
-<!--                                        <u><a href="copetition_rule">Compeition Rule</a></u><br/><br/>-->
-<!--                                        </span>-->
+                                       <tbody>
+                                        <li style="padding-left: 69px;"><b>Section 1: About the Competitions</b></li>
+                                        <li style="padding-left: 69px;"><b>Section 2: Participant,team eligibility and registration</b></li>
+                                        <li style="padding-left: 69px;"><b>Section 3: Competition format  stages</b></li>
+                                        <li style="padding-left: 69px;"><b>Section 4: Penlties and non Compliance</b></li>
+                                        <li style="padding-left: 69px;"><b>Section 5: Intellectual Property</b></li>
+                                        <li style="padding-left: 69px;"><b>Section 6: Consent and release</b></li>
+                                        <li style="padding-left: 69px;"><b>Section 7: Disclaimers</b></li>
+                                        <li style="padding-left: 69px;"><b>Section 8: Official prize, prize transfer or substitution</b></li>
+                                        <li style="padding-left: 69px;"><b>Section 9: Applicable laws and jursiducation</b></li>
+                                        <li style="padding-left: 69px;"><b>Section 10:Adjudication and outcomes</b></li><br/><br/>
+
+                                        <b>
+                                         In as much as compliance to THE CFO (and CFO Junior) Case Study Competition/s Rules was completed during the registration process and update of your bio, In the spirit of the competition and for this submission process of your report, you agree to be bound by the detailed rules downloadable in pdf version
+                                        </b>
+                                        <span>
+                                        <u><a href="http://charterquest.odoo.co.za/web/static/src/files/docs/The-CFO/documents/Competition_Rules.pdf" style="color :blue;">at Competition Rules Page.</a></u><br/><br/>
+                                        </span>
                                         <tr>
-                                            <input type="checkbox" id="acknowledge_id"  value="acknowledge" required="1">I aknowledge that the report is entirly the work of my team and
-                                        that it does not incorporate the intellectual property of any other party.<br/></input>
+                                            <input type="checkbox" id="acknowledge_id"  value="acknowledge" required="1"><b>I acknowledge that the report is entirely the work of my team and that it does not incorporate the intellectual property of any other party.</b><br/></input>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <button class="btn btn-default btn-primary mb32" onclick="history.back();return false"><i class="fa fa-chevron-left"/>Back
                                                         </button>
                                             </td>
-                                            <td>
-                                                <a href='cfo_junior' class="btn btn-default btn-primary mb32 a-submit fa fa-home">HOME</a>
-                                            </td>
+<!--                                            <td>-->
+<!--                                                <a href='cfo_junior' class="btn btn-default btn-primary mb32 a-submit fa fa-home">HOME</a>-->
+<!--                                            </td>-->
                                             <td>
                                                 <button type="submit" class="btn btn-default btn-primary mb32" id="confirm_report" value="Confirm">SUBMIT CFO REPORT</button>
                                             </td>
