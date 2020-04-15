@@ -4487,6 +4487,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                                 </t>
                                             </td>
                                             <td>
+
                                                 <button class="btn btn-danger remove_document" t-att-id="document_new_id">Remove</button>
                                             </td>
                                         </tr>
@@ -4560,6 +4561,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                                 </t>
                                             </td>
                                             <td>
+                                                <input id="team_image_list" class="form-field" name="team_image_list" type="hidden"/>
                                                 <button class="btn btn-danger remove_document" t-att-id="document_new_id">Remove</button>
                                             </td>
                                         </tr>
@@ -4567,6 +4569,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                     </div>
                                 </table>
                             </div>
+                            <div class="col-md-12 mt16" id="divFiles"></div>
                             <div class="col-md-12 mt16">
                                  <table>
                                     <h3 style="background-color: red;">Competition Rules</h3>

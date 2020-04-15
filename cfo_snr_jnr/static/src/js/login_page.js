@@ -135,30 +135,6 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
             });
         });
 
-        var selDiv = "";
-
-        document.addEventListener("DOMContentLoaded", init, false);
-
-        function init() {
-            document.querySelector('#team_png').addEventListener('change', handleFileSelect, false);
-            selDiv = document.querySelector("#selectedFiles");
-        }
-
-        function handleFileSelect(e) {
-
-            if(!e.target.files) return;
-
-            selDiv.innerHTML = "";
-
-            var files = e.target.files;
-            for(var i=0; i<files.length; i++) {
-                var f = files[i];
-
-                selDiv.innerHTML += f.name + "<br/>";
-
-            }
-
-        }
         $(".datepicker5").on('change', function () {
             var dt = new Date();
             var select_date = $(this).datepicker('getDate');
@@ -253,13 +229,38 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         })
 
         $('#team_png').on('change', function() {
-            var a=(this.files[0].size);
-            console.log("\n\n\n\n=========file size====",a)
-            alert(a);
-            if(a > 52428800)
-            {
-                alert('Image must not be bigger than 100MB');
+//            var a=(this.files[0].size);
+//            console.log("\n\n\n\n=========file size====",a)
+//            alert(a);
+//            if(a > 52428800)
+//            {
+//                alert('Image must not be bigger than 100MB');
+//            }
+            var filelist = new Array();
+            var input = document.getElementById('team_png');
+            var output = document.getElementById('divFiles');
+            console.log("\n\n\n\n\n\n=========input===output======",input,output)
+            var HTML = "<table>";
+            for (var i = 0; i < input.files.length; ++i) {
+                //filelist[i] = input.files.item(i).name;
+                var a = input.files.item(i).size
+                if (a > 104857600)
+                {
+                    alert('Image must not be bigger than 100MB');
+                }
+                else
+                {
+                    filelist.push(input.files.item(i).name);
+                    HTML += "<tr><td>"
+                      + filelist[i]
+                      + "</td></tr>";
+                }
+
             }
+            HTML += "</table>";
+            document.getElementById('divFiles').innerHTML = HTML;
+            $('#team_image_list').val(filelist);
+            console.log("\n\n\n\n file ==========",filelist);
         });
 
         $('.oe_signup_form').on('submit', function (e) {

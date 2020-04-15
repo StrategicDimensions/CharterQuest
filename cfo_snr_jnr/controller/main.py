@@ -1873,20 +1873,26 @@ class CfoHome(web.Home):
                     'datas': base64.b64encode(file.read()),
                     'member_status': 'Pending',
                 })
-        if post.get('team_png'):
-            filename = post.get('team_png').filename
-            file = post.get('team_png')
-            attach_id = request.env['ir.attachment'].sudo().create({
-                'snr_team_id': team_id.id,
-                'name': filename,
-                'type': 'binary',
-                'datas_fname': filename,
-                'datas': base64.b64encode(file.read()),
-                'member_status': 'Pending',
-            })
-            return request.render('cfo_snr_jnr.report_submit_success')
-        if (post.get('pdf_db') or post.get('doc_db')):
-            return request.render('cfo_snr_jnr.report_submit_success')
+        if post.get('team_image_list'):
+            image_file = post.get('team_image_list').split(',')
+            i = 0
+            for image in image_file:
+
+                # filename = image.filename
+                file = image
+                attach_id = request.env['ir.attachment'].sudo().create({
+                    'snr_team_id': team_id.id,
+                    'name': image,
+                    'type': 'binary',
+                    'res_id':5+i,
+                    'datas_fname': image,
+                    # 'datas': base64.b64encode(file.read()),
+                    'member_status': 'Pending',
+                })
+                i=i+1
+        return request.render('cfo_snr_jnr.report_submit_success')
+        # if (post.get('pdf_db') or post.get('doc_db')):
+        #     return request.render('cfo_snr_jnr.report_submit_success')
 
     @http.route('/create_acadamic_team', type='json', auth='public', website=True)
     def create_acadamic_team(self, **post):
