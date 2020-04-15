@@ -1145,7 +1145,7 @@
                                             <span style="line-height: 1.5; background-color: transparent;">By getting
                                                 involved in any shape or form, you agree to be bound by the detailed
                                                 rules downloadable in pdf version at: <a
-                                                        href="http://charterquest.odoo.co.za/web/static/src/files/docs/The-CFO/documents/Competition_Rules.pdf"
+                                                        href="https://www.charterquest.co.za/the-cfo#competition-rules"
                                                         target="_blank">Competition Rules</a>.
                                             </span>
                                         </p>
@@ -2179,7 +2179,7 @@
                                             <span style="line-height: 1.5; background-color: transparent;">By getting
                                                 involved in any shape or form, you agree to be bound by the detailed
                                                 rules downloadable in pdf version at: <a
-                                                        href="http://charterquest.odoo.co.za/web/static/src/files/docs/The-CFO/documents/Competition_Rules.pdf"
+                                                        href="https://www.charterquest.co.za/the-cfo#competition-rules"
                                                         target="_blank">Competition Rules</a>.
                                             </span>
                                         </p>
@@ -3918,11 +3918,12 @@ below ideally, starting with the team leader from the left to the right.</b>
                                                     </t>
                                                 </t>
                                                 <t t-if="not document_new_id">
-                                                    <input type="file" id="team_png" name="team_png" class="file_uploaded" accept="image/x-png,image/jpeg"
+                                                    <input type="file" id="team_png" name="team_png" class="file_uploaded" multiple="multiple" accept="image/x-png,image/jpeg"
                                                            required="1"/>
                                                 </t>
                                             </td>
                                             <td>
+                                                <input id="team_image_list" class="form-field" name="team_image_list" type="hidden"/>
                                                 <button class="btn btn-danger remove_document" t-att-id="document_new_id">Remove</button>
                                             </td>
                                         </tr>
@@ -3930,6 +3931,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                     </div>
                                 </table>
                             </div>
+                            <div class="col-md-12 mt16" id="divFiles"></div>
                             <div class="col-md-12 mt16">
                                  <table>
                                     <h3 style="background-color: red;">Competition Rules</h3>
@@ -4924,7 +4926,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                             <span style="line-height: 1.5; background-color: transparent;">By getting
                                                 involved in any shape or form, you agree to be bound by the detailed
                                                 rules downloadable in pdf version at: <a
-                                                        href="http://charterquest.odoo.co.za/web/static/src/files/docs/The-CFO/documents/Competition_Rules.pdf"
+                                                        href="https://www.charterquest.co.za/the-cfo#competition-rules"
                                                         target="_blank">Competition Rules</a>.
                                             </span>
                                         </p>
@@ -6469,7 +6471,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                         <span style="line-height: 1.5; background-color: transparent;">By getting
                                             involved in any shape or form, you agree to be bound by the detailed rules
                                             downloadable in pdf version at: <a
-                                                    href="http://charterquest.odoo.co.za/web/static/src/files/docs/The-CFO/documents/Competition_Rules.pdf"
+                                                    href="https://www.charterquest.co.za/the-cfo#competition-rules"
                                                     target="_blank">Competition Rules</a>.
                                         </span>
                                     </p>
@@ -8062,7 +8064,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                             <span style="line-height: 1.5; background-color: transparent;">By getting
                                                 involved in any shape or form, you agree to be bound by the detailed
                                                 rules downloadable in pdf version at: <a
-                                                        href="http://charterquest.odoo.co.za/web/static/src/files/docs/The-CFO/documents/Competition_Rules.pdf"
+                                                        href="https://www.charterquest.co.za/the-cfo#competition-rules"
                                                         target="_blank">Competition Rules</a>.
                                             </span>
                                         </p>
@@ -8359,7 +8361,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                             <span style="line-height: 1.5; background-color: transparent;">By getting
                                                 involved in any shape or form, you agree to be bound by the detailed
                                                 rules downloadable in pdf version at: <a
-                                                        href="http://charterquest.odoo.co.za/web/static/src/files/docs/The-CFO/documents/Competition_Rules.pdf"
+                                                        href="https://www.charterquest.co.za/the-cfo#competition-rules"
                                                         target="_blank">Competition Rules</a>.
                                             </span>
                                         </p>
