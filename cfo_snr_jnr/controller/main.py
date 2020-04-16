@@ -22,6 +22,7 @@ import werkzeug
 from odoo import http, _
 from odoo.http import request
 import logging
+import io
 import json
 from odoo.addons.web.controllers import main as web
 from odoo.addons.auth_signup.controllers import main as auth_signup
@@ -1848,7 +1849,7 @@ class CfoHome(web.Home):
                     'datas': base64.b64encode(file.read()),
                     'member_status': 'Pending',
                 })
-        if (post.get('team_pdf') or post.get('tean_doc')):
+        if (post.get('team_pdf') or post.get('team_doc')):
             if post.get('team_pdf'):
                 filename = post.get('team_pdf').filename
                 file = post.get('team_pdf')
@@ -1864,6 +1865,7 @@ class CfoHome(web.Home):
             if post.get('team_doc'):
                 filename = post.get('team_doc').filename
                 file = post.get('team_doc')
+                print("\n\n\n\n======filename===file===",filename,file)
                 attach_id = request.env['ir.attachment'].sudo().create({
                     'snr_team_id': team_id.id,
                     'name': filename,
@@ -1873,23 +1875,30 @@ class CfoHome(web.Home):
                     'datas': base64.b64encode(file.read()),
                     'member_status': 'Pending',
                 })
-        if post.get('team_image_list'):
-            image_file = post.get('team_image_list').split(',')
-            i = 0
-            for image in image_file:
+        # print("\n\n\n\n\n====request.params====",request.params)
+        # if 'team_png' in request.params:
+        #     attached_files = request.httprequest.files.getlist('team_png')
+        #
+        #     print("\n\n\n\n\n====attached_files====",attached_files)
+        if post.get('team_png'):
+            if 'team_png' in request.params:
+                attached_files = request.httprequest.files.getlist('team_png')
+                print("\n\n\n\n==========attached_files==",attached_files)
+                i=0
+                for attachment in attached_files:
+                    print("\n\n\n\n==========attachment==", attachment)
+                    # attached_file = attachment.read()
+                    attach_id = request.env['ir.attachment'].sudo().create({
+                            'snr_team_id': team_id.id,
+                            'name': attachment.filename,
+                            'type': 'binary',
+                            'res_id': 5 + i,
+                            'datas_fname': attachment.filename,
+                            'datas': base64.b64encode(attachment.read()),
+                            'member_status': 'Pending',
+                        })
+                    i=i+1
 
-                # filename = image.filename
-                file = image
-                attach_id = request.env['ir.attachment'].sudo().create({
-                    'snr_team_id': team_id.id,
-                    'name': image,
-                    'type': 'binary',
-                    'res_id':5+i,
-                    'datas_fname': image,
-                    # 'datas': base64.b64encode(file.read()),
-                    'member_status': 'Pending',
-                })
-                i=i+1
         return request.render('cfo_snr_jnr.report_submit_success')
         # if (post.get('pdf_db') or post.get('doc_db')):
         #     return request.render('cfo_snr_jnr.report_submit_success')

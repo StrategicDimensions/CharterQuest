@@ -4336,7 +4336,7 @@
                                                     </t>
                                                 </t>
                                                 <t t-if="not document_new_doc">
-                                                    <input type="file" name="doc" class="file_uploaded_doc"
+                                                    <input type="file" name="doc" class="file_uploaded"
                                                            accept=".doc,.docx" required="1"/>
                                                 </t>
                                             </td>
@@ -4508,7 +4508,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                                     </t>
                                                 </t>
                                                 <t t-if="not document_new_doc">
-                                                    <input type="file" name="team_doc" class="file_uploaded_doc"
+                                                    <input type="file" name="team_doc" class="file_uploaded"
                                                            accept=".doc,.docx" required="1"/>
                                                 </t>
                                             </td>
