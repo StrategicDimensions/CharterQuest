@@ -1337,6 +1337,9 @@ margin-left: 243px !important;
     width: fit-content;
     max-width: 100%;
 }
+.file_uploaded{
+    width:230px;
+}
 }
 
 /* form report end */
