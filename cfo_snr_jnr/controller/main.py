@@ -1875,11 +1875,6 @@ class CfoHome(web.Home):
                     'datas': base64.b64encode(file.read()),
                     'member_status': 'Pending',
                 })
-        # print("\n\n\n\n\n====request.params====",request.params)
-        # if 'team_png' in request.params:
-        #     attached_files = request.httprequest.files.getlist('team_png')
-        #
-        #     print("\n\n\n\n\n====attached_files====",attached_files)
         if post.get('team_png'):
             if 'team_png' in request.params:
                 attached_files = request.httprequest.files.getlist('team_png')
