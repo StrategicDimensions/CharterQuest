@@ -1426,6 +1426,7 @@ class CfoHomeJnr(web.Home):
                                         'member_status': 'Pending',
                                     })
         if (post.get('team_pdf') or post.get('tean_doc')):
+
             if post.get('team_pdf'):
                 filename = post.get('team_pdf').filename
                 file = post.get('team_pdf')
@@ -1438,6 +1439,7 @@ class CfoHomeJnr(web.Home):
                                         'datas': base64.b64encode(file.read()),
                                         'member_status': 'Pending',
                 })
+
             if post.get('team_doc'):
                 filename = post.get('team_doc').filename
                 file = post.get('team_doc')
@@ -1450,6 +1452,7 @@ class CfoHomeJnr(web.Home):
                                         'datas': base64.b64encode(file.read()),
                                         'member_status': 'Pending',
                 })
+
         if post.get('team_png'):
             if 'team_png' in request.params:
                 attached_files = request.httprequest.files.getlist('team_png')
@@ -1457,7 +1460,6 @@ class CfoHomeJnr(web.Home):
                 i = 0
                 for attachment in attached_files:
                     print("\n\n\n\n==========attachment==", attachment)
-                    # attached_file = attachment.read()
                     attach_id = request.env['ir.attachment'].sudo().create({
                         'jnr_team_id': team_id.id,
                         'name': attachment.filename,

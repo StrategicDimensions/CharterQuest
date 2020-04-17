@@ -229,13 +229,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         })
 
         $('#team_png').on('change', function() {
-//            var a=(this.files[0].size);
-//            console.log("\n\n\n\n=========file size====",a)
-//            alert(a);
-//            if(a > 52428800)
-//            {
-//                alert('Image must not be bigger than 100MB');
-//            }
+
             var filelist = new Array();
             var input = document.getElementById('team_png');
             var output = document.getElementById('divFiles');
