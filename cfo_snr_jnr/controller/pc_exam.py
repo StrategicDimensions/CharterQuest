@@ -1302,19 +1302,20 @@ class PCExambooking(http.Controller):
         invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
         journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
         payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
-        # payment_id = request.env['account.payment'].sudo().create({
-        #     'partner_id': sale_order_id.partner_id.id,
-        #     'amount': sale_order_id.amount_total,
-        #     'payment_type': 'inbound',
-        #     'partner_type': 'customer',
-        #     'invoice_ids': [(6, 0, invoice_id.ids)],
-        #     'payment_date': datetime.today(),
-        #     'journal_id': journal_id.id,
-        #     'payment_method_id': payment_methods[0].id
-        # })
+        payment_id = request.env['account.payment'].sudo().create({
+            'partner_id': sale_order_id.partner_id.id,
+            'amount': sale_order_id.amount_total,
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'invoice_ids': [(6, 0, invoice_id.ids)],
+            'payment_date': datetime.today(),
+            'journal_id': journal_id.id,
+            'payment_method_id': payment_methods[0].id
+        })
 
-        # invoice_id.action_invoice_open()
+        invoice_id.action_invoice_open()
         print("\n\n\n\nn\====state=======", invoice_id.state)
+        # payment_id.action_validate_invoice_payment()
         # payment_id.post()
         template_id = request.env.ref('cfo_snr_jnr.email_template_payvia_credit_card',
                                       raise_if_not_found=False)
@@ -1359,19 +1360,18 @@ class PCExambooking(http.Controller):
         template_invoice_id = request.env.ref('cfo_snr_jnr.email_template_pcexam_confirm',
                                           raise_if_not_found=False)
         if template_invoice_id:
-            if request.session.get('sale_order'):
-                pdf_data_enroll = request.env.ref('event_price_kt.report_pc_exam').sudo().render_qweb_pdf(
-                    sale_order_id.id)
-                enroll_file_name = "Pro-Forma " + sale_order_id.name
-                if pdf_data_enroll:
-                    pdfvals = {'name': enroll_file_name,
-                               'db_datas': base64.b64encode(pdf_data_enroll[0]),
-                               'datas': base64.b64encode(pdf_data_enroll[0]),
-                               'datas_fname': enroll_file_name + ".pdf",
-                               'res_model': 'sale.order',
-                               'type': 'binary'}
-                    pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
-                    attachment_list.append(pdf_create)
+            # if request.session.get('sale_order'):
+            pdf_data_order = request.env.ref(
+                'event_price_kt.report_invoice_pcexam').sudo().render_qweb_pdf(invoice_id.id)
+            if pdf_data_order:
+                pdfvals = {'name': 'Invoice Report',
+                           'db_datas': base64.b64encode(pdf_data_order[0]),
+                           'datas': base64.b64encode(pdf_data_order[0]),
+                           'datas_fname': 'Invoice Report.pdf',
+                           'res_model': 'account.invoice',
+                           'type': 'binary'}
+                pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
+                attachment_list.append(pdf_create)
 
             agreement_id = request.env.ref('cfo_snr_jnr.pc_exam_data_pdf')
             if agreement_id:
@@ -1478,8 +1478,7 @@ class PCExambooking(http.Controller):
         template_invoice_id = request.env.ref('cfo_snr_jnr.email_template_pcexam_confirm',
                                                   raise_if_not_found=False)
         if template_invoice_id:
-            pdf_data_order = request.env.ref(
-                'event_price_kt.report_invoice_pcexam').sudo().render_qweb_pdf(invoice_id.id)
+            pdf_data_order = request.env.ref('event_price_kt.report_invoice_pcexam').sudo().render_qweb_pdf(invoice_id.id)
             if pdf_data_order:
                 pdfvals = {'name': 'Invoice Report',
                            'db_datas': base64.b64encode(pdf_data_order[0]),
@@ -1493,9 +1492,9 @@ class PCExambooking(http.Controller):
             {'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])]})
         if template_invoice_id:
             template_invoice_id.sudo().with_context(
-                event_list=event_list,
+                # event_list=event_list,
                 email_cc='thecfo@charterquest.co.za',
-                prof_body=invoice_id.prof_body.name,
+                # prof_body=invoice_id.prof_body.name,
             ).sudo().send_mail(invoice_id.id, force_send=True)
 
         return request.render('cfo_snr_jnr.reschedule_booking_thankyou', {'page_name': post.get('page_name')})
