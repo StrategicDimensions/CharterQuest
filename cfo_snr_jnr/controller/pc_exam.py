@@ -1273,7 +1273,7 @@ class PCExambooking(http.Controller):
         print("\n\n\n\n\n\n===========voucher_ids_list====",request.session.get('voucher_id'))
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
 
-        # sale_order_id.write({'state': 'sale'})
+        # sale_order_id.write({'amount_untaxed': 0.00})
         for each_order_line in sale_order_id.order_line:
             invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
                                         'name': each_order_line.name,
@@ -1302,16 +1302,16 @@ class PCExambooking(http.Controller):
         invoice_id = request.env['account.invoice'].sudo().browse(invoice_id[0])
         journal_id = request.env['account.journal'].sudo().browse(inv_default_vals.get('journal_id'))
         payment_methods = journal_id.inbound_payment_method_ids or journal_id.outbound_payment_method_ids
-        payment_id = request.env['account.payment'].sudo().create({
-            'partner_id': sale_order_id.partner_id.id,
-            'amount': sale_order_id.amount_total,
-            'payment_type': 'inbound',
-            'partner_type': 'customer',
-            'invoice_ids': [(6, 0, invoice_id.ids)],
-            'payment_date': datetime.today(),
-            'journal_id': journal_id.id,
-            'payment_method_id': payment_methods[0].id
-        })
+        # payment_id = request.env['account.payment'].sudo().create({
+        #     'partner_id': sale_order_id.partner_id.id,
+        #     'amount': sale_order_id.amount_total,
+        #     'payment_type': 'inbound',
+        #     'partner_type': 'customer',
+        #     'invoice_ids': [(6, 0, invoice_id.ids)],
+        #     'payment_date': datetime.today(),
+        #     'journal_id': journal_id.id,
+        #     'payment_method_id': payment_methods[0].id
+        # })
 
         invoice_id.action_invoice_open()
         print("\n\n\n\nn\====state=======", invoice_id.state)
@@ -1423,7 +1423,7 @@ class PCExambooking(http.Controller):
             print("\n\n\n\n\n=========post event_id====", event_id)
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
         print("\n\n\n\n\n\n==============sale order name=====",sale_order_id.name)
-        invoice_id = request.env['account.invoice'].sudo().search([('sale_order_id','=',sale_order_id.name),('state','=','paid')])
+        invoice_id = request.env['account.invoice'].sudo().search([('sale_order_id','=',sale_order_id.name),'|', ('state','=','paid'), ('state', '=', 'open')])
         template_id = request.env.ref('cfo_snr_jnr.email_template_reschedule_exam',raise_if_not_found=False)
         print("\n\n\n\n\n\n==============invoice id==========",invoice_id)
         event_list = []
