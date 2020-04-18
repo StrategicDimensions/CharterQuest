@@ -1338,7 +1338,19 @@ margin-left: 243px !important;
     max-width: 100%;
 }
 .file_uploaded{
-    width:230px;
+    width:100px;
+}
+.submit_cfo_report{
+    width:193px;
+    padding: 6px 25px !important;
+    margin-left: 7px !important;
+}
+.submission_report{
+    border-collapse: collapse;
+    overflow-x: auto;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
 }
 }
 

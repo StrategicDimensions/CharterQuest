@@ -4625,7 +4625,7 @@ below ideally, starting with the team leader from the left to the right.</b>
 <!--                                                <a href='cfo_junior' class="btn btn-default btn-primary mb32 a-submit fa fa-home">HOME</a>-->
 <!--                                            </td>-->
                                             <td>
-                                                <button type="submit" class="btn btn-default btn-primary mb32" id="confirm_report" value="Confirm">SUBMIT CFO REPORT</button>
+                                                <button type="submit" class="btn btn-default btn-primary mb32 submit_cfo_report" id="confirm_report" value="Confirm">SUBMIT CFO REPORT</button>
                                             </td>
                                         </tr>
                                        </tbody>
