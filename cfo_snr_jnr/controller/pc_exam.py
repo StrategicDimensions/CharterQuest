@@ -421,7 +421,6 @@ class PCExambooking(http.Controller):
                                                                                       'product_uom': 1.0,
                                                                                       'price_unit': event_reschedule_id.price,
                                                                                       'discount': 0})]})
-
                         available_seats = event_reschedule_id.seats_available - 1
                         event_reschedule_id.write({
                             'seats_available': available_seats,
@@ -507,7 +506,7 @@ class PCExambooking(http.Controller):
                 event_id.write({
                     'seats_available': available_seats,
                 })
-
+                print("\n\n\n\n=====order line=====",order_line)
                 # sale_order_dict['Validity_date'] = event_id.date_end
                 sale_order_dict['prof_body'] = event_id.event_type_id.id if event_id.event_type_id else event_id.type_pc_exam.type_event_id.id
                 sale_order_dict['semester_id'] = event_id.semester_id.id
@@ -516,7 +515,7 @@ class PCExambooking(http.Controller):
 
                 print("\n\n\n\n\=================dict=============",sale_order_dict)
             if not partner_id:
-                partner_id = res_partner_obj.create({'name': name,
+                partner_id = res_partner_obj.sudo().create({'name': name,
                                                      'student_company': post.get('Company') if post.get(
                                                          'Company') else '',
                                                      'email': post.get('Email') if post.get('Email') else '',
@@ -549,7 +548,7 @@ class PCExambooking(http.Controller):
                                                      'property_account_receivable_id': account_rec_id.id,
                                                      'property_account_payable_id': account_pay_id.id})
             else:
-                partner_id.write({'name': name,
+                partner_id.sudo().write({'name': name,
                                                      'student_company': post.get('Company') if post.get(
                                                          'Company') else '',
                                                      'email': post.get('Email') if post.get('Email') else '',
@@ -584,7 +583,7 @@ class PCExambooking(http.Controller):
 
 
             if partner_id:
-                sale_order_id=sale_obj.create({'partner_id': partner_id.id,
+                sale_order_id=sale_obj.sudo().create({'partner_id': partner_id.id,
                                      'campus': campus_id.id if campus_id else '',
                                      'student_number': partner_id.student_number,
                                      'warehouse_id': warehouse_id.id,
@@ -594,9 +593,9 @@ class PCExambooking(http.Controller):
                                      'quote_type': 'PC Exam',
                                      # 'discount_type_ids': [(6, 0, [each for each in discount_id])],
                                      'order_line': order_line})
-                sale_order_id.write(sale_order_dict)
-                sale_order_id.write({'name': sale_order_id.name + 'PC'})
-                partner_id.write({'event_type_id':sale_order_id.prof_body.id})
+                sale_order_id.sudo().write(sale_order_dict)
+                sale_order_id.sudo().write({'name': sale_order_id.name + 'PC'})
+                partner_id.sudo().write({'event_type_id':sale_order_id.prof_body.id})
                 request.session['event_ids']=event_select_list
                 # for event in event_select_list:
                 #     event_id = request.env['event.event'].sudo().browse(int(event))
@@ -624,7 +623,7 @@ class PCExambooking(http.Controller):
                                                                     'do_invoice':'yes' if post.get('do_invoice') == 'Yes' else 'no',})
         if post.get('pay_via_eft'):
             if post.get('do_invoice') == 'No':
-                sale_order_id.write({'state': 'draft'})
+                sale_order_id.sudo().write({'state': 'draft'})
 
                 # for event in event_select_list:
                 #     event_id = request.env['event.event'].sudo().browse(int(event))
@@ -635,7 +634,7 @@ class PCExambooking(http.Controller):
                 #     event_id.write({'online_registration_ids':online_registration})
 
                 mail_obj = request.env['mail.mail'].sudo()
-                template_invoice_id = request.env.ref('cfo_snr_jnr.email_template_pcexam_payvia_eft',
+                template_invoice_id = request.env.ref('cfo_snr_jnr.email_template_pcexam_payvia_eft_no_invoice',
                                                       raise_if_not_found=False)
                 if template_invoice_id:
                     sale_order_id = sale_order_id.sudo()
@@ -655,34 +654,46 @@ class PCExambooking(http.Controller):
                     agreement_id = request.env.ref('cfo_snr_jnr.pc_exam_data_pdf')
                     if agreement_id:
                         attachment_list.append(agreement_id)
-                    body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
-                    body_html += "<br>"
-                    body_html += "Dear " + sale_order_id.partner_id.name + ","
-                    body_html += "<br><br>"
-                    body_html += "Thank you for provisionally booking your exam with CharterQuest."
-                    body_html += "<br><br>"
-                    body_html += "Payment must be submitted today to ensure your exam is fully booked 7 days in advance. Please note that space is limited so it is advisable to make payment as soon as possible."
-                    body_html += "<br><br>"
-                    body_html += "If you have paid your exams with your enrolment kindly forward your booking to accounts@charterquest.co.za to receive a confirmation of booking."
-                    body_html += "<br><br>"
-                    body_html += "Please see attached Terms and Condition for the pc exams."
-                    body_html += "<br><br>"
-                    body_html += "Email enquiries@charterquest.co.za for more information."
-                    body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
-                    body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
 
-                    mail_values = {
-                        'email_from': template_invoice_id.email_from,
-                        'reply_to': template_invoice_id.reply_to,
-                        'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
-                        'subject': "Charterquest PC Exam Booking " + sale_order_id.name + "PC",
-                        'body_html': body_html,
-                        'notification': True,
-                        'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])],
-                        'auto_delete': False,
-                    }
-                    msg_id = mail_obj.create(mail_values)
-                    msg_id.send()
+                    agreement_id = request.env.ref('cfo_snr_jnr.pc_exam_data_pdf')
+                    if agreement_id:
+                        attachment_list.append(agreement_id)
+                    template_invoice_id.sudo().write(
+                        {'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])]})
+                    template_invoice_id.sudo().with_context(
+                        # email_to=each_request.get('email'),
+                        # event_list=event_list,
+                        email_cc='thecfo@charterquest.co.za',
+                        # prof_body=invoice_id.prof_body.name,
+                    ).sudo().send_mail(sale_order_id.id, force_send=True)
+                    # body_html = "<div style='font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;'>"
+                    # body_html += "<br>"
+                    # body_html += "Dear " + sale_order_id.partner_id.name + ","
+                    # body_html += "<br><br>"
+                    # body_html += "Thank you for provisionally booking your exam with CharterQuest."
+                    # body_html += "<br><br>"
+                    # body_html += "Payment must be submitted today to ensure your exam is fully booked 7 days in advance. Please note that space is limited so it is advisable to make payment as soon as possible."
+                    # body_html += "<br><br>"
+                    # body_html += "If you have paid your exams with your enrolment kindly forward your booking to accounts@charterquest.co.za to receive a confirmation of booking."
+                    # body_html += "<br><br>"
+                    # body_html += "Please see attached Terms and Condition for the pc exams."
+                    # body_html += "<br><br>"
+                    # body_html += "Email enquiries@charterquest.co.za for more information."
+                    # body_html += "<br><br><br> Thanking You <br><br> Patience Mukondwa<br> Head Of Operations<br> The CharterQuest Professional Education Institute<br>"
+                    # body_html += "CENTRAL CONTACT INFORMATION:<br> Tel: +27 (0)11 234 9223 [SA & Intl]<br> Cell: +27 (0)73 174 5454 [SA & Intl]<br> <br/><div>"
+                    #
+                    # mail_values = {
+                    #     'email_from': template_invoice_id.email_from,
+                    #     'reply_to': template_invoice_id.reply_to,
+                    #     'email_to': sale_order_id.partner_id.email if sale_order_id.partner_id.email else '',
+                    #     'subject': "Charterquest PC Exam Booking " + sale_order_id.name + "PC",
+                    #     'body_html': body_html,
+                    #     'notification': True,
+                    #     'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])],
+                    #     'auto_delete': False,
+                    # }
+                    # msg_id = mail_obj.sudo().create(mail_values)
+                    # msg_id.sudo().send()
                 return request.render('cfo_snr_jnr.exam_page_eft_thankyou', {'page_name': post.get('page_name')})
 
 
@@ -767,7 +778,7 @@ class PCExambooking(http.Controller):
                         # event_list=event_list,
                         email_cc='thecfo@charterquest.co.za',
                         # prof_body=invoice_id.prof_body.name,
-                    ).send_mail(invoice_id.id, force_send=True)
+                    ).sudo().send_mail(invoice_id.id, force_send=True)
                 return request.render('cfo_snr_jnr.exam_page_eft_thankyou', {'page_name': post.get('page_name')})
 
     @http.route(['/exam/redirect_payu'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
@@ -1041,7 +1052,7 @@ class PCExambooking(http.Controller):
             # msg_id = mail_obj.create(mail_values)
             # msg_id.send()
 
-            template_id.write(
+            template_id.sudo().write(
                     {'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attchment_list])]})
             template_id.sudo().with_context(
                 # email_to=each_request.get('email'),
@@ -1261,7 +1272,7 @@ class PCExambooking(http.Controller):
         print("\n\n\n\n\n\n===========voucher_ids_list====",request.session.get('voucher_id'))
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
 
-        # sale_order_id.write({'state': 'sale'})
+        # sale_order_id.write({'amount_untaxed': 0.00})
         for each_order_line in sale_order_id.order_line:
             invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
                                         'name': each_order_line.name,
@@ -1301,8 +1312,9 @@ class PCExambooking(http.Controller):
         #     'payment_method_id': payment_methods[0].id
         # })
 
-        # invoice_id.action_invoice_open()
+        invoice_id.action_invoice_open()
         print("\n\n\n\nn\====state=======", invoice_id.state)
+        # payment_id.action_validate_invoice_payment()
         # payment_id.post()
         template_id = request.env.ref('cfo_snr_jnr.email_template_payvia_credit_card',
                                       raise_if_not_found=False)
@@ -1311,7 +1323,7 @@ class PCExambooking(http.Controller):
         if sale_order_id:
             for exam in sale_order_id.order_line:
                 exam_dict = {}
-                event = request.env['event.event'].sudo().search([('name', '=', exam.event_id.name), ('type_pc_exam', '=', sale_order_id.pc_exam_type.id)])
+                event = request.env['event.event'].sudo().search([('id','=',exam.event_id.id),('name', '=', exam.event_id.name), ('type_pc_exam', '=', sale_order_id.pc_exam_type.id)])
                 if event:
                     online_registration.append([0, 0, {'event_id': exam.event_id.name,
                                                        'partner_id': sale_order_id.partner_id.id,
@@ -1342,24 +1354,23 @@ class PCExambooking(http.Controller):
                 event_list=event_list,
                 email_cc='thecfo@charterquest.co.za',
                 prof_body=sale_order_id.prof_body.name,
-            ).send_mail(sale_order_id.id, force_send=True)
+            ).sudo().send_mail(sale_order_id.id, force_send=True)
 
         template_invoice_id = request.env.ref('cfo_snr_jnr.email_template_pcexam_confirm',
                                           raise_if_not_found=False)
         if template_invoice_id:
-            if request.session.get('sale_order'):
-                pdf_data_enroll = request.env.ref('event_price_kt.report_pc_exam').sudo().render_qweb_pdf(
-                    sale_order_id.id)
-                enroll_file_name = "Pro-Forma " + sale_order_id.name
-                if pdf_data_enroll:
-                    pdfvals = {'name': enroll_file_name,
-                               'db_datas': base64.b64encode(pdf_data_enroll[0]),
-                               'datas': base64.b64encode(pdf_data_enroll[0]),
-                               'datas_fname': enroll_file_name + ".pdf",
-                               'res_model': 'sale.order',
-                               'type': 'binary'}
-                    pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
-                    attachment_list.append(pdf_create)
+            # if request.session.get('sale_order'):
+            pdf_data_order = request.env.ref(
+                'event_price_kt.report_invoice_pcexam').sudo().render_qweb_pdf(invoice_id.id)
+            if pdf_data_order:
+                pdfvals = {'name': 'Invoice Report',
+                           'db_datas': base64.b64encode(pdf_data_order[0]),
+                           'datas': base64.b64encode(pdf_data_order[0]),
+                           'datas_fname': 'Invoice Report.pdf',
+                           'res_model': 'account.invoice',
+                           'type': 'binary'}
+                pdf_create = request.env['ir.attachment'].sudo().create(pdfvals)
+                attachment_list.append(pdf_create)
 
             agreement_id = request.env.ref('cfo_snr_jnr.pc_exam_data_pdf')
             if agreement_id:
@@ -1394,7 +1405,7 @@ class PCExambooking(http.Controller):
                 # event_list=event_list,
                 email_cc='thecfo@charterquest.co.za',
                 # prof_body=invoice_id.prof_body.name,
-            ).send_mail(invoice_id.id, force_send=True)
+            ).sudo().send_mail(invoice_id.id, force_send=True)
         return request.render('cfo_snr_jnr.confirm_booking_thankyou', {'page_name': post.get('page_name')})
 
     @http.route(['/page/reschedule_thank_you'], type='http', auth="public", methods=['POST', 'GET'], website=True, csrf=False)
@@ -1411,15 +1422,22 @@ class PCExambooking(http.Controller):
             print("\n\n\n\n\n=========post event_id====", event_id)
         sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
         print("\n\n\n\n\n\n==============sale order name=====",sale_order_id.name)
-        invoice_id = request.env['account.invoice'].sudo().search([('sale_order_id','=',sale_order_id.name),('state','=','paid')])
+        invoice_id = request.env['account.invoice'].sudo().search([('sale_order_id','=',sale_order_id.name),'|', ('state','=','paid'), ('state', '=', 'open')])
         template_id = request.env.ref('cfo_snr_jnr.email_template_reschedule_exam',raise_if_not_found=False)
         print("\n\n\n\n\n\n==============invoice id==========",invoice_id)
         event_list = []
         # event_list = request.session.get('event_ids')
+        campus_name =''
         for order_line in sale_order_id.order_line:
             exam_dict = {}
+            event_id = request.env['event.event'].sudo().search(
+                [('id','=',order_line.event_id.id),('name', '=', order_line.event_id.name), ('type_pc_exam', '=', sale_order_id.pc_exam_type.id)])
 
             if event_id:
+                campus_name = sale_order_id.campus.name
+                if event_id.id == int(post.get('event_reschedule_id')):
+                    campus_id = request.env['res.partner'].sudo().search([('name', '=', post.get('campus'))])
+                    campus_name = campus_id.name
                 online_registration.append([0, 0, {'event_id': event_id.name,
                                                    'partner_id': sale_order_id.partner_id.id,
                                                    'email': sale_order_id.partner_id.email
@@ -1437,7 +1455,7 @@ class PCExambooking(http.Controller):
                 exam_dict['subject_name'] = order_line.event_id.name
                 exam_dict['start_time'] = order_line.event_id.date_begin
                 exam_dict['end_time'] = order_line.event_id.date_end
-                exam_dict['campus'] = sale_order_id.campus.name
+                exam_dict['campus'] = campus_name
                 link += '&%s' % (order_line.event_id.id)
                 exam_dict['link'] = link
                 event_list.append(exam_dict)
@@ -1454,13 +1472,12 @@ class PCExambooking(http.Controller):
                 event_list=event_list,
                 email_cc='thecfo@charterquest.co.za',
                 prof_body=sale_order_id.prof_body.name,
-            ).send_mail(sale_order_id.id, force_send=True)
+            ).sudo().send_mail(sale_order_id.id, force_send=True)
 
         template_invoice_id = request.env.ref('cfo_snr_jnr.email_template_pcexam_confirm',
                                                   raise_if_not_found=False)
         if template_invoice_id:
-            pdf_data_order = request.env.ref(
-                'event_price_kt.report_invoice_pcexam').sudo().render_qweb_pdf(invoice_id.id)
+            pdf_data_order = request.env.ref('event_price_kt.report_invoice_pcexam').sudo().render_qweb_pdf(invoice_id.id)
             if pdf_data_order:
                 pdfvals = {'name': 'Invoice Report',
                            'db_datas': base64.b64encode(pdf_data_order[0]),
@@ -1474,9 +1491,9 @@ class PCExambooking(http.Controller):
             {'attachment_ids': [(6, 0, [each_attachment.id for each_attachment in attachment_list])]})
         if template_invoice_id:
             template_invoice_id.sudo().with_context(
-                event_list=event_list,
+                # event_list=event_list,
                 email_cc='thecfo@charterquest.co.za',
-                prof_body=invoice_id.prof_body.name,
-            ).send_mail(invoice_id.id, force_send=True)
+                # prof_body=invoice_id.prof_body.name,
+            ).sudo().send_mail(invoice_id.id, force_send=True)
 
         return request.render('cfo_snr_jnr.reschedule_booking_thankyou', {'page_name': post.get('page_name')})

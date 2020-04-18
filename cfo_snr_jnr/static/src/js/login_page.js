@@ -482,7 +482,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         });
         $('.remove_attachment').click(function (e) {
             var attachment_id = $(document).find('input[name="attachment_id"]').val();
-            window.location.reload();
+//            window.location.reload();
             ajax.jsonRpc("/remove_attachment_from_team", "call", {
                 'attachment_id': attachment_id,
 

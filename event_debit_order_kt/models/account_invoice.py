@@ -75,7 +75,7 @@ class account_invoice(models.Model):
 
                 for exam in sale_order_id.order_line:
                     exam_dict = {}
-                    event = self.env['event.event'].search([('name','=',exam.event_id.name),('type_pc_exam','=',sale_order_id.pc_exam_type.id)])
+                    event = self.env['event.event'].search([('id','=',exam.event_id.id),('name','=',exam.event_id.name),('type_pc_exam','=',sale_order_id.pc_exam_type.id)])
                     if event:
                         online_registration.append([0, 0, {'event_id': exam.event_id.name,
                                                            'partner_id': self.partner_id.id,

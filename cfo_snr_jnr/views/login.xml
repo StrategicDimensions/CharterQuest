@@ -3642,11 +3642,11 @@
                                 </div>
                             </div>
                             <div class="col-md-12 mt16">
-                                <table>
+                                <table id="submission_report" class="submission_report">
                                     <h3 style="background-color: red;">Submit CFO Report</h3>
                                     <b>Please upload a PDF and a DOC version of the report in the section provided below (1st check that it meets the specs defined in the case study document itself)</b>
                                     <div class="col-md-10 mt16">
-                                    <tbody >
+                                    <tbody>
                                         <tr style=" border-style: solid;">
                                             <t t-set="document_new_id" t-value="0"/>
                                             <td style=" border-right: solid;">
@@ -3825,7 +3825,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                      <h5><b>Videos of these will be required later, depending on if you get considered!</b></h5>
                                      <h5><b>Please upload and submit now</b></h5>
                                      <div class="col-md-10 mt16">
-                                    <tbody >
+                                    <tbody id="submission_report" class="submission_report">
                                         <tr style=" border-style: solid;">
                                             <t t-set="document_new_id" t-value="0"/>
                                             <td style=" border-right: solid;">
@@ -3987,7 +3987,7 @@ below ideally, starting with the team leader from the left to the right.</b>
 <!--                                                <a href='cfo_junior' class="btn btn-default btn-primary mb32 a-submit fa fa-home">HOME</a>-->
 <!--                                            </td>-->
                                             <td>
-                                                <button type="submit" class="btn btn-default btn-primary mb32" id="confirm_report" value="Confirm">SUBMIT CFO REPORT</button>
+                                                <button type="submit" class="btn btn-default btn-primary mb32 submit_cfo_report" id="confirm_report" value="Confirm">SUBMIT CFO REPORT</button>
                                             </td>
                                         </tr>
                                        </tbody>
