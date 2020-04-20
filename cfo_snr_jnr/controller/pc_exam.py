@@ -10,6 +10,10 @@ from datetime import date, datetime, timedelta
 import json, base64
 from odoo import http, SUPERUSER_ID, _
 from odoo.addons.payment_payu_com.controllers.main import PayuController
+import datetime
+from datetime import timedelta
+import pytz
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from dateutil.relativedelta import relativedelta
 
 _logger = logging.getLogger(__name__)
@@ -54,11 +58,11 @@ class PCExambooking(http.Controller):
             event_reschedule_ids = request.env['event.event'].sudo().search([('name','=',event_id.name),('type_pc_exam','=',event_id.type_pc_exam.name),('subject','=',event_id.subject.name),('qualification','=',event_id.qualification.name)])
         if sale_order_id and event_id:
 
-            today = datetime.now()
+            today = datetime.datetime.now()
             print("\n\n\n\n\n====today date===",today)
             # for order_line in sale_order_id.order_line:
             #     if order_line.event_id.date_begin:
-            event_date=datetime.strptime(event_id.date_begin, '%Y-%m-%d %H:%M:%S')
+            event_date=datetime.datetime.strptime(event_id.date_begin, '%Y-%m-%d %H:%M:%S')
             print("\n\n\n\n\n====event_date date===",event_date)
             time_diff = event_date - today
             reschedule_time = time_diff.total_seconds()
@@ -158,8 +162,8 @@ class PCExambooking(http.Controller):
         exam_date = post.get('date')
         # str_exam_date = date_converter.date_to_datetime(exam_date)
         last_date = str(exam_date) + ' 23:59:59'
-        str_exam_date = datetime.strptime(exam_date, '%m/%d/%Y')
-        end_exam_date = datetime.strptime(last_date, '%m/%d/%Y %H:%M:%S')
+        str_exam_date = datetime.datetime.strptime(exam_date, '%m/%d/%Y')
+        end_exam_date = datetime.datetime.strptime(last_date, '%m/%d/%Y %H:%M:%S')
 
         str_exam_date = str_exam_date.strftime("%m/%d/%Y %H:%M:%S")
         end_exam_date = end_exam_date.strftime("%m/%d/%Y %H:%M:%S")
@@ -171,11 +175,25 @@ class PCExambooking(http.Controller):
             for exam in exam_ids:
                 if exam.seats_available > 0 or exam.seat_availability == 'unlimited':
                     exam_dict = {}
-                    print("\n\n\n\n=====time=====",datetime.strptime(exam.date_begin,'%Y-%m-%d %H:%M:%S').time())
-                    print("\n\n\n\n=====time end=====", datetime.strptime(exam.date_end, '%Y-%m-%d %H:%M:%S').time())
+                    exam_date_begin = ''
+                    exam_date_end = ''
+                    print("\n\n\n\n=====time=====",datetime.datetime.strptime(exam.date_begin,'%Y-%m-%d %H:%M:%S').time())
+                    print("\n\n\n\n=====time end=====", datetime.datetime.strptime(exam.date_end, '%Y-%m-%d %H:%M:%S').time())
+                    tz = pytz.timezone(request.env.user.tz) if request.env.user.tz else pytz.utc
+                    start_date = datetime.datetime.strptime(exam.date_begin,
+                                                           DEFAULT_SERVER_DATETIME_FORMAT)
+                    start_date = (start_date + timedelta(hours=5, minutes=30)).strftime('%d-%m-%Y %H:%M:%S')
+                    exam_date_begin = start_date
+
+                    tz = pytz.timezone(request.env.user.tz) if request.env.user.tz else pytz.utc
+                    end_date = datetime.datetime.strptime(exam.date_end,
+                                                           DEFAULT_SERVER_DATETIME_FORMAT)
+                    end_date = (end_date + timedelta(hours=5, minutes=30)).strftime('%d-%m-%Y %H:%M:%S')
+                    exam_date_end = end_date
+
                     exam_dict['subject_name']=exam.name
-                    exam_dict['start_time']=exam.date_begin
-                    exam_dict['end_time']=exam.date_end
+                    exam_dict['start_time']=exam_date_begin
+                    exam_dict['end_time']=exam_date_end
                     exam_dict['price']= 0.0 if post.get('sale_order_id') else exam.price
                     exam_dict['seats_available']=exam.seats_available
                     exam_dict['exam_id']=exam.id
@@ -192,7 +210,7 @@ class PCExambooking(http.Controller):
         print("\n\n\n\n\n\===========exam pc_exam_subject_search post======", post)
         exam_type_id = request.env['pc.exam.type'].sudo().browse(int(post.get('exam_type')))
 
-        today_datetime = datetime.now() + timedelta(7)
+        today_datetime = datetime.datetime.now() + timedelta(7)
         tody_date_format = today_datetime.strftime('X%d-X%m-%Y').replace('X0', 'X').replace('X', '')
         if post.get('level'):
             exam_level_id = request.env['event.qual'].sudo().browse(int(post.get('level')))
@@ -204,12 +222,12 @@ class PCExambooking(http.Controller):
                         exam_subject_list.append(event.subject)
                     exam_date = event.date_end.split(" ")
                     print("\n\n\n\n\n===========exam_date types===", exam_date,exam_date[0])
-                    datetimeobject = datetime.strptime(exam_date[0], '%Y-%m-%d')
+                    datetimeobject = datetime.datetime.strptime(exam_date[0], '%Y-%m-%d')
                     newformat = datetimeobject.strftime('X%d-X%m-%Y').replace('X0', 'X').replace('X', '')
                     print("\n\n\n\n\n===========dates types===", type(tody_date_format), type(newformat),newformat)
 
-                    date1 = datetime.strptime(tody_date_format, "%d-%m-%Y")
-                    date2 = datetime.strptime(newformat, "%d-%m-%Y")
+                    date1 = datetime.datetime.strptime(tody_date_format, "%d-%m-%Y")
+                    date2 = datetime.datetime.strptime(newformat, "%d-%m-%Y")
                     if date1 <= date2:
                         exam_date_lst.append(newformat)
             print("\n\n\n\n\n===========exam_subject_list========",exam_subject_list)
@@ -261,7 +279,7 @@ class PCExambooking(http.Controller):
             exam_ids = request.env['event.event'].sudo().search([('name','=',event_id.name),('type_pc_exam.id', '=', post.get('exam_type')),('address_ids', 'in', int(post.get('campus'))),('subject','=',post.get('subject')),('qualification.id', '=', int(post.get("level")))])
 
         print("\n\n\n==========exam_id====", exam_ids)
-        today_datetime = datetime.now() + timedelta(7)
+        today_datetime = datetime.datetime.now() + timedelta(7)
         tody_date_format = today_datetime.strftime('X%d-X%m-%Y').replace('X0','X').replace('X','')
 
         print("\n\n\n\n\n\n===========today date======",tody_date_format)
@@ -270,11 +288,11 @@ class PCExambooking(http.Controller):
                 if exam.seats_available > 0:
                     exam_date = exam.date_end\
                         .split(" ")
-                    datetimeobject = datetime.strptime(exam_date[0], '%Y-%m-%d')
+                    datetimeobject = datetime.datetime.strptime(exam_date[0], '%Y-%m-%d')
                     newformat = datetimeobject.strftime('X%d-X%m-%Y').replace('X0','X').replace('X','')
 
-                    date1 = datetime.strptime(tody_date_format, "%d-%m-%Y")
-                    date2 = datetime.strptime(newformat, "%d-%m-%Y")
+                    date1 = datetime.datetime.strptime(tody_date_format, "%d-%m-%Y")
+                    date2 = datetime.datetime.strptime(newformat, "%d-%m-%Y")
                     if date1 <= date2:
                         exam_date_list.append(newformat)
             print("\n\n\n\n===========list========",exam_date_list)
@@ -409,6 +427,7 @@ class PCExambooking(http.Controller):
                     exam_list.append(int(exam_select[i]))
             product_id = request.env['product.product'].sudo().search([('name', '=', 'PC Exams')])
             for event in exam_list:
+
                 event_reschedule_id = request.env['event.event'].sudo().browse(int(event))
                 for order_line in sale_order_id.order_line:
                     if int(post.get('event_id')) == order_line.event_id.id:
@@ -589,7 +608,7 @@ class PCExambooking(http.Controller):
                                      'warehouse_id': warehouse_id.id,
                                      'amount_untaxed': post.get('total_price'),
                                      'pc_exam':True,
-                                     'date_order':datetime.now(),
+                                     'date_order':datetime.datetime.now(),
                                      'quote_type': 'PC Exam',
                                      # 'discount_type_ids': [(6, 0, [each for each in discount_id])],
                                      'order_line': order_line})
@@ -953,7 +972,7 @@ class PCExambooking(http.Controller):
                 #             if result and payu_response['successful'] and payu_response['TRANSACTION_STATUS'] in ['SUCCESSFUL', 'PARTIAL_PAYMENT', 'OVER_PAYMENT']:
                 if result and payu_response['TRANSACTION_STATUS'] in ['SUCCESSFUL', 'PARTIAL_PAYMENT', 'OVER_PAYMENT']:
                     transaction = tx.sudo().write(
-                        {'state': 'done', 'date_validate': datetime.now(),
+                        {'state': 'done', 'date_validate': datetime.datetime.now(),
                          'acquirer_reference': result['payUReference']})
                     email_act = sale_order_id.action_quotation_send()
                     action_confirm_res = sale_order_id.action_confirm()
