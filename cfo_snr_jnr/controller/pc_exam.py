@@ -409,7 +409,6 @@ class PCExambooking(http.Controller):
                     exam_list.append(int(exam_select[i]))
             product_id = request.env['product.product'].sudo().search([('name', '=', 'PC Exams')])
             for event in exam_list:
-
                 event_reschedule_id = request.env['event.event'].sudo().browse(int(event))
                 for order_line in sale_order_id.order_line:
                     if int(post.get('event_id')) == order_line.event_id.id:
