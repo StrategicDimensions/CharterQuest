@@ -60,10 +60,12 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         if (window.location.href.indexOf("/cfo_junior") != -1) {
             var deadline_date = $(document).find('input[name="cfo_report_deadline_date_time"]').val();
             var countDownDate = new Date(deadline_date).getTime();
-
+            console.log("\n\n\n\n===countdowndate===",countDownDate)
             var x = setInterval(function () {
                 var now = new Date().getTime();
+                console.log("\n\n\n\n===now===",now)
                 var distance = countDownDate - now;
+                console.log("\n\n\n\n===distance===",distance)
                 var days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -72,6 +74,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                 if (deadline_date) {
                     html = ''
                     html += days + "Days " + hours + ":" + minutes + ":" + seconds + "";
+                    console.log("\n\n\n\n===html===",html)
                     $('#remaining_time_time').html(html);
                     if (distance < 0) {
                         clearInterval(x);
