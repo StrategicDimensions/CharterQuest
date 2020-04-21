@@ -182,13 +182,15 @@ class PCExambooking(http.Controller):
                     tz = pytz.timezone(request.env.user.tz) if request.env.user.tz else pytz.utc
                     start_date = datetime.datetime.strptime(exam.date_begin,
                                                            DEFAULT_SERVER_DATETIME_FORMAT)
-                    start_date = (start_date + timedelta(hours=5, minutes=30)).strftime('%d-%m-%Y %H:%M:%S')
+                    start_date = (start_date + timedelta(hours=2)).strftime('%d-%m-%Y %H:%M:%S')
                     exam_date_begin = start_date
 
                     tz = pytz.timezone(request.env.user.tz) if request.env.user.tz else pytz.utc
                     end_date = datetime.datetime.strptime(exam.date_end,
                                                            DEFAULT_SERVER_DATETIME_FORMAT)
-                    end_date = (end_date + timedelta(hours=5, minutes=30)).strftime('%d-%m-%Y %H:%M:%S')
+                    print("\n\n\n\n======end_date======",end_date)
+                    end_date = (end_date + timedelta(hours=2)).strftime('%d-%m-%Y %H:%M:%S')
+                    print("\n\n\n\n======end_date====222==", end_date)
                     exam_date_end = end_date
 
                     exam_dict['subject_name']=exam.name

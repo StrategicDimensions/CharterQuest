@@ -879,7 +879,7 @@
                                         <tr class="exam_price_row">
                                         <td>#</td>
                                         <td><t t-esc="event_id.name"/></td>
-                                        <td><t t-esc="(datetime.datetime.strptime(event_id.date_begin, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=5, minutes=30)).strftime('%d-%m-%Y %H:%M:%S')"/></td>
+                                        <td><t t-esc="(datetime.datetime.strptime(event_id.date_begin, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=2)).strftime('%d-%m-%Y %H:%M:%S')"/></td>
                                         <td><span t-esc="event_id.company_id.currency_id.symbol"/><input t-attf-id="event_price_#{event_id.id}" name="event_price_#{event_id.id}" style="width: 80px !important; height: 30px; background: azure; border: azure;" class="event_price" type="number" disabled="true" t-att-value="event_id.price"/></td>
 <!--                                        <td>R<t t-esc="event_id.price"/></td>-->
                                         <td><span t-esc="event_id.company_id.currency_id.symbol"/><input t-attf-id="voucher_#{event_id.id}" name="voucher_#{event_id.id}" style="width: 80px !important; height: 30px; background: azure; border: azure;" class="voucher_price" type="number" disabled="true" value="0.0"/></td>
@@ -1496,9 +1496,9 @@
                                                 <t t-foreach="event_ids" t-as="each_event">
                                                     <t t-set="event_id"
                                                         t-value="request.env['event.event'].sudo().browse(int(each_event))"/>
-                                                    <t t-set="event_date_start" t-value="(datetime.datetime.strptime(event_id.date_begin, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=5, minutes=30)).strftime('%d-%m-%Y %H:%M:%S')"/>
+                                                    <t t-set="event_date_start" t-value="(datetime.datetime.strptime(event_id.date_begin, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=2)).strftime('%d-%m-%Y %H:%M:%S')"/>
                                                     <t t-set="date_start" t-value="event_date_start.split(' ')"/>
-                                                    <t t-set="event_date_end" t-value="(datetime.datetime.strptime(event_id.date_end, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=5, minutes=30)).strftime('%d-%m-%Y %H:%M:%S')"/>
+                                                    <t t-set="event_date_end" t-value="(datetime.datetime.strptime(event_id.date_end, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=2)).strftime('%d-%m-%Y %H:%M:%S')"/>
                                                     <t t-set="date_end" t-value="event_date_end.split(' ')"/>
                                                     <t t-set="time_str" t-value="date_start[1].split(':')"/>
                                                     <t t-set="time_send" t-value="date_end[1].split(':')"/>
