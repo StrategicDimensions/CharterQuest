@@ -1149,7 +1149,7 @@ class PCExambooking(http.Controller):
             'payment_type': 'inbound',
             'partner_type': 'customer',
             'invoice_ids': [(6, 0, invoice_id.ids)],
-            'payment_date': datetime.today(),
+            'payment_date': datetime.datetime.today(),
             'journal_id': journal_id.id,
             'payment_method_id': payment_methods[0].id
         })
