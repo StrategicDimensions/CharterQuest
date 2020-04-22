@@ -98,18 +98,26 @@ class CFOTeamSNR(models.Model):
         deadline_year = create.year if create.month < 4 else create.year + 1
 
         deadline_date = create.replace(day=30, month=4, year=deadline_year, hour=23, minute=59, second=59, microsecond=0)
+        print("\n\n\n\n========deadline_date===",deadline_date)
         if self._context.get('tz'):
           tz = pytz.timezone(self._context.get('tz'))
         else:
            tz = pytz.utc
+        print("\n\n\n\n========tz==222=", tz)
         c_time = datetime.now(tz)
-        hour_tz = int(str(c_time)[-5:][:2])
-        min_tz = int(str(c_time)[-5:][3:])
+        print("\n\n\n\n========c_time=", c_time)
+        # hour_tz = int(str(c_time)[-5:][:2])
+        # print("\n\n\n\n========hour_tz==222=", hour_tz)
+        # min_tz = int(str(c_time)[-5:][3:])
         sign = str(c_time)[-6][:1]
+        print("\n\n\n\n========sign=", sign)
         if sign == '-':
-            d1_date = (deadline_date + timedelta(hours=hour_tz +5, minutes=min_tz + 30)).strftime('%Y-%m-%d %H:%M:%S')
+            d1_date = (deadline_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+            print("\n\n\n\n========d1_date===", d1_date)
         if sign == '+':
-            d1_date = (deadline_date - timedelta(hours=5, minutes=30)).strftime('%Y-%m-%d %H:%M:%S')
+            d1_date = (deadline_date - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+        # d1_date = (deadline_date).strftime('%Y-%m-%d %H:%M:%S')
+        print("\n\n\n\n========d1_date==222=", d1_date)
         res.update({'cfo_report_deadline_date': d1_date if d1_date else False})
         return res
     
@@ -253,13 +261,13 @@ class CFOTeamJNR(models.Model):
         else:
            tz = pytz.utc
         c_time = datetime.now(tz)
-        hour_tz = int(str(c_time)[-5:][:2])
-        min_tz = int(str(c_time)[-5:][3:])
+        # hour_tz = int(str(c_time)[-5:][:2])
+        # min_tz = int(str(c_time)[-5:][3:])
         sign = str(c_time)[-6][:1]
         if sign == '-':
-            d1_date = (deadline_date + timedelta(hours=hour_tz - 2, minutes=min_tz)).strftime('%Y-%m-%d %H:%M:%S')
+            d1_date = (deadline_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
         if sign == '+':
-            d1_date = (deadline_date - timedelta(hours=hour_tz - 2, minutes=min_tz)).strftime('%Y-%m-%d %H:%M:%S')
+            d1_date = (deadline_date - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
         res.update({'cfo_report_deadline_date': d1_date if d1_date else False})
         return res
 

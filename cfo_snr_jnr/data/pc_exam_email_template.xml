@@ -68,7 +68,7 @@
                                 </td>
                                 <td style="width:4.0cm;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt" valign="top" width="151">
                                     <p class="MsoNormal">
-                                    <span style="font-family:&quot;Arial Narrow&quot;,&quot;sans-serif&quot;">${event['start_time']}</span></p>
+                                    <span style="font-size:11.0pt;font-family:&quot;Arial Narrow&quot;,&quot;sans-serif&quot;">${event['start_time']}</span></p>
                                 </td>
                                 <td style="width:4.0cm;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt" valign="top" width="151">
                                     <p class="MsoNormal">
@@ -214,7 +214,7 @@
                                 </td>
                                 <td style="width:4.0cm;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt" valign="top" width="151">
                                     <p class="MsoNormal">
-                                    <span style="font-family:&quot;Arial Narrow&quot;,&quot;sans-serif&quot;">${event['start_time']}</span></p>
+                                    <span style="font-size:11.0pt;font-family:&quot;Arial Narrow&quot;,&quot;sans-serif&quot;">${event['start_time']}</span></p>
                                 </td>
                                 <td style="width:4.0cm;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt" valign="top" width="151">
                                     <p class="MsoNormal">

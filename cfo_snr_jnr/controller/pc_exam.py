@@ -182,13 +182,15 @@ class PCExambooking(http.Controller):
                     tz = pytz.timezone(request.env.user.tz) if request.env.user.tz else pytz.utc
                     start_date = datetime.datetime.strptime(exam.date_begin,
                                                            DEFAULT_SERVER_DATETIME_FORMAT)
-                    start_date = (start_date + timedelta(hours=5, minutes=30)).strftime('%d-%m-%Y %H:%M:%S')
+                    start_date = (start_date + timedelta(hours=2)).strftime('%d-%m-%Y %H:%M:%S')
                     exam_date_begin = start_date
 
                     tz = pytz.timezone(request.env.user.tz) if request.env.user.tz else pytz.utc
                     end_date = datetime.datetime.strptime(exam.date_end,
                                                            DEFAULT_SERVER_DATETIME_FORMAT)
-                    end_date = (end_date + timedelta(hours=5, minutes=30)).strftime('%d-%m-%Y %H:%M:%S')
+                    print("\n\n\n\n======end_date======",end_date)
+                    end_date = (end_date + timedelta(hours=2)).strftime('%d-%m-%Y %H:%M:%S')
+                    print("\n\n\n\n======end_date====222==", end_date)
                     exam_date_end = end_date
 
                     exam_dict['subject_name']=exam.name
@@ -1147,7 +1149,7 @@ class PCExambooking(http.Controller):
             'payment_type': 'inbound',
             'partner_type': 'customer',
             'invoice_ids': [(6, 0, invoice_id.ids)],
-            'payment_date': datetime.today(),
+            'payment_date': datetime.datetime.today(),
             'journal_id': journal_id.id,
             'payment_method_id': payment_methods[0].id
         })
@@ -1358,10 +1360,18 @@ class PCExambooking(http.Controller):
                         link = config_para.value + "/reschedulePB/" + decoded_quote_name
                         sale_order_id.write({'debit_link': decoded_quote_name})
 
+                    start_date = datetime.datetime.strptime(exam.event_id.date_begin,
+                                                            DEFAULT_SERVER_DATETIME_FORMAT)
+                    exam_start_date = (start_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+
+                    end_date = datetime.datetime.strptime(exam.event_id.date_end,
+                                                          DEFAULT_SERVER_DATETIME_FORMAT)
+                    exam_end_date = (end_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+
                     exam.event_id.write({'online_registration_ids': online_registration})
                     exam_dict['subject_name'] = exam.event_id.name
-                    exam_dict['start_time'] = exam.event_id.date_begin
-                    exam_dict['end_time'] = exam.event_id.date_end
+                    exam_dict['start_time'] = exam_start_date
+                    exam_dict['end_time'] = exam_end_date
                     exam_dict['campus'] = sale_order_id.campus.name
                     link += '&%s' % (exam.event_id.id)
                     exam_dict['link'] = link
@@ -1471,9 +1481,16 @@ class PCExambooking(http.Controller):
                     link = config_para.value + "/reschedulePB/" + decoded_quote_name
                     sale_order_id.write({'debit_link': decoded_quote_name})
 
+                start_date = datetime.datetime.strptime(order_line.event_id.date_begin,
+                                                        DEFAULT_SERVER_DATETIME_FORMAT)
+                exam_start_date = (start_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+                end_date = datetime.datetime.strptime(order_line.event_id.date_end,
+                                                      DEFAULT_SERVER_DATETIME_FORMAT)
+                exam_end_date = (end_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+
                 exam_dict['subject_name'] = order_line.event_id.name
-                exam_dict['start_time'] = order_line.event_id.date_begin
-                exam_dict['end_time'] = order_line.event_id.date_end
+                exam_dict['start_time'] = exam_start_date
+                exam_dict['end_time'] = exam_end_date
                 exam_dict['campus'] = campus_name
                 link += '&%s' % (order_line.event_id.id)
                 exam_dict['link'] = link

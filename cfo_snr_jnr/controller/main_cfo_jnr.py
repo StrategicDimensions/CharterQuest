@@ -201,7 +201,7 @@ class CfoHomeJnr(web.Home):
             tz = pytz.timezone(request.env.user.tz) if request.env.user.tz else pytz.utc
             life_date = datetime.datetime.strptime(jnr_aspirants.aspirant_id.cfo_report_deadline_date,
                                                    DEFAULT_SERVER_DATETIME_FORMAT)
-            life_date = (life_date + timedelta(hours=5, minutes=30)).strftime('%Y-%m-%d %H:%M:%S')
+            life_date = (life_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
             values['date_of_report_submit'] = life_date
         
         if is_from_new_member:
