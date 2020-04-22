@@ -36,14 +36,21 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         if (window.location.href.indexOf("/cfo_senior") != -1) {
             var deadline_date = $(document).find('input[name="cfo_report_deadline_date_time"]').val();
             var countDownDate = new Date(deadline_date).getTime();
-
+            console.log("\n\n\n\n===countdowndate===",countDownDate)
             var x = setInterval(function () {
                 var now = new Date().getTime();
+                console.log("\n\n\n\n===now===",now)
                 var distance = countDownDate - now;
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                console.log("\n\n\n\n===distance===",distance)
+                var dateStr = new Date(distance);
+                console.log("\n\n\n\n====dats=====",dateStr.getDay(),dateStr.getHours(),dateStr.getMinutes(),dateStr.getSeconds())
+                var days = Math.floor(distance / (24*60*60*1000));
+                var daysms=distance % (24*60*60*1000);
+                var hours = dateStr.getHours();
+                var hoursms=distance % (60*60*1000);
+                var minutes = Math.floor((hoursms)/(60*1000));
+                var minutesms=distance % (60*1000);
+                var seconds = Math.floor((minutesms)/(1000));
 
                 if (deadline_date) {
                     html = ''
@@ -66,11 +73,19 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
                 console.log("\n\n\n\n===now===",now)
                 var distance = countDownDate - now;
                 console.log("\n\n\n\n===distance===",distance)
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
+                var dateStr = new Date(distance);
+                console.log("\n\n\n\n====dats=====",dateStr.getDay(),dateStr.getHours(),dateStr.getMinutes(),dateStr.getSeconds())
+//                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+//                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+//                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+//                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                var days = Math.floor(distance / (24*60*60*1000));
+                var daysms=distance % (24*60*60*1000);
+                var hours = dateStr.getHours();
+                var hoursms=distance % (60*60*1000);
+                var minutes = Math.floor((hoursms)/(60*1000));
+                var minutesms=distance % (60*1000);
+                var seconds = Math.floor((minutesms)/(1000));
                 if (deadline_date) {
                     html = ''
                     html += days + "Days " + hours + ":" + minutes + ":" + seconds + "";
