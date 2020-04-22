@@ -2,11 +2,13 @@ import hashlib
 
 from odoo import models,fields, api, _
 import re
-from datetime import datetime, timedelta, date
+import datetime
+from datetime import timedelta
 from dateutil.relativedelta import relativedelta
 import random
 import base64
 import urllib
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from odoo import netsvc
 # from openerp.report import render_report
 
@@ -90,11 +92,18 @@ class account_invoice(models.Model):
                         if config_para:
                             link = config_para.value + "/reschedulePB/" + decoded_quote_name
                             sale_order_id.write({'debit_link': decoded_quote_name})
-                        print("\n\n\n\n\n\n========link======",link,exam.event_id)
+                        print("\n\n\n\n\n\n========link======",link,exam.event_id,type(exam.event_id.date_begin))
+                        start_date = datetime.datetime.strptime(exam.event_id.date_begin,
+                                                               DEFAULT_SERVER_DATETIME_FORMAT)
+                        exam_start_date = (start_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+                        end_date = datetime.datetime.strptime(exam.event_id.date_end,
+                                                                DEFAULT_SERVER_DATETIME_FORMAT)
+                        exam_end_date = (end_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+                        print("\n\n\n\n\n\n========start_date======", start_date)
                         exam.event_id.write({'online_registration_ids': online_registration})
                         exam_dict['subject_name'] = exam.event_id.name
-                        exam_dict['start_time'] = exam.event_id.date_begin
-                        exam_dict['end_time'] = exam.event_id.date_end
+                        exam_dict['start_time'] = exam_start_date
+                        exam_dict['end_time'] = exam_end_date
                         exam_dict['campus'] = sale_order_id.campus.name
                         link += '&%s' % (exam.event_id.id)
                         exam_dict['link'] = link
