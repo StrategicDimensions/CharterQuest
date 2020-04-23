@@ -92,7 +92,7 @@ class AccountPayment(models.Model):
                      msg_id = mail_obj.create(mail_values)
                      msg_id.send()
                  if self.invoice_ids[0].payment_ids and not self.invoice_ids[0].pcexam_voucher_ids:
-                     voucher_lis = []
+                     # voucher_lis = []
                      mail_mail_obj = self.env['mail.mail']
                      mail_vals = {}
                      for invoice_line in self.invoice_ids[0].invoice_line_ids:
@@ -103,6 +103,7 @@ class AccountPayment(models.Model):
                              from_add = 'accounts@charterquest.co.za'
                              To = self.partner_id.email
                              document_ids = []
+                             voucher_lis = []
                              for i in range(0, invoice_line.product_id.no_vouchers):
                                  pcexam_voucher = {
                                      'voucher_no': 'CHQ' + str(random.randint(10000, 99999)),
