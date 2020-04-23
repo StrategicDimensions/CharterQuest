@@ -4,6 +4,7 @@ from odoo import models,fields, api, _
 import re
 import datetime
 from datetime import timedelta
+from datetime import date,datetime,timedelta
 from dateutil.relativedelta import relativedelta
 import random
 import base64
@@ -228,7 +229,8 @@ class account_invoice(models.Model):
                              'sale_id': self.sale_order_id.id,
                              'invoice_id': self.id
                             }
-                          debitorder_date = datetime.strptime(str(debitorder_date), "%Y-%m-%d").date()+relativedelta(months=1)
+                          if debitorder_date:
+                            debitorder_date = datetime.strptime(str(debitorder_date), "%Y-%m-%d").date()+relativedelta(months=1)
                           self.env['debit.order.details'].create(debit_order)
 
         voucher_body = ""
