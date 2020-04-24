@@ -37,7 +37,6 @@ class PCExambooking(http.Controller):
         print("\n\n\n\n\n============uuid============", uuid)
         event_ids = request.env['event.event'].sudo().search([])
         campus_ids = request.env['res.partner'].sudo().search([('is_campus','=', True)])
-
         for campus in campus_ids:
             for exam_campus in event_ids:
                 if campus in exam_campus.address_ids:

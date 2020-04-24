@@ -75,7 +75,7 @@ class AccountPayment(models.Model):
             if self.payment_difference > 0 and self.invoice_ids[0].affiliation == '1':
                  partial_template_id = email_obj.sudo().search([('name', '=', "Partly invoice payment")])
                  print("\n\n\n\n\n===================partly invoice=========",self.invoice_ids[0].payment_ids,self.invoice_ids[0].pcexam_voucher_ids)
-                 if partial_template_id:
+                 if partial_template_id and self.invoice_ids[0].additional_payment == False:
                      email_data = partial_template_id.generate_email(self.invoice_ids[0].id)
                      mail_values = {
                         'email_from': email_data.get('email_from'),
@@ -91,6 +91,7 @@ class AccountPayment(models.Model):
                         }
                      msg_id = mail_obj.create(mail_values)
                      msg_id.send()
+                     self.invoice_ids[0].sudo().write({'additional_payment': True})
                  if self.invoice_ids[0].payment_ids and not self.invoice_ids[0].pcexam_voucher_ids:
                      # voucher_lis = []
                      mail_mail_obj = self.env['mail.mail']

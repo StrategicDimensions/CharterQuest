@@ -48,6 +48,7 @@ class account_invoice(models.Model):
     redeemed_voucher_ids = fields.One2many('pcexams.voucher','redeemed_invoice',string='Redeemed Vouchers')
     is_recent = fields.Boolean("Is Recent")
     voucher_send = fields.Boolean("Voucher Send")
+    additional_payment = fields.Boolean("Additional Payment")
 
     @api.onchange('partner_id')
     def onchange_partner_id(self):
@@ -61,7 +62,8 @@ class account_invoice(models.Model):
             stud_no = partner_obj.student_number
             vals['student_number'] = stud_no
             vals.update({'is_recent': True,
-                         'voucher_send':False})
+                         'voucher_send':False,
+                         'additional_payment':False})
         return super(account_invoice, self).create(vals)
 
     @api.multi
