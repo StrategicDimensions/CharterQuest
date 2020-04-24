@@ -210,30 +210,30 @@ class account_invoice(models.Model):
                                 document_id = self.env['ir.attachment'].create(dic4)
                                 document_ids.append(document_id)
 
-
-            if self.payment_ids and not self.debit_order_entry:
-                  if self.sale_order_id and self.sale_order_id.debit_order_mandat:
-                     debitorder = self.sale_order_id.debit_order_mandat
-                     debitorder_date = debitorder.dbo_date
-                     for i in range(0,int(debitorder.months)):
-                          debit_order = {
-                             'partner_id': self.partner_id and self.partner_id.id,
-                             'dbo_amount': float(debitorder.dbo_amount)/int(debitorder.months),
-                             'course_fee': float(debitorder.course_fee)/int(debitorder.months),
-                             'interest': float(debitorder.interest)/int(debitorder.months),
-                             'dbo_date': debitorder_date,
-                             'acc_holder': debitorder.acc_holder,
-                             'bank_name': debitorder.bank_name and debitorder.bank_name.id,
-                             'bank_acc_no': debitorder.bank_acc_no,
-                             'bank_code': debitorder.bank_code,
-                             'bank_acc_type': debitorder.bank_type_id.name,
-                             'state':'pending',
-                             'sale_id': self.sale_order_id.id,
-                             'invoice_id': self.id
-                            }
-                          if debitorder_date:
-                            debitorder_date = datetime.strptime(str(debitorder_date), "%Y-%m-%d").date()+relativedelta(months=1)
-                          self.env['debit.order.details'].create(debit_order)
+            # if self.payment_ids and not self.debit_order_entry:
+            #     print("\n\n\n\n\n\n\n\=======dbfebfjsdbfjwebfkjewfjwebfj=============")
+            #     if self.sale_order_id and self.sale_order_id.debit_order_mandat:
+            #         debitorder = self.sale_order_id.debit_order_mandat
+            #         debitorder_date = debitorder.dbo_date
+            #         for i in range(0, int(debitorder.months)):
+            #             debit_order = {
+            #                 'partner_id': self.partner_id and self.partner_id.id,
+            #                 'dbo_amount': float(debitorder.dbo_amount) / int(debitorder.months),
+            #                 'course_fee': float(debitorder.course_fee) / int(debitorder.months),
+            #                 'interest': float(debitorder.interest) / int(debitorder.months),
+            #                 'dbo_date': debitorder_date,
+            #                 'acc_holder': debitorder.acc_holder,
+            #                 'bank_name': debitorder.bank_name and debitorder.bank_name.id,
+            #                 'bank_acc_no': debitorder.bank_acc_no,
+            #                 'bank_code': debitorder.bank_code,
+            #                 'bank_acc_type': debitorder.bank_type_id.name,
+            #                 'state': 'pending',
+            #                 'sale_id': self.sale_order_id.id,
+            #                 'invoice_id': self.id
+            #             }
+            #             debitorder_date = datetime.strptime(str(debitorder_date), "%Y-%m-%d").date() + relativedelta(
+            #                 months=1)
+            #             self.env['debit.order.details'].create(debit_order)
 
         voucher_body = ""
         if self.pcexam_voucher_ids and vals.get('state') == 'paid' and self.voucher_send == False:

@@ -3199,7 +3199,9 @@ class EnrolmentProcess(http.Controller):
                 dbo_date = date(year=datetime.now().year, month=datetime.now().month + 1, day=date_day)
                 debit_order_mandat_id = sale_order_id.debit_order_mandat[-1]
                 debit_intrest = debit_order_mandat_id.interest / int(sale_order_id.months)
+                print("\n\n\n\n\n\n===========sale_order_id.months============",sale_order_id.months)
                 for i in range(sale_order_id.months):
+                    print("\n\n\n\n\n\n===========sale_order_id.months============", sale_order_id.months,i)
                     res = debit_order_obj.create({'partner_id': sale_order_id.partner_id.id,
                                                   'student_number': sale_order_id.partner_id.student_number,
                                                   'dbo_amount': sale_order_id.monthly_amount,
