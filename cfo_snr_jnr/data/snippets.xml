@@ -14,7 +14,7 @@
                     </div>
                     <div class="row menu-with-icon">
                     </div>
-                    <div class="row menu-content" style="width: 80%;float: left;margin:0px;">
+                    <div class="row menu-content" style="width: 80% !important;float: left;margin:0px;">
                     </div>
                 </div>
             </div>
