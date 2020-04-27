@@ -99,18 +99,17 @@ class CFOTeamSNR(models.Model):
 
         deadline_date = create.replace(day=30, month=4, year=deadline_year, hour=23, minute=59, second=59, microsecond=0)
         print("\n\n\n\n========deadline_date===",deadline_date)
-        if self._context.get('tz'):
-          tz = pytz.timezone(self._context.get('tz'))
-        else:
-           tz = pytz.utc
-        print("\n\n\n\n========tz==222=", tz)
+        # if self._context.get('tz'):
+        #   tz = pytz.timezone(self._context.get('tz'))
+        #   print("\n\n\n\n========tz==11=", tz)
+        # else:
+        #    tz = pytz.utc
+        tz = pytz.timezone('Africa/Johannesburg')
         c_time = datetime.now(tz)
-        print("\n\n\n\n========c_time=", c_time)
         # hour_tz = int(str(c_time)[-5:][:2])
         # print("\n\n\n\n========hour_tz==222=", hour_tz)
         # min_tz = int(str(c_time)[-5:][3:])
         sign = str(c_time)[-6][:1]
-        print("\n\n\n\n========sign=", sign)
         if sign == '-':
             d1_date = (deadline_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
             print("\n\n\n\n========d1_date===", d1_date)
@@ -256,10 +255,13 @@ class CFOTeamJNR(models.Model):
         create = datetime.strptime(res.create_date, '%Y-%m-%d %H:%M:%S')
         deadline_year = create.year if create.month < 4 else create.year + 1
         deadline_date = create.replace(day=30, month=4, year=deadline_year, hour=21, minute=59, second=59, microsecond=0)
-        if self._context.get('tz'):
-          tz = pytz.timezone(self._context.get('tz'))
-        else:
-           tz = pytz.utc
+        # if self._context.get('tz'):
+        #   tz = pytz.timezone(self._context.get('tz'))
+        # else:
+        #    tz = pytz.utc
+        # print("\n\n\n\n\n=============cfo report deadline dte====",tz)
+        # c_time = datetime.now(tz)
+        tz = pytz.timezone('Africa/Johannesburg')
         c_time = datetime.now(tz)
         # hour_tz = int(str(c_time)[-5:][:2])
         # min_tz = int(str(c_time)[-5:][3:])
