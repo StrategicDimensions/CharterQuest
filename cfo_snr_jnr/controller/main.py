@@ -2575,6 +2575,7 @@ class CfoHome(web.Home):
 
     @http.route('/submit_cfo_report_data', type="json", auth="public", website=True)
     def submit_cfo_report_data(self, **post):
+        print("\n\n\n\n\=====post for submit report==========",post)
         aspirant_id = request.env['cfo.snr.aspirants'].sudo().search([('id', '=', post.get('aspirant_id'))])
         team_id = request.env['cfo.team.snr'].sudo().search([('id', '=', post.get('team_id'))])
         list_without_bio_member = []
