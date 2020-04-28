@@ -96,10 +96,10 @@ class account_invoice(models.Model):
                             link = config_para.value + "/reschedulePB/" + decoded_quote_name
                             sale_order_id.write({'debit_link': decoded_quote_name})
                         print("\n\n\n\n\n\n========link======",link,exam.event_id,type(exam.event_id.date_begin))
-                        start_date = datetime.datetime.strptime(exam.event_id.date_begin,
+                        start_date = datetime.strptime(exam.event_id.date_begin,
                                                                DEFAULT_SERVER_DATETIME_FORMAT)
                         exam_start_date = (start_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
-                        end_date = datetime.datetime.strptime(exam.event_id.date_end,
+                        end_date = datetime.strptime(exam.event_id.date_end,
                                                                 DEFAULT_SERVER_DATETIME_FORMAT)
                         exam_end_date = (end_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
                         print("\n\n\n\n\n\n========start_date======", start_date)
