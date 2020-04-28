@@ -780,7 +780,7 @@
     <template id="header_template" name="Header">
         <section class="cfo_snr_jnr_menu my_class" data-menu-title="new" data-menu-url="new"
                  data-menu-icon="fa-angle-right">
-            <div class="container" style="margin: 0px;padding: 0px;">
+            <div class="container" style="margin-bottom: 400px !important;margin: 0px;padding: 0px;">
                 <div class="row" style="margin-left:0px;">
                     <a class="onlymobilebtn">
                         <img src="/cfo_snr_jnr/static/src/img/blocks/drop_menu3.png" alt="menu-bar" width="45"
