@@ -109,15 +109,15 @@ class CFOTeamSNR(models.Model):
         # hour_tz = int(str(c_time)[-5:][:2])
         # print("\n\n\n\n========hour_tz==222=", hour_tz)
         # min_tz = int(str(c_time)[-5:][3:])
-        sign = str(c_time)[-6][:1]
-        if sign == '-':
-            d1_date = (deadline_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
-            print("\n\n\n\n========d1_date===", d1_date)
-        if sign == '+':
-            d1_date = (deadline_date - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+        # sign = str(c_time)[-6][:1]
+        # if sign == '-':
+        #     d1_date = (deadline_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+        #     print("\n\n\n\n========d1_date===", d1_date)
+        # if sign == '+':
+        #     d1_date = (deadline_date - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
         # d1_date = (deadline_date).strftime('%Y-%m-%d %H:%M:%S')
-        print("\n\n\n\n========d1_date==222=", d1_date)
-        res.update({'cfo_report_deadline_date': d1_date if d1_date else False})
+        print("\n\n\n\n========d1_date==222=", deadline_date)
+        res.update({'cfo_report_deadline_date': deadline_date if deadline_date else False})
         return res
     
     @api.model
@@ -265,12 +265,12 @@ class CFOTeamJNR(models.Model):
         c_time = datetime.now(tz)
         # hour_tz = int(str(c_time)[-5:][:2])
         # min_tz = int(str(c_time)[-5:][3:])
-        sign = str(c_time)[-6][:1]
-        if sign == '-':
-            d1_date = (deadline_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
-        if sign == '+':
-            d1_date = (deadline_date - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
-        res.update({'cfo_report_deadline_date': d1_date if d1_date else False})
+        # sign = str(c_time)[-6][:1]
+        # if sign == '-':
+        #     d1_date = (deadline_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+        # if sign == '+':
+        #     d1_date = (deadline_date - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+        res.update({'cfo_report_deadline_date': deadline_date if deadline_date else False})
         return res
 
     @api.model
