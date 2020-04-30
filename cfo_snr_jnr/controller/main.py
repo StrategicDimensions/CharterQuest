@@ -1262,7 +1262,7 @@ class CfoHome(web.Home):
                             team_id=team_snr_id.id,
                             team_name=team_snr_id.name,
                             cfo_report_deadline_date=cfo_report_deadline_date,
-                            # email_to=member_id.related_user_id.email_1,
+                            email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
                 return True
             if team_jnr_id.team_type == 'CFO Aspirant':
@@ -1277,7 +1277,7 @@ class CfoHome(web.Home):
                             team_id=team_jnr_id.id,
                             team_name=team_jnr_id.name,
                             cfo_report_deadline_date=cfo_report_deadline_date,
-                            # email_to=member_id.related_user_id.email_1,
+                            email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
                 return True
             if team_snr_id.team_type == 'Academic Institution':
@@ -1292,7 +1292,7 @@ class CfoHome(web.Home):
                             team_id=team_snr_id.id,
                             team_name=team_snr_id.name,
                             cfo_report_deadline_date=cfo_report_deadline_date,
-                            # email_to=member_id.related_user_aspirant_id.email_1,
+                            email_to=member_id.related_user_aspirant_id.email_1,
                         ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
 
                     template_acadamic = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr_acadamic',
@@ -1303,7 +1303,7 @@ class CfoHome(web.Home):
                             team_id=team_snr_id.id,
                             team_name=team_snr_id.name,
                             cfo_report_deadline_date=cfo_report_deadline_date,
-                            # email_to=member_id.related_user_id.email_1,
+                            email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
                 return True
 
@@ -1332,7 +1332,7 @@ class CfoHome(web.Home):
                             team_id=team_jnr_id.id,
                             team_name=team_jnr_id.name,
                             cfo_report_deadline_date=cfo_report_deadline_date,
-                            # email_to=member_id.related_user_aspirant_id.email_1,
+                            email_to=member_id.related_user_aspirant_id.email_1,
                         ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
 
                     template_highschool = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_jnr_acadamic',raise_if_not_found=False)
@@ -1341,7 +1341,7 @@ class CfoHome(web.Home):
                             team_id=team_jnr_id.id,
                             team_name=team_jnr_id.name,
                             cfo_report_deadline_date=cfo_report_deadline_date,
-                            # email_to=member_id.related_user_id.email_1,
+                            email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
                 return True
 
@@ -1355,7 +1355,7 @@ class CfoHome(web.Home):
                             team_id=team_snr_id.id,
                             team_name=team_snr_id.name,
                             cfo_report_deadline_date=cfo_report_deadline_date,
-                            # email_to=member_id.related_user_aspirant_id.email_1,
+                            email_to=member_id.related_user_aspirant_id.email_1,
                         ).send_mail(member_id.related_user_aspirant_id.id, force_send=True)
 
                     template_employer = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr_employer',
@@ -1366,7 +1366,7 @@ class CfoHome(web.Home):
                             team_id=team_snr_id.id,
                             team_name=team_snr_id.name,
                             cfo_report_deadline_date=cfo_report_deadline_date,
-                            # email_to=member_id.related_user_id.email_1,
+                            email_to=member_id.related_user_id.email_1,
                         ).send_mail(member_id.related_user_id.id, force_send=True)
                 return True
 
