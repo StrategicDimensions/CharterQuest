@@ -85,7 +85,7 @@
 	                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 	                                  <input type="hidden" t-att-value="jnr_aspirants.id" name="aspirant_id"/>
 	                                  <input type="hidden" t-att-value="jnr_aspirants.aspirant_id.id" name="team_id"/>
-	                                  <button type="button" id="submit_cfo_jnr_report" class="btn btn-primary submit_cfo_jnr_report"  style="width: 60%;background-color: firebrick;"><span style="color:white;">Submit Report</span><i style="color:white;" class="fa fa-cloud-upload"></i></button>
+	                                  <button type="button" id="submit_cfo_jnr_report" class="btn btn-primary submit_cfo_jnr_report"  style="width: 80%;background-color: firebrick;"><span style="color:white;">Submit Report</span><i style="color:white;" class="fa fa-cloud-upload"></i></button>
 	                              <div class="loader_report_jnr_school" style="display:none;
                                                                 position: fixed;
                                                                 width: 100%;
@@ -1118,7 +1118,7 @@
                             <button class="btn btn-primary" type="submit">Create Team</button>
                         </div>
                         <div class="col-md-12" t-if="aspirant_team">
-                            <table class="table table-bordered" width="100%">
+                            <table class="table table-bordered table_exam" width="100%">
                                 <tr>
                                     <th style="width: 17%;" t-if="jnr_aspirants.team_admin or jnr_aspirants.team_leader"></th>
                                     <th style="width: 10%;">Team Name</th>
@@ -1158,8 +1158,8 @@
                                                  <table style="width: 100%;margin: 2px 0;">
                                                  <tbody>
                                                     <tr style="width: 100%;">
-                                                        <td style="width: 50%;border: inset;border-color: indianred;margin: 0;float: left;"><b><t t-esc="member_id.related_user_id.name"/></b></td>
-                                                        <td style="width: 49%;border: inset;border-color: indianred;margin-left: 2px;float: left;"><b><t t-esc="member_id.user_type"/></b></td>
+                                                        <td style="width: 49%;border: inset;border-color: indianred;margin: 0;float: left;"><b><t t-esc="member_id.related_user_id.name"/></b></td>
+                                                        <td style="width: 48%;border: inset;border-color: indianred;margin-left: 2px;float: left;"><b><t t-esc="member_id.user_type"/></b></td>
                                                     </tr>
                                                 </tbody>
                                                 </table>
@@ -1167,10 +1167,10 @@
                                               <table style="width: 100%;margin: 2px 0;">
                                                  <tbody>
                                                     <tr style="width: 100%;">
-                                                       <td style="width: 49%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.mentor_id"><b><t t-esc="aspirant_team.mentor_id.partner_id.name" /></b></td>
-                                                       <td style="width: 49%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.mentor_id"><b>Mentor</b></td>
-                                                        <td style="width: 49%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.brand_amb_id"><b><t t-esc="aspirant_team.brand_amb_id.partner_id.name"/></b></td>
-                                                        <td style="width: 49%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.brand_amb_id"><b>Brand Ambassador</b></td></tr>
+                                                       <td style="width: 47%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.mentor_id"><b><t t-esc="aspirant_team.mentor_id.partner_id.name" /></b></td>
+                                                       <td style="width: 48%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.mentor_id"><b>Mentor</b></td>
+                                                        <td style="width: 47%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.brand_amb_id"><b><t t-esc="aspirant_team.brand_amb_id.partner_id.name"/></b></td>
+                                                        <td style="width: 48%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.brand_amb_id"><b>Brand Ambassador</b></td></tr>
                                                 </tbody>
                                                 </table>
                                         </t>
@@ -1180,15 +1180,15 @@
                                                   <table style="width: 100%;margin: 2px 0;">
                                                    <tbody>
                                                        <t t-if="member_id.user_type=='Admin'">
-                                                           <tr>
-                                                              <td style="width: 50%;border: inset;border-color: indianred;margin: 0;float: left;"><b><t t-esc="member_id.related_user_id.name"/></b></td>
-                                                              <td style="width: 49%;border: inset;border-color: indianred;margin-left: 2px;float: left;"><b><t t-esc="member_id.user_type"/></b></td>
+                                                           <tr style="width: 100%;">
+                                                              <td style="width: 49%;border: inset;border-color: indianred;margin: 0;float: left;"><b><t t-esc="member_id.related_user_id.name"/></b></td>
+                                                              <td style="width: 48%;border: inset;border-color: indianred;margin-left: 2px;float: left;"><b><t t-esc="member_id.user_type"/></b></td>
                                                            </tr>
                                                        </t>
                                                        <t t-if="member_id.user_type!='Admin'">
                                                        <tr style="width: 100%;">
-                                                           <td style="width: 50%;border: inset;border-color: indianred;margin: 0;float: left;"><b><t t-esc="member_id.related_user_aspirant_id.name"/></b></td>
-                                                           <td style="width: 49%;border: inset;border-color: indianred;margin-left: 2px;float: left;"><b><t t-esc="member_id.user_type"/></b></td>
+                                                           <td style="width: 49%;border: inset;border-color: indianred;margin: 0;float: left;"><b><t t-esc="member_id.related_user_aspirant_id.name"/></b></td>
+                                                           <td style="width: 48%;border: inset;border-color: indianred;margin-left: 2px;float: left;"><b><t t-esc="member_id.user_type"/></b></td>
                                                        </tr>
                                                        </t>
                                                    </tbody>
@@ -1197,10 +1197,10 @@
                                                 <table style="width: 100%;margin: 2px 0;">
                                                 <tbody>
                                                    <tr style="width: 100%;">
-                                                      <td style="width: 49%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.mentor_id"><b><t t-esc="aspirant_team.mentor_id.partner_id.name" /></b></td>
-                                                      <td style="width: 49%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.mentor_id"><b>Mentor</b></td>
-                                                      <td style="width: 49%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.brand_amb_id"><b><t t-esc="aspirant_team.brand_amb_id.partner_id.name"/></b></td>
-                                                      <td style="width: 49%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.brand_amb_id"><b>Brand Ambassador</b></td>
+                                                      <td style="width: 47%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.mentor_id"><b><t t-esc="aspirant_team.mentor_id.partner_id.name" /></b></td>
+                                                      <td style="width: 48%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.mentor_id"><b>Mentor</b></td>
+                                                      <td style="width: 47%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.brand_amb_id"><b><t t-esc="aspirant_team.brand_amb_id.partner_id.name"/></b></td>
+                                                      <td style="width: 48%;border: inset;border-color: indianred;margin-left: 2px;float: left;" t-if="aspirant_team.brand_amb_id"><b>Brand Ambassador</b></td>
                                                    </tr>
                                                </tbody>
                                                </table>
@@ -1248,7 +1248,7 @@
                                     <td style="width: 17%;padding;" t-attf-style="height:#{height}px;" t-if="jnr_aspirants.team_admin or jnr_aspirants.team_leader">
                                         <div style="display: flex;height: 62px;justify-content: center;align-items: center;">
                                         <input type="hidden" t-att-value="aspirant_team.id" name="team_id"/>
-                                        <button class="btn send_report_reminder" t-att-id="aspirant_team.id" type="submit" style="width: 100%;background-color: forestgreen;"><span style="color:white;">Send Report submission Reminder&#9993;</span></button>
+                                        <button class="btn send_report_reminder report_remainder_set1 widthset_btn widthset_btn1" t-att-id="aspirant_team.id" type="submit" style="width:100%;white-space:inherit;background-color: forestgreen;font-size:11px;margin:0;"><span style="color:white;">Send Report submission Reminder&#9993;</span></button>
                                         </div>
                                         <div id="download_report_id" class="modal fade" role="dialog">
                                           <div class="modal-dialog">
@@ -2499,7 +2499,7 @@
                                                 <t t-set="height2" t-value="int(height_count) * 20"/>
                                                 </t>
 <!--                                                <td class="table_setheight_part2" style="width: 23%;padding;" t-attf-style="height: 78px;-->
-                                                <td style="width: 23%;padding;" t-attf-style="height: 78px;
+                                                <td style="width: 23%;padding;" t-attf-style="height: 49px;
                                                 align-items: center;justify-content: center;" t-if="jnr_high_school.team_admin or jnr_high_school.team_leader">
                                                     <input type="hidden" t-att-value="high_school_team.id"
                                                            name="high_school_team" t-att-id="high_school_team.id"/>
@@ -2589,9 +2589,7 @@
                                                 </div>
                                                 <td style="width: 17%;padding;" t-attf-style="height:#{height}px;" t-if="jnr_high_school.team_admin or jnr_high_school.team_leader">
                                                     <div style="display: flex;height: 62px;justify-content: center;align-items: center;">
-                                                    <button class="btn send_report_reminder" t-att-id="high_school_team.id" type="submit" style="width: 100%;background-color: forestgreen;
-                                                        white-space: inherit;
-                                                        font-size: 11px;"><span style="color:white;">Send Report submission Reminder&#9993;</span></button>
+                                                    <button class="btn send_report_reminder" t-att-id="high_school_team.id" type="submit" style="width:100%;white-space:inherit;background-color: forestgreen;font-size:11px;margin:0;"><span style="color:white;">Send Report submission Reminder&#9993;</span></button>
                                                     </div>
                                                     <div id="download_report_id" class="modal fade" role="dialog">
                                                       <div class="modal-dialog">
@@ -3458,7 +3456,7 @@
                                         <t t-foreach="jnr_mentors.team_ids" t-as="team">
                                            <tr class="table_responsive_set2">
                                                <input type="hidden" t-att-value="team.id" name="team_id"/>
-                                               <td class="table_setheight_part2" style="height:32px;">
+                                               <td class="table_setheight_part2" style="width: 100px !important;height:32px;">
                                                 <t t-esc="team.name"/>
                                                </td>
                                               <td class="team_heightset_teammember">
@@ -3529,8 +3527,7 @@
                                             </td>
                                             <td style="width: 17%;padding;" t-attf-style="height:160px;padding: 10px 0px;">
                                                 <div class="margin_btn" style="display: flex;height: 41px;justify-content: center;align-items: center;">
-                                                 <button class="btn send_report_reminder"  t-att-id="team.id" type="submit" style="width: 100%;white-space: inherit;background-color: forestgreen;
-    font-size: 11px;"><span style="color:white;">Send Report submission Reminder&#9993;</span></button>
+                                                 <button class="btn send_report_reminder"  t-att-id="team.id" type="submit" style="margin-top: 20px !important;width:100%;white-space:inherit;background-color: forestgreen;font-size:11px;margin:0;"><span style="color:white;">Send Report submission Reminder&#9993;</span></button>
                                                 </div>
                                                <div id="download_report_id" class="modal fade margin_btn" role="dialog">
                                                       <div class="modal-dialog">
@@ -3553,10 +3550,10 @@
                                                     <div>
                                                         <t t-set="attachment_id" t-value="request.env['ir.attachment'].sudo().search([('jnr_team_id','=',team.id),('mimetype', '=', 'application/pdf')],order = 'id desc', limit = 1)"/>
                                                           <t t-if="attachment_id">                                             
-                                                             <a class="btn" t-attf-href="/web/content/#{attachment_id.id}?download=true" style="width: 100%;background-color: firebrick;"><span style="color:white;font-size:11px;">Downalod Report</span><i style="color:white;" class="fa fa-cloud-download"></i></a>
+                                                             <a class="btn" t-attf-href="/web/content/#{attachment_id.id}?download=true" style="margin-top: 30px;width: 100%;background-color: firebrick;"><span style="color:white;font-size:11px;">Downalod Report</span><i style="color:white;" class="fa fa-cloud-download"></i></a>
                                                           </t>
                                                           <t t-if="not attachment_id">
-                                                             <button type="button" class="btn" data-toggle="modal" data-target="#download_report_id" style="width: 100%;background-color: firebrick;"><span style="color:white;font-size:11px;">Downalod Report</span><i style="color:white;" class="fa fa-cloud-download"></i></button>
+                                                             <button type="button" class="btn" data-toggle="modal" data-target="#download_report_id" style="margin-top: 30px;width: 100%;background-color: firebrick;"><span style="color:white;font-size:11px;">Downalod Report</span><i style="color:white;" class="fa fa-cloud-download"></i></button>
                                                           </t>    
                                                     </div>
                                             </td>

@@ -1234,6 +1234,8 @@ class CfoHome(web.Home):
             team_jnr_id= request.env['cfo.team.jnr'].sudo().search([('id', '=', post.get('team_id'))])
             # template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr',
             #                            raise_if_not_found=False)
+
+            print("\n\n\n\n\n\n\n=================================send reminder mail=========",team_snr_id,team_jnr_id)
             if team_snr_id:
                 tz = pytz.timezone(request.env.user.tz) if request.env.user.tz else pytz.utc
                 life_date = datetime.datetime.strptime(team_snr_id.cfo_report_deadline_date,
@@ -1266,6 +1268,7 @@ class CfoHome(web.Home):
                                                raise_if_not_found=False)
                     # if template and member_id.user_type == 'Admin':
                     if template and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader') or (member_id.user_type == 'Member')):
+                        print("\n\n\n\n\n\n=========member_id.related_user_id.name=====",member_id.related_user_id.name)
                         template.sudo().with_context(
                             team_id=team_jnr_id.id,
                             team_name=team_jnr_id.name,
@@ -1316,6 +1319,7 @@ class CfoHome(web.Home):
                     template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_jnr',
                                                raise_if_not_found=False)
                     if template and member_id.related_user_aspirant_id and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader') or (member_id.user_type == 'Member')):
+                        print("\n\n\n\n\n\n=========member_id.related_user_aspirant_id.id=====",member_id.related_user_aspirant_id.name)
                         template.sudo().with_context(
                             team_id=team_jnr_id.id,
                             team_name=team_jnr_id.name,

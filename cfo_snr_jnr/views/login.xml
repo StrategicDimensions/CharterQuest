@@ -869,7 +869,7 @@
                                                      style="display: flex;height: 41px;justify-content: center;align-items: center;">
                                                     <button class="btn send_report_reminder report_remainder_set1 widthset_btn widthset_btn1"
                                                             t-att-id="team.id" type="submit"
-                                                            style="white-space: inherit;font-size:11px;width: 100%;background-color: forestgreen;margin:0;">
+                                                            style="width:100%;white-space:inherit;background-color: forestgreen;font-size:11px;margin:0;">
                                                         <span style="color:white;">Send Report submission Reminder&#9993;</span>
                                                     </button>
                                                 </div>
@@ -2532,7 +2532,7 @@
                                    name="cfo_report_deadline_date_time"/>
                                             <button class="btn send_report_reminder report_remainder_set1 widthset_btn widthset_btn1"
                                                     t-att-id="aspirant_team.id" type="submit"
-                                                    style="width:100%;white-space:inherit;background-color: forestgreen;font-size:11px;margin:0;">
+                                                    style="margin-top: 40px !important;width:100%;white-space:inherit;background-color: forestgreen;font-size:11px;margin:0;">
                                                 <span style="color:white;">Send Report submission Reminder&#9993;</span>
                                             </button>
                                         </div>
@@ -2571,7 +2571,7 @@
                                             <t t-if="not attachment_id">
                                                 <button type="button" class="btn report_remainder_set2"
                                                         data-toggle="modal" data-target="#download_report_id"
-                                                        style="width: 100%;background-color: #f12200;font-size:11px;">
+                                                        style="margin-top: 40px !important;width: 100%;background-color: #f12200;font-size:11px;">
                                                     <span style="color:white;">Downalod Report</span>
                                                     <i style="color:white;" class="fa fa-cloud-download"></i>
                                                 </button>
@@ -5154,7 +5154,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                                     <div style="display: flex;height: 62px;justify-content: center;align-items: center;">
                                                         <button class="btn send_report_reminder report_remainder_set1 widthset_btn widthset_btn1"
                                                                 t-att-id="acadamic_team.id" type="submit"
-                                                                style="margin:0;width: 100%;background-color: forestgreen;font-size:11px;white-space: inherit;">
+                                                                style="width:100%;white-space:inherit;background-color: forestgreen;font-size:11px;margin:0;">
                                                             <span style="color:white;">Send Report submission Reminder&#9993;</span>
                                                         </button>
                                                     </div>
@@ -6695,8 +6695,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                                     t-if="snr_employers.team_admin or snr_employers.team_leader">
                                                     <div style="display: flex;height: 62px;justify-content: center;align-items: center;">
                                                         <button class="btn send_report_reminder"
-                                                                t-att-id="employers_team.id" type="submit" style="margin:0;width: 100%;background-color: forestgreen;    font-size: 11px;
-    white-space: inherit;">
+                                                                t-att-id="employers_team.id" type="submit" style="width:100%;white-space:inherit;background-color: forestgreen;font-size:11px;margin:0;">
                                                             <span style="color:white;">Send Report submission Reminder&#9993;</span>
                                                         </button>
                                                     </div>
