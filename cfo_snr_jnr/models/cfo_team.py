@@ -114,10 +114,10 @@ class CFOTeamSNR(models.Model):
         #     d1_date = (deadline_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
         #     print("\n\n\n\n========d1_date===", d1_date)
         # if sign == '+':
-        #     d1_date = (deadline_date - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+        d1_date = (deadline_date - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
         # d1_date = (deadline_date).strftime('%Y-%m-%d %H:%M:%S')
-        print("\n\n\n\n========d1_date==222=", deadline_date)
-        res.update({'cfo_report_deadline_date': deadline_date if deadline_date else False})
+        print("\n\n\n\n========d1_date==222=11snr", d1_date)
+        res.update({'cfo_report_deadline_date': d1_date if d1_date else False})
         return res
     
     @api.model

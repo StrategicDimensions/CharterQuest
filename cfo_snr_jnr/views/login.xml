@@ -901,7 +901,7 @@
                                                         <a class="btn report_remainder_set1"
                                                            t-attf-href="/web/content/#{attachment_id.id}?download=true"
                                                            style="width: 100%;background-color: #f12200;">
-                                                            <span style="color:white;">Downalod Report</span>
+                                                            <span style="color:white;">DOWNLOAD REPORT</span>
                                                             <i style="color:white;" class="fa fa-cloud-download"></i>
                                                         </a>
                                                     </t>
@@ -909,7 +909,7 @@
                                                         <button type="button" class="btn report_remainder_set1"
                                                                 data-toggle="modal" data-target="#download_report_id"
                                                                 style="font-size:11px;background-color: #f12200;">
-                                                            <span style="color:white;">Downalod Report</span>
+                                                            <span style="color:white;">DOWNLOAD REPORT</span>
                                                             <i style="color:white;" class="fa fa-cloud-download"></i>
                                                         </button>
                                                     </t>
@@ -2564,7 +2564,7 @@
                                                 <a class="btn"
                                                    t-attf-href="/web/content/#{attachment_id.id}?download=true"
                                                    style="width: 100%;background-color: #f12200;">
-                                                    <span style="color:white;">Downalod Report</span>
+                                                    <span style="color:white;">DOWNLOAD REPORT</span>
                                                     <i style="color:white;" class="fa fa-cloud-download"></i>
                                                 </a>
                                             </t>
@@ -2572,7 +2572,7 @@
                                                 <button type="button" class="btn report_remainder_set2"
                                                         data-toggle="modal" data-target="#download_report_id"
                                                         style="margin-top: 40px !important;width: 100%;background-color: #f12200;font-size:11px;">
-                                                    <span style="color:white;">Downalod Report</span>
+                                                    <span style="color:white;">DOWNLOAD REPORT</span>
                                                     <i style="color:white;" class="fa fa-cloud-download"></i>
                                                 </button>
                                             </t>
@@ -5186,7 +5186,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                                             <a class="btn"
                                                                t-attf-href="/web/content/#{attachment_id.id}?download=true"
                                                                style="width: 100%;background-color: #f12200;">
-                                                                <span style="color:white;">Downalod Report</span>
+                                                                <span style="color:white;">DOWNLOAD REPORT</span>
                                                                 <i style="color:white;"
                                                                    class="fa fa-cloud-download"></i>
                                                             </a>
@@ -5196,7 +5196,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                                                     data-toggle="modal"
                                                                     data-target="#download_report_id"
                                                                     style="font-size:11px;white-space: inherit;width: 100%;background-color: #f12200;">
-                                                                <span style="color:white;">Downalod Report</span>
+                                                                <span style="color:white;">DOWNLOAD REPORT</span>
                                                                 <i style="color:white;"
                                                                    class="fa fa-cloud-download"></i>
                                                             </button>
@@ -6727,7 +6727,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                                             <a class="btn"
                                                                t-attf-href="/web/content/#{attachment_id.id}?download=true"
                                                                style="width: 100%;background-color: #f12200;">
-                                                                <span style="color:white;">Downalod Report</span>
+                                                                <span style="color:white;">DOWNLOAD REPORT</span>
                                                                 <i style="color:white;"
                                                                    class="fa fa-cloud-download"></i>
                                                             </a>
@@ -6736,7 +6736,7 @@ below ideally, starting with the team leader from the left to the right.</b>
                                                             <button type="button" class="btn" data-toggle="modal"
                                                                     data-target="#download_report_id" style="width: 100%;background-color: #f12200;    font-size: 11px;
     white-space: inherit;">
-                                                                <span style="color:white;">Downalod Report</span>
+                                                                <span style="color:white;">DOWNLOAD REPORT</span>
                                                                 <i style="color:white;"
                                                                    class="fa fa-cloud-download"></i>
                                                             </button>
