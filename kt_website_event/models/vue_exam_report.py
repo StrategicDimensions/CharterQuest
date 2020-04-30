@@ -154,7 +154,7 @@ class account_invoice(models.Model):
         now = datetime.now()
         curr_month = now.month
         actual_invoices = []
-        # attachments=[]
+        attachments=[]
         inv_obj = self.env['account.invoice']
         inv_ids = inv_obj.search([('fee_on_invoice', '=', True), ('paid_body', '=', False)])
         print("\n\n\n\n\nn======inv_ids========", inv_ids)
@@ -231,7 +231,7 @@ class account_invoice(models.Model):
                      'datas_fname': 'Remittenece Report.xls'})
         print("\n\n\n\n\n=======data========",data)
         attachment_id = self.env['ir.attachment'].create(data)
-        # attachments.append(attachment_id.id)
+        attachments.append(attachment_id.id)
         print("\n\n\n\n\n\n=======attachment_id===",attachment_id)
         email_to = 'accounts@charterquest.co.za'  # partner_obj.read(cr,uid,rec,['email','email_1','name'])
         email_from = 'cqerp@charterquest.co.za'
@@ -240,7 +240,7 @@ class account_invoice(models.Model):
             'email_to': email_to,
             'email_cc': 'patience.m@charterquest.co.za;rasetja.rapholo@charterquest.co.za',
             'subject': 'Remittence Reports',
-            'attachment_ids': [(6, 0, [attachment_id.id])],
+            'attachment_ids': [(6, 0, attachments)],
             'body_html': '<p>Dear User, please find the attached report for Remittence.</p>',
         }
         print("\n\n\n\n\n===========mail value===========",mail_vals)
@@ -353,5 +353,4 @@ def send_monthly_stock_report(self):
     }
 
     res = self.env['mail.mail'].create(mail_vals)
-    res.send()
     return True
