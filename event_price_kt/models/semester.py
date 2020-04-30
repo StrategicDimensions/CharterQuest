@@ -55,29 +55,30 @@ class pcexams_voucher(models.Model):
     def pcexams_expiry_notification(self):
     # '''Send Voucher Expiry notifications to Student'''
         todaydate = date.today()
-
+        print("\n\n\n\n=======todaydate===00=",todaydate)
         voucher_ids = self.search([('status', '=', 'Issued')])
 
+        print("\n\n\n\n=======voucher_ids===00=", voucher_ids)
         for voucher in voucher_ids:
             expiry_date = datetime.strptime(str(voucher.expiry_date), "%Y-%m-%d").date()-timedelta(days=30)
-
+            print("\n\n\n\n=======expiry_date===00=", expiry_date)
             if str(expiry_date) == str(todaydate):
-               template_id = self.env['mail.template'].search([('name', '=', "PC Exam Voucher Expiring in 30 days!")])
+               template_id = self.env['mail.template'].sudo().search([('name', '=', "PC Exam Voucher Expiring in 30 days!")])
                if template_id:
                    template_id.send_mail(voucher)
             expiry_date1 = datetime.strptime(str(voucher.expiry_date), "%Y-%m-%d").date()-timedelta(days=7)
 
             if str(expiry_date1) == str(todaydate):
-               template_id = self.env['mail.template'].search([('name', '=', "PC Exam Voucher Expiring in 7 days!")])
+               template_id = self.env['mail.template'].sudo().search([('name', '=', "PC Exam Voucher Expiring in 7 days!")])
                if template_id:
                    template_id.send_mail(voucher)
             #expiry_date2 = datetime.strptime(str(voucher.expiry_date), "%Y-%m-%d").date()
             expiry_date2 = datetime.strptime(str(voucher.expiry_date), "%Y-%m-%d").date() + timedelta(days=1)
             if str(expiry_date2) == str(todaydate):
                 ## Raaj 27th april updated the template name
-                   #template_id = self.pool.get('email.template').search(cr,uid,[('name','=',"PC Exam Expiry Notification")])
-                template_id = self.env['mail.template'].search([('name', '=', "PC Exam Voucher Expired!")])
+                   #template_id = self.pool.get('email.template').search(cr,uid,[('name','=',"PC Exam Expiry Notification")])request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_jnr_acadamic',raise_if_not_found=False)
+                template_id = self.env['mail.template'].sudo().search([('name', '=', "PC Exam Voucher Expired!")])
                 if template_id:
-                    template_id.send_mail(voucher)
+                    template_id.send_mail(voucher.id)
                     voucher.write({'status': 'Expired'})
         return True

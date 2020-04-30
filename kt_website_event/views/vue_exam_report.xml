@@ -26,7 +26,7 @@
 
     </data>
 
-    <data noupdate="1">
+    <data noupdate="0">
 
         <record id="cron_remittence_report" model="ir.cron">
             <field name="name">Cron to send Remittence Report</field>
@@ -35,14 +35,14 @@
             <field name="code">model.send_remittence_report()</field>
             <field name="interval_number">7</field>
             <field name="interval_type">days</field>
-            <field name="active">0</field>
+<!--            <field name="active">0</field>-->
             <field name="numbercall">-1</field>
         </record>
 
 
     </data>
 
-    <data noupdate="1">
+    <data noupdate="0">
 
          <record id="cron_stock_report" model="ir.cron">
             <field name="name">Cron to send monthly stock Report</field>

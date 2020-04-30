@@ -13,8 +13,9 @@
     'depends': ['event', 'website_event', 'event_sale', 'stock', 'website_sale'],
     'auto_install': False,
     'data': ['security/ir.model.access.csv',
+             'data/ir_cron.xml',
              'views/website_event_view.xml',
              'views/templates.xml',
              'views/subscriptions_view.xml',
-             'views/vue_exam_report.xml'],
+            ],
 }
