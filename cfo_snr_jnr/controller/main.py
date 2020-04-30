@@ -1324,6 +1324,7 @@ class CfoHome(web.Home):
                 for member_id in team_jnr_id.highschool_team_member_ids:
                     template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_jnr',
                                                raise_if_not_found=False)
+                    _logger.info("member_id.related_user_aspirant_id.id <%s> and <%s>",member_id.related_user_id.name, member_id.related_user_aspirant_id.name)
                     if template and member_id.related_user_aspirant_id and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader') or (member_id.user_type == 'Member')):
                         _logger.info("member_id.related_user_aspirant_id.id <%s>", member_id.related_user_aspirant_id.name)
                         print("\n\n\n\n\n\n=========member_id.related_user_aspirant_id.id=====",member_id.related_user_aspirant_id.name)
