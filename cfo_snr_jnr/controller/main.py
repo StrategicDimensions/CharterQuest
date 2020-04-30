@@ -256,6 +256,8 @@ class CfoHome(web.Home):
             life_date = datetime.datetime.strptime(snr_aspirants.aspirant_id.cfo_report_deadline_date,
                                                    DEFAULT_SERVER_DATETIME_FORMAT)
             life_date = (life_date + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
+
+            print("\n\n\n\n\n===========datev of report submit========",life_date)
             values['date_of_report_submit'] = life_date
 
         if is_from_new_member:
@@ -1254,6 +1256,7 @@ class CfoHome(web.Home):
                                                raise_if_not_found=False)
                     # if template and member_id.user_type == 'Admin':
                     print("\n\n\n\n\n\n=========team_snr_id.cfo_report_deadline_date=====",team_snr_id.cfo_report_deadline_date)
+                    print("\n\n\n\n\n\n=========member_id.related_user_id.name=====", member_id.related_user_id.name)
                     if template and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader') or (member_id.user_type == 'Member')):
                         template.sudo().with_context(
                             team_id=team_snr_id.id,
@@ -1281,6 +1284,8 @@ class CfoHome(web.Home):
                     template = request.env.ref('cfo_snr_jnr.email_template_upload_report_reminder_snr',
                                                raise_if_not_found=False)
                     # if template and member_id.related_user_aspirant_id and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader')):
+                    print("\n\n\n\n\n\n=========member_id.related_user_aspirant_id.id=====",
+                          member_id.related_user_aspirant_id.name)
                     if template and member_id.related_user_aspirant_id and ((member_id.user_type == 'Admin') or (member_id.user_type == 'Leader') or (member_id.user_type == 'Member')):
                         template.sudo().with_context(
                             team_id=team_snr_id.id,

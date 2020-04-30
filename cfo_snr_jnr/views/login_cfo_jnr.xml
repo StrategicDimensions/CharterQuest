@@ -1271,10 +1271,10 @@
                                         <div>
                                             <t t-set="attachment_id" t-value="request.env['ir.attachment'].sudo().search([('jnr_team_id','=',aspirant_team.id),('mimetype', '=', 'application/pdf')],order = 'id desc', limit = 1)"/>
                                               <t t-if="attachment_id">                                             
-                                                 <a class="btn" t-attf-href="/web/content/#{attachment_id.id}?download=true" style="width: 100%;background-color: firebrick;"><span style="color:white;">Downalod Report</span><i style="color:white;" class="fa fa-cloud-download"></i></a>
+                                                 <a class="btn" t-attf-href="/web/content/#{attachment_id.id}?download=true" style="width: 100%;background-color: firebrick;"><span style="color:white;">DOWNLOAD REPORT</span><i style="color:white;" class="fa fa-cloud-download"></i></a>
                                               </t>
                                               <t t-if="not attachment_id">
-                                                 <button type="button" class="btn " data-toggle="modal" data-target="#download_report_id" style="width: 100%;background-color: firebrick;"><span style="color:white;">Downalod Report</span><i style="color:white;" class="fa fa-cloud-download"></i></button>
+                                                 <button type="button" class="btn " data-toggle="modal" data-target="#download_report_id" style="width: 100%;background-color: firebrick;"><span style="color:white;">DOWNLOAD REPORT</span><i style="color:white;" class="fa fa-cloud-download"></i></button>
                                               </t>    
                                         </div>
                                         
@@ -2612,14 +2612,14 @@
                                                     <div>
                                                         <t t-set="attachment_id" t-value="request.env['ir.attachment'].sudo().search([('jnr_team_id','=',high_school_team.id),('mimetype', '=', 'application/pdf')],order = 'id desc', limit = 1)"/>
                                                           <t t-if="attachment_id">                                             
-                                                             <a class="btn " t-attf-href="/web/content/#{attachment_id.id}?download=true" style="width: 100%;background-color: firebrick;"><span style="color:white;">Downalod Report</span><i style="color:white;
+                                                             <a class="btn " t-attf-href="/web/content/#{attachment_id.id}?download=true" style="width: 100%;background-color: firebrick;"><span style="color:white;">DOWNLOAD REPORT</span><i style="color:white;
     white-space: inherit;
     font-size: 11px;" class="fa fa-cloud-download"></i></a>
                                                           </t>
                                                           <t t-if="not attachment_id">
                                                              <button type="button" class="btn " data-toggle="modal" data-target="#download_report_id" style="width: 100%;background-color: firebrick;"><span style="color:white;
     white-space: inherit;
-    font-size: 11px;">Downalod Report</span><i style="color:white;" class="fa fa-cloud-download"></i></button>
+    font-size: 11px;">DOWNLOAD REPORT</span><i style="color:white;" class="fa fa-cloud-download"></i></button>
                                                           </t>    
                                                     </div>
                                                  </td>
@@ -3550,10 +3550,10 @@
                                                     <div>
                                                         <t t-set="attachment_id" t-value="request.env['ir.attachment'].sudo().search([('jnr_team_id','=',team.id),('mimetype', '=', 'application/pdf')],order = 'id desc', limit = 1)"/>
                                                           <t t-if="attachment_id">                                             
-                                                             <a class="btn" t-attf-href="/web/content/#{attachment_id.id}?download=true" style="margin-top: 30px;width: 100%;background-color: firebrick;"><span style="color:white;font-size:11px;">Downalod Report</span><i style="color:white;" class="fa fa-cloud-download"></i></a>
+                                                             <a class="btn" t-attf-href="/web/content/#{attachment_id.id}?download=true" style="margin-top: 30px;width: 100%;background-color: firebrick;"><span style="color:white;font-size:11px;">DOWNLOAD REPORT</span><i style="color:white;" class="fa fa-cloud-download"></i></a>
                                                           </t>
                                                           <t t-if="not attachment_id">
-                                                             <button type="button" class="btn" data-toggle="modal" data-target="#download_report_id" style="margin-top: 30px;width: 100%;background-color: firebrick;"><span style="color:white;font-size:11px;">Downalod Report</span><i style="color:white;" class="fa fa-cloud-download"></i></button>
+                                                             <button type="button" class="btn" data-toggle="modal" data-target="#download_report_id" style="margin-top: 30px;width: 100%;background-color: firebrick;"><span style="color:white;font-size:11px;">DOWNLOAD REPORT</span><i style="color:white;" class="fa fa-cloud-download"></i></button>
                                                           </t>    
                                                     </div>
                                             </td>
