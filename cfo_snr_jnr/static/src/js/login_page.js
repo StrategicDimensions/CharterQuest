@@ -239,6 +239,7 @@ odoo.define('cfo_snr_jnr.login_page', function (require) {
         $('.send_report_reminder').on('click', function (e) {
             e.preventDefault();
             var team_id = $(this).attr('id');
+            console.log("\n\n\n\n\n==========team id======",team_id)
             $(document).find('.loader_report_reminder_send').css("display", "block");
             ajax.jsonRpc("/send_reminder_mail", "call", {'team_id': team_id}).then(
                 function (result) {
