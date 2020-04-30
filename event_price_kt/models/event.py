@@ -400,7 +400,8 @@ class sale_order(models.Model):
             try:
                 max_id = max(sale_order.search(draft_domain + [('semester_id.semester', '=', '1'),
                                                                ('partner_id', '=', partner)]))
-                sem1_filtered_ids.append(max_id.id)
+                if max_id.id not in sem1_filtered_ids:
+                    sem1_filtered_ids.append(max_id.id)
             except:
                 pass
 
@@ -415,21 +416,28 @@ class sale_order(models.Model):
                 try:
                     max_id = max(sale_order.search(
                         draft_domain + [('semester_id.semester', '=', '2'), ('partner_id', '=', partner)]))
-                    sem2_filtered_ids.append(max_id)
+                    if max_id.id not in sem2_filtered_ids:
+                        sem2_filtered_ids.append(max_id.id)
                 except:
                     pass
+        print("\n\n\n\n\n======sem1_filtered_ids====", sem1_filtered_ids)
+        print("\n\n\n\n\n======sem2_filtered_ids====", sem2_filtered_ids)
         ids = list(set(sem1_filtered_ids + sem2_filtered_ids))
-
+        print("\n\n\n\n\n======self.browse====",ids,self.browse(ids))
         for sale_order_id in self.browse(ids):
+            print("\n\n\n\n\n=====sale_order_id.freequote_opt_out======",sale_order_id.freequote_opt_out)
             if not sale_order_id.freequote_opt_out:
+                print("\n\n\n\n\n=====sale_order_id.no_of_reminder_emails_sent======", sale_order_id.no_of_reminder_emails_sent)
                 if sale_order_id.no_of_reminder_emails_sent == 4:
                     continue
+                print("\n\n\n\n\n=====sale_order_id.no_of_days======",
+                      sale_order_id.no_of_days)
                 if sale_order_id.no_of_days in ['7', '14 days', '21 days', '28 days']:
                     no_of_reminder_emails_sent = sale_order_id.no_of_reminder_emails_sent + 1
                     sale_order_id.sudo().write({'no_of_reminder_emails_sent': no_of_reminder_emails_sent})
                     template_id = self.env['mail.template'].search([('name', '=', "Freequote Reminder Email")])
                     if template_id:
-                        template_id.send_mail(sale_order_id)
+                        template_id.send_mail(sale_order_id.id)
         return True
 
 

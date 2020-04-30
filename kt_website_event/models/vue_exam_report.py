@@ -3,6 +3,7 @@ from odoo import models, fields
 import re
 from odoo.tools.translate import _
 from io import StringIO
+from io import BytesIO
 import base64
 import xlrd
 import time
@@ -33,7 +34,7 @@ class event(models.Model):
         event_ids = event_obj.search([('date_begin', '>=', time.strftime('%Y-%m-%d 00:00:00')), ('pc_exam', '=', True),
                                       ('registration_ids', '!=', False)])
 
-        fp = StringIO()
+        fp = BytesIO()
         wb = xlwt.Workbook(encoding='utf-8')
         header_style2 = xlwt.easyxf(
             "font: bold on;align: horiz center; pattern: pattern solid, fore_colour white;")
@@ -75,7 +76,7 @@ class event(models.Model):
         data = {}
 
         for item in event_ids:
-            event_data = event_obj.browse(item)
+            event_data = event_obj.browse(item.id)
 
             # if lead_data.type == "lead":
             worksheet.write(line, 0, event_data.name or '', header_style5)
@@ -85,7 +86,8 @@ class event(models.Model):
                 worksheet.write(line, 4, rec.state or '', header_style5)
                 inv_id = self.env['account.invoice'].search([('origin', '=', rec.origin)])
                 if inv_id:
-                    inv_data = self.env['account.invoice'].browse(inv_id)
+                    inv_data = self.env['account.invoice'].browse(inv_id.id)
+                    sale_order_id = self.env['sale.order'].sudo().search([('name', '=', inv_data.sale_order_id.name)])
                     paid_body = inv_data.paid_body
                     if paid_body:
                         worksheet.write(line, 5, 'Yes' or '', header_style5)
@@ -98,8 +100,8 @@ class event(models.Model):
                 worksheet.write(line, 9, rec.email or '', header_style5)
                 worksheet.write(line, 10, rec.phone or '', header_style5)
                 line += 1
-            worksheet.write(line, 2, event_data.address_id and event_data.address_id.name or '', header_style5)
-            worksheet.write(line, 3, event_data.date_begin or '', header_style5)
+                worksheet.write(line, 2, sale_order_id.campus.name or '', header_style5)
+                worksheet.write(line, 3, event_data.date_begin or '', header_style5)
             """for rec in event_data.registration_ids:
                 worksheet.write(line, 4, rec.state or '', header_style5)
                 line+=1
@@ -128,19 +130,20 @@ class event(models.Model):
         data.update(
             {'name': 'VUE EXAM REPORT', 'res_model': 'event.event', 'datas': out, 'datas_fname': 'Vue Exam Report.xls'})
         attachment_id = self.env['ir.attachment'].create(data)
-
+        print("\n\n\n\n\n\n=====attachment=====",attachment_id)
         email_to = 'pcexams@charterquest.co.za'  # partner_obj.read(cr,uid,rec,['email','email_1','name'])
         email_from = 'cqerp@charterquest.co.za'
         mail_vals = {
             'email_from': email_from,
             'email_to': email_to,
-            'email_cc': 'patience.m@charterquest.co.za',
+            'email_cc': 'patience.m@charterquest.co.za;rasetja.rapholo@charterquest.co.za',
             'subject': 'PearsonVUE Exams Reports',
-            'attachment_ids': [(6, 0, [attachment_id])],
+            'attachment_ids': [(6, 0, [attachment_id.id])],
             'body_html': '<p>Dear User, please find the attached report for VUE Exam.</p>',
         }
 
         res = self.env['mail.mail'].create(mail_vals)
+        res.send()
         return True
 
 
@@ -151,17 +154,19 @@ class account_invoice(models.Model):
         now = datetime.now()
         curr_month = now.month
         actual_invoices = []
+        attachments=[]
         inv_obj = self.env['account.invoice']
         inv_ids = inv_obj.search([('fee_on_invoice', '=', True), ('paid_body', '=', False)])
+        print("\n\n\n\n\nn======inv_ids========", inv_ids)
         for rec in inv_ids:
-            inv_obj_data = inv_obj.browse(rec)
+            print("\n\n\n\n\nn======rec========", rec)
+            inv_obj_data = inv_obj.browse(rec.id)
+            print("\n\n\n\n\nn======inv_obj_data========",inv_obj_data)
             if inv_obj_data.payment_ids:
                 for payments in inv_obj_data.payment_ids:
-                    if datetime.strptime(str(payments.date_created),
-                                         "%Y-%m-%d").month == curr_month and datetime.strptime(
-                        str(payments.date_created), "%Y-%m-%d").year == now.year:
-                        actual_invoices.append(rec)
-        fp = StringIO()
+                    if datetime.strptime(str(payments.payment_date),"%Y-%m-%d").month == curr_month and datetime.strptime(str(payments.payment_date), "%Y-%m-%d").year == now.year:
+                        actual_invoices.append(rec.id)
+        fp = BytesIO()
         wb = xlwt.Workbook(encoding='utf-8')
         header_style2 = xlwt.easyxf(
             "font: bold on;align: horiz center; pattern: pattern solid, fore_colour white;")
@@ -224,20 +229,23 @@ class account_invoice(models.Model):
         # print kk
         data.update({'name': 'Remittence Report', 'res_model': 'account.invoice', 'datas': out,
                      'datas_fname': 'Remittenece Report.xls'})
+        print("\n\n\n\n\n=======data========",data)
         attachment_id = self.env['ir.attachment'].create(data)
-
+        attachments.append(attachment_id.id)
+        print("\n\n\n\n\n\n=======attachment_id===",attachment_id)
         email_to = 'accounts@charterquest.co.za'  # partner_obj.read(cr,uid,rec,['email','email_1','name'])
         email_from = 'cqerp@charterquest.co.za'
         mail_vals = {
             'email_from': email_from,
             'email_to': email_to,
-            'email_cc': 'patience.m@charterquest.co.za',
+            'email_cc': 'patience.m@charterquest.co.za;rasetja.rapholo@charterquest.co.za',
             'subject': 'Remittence Reports',
-            'attachment_ids': [(6, 0, [attachment_id])],
+            'attachment_ids': [(6, 0, attachments)],
             'body_html': '<p>Dear User, please find the attached report for Remittence.</p>',
         }
-
+        print("\n\n\n\n\n===========mail value===========",mail_vals)
         res = self.env['mail.mail'].create(mail_vals)
+        res.send()
         return True
 
 
