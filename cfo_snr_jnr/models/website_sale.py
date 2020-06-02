@@ -61,7 +61,6 @@ class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
     sale_order_reference_link = fields.Char(string="Sale Order Reference Link")
-    date_of_invoice = fields.Datetime('Date Of Invoice')
 
 class AccountPayment(models.Model):
     _inherit = 'account.payment'
