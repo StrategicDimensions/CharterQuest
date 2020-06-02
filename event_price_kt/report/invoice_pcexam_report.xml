@@ -277,7 +277,7 @@
                             <span t-esc="l.name"/>
                         </td>
                         <td style="padding: 2px;padding-left: 20px;line-height: 1;width:15%;">
-                            <span t-esc="o.sale_order_id.order_line[0].event_id and (datetime.datetime.strptime(o.sale_order_id.order_line[0].event_id.date_begin, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=2)).strftime('%d-%m-%Y %H:%M:%S') or '' "/>
+                            <span t-esc="l.event_id and (datetime.datetime.strptime(l.event_id.date_begin, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=2)).strftime('%d-%m-%Y %H:%M:%S') or '' "/>
                         </td>
                         <td style="padding: 2px;line-height: 1;width:10%;">
                             <t t-foreach="l.invoice_line_tax_ids" t-as="lt">

@@ -221,6 +221,7 @@ class PCExambooking(http.Controller):
                 if int(post.get('campus')) in event.address_ids.ids and exam_type_id.name == event.type_pc_exam.name and exam_level_id.name == event.qualification.name:
                     if event.subject:
                         exam_subject_list.append(event.subject)
+                    print("\n\n\n\n\n===type===event.date_end======", event.date_end,type(event.date_end))
                     exam_date = event.date_end.split(" ")
                     print("\n\n\n\n\n===========exam_date types===", exam_date,exam_date[0])
                     datetimeobject = datetime.datetime.strptime(exam_date[0], '%Y-%m-%d')
@@ -718,25 +719,26 @@ class PCExambooking(http.Controller):
 
 
             if post.get('do_invoice') == 'Yes':
-                # for each_order_line in sale_order_id.order_line:
-                #     print("\n\n\n\n\n\n\n==========each_order_line.name,==========",each_order_line.name)
-                #     invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
-                #                                 'name': each_order_line.name,
-                #                                 'quantity': 1.0,
-                #                                 'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
-                #                                 'invoice_line_tax_ids': [
-                #                                     (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
-                #                                 'price_unit': each_order_line.price_unit,
-                #                                 'discount': each_order_line.discount}])
-                # print("\n\n\n\n\n\n\n===============invoice line===========",invoice_line)
-                # invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
-                #                                         'campus': sale_order_id.campus.id,
-                #                                         'prof_body': sale_order_id.prof_body.id,
-                #                                         'sale_order_id': sale_order_id.id,
-                #                                         'semester_id': sale_order_id.semester_id.id,
-                #                                         'invoice_line_ids': invoice_line,
-                #                                         'residual': sale_order_id.out_standing_balance_incl_vat,
-                #                                         })
+                for each_order_line in sale_order_id.order_line:
+                    print("\n\n\n\n\n\n\n==========each_order_line.name,==========",each_order_line.name)
+                    invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
+                                                'name': each_order_line.name,
+                                                'event_id':each_order_line.event_id.id,
+                                                'quantity': 1.0,
+                                                'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
+                                                'invoice_line_tax_ids': [
+                                                    (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
+                                                'price_unit': each_order_line.price_unit,
+                                                'discount': each_order_line.discount}])
+                print("\n\n\n\n\n\n\n===============invoice line===========",invoice_line)
+                invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
+                                                        'campus': sale_order_id.campus.id,
+                                                        'prof_body': sale_order_id.prof_body.id,
+                                                        'sale_order_id': sale_order_id.id,
+                                                        'semester_id': sale_order_id.semester_id.id,
+                                                        'invoice_line_ids': invoice_line,
+                                                        'residual': sale_order_id.out_standing_balance_incl_vat,
+                                                        })
 
                 sale_order_id._action_confirm()
                 # sale_order_id = request.env['sale.order'].sudo().browse(int(sale_order))
@@ -769,8 +771,12 @@ class PCExambooking(http.Controller):
                 #                                        }])
                 #     event_id.write({'online_registration_ids':online_registration})
 
-
-
+                for invoice_line in invoice_id.invoice_line_ids:
+                    for order_line in sale_order_id.order_line:
+                        if order_line.name == invoice_line.name and order_line.price_unit == invoice_line.price_unit:
+                            invoice_id.write({'invoice_line_ids': [(1, invoice_line.id, {'event_id':order_line.event_id.id})]})
+                            print("\n\n\n\n======date event id========",invoice_line.event_id,invoice_line.event_id.date_begin)
+                print("\n\n\n\n\n============invoiceline ids========",invoice_id.invoice_line_ids)
                 mail_obj = request.env['mail.mail'].sudo()
                 template_invoice_id = request.env.ref('cfo_snr_jnr.email_template_pcexam_payvia_eft',
                                                    raise_if_not_found=False)
@@ -836,13 +842,14 @@ class PCExambooking(http.Controller):
         for each_order_line in sale_order_id.order_line:
             invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
                                         'name': each_order_line.name,
+                                        'event_id':each_order_line.event_id.id,
                                         'quantity': 1.0,
                                         'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
                                         'invoice_line_tax_ids': [
                                             (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
                                         'price_unit': each_order_line.price_unit,
                                         'discount': each_order_line.discount}])
-
+        print("\n\n\n\n\n=======invoice_line=========", invoice_line)
         invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
                                                     'campus': sale_order_id.campus.id,
                                                     'prof_body': sale_order_id.prof_body.id,
@@ -1113,12 +1120,14 @@ class PCExambooking(http.Controller):
         for each_order_line in sale_order_id.order_line:
             invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
                                         'name': each_order_line.name,
+                                        'event_id':each_order_line.event_id.id,
                                         'quantity': 1.0,
                                         'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
                                         'invoice_line_tax_ids': [
                                             (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
                                         'price_unit': each_order_line.price_unit,
                                         'discount': each_order_line.discount}])
+        print("\n\n\n\n\n=======invoice_line=========", invoice_line)
         invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
                                                 'campus': sale_order_id.campus.id,
                                                 'prof_body': sale_order_id.prof_body.id,
@@ -1296,12 +1305,14 @@ class PCExambooking(http.Controller):
         for each_order_line in sale_order_id.order_line:
             invoice_line.append([0, 0, {'product_id': each_order_line.product_id.id,
                                         'name': each_order_line.name,
+                                        'event_id':each_order_line.event_id.id,
                                         'quantity': 1.0,
                                         'account_id': each_order_line.product_id.categ_id.property_account_income_categ_id.id,
                                         'invoice_line_tax_ids': [
                                             (6, 0, [each_tax.id for each_tax in each_order_line.tax_id])],
                                         'price_unit': each_order_line.price_unit,
                                         'discount': each_order_line.discount}])
+        print("\n\n\n\n\n=======invoice_line=========",invoice_line)
         invoice_id = invoice_obj.sudo().create({'partner_id': sale_order_id.partner_id.id,
                                                 'campus': sale_order_id.campus.id,
                                                 'prof_body': sale_order_id.prof_body.id,
