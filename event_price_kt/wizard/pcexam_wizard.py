@@ -37,7 +37,9 @@ class pcexams_wizard(models.Model):
           for record in self.browse(self.id):
                 print("\n\n\n\n\n======record=====",record)
                 count =0
+
                 start_date = record.date_begin
+                print("\n\n\n\n\n=======start_date=====", start_date, type(start_date))
                 test = int(start_date[:4])
                
                 last_date = date(test, 12, 31)

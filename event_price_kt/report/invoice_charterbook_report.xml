@@ -376,7 +376,7 @@
                        t-value="request.env['terms.conditions'].search([('type','=','CharterBooks')],order='id desc' ,limit=1)"/>
                     <t t-set="pc_exam"
                        t-value="request.env['terms.conditions'].search([('type','=','PC Exams')],order='id desc' ,limit=1)"/>
-                    <t t-if="charterbooks">
+                       <t t-if="charterbooks">
                         <span t-raw="charterbooks.terms_condition">
                         </span>
                     </t>
