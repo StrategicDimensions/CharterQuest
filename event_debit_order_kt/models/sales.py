@@ -193,7 +193,7 @@ class payment_confirmation(models.Model):
         if config_para:
             link = config_para.value + "/payment/" + decoded_quote_name + '/' + decoded_quote_name
             if sale_obj.amount_total != self.payment_amount:
-                sale_obj.write({'debit_order_mandate_link': link,'debit_order_mandate':True})
+                sale_obj.write({'debit_order_mandate_link': link,'debitorder_link':True})
                 template_id = self.env['mail.template'].search([('name', '=', "Debit Order Mandate Email")])
                 if template_id:
                     mail_message = template_id.send_mail(self.order_id.id, force_send=True)
