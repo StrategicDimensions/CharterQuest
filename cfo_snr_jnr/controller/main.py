@@ -2673,11 +2673,12 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
     def do_signup(self, qcontext):
         """ Shared helper that creates a res.partner out of a token """
         values = {key: qcontext.get(key) for key in ('login', 'name', 'password', 'cfo_signup')}
+        print("\n\n\n\n\n\n\n\n===============values===========11=",values)
         member_values = {key: qcontext.get(key) for key in (
             'login', 'name', 'password', 'lastname', 'cfo_competition', 'cfo_membertype', 'cfo_source',
             'other',
             'cfo_signup')}
-
+        print("\n\n\n\n\n\n\n\n===============member_values===========11=", member_values)
         if not values:
             raise UserError(_("The form was not properly filled in."))
         if values.get('password') != qcontext.get('confirm_password'):
@@ -2689,17 +2690,21 @@ class CfoAuthSignup(auth_signup.AuthSignupHome):
             values['lang'] = request.lang
         if member_values.get('lastname'):
             values.update({'name': member_values.get('name') + ' ' + member_values.get('lastname')})
-
+        print("\n\n\n\n\n\n\n===========supported_langs=====1==", supported_langs)
         user_val = self._signup_with_values(qcontext.get('token'), values, member_values)
         request.env.cr.commit()
+        print("\n\n\n\n\n\n\n===========user_val=====1==", user_val)
         return user_val;
 
     def _signup_with_values(self, token, values, values1=''):
+        print("\n\n\n\n\n\n\n======token, valuesd===========",token,values)
         db, login, password = request.env['res.users'].sudo().signup(values, token)
+        print("\n\n\n\n\n\n\n=======db, login, password===========", db, login, password)
         request.env.cr.commit()  # as authenticate will use its own cursor we need to commit the current transaction
         uid = request.session.authenticate(db, login, password)
         user = request.env['res.users'].sudo().browse(uid)
         user.sudo().write({'share': True})
+        print("\n\n\n\n\n\n\n=======values===========", values)
         if values.get('cfo_signup'):
             user.partner_id.sudo().write({
                 'cfo_user': True

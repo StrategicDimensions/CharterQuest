@@ -158,6 +158,7 @@ class ResUsers(models.Model):
             :return: (dbname, login, password) for the signed up user
         """
         if token:
+            print("\n\n\n\n\n\n\n===========values=======token=======", values, token)
             # signup with a token: find the corresponding partner id
             partner = self.env['res.partner']._signup_retrieve_partner(token, check_validity=True, raise_exception=True)
             # invalidate signup token
@@ -191,6 +192,7 @@ class ResUsers(models.Model):
                 self._signup_create_user(values)
         else:
             # no token, sign up an external user
+            print("\n\n\n\n\n\n======value else==========", values)
             values['email'] = values.get('email') or values.get('login')
             self._signup_create_user(values)
 
