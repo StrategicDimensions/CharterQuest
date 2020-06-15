@@ -137,6 +137,7 @@
 
  <t t-call="payment.payment_tokens_list">
                                             <t t-set="mode" t-value="'payment'"/>
+					    <t t-set="type" t-value="submit"/>
                                             <t t-set="submit_txt">Pay Now</t>
                                             <t t-set="icon_class" t-value="'fa-lock'"/>
                                             <t t-set="pms" t-value="tokens"/>
