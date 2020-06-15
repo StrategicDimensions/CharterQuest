@@ -148,6 +148,20 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr t-if="o.affiliation=='2'">
+                                    <td>
+                                        <p>Company</p>
+                                    </td>
+                                    <td colspan="2">
+                                        <span t-esc="o.partner_id.student_company or '00000'"></span>
+                                    </td>
+                                    <td>
+                                        <p style="terp_default_8">VAT No</p>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.partner_id.vat_no_comp or ''"></span>
+                                    </td>
+                            </tr>
                             <tr>
                                 <td>
                                     <p>Name</p>
