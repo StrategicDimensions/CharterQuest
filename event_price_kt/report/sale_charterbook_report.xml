@@ -148,7 +148,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr t-if="o.affiliation=='2'">
+                            <tr t-if="o.partner_id.student_company and o.partner_id.vat_no_comp">
                                     <td>
                                         <p>Company</p>
                                     </td>
