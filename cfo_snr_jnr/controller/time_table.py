@@ -144,14 +144,17 @@ class TimeTable(http.Controller):
         subject = []
         study_option = []
         level = []
+        level1 = []
         course_option = []
+        course_option1 = []
         print("\n\n\n\n\n\n\n===========kw==========",kw)
         if kw.get('campus_ids') and kw.get('semester_ids'):
             res = request.env['cfo.time.table'].sudo().search(
                 [('semester_id', 'in', [int(id) for id in kw.get('semester_ids')])])
             for record in res:
                 if record.qualification_id.id not in level:
-                    level.append({'id': record.qualification_id.id, 'name': record.qualification_id.name})
+                    level.append(record.qualification_id.id)
+                    level1.append({'id': record.qualification_id.id, 'name': record.qualification_id.name})
             print("\n\n\n\n\n\n\n============level--------",level)
 
         if kw.get('qua_ids') and kw.get('campus_ids') and kw.get('semester_ids'):
@@ -160,7 +163,8 @@ class TimeTable(http.Controller):
                  ('semester_id', 'in', [int(id) for id in kw.get('semester_ids')])])
             for record in res:
                 if record.course_option_id.id not in course_option:
-                    course_option.append({'id': record.course_option_id.id, 'name': record.course_option_id.name})
+                    course_option.append(record.course_option_id.id)
+                    course_option1.append({'id': record.course_option_id.id, 'name': record.course_option_id.name})
 
         if kw.get('qua_ids') and kw.get('campus_ids') and kw.get('semester_ids') and kw.get('option_ids'):
 
@@ -181,8 +185,8 @@ class TimeTable(http.Controller):
         return {
             'subject':subject,
             'study_option':study_option,
-            'level':level,
-            'course_option':course_option
+            'level':level1,
+            'course_option':course_option1
         }
 
     @http.route(['/set_color'], type='json', auth="public", website=True)
