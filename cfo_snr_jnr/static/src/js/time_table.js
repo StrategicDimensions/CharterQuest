@@ -55,6 +55,12 @@ $(document).ready(function(){
                     subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
                 }
                 $(document).find('#course_code_select').html(subject)
+                $(document).find('#option_select').html("")
+                for(var i=0; i<data['course_option'].length; i++)
+                {
+                    study_option.push('<option value=' + data['course_option'][i].id + '>' + data['course_option'][i].name + '</option>\n')
+                }
+                $(document).find('#option_select').html(study_option)
 //                $(document).find('#option_select').html("")
 //                for(var i=0; i<data['study_option'].length; i++)
 //                {
@@ -128,6 +134,7 @@ $(document).ready(function(){
             var option_ids=$('#option_select').val()
             var subject=[]
             var study_option=[]
+            var level = []
                 ajax.jsonRpc('/get_timetable_data', 'call', {
                 'qua_ids': qua_ids,
                 'campus_ids': campus_ids,
@@ -140,6 +147,12 @@ $(document).ready(function(){
                     subject.push('<option value=' + data['subject'][i].id + '>' + data['subject'][i].name + '</option>\n')
                 }
                 $(document).find('#course_code_select').html(subject)
+                $(document).find('#level_select').html("")
+                for(var i=0; i<data['level'].length; i++)
+                {
+                    level.push('<option value=' + data['level'][i].id + '>' + data['level'][i].name + '</option>\n')
+                }
+                $(document).find('#level_select').html(level)
 //                $(document).find('#option_select').html("")
 //                for(var i=0; i<data['study_option'].length; i++)
 //                {

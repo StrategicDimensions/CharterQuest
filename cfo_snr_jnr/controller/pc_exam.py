@@ -53,7 +53,6 @@ class PCExambooking(http.Controller):
             print("\n\n\n\n\n\n=====uuid_lst=====",uuid_lst)
             sale_order_id = request.env['sale.order'].sudo().search([('debit_link','=',uuid_lst[0])])
             event_id = request.env['event.event'].sudo().search([('id','=',uuid_lst[1])])
-            print("\n\n\n\n\n==========event_id line=========", event_id)
             event_reschedule_ids = request.env['event.event'].sudo().search([('name','=',event_id.name),('type_pc_exam','=',event_id.type_pc_exam.name),('subject','=',event_id.subject.name),('qualification','=',event_id.qualification.name)])
         if sale_order_id and event_id:
 
@@ -103,7 +102,6 @@ class PCExambooking(http.Controller):
             if int(post.get('Select Campus')) in event.address_ids.ids:
                 if event.type_pc_exam:
                     examtype_ids.append(event.type_pc_exam)
-        print("\n\n\n\n==exam_type======",examtype_ids)
         for exam_type in examtype_ids:
             if exam_type.id not in exam_type_ids:
                 exam_type_ids.append(exam_type.id)
@@ -140,7 +138,6 @@ class PCExambooking(http.Controller):
         # for exam_subject in examsubject_ids:
         #     if exam_subject.id not in exam_subject_ids:
         #         exam_subject_ids.append(exam_subject.id)
-        # print("\n\n\n\n==exam_subject_ids======", exam_subject_ids)
         value={}
 
         value['campus'] = int(post.get('campus'))
@@ -166,7 +163,6 @@ class PCExambooking(http.Controller):
 
         str_exam_date = str_exam_date.strftime("%m/%d/%Y %H:%M:%S")
         end_exam_date = end_exam_date.strftime("%m/%d/%Y %H:%M:%S")
-        print("\n\n\n\n==========str_exam_date========",str_exam_date,type(str_exam_date))
         exam_ids = request.env['event.event'].sudo().search([('type_pc_exam.id','=',post.get('exam_type')),('date_begin','>=',str_exam_date),('date_end','<=',end_exam_date),('subject','=',(post.get('subject'))),('qualification.id','=',int(post.get("level"))),('address_ids','in',int(post.get('campus')))])
         print("\n\n\n==========exam_id====",exam_ids)
 
@@ -199,7 +195,6 @@ class PCExambooking(http.Controller):
                     exam_dict['seats_available']=exam.seats_available
                     exam_dict['exam_id']=exam.id
                     exam_list.append(exam_dict)
-                    # print("\n\n\n\n===========list========",exam_list)
             return exam_list
 
     @http.route('/pc_exam_subject_search', type='json', auth='public', website=True)
@@ -244,7 +239,6 @@ class PCExambooking(http.Controller):
     # @http.route('/set_available_seats', type='json', auth='public', website=True)
     # def set_available_seats(self, select_exam_list=select_exam_list, **post):
     #
-    #     print("\n\n\n\n===========post========",post,select_exam_list)
     #     if post.get('type') == 'Select':
     #         if int(post.get('select_exam_id')) not in select_exam_list:
     #             select_exam_list.append(int(post.get('select_exam_id')))
@@ -254,7 +248,6 @@ class PCExambooking(http.Controller):
     #         #     event_id.write({
     #         #                     'seats_available':available_seats,
     #         #                     })
-    #         print("\n\n\n=====select_list====",select_exam_list)
     #     if post.get('type') == 'Remove':
     #         if int(post.get('remove_exam_id')) in select_exam_list:
     #             select_exam_list.remove(int(post.get('remove_exam_id')))
@@ -264,7 +257,6 @@ class PCExambooking(http.Controller):
     #         #     event_id.write({
     #         #                     'seats_available':available_seats,
     #         #                     })
-    #         print("\n\n\n=====select_list====", select_exam_list)
     #     return select_exam_list
 
     @http.route('/pc_exam_date_search', type='json', auth='public', website=True)
