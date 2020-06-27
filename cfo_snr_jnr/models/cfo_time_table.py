@@ -32,7 +32,7 @@ class CFOCourseOption(models.Model):
 
     name = fields.Char(string="Course Option")
     active = fields.Boolean(string="Active", default=True)
-
+    sequence = fields.Integer(string="Sequence")
 
 class CFOSemesterInformation(models.Model):
     _name = 'cfo.semester.information'
