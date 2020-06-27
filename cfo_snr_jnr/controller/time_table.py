@@ -152,20 +152,24 @@ class TimeTable(http.Controller):
             res = request.env['cfo.time.table'].sudo().search(
                 [('semester_id', 'in', [int(id) for id in kw.get('semester_ids')])])
             for record in res:
-                if record.qualification_id.id not in level:
-                    level.append(record.qualification_id.id)
-                    level1.append({'id': record.qualification_id.id, 'name': record.qualification_id.name})
-            print("\n\n\n\n\n\n\n============level--------",level)
+                for line in record.time_table_line_ids:
+                    if line.course_code_id.campus_id.id in [int(id) for id in kw.get('campus_ids')]:
+                        if record.qualification_id.id not in level:
+                            level.append(record.qualification_id.id)
+                            level1.append({'id': record.qualification_id.id, 'name': record.qualification_id.name})
+            print("\n\n\n\n\n\n\n============level--------",level1)
 
         if kw.get('qua_ids') and kw.get('campus_ids') and kw.get('semester_ids'):
             res = request.env['cfo.time.table'].sudo().search(
                 [('qualification_id', 'in', [int(id) for id in kw.get('qua_ids')]),
                  ('semester_id', 'in', [int(id) for id in kw.get('semester_ids')])])
             for record in res:
-                if record.course_option_id.id not in course_option:
-                    course_option.append(record.course_option_id.id)
-                    course_option1.append({'id': record.course_option_id.id, 'name': record.course_option_id.name})
-
+                for line in record.time_table_line_ids:
+                    if line.course_code_id.campus_id.id in [int(id) for id in kw.get('campus_ids')]:
+                        if record.course_option_id.id not in course_option:
+                            course_option.append(record.course_option_id.id)
+                            course_option1.append({'id': record.course_option_id.id, 'name': record.course_option_id.name})
+            print("\n\n\n\n\n\n\n============level--------", course_option1)
         if kw.get('qua_ids') and kw.get('campus_ids') and kw.get('semester_ids') and kw.get('option_ids'):
 
             res = request.env['cfo.time.table'].sudo().search([('qualification_id', 'in', [int(id) for id in kw.get('qua_ids')]),
