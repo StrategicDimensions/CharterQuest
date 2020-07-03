@@ -333,7 +333,7 @@
                 <table class="table">
                     <thead>
                         <tr style="background-color:darkgray;">
-                            <td colspan="2" style="padding: 5px;line-height: 1;text-align:center;">
+                            <td style="padding: 5px;line-height: 1;text-align:center;">
                                 <span>
                                     <b>Description</b>
                                 </span>
@@ -373,13 +373,13 @@
                     <tbody>
                         <t t-foreach="o.invoice_line_ids" t-as="l">
                             <tr>
-                                <td colspan="2" style="line-height: 1;width:45%;">
+                                <td style="line-height: 1;width:45%;text-align:left;">
                                     <p t-esc="l.name"/>
                                 </td>
 <!--                                <td style="padding: 2px;line-height: 1;width:15%;" t-if="o.affiliation == '1'">-->
 <!--                                    <span t-esc="l.event_id and l.event_id.date_begin or '' "/>-->
 <!--                                </td>-->
-                                <td style="padding: 2px;line-height: 1;width:10%;">
+                                <td style="padding: 2px;line-height: 1;width:10%;text-align:center;">
                                     <t t-if="not l.invoice_line_tax_ids">
                                         <span style="float:right;" t-esc="'Tax 0%'"/>
                                     </t>
@@ -387,16 +387,16 @@
                                         <span style="float:right;" t-esc="lt.name"/>
                                     </t>
                                 </td>
-                                <td style="padding: 2px;line-height: 1;width:10%;">
+                                <td style="padding: 2px;line-height: 1;width:10%;text-align:center;">
                                     <span style="float:right;" t-esc="l.quantity"/>
                                 </td>
-                                <td style="padding: 2px;line-height: 1;width:10%;">
+                                <td style="padding: 2px;line-height: 1;width:10%;text-align:center;">
                                     <span style="float:right;" t-esc="'%.2f'%(l.price_unit)"/>
                                 </td>
-                                <td style="padding: 2px;line-height: 1;width:10%;">
+                                <td style="padding: 2px;line-height: 1;width:10%;text-align:center;">
                                     <span style="float:right;" t-esc="'%.2f'%(l.discount)"/>
                                 </td>
-                                <td style="padding: 2px;line-height: 1;width:15%;">
+                                <td style="padding: 2px;line-height: 1;width:15%;text-align:center;">
                                     <span style="float:right;" t-esc="'%.2f'%(l.price_subtotal)"/>
                                     <span style="float:right;" t-esc="o.currency_id.symbol"/>
                                 </td>
