@@ -20,9 +20,9 @@
                 <br><br>
                 Thank you so much for contacting <b style="color: red;">Charter</b><b>Quest.</b>
                 <br><br>
-                This serves as a confirmation that you have been booked to write the following exams;
+                This serves as a confirmation that you have been booked to write the following <b>${ctx.get('prof_body')} Exam(s);</b>
                 <br><br>
-                Please confirm your subject(s) below. <b>You should receive a confirmation email from PearsonVue within 5-7 working days if you are booked for ${ctx.get('prof_body')} Exam.</b>
+                Please confirm your subject(s) below:
                 <br><br>
 
                 <table width="100%" class="table table-bordered" border="0" cellspacing="0" cellpadding="0">
@@ -91,37 +91,31 @@
                 </table>
 
                 <br><br>
-                <b><u>How to Reschedule your exam?</u></b>
+                <b style="color:red;">Confirmation from PearsonVUE for CIMA Exams</b>
+                <br>
+                You should receive a confirmation email from PearsonVue at least 3-4 working days before your exam. If you don't receive the confirmation from PearsonVUE within these timelines, please write back to us urgently to avoid any inconvenience.
                 <br><br>
-                Objective tests can be rescheduled up to 2 working days before the exam and case study exams can only rescheduled on our portal before the exam closing date if they have not <b><u>been already confirmed by PearsonVUE.</u></b>
+                <b style="color:red;">How to Reschedule your exam?</b>
+                <br>
+                Once your exam is booked with your Professional Body or via PearsonVUE you will need to reschedule the exam in your Professional Body Student Account or via PearsonVUE. It’s your responsibility to ensure you log in and reschedule your exam.
                 <br><br>
-                If your exam is <b><u>not yet confirmed</u></b> with your professional body/PearsonVue please reschedule on the link above.
+                <b>You can reschedule your exams on the CharterQuest website only if your exam is not yet confirmed with your Professional Body or via PearsonVUE.</b> Objective tests can be rescheduled up to 2 working days before the exam and <u>case study exams can only be rescheduled on our portal before the exam closing date if they have not been already confirmed by PearsonVUE.</u>
                 <br><br>
-                Exams already confirmed with PearsonVUE or if you received an email from PearsonVUE please rescheduled via myCIMA. It’s your responsibility to ensure you log in and reschedule your exam.
-                <br><br>
-                <b><u>On the exam day</u></b>
-                <br><br>
+                <b style="color:red;">On the exam day</b>
+                <br>
                 Please bring <b>two</b>(2) forms of identification with you; one should have at least your photo plus signature <b>(Passport or Driving License)</b> and the other one should have at least your name and signature <b>(Credit card, student card, company employee card or any other identification that has your name and signature).</b>
                 <br><br>
-                Also note that you are not required to bring calculators as these have been imbedded on your exam already and you are required to use the calculators and formulas provided. However should you elect to bring your own calculator, note that you are only allowed to bring ONE of the following CIMA Authorized Calculators:
+                If you are writing from any of our campuses, you are required to come to the center for your exam <b>at least 30 minutes before Exam Time</b> for check-in processes and Exam Tutorial.
                 <br><br>
-                <b><u>The following scientific calculators are permitted</u></b>
-                <br><br>
-                Casio FX models<br>
-                Sharp EL-531X<br>
-                Texas Instruments TI-30X<br>
-                Hewlett Packard HP 10S or HP 300S+<br>
+                <b style="color:red;">Calculators for CIMA Exams</b>
                 <br>
-                <b><u>The following Financial calculators are permitted</u></b>
+                Students are allowed to take non-programmable calculators from a preapproved list into exams at Pearson VUE test centres. Click <b style="color:red">here</b> to view the Approved List of Calculators
                 <br><br>
-                Hewlett Packard - HP 10bII<br>
-                Texas Instruments TI BA II Plus<br>
-                Sharp -Sharp EL733A<br>
-                Casio - Casio FC 100V<br>
-                <br>
-                As you are aware CIMA is now providing their exams through <b>Pearson Vue</b> and you are required to come to the center for your exam at least 30 minutes before Exam time for check in process and Exam Tutorial.
+                <b style="color:red">CIMA Remote Exams</b>
                 <br><br>
-                Below is our address and I have attached a map on this email to our Sandton Campus as well…
+                NOTE: Pearson VUE highly recommends that you run the system test on the same computer and location you will be testing from home on exam day to ensure system compatibility.<b style="color:red;">Running the system test helps avoid issues during the exam.</b>
+                <br><br>
+                Below is our address to our campus as well:
                 <br><br><br>
                 <b>
                 ${object.campus.name or ''}<br>
@@ -166,9 +160,9 @@
                 <br><br>
                 Thank you so much for contacting <b style="color: red;">Charter</b><b>Quest.</b>
                 <br><br>
-                This serves as a confirmation that you have been booked to write the following exams;
+                This serves as a confirmation that you have been booked to write the following <b>${ctx.get('prof_body')} Exam(s);</b>
                 <br><br>
-                Please confirm your subject(s) below. <b>You should receive a confirmation email from PearsonVue within 5-7 working days if you are booked for ${ctx.get('prof_body')} Exam.</b>
+                Please confirm your subject(s) below:
                 <br><br>
 
                 <table width="100%" class="table table-bordered" border="0" cellspacing="0" cellpadding="0">
@@ -237,37 +231,31 @@
                 </table>
 
                 <br><br>
-                <b><u>How to Reschedule your exam?</u></b>
+                <b style="color:red;">Confirmation from PearsonVUE for CIMA Exams</b>
+                <br>
+                You should receive a confirmation email from PearsonVue at least 3-4 working days before your exam. If you don't receive the confirmation from PearsonVUE within these timelines, please write back to us urgently to avoid any inconvenience.
                 <br><br>
-                Objective tests can be rescheduled up to 2 working days before the exam and case study exams can only rescheduled on our portal before the exam closing date if they have not <b><u>been already confirmed by PearsonVUE.</u></b>
+                <b style="color:red;">How to Reschedule your exam?</b>
+                <br>
+                Once your exam is booked with your Professional Body or via PearsonVUE you will need to reschedule the exam in your Professional Body Student Account or via PearsonVUE. It’s your responsibility to ensure you log in and reschedule your exam.
                 <br><br>
-                If your exam is <b><u>not yet confirmed</u></b> with your professional body/PearsonVue please reschedule on the link above.
+                <b>You can reschedule your exams on the CharterQuest website only if your exam is not yet confirmed with your Professional Body or via PearsonVUE.</b> Objective tests can be rescheduled up to 2 working days before the exam and <u>case study exams can only be rescheduled on our portal before the exam closing date if they have not been already confirmed by PearsonVUE.</u>
                 <br><br>
-                Exams already confirmed with PearsonVUE or if you received an email from PearsonVUE please rescheduled via myCIMA. It’s your responsibility to ensure you log in and reschedule your exam.
-                <br><br>
-                <b><u>On the exam day</u></b>
-                <br><br>
+                <b style="color:red;">On the exam day</b>
+                <br>
                 Please bring <b>two</b>(2) forms of identification with you; one should have at least your photo plus signature <b>(Passport or Driving License)</b> and the other one should have at least your name and signature <b>(Credit card, student card, company employee card or any other identification that has your name and signature).</b>
                 <br><br>
-                Also note that you are not required to bring calculators as these have been imbedded on your exam already and you are required to use the calculators and formulas provided. However should you elect to bring your own calculator, note that you are only allowed to bring ONE of the following CIMA Authorized Calculators:
+                If you are writing from any of our campuses, you are required to come to the center for your exam <b>at least 30 minutes before Exam Time</b> for check-in processes and Exam Tutorial.
                 <br><br>
-                <b><u>The following scientific calculators are permitted</u></b>
-                <br><br>
-                Casio FX models<br>
-                Sharp EL-531X<br>
-                Texas Instruments TI-30X<br>
-                Hewlett Packard HP 10S or HP 300S+<br>
+                <b style="color:red;">Calculators for CIMA Exams</b>
                 <br>
-                <b><u>The following Financial calculators are permitted</u></b>
+                Students are allowed to take non-programmable calculators from a preapproved list into exams at Pearson VUE test centres. Click <a href="/cfo_snr_jnr/data/Calculator guidance_July 2018.pdf" target="_blank" style="color:red">here</a> to view the Approved List of Calculators
                 <br><br>
-                Hewlett Packard - HP 10bII<br>
-                Texas Instruments TI BA II Plus<br>
-                Sharp -Sharp EL733A<br>
-                Casio - Casio FC 100V<br>
-                <br>
-                As you are aware CIMA is now providing their exams through <b>Pearson Vue</b> and you are required to come to the center for your exam at least 30 minutes before Exam time for check in process and Exam Tutorial.
+                <b style="color:red">CIMA Remote Exams</b>
                 <br><br>
-                Below is our address and I have attached a map on this email to our Sandton Campus as well…
+                NOTE: Pearson VUE highly recommends that you run the system test on the same computer and location you will be testing from home on exam day to ensure system compatibility.<b style="color:red;">Running the system test helps avoid issues during the exam.</b>
+                <br><br>
+                Below is our address to our campus as well:
                 <br><br><br>
                 <b>
                 ${object.campus.name or ''}<br>
@@ -453,7 +441,7 @@
             Please find attached your Tax invoice as well as the PC Exams Terms & Conditions.
             <br><br>
             We look forward to seeing you on the day of your PC Exam. Please lookout for another email confirming your PC Exam Booking.<br>
-            CIMA Exams will be confirmed with PearsonVUE within 5-7 working days at most times sooner.
+            <b style="color:red;">CIMA Exams will be confirmed with PearsonVUE within 5-7 working days at most times sooner.</b>
             <br><br>
             Thanking You
             <br><br>

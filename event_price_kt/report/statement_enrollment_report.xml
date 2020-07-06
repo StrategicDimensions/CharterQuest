@@ -333,7 +333,7 @@
                 <table class="table">
                     <thead>
                         <tr style="background-color:darkgray;">
-                            <td style="padding: 5px;line-height: 1;text-align:center;">
+                            <td colspan="2" style="padding: 5px;line-height: 1;text-align:center;">
                                 <span>
                                     <b>Description</b>
                                 </span>
@@ -373,8 +373,14 @@
                     <tbody>
                         <t t-foreach="o.invoice_line_ids" t-as="l">
                             <tr>
-                                <td style="line-height: 1;width:45%;text-align:left;">
-                                    <p t-esc="l.name"/>
+                                <td colspan="2" style="line-height: 1;width:45%;text-align:left;">
+                                    <p><t t-esc="l.name"/>
+                                        <t t-if="not l.product_id.fee_ok and l.product_id.event_ok">
+                                            - <t t-esc="l.product_id.name"/>
+                                        </t>
+                                    </p>
+<!--                                    t-esc="l.name"-->
+<!--                                    <p t-esc="l.product_id.name"/>-->
                                 </td>
 <!--                                <td style="padding: 2px;line-height: 1;width:15%;" t-if="o.affiliation == '1'">-->
 <!--                                    <span t-esc="l.event_id and l.event_id.date_begin or '' "/>-->
