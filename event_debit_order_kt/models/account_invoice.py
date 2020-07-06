@@ -118,7 +118,7 @@ class account_invoice(models.Model):
                 template_id.sudo().with_context(
                     # email_to=each_request.get('email'),
                     event_list=event_list,
-                    email_cc='thecfo@charterquest.co.za',
+                    email_cc='pcexams@charterquest.co.za',
                     # reschedule_link=link,
                     prof_body=self.prof_body.name,
                 ).send_mail(sale_order_id.id, force_send=True)
@@ -146,7 +146,7 @@ class account_invoice(models.Model):
             template_invoice_id.sudo().with_context(
                 # email_to=each_request.get('email'),
                 # event_list=event_list,
-                email_cc='thecfo@charterquest.co.za',
+                email_cc= 'pcexams@charterquest.co.za;accounts@charterquest.co.za',
                 # prof_body=invoice_id.prof_body.name,
             ).send_mail(self.id, force_send=True)
 

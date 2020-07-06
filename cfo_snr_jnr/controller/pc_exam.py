@@ -1383,7 +1383,7 @@ class PCExambooking(http.Controller):
         if template_id:
             template_id.sudo().with_context(
                 event_list=event_list,
-                email_cc='thecfo@charterquest.co.za',
+                email_cc='pcexams@charterquest.co.za',
                 prof_body=sale_order_id.prof_body.name,
             ).sudo().send_mail(sale_order_id.id, force_send=True)
 
@@ -1434,7 +1434,7 @@ class PCExambooking(http.Controller):
             template_invoice_id.sudo().with_context(
                 # email_to=each_request.get('email'),
                 # event_list=event_list,
-                email_cc='thecfo@charterquest.co.za',
+                email_cc='pcexams@charterquest.co.za;accounts@charterquest.co.za',
                 # prof_body=invoice_id.prof_body.name,
             ).sudo().send_mail(invoice_id.id, force_send=True)
         return request.render('cfo_snr_jnr.confirm_booking_thankyou', {'page_name': post.get('page_name')})
@@ -1508,7 +1508,7 @@ class PCExambooking(http.Controller):
         if template_id:
             template_id.sudo().with_context(
                 event_list=event_list,
-                email_cc='thecfo@charterquest.co.za',
+                email_cc='pcexams@charterquest.co.za',
                 prof_body=sale_order_id.prof_body.name,
             ).sudo().send_mail(sale_order_id.id, force_send=True)
 
@@ -1530,7 +1530,7 @@ class PCExambooking(http.Controller):
         if template_invoice_id:
             template_invoice_id.sudo().with_context(
                 # event_list=event_list,
-                email_cc='thecfo@charterquest.co.za',
+                email_cc='pcexams@charterquest.co.za;accounts@charterquest.co.za',
                 # prof_body=invoice_id.prof_body.name,
             ).sudo().send_mail(invoice_id.id, force_send=True)
 

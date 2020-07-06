@@ -292,7 +292,7 @@ Please Find the Attached PDF for Vouchers
             <field name="name">PC Exam Expiry Notification</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
             <field name="email_to">${object.student_id.email}</field>
-            <field name="email_cc">''</field>
+            <field name="email_cc">'accounts@charterquest.co.za'</field>
             <field name="subject">PC Exam Expiry Notification</field>
             <field name="model_id" ref="event_price_kt.model_pcexams_voucher"/>
             <field name="auto_delete" eval="False"/>
@@ -361,7 +361,7 @@ Please note that your PC Exam Voucher ${object.voucher_no} has Expired .
             <field name="name">PC Exam Expiry Notification after 7days</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
             <field name="email_to">${object.student_id.email}</field>
-            <field name="email_cc">''</field>
+            <field name="email_cc">'accounts@charterquest.co.za'</field>
             <field name="subject">PC Exam Voucher Expiring in 7 days!</field>
             <field name="model_id" ref="event_price_kt.model_pcexams_voucher"/>
             <field name="auto_delete" eval="False"/>
@@ -428,7 +428,7 @@ Please note that your PC Exam Voucher ${object.voucher_no} will expire in 7 days
             <field name="name">PC Exam Expiry Notification after 30days</field>
             <field name="email_from">patience.m@charterquest.co.za</field>
             <field name="email_to">${object.student_id.email}</field>
-            <field name="email_cc">''</field>
+            <field name="email_cc">'accounts@charterquest.co.za'</field>
             <field name="subject">PC Exam Voucher Expiring in 30 days!</field>
             <field name="model_id" ref="event_price_kt.model_pcexams_voucher"/>
             <field name="auto_delete" eval="False"/>

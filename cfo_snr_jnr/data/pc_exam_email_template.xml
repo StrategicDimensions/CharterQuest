@@ -109,11 +109,11 @@
                 <br><br>
                 <b style="color:red;">Calculators for CIMA Exams</b>
                 <br>
-                Students are allowed to take non-programmable calculators from a preapproved list into exams at Pearson VUE test centres. Click <b style="color:red">here</b> to view the Approved List of Calculators
+                Students are allowed to take non-programmable calculators from a preapproved list into exams at Pearson VUE test centres. Click <b><a href="https://www.cimaglobal.com/Documents/Student%20docs/2018/Connected/Calculator%20guidance_July%202018.pdf" target="_blank" style="color:red">here</a></b> to view the Approved List of Calculators
                 <br><br>
                 <b style="color:red">CIMA Remote Exams</b>
                 <br><br>
-                NOTE: Pearson VUE highly recommends that you run the system test on the same computer and location you will be testing from home on exam day to ensure system compatibility.<b style="color:red;">Running the system test helps avoid issues during the exam.</b>
+                NOTE: Pearson VUE highly recommends that you run the system test on the same computer and location you will be testing from home on exam day to ensure system compatibility.<b style="color:red;">Running the system test helps avoid issues during the exam.</b>Click <b><a href="https://service.proctorcam.com/system_tests/launch_test?app_locale=en_US&session_id=3968779&template_name=onvue_system_test" target="_blank" style="color:red">here</a></b> to run the system test.
                 <br><br>
                 Below is our address to our campus as well:
                 <br><br><br>
@@ -249,11 +249,11 @@
                 <br><br>
                 <b style="color:red;">Calculators for CIMA Exams</b>
                 <br>
-                Students are allowed to take non-programmable calculators from a preapproved list into exams at Pearson VUE test centres. Click <a href="/cfo_snr_jnr/data/Calculator guidance_July 2018.pdf" target="_blank" style="color:red">here</a> to view the Approved List of Calculators
+                Students are allowed to take non-programmable calculators from a preapproved list into exams at Pearson VUE test centres. Click </b><a href="https://www.cimaglobal.com/Documents/Student%20docs/2018/Connected/Calculator%20guidance_July%202018.pdf" target="_blank" style="color:red">here</a></b> to view the Approved List of Calculators
                 <br><br>
                 <b style="color:red">CIMA Remote Exams</b>
                 <br><br>
-                NOTE: Pearson VUE highly recommends that you run the system test on the same computer and location you will be testing from home on exam day to ensure system compatibility.<b style="color:red;">Running the system test helps avoid issues during the exam.</b>
+                NOTE: Pearson VUE highly recommends that you run the system test on the same computer and location you will be testing from home on exam day to ensure system compatibility.<b style="color:red;">Running the system test helps avoid issues during the exam.</b>Click <b><a href="https://service.proctorcam.com/system_tests/launch_test?app_locale=en_US&session_id=3968779&template_name=onvue_system_test" target="_blank" style="color:red">here</a></b> to run the system test.
                 <br><br>
                 Below is our address to our campus as well:
                 <br><br><br>
@@ -266,7 +266,7 @@
                 ${object.campus.city or ''}<br>
                 ${object.campus.state_id.name or ''}<br>
                 ${object.campus.country_id.name or ''}</b><br>
-                <br><br><br>
+                <br><br><br>Click <a href="https://service.proctorcam.com/system_tests/launch_test?app_locale=en_US&session_id=3968779&template_name=onvue_system_test" target="_blank" style="color:red">here</a> to run the system test.
                 Thanking You
                 <br><br>
                 Patience Mukondwa<br>
@@ -440,8 +440,8 @@
             <br><br>
             Please find attached your Tax invoice as well as the PC Exams Terms & Conditions.
             <br><br>
-            We look forward to seeing you on the day of your PC Exam. Please lookout for another email confirming your PC Exam Booking.<br>
-            <b style="color:red;">CIMA Exams will be confirmed with PearsonVUE within 5-7 working days at most times sooner.</b>
+            We look forward to seeing you on the day of your PC Exam. Please look out for another email confirming your PC Exam Booking.<br>
+            <b style="color:red;">CIMA Exams will be confirmed with PearsonVue at least 3-4 working days before your exam.</b>
             <br><br>
             Thanking You
             <br><br>
